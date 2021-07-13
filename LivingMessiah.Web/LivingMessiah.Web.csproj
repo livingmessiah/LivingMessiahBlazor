@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <UserSecretsId>812a17a0-f672-4b44-8fc1-f06639fe93db</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LivingMessiah.Data\LivingMessiah.Data.csproj" />
+    <ProjectReference Include="..\LivingMessiah.Domain\LivingMessiah.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="5.0.8" />
+  </ItemGroup>
+
+</Project>
