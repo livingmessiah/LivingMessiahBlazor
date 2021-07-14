@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace LivingMessiah.Web.Components.Pages.ShabbatService
+namespace LivingMessiah.Web.Pages.ShabbatService
 {
 	public enum SectionEnum
 	{

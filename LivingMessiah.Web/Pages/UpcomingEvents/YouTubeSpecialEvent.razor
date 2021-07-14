@@ -1,0 +1,25 @@
+﻿
+<h1 class="mt-5"><span class="badge badge-warning">@Title</span></h1>
+
+<div class="embed-responsive embed-responsive-16by9">
+	<iframe class="embed-responsive-item" src="https://www.youtube.com/embed/@YouTubeId?rel=0"
+					allowfullscreen></iframe>
+</div>
+
+<span class="float-right">
+	<a href="https://www.youtube.com/watch?v=@YouTubeId" target="_blank"
+		 title="@YouTubeId">
+		<u>@YouTubeId</u>
+		<i class="fas fa-external-link-square-alt"></i>
+	</a>
+</span>
+
+@code {
+
+	[Parameter]
+	public string Title { get; set; }
+
+	[Parameter]
+	public string YouTubeId { get; set; }
+
+}

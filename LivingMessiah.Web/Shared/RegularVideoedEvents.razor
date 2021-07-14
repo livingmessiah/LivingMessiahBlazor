@@ -1,0 +1,35 @@
+﻿@using Microsoft.AspNetCore.Hosting;
+@using Microsoft.Extensions.Hosting;
+@inject IWebHostEnvironment Env
+
+@if (!Env.IsDevelopment())
+{
+	<hr class="warning" />
+	<h3>Latest Videos</h3>
+
+	@if (CurrentWeeklyVideos != null)
+	{
+		foreach (var item in CurrentWeeklyVideos)
+		{
+			<YouTubeWeeklyVideo WeeklyVideoType="(LivingMessiah.Domain.WeeklyVideoType)item.WvtId">
+
+			</YouTubeWeeklyVideo>
+		}
+	}
+	else if (ReadOperationFailed)
+	{
+		<h1 class="text-danger">Database operation <b>Read</b> failed.</h1>
+	}
+	else
+	{
+		<p><em>Loading...</em></p>
+	}
+
+}
+
+
+
+
+
+
+

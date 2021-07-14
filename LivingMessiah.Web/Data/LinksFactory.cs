@@ -6,8 +6,10 @@ namespace LivingMessiah.Web.Data
 {
 	public class LinksFactory : ILinksFactory
 	{
+		/*
 		public List<LinkBasic> GetDashboardLinks()
 		{
+
 			return new List<LinkBasic>
 			{
 				new LinkBasic {Index = "/Admin/Dashboard/Index", Title = "Dashboard", Icon = "fas fa-tachometer-alt", },
@@ -18,7 +20,9 @@ namespace LivingMessiah.Web.Data
 				new LinkBasic {Index = "/Admin/Dashboard/ThrowException", Title = "Throw Exception", Icon = "fas fa-bomb", },
  			};
 		}
+		*/
 
+		/*
 		public List<LinkBasic> GetMarkdownLinks()
 		{
 			return new List<LinkBasic>
@@ -31,7 +35,9 @@ namespace LivingMessiah.Web.Data
 				new LinkBasic {Index = "/Admin/Markdown/Verse_Mat_5_17_to_20", Title = "Verse Mat:517-20", Icon = "fas fa-bible", },
  			};
 		}
+		*/
 
+		/*
 		public List<Link> GetFeastLinks()
 		{
 			return new List<Link>
@@ -70,7 +76,36 @@ namespace LivingMessiah.Web.Data
 				},
 			};
 		}
+		*/
 
+		public List<Link> GetLinks()
+		{
+			return new List<Link>
+			{
+
+				new Link
+				{
+					/*
+					Index = UpcomingEvents.Index,
+					Title = UpcomingEvents.Title,
+					Icon = UpcomingEvents.Icon,
+					*/
+
+					Index = "/UpcomingEvents/",
+					Title = "Upcoming Events",
+					Icon = "far fa-clock",
+
+					HomeSidebarUsage=true,
+					//Commented out not because it's wrong, but it's too wide
+					//HomeFloatRightHebrew="שׁוֹפָר",
+					//HomeTitleSuffix=" Shofar H7782",
+					SitemapUsage=true
+				}
+
+			};
+		}
+
+		/*
 		public List<Link> GetLinks()
 		{
 			return new List<Link>
@@ -319,5 +354,6 @@ namespace LivingMessiah.Web.Data
 				},
 			};
 		}
+		*/
 	}
 }

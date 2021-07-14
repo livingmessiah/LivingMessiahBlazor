@@ -1,0 +1,100 @@
+﻿
+<div class="card  border-primary my-5">
+	<div class="card-header">
+		<div class="row">
+
+			<div class="col-4 mt-3">
+				<span class="fa-stack fa-3x mt-2">
+					<i class="far fa-calendar fa-stack-2x"></i>
+					<strong class="fa-stack-1x calendar-text">@EventDate.Day</strong>
+				</span>
+				<h3><span class='badge badge-primary'>@EventDate.Date.ToString(DateFormat.ddd_mm_dd)</span></h3>
+			</div>
+
+			<div class="col-4">
+				<h3 class="">Special Event</h3>
+				<h1 class="mt-4"><i class="@EventType.Icon"></i> <i>@EventType.Name</i></h1>
+			</div>
+
+			<div class="col-4">
+				<img src='@EventType.ImageHeaderUrl' alt="@EventType.Name" class="float-right img-fluid rounded mt-4" />
+			</div>
+
+		</div>
+
+	</div>
+
+	<div class="card-body">
+		@if (!String.IsNullOrEmpty(@ImageUrl))
+		{
+			<CascadingValue Value="@false">
+				<ImageDisplayOption>
+					<img src='@Blobs.UrlOther(@ImageUrl)' alt="@Title" class="img-fluid rounded mt-4" />
+				</ImageDisplayOption>
+			</CascadingValue>
+		}
+
+		<div class="card-body  text-white bg-secondary">
+			<p>ToDo Description Mark Down</p>
+		</div>
+
+		@if (!String.IsNullOrEmpty(@YouTubeId))
+		{
+			@if (ShowVideo)
+			{
+				<YouTubeSpecialEvent YouTubeId="@YouTubeId"
+														 Title="@Title">
+				</YouTubeSpecialEvent>
+
+				<div class="row">
+					<div class="col">
+						<button class="my-3 btn btn-xlarge btn-primary"
+										@onclick="@(e => ShowVideo_Button_Click())">
+							@((MarkupString)OppositeIcon) @OppositeToggleMsg
+						</button>
+					</div>
+				</div>
+			}
+
+		}
+
+		@if (!String.IsNullOrEmpty(@SubTitle))
+		{
+			<h4 class="card-title">@SubTitle</h4>
+		}
+
+		@if (!String.IsNullOrEmpty(@WebsiteUrl))
+		{
+			<Anchor Href="@WebsiteUrl" TargetIsBlank="true" Descr="@WebsiteDescr">
+			</Anchor>
+		}
+
+
+	</div>
+
+	@*<div class="body">
+
+		<ul class="lead">
+
+			<li>Come join us</li>
+
+			@if (!string.IsNullOrEmpty(item.EventTime))
+			{
+				<li><i class="far fa-clock"></i> @item.EventTime</li>
+			}
+
+			@if (!string.IsNullOrEmpty(item.WebsiteUrl))
+			{
+				<li>
+					<Anchor Href="@item.WebsiteUrl" TargetIsBlank="true" Descr="@item.WebsiteDescr">
+					</Anchor>
+				</li>
+			}
+
+			<li><LocationAnchor></LocationAnchor></li>
+		</ul>
+	</div>*@
+
+</div>
+
+

@@ -1,0 +1,62 @@
+﻿@page "/upcomingevents"
+@using LivingMessiah.Domain.KeyDates.Enums
+@using static LivingMessiah.Web.UpcomingEvents
+
+<div class="d-print-none">
+	<h2><i class="@Anchors.Icon"></i> @Anchors.Title</h2>
+</div>
+
+<div class="d-none d-print-block">
+	<h1 class="text-center">Living Messiah Ministries @Anchors.Title</h1>
+</div>
+
+<RegularVideoedEvents></RegularVideoedEvents>
+
+<hr class="warning mt-5" />
+<h3>Upcoming Events</h3>
+<hr class="warning mt-0 mb-5" />
+
+@if (UpcomingEventList != null)
+{
+
+	@foreach (var item in UpcomingEventList)
+	{
+		if (item.EventTypeEnum == EventTypeEnum.KeyDate)
+		{
+			<div class="d-md-none">
+				<DetailKeyDate UpcomingEvent="@item" IsXsOrSm="true">
+				</DetailKeyDate>
+			</div>
+			<div class="d-none d-md-block">
+				<DetailKeyDate UpcomingEvent="@item" IsXsOrSm="false">
+				</DetailKeyDate>
+			</div>
+		}
+		else
+		{
+			<NonKeyDate EventDate="@item.EventDate"
+									EventType="@EventType.FromEnum(item.EventTypeEnum)"
+									Title="@item.Title"
+									SubTitle="@item.SubTitle"
+									ImageUrl="@item.ImageUrl"
+									WebsiteUrl="@item.WebsiteUrl"
+									WebsiteDescr="@item.WebsiteDescr"
+									YouTubeId="@item.YouTubeId"
+									Description="@item.Description">
+			</NonKeyDate>
+		}
+	}
+
+}
+else if (LoadFailed)
+{
+	<p class="text-danger"><em>Could not load because of an Error</em></p>
+}
+else
+{
+	<p><em>Loading...</em></p>
+}
+
+
+
+

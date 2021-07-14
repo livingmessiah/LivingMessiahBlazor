@@ -1,0 +1,29 @@
+﻿@inherits BaseKeyDates
+
+<div class="card border-primary my-5">
+	<div class="card-header">
+		<div class="row">
+
+			<div class="col-4 mt-3">
+				<span class="fa-stack fa-3x mt-2">
+					<i class="far fa-calendar fa-stack-2x"></i>
+					<strong class="fa-stack-1x calendar-text">@EventDate.Day</strong>
+				</span>
+				<h3><span class='badge badge-primary'>@EventDate.Date.ToString(DateFormat.ddd_mm_dd)</span></h3>
+			</div>
+
+			<div class="col-4">
+				<h1 class="mt-4">
+					<span class="badge @SeasonLocal.BadgeColor"><i class="@SeasonLocal.Icon"></i> @SeasonLocal.Name</span>
+				</h1>
+			</div>
+
+			<div class="col-4">
+				<img src='@Blobs.UrlOther("seasons-175-175.jpg")' alt="@SeasonLocal.Name" class="float-right img-fluid rounded mt-4" />
+			</div>
+
+		</div>
+
+	</div>
+</div>
+

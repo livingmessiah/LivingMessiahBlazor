@@ -1,0 +1,90 @@
+﻿@inherits BaseKeyDates
+
+<div class="card border-primary my-5">
+	<div class="card-header">
+
+		@if (IsXsOrSm)
+		{
+
+			<div class="row">
+
+				<div class="col-12">
+					<h1 class="text-center"><span class="badge badge-info"><i class="@LunarMonthLocal.Icon"></i> New Moon</span></h1>
+				</div>
+
+			</div>
+
+			<div class="row">
+
+				<div class="col-6 mt-3">
+					<span class="fa-stack fa-3x mt-2">
+						<i class="far fa-calendar fa-stack-2x"></i>
+						<strong class="fa-stack-1x calendar-text">@EventDate.Day</strong>
+					</span>
+					<h3><span class='badge badge-primary'>@EventDate.Date.ToString(DateFormat.ddd_mm_dd)</span></h3>
+					@*<p class="mt-0"><small>@DaysAhead</small></p>*@
+				</div>
+
+				<div class="col-6">
+					<img src='@Blobs.UrlOther("new-moon-175-174.jpg")' alt="@LunarMonthLocal.Name" class="float-right img-fluid rounded mt-4" />
+				</div>
+
+			</div>
+
+			<div class="row">
+
+				<div class="col-12">
+					<h1 class="text-center mt-4"><i>@LunarMonthLocal.Name</i> <span class="hebrew44">@LunarMonthLocal.Hebrew</span></h1>
+
+					@if (!String.IsNullOrEmpty(@LunarMonthLocal.BiblicalHebrew))
+					{
+						<h3 class="text-center mb-0"><i>@LunarMonthLocal.BiblicalName</i> <span class="hebrew36">@LunarMonthLocal.BiblicalHebrew</span> </h3>
+						<p class="text-center text-black-50 mt-0"><small>Biblical Name</small></p>
+					}
+
+				</div>
+
+			</div>
+
+		}
+		else
+		{
+			<div class="row">
+
+				<div class="col-3 mt-3">
+					<span class="fa-stack fa-3x mt-2">
+						<i class="far fa-calendar fa-stack-2x"></i>
+						<strong class="fa-stack-1x calendar-text">@EventDate.Day</strong>
+					</span>
+					<h3><span class='badge badge-primary'>@EventDate.Date.ToString(DateFormat.ddd_mm_dd)</span></h3>
+					<p class="mt-0"><small>@DaysAhead</small></p>
+				</div>
+
+				<div class="col-6">
+					<h3 class="text-center"><span class="badge badge-info"><i class="@LunarMonthLocal.Icon"></i> New Moon</span></h3>
+					<h1 class="text-center mt-4"><i>@LunarMonthLocal.Name</i> <span class="hebrew44">@LunarMonthLocal.Hebrew</span></h1>
+
+					@if (!String.IsNullOrEmpty(@LunarMonthLocal.BiblicalHebrew))
+					{
+						<h4 class="text-center mt-2"><i>@LunarMonthLocal.BiblicalName</i> <span class="hebrew36">@LunarMonthLocal.BiblicalHebrew</span> </h4>
+						<p class="text-center text-black-50 mt-0"><small>Biblical Name</small></p>
+					}
+
+				</div>
+
+				<div class="col-3">
+					<img src='@Blobs.UrlOther("new-moon-175-174.jpg")' alt="@LunarMonthLocal.Name" class="float-right img-fluid rounded mt-4" />
+				</div>
+
+			</div>
+
+		}
+
+	</div>
+
+</div>
+
+
+
+@*<div class="card-body  text-white bg-secondary">
+	</div>*@

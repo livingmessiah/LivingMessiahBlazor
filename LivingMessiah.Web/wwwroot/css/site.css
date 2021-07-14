@@ -1,5 +1,11 @@
 @import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
 
+
+@font-face {
+  font-family: 'david';
+  src: url('../fonts/david.ttf') format('truetype');
+}
+
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
@@ -48,3 +54,60 @@ a, .btn-link {
         right: 0.75rem;
         top: 0.5rem;
     }
+
+hr.warning {
+  border-bottom: 3px solid #ece1c1;
+}
+
+.hebrew16 {
+  font-size: 16.0pt;
+  font-family: david;
+  direction: rtl;
+}
+
+.hebrew {
+  font-size: 22.0pt;
+  font-family: david;
+  direction: rtl;
+}
+
+
+.hebrew36 {
+  font-size: 36.0pt;
+  font-family: david;
+  direction: rtl;
+  margin-top: .2em;
+}
+
+.hebrew44 {
+  font-size: 44.0pt;
+  font-family: david;
+  direction: rtl;
+}
+
+.hebrew62 {
+  font-size: 62.0pt;
+  font-family: david;
+  direction: rtl;
+}
+
+.hebrew.tiny {
+  font-size: 10.0pt;
+}
+
+/*color: #800000;*/
+.at-red {
+  color: #ff0000;
+}
+
+.hebrewchart {
+  font-size: 22.0pt;
+  font-family: david;
+  direction: rtl;
+  line-height: 1.1;
+}
+
+/* FontAwesome Big Callendar*/
+.calendar-text {
+  margin-top: .3em;
+}

@@ -1,5 +1,5 @@
 ﻿using LivingMessiah.Web.Data;
-using LivingMessiah.Web.Components.Pages.ShabbatService;
+using LivingMessiah.Web.Pages.ShabbatService;
 using LivingMessiah.RazorClassLibrary;
 using System;
 using System.Collections.Generic;

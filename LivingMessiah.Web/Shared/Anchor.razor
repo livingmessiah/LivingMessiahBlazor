@@ -1,0 +1,17 @@
+﻿
+@if (IsPrinterFriendly)
+{
+	<code>Website: </code> @Href
+}
+else
+{
+	@if (!String.IsNullOrWhiteSpace(ButtonCss))
+	{
+		@((MarkupString)BuildButton)
+	}
+	else
+	{
+		@((MarkupString)BuildAnchor)
+	}
+
+}

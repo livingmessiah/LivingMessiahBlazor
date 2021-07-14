@@ -1,4 +1,6 @@
-﻿<div class="top-row pl-4 navbar navbar-dark">
+﻿@using LivingMessiah.Web.Links
+
+<div class="top-row pl-4 navbar navbar-dark">
 	<a class="navbar-brand" href="">Living Messiah</a>
 	<button class="navbar-toggler" @onclick="ToggleNavMenu">
 		<span class="navbar-toggler-icon"></span>
@@ -10,6 +12,16 @@
 		<li class="nav-item px-3">
 			<NavLink class="nav-link" href="" Match="NavLinkMatch.All">
 				<span class="oi oi-home" aria-hidden="true"></span> Home
+			</NavLink>
+		</li>
+	</ul>
+</div>
+
+<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+	<ul class="nav flex-column">
+		<li class="nav-item px-3">
+			<NavLink class="nav-link" href="@LivingMessiah.Web.UpcomingEvents.Anchors.Index" Match="NavLinkMatch.All">
+				<i class="@LivingMessiah.Web.UpcomingEvents.Anchors.Icon" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;@LivingMessiah.Web.UpcomingEvents.Anchors.Title
 			</NavLink>
 		</li>
 	</ul>

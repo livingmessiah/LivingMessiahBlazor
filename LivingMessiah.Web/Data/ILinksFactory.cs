@@ -6,8 +6,8 @@ namespace LivingMessiah.Web.Data
 	public interface ILinksFactory
 	{
 		List<Link> GetLinks();
-		List<Link> GetFeastLinks();
-		List<LinkBasic> GetDashboardLinks();
-		List<LinkBasic> GetMarkdownLinks();
+		//List<Link> GetFeastLinks();
+		//List<LinkBasic> GetDashboardLinks();
+		//List<LinkBasic> GetMarkdownLinks();
 	}
 }

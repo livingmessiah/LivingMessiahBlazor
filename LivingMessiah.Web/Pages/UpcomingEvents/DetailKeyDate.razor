@@ -1,0 +1,32 @@
+﻿@using LivingMessiah.Web.Pages.UpcomingEvents
+@using LivingMessiah.Domain.KeyDates.Enums
+
+@switch (UpcomingEvent.DateTypeEnum)
+{
+	case DateTypeEnum.Month:
+		<LunarMonth EventDate="@UpcomingEvent.EventDate" DaysAhead="@UpcomingEvent.DaysAhead" IsXsOrSm="@IsXsOrSm"
+								LunarMonthLocal="@LunarMonthLocal.FromInt(UpcomingEvent.EnumId)">
+		</LunarMonth>
+		break;
+
+	case DateTypeEnum.Feast:
+		<Feast EventDate="@UpcomingEvent.EventDate" DaysAhead="@UpcomingEvent.DaysAhead" IsXsOrSm="@IsXsOrSm"
+					 FeastDayLocal="@FeastDayLocal.FromInt(UpcomingEvent.EnumId)">
+		</Feast>
+		break;
+
+	case DateTypeEnum.Season:
+		<Season EventDate="@UpcomingEvent.EventDate" DaysAhead="@UpcomingEvent.DaysAhead" IsXsOrSm="@IsXsOrSm"
+						SeasonLocal="@SeasonLocal.FromInt(UpcomingEvent.EnumId)">
+		</Season>
+		break;
+
+	default:
+		<p>DateTypeEnum Unknown</p>
+		break;
+}
+
+
+
+
+

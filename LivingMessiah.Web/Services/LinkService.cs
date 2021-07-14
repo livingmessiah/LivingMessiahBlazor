@@ -9,10 +9,13 @@ namespace LivingMessiah.Web.Services
 	{
 		List<Link> GetSitemapLinks();
 		List<Link> GetHomeSidebarLinks();
+		
+		/*
 		List<Link> GetFeastLinks();
 		List<LinkBasic> GetAdminLinks();
 		List<LinkBasic> GetDashboardLinks();
 		List<LinkBasic> GetMarkdownLinks();
+		*/
 	}
 
 	public class LinkService : ILinkService
@@ -29,6 +32,7 @@ namespace LivingMessiah.Web.Services
 			return links.GetLinks().Where(x => x.SitemapUsage == true).ToList();
 		}
 
+		/*
 		public List<LinkBasic> GetAdminLinks()
 		{
 			LinksFactory links = new LinksFactory();
@@ -52,6 +56,7 @@ namespace LivingMessiah.Web.Services
 			LinksFactory links = new LinksFactory();
 			return links.GetFeastLinks().ToList();
 		}
+		*/
 	}
 }
 
