@@ -74,7 +74,8 @@ namespace LivingMessiah.Web
 						// Set the callback path, so Auth0 will call back to http://localhost:5000/signin-auth0 
 						// Also ensure that you have added the URL as an Allowed Callback URL in your Auth0 dashboard 
 						options.CallbackPath = new PathString(Auth0.CallbackPath);
-						options.ClaimsIssuer = Auth0.SchemeName; // Configure the Claims Issuer to be Auth0
+						options.ClaimsIssuer = Auth0.SchemeName;
+						options.SaveTokens = true;
 
 						options.TokenValidationParameters = new TokenValidationParameters
 						{

@@ -4,7 +4,7 @@ namespace LivingMessiah.Web.Services
 	public static class Auth0
 	{
 		public const string SchemeName = "Auth0";
-		public const string CallbackPath = "/signin-auth0";
+		public const string CallbackPath = "/callback";
 		public const string SchemaNameSpace = "https://schemas.livingmessiah.com/roles";
 
 		public static class Configuration

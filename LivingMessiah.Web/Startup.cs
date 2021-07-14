@@ -1,10 +1,17 @@
 using LivingMessiah.Web.Settings;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Serilog;
+
 using Microsoft.Extensions.Hosting;
-//using Serilog;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using System;
+using System.Threading.Tasks;
 
 namespace LivingMessiah.Web
 {
@@ -23,8 +30,9 @@ namespace LivingMessiah.Web
 			services.AddServerSideBlazor();
 			services.AddOptions();
 			services.AddDataStores();
-			services.AddSession();  
+			services.AddSession();
 			services.AddCustomAuthentication(Configuration);
+
 			services
 				.Configure<AppSettings>(options => Configuration.GetSection("AppSettings").Bind(options));
 		}
@@ -44,7 +52,7 @@ namespace LivingMessiah.Web
 
 			app.UseHttpsRedirection();
 			app.UseStaticFiles();
-			//app.UseSerilogRequestLogging();
+			app.UseSerilogRequestLogging();
 			app.UseRouting();
 
 			app.UseAuthentication();
