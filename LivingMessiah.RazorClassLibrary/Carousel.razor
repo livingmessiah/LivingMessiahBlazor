@@ -1,0 +1,57 @@
+﻿@inherits CarouselBase
+
+<div class="container blazor-carousel @(CssClass)">
+	@if (imageset != null)
+	{
+		<div class="blazor-carousel-inner">
+			@foreach (var imageFile in imageset)
+			{
+				<div class="blazor-carousel-image @GetClasses()">
+					<img class="d-block center @(ImageClass)" src="@GetImageSource(imageFile)" alt="@imageFile.FileName" @onclick="() => { OnCarouselItemClicked?.Invoke(this, _activeImageIndex); }">
+				</div>
+			}
+
+			@ResetRenderCounter();
+		</div>
+
+		@if (ShowNavigation)
+		{
+			<div class="blazor-carousel-nav-container">
+				<div class="blazor-carousel-arrow-container float-left ml-2">
+					<div class="blazor-carousel-control-nav">
+						@if (_activeImageIndex > 0 && imageset.Count() > 1)
+						{
+							<a class="blazor-carousel-control-prev" @onclick="OnPreviousClicked">
+								<span class="carousel-control-prev-icon"></span>
+							</a>
+						}
+					</div>
+				</div>
+
+				<div class="blazor-carousel-indicators-container mt-2">
+					<ol>
+						@for (int indicatorIndex = 0; indicatorIndex < imageset.Count; indicatorIndex++)
+						{
+							int copiedIndex = indicatorIndex;
+							<li class="blazor-carousel-indicator @GetIndicatorState()" @onclick="() => SetActiveImageIndex(copiedIndex)" blazor-indicator-index="@_carouselRenderIndex">&nbsp;</li>
+						}
+					</ol>
+				</div>
+
+				<div class="blazor-carousel-arrow-container float-right mr-2">
+					<div class="blazor-carousel-control-nav">
+						@if (_activeImageIndex < imageset.Count() - 1 && imageset.Count() > 1)
+						{
+							<a class="blazor-carousel-control-next" @onclick="OnNextClicked">
+								<span class="carousel-control-next-icon"></span>
+							</a>
+						}
+					</div>
+				</div>
+			</div>
+
+			@ResetRenderCounter();
+		}
+	}
+</div>
+
