@@ -14,7 +14,6 @@ namespace LivingMessiah.Web.Services
 
 		/*
 		List<Link> GetFeastLinks();
-		
 		List<LinkBasic> GetMarkdownLinks();
 		*/
 	}
@@ -37,14 +36,13 @@ namespace LivingMessiah.Web.Services
 		{
 			LinksFactory links = new LinksFactory();
 			//return links.GetDashboardLinks().Union(links.GetMarkdownLinks()).ToList();
-			return null; // untill I get everything ported over
+			return links.GetDashboardLinks().ToList();
 		}
 
 		public List<LinkBasic> GetDashboardLinks()
 		{
 			LinksFactory links = new LinksFactory();
-			//return links.GetDashboardLinks().ToList();
-			return null; // untill I get everything ported over
+			return links.GetDashboardLinks().ToList();
 		}
 		/*
 

@@ -1,17 +1,16 @@
-﻿<div class="list-group">
-	<div class="card mb-3 bg-warning">
-		<div class="card-body">
+﻿
+	<div class="list-group">
+		<div class="card mb-3 bg-warning">
+			<div class="card-body">
 
-			<DataList Data="@AdminLinks"
-								Type="LinkTypeEnum.Admin">
-				<a href="@context.Index" title="@context.Title">
-					<i class="@context.Icon" aria-hidden="true"></i>
-					@context.Title
-				</a>
-			</DataList>
+				<DataList Data="@AdminLinks"
+									Type="LinkTypeEnum.Admin">
+					<a href="@context.Index" title="@context.Title">
+						<i class="@context.Icon" aria-hidden="true"></i>
+						@context.Title
+					</a>
+				</DataList>
 
+			</div>
 		</div>
 	</div>
-
-
-</div>

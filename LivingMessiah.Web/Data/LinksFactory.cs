@@ -6,7 +6,6 @@ namespace LivingMessiah.Web.Data
 {
 	public class LinksFactory : ILinksFactory
 	{
-		/*
 		public List<LinkBasic> GetDashboardLinks()
 		{
 
@@ -20,92 +19,7 @@ namespace LivingMessiah.Web.Data
 				new LinkBasic {Index = "/Admin/Dashboard/ThrowException", Title = "Throw Exception", Icon = "fas fa-bomb", },
  			};
 		}
-		*/
 
-		/*
-		public List<LinkBasic> GetMarkdownLinks()
-		{
-			return new List<LinkBasic>
-			{
-				new LinkBasic {Index = "/Admin/Markdown/Index", Title = "Markdown", Icon = "fas fa-tachometer-alt", },
-				new LinkBasic {Index = "/Admin/Markdown/BlogUrl", Title = "BlogUrl", Icon = "fas fa-globe-americas", },
-				new LinkBasic {Index = "/Admin/Markdown/EmbededStaticRazorView", Title = "Embeded Static Razor View", Icon = "fab fa-font-awesome-flag", },
-				new LinkBasic {Index = "/Admin/Markdown/LocalFilename", Title = "Local Filename", Icon = "fas fa-satellite", },
-				new LinkBasic {Index = "/Admin/Markdown/Parse", Title = "Parse", Icon = "fas fa-horse-head", },
-				new LinkBasic {Index = "/Admin/Markdown/Verse_Mat_5_17_to_20", Title = "Verse Mat:517-20", Icon = "fas fa-bible", },
- 			};
-		}
-		*/
-
-		/*
-		public List<Link> GetFeastLinks()
-		{
-			return new List<Link>
-			{
-				new Link
-				{
-					Index = Pesach.Index,
-					Title = Pesach.Title,
-					Icon = Pesach.Icon,
-					HomeSidebarUsage=false,
-					HomeFloatRightHebrew="פֶסַח",
-					HomeTitleSuffix=" shavuot H7620",
-					SitemapUsage=false
-				},
-				new Link
-				{
-					Index = Shavuot.Index,
-					Title = Shavuot.Title,
-					Icon = Shavuot.Icon,
-					HomeSidebarUsage=false,
-					HomeFloatRightHebrew="שָׁבוּעוֹת",
-					HomeTitleSuffix=" shavuot H7620",
-					SitemapUsage=false
-				},
-				new Link
-				{
-
-					//Index=  Sukkot.Index, // This gives me an error
-					Index = Links.Sukkot.Index,
-					Title = Links.Sukkot.Title, 
-					Icon = Links.Sukkot.Icon,
-					HomeSidebarUsage=false,
-					HomeFloatRightHebrew="סֻכּוֹת",
-					HomeTitleSuffix=" Sukkot H5523",
-					SitemapUsage=false
-				},
-			};
-		}
-		*/
-
-		public List<Link> GetLinks()
-		{
-			return new List<Link>
-			{
-
-				new Link
-				{
-					/*
-					Index = UpcomingEvents.Index,
-					Title = UpcomingEvents.Title,
-					Icon = UpcomingEvents.Icon,
-					*/
-
-					Index = "/UpcomingEvents/",
-					Title = "Upcoming Events",
-					Icon = "far fa-clock",
-
-					HomeSidebarUsage=true,
-					//Commented out not because it's wrong, but it's too wide
-					//HomeFloatRightHebrew="שׁוֹפָר",
-					//HomeTitleSuffix=" Shofar H7782",
-					SitemapUsage=true
-				}
-
-			};
-		}
-
-		/*
 		public List<Link> GetLinks()
 		{
 			return new List<Link>
@@ -122,12 +36,13 @@ namespace LivingMessiah.Web.Data
 				},
 				new Link
 				{
-					Index = WindmillRanch.Index,
-					Title = WindmillRanch.Title,
-					Icon = WindmillRanch.Icon,
+					Index = WindmillRanch.Anchors.Index,
+					Title = WindmillRanch.Anchors.Title,
+					Icon = WindmillRanch.Anchors.Icon,
 					HomeSidebarUsage=true,
 					SitemapUsage=true
 				},
+
 				new Link
 				{
 					Index = ShabbatService.Index,
@@ -140,9 +55,9 @@ namespace LivingMessiah.Web.Data
 				},
 				new Link
 				{
-					Index = UpcomingEvents.Index,
-					Title = UpcomingEvents.Title,
-					Icon = UpcomingEvents.Icon,
+					Index = UpcomingEvents.Anchors.Index,
+					Title = UpcomingEvents.Anchors.Title,
+					Icon = UpcomingEvents.Anchors.Icon,
 					HomeSidebarUsage=true,
 					//Commented out not because it's wrong, but it's too wide
 					//HomeFloatRightHebrew="שׁוֹפָר",
@@ -151,14 +66,23 @@ namespace LivingMessiah.Web.Data
 				},
 				new Link
 				{
-					Index = Podcast.Index,
-					Title = Podcast.Title,
-					Icon = Podcast.Icon,
+					Index = Podcast.Anchors.Index,
+					Title = Podcast.Anchors.Title,
+					Icon = Podcast.Anchors.Icon,
 					HomeSidebarUsage=true,
 					HomeFloatRightHebrew="דָּבַר",
 					HomeTitleSuffix=" Dabar H1696",
 					SitemapUsage=true
 				},
+
+			};
+		}
+
+		/*
+		public List<Link> GetLinks()
+		{
+			return new List<Link>
+			{
 				new Link
 				{
 					Index = TorahTuesday.Index,
@@ -355,5 +279,63 @@ namespace LivingMessiah.Web.Data
 			};
 		}
 		*/
+
+
+		/*
+		public List<LinkBasic> GetMarkdownLinks()
+		{
+			return new List<LinkBasic>
+			{
+				new LinkBasic {Index = "/Admin/Markdown/Index", Title = "Markdown", Icon = "fas fa-tachometer-alt", },
+				new LinkBasic {Index = "/Admin/Markdown/BlogUrl", Title = "BlogUrl", Icon = "fas fa-globe-americas", },
+				new LinkBasic {Index = "/Admin/Markdown/EmbededStaticRazorView", Title = "Embeded Static Razor View", Icon = "fab fa-font-awesome-flag", },
+				new LinkBasic {Index = "/Admin/Markdown/LocalFilename", Title = "Local Filename", Icon = "fas fa-satellite", },
+				new LinkBasic {Index = "/Admin/Markdown/Parse", Title = "Parse", Icon = "fas fa-horse-head", },
+				new LinkBasic {Index = "/Admin/Markdown/Verse_Mat_5_17_to_20", Title = "Verse Mat:517-20", Icon = "fas fa-bible", },
+ 			};
+		}
+		*/
+
+		/*
+		public List<Link> GetFeastLinks()
+		{
+			return new List<Link>
+			{
+				new Link
+				{
+					Index = Pesach.Index,
+					Title = Pesach.Title,
+					Icon = Pesach.Icon,
+					HomeSidebarUsage=false,
+					HomeFloatRightHebrew="פֶסַח",
+					HomeTitleSuffix=" shavuot H7620",
+					SitemapUsage=false
+				},
+				new Link
+				{
+					Index = Shavuot.Index,
+					Title = Shavuot.Title,
+					Icon = Shavuot.Icon,
+					HomeSidebarUsage=false,
+					HomeFloatRightHebrew="שָׁבוּעוֹת",
+					HomeTitleSuffix=" shavuot H7620",
+					SitemapUsage=false
+				},
+				new Link
+				{
+
+					//Index=  Sukkot.Index, // This gives me an error
+					Index = Links.Sukkot.Index,
+					Title = Links.Sukkot.Title, 
+					Icon = Links.Sukkot.Icon,
+					HomeSidebarUsage=false,
+					HomeFloatRightHebrew="סֻכּוֹת",
+					HomeTitleSuffix=" Sukkot H5523",
+					SitemapUsage=false
+				},
+			};
+		}
+		*/
+
 	}
 }

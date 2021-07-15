@@ -1,0 +1,40 @@
+﻿@page "/account/profile"
+
+@{
+	int rowNo = 1;
+}
+<h3><i class="fab fa-superpowers"></i> User Claims</h3>
+
+<button @onclick="GetClaimsPrincipalData">Get ClaimsPrincipal Data</button>
+
+<p>@_authMessage</p>
+
+@*
+	@attributes="@TableAttributes" *@
+
+@if (_claims.Count() > 0)
+{
+
+	<ul>
+		@foreach (var claim in _claims)
+		{
+			<li>@claim.Type: @claim.Value</li>
+		}
+	</ul>
+
+	@*<TableTemplate Items="@_claims">
+		<TableHeader>
+			<th>#</th>
+			<th>Claim</th>
+			<th>Value</th>
+
+		</TableHeader>
+		<RowTemplate>
+			<td>@rowNo</td>
+			<td>@claim.Type</td>
+			<td>@claim.Value</td>
+		</RowTemplate>
+	</TableTemplate>*@
+
+}
+

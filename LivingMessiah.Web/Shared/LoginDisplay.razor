@@ -1,11 +1,49 @@
-﻿<AuthorizeView>
-	<Authorized>
-		Shalom, @context.User.Identity.Name!
-		<form method="post" action="Account/LogOut">
-			<button type="submit" class="nav-link btn btn-link">Log out</button>
-		</form>
-	</Authorized>
-	<NotAuthorized>
-		<a href="Account/Login">Log in</a>
-	</NotAuthorized>
-</AuthorizeView>
+﻿<div class="row">
+	<div class="col-12">
+		<span class="float-right mt-0 mb-4">
+			<AuthorizeView>
+				<Authorized>
+					<form method="post" action="Account/LogOut">
+						<button type="submit" class="nav-link btn btn-link">Log out</button>
+					</form>
+
+
+					@*@if (context.User.Verified())
+		{
+			<a href="@LivingMessiah.Web.Links.Account.Profile">
+				<span class="text-black-50">Shalom @context.User.Identity.Name! </span>
+				<span class="text-primary"><i class="fas fa-check"></i></span>
+			</a>
+		}
+		else
+		{
+			<a href="@LivingMessiah.Web.Links.Account.Profile">
+				<span class="text-black-50">Shalom @context.User.Identity.Name!</span>
+				<span class="text-danger"><i class="fas fa-question"></i></span>
+			</a>
+		}*@
+
+					<a href="@LivingMessiah.Web.Links.Account.Profile">
+						<span class="text-black-50">Shalom @context.User.Identity.Name!</span>
+						<span class="text-danger"><i class="fas fa-question"></i></span>
+					</a>
+
+					<br />
+					<a class="float-right" href="@LivingMessiah.Web.Links.Account.Logout">
+						<span class="text-black-50"><u>Logout</u></span>
+						<i class="fas fa-sign-out-alt"></i>
+					</a>
+				</Authorized>
+				<NotAuthorized>
+					<a href="@LivingMessiah.Web.Links.Account.Login">
+						<span class="text-black-50"><u>Login</u></span>
+						<i class="fas fa-sign-in-alt"></i>
+					</a>
+				</NotAuthorized>
+
+			</AuthorizeView>
+
+		</span>
+	</div>
+</div>
+

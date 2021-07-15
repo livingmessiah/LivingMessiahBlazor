@@ -1,11 +1,15 @@
 @page "/"
 <HomeImage></HomeImage>
 
-<p>ToDo: Port LogAndAccount PartialView</p>
-
 <div class="d-md-none">
-	<Admin></Admin>
-	<Dashboard></Dashboard>
+	<AuthorizeView>
+		<Admin></Admin>
+	</AuthorizeView>
+
+	<AuthorizeView>
+		<DashboardButton></DashboardButton>
+	</AuthorizeView>
+
 	<SidebarButtons></SidebarButtons>
 	<ShabbatMeter></ShabbatMeter>
 	<div class="d-print-none">
@@ -21,7 +25,9 @@
 		</div>
 		<div class="col-5">
 			<Admin></Admin>
-			<Dashboard></Dashboard>
+			<AuthorizeView>
+				<DashboardButton></DashboardButton>
+			</AuthorizeView>
 			<SidebarButtons></SidebarButtons>
 			@* <ShabbatMeter IsMini="true" Format="MMMM dd"></ShabbatMeter> *@
 			<ShabbatMeter></ShabbatMeter>
@@ -40,7 +46,9 @@
 		<div class="col-4">
 
 			<Admin></Admin>
-			<Dashboard></Dashboard>
+			<AuthorizeView>
+				<DashboardButton></DashboardButton>
+			</AuthorizeView>
 			<SidebarButtons></SidebarButtons>
 
 			<ShabbatMeter></ShabbatMeter>
