@@ -1,0 +1,39 @@
+﻿@using LivingMessiah.Web.Pages.Shavuot.Domain
+	<table class="table table-sm table-striped">
+		@*<thead class="thead-light">*@
+		<thead>
+			<tr>
+				<th class="text-center"><u>#</u></th>
+				<th class="text-center d-print-none"><a href="https://en.wikipedia.org/wiki/Gematria">gem</a></th>
+				<th class="text-center"><u>nd</u></th>
+				<th class="text-center"><u>s</u></th>
+				<th class="text-left"><u>Letter/Name</u> </th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var item in letters)
+			{
+				<tr>
+					<td class="text-center">@item.Id</td>
+					<td class="text-center">@item.Gematria</td>
+					<td class="hebrewchart black text-center">@item.WithoutDagesh</td>
+					<td class="hebrewchart black text-center">@item.Sofit</td>
+					<td> <span class="hebrewchart black text-center"> @item.Hebrew</span> <span class="text-primary">@item.UnicodeName</span></td>
+				</tr>
+			}
+			<tr>
+				<td colspan="5">
+					<small><u>Column Names:</u><br /><b>gem</b>: Gematria; <b>nd</b>: No Dagesh; <b>s</b>: Sofit</small>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+@code {
+	private List<HebrewLetter> letters;
+
+	protected override void OnInitialized()
+	{
+		letters = HebrewLettersFactory.HebrewLetters();
+	}
+}

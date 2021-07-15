@@ -1,0 +1,53 @@
+@page "/"
+<HomeImage></HomeImage>
+
+<p>ToDo: Port LogAndAccount PartialView</p>
+
+<div class="d-md-none">
+	<Admin></Admin>
+	<Dashboard></Dashboard>
+	<SidebarButtons></SidebarButtons>
+	<ShabbatMeter></ShabbatMeter>
+	<div class="d-print-none">
+		<SocialMediaButtons></SocialMediaButtons>
+	</div>
+</div>
+
+
+<div class="d-none d-md-block d-lg-none d-xl-none">
+	<div class="row">
+		<div class="col-7">
+			<IntroductionAndWelcome></IntroductionAndWelcome>
+		</div>
+		<div class="col-5">
+			<Admin></Admin>
+			<Dashboard></Dashboard>
+			<SidebarButtons></SidebarButtons>
+			@* <ShabbatMeter IsMini="true" Format="MMMM dd"></ShabbatMeter> *@
+			<ShabbatMeter></ShabbatMeter>
+			<div class="d-print-none">
+				<SocialMediaButtons></SocialMediaButtons>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="d-none d-lg-block">
+	<div class="row">
+		<div class="col-8">
+			<IntroductionAndWelcome></IntroductionAndWelcome>
+		</div>
+		<div class="col-4">
+
+			<Admin></Admin>
+			<Dashboard></Dashboard>
+			<SidebarButtons></SidebarButtons>
+
+			<ShabbatMeter></ShabbatMeter>
+			<div class="d-print-none">
+				<SocialMediaButtons></SocialMediaButtons>
+			</div>
+
+		</div>
+	</div>
+</div>

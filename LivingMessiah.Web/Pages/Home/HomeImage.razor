@@ -1,0 +1,25 @@
+﻿@*d-block d-sm-none*@
+<div class="d-sm-none">
+	<img src="/images/header-2017-xs.jpg" class="img-fluid" />
+</div>
+
+<div class="d-none d-sm-block d-md-none d-lg-none d-xl-none">
+	<img src="/images/header-2017-sm.jpg" class="img-fluid" />
+</div>
+
+<div class="d-none d-md-block d-lg-none d-xl-none">
+	<img src="/images/header-2017-md.jpg" class="img-fluid" />
+</div>
+
+<div class="d-none d-lg-block d-xl-none">
+	<img src="/images/header-2017-lg.jpg" class="img-fluid" />
+</div>
+
+<div class="d-none d-xl-block">
+	<img src="/images/header-2017-xl.jpg" class="img-fluid" />
+</div>
+
+@code {
+	// NO WORKY! a @functions like...
+	//   public String GetImg(string mediaQuerySize); called like <img src="@Html.Raw(GetImg("xs"))" class="img-fluid" /
+}

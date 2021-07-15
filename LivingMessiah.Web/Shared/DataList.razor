@@ -1,0 +1,74 @@
+﻿@typeparam TItem
+
+@switch (Type)
+{
+	case LinkTypeEnum.Sitemap:
+		<div class="h4 mb-3">
+			<ul class="fa-ul">
+				@foreach (TItem item in Data ?? Array.Empty<TItem>())
+				{
+					<li>@ChildContent(item)</li>
+				}
+			</ul>
+		</div>
+		break;
+
+	case LinkTypeEnum.HomeSidebar:
+		@foreach (TItem item in Data ?? Array.Empty<TItem>())
+		{
+			@ChildContent(item)
+		}
+		break;
+
+	case LinkTypeEnum.Feast:
+		@foreach (TItem item in Data ?? Array.Empty<TItem>())
+		{
+			@ChildContent(item)
+		}
+		break;
+
+	case LinkTypeEnum.Admin:
+		<ul class="nav flex-column">
+			@foreach (TItem item in Data ?? Array.Empty<TItem>())
+			{
+				<li class="nav-item">
+					@ChildContent(item)
+				</li>
+			}
+		</ul>
+		break;
+
+	case LinkTypeEnum.AdminDashboard:
+		<ul class="nav flex-column">
+			@foreach (TItem item in Data ?? Array.Empty<TItem>())
+			{
+				<li class="nav-item">
+					@ChildContent(item)
+				</li>
+			}
+		</ul>
+		break;
+
+	case LinkTypeEnum.AdminMarkdown:
+		<ul class="nav flex-column">
+			@foreach (TItem item in Data ?? Array.Empty<TItem>())
+			{
+				<li class="nav-item">
+					@ChildContent(item)
+				</li>
+			}
+		</ul>
+		break;
+
+	default:
+		break;
+}
+
+
+@*
+	- Line 1 specifies this component is generic and has a single generic paramete TItem
+	- [Parameter] Data is declared as a enumerable property of type TItem
+	- [Parameter] ChildContent is RenderFragment<TItem> – so we can pass an instance of
+			TItem to it and have it give us some rendered HTML to output.
+	- Line 3-4 iterates
+*@

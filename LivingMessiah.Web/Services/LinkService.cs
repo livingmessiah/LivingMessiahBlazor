@@ -9,11 +9,12 @@ namespace LivingMessiah.Web.Services
 	{
 		List<Link> GetSitemapLinks();
 		List<Link> GetHomeSidebarLinks();
-		
-		/*
-		List<Link> GetFeastLinks();
 		List<LinkBasic> GetAdminLinks();
 		List<LinkBasic> GetDashboardLinks();
+
+		/*
+		List<Link> GetFeastLinks();
+		
 		List<LinkBasic> GetMarkdownLinks();
 		*/
 	}
@@ -32,18 +33,22 @@ namespace LivingMessiah.Web.Services
 			return links.GetLinks().Where(x => x.SitemapUsage == true).ToList();
 		}
 
-		/*
 		public List<LinkBasic> GetAdminLinks()
 		{
 			LinksFactory links = new LinksFactory();
-			return links.GetDashboardLinks().Union(links.GetMarkdownLinks()).ToList();
+			//return links.GetDashboardLinks().Union(links.GetMarkdownLinks()).ToList();
+			return null; // untill I get everything ported over
 		}
 
 		public List<LinkBasic> GetDashboardLinks()
 		{
 			LinksFactory links = new LinksFactory();
-			return links.GetDashboardLinks().ToList();
+			//return links.GetDashboardLinks().ToList();
+			return null; // untill I get everything ported over
 		}
+		/*
+
+
 
 		public List<LinkBasic> GetMarkdownLinks()
 		{

@@ -139,15 +139,15 @@
 		}
 	}
 
-	public static class Location
-	{
-		public static class Anchors
-		{
-			public const string Index = "/Location";
-			public const string Title = "Location";
-			public const string Icon = "fas fa-map-signs";
-		}
-	}
+	//public static class Location
+	//{
+	//	public static class Anchors
+	//	{
+	//		public const string Index = "/Location";
+	//		public const string Title = "Location";
+	//		public const string Icon = "fas fa-map-signs";
+	//	}
+	//}
 
 	public static class Mishpocha
 	{
@@ -244,39 +244,39 @@
 		}
 	}
 
-	public static class ShabbatService
-	{
-		//  Shofar H7782
-		//<span class="hebrew">שַׁבָּת</span><br />
+	//public static class ShabbatService
+	//{
+	//	//  Shofar H7782
+	//	//<span class="hebrew">שַׁבָּת</span><br />
 
-		// Shalom H7965
-		//<span class="hebrew">שָׁלוֹם</span> <br />
+	//	// Shalom H7965
+	//	//<span class="hebrew">שָׁלוֹם</span> <br />
 
-		//ToDo: No references...delete.
-		public const string LiveFeedTopId = "IndepthStudyTop";       // ToDo: Anchor Fragment's don't work in Blazor 3.1
-		public const string LiveFeedEspTopId = "IndepthStudyEspTop"; // ToDo: Anchor Fragment's don't work in Blazor 3.1
+	//	//ToDo: No references...delete.
+	//	public const string LiveFeedTopId = "IndepthStudyTop";       // ToDo: Anchor Fragment's don't work in Blazor 3.1
+	//	public const string LiveFeedEspTopId = "IndepthStudyEspTop"; // ToDo: Anchor Fragment's don't work in Blazor 3.1
 
-		public static class Anchors
-		{
-			public const string Index = "/ShabbatService";
-			public const string Title = "Shabbat Service";
-			public const string Icon = "far fa-hand-spock";
+	//	public static class Anchors
+	//	{
+	//		public const string Index = "/ShabbatService";
+	//		public const string Title = "Shabbat Service";
+	//		public const string Icon = "far fa-hand-spock";
 
-		}
+	//	}
 
-		//ToDo: used only by Components\Pages\ShabbatService\ShabbatService.razor
-		public static class LiveFeed
-		{
-			public const string IndepthStudyTopId = "IndepthStudyTop";  // ToDo: Anchor Fragment's don't work in Blazor 3.1
-			public const string IndepthStudyTitle = "In-depth Study";
+	//	//ToDo: used only by Components\Pages\ShabbatService\ShabbatService.razor
+	//	public static class LiveFeed
+	//	{
+	//		public const string IndepthStudyTopId = "IndepthStudyTop";  // ToDo: Anchor Fragment's don't work in Blazor 3.1
+	//		public const string IndepthStudyTitle = "In-depth Study";
 
-			public const string ShabbatServiceTopId = "ShabbatServiceTop"; // ToDo: Anchor Fragment's don't work in Blazor 3.1
-			public const string ShabbatServiceTitle = "Main Shabbat Service";
+	//		public const string ShabbatServiceTopId = "ShabbatServiceTop"; // ToDo: Anchor Fragment's don't work in Blazor 3.1
+	//		public const string ShabbatServiceTitle = "Main Shabbat Service";
 
-			public const string ShabbatServiceEspTopId = "ShabbatServiceEspTop"; // ToDo: Anchor Fragment's don't work in Blazor 3.1
-			public const string ShabbatServiceEspTitle = "Servicio principal de Shabat";
-		}
-	}
+	//		public const string ShabbatServiceEspTopId = "ShabbatServiceEspTop"; // ToDo: Anchor Fragment's don't work in Blazor 3.1
+	//		public const string ShabbatServiceEspTitle = "Servicio principal de Shabat";
+	//	}
+	//}
 
 	public static class Shavuot
 	{
@@ -288,15 +288,15 @@
 		}
 	}
 
-	public static class Sitemap
-	{
-		public static class Anchors
-		{
-			public const string Index = "/Sitemap";
-			public const string Title = "Sitemap";
-			public const string Icon = "fas fa-sitemap";
-		}
-	}
+	//public static class Sitemap
+	//{
+	//	public static class Anchors
+	//	{
+	//		public const string Index = "/Sitemap";
+	//		public const string Title = "Sitemap";
+	//		public const string Icon = "fas fa-sitemap";
+	//	}
+	//}
 
 	public static class ShowLow
 	{

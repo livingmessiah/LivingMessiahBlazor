@@ -1,0 +1,53 @@
+﻿@using LivingMessiah.Web.Pages.KeyDate.Constants;
+@using static LivingMessiah.Web.Pages.Shavuot.Domain.OmerGematriaFactory
+
+<table class="table">
+	<thead class="thead-dark">
+		<tr>
+			<th class="text-center mb-0">Sunday</th>
+			<th class="text-center mb-0">Monday</th>
+			<th class="text-center mb-0">Tuesday</th>
+			<th class="text-center mb-0">Wednesday</th>
+			<th class="text-center mb-0">Thursday</th>
+			<th class="text-center mb-0">Friday</th>
+			<th class="text-center mb-0">Saturday</th>
+		</tr>
+	</thead>
+
+	<tbody>
+
+		@for (int weeks = 1; weeks < 8; weeks++)
+		{
+			<tr>
+
+				@for (int j = 1; j < 8; j++)
+				{
+					days += 1;
+					<td class="text-center">
+						<p class="text-center mb-0"><sup>@FormatedDate(days)</sup></p>
+						<span class='fa-stack fa-3x'>
+							<span class='text-black-50'><i class='far fa-calendar fa-stack-2x'></i></span>
+							<span class='fa-stack-1x'>
+								<span class='hebrew36'>@GetHebrew(days)</span>
+							</span>
+						</span>
+						<p class="text-center mb-0"><b>@days</b></p>
+					</td>
+				}
+			</tr>
+		}
+	</tbody>
+</table>
+
+
+@code {
+	int days = 0;
+
+	protected string FormatedDate(int day)
+	{
+		DateTime dt = Omer.Date;
+		dt = dt.AddDays(day - 1);
+		return dt.Date.ToString(DateFormat.mm_dd);
+	}
+
+}
