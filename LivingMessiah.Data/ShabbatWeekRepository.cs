@@ -23,7 +23,7 @@ namespace LivingMessiah.Data
 
 		#region ShabbatWeek
 
-		private Tuple<string, bool> CurrentShabbatDate()
+		private static Tuple<string, bool> CurrentShabbatDate()
 		{
 			DateTime CompareDate = DateTime.Today;
 			string sCompareDate = DateTime.Today.ToString("yyyy-MM-dd") + " 12:00:00 AM";
@@ -33,7 +33,6 @@ namespace LivingMessiah.Data
 			var dateTuple = new Tuple<string, bool>(sCompareDate, isDayOfWeekSaturday);
 			return dateTuple;
 		}
-
 
 		#endregion
 
@@ -258,14 +257,14 @@ ORDER BY ShabbatDate DESC, tvf.WeeklyVideoTypeId
 		{
 			base.Parms = new DynamicParameters(new
 			{
-				ShabbatWeekId = dto.ShabbatWeekId,
-				WeeklyVideoTypeId = dto.TypeId,
-				YouTubeId = dto.YouTubeId,
-				Title = dto.Title,
-				GraphicFile = dto.GraphicFileRoot,
-				NotesFile = dto.NotesFileRoot,
-				Book = dto.Book,
-				Chapter = dto.Chapter
+				dto.ShabbatWeekId,
+				dto.TypeId,
+				dto.YouTubeId,
+				dto.Title,
+				dto.GraphicFileRoot,
+				dto.NotesFileRoot,
+				dto.Book,
+				dto.Chapter
 			});
 
 			base.Sql = $@"
@@ -290,15 +289,15 @@ VALUES (@ShabbatWeekId, @WeeklyVideoTypeId, @YouTubeId, @Title, @GraphicFile, @N
 		{
 			base.Parms = new DynamicParameters(new
 			{
-				Id = dto.Id,
-				ShabbatWeekId = dto.ShabbatWeekId,
-				WeeklyVideoTypeId = dto.TypeId,
-				YouTubeId = dto.YouTubeId,
-				Title = dto.Title,
-				GraphicFile = dto.GraphicFileRoot,
-				NotesFile = dto.NotesFileRoot,
-				Book = dto.Book,
-				Chapter = dto.Chapter
+				dto.Id,
+				dto.ShabbatWeekId,
+				dto.TypeId,
+				dto.YouTubeId,
+				dto.Title,
+				dto.GraphicFileRoot,
+				dto.NotesFileRoot,
+				dto.Book,
+				dto.Chapter
 
 			});
 			base.Sql = $@"

@@ -1,0 +1,78 @@
+﻿@using LivingMessiah.Web.Anchors
+@inherits IntroductionBase
+@*
+	Using an href that includes a fragment doesn't in Blazor out of the box
+		See Task #647 https://livingmessiah.visualstudio.com/LivingMessiah/_queries/edit/647/?triage=true
+*@
+
+@if (IsSpanish)
+{
+	<h4>
+		<span class='badge badge-warning mb-0'><b>Itineraria</b></span>
+		<input type="checkbox" @onchange="CheckBoxChanged" /> English
+	</h4>
+	<div class="ml-2">
+		<ul class="fa-ul">
+
+			<li class="lead">
+				<span class="text-warning"><i class="fa-li fas fa-caret-right"></i></span>
+				El servicio principal va de <i class="text-warning far fa-clock"></i> 3:00 pm a 5:15 pm
+			</li>
+			@if (!String.IsNullOrEmpty(SpanishUrlId))
+			{
+				<li class="lead">
+					<span class="text-warning"><i class="fa-li fas fa-caret-right"></i></span>
+					Una transmisión en vivo del servicio se puede encontrar a continuación
+					Versión en español <i class="fas fa-share fa-rotate-90"></i>
+					@* ToDo: Task #647, see note above *@
+				</li>
+			}
+			else
+			{
+				<li class="lead">
+					<span class="text-warning"><i class="fa-li fas fa-caret-right"></i></span>
+					<b>No hay transmisión en vivo</b>
+				</li>
+			}
+			<li class="lead">
+				<span class="text-warning"><i class="fa-li fas fa-caret-right"></i></span>
+				<span class="text-danger">Nota: <b><i>ONEG</i> (la comida comunitaria) ha sido pospuesta por ahora</b></span>
+			</li>
+		</ul>
+	</div>
+
+}
+else
+{
+	<h4>
+		<span class='badge badge-warning mb-0'><b>Itinerary</b></span>
+		<input type="checkbox" @onchange="CheckBoxChanged" /> Spanish
+	</h4>
+	<div class="ml-2">
+		<ul class="fa-ul">
+
+			<li class="lead">
+				<span class="text-warning"><i class="fa-li fas fa-caret-right"></i></span>
+				The main service goes between <i class="text-warning far fa-clock"></i> 3:00 pm - 5:15 pm
+			</li>
+			<li class="lead">
+				<span class="text-warning"><i class="fa-li fas fa-caret-right"></i></span>
+				A <b>live feed</b> <i class='fas fa-satellite'></i> of the service can be found
+				below <i class="fas fa-share fa-rotate-90"></i>
+				@* ToDo: Task #647, see note above *@
+			</li>
+			<li class="lead">
+				<span class="text-warning"><i class="fa-li fas fa-caret-right"></i></span>
+				We also have an
+				<AnchorInDepthStudy AnchorEnum="AnchorEnums.InternalBtnSm"></AnchorInDepthStudy>
+
+				which starts earlier at <i class="text-warning far fa-clock"></i> 1:30 - 2:15 pm
+			</li>
+			<li class="lead">
+				<span class="text-warning"><i class="fa-li fas fa-caret-right"></i></span>
+				<span class="text-danger">Note: <b><i>ONEG</i> (Community Meal) HAS BEEN POSTPONED FOR NOW</b></span>
+			</li>
+		</ul>
+	</div>
+
+}

@@ -1,0 +1,43 @@
+﻿@inherits ShabbatMeterBase
+@* Bug: When _isMini=true, it causes the social buttons below it to not horizontally space correctly *@
+@if (!_isPrinterFriendly)
+{
+	if (!_isMini)
+	{
+		<h3 class="text-center mt-3 mb-2"><span class="badge badge-warning"><i>Shabbat-O-Meter</i></span></h3>
+	}
+	else
+	{
+		<h5 class="text-black-50 mt-3">Next Shabbat <b>@NextShabbat</b></h5>
+	}
+
+	<div class="progress">
+		<div class="progress-bar progress-bar-success" role="progressbar"
+				 aria-valuenow="@DowInt" aria-valuemin="0" aria-valuemax="7" style="width: @DowWidthPerc%;">
+			Day @DowInt
+		</div>
+	</div>
+
+	@if (DowInt == 7)
+	{
+		<div class="row">
+			<div class="col-6" style="font-size:22px" ;> <b>Shabbat Shalom!</b></div>
+			<div class="col-6">
+				<span class="text-danger hebrewchart float-right"> שַׁבָּת שָׁלוֹם</span>
+			</div>
+		</div>
+	}
+	else
+	{
+		if (_isMini)
+		{
+			<p class=" text-black-50 float-right"><i>Shabbat-O-Meter</i></p>
+		}
+	}
+
+
+}
+else
+{
+	<p class="text-black-50"><small>Shabbat-O-Meter NOT SHOWN</small></p>
+}

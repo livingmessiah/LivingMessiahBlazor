@@ -1,0 +1,41 @@
+﻿
+@if (CalenderReadyForSale)
+{
+	<div class="d-print-none">
+		<div class="card border-warning mt-5 mb-3">
+			<img src="@Blobs.UrlRoot("lmm-calendar-final-800-600.jpeg")"
+					 class="card-img-top p-2"
+					 alt="@LivingMessiah.Web.Store.Items.TitleCalendar">
+			<div class="card-body">
+				<h3 class="card-text text-center">
+					Living Messiah Calendar! Get It!
+				</h3>
+				<div class="text-center">
+					<a href="@LivingMessiah.Web.Store.Anchors.Index"
+						 title="@LivingMessiah.Web.Store.Items.TitleCalendar"
+						 class="btn btn-primary btn-lg">
+						<i class="fas fa-file-movie-o"></i>Order Now
+						<i class="fas fa-chevron-right"></i>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+}
+else
+{
+<div class="card border-warning mt-5 mb-3">
+	<div class="card-body">
+		<h3 class="card-text text-center">
+			Living Messiah Calendar! Coming Soon
+		</h3>
+	</div>
+</div>
+}
+
+@code {
+	[Parameter]
+	public bool CalenderReadyForSale { get; set; }
+
+}

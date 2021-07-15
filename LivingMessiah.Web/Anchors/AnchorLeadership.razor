@@ -1,0 +1,82 @@
+﻿
+@switch (AnchorEnum)
+{
+	@*case AnchorEnums.Location:
+		<a href="@Location.Index" title="@Location.Title">
+				<i class="@Location.Icon" aria-hidden="true"></i>
+			</a>
+			<p class="text-warning">Anchor @AnchorEnum missing</p>
+			break;*@
+
+
+	case AnchorEnums.ScrollSpyHeader:
+		<a href="@Anchors.Index" class="nav-link ml-0 my-1"
+			 asp-fragment="@Anchors.Fragments.Top">
+			<i class="@Anchors.Icon"></i>
+			@Anchors.Fragments.Top
+		</a>
+		@*ToDo: asp-fragment does not work in Blazor Components*@
+		break;
+
+	@*
+		<a href="@Anchors.Index" class="nav-link ml-0 my-1" <i class="@Anchors.Icon"></i>@Anchors.Fragments.Top</a>
+		<a href="@Anchors.Index" class="nav-link ml-0 my-1">                             @person.Name</a>
+		<a href="@Anchors.Index" class="nav-link ml-0 my-1">                             @Anchors.Fragments.Leadership</a>
+	*@
+
+
+	case AnchorEnums.InternalBtnSm:
+		<a href="@Anchors.Index" class="btn btn-outline-primary btn-sm"
+			 title="@Anchors.Title">
+			<i class="@Anchors.Icon"></i>
+			@Anchors.Title
+		</a>
+		break;
+
+	case AnchorEnums.InternalHome:
+		<a href="@Anchors.Index"
+			 title="@Anchors.Title @TitleSuffix" class="list-group-item list-group-item-warning ">
+			<i class="@Anchors.Icon fa-fw fa-3x" aria-hidden="true"></i>
+			<span class="home-page-xs"><b>@Anchors.Title</b></span>
+
+			@if (!String.IsNullOrEmpty(FloatRightHebrew))
+			{
+				<span class="float-right text-info"> <span class="hebrew">@FloatRightHebrew</span>	</span>
+			}
+		</a>
+		break;
+
+
+	default:
+		<p class="text-warning">Anchor @AnchorEnum missing</p>
+		break;
+}
+
+@code {
+
+	const string TitleSuffix = " zaken H2205";
+	const string FloatRightHebrew = "זָקֵן";
+
+	[Parameter]
+	public LivingMessiah.Web.Anchors.AnchorEnums AnchorEnum { get; set; }
+
+	[Parameter]
+	public RenderFragment Title { get; set; }
+
+	[Parameter]
+	public RenderFragment Icon { get; set; }
+
+	public static class Anchors
+	{
+		public const string Index = "/Leadership";
+		public const string Title = "Leadership";
+		public const string Icon = "fas fa-user-friends";
+		public static class Fragments
+		{
+			public const string Top = "Top";
+			public const string Leadership = "Leadership";
+		}
+	}
+
+
+}

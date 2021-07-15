@@ -1,0 +1,45 @@
+﻿
+@if (CalendarEntries != null)
+{
+
+	@foreach (var item in CalendarEntries)
+	{
+
+		if (item.RowCntByGregorianYear == 1)
+		{
+			<GregorianYear year="item.GregorianYear"></GregorianYear>
+		}
+
+		if (item.DateTypeId == 1 && WithMonths==true)
+		{
+				<LunarMonthComponent IsXsOrSm="@IsXsOrSm"
+														 DateIdBeg="item.DateIdBeg"
+														 DateIdEnd="item.DateIdEnd"
+														 LunarMonths="LunarMonths.Where(w => w.DateId >= item.DateIdBeg && w.DateId <= item.DateIdEnd).ToList()">
+				</LunarMonthComponent>
+		}
+		else
+		{
+			if (item.DateTypeId == 2)
+			{
+				<FeastDayComponent IsXsOrSm="@IsXsOrSm"
+													 FeastDays="FeastDays.Where(w => w.DateId >= item.DateIdBeg && w.DateId <= item.DateIdEnd).ToList()">
+				</FeastDayComponent>
+			}
+			else
+			{
+				<SeasonComponent Date="item.Date"
+												 Season="Seasons.Where(w => w.DateId == item.DateIdBeg).SingleOrDefault()">
+				</SeasonComponent>
+
+			}
+		}
+
+
+	}
+
+}
+else
+{
+	<p><em>Loading...</em></p>
+}

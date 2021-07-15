@@ -1,0 +1,38 @@
+﻿@inherits SectionComponentBase
+
+<CascadingValue Value="@IsPrinterFriendly">
+	<ImageDisplayOption>
+		<img src='@Blobs.UrlShabbatService(sec.GraphicUrl)' alt="@sec.Title" class="img-fluid rounded mt-4" />
+	</ImageDisplayOption>
+</CascadingValue>
+
+@SubTitle
+
+<h4 class="pt-2">
+	@((MarkupString)HeaderIcon)
+	<span class='badge @BadgeColor pb-15'>@sec.Title</span>
+	<CascadingValue Value="@IsPrinterFriendly">
+		<DetailsButtonDisplayOption FragmentId="@sec.ToggleId">
+		</DetailsButtonDisplayOption>
+	</CascadingValue>
+</h4>
+
+@if (!IsPrinterFriendly)
+{
+	<div class="@_collapse" id="@sec.ToggleId">
+		<div class="card border-primary mb-3">
+			@ChildContent
+		</div>
+	</div>
+
+}
+else
+{
+	<div class="card border-light mb-3">
+		@ChildContent
+	</div>
+}
+
+
+@* Hack; maybe add mt-3 to <Image> *@
+<br />

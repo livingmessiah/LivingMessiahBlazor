@@ -12,17 +12,16 @@ namespace LivingMessiah.Domain.KeyDates.Queries
 		public List<CalendarEntry> CalendarEntrys { get; set; } = new List<CalendarEntry>();
 		public List<FeastDay> FeastDays { get; set; } = new List<FeastDay>();
 		public List<LunarMonth> LunarMonths { get; set; } = new List<LunarMonth>();
-		//public List<Season> Seasons { get; set; } = new List<Season>();
-		public List<SeasonOrEquinox> SeasonOrEqinoxList { get; set; } = new List<SeasonOrEquinox>();
+		public List<Season> Seasons { get; set; } = new List<Season>();
 
 		public override string ToString()
 		{
 			return $@"
 Year: {Year}
-, CalendarEntrys.Count: {CalendarEntrys.Count()}
-, FeastDays.Count: {FeastDays.Count()}
-, LunarMonths.Count: {LunarMonths.Count()}
-, SeasonOrEqinoxList.Count: {SeasonOrEqinoxList.Count()}";
+, CalendarEntrys.Count: {CalendarEntrys.Count}
+, FeastDays.Count: {FeastDays.Count}
+, LunarMonths.Count: {LunarMonths.Count}
+, SeasonList.Count: {Seasons.Count}";
 		}
 	}
 }

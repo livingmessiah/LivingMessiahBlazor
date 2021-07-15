@@ -124,8 +124,7 @@ FROM KeyDate.FeastDayDetail
 					calendarYear.CalendarEntrys = (await multi.ReadAsync<CalendarEntry>()).ToList();   // #2
 					calendarYear.FeastDays = (await multi.ReadAsync<FeastDay>()).ToList();    // #3
 					calendarYear.LunarMonths = (await multi.ReadAsync<LunarMonth>()).ToList();   // #4
-					//calendarYear.Seasons = (await multi.ReadAsync<Season>()).ToList();    // #5
-					calendarYear.SeasonOrEqinoxList = (await multi.ReadAsync<SeasonOrEquinox>()).ToList();    // #5
+					calendarYear.Seasons = (await multi.ReadAsync<Season>()).ToList();    // #5
 				}
 
 				//System.Text.StringBuilder debug = new System.Text.StringBuilder();

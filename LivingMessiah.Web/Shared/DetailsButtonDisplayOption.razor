@@ -1,0 +1,17 @@
+﻿
+@if (!IsPrinterFriendly)
+{
+	<button class="btn btn-outline-primary collapsed" type="button"
+					data-target="#@FragmentId" data-toggle="collapse"
+					aria-controls="@FragmentId" aria-expanded="false">
+		<i class="fas" aria-hidden="true"></i>
+		Details...
+	</button>
+}
+
+@code {
+	[Parameter]
+	public string FragmentId { get; set; }
+
+	[CascadingParameter] bool IsPrinterFriendly { get; set; }
+}

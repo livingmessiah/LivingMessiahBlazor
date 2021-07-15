@@ -1,0 +1,14 @@
+﻿@page  "/ParashaNextBook"
+@using static LivingMessiah.Web.Parasha.Anchors
+
+<h2>
+	<i class="@Icon"></i> @Title <b><u>Next Book</u></b>
+	<br />
+</h2>
+
+<div class="row d-none d-sm-block">
+	<IndexTable IsXs="false" NextBook="true"></IndexTable>
+</div>
+<div class="d-block d-sm-none">
+	<IndexTable IsXs="true" NextBook="true"></IndexTable>
+</div>

@@ -1,0 +1,48 @@
+﻿@inject IJSRuntime JS
+
+<div style="font-size:small; text-align: right">
+	<span>
+		Hebrew date:<b>
+			@currentHebrewDate
+		</b>
+		&nbsp;<abbr title="source www.hebcal.com">?</abbr> &nbsp;
+	
+		@*<br /> GetCurrentDate:	@GetCurrentDate();*@
+
+	</span>
+</div>
+
+
+@code {
+
+	string currentHebrewDate = ""; // warning, never assigned to 
+
+	//private async Task GetCurrentDate()
+	//{
+	//	await JS.InvokeVoidAsync("HebCal.js", currentHebrewDate);
+	//}
+
+	protected override void OnInitialized()
+	{
+		 JS.InvokeVoidAsync("HebCal.js", currentHebrewDate);
+		//return base.OnInitializedAsync();
+	}
+
+	//https://docs.microsoft.com/en-us/aspnet/core/blazor/call-javascript-from-dotnet?view=aspnetcore-5.0#ijsruntime
+
+	//protected override void OnInitialized()
+	//{
+	//	CurrentHebrewDate = JS.InvokeVoidAsync("HebCal.js").ToString();
+	//}
+
+
+	//private MarkupString convertedText = new MarkupString("Select the <b>Convert Array</b> button.");
+
+	//StocksService.OnStockTickerUpdated += stockUpdate =>
+	//{
+	//	JS.InvokeVoidAsync("handleTickerChanged",
+	//				stockUpdate.symbol, stockUpdate.price);
+	//};
+
+
+}

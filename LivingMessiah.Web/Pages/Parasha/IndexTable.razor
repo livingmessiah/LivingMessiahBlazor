@@ -1,0 +1,90 @@
+﻿
+@if (Parasha != null)
+{
+	<table class="table table-sm table-hover">
+		<thead>
+			<tr>
+				<th>#</th>
+
+				@if (!IsXs)
+				{
+					<th>Parasha</th>
+					<th>Meaning</th>
+				}
+
+				<th>Read Date</th>
+				<th>Torah</th>
+				<th>Haftorah</th>
+				<th>Brit Chadashah</th>
+				<th><i class="fas fa-external-link-square-alt"></i></th>
+			</tr>
+		</thead>
+		<tbody>
+
+			@foreach (var item in Parasha)
+			{
+				if (item.RowCntByBookId == 1)
+				{
+					if (Book != null)
+					{
+						<tr>
+							<td colspan="@Colspan">
+								<a id="@Book.EnglishTitle"></a>
+								<span class="badge badge-danger">@Book.EnglishTitle</span> &nbsp;
+								<span class="text-muted"><i>@Book.HebrewTitle</i></span>
+								<span class="float-right hebrewchart">@((MarkupString)@Book.HebrewName)</span>
+							</td>
+						</tr>
+					}
+				}
+
+				<tr>
+					<td>@item.TriNum</td>
+
+					@if (!IsXs)
+					{
+						<td>
+							<a href="@MyHebrewBibleParashaUrl(@item.Id, @item.NameUrl)"><i>@item.ParashaName</i></a>
+						</td>
+						<td>@item.Meaning</td>
+					}
+
+					<td class="@CurrentReadDateTextFormat(item.ShabbatDate)">
+						@if (item.ShabbatDate.Year != prevGregorianYear)
+						{
+							prevGregorianYear = item.ShabbatDate.Year;
+							<span class="badge badge-danger">@item.ShabbatDate.Year</span><br />
+						}
+						@item.ShabbatDate.ToString("MMM d")
+					</td>
+
+
+					<td>@item.Torah</td>
+					<td>@item.Haftorah</td>
+					<td>@item.Brit</td>
+
+					<td>
+						<a href="@item.AhavtaURL"
+							 title="Ahavta URL [@item.Id]" target="_blank">
+							<i class="fas fa-external-link-alt"></i>
+						</a>
+					</td>
+				</tr>
+
+			}
+
+		</tbody>
+
+	</table>
+
+}
+else if (LoadFailed)
+{
+	<p class="text-danger"><em>Could not load because of an Error</em></p>
+}
+else
+{
+	<p><em>Loading...</em></p>
+}
+
+

@@ -1,0 +1,24 @@
+﻿
+@if (Season != null)
+{
+	<div class="row">
+		<div class="col">
+			<span class="float-right mr-3">@Season.Type @Date.ToString(DateFormat.ddd_mm_dd)</span>
+			<h2 id="@Season.Id">
+				<span class="badge @Season.BadgeColor"><i class="@Season.Icon"></i> @Season.Name</span>
+			</h2>
+		</div>
+	</div>
+
+	@*
+		ToDo: dont understand why this particular keydate component would not stop showing this once Season was not null anymore?
+		else
+		{
+			<p><em>Loading SeasonComponent...</em></p>
+		}
+	*@
+
+}
+
+
+

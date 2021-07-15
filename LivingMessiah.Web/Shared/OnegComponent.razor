@@ -1,0 +1,44 @@
+﻿@inherits OnegComponentBase
+
+@if (OnegCanceled)
+{
+	<p class="display-4"><i>ONEG</i> HAS BEEN POSTPONED FOR NOW</p>
+}
+else
+{
+	<p class="lead">
+		<i class="text-warning far fa-clock"></i> 5:30 - 7:00 pm
+		<strong><i>Oneg</i> - </strong> Breaking Bread Together
+		<ul class="size14">
+			<li>Oneg Theme: <strong>@Oneg.MessageTheme</strong></li>
+
+			<li>
+				Bring a <b>Biblically clean</b> dish to share
+				<br />
+				<ul>
+					<li>Salad bar items and desserts always welcome</li>
+					<li>
+						See
+						<a href='https://www.myhebrewbible.com/BookChapter/Leviticus/11/laws-of-clean-and-unclean-food'
+							 class='btn-primary btn-sm' target='_blank'>
+							<i class='fas fa-external-link-alt'></i>
+							Leviticus chapter 11
+						</a>&nbsp;for the definition of <b>Biblically clean</b> food
+					</li>
+
+				</ul>
+			</li>
+
+			<li>Join us for fellowship, dialog & Biblical dialog/discussion</li>
+
+			<li>
+				<strong>Thank you</strong> in advance
+				<strong>@Oneg.MessageCleanup</strong> <span class="@Oneg.FontAwesomeCleanup"></span>
+				for helping with <i>Oneg</i> clean-up.
+			</li>
+
+			<li><strong>Clean up Team</strong>, you are invited to join our <strong>guests</strong> at the front of the line for the evening meal.</li>
+		</ul>
+
+	</p>
+}

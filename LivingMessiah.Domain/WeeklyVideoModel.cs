@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
 // ToDo: does this belong here?
-// Moved from LivingMessiah.Web.Components.Pages.Admin.WeeklyVideos because 
+// Moved from LivingMessiah.Web.Pages.Admin.WeeklyVideos because 
 //   LivingMessiah.Data\ShabbatWeekRepository.cs needed it
 namespace LivingMessiah.Domain
 {

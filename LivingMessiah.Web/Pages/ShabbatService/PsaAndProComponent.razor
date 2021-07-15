@@ -1,0 +1,27 @@
+﻿@inherits PsaAndProComponentBase
+
+<CascadingValue Value="@IsPrinterFriendly">
+	<ImageDisplayOption>
+		<img src='@Blobs.UrlShabbatService(sec.GraphicUrl)' alt="@sec.Title" class="img-fluid rounded mt-3" />
+	</ImageDisplayOption>
+</CascadingValue>
+
+
+<h4 class="pt-2">
+	<span class='badge @BadgeColor pb-15'>@sec.Title</span>
+	<CascadingValue Value="@IsPrinterFriendly">
+		<DetailsButtonDisplayOption FragmentId="@sec.ToggleId">
+		</DetailsButtonDisplayOption>
+	</CascadingValue>
+</h4>
+
+<CascadingValue Value="@IsPrinterFriendly">
+	<VerseParagrapDisplayOption ToggleId="@sec.ToggleId">
+		<ChildContent>
+			<PsalmAndProverbCurrent PerformHtmlValidation="false">
+			</PsalmAndProverbCurrent>
+		</ChildContent>
+	</VerseParagrapDisplayOption>
+</CascadingValue>
+
+<br />

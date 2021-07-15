@@ -1,6 +1,6 @@
 ﻿namespace LivingMessiah.Domain.KeyDates.Queries
 {
-	public class SeasonOrEquinox
+	public class Season
 	{
 		public int Id { get; set; }
 		public int YearId { get; set; }

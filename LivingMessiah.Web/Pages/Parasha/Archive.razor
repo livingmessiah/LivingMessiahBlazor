@@ -1,0 +1,33 @@
+﻿@page "/parasha/Archive"
+@using static LivingMessiah.Web.ParashaArchive.Anchors
+
+<div class="pb-2 mt-4 mb-2 border-bottom">
+	<h1 class="@Icon fa-2x"> @Title</h1>
+	<ul class="nav nav-pills">
+		<li role="presentation" class="nav-item">
+			<a class="nav-link active" data-toggle="pill" 
+				 href="#@Fragments.Leviticus">Leviticus</a>
+		</li>
+		<li role="presentation" class="nav-item">
+			<a class="nav-link" data-toggle="pill" 
+				 href="#@Fragments.Numbers">Numbers</a>
+		</li>
+		<li role="presentation" class="nav-item">
+			<a class="nav-link" href="@CurrentIndex">
+				Current Index <i class="far fa-arrow-alt-circle-left"></i>
+			</a>
+		</li>
+	</ul>
+
+</div>
+
+
+<div class="tab-content">
+
+	<div id="@Fragments.Leviticus" class="tab-pane active" role="tabpanel">
+		<ArchiveTableStaticLev></ArchiveTableStaticLev>
+	</div>
+	<div id="@Fragments.Numbers" class="tab-pane" role="tabpanel">
+		<ArchiveTableStaticNum></ArchiveTableStaticNum>
+	</div>
+</div>

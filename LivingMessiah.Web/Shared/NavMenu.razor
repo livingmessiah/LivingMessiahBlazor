@@ -27,6 +27,36 @@
 	</ul>
 </div>
 
+<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+	<ul class="nav flex-column">
+		<li class="nav-item px-3">
+			<NavLink class="nav-link" href="@LivingMessiah.Web.Links.KeyDates.Index" Match="NavLinkMatch.All">
+				<i class="@LivingMessiah.Web.Links.KeyDates.Icon" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;@LivingMessiah.Web.Links.KeyDates.Title
+			</NavLink>
+		</li>
+	</ul>
+</div>
+
+<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+	<ul class="nav flex-column">
+		<li class="nav-item px-3">
+			<NavLink class="nav-link" href="@LivingMessiah.Web.Links.Parasha.Index" Match="NavLinkMatch.All">
+				<i class="@LivingMessiah.Web.Links.Parasha.Icon" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;@LivingMessiah.Web.Links.Parasha.Title
+			</NavLink>
+		</li>
+	</ul>
+</div>
+
+<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+	<ul class="nav flex-column">
+		<li class="nav-item px-3">
+			<NavLink class="nav-link" href="@LivingMessiah.Web.Links.ShabbatService.Index" Match="NavLinkMatch.All">
+				<i class="@LivingMessiah.Web.Links.ShabbatService.Icon" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;@LivingMessiah.Web.Links.ShabbatService.Title
+			</NavLink>
+		</li>
+	</ul>
+</div>
+
 @code {
 	private bool collapseNavMenu = true;
 

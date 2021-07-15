@@ -1,0 +1,86 @@
+﻿@using static LivingMessiah.Web.ThankYou
+@inherits ThankYouBase
+
+<CascadingValue Value="@IsPrinterFriendly">
+	<ImageDisplayOption>
+		<img src='@Blobs.UrlOther("thank-you-1024-385.jpeg")'
+				 alt="@Descr" class="img-fluid rounded mt-3" />
+	</ImageDisplayOption>
+</CascadingValue>
+
+<h4 id="@TopId" class="pt-2">
+	<span class='badge badge-warning pb-15'>@Descr</span>
+	<CascadingValue Value="@IsPrinterFriendly">
+		<DetailsButtonDisplayOption FragmentId="@FragmentId">
+		</DetailsButtonDisplayOption>
+	</CascadingValue>
+</h4>
+
+<h5 class="text-warning"><b>Prayers and Contributions</b></h5>
+
+@if (!IsPrinterFriendly)
+{
+	<p class="lead">
+		Your giving helps meet the needs that come before this fellowship.
+		You may also give online by clicking here
+
+		<a href="Donate"
+			 title="Donate" class="btn btn-primary btn-sm">
+			<i class="fab fa-paypal" aria-hidden="true"></i>
+			<b>Donate</b>
+		</a>
+	</p>
+}
+else
+{
+	<p class="lead">
+		Your giving helps meet the needs that come before this fellowship.
+		You may also give online by going to <b>www.LivingMessia.com/donate</b>
+	</p>
+}
+
+
+<div class="@_collapse" id="@FragmentId">
+	<div class="card border-primary mb-3">
+
+		<div class="card-body">
+
+			<ul class="size14">
+
+				<li>
+					Living Messiah is <b>NOT</b> an IRS recognized 501c3 organization
+					<ul>
+						<li>
+							If you have questions about keeping record of your contributions
+							contact <a href="mailto:jerry@livingmessiah.com?Subject=Tax%20Information">jerry@livingmessiah.com</a>
+						</li>
+					</ul>
+				</li>
+				<li>
+					If you would like to be added to our email list, fill out a visitor card during Shabbat service or
+					contact <a href="mailto:mark@livingmessiah.com?Subject=Email%20List">info@livingmessiah.com</a>
+				</li>
+				<li>
+					The <strong>Beit Din</strong> is a group of men who service this community as watchmen to guard,
+					protect and judge between those that fellowship together.
+					If you have comments, questions or concerns we encourage you to
+					contact <a href="mailto:ralphie@livingmessiah.com" target="_top">ralphie@livingmessiah.com</a> to arrange a time to speak with them.
+				</li>
+				<li>
+					<strong>Elders</strong> are a group of individuals who serve this community by dedicating time to fast and pray for our leadership team and the entire fellowship.
+					They are available to offer words of wisdom to the fellowship.
+					If you would like to speak with them, contact <a href="mailto:jerry@livingmessiah.com">jerry@livingmessiah.com</a>.
+				</li>
+				<li>
+					<b>Thanksgiving and Praises</b> to <span class="hebrew">יְהוָה</span> for providing us a place to gather, worship, study and fellowship together!
+					By His hand of provision, He provides for the needs of this community.
+					May His great name be praised.
+					<b>Thank you</b> <span class="hebrew">יְהוָה</span> for all your provisions and for supplying our daily bread.
+					You have done great things for us!
+				</li>
+			</ul>
+
+		</div>
+
+	</div>
+</div>

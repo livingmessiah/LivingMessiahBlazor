@@ -1,0 +1,33 @@
+﻿@page "/KeyDatesWithMonths"
+@using static LivingMessiah.Web.Links.KeyDates
+@using LivingMessiah.Domain.KeyDates.Enums
+
+<div class="d-print-none float-right">
+	<a class="btn btn-sm btn-default" href="javascript:window.print()">
+		<span class="fas fa-print"></span> Print
+	</a>
+</div>
+<h2 class="mt-2">
+	<i class="@Icon"></i> @LivingMessiah.Web.Links.KeyDates.Title
+</h2>
+
+<h1 class="jumbotron">
+	THIS VERSION OF KEY DATES (WITH MONTHS) <br />
+	<b></b>IS UNDER CONSTRUCTION!!! <br />
+	<b></b>DON'T USE!!! <br />
+</h1>
+
+
+<div class="d-none d-md-block">
+	<HebrewYear RelativeYear="RelativeYearEnum.Current" IsXsOrSm="false" WithMonths="true"></HebrewYear>
+</div>
+
+<div class="d-md-none">
+	<HebrewYear RelativeYear="RelativeYearEnum.Current" IsXsOrSm="true" WithMonths="true"></HebrewYear>
+</div>
+
+
+@*<hr class="warning" />
+	<LmmCalendarAdvertisement CalenderReadyForSale="@CalenderReadyForSale">
+	</LmmCalendarAdvertisement>*@
+

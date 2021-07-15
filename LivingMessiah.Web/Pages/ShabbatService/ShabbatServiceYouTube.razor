@@ -1,0 +1,27 @@
+﻿
+@if (CurrentWeeklyVideo != null)
+{
+	@if (!IsPrinterFriendly)
+	{
+		<hr class="warning" />
+
+		@((MarkupString)Heading)
+
+		<div class="embed-responsive embed-responsive-16by9">
+			<iframe class="embed-responsive-item" src="@Url"
+							allowfullscreen></iframe>
+		</div>
+
+		<p class="my-0"><i class="fas fa-share fa-rotate-270"></i> @SubTitle</p>
+	}
+}
+else if (LoadFailed)
+{
+	<p class="text-danger"><em>Could not load because of an Error</em></p>
+}
+else
+{
+	<p><em>Loading...</em></p>
+}
+
+
