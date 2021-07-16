@@ -1,0 +1,41 @@
+﻿@if (ShabbatDateYMD is null)
+{
+	<p><em>Shabbat Week Loading...</em></p>
+}
+else
+{
+	<div class="d-print-none float-right">
+		<small>Current Week: @ShabbatDateYMD</small>
+	</div>
+}
+
+@if (CurrentPsalmAndProverb != null)
+{
+	<h3 class="text-primary mt-5 mb-0">Current Psalms And Proverbs</h3>
+	<div class="card border-primary mb-3">
+
+		<div class="card-body">
+			<h5 class="text-success mt-2 mb-0">
+				@((MarkupString)PsalmsHeading)
+			</h5>
+			<p class="lead text-center pb-3">
+				@((MarkupString)PsalmsVerses)
+			</p>
+			<h5 class="text-success mt-2 mb-0">
+				@((MarkupString)ProverbsHeading)
+			</h5>
+			<p class="lead text-center pb-3">
+				@((MarkupString)ProverbsVerses)
+			</p>
+		</div>
+
+	</div>
+}
+else if (LoadFailed)
+{
+	<p class="text-danger"><em>Could not load because of an Error</em></p>
+}
+else
+{
+	<p><em>Loading...</em></p>
+}

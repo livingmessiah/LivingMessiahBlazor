@@ -1,0 +1,28 @@
+﻿@*
+	ToDo: Task-786
+	Called by LivingMessiah.Web\Components\Pages\UpcomingEvents\UpcomingEvents.razor
+*@
+
+@if (Month != null)
+{
+	<div class="row">
+		<div class="col-sm-6">
+			<div class="card">
+				<div class="card-body">
+					<h4 class="card-title">Biblical Name</h4>
+					<p class="card-text"><span class="hebrew">@Month.BiblicalHebrew</span> <i class="lead">@Month.BiblicalName</i></p>
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-6">
+			<div class="card">
+				<div class="card-body">
+					<h4 class="card-title">Rabbinic Name</h4>
+					<p class="card-text"><span class="hebrew">@Month.Hebrew</span> <i class="lead">@Month.Month</i></p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+}
+

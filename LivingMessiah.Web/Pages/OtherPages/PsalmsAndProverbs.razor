@@ -1,0 +1,60 @@
+﻿@page "/PsalmsAndProverbs"
+@page "/PAndP"
+@using static LivingMessiah.Web.Pages.ImportantLinks.Constants.MyHebrewBible
+
+<PsalmAndProverbCurrent PerformHtmlValidation="true">
+</PsalmAndProverbCurrent>
+
+@if (PsalmsAndProverbsList != null)
+{
+	<h3 class="text-warning mt-5 mb-0">Upcoming Psalms And Proverbs</h3>
+
+	<TableTemplate Items="PsalmsAndProverbsList">
+		<TableHeader>
+			<th>Shabbat<br />Week<br />Id</th>
+			<th><br /><br />Week</th>
+			<th class="text-info"><br /><br />Psalms BCV</th>
+			<th class="text-primary"><br /><br />Proverbs BCV</th>
+			<th class="text-info">Psalms<br />Verse<br />Count</th>
+			<th class="text-primary">Proverbs<br />Verse<br />Count</th>
+			<th class="text-danger">Total<br />Verse<br />Count</th>
+		</TableHeader>
+		<RowTemplate>
+			<td>@context.ShabbatWeekId</td>
+			<td>@context.ShabbatDateYMD</td>
+			<td>
+				<a href="@context.PsalmsUrl" target="_blank"
+					 title="@context.PsalmsUrl (@context.PsalmsBCV) ">
+					@context.PsalmsBCV
+				</a>
+				@if (context.IsWholeChapter)
+		{
+		<sup>wc</sup>
+}
+			</td>
+			<td>
+				<a href="@context.ProverbsUrl" target="_blank"
+					 title="@context.ProverbsUrl (@context.ProverbsBCV) ">
+					@context.ProverbsBCV
+				</a>
+			</td>
+			<td>@context.PslamsVerseCount</td>
+			<td>@context.ProverbsVerseCount</td>
+			<td class="text-danger"><b>@context.TotalVerseCount</b></td>
+		</RowTemplate>
+	</TableTemplate>
+
+	<h6 class="mb-1"><b>BCV:</b> Book/Chapter/Verse</h6>
+	<h6 class="mt-0"><b>wc:</b> Whole Chapter</h6>
+}
+else if (LoadFailed)
+{
+	<p class="text-danger"><em>Could not load because of an Error</em></p>
+}
+else
+{
+	<p><em>Loading...</em></p>
+}
+
+
+

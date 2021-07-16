@@ -1,0 +1,104 @@
+﻿@page "/articles/pesach"
+@using static LivingMessiah.Web.Articles2.Pesach.Anchors
+
+<BreadCrumbs Href="/Articles"
+						 ParentTitle="Articles"
+						 Title="@PesachTitle"
+						 Icon="@Icon">
+</BreadCrumbs>
+
+@* ToDo: This image used to be above the h2 Title *@
+
+<div class="d-block d-sm-none">
+	<img src="@Blobs.UrlRoot("Pesach2016GraphicLg.png")" class="img-fluid" alt="Pesach 2016 Graphic" />
+</div>
+<div class="d-none d-sm-block">
+	<img src="@Blobs.UrlRoot("Pesach2016GraphicLg.png")" class="center-block" alt="Pesach 2016 Graphic" />
+</div>
+
+<p class="lead">
+	This year, <b>Passover</b> (<i>Pesach</i>) begins on <b>@PesachDate</b>.
+	In times past, we have met together as a community and had a large Passover celebration.
+	However, as we have grown, it has become more difficult and expensive to continue this practice.
+	Furthermore, as we read the account of the first Passover, Exodus 12 states:
+
+	<blockquote class="blockquote mx-5">
+		Tell the whole community of Israel that on the tenth day of this month each man is to take a lamb for his family, one for each household.
+		If any household is too small for a whole lamb, they must share one with their nearest neighbor,
+		having taken into account the number of people there are. You are to determine the amount of lamb needed in accordance with what each person will eat.
+		<footer class="blockquote-footer"><cite title="">Exodus 12:3-4</cite></footer>
+	</blockquote>
+</p>
+
+<p class="lead">
+	Rather than the entire community meeting together at one location to celebrate <i>Pesach</i>, we will meet in our homes,
+	sharing with our "neighbors" so that all are able to enjoy a meaningful set-apart time.
+	This is how Passover has been celebrated for the last 3,500 years.
+	With this in mind, we want to make sure that <b>everyone</b> in our community is included and that <b>no one</b> is left out of the opportunity to celebrate this feast day (Hebrew: <i>mo'ed</i>).
+</p>
+
+<img src="@Blobs.UrlRoot("passover-pic.jpg")" class="img-fluid rounded float-right" alt="Passover picture" />
+
+<p class="lead">
+	We are developing teaching, instruction and guidance for those who would like a better understanding of how to host and conduct a Passover <i>Seder</i>.
+	(By the way, the Hebrew word <i>seder</i> means "arrangement" or "order.")
+	Here is our list of resources so far.
+	Each week, we will be adding to this list of resources that you may find helpful as you prepare to conduct your own <i>Pesach Seder</i>.
+	<ul class="fa-ul size14">
+		<li>
+			<span class="text-warning"><i class="fa-li fas fa-caret-right"></i></span>
+			<b>Passover <i>Haggadah</i> - </b>  The Hebrew word <i>haggadah</i> literally means "the telling."
+			Typically, at traditional Passover celebrations, there is a booklet available for the participants to read and follow along as the story of the first Passover is told.
+			There are many forms of this booklet available on the Internet, from various other sources, or you may choose not to use one at all.
+			<b>Living Messiah</b> has developed a
+			<a href="@Blobs.UrlPdfs("Haggadah2015.pdf")" target="_blank"><b>Passover <i>Haggadah</i></b></a> <i class="fas fa-file-pdf"></i>
+			which you may print, copy and use if you would like.
+			We have also have a
+			<a href="@Blobs.UrlPdfs("SpanishPassoverHaggadah.pdf")" target="_blank"><b>Spanish version of the <i>Haggadah</i></b></a> <i class="fas fa-file-pdf"></i> available.
+		</li>
+
+		<li>
+			<span class="text-warning"><i class="fa-li fas fa-caret-right"></i></span>
+			<b>Instructional Video - </b> We have put together a short
+			<a href="https://youtu.be/_UlPXfwWu9c"
+				 target="_blank">
+				<b>instructional video</b>
+			</a> <i class="fab fa-youtube"></i>
+			with guidance to help you host and conduct your own Passover <i>Seder</i>.
+		</li>
+
+		<li>
+			<span class="text-warning"><i class="fa-li fas fa-caret-right"></i></span>
+			<b>Recipes - </b>Here are a few recipes for some of the dishes commonly associated with the Passover meal.
+			More will be added as we receive them.
+			If you have any favorite recipes, send them along to us!
+			<ul>
+				<li>
+					Here is a recipe for
+					<a href="http://www.aish.com/h/pes/r/The-Best-Charoses-Recipes-for-Passover.html?s=feat" target="_blank"><b><i>Charoset</i></b></a> <span class="fas fa-external-link-alt"></span>,
+					the sweet mixture of chopped nuts and apples that symbolizes the mortar the Hebrews were forced to make as slaves in Egypt.
+				</li>
+				<li>
+					Here is a great recipe for making your own
+					<a href="http://leitesculinaria.com/84910/recipes-homemade-matzoh.html/print" target="_blank"><b><i>Matzoh</i></b></a> <span class="fas fa-external-link-alt"></span>,
+					the unleavened bread that the Hebrews made for Passover as they prepared to leave Egypt.
+					(Of course, <i>Matzoh</i> can usually be purchased at local grocery stores as well.)
+				</li>
+			</ul>
+		</li>
+		<li>
+			<span class="text-warning"><i class="fa-li fas fa-caret-right"></i></span>
+			<b>Dayenu - </b>There is a traditional song that is often heard at <i>Pesach</i> called <i>"Dayenu."</i>
+			This is a Hebrew word which can be translated "it would have been enough."
+			We have put both the
+			<a href="@Blobs.UrlPdfs("Dayenu-sheet-music.pdf")" target="_blank"><b>words and music</b></a> <i class="fas fa-file-pdf"></i>
+			as well as a
+			<a href="https://www.youtube.com/watch?v=mSfrxV_Kcig" target="_blank">
+				<b>YouTube video</b>
+			</a> <i class="fab fa-youtube"></i> here for you to look at.
+			It is quite a catchy tune and serves as a good reminder of <i>Pesach.</i>
+		</li>
+	</ul>
+</p>
+
+<p class="lead text-center">We're looking forward to a great <b><i>Pesach!</i></b></p>

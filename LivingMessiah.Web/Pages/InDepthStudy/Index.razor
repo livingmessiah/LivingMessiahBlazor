@@ -1,0 +1,63 @@
+﻿@page "/InDepthStudy"
+@using LivingMessiah.Web.Anchors
+@using static LivingMessiah.Web.Links.IndepthStudy
+
+<div class="pb-2 mt-4 mb-2 border-bottom">
+	<h1 class="@Icon fa-2x"> @Title</h1>
+</div>
+
+<br />
+
+<h3><span class="badge badge-warning">Torah perspective of the Gospels</span></h3>
+
+<p class="lead mt-2">
+	<img src=@Blobs.Persons("Ralphie.jpg") class="img-fluid rounded-circle float-right" alt="Ralphie Cratty" />
+	<b>Ralphie Cratty</b>, a member of our <i>Beit Din</i>, leads the class of the Gospels from a Hebraic mindset.
+	Ralphie came to a greater understanding of the scriptures after discovering the truth regarding the Creator’s name.
+	This gave him a desire to re-examine his understanding of all the scriptures from the Hebraic mindset.
+	He now has a deep passion for seeking out the scriptures and continues learning each and every day.
+</p>
+
+<div class="card border-primary mb-3">
+
+	<div class="card-header">
+		<h4 class="card-title">@Title</h4>
+	</div>
+
+	<div class="body">
+
+		<ul class="lead">
+			<li>
+				Meets every Shabbat before the main service
+			</li>
+
+			<li>
+				<i class="text-warning far fa-clock"></i> 1:30 - 2:15 pm at <b>Living Messiah</b>
+				<AnchorInDepthStudy AnchorEnum="AnchorEnums.Location"></AnchorInDepthStudy>
+			</li>
+			<li>
+				<span class="far fa-envelope"></span>&nbsp;Contact
+				<a href="mailto:ralphie@livingmessiah.com?Subject=Indepth-Study" target="_top"> ralphie@livingmessiah.com</a> for more information
+			</li>
+		</ul>
+
+	</div>
+
+</div>
+
+@if (ShowLatestVideo)
+{
+	<YouTubeWeeklyVideo WeeklyVideoType="LivingMessiah.Domain.WeeklyVideoType.InDepthStudy">
+
+	</YouTubeWeeklyVideo>
+}
+
+@* ToDo: is this a better way  @onclick="@(e => ChangeContent(e, PartialViewEnum.Intro))"> *@
+<div class="row">
+	<div class="col">
+		<button class="my-3 btn btn-xlarge btn-primary"
+						@onclick="@ShowLatestVideo_Button_Click">
+			@((MarkupString)OppositeIcon) @OppositeToggleMsg
+		</button>
+	</div>
+</div>

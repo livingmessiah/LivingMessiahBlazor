@@ -1,0 +1,18 @@
+﻿
+@if (!IsPrinterFriendly)
+{
+	<div class=" collapse" id="@ToggleId">
+		@ChildContent
+	</div>
+}
+else
+{
+	@ChildContent
+}
+
+@code {
+
+	[CascadingParameter] bool IsPrinterFriendly { get; set; }
+	[Parameter] public string ToggleId { get; set; }
+	[Parameter] public RenderFragment ChildContent { get; set; }
+}

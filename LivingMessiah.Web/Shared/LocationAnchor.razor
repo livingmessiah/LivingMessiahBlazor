@@ -1,0 +1,41 @@
+﻿
+@if (IsPrinterFriendly)
+{
+	if (IsRemote)
+	{
+		<i class='fas fa-satellite-dish' aria-hidden='true'></i><code> Call in remotely</code>
+	}
+	else
+	{
+		<i class='fas fa-map-signs'></i> <b>@AddressName</b>
+		<br />
+		@AddressStreet
+	}
+}
+else
+{
+	if (IsRemote)
+	{
+		<i class='fas fa-satellite-dish' aria-hidden='true'></i><code> Call in remotely</code>
+	}
+	else
+	{
+		if (String.IsNullOrEmpty(AddressStreet))
+		{
+			<i class='fas fa-map-signs'></i> <b>@AddressName</b>
+			<a href='@Href' title='Living Messiah Location Page @AddressName' alt='Go to Living Messiah Location Page @AddressName'>
+				<i class='fas fa-arrow-circle-right'></i>
+			</a>
+		}
+		else
+		{
+			<i class='fas fa-map-signs'></i> <b>@AddressName</b>
+			<br />
+			<a href='@Href' title='Address Map @AddressName | @AddressStreet' alt='Address Map @AddressName | @AddressStreet'>
+				@AddressStreet
+				<i class='fas fa-external-link-alt'></i>
+			</a>
+		}
+	}
+
+}

@@ -1,0 +1,154 @@
+﻿@page "/articles/pesachquestionaire"
+
+<h3>Pesach Questionaire</h3>
+
+<p>Also, we have developed a questionaire to collect information from you on how you would like to participate in <i>Pesach</i> this year.  Please complete the form below and click the "SEND" button.  We will collect your information and put you in contact with other members of our community who will complement your situation.  In this way, we hope that everyone will enjoy a meaningful <i>Pesach</i> experience.</p>
+
+<p>Finally, as we are still working out our plans, we would value your input, your ideas and suggestions.  Please feel free to contact us at <a href="mailto:pesach2016@livingmessiah.com?Subject=Pesach%202016%20Planning" target="_top"> pesach2016@livingmessiah.com</a>.  We appreciate your suggestions and feedback and will respond as we are able.</p>
+
+<p style="font-size:1.4em">Thanks for your input and support.  We are looking forward to a wonderful <i>Pesach!</i>.</p>
+<br>
+<br>
+
+<h1><i>Pesach</i> Matchmaking Form</h1>
+<br>
+<br>
+
+<p style="font-size:1.4em">
+	As a member of our community, you might find yourself in one or more of the following situations:
+	<ul style="font-size:1.4em">
+		<li>A family with younger children, who wants to assure that good memories of Passover are passed down through the generations</li>
+		<li>A family with older children (or no children at home) who want to celebrate Passover more traditionally</li>
+		<li>A family with plenty of room to share Passover with other guests or another family</li>
+		<li>A family without the room to share Passover with others but who are eager to join with another family to prepare and celebrate.</li>
+		<li>A family who has celebrated Passover many times in the past and is comfortable hosting others who may be less familiar with the celebration</li>
+		<li>A family relatively new to this walk and eager to learn about Passover</li>
+		<li>A single-parent family who would like to be involved with another family with children of a similar age to encourage the handing down of good memories</li>
+		<li>A small family who would just like to share Passover with others</li>
+		<li>A single man or woman who would like to be involved with a larger group or family (as scripture instructs) to celebrate Passover</li>
+	</ul>
+</p>
+
+
+<p>
+	To help our community plan for the Passover celebrations, we would like to assist in the "match-making" process of putting those with specific needs together with those who can best meet those needs.  With this in mind, please fill out the form below describing your particular situation for Passover and we will assist as best we can in pairing you up with another member of our community that best matches your situation.  It is our goal to make sure that <b>EVERYONE</b> has an enjoyable and memorable Passover.
+</p>
+
+
+<br>
+<br>
+
+<!-- Back to Wellness	- Bags of Kindness -->
+
+<form action="http://formspree.io/jwatkins119@cox.net" method="post">
+	<br><br>
+
+	Choose <b>ONE</b> of the following <b>scenarios</b> that best fits your situation and supply the information requested:<br><br>
+	<b>SCENARIO #1:</b><br>
+	<input type="radio" name="scenario" value="host_family" checked>I/We would like to have guests celebrate Passover with us in our home.<br>
+	<blockquote>
+		1.  In addition to our own family, I/we can host up to
+		<select name="can_host">
+			<option value="1" selected>1</option>
+			<option value="2">2</option>
+			<option value="3">3</option>
+			<option value="4">4</option>
+			<option value="5">5</option>
+			<option value="6">6</option>
+			<option value="7">7</option>
+			<option value="8">8</option>
+			<option value="9">9</option>
+			<option value="10">10</option>
+			<option value="11">11</option>
+			<option value="12">12</option>
+			<option value=">12">>12</option>
+		</select> people<br>
+		2.  Our home is near <input type="text" name="cross_streets" value="&nbsp;"> (major cross-streets)<br>
+		3.  Choose ONE of the following:<br>
+		&nbsp;&nbsp;<input type="radio" name="host_children" value="Yes" checked>I/We have <select name="number_children_at_home">
+			<option value="0">0</option>
+			<option value="1" selected>1</option>
+			<option value="2">2</option>
+			<option value="3">3</option>
+			<option value="4">4</option>
+			<option value="5">5</option>
+			<option value="6">6</option>
+			<option value="7">7</option>
+			<option value="8">8</option>
+			<option value=">8">>8</option>
+		</select> child(ren) in our home and would enjoy families with young children<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OR<br>
+		&nbsp;&nbsp;<input type="radio" name="host_children" value="No">I/We would prefer to host families with older children or no children<br>
+		4.  Choose ONE of the following:<br>
+		&nbsp;&nbsp;<input type="radio" name="host_conduct_seder" value="Yes" checked>I/We feel comfortable hosting Passover and conducting the Seder<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OR<br>
+		&nbsp;&nbsp;<input type="radio" name="host_conduct_seder" value="No">I/We would like to host the meal but would prefer someone with more experience conduct the Seder<br>
+		5.  Choose ONE of the following:<br>
+		&nbsp;&nbsp;<input type="radio" name="need_meal_help" value="No" checked>I/We can prepare and serve the Passover meal with little or no help<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OR<br>
+		&nbsp;&nbsp;<input type="radio" name="need_meal_help" value="Yes">I/We would like help preparing and serving the Passover meal<br>
+	</blockquote>
+	<br>
+	<b>SCENARIO #2:</b><br>
+	<input type="radio" name="scenario" value="guest">I/We would like to celebrate Passover with others but not in my/our home.<br>
+	<blockquote>
+		1.  There are <select name="number_adult_guests">
+			<option value="1" selected>1</option>
+			<option value="2">2</option>
+			<option value="3">3</option>
+			<option value="4">4</option>
+			<option value="5">5</option>
+			<option value="6">6</option>
+			<option value="7">7</option>
+			<option value="8">8</option>
+			<option value=">8">>8</option>
+		</select> adults and <select name="number_children_guests">
+			<option value="0" selected>0</option>
+			<option value="1">1</option>
+			<option value="2">2</option>
+			<option value="3">3</option>
+			<option value="4">4</option>
+			<option value="5">5</option>
+			<option value="6">6</option>
+			<option value="7">7</option>
+			<option value="8">8</option>
+			<option value=">8">>8</option>
+		</select> children from my family who would like to celebrate Passover.<br>
+		2.  We live near <input type="text" name="cross_streets" value="&nbsp;"> (major cross-streets)<br>
+		3.  I/we are able to conduct the Passover Seder<br>&nbsp;&nbsp;
+		<input type="radio" name="guest_conduct_seder" value="Yes" checked>Yes&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<input type="radio" name="guest_conduct_seder" value="No">No<br>
+		4.  I/we would be happy to help prepare and serve the P meal<br>&nbsp;&nbsp;
+		<input type="radio" name="guest_meal_help" value="Yes" checked>Yes&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<input type="radio" name="guest_meal_help" value="No">No<br><br>
+	</blockquote>
+
+	<b>SCENARIO #3:</b><br>
+	<input type="radio" name="scenario" value="other plans">I/We have already made plans to celebrate Passover but would consider helping in other ways if needed.<br><br><br>
+
+
+	Comments or Special Requests:<br>
+<textarea name="Comments" rows="5" cols="55">
+</textarea> <br><br>
+	Please enter the information below so that we can contact you:<br>
+	Family Name:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="family_name" placeholder="Family Name"><br>
+
+	Email Address:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="text" name="_replyto" placeholder="Your email" />
+	<input type="hidden" name="_subject" value="Passover 2016 Registration" />
+	<input type="hidden" name="_next" value="/pesach2016Thanks.html" /><br>
+
+	Telephone Number:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="telephone" placeholder="Your Telephone"><br><br><br>
+
+	<input type="submit" value="Send">
+	<input type="reset" value="Reset">
+</form>
+<br>
+<b>NOTE:</b> If your situation changes, feel free to submit an updated form.  Just mention that the new information is an update.
+<br>
+
+
+
+@code {
+
+}

@@ -1,0 +1,70 @@
+﻿@page "/Leadership"
+@using static LivingMessiah.Web.Anchors.AnchorLeadership
+
+<Header></Header>
+
+<div class="d-block d-sm-none">
+	
+	<div class="row">
+		<IndexXsAccordion People="@People"></IndexXsAccordion>
+	</div>
+
+	<div class="row">
+		<div class="col-6">
+			<ElderQualifications></ElderQualifications>
+		</div>
+		<div class="col-6">
+			<br />
+			<img src="@Blobs.UrlRoot("shofarsmall.jpg")" class="img-fluid" />
+		</div>
+	</div>
+</div>
+
+
+<div class="d-none d-sm-block">
+	<div class="row">
+
+		@*
+		<div class="col-8 col-sm-9 content">
+			@foreach (var person in People)
+			{
+				<div id="@person.Id" class="row"></div>
+				<hr class="warning" />
+				<Office Person="@person"></Office>
+			}
+		</div>
+		<div class="col-4 col-sm-3">
+			<ScrollSpy People="@People"></ScrollSpy>
+		</div>
+		*@
+
+		<div class="col-12">
+			@foreach (var person in People)
+			{
+				<div id="@person.Id" class="row"></div>
+				<hr class="warning" />
+				<Office Person="@person"></Office>
+			}
+		</div>
+
+	</div>
+
+	<div class="row">
+		<div class="col-sm-10">
+			<hr class="warning" />
+			<img src="@Blobs.UrlRoot("shofar.jpg")" class="img-fluid" />
+		</div>
+		<div class="col-sm-2"></div>
+	</div>
+
+	<div class="row">
+		<div class="col-sm-10">
+			<div id="@Anchors.Fragments.Leadership" class="row">
+				<hr class="warning" />
+				<ElderQualifications></ElderQualifications>
+			</div>
+		</div>
+		<div class="col-sm-2"></div>
+	</div>
+
+</div>

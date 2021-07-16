@@ -1,0 +1,68 @@
+﻿@page "/donate"
+@using static LivingMessiah.Web.PayPal.Anchors.Donate
+<h2><span class="text-primary @Icon mb-3"></span> @Title</h2>
+
+<p class="lead text-primary text-center">
+	<sup><small><i class="far fa-heart text-muted"></i></small></sup> We greatly appreciate your support of this ministry <sup><small><i class="far fa-heart text-muted"></i></small></sup>
+</p>
+<p class="size14 text-center">
+	You can make a donation on-line <i class="badge badge-info">1</i> or by check <i class="badge badge-info">2</i>.
+</p>
+
+<br />
+
+<div class="row">
+
+	<div class="col-sm-6">
+		<div class="card card-body bg-light">
+			<p class="lead">
+				<i class="badge badge-info">1</i> We are currently using PayPal for processing Living Messiah Ministries donations on-line.<br /><br />
+				By clicking the donate button you will temporarily be redirected to their website.
+			</p>
+
+			<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+				<input type="hidden" name="cmd" value="_s-xclick">
+				<input type="hidden" name="hosted_button_id" value="@PayPal.HostedButton">
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"
+							 border="0" name="submit" alt="PayPal - The safer, easier way to pay online!"
+							 title="Donate online with PayPal" class="btn btn-primary btn-lg">
+				<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif"
+						 width="1" height="1">
+			</form>
+		</div>
+
+	</div>
+
+	<div class="col-sm-6">
+		<div class="card card-body bg-light">
+			<p class="lead">
+				<i class="badge badge-info">2</i> To mail Living Messiah Ministries a check...
+				<address>
+					<strong>Living Messiah Ministries</strong><br>
+					19 North Robson #106<br>
+					Mesa, AZ 85201   USA
+				</address>
+			</p>
+			<i class="fas fa-envelope-square fa-5x text-primary"></i>
+		</div>
+	</div>
+
+</div>
+
+@code {
+
+	public static class PayPal
+	{
+		public const string HostedButton = "DLJ4ELB2CN3HJ";
+	}
+	/*
+	public static class Routing
+	{
+		public const string ConfirmDonation = "Confirm_donation";
+		public const string CancelDonation = "Cancel_donation";
+		public const string ConfirmDonationHtml = "confirm_donation.html";
+		public const string CancelDonationHtml = "cancel_donation.html";
+	}
+	*/
+}

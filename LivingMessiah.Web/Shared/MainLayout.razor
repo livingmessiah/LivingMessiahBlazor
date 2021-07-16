@@ -8,11 +8,26 @@
 
 	<div class="main">
 		<div class="top-row px-4">
-			<LoginDisplay /> 
+			<LoginDisplay />
 		</div>
 
 		<div class="content px-4">
 			@Body
 		</div>
+
+		<footer class="text-muted">
+
+			<div class="d-print-none">
+				<img src=@Blobs.UrlRoot("footer.jpg") class="img-fluid" />
+			</div>
+			<div class="d-none d-print-block">
+				<img src=@Blobs.UrlRoot("bannerline.png") class="img-fluid" />
+			</div>
+			<p class="text-center">
+				@DateTime.Now.Year LivingMessiah.com | &copy; Living Messiah Ministries Inc. All rights reserved.
+			</p>
+		</footer>
+
+
 	</div>
 </div>

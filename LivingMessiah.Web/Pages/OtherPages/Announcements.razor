@@ -1,0 +1,27 @@
+﻿@page "/Announcements"
+@using static LivingMessiah.Web.Links.ShabbatService
+
+<h3 class="text-center">Left here because the code behind does a 301 permanent redirect</h3>
+<h5 class="text-center">You should not see this, but if you do click the link below</h5>
+<ul class="fa-ul">
+	<li>
+		<span class="fa-li"><i class="@Icon"></i></span>
+		<a href="@Links.ShabbatService.Index">
+			@Title
+		</a>
+	</li>
+</ul>
+
+@code {
+	/*
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+		public class IndexModel : PageModel
+		{
+			public IActionResult OnGet()
+			{
+				return RedirectPermanent(Index);
+			}
+		}
+	*/
+}

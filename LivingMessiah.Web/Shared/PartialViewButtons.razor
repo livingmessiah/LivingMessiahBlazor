@@ -1,0 +1,469 @@
+﻿
+<div class="row">
+	<div class="col-12">
+		<button class="btn btn-sm btn-primary"
+						@onclick="@(e => ChangeContent(e, PartialViewEnum.Intro))">
+			Intro
+		</button>
+
+		<button class="btn btn-sm btn-primary"
+						@onclick="@(e => ChangeContent(e, PartialViewEnum.Audit))">
+			Audit
+		</button>
+
+		<button class="btn btn-sm btn-primary"
+						@onclick="@(e => ChangeContent(e, PartialViewEnum.Permaculture))">
+			Permaculture
+		</button>
+
+		<button class="btn btn-sm btn-primary"
+						@onclick="@(e => ChangeContent(e, PartialViewEnum.Projects))">
+			Projects
+		</button>
+
+		<button class="btn btn-sm btn-primary"
+						@onclick="@(e => ChangeContent(e, PartialViewEnum.Priorities))">
+			Priorities
+		</button>
+
+		<button class="btn btn-sm btn-primary"
+						@onclick="@(e => ChangeContent(e, PartialViewEnum.Album))">
+			Album
+		</button>
+
+		<button class="btn btn-sm btn-primary"
+						@onclick="@(e => ChangeContent(e, PartialViewEnum.Support))">
+			Support
+		</button>
+
+		<button class="btn btn-sm btn-primary"
+						@onclick="@(e => ChangeContent(e, PartialViewEnum.Archive))">
+			Archive
+		</button>
+
+	</div>
+</div>
+
+@switch (CurrentPartialView)
+{
+	case PartialViewEnum.Intro:
+		<h2 class="mt-5 mb-0"><span class="badge badge-warning">Windmill Ranch Introduction</span></h2>
+		<p class="lead">
+			For the past several years Living Messiah	has been looking for land for community	development.
+			We've called this project our <b>Land Vision</b> see
+			<Anchor Href="@Blobs.UrlWindmillRanch("original-land-vision-by-jerry-watkins.pdf")"
+							UsePrefixIcon="false"
+							Descr="Intial Vision (PDF)">
+			</Anchor>.
+			We are happy to announce this vision <b>is a reality</b> and we are now in the initial development phase!
+		</p>
+
+		<p class="lead">
+			On October 5<sup>th</sup> 2020 we paid in full for a 40 acre ranch just South of Bisbee Arizona
+			It has 2 wells. One is working and is driven by an electric motor and the second is driven by a windmill, but it is not working because it needs new <i>leathers</i>.
+			The property has two trailers in the South West corner that sit on a hill along.
+			The property is off-grid and uses a solar system and wind generators. It also has two propane tanks and a septic tank.
+			Our desire is to build a Hebrew roots community that is self-reliant and also good stewards of the land by leveraging good permaculture design.
+		</p>
+
+		<p class="lead">
+			Please keep a link of this page as content will be updated frequently
+		</p>
+
+		<p>ToDo: Write more about</p>
+		<ul>
+			<li>Emphasize the need for people to live Off Grid and lead a self sufficient life style</li>
+			<li>The life style is oriented to be community focused</li>
+			<li>Land Stewardship</li>
+			<li>PDF Map reference</li>
+		</ul>
+
+<br />		
+<WindmillRanchFaithLife>
+
+</WindmillRanchFaithLife>
+
+		break;
+
+	case PartialViewEnum.Audit:
+		<h2 class="mt-5 mb-0"><span class="badge badge-warning">Audit</span></h2>
+		<p class="lead">
+			In the initial phase it's important to take an audit of what you have available and review the condition of those assets and resources.
+			Here is a list of those assets and resources.
+		</p>
+
+		<ul>
+			<li>Existing Solar System</li>
+			<li>
+				<ul>
+					<li>RV Panels</li>
+					<li>Batteries</li>
+					<li>Energy Shed / Building</li>
+				</ul>
+
+			</li>
+			<li>Existing Water System</li>
+			<li>...</li>
+		</ul>
+
+		<h4 class="mt-5 mb-0">Existing Solar Systems</h4>
+		<p class="lead">
+			Existing Batteries
+			<img src='@Blobs.UrlWindmillRanch("EnergyBatteries.jpg")' class='img-fluid rounded mt-3' />
+		</p>
+
+		<p class="lead">
+			Existing Panels
+			<img src='@Blobs.UrlWindmillRanch("EnergySolarPanels.jpg")' class='img-fluid rounded mt-3' />
+		</p>
+
+		<p class="lead">
+			Wind Generators
+			<img src='@Blobs.UrlWindmillRanch("EnergyWindGeneratorsPollForThirdOne-1120-745.jpg")' class='img-fluid rounded mt-3' />
+			<br />
+			<img src='@Blobs.UrlWindmillRanch("EngeryWindGeneratorWiresFromTall.jpg")' class='img-fluid rounded mt-3' />
+		</p>
+
+		<h4 class="mt-5 mb-0">Existing Water Systems</h4>
+		<p class="lead">
+			Well location
+			<img src='@Blobs.UrlWindmillRanch("Well-location-48ft-right-angle-to-front-of-boat-SE-dir.jpg")' class='img-fluid rounded mt-3' />
+		</p>
+
+		<h6 class="mt-5 mb-0">Water Production</h6>
+		<p class="lead">
+			On <b>2020-10-20</b>, I ran the water pump for approximately 17 minutes and I calculated it at <b>10 gallons per minute</b> (or 600 gallons / hour)
+			(it took 6 seconds to fill up a gallon plastic jug) so that works out to <b>170 gallons</b>(17 * 10)
+			<br /> the <b>Chicago Electric Generator</b> is wired directly to the pump and to be able to use the solar you need to put in an electric socket.
+		</p>
+
+		<h6 class="mt-5 mb-0">Wellhead fence and maybe use solar</h6>
+		<p class="lead">
+			<b>Task:</b> Should we build a fence around the well head to protect it from cows?
+			If we put a fence around it (like chain link) would it make sense to put a <b>solar panel</b> there (inside a lockable fence) and have it dedicated to pumping the water?
+			You would need to include an inverter with it, but that's it, no batteries and all the extra cost and maintenance that goes with them.
+			It would just run if the storage tank is low and if the panels are producing power.
+			I would just need to figure a triggering mechanism when to run it.
+			If I can't wait for these conditions and I need water I need to have an alternative solution (like running a generator)
+			<img src='@Blobs.UrlWindmillRanch("WellHeadNeedsFence.jpg")' class='img-fluid rounded mt-3' />
+			<br />
+		</p>
+
+		<h6 class="mt-5 mb-0">Pump water with the wind and use of a siphon</h6>
+		<p class="lead">
+			It is a good principle of permaculture to store bodies of water (e.g. a tank or a pond) as high up in the property as possible.
+			If the water can be stored in the higher places then all the demands for that water below it can be met without use of a pump.
+			The energy from the windmill to pump the water (which is free) can be designed in such a way that an elevated storage tank can be filled.
+			The storage tank can be right next to the windmill (like the big rusty one that is already there) or located anywhere so long as the top of the tank's elevation is below the elevation point where the windmill lifts the water.
+			The higher the windmill lifts the water the higher the storage tank can be on the landscape (embracing the permaculture principle just mentioned).
+			If the optimal place for the storage tank is some distance away, then a water line can be installed connecting it to the windmill.
+			Jerry Watkins showed me this working at his place in Tonto Creek Arizona.
+			With the use of a siphon, the water line can go anywhere (e.g. over a hill that is higher than the windmill and storage tank) as long as the source of the water is a little bit higher than where it is stored.
+			
+			<br />see this <img src='@Blobs.UrlWindmillRanch("GravityFeedFromWindmill.jpg")' class='img-fluid rounded mt-3' /> to get an idea of what I am talking about.
+			It depicts a long water line starting at the windmill (off in the distance) which will feed a tank at or near the top of the hill where the trailers are.
+			There's another high place on the property that is north of the windmill and a storage tank can be placed there using the same principle.
+			<!--
+			A typical windmill with 8’ diameter wheel can lift water 185 feet and pump about 150 gallons an hour in 15 to 20 mph winds when using a 1 ¾ “pump cylinder.
+			..
+			An average windmill with the blades spinning in a brisk breeze of <b>15 to 20 MPH</b> will pump about <b>three gallons a minute</b> whenever the wind blows.
+				The wind blows about <b>35% of the time</b> in many areas, which will produce around <b>1,500 gallons of water a day</b>.
+	-->
+
+		</p>
+
+		// 
+		<p class="lead">
+			The question therefore becomes a) what is the cost to <b>fix the windmill</b> (replace the <i>leathers</i>) and b) dig a trench for a 1,000 ft of pipe?
+			The <b>big advantage</b> to this is <u>you've got water pressure stored up on the hill driven strictly by wind and can be used wherever you have a connection to the main waterline.</u>
+		</p>
+		<p class="lead">
+			I would assume we would still want an elevated tank so that you have enough gravity pressure for all the demands that are on the Mesa platform (where the two trailers are).
+			I would think though that pumping water from the tank that's filled by the windmill to the tank that's up on stilts would be pretty cheap to do.
+		</p>
+
+		//https://waterstoragetanksinc.com/engineering-and-technical-information-on-tanks/
+		//https://waterstoragetanksinc.com/water-storage-tank-applications/elevated-tanks-on-towers/
+		//<h5>Swisher Pump Service</h5>
+		//			-(520) 642 - 3697
+		//		 - 4822 West Tumbleweed Lane
+		//		 - McNeal Arizona 85617
+		//		 - Arizona 85617
+		//		 - [Google maps W Tumbleweed Ln](https://maps.app.goo.gl/PC3nxVSgWjbHcae48)
+		//		 -https://www.manta.com/c/mm20s4v/swisher-pump-service
+
+
+		break;
+
+	case PartialViewEnum.Permaculture:
+
+		<h2 class="mt-5 mb-0"><span class="badge badge-warning">Biblical Permaculture</span></h2>
+
+		<div class="card">
+
+			<div class="card-body">
+				<p class="lead">
+					Before I can talk about <i>Biblical Permaculture</i> I need to talk about <b>Torah Gated Communities (TGC)</b>.
+					This is a place where Torah observant people can come together and live based on their strongly held religious beliefs and convictions with an emphasis on self reliance and self governance.
+				</p>
+				<p class="card-text">
+					At it's foundation TGC's naturally lend themselves to agriculture because that was the first job in the Bible.  God told Adam to Keep the Garden of Eden.
+					Another way of describing Biblical Permaculture is to think of it as a religious based <a href="https://en.wikipedia.org/wiki/Ecovillage"><u>Ecovillage</u></a> that governs itself according to the <b>Torah</b>.
+					<blockquote class="blockquote mx-5">
+						Instead of Permaculture Ethics, replace it with the rule book of life, the <b>Torah</b>.
+						<footer class="blockquote-footer"><cite title="">John Marsing LMM Beit Din member</cite></footer>
+					</blockquote>
+				</p>
+
+				<h4 class="card-text">Advantages</h4>
+				<ul class="lead">
+					<li>
+						<b>self reliance</b>:
+						Being part of a tight community that can meet the basic needs of it's member and create an economy
+						(<a href="https://www.myhebrewbible.com/Article/153/Economy-of-God-G3622-oikonomia-G3623-oikonomos-dispensation-steward">God's Economy <i class="fas fa-external-link-alt"></i></a>)
+						independent of the World's economy is not only a good thing it is commanded to do so
+						<a href="https://www.myhebrewbible.com/VerseByScriptureIdRange/30294/30294/slug">James 1:27  <i class="fas fa-external-link-alt"></i></a>.
+					</li>
+					<li>
+						<b>self governance</b>: is the outcome of righteous sovereignty.
+						My duties, responsibilities, obligations and loyalties are met first and foremost with the TGC.
+						The church need to zealously take back her responsibility as the sole the welfare provider for their members/citizens.
+					</li>
+					<li>
+						<b>alternative dispute resolution</b>:
+						It is like when people register to attend Living Messiah sponsored <i>Sukkot</i> gatherings where the registrant agrees to the rules defined in the registration form.
+						If a conflict arises the decisions will be made by the Elders and those decisions are final.
+						The church can not be a fully sovereign entity until is re-establishes its jurisdiction and create
+						<a href="https://www.myhebrewbible.com/Article/899/1Co-06-1-11-Legal-Matters-Between-The-Brethren-Courts-of-Ecclesia">Courts of Ecclesia <i class="fas fa-external-link-alt"></i></a>.
+					</li>
+					<li>
+						<b>Vetted Neighbors</b>:
+						"Love thy neighbor as thyself" takes on a whole different meaning when restricted to citizens of the TGC
+					</li>
+					<li>
+						<b>perpetuity:</b> The title of the property is owned by the TGC and is held in trust.  The advantage is that the title part of the ownership is held in perpetuity not unlike a <b>covenant</b>.
+					</li>
+				</ul>
+
+			</div>
+		</div>
+
+
+
+		@*<div class="card border-warning  mt-3">
+				<div class="card-header bg-warning text-center">
+					<h2><span class="card-title mb-0">Garden of Eden</span></h2>
+				</div>
+
+				<div class="card-body">
+					<p class="mb-0 card-text">
+						<sup class="text-primary"><small><b>8</b></small></sup> And YHVH God planted a garden eastward in Eden; and there he put the man whom he had formed. 
+						<br /><sup class="text-primary"><small><b>9</b></small></sup> And out of the ground made the LORD God to grow every tree that is pleasant to the sight, and good for food; the tree of life also in the midst of the garden, and the tree of knowledge of good and evil. 
+						<br />...
+						<br /><sup class="text-primary"><small><b>15</b></small></sup> And YHVH God took the man, and put him into the garden of Eden to dress it and to keep it.
+						<br /><sup class="text-primary"><small><b>16</b></small></sup> And YHVH God commanded the man, saying, Of every tree of the garden thou mayest freely eat: 
+						<br /><sup class="text-primary"><small><b>17</b></small></sup> But of the tree of the knowledge of good and evil, thou shalt not eat of it: for in the day that thou eatest thereof thou shalt surely die. 
+					</p>
+
+
+					<blockquote class="blockquote">
+						<footer class="blockquote-footer">Bible <cite title="Source Title">Genesis 2:8-9, 15-17</cite></footer>
+					</blockquote>
+
+				</div>
+			</div>*@
+
+		<h1 class="mt-4 mb-1">References</h1>
+		<ul class="fa-ul size14">
+			<li>ToDo: Add my critique of the Permaculture Design Manual - Chapter 14</li>
+			<li>
+				<span class="text-warning"><i class="fa-li fas fa-caret-right"></i></span>
+				<a href="@Blobs.UrlPdfs("permacultue-geoff-lawton-center-pivot-strategy.pdf")" target="_blank"><b>Center Pivot Strategy by Geoff Lawton</b> <i class="fas fa-file-pdf"></i></a>
+			</li>
+			<li>
+				<span class="text-warning"><i class="fa-li fas fa-caret-right"></i></span>
+				More thoughts by <a href="http://torahlawform.com/Permaculture" )" target="_blank"><b>John Marsing</b> <i class="fas fa-external-link-alt"></i></a>
+			</li>
+		</ul>
+
+		break;
+
+	case PartialViewEnum.Projects:
+		<h2 class="mt-5 mb-0"><span class="badge badge-warning">Projects to Develop</span></h2>
+
+		<h5 class="text-warning">ToDo Review this list</h5>
+		<ul class="lead">
+			<li>Community Center</li>
+			<li>Gardens / Greenhouses</li>
+			<li>Fruit Trees</li>
+			<li>Fish Pond</li>
+			<li>Livestock</li>
+		</ul>
+
+		<h3 class="mt-5 mb-0">Property Access | Roads</h3>
+		<h5 class="text-warning">ToDo: Add picture of the Ridge for RV's</h5>
+
+
+		@* ToDo: This wasn't a very useful picture, but I do need one
+				<h2 class="mt-5 mb-0"><span class="badge badge-warning">Access Road</span></h2>
+			<img src='@Blobs.UrlWindmillRanch("access-road.jpeg")' class='img-fluid rounded mt-3' />
+		*@
+
+
+		<h3 class="mt-5 mb-0">Water Retention Maps and Contours</h3>
+
+		<h2 class="mt-5 mb-0"><span class="badge badge-warning">Contour lines to develop swells</span></h2>
+		<img src='@Blobs.UrlWindmillRanch("bisbee-contour-2020-09-22.png")' class='img-fluid rounded mt-3' />
+
+		<h2 class="mt-5 mb-0"><span class="badge badge-warning">Contour (bigger area)</span></h2>
+		<img src='@Blobs.UrlWindmillRanch("contour-big.jpg")' class='img-fluid rounded mt-3' />
+
+		<h2 class="mt-5 mb-0"><span class="badge badge-warning">Watershed to the N.E.</span></h2>
+		<img src='@Blobs.UrlWindmillRanch("160-acres-adjacent.jpg")' class='img-fluid rounded mt-3' />
+
+		<h2 class="mt-5 mb-0"><span class="badge badge-warning">Property Lines</span></h2>
+		<img src='@Blobs.UrlWindmillRanch("arial.jpg")' class='img-fluid rounded mt-3' />
+
+
+		<h2 class="mt-5 mb-0"><span class="badge badge-warning">Windmill, water storage and second well</span></h2>
+		<p>Fix the <i>leathers</i> and get this well producing water.</p>
+		<img src='@Blobs.UrlWindmillRanch("windmill-well-water-storage.jpeg")' class='img-fluid rounded mt-3' />
+
+		break;
+
+	case PartialViewEnum.Priorities:
+		<h2 class="mt-5 mb-0"><span class="badge badge-warning">Priorities</span></h2>
+
+		<h5 class="text-warning">ToDo: Page Introduction</h5>
+		<ol>
+			<li>Permaculture Design Framework</li>
+			<li>
+				<p>ToDo: finish the list of Permaculture Design Priorities</p>
+				<ul>
+					<li>Access to the properties</li>
+					<li>Water Retention: Swells, Gibbon / Check Dams</li>
+					<li>Zones</li>
+				</ul>
+			</li>
+			<li>Sukkot Gathering | Shooting for the first to be next year (2021)</li>
+		</ol>
+		break;
+
+	case PartialViewEnum.Album:
+		<h2 class="mt-5 mb-0"><span class="badge badge-warning">Picture Album</span></h2>
+
+		<p>ToDo: list the pictures in some sort of organized manner</p>
+		@*
+			10139008K-SEAVER-VICI-E-25-acres-SE-water-collection.jpg
+			160-acres-adjacent.jpg
+			40-acres-with-parcel-info.jpg
+			40-acres-with-parcel-info2.jpg
+			40-acres.jpg
+			AH Land Design.url
+			arizona-street-and-swan-road-intersection.png
+			Cochise County Open Data.url
+			Contour-with-ridgeline-for-road.jpg
+			Contour.jpg
+			Gulf-of-Mexico-as-crow-files-812.jpg
+			map-to-windmil-ranch-01.png
+			map-to-windmil-ranch-03.png
+			map-to-windmil-ranch-google-maps.png
+			map-to-windmil-ranch.docx
+			map-to-windmil-ranch.jpg
+			map-to-windmil-ranch.pdf
+			map-to-windmil-ranch.png
+			map-to-windmil-ranch.txt
+			Metro-Politan-area-El-Paso-TX-285.jpg
+			Metro-Politan-area-Las-Crusus-NM-243.jpg
+			Metro-Politan-area-Mesa-AZ-213.jpg
+			Metro-Politan-area-Tucson-AZ-100.jpg
+			Pacific-Gulf-of-Calif-as-crow-files-320-194.jpg
+			property-northwest-1.png
+			property-northwest-2.png
+			roof-sqare-feet-and-water-collection-potential.png
+			Sole Source Aquifers.url
+			SoleSourceAquafer1 - Copy.jpg
+			SoleSourceAquafer1.jpg
+			SoleSourceAquafer2 - Copy.jpg
+			SoleSourceAquafer2.jpg
+			SoleSourceAquafer3 - Copy.jpg
+			SoleSourceAquafer3.jpg
+			trailers-and-storage-units-zoomed-in.png
+		*@
+
+		break;
+
+
+	case PartialViewEnum.Support:
+		<h2 class="mt-5 mb-0"><span class="badge badge-warning">Support</span></h2>
+
+		<h5 class="mt-5 mb-0"><span class="badge badge-warning">Projects to develop</span></h5>
+		<p>Now that Living Messiah Ministries has acquired this great property, we will still need support going forward to develop the projects that we have enumerated.</p>
+		<img src='@Blobs.UrlWindmillRanch("we-need-your-support.jpeg")' class='img-fluid rounded mt-3' />
+
+
+		<h5 class="mt-5 mb-0"><span class="badge badge-warning">Donation</span></h5>
+		<img src='@Blobs.UrlWindmillRanch("donation.jpeg")' class='img-fluid rounded mt-3' />
+
+
+		<p class="mt-3">
+			<a href="@Donate.Anchors.Index"
+				 title="@Donate.Anchors.Title" class="btn btn-primary btn-xlarge">
+				<i class="@Donate.Anchors.Icon" aria-hidden="true"></i>
+				<b>@Donate.Anchors.Title</b>
+			</a>
+		</p>
+
+		break;
+
+	case PartialViewEnum.Archive:
+		<h2 class="mt-5 mb-0"><span class="badge badge-warning">Archive</span></h2>
+
+		<h5>Last Video Update regarding the property</h5>
+<p class="text-warning">ToDo: Make YouTubeDisplayOption or something like it work</p>		
+		@*<YouTubeDisplayOption TopId="zzz"
+													Title="Land Vision Support Update 10-5"
+													UrlId="FisFR1vAZdE"
+													IsPrinterFriendly="false">
+		</YouTubeDisplayOption>*@
+
+		<h5 class="mt-5 mb-0"><span class="badge badge-warning">40 acres</span></h5>
+		<img src='@Blobs.UrlWindmillRanch("map-40-acre.jpeg")' class='img-fluid rounded mt-3' />
+
+		<h5 class="mt-5 mb-0"><span class="badge badge-warning">off-grid</span></h5>
+		<img src='@Blobs.UrlWindmillRanch("off-grid.jpeg")' class='img-fluid rounded mt-3' />
+
+		<h5 class="mt-5 mb-0"><span class="badge badge-warning">panoramic view</span></h5>
+		<img src='@Blobs.UrlWindmillRanch("panoramic-view.jpeg")' class='img-fluid rounded mt-3' />
+
+		<h5 class="mt-5 mb-0"><span class="badge badge-warning">Wash arroyo and Watering hole</span></h5>
+		<img src='@Blobs.UrlWindmillRanch("wash-and-watering-hole.jpeg")' class='img-fluid rounded mt-3' />
+
+
+
+		<h3 class="mt-5 mb-0">Soul Source Aquifer</h3>
+		<ul class="lead">
+			<li>
+				<Anchor Href="https://en.wikipedia.org/wiki/Sole_Source_Aquifer" TargetIsBlank="true" Descr="Wikipedia">
+				</Anchor>
+			</li>
+			<li>
+				<Anchor Href="https://epa.maps.arcgis.com/apps/webappviewer/index.html?id=9ebb047ba3ec41ada1877155fe31356b" TargetIsBlank="true" Descr="EPA Map">
+				</Anchor>
+			</li>
+		</ul>
+
+		<h2 class="mt-5 mb-0"><span class="badge badge-warning">Sole Source Aquifer <sup>Zoomed Out</sup></span></h2>
+		<img src='@Blobs.UrlWindmillRanch("SoleSourceAquafer1.jpg")' class='img-fluid rounded mt-3' />
+
+
+		<h2 class="mt-5 mb-0"><span class="badge badge-warning">Sole Source Aquifer <sup>Zoomed In</sup></span></h2>
+		<img src='@Blobs.UrlWindmillRanch("SoleSourceAquafer3.jpg")' class='img-fluid rounded mt-3' />
+
+
+		break;
+
+	default:
+		<p class="text-warning">Content for DEFAULT Goes here</p>
+		break;
+}

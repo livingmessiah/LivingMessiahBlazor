@@ -1,0 +1,28 @@
+﻿@page "/TorahTuesday"
+@using LivingMessiah.Web.Pages.Parasha
+@using static LivingMessiah.Web.Links.TorahTuesday
+
+<div class="pb-2 mt-4 mb-2 border-bottom">
+	<h1 class="@Icon fa-2x"> @Title</h1>
+</div>
+
+<br />
+
+<TuesdayTorahStudy></TuesdayTorahStudy>
+
+@if (ShowLatestVideo)
+{
+	<YouTubeWeeklyVideo WeeklyVideoType="LivingMessiah.Domain.WeeklyVideoType.TorahTuesday">
+
+	</YouTubeWeeklyVideo>
+}
+
+@* ToDo: is this a better way  @onclick="@(e => ChangeContent(e, PartialViewEnum.Intro))"> *@
+<div class="row">
+	<div class="col">
+		<button class="my-3 btn btn-xlarge btn-primary"
+						@onclick="@ShowLatestVideo_Button_Click">
+			@((MarkupString)OppositeIcon) @OppositeToggleMsg
+		</button>
+	</div>
+</div>

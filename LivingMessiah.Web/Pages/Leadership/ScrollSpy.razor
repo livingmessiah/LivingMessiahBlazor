@@ -1,0 +1,33 @@
+﻿@using LivingMessiah.Web.Anchors
+
+@*https://stackoverflow.com/questions/63823423/bootstrap-scrollspy-not-working-in-blazor*@
+
+
+
+<div class="menu sticky-top p-1 bg-light">
+	<h5 class="text-primary pt-5">Leadership Team</h5>
+	<nav id="spyScrollNavbar" class="navbar navbar-light bg-light p-1">
+		<nav class="nav nav-pills flex-column">
+
+			<AnchorLeadership AnchorEnum="Anchors.AnchorEnums.ScrollSpyHeader"></AnchorLeadership>
+
+
+			@if (People == null)
+			{
+				<p><em>Loading...</em></p>
+			}
+			else
+			{
+				@* ToDo: fragments don't work with Blazor Components asp-fragment="@person.Id" *@
+				@foreach (var person in People)
+				{
+					<a href="#"></a>
+					@* <a class="nav-link ml-0 my-1" href="@Anchors.Index">@person.Name</a> *@
+				}
+			}
+			<a href="#"></a>
+			@* <a class="nav-link ml-0 my-1" href="@Anchors.Index">@Anchors.Fragments.Leadership</a>  *@
+			@*  ToDo: fragments don't work with Blazor Components asp-fragment="@Anchors.Fragments.Leadership" *@
+		</nav>
+	</nav>
+</div>

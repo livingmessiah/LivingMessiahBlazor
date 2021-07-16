@@ -4,11 +4,18 @@ using LivingMessiah.Web.Links;
 
 namespace LivingMessiah.Web.Data
 {
+	public interface ILinksFactory
+	{
+		List<Link> GetLinks();
+		//List<Link> GetFeastLinks();
+		//List<LinkBasic> GetDashboardLinks();
+		//List<LinkBasic> GetMarkdownLinks();
+	}
+
 	public class LinksFactory : ILinksFactory
 	{
 		public List<LinkBasic> GetDashboardLinks()
 		{
-
 			return new List<LinkBasic>
 			{
 				new LinkBasic {Index = "/Admin/Dashboard/Index", Title = "Dashboard", Icon = "fas fa-tachometer-alt", },
@@ -74,20 +81,11 @@ namespace LivingMessiah.Web.Data
 					HomeTitleSuffix=" Dabar H1696",
 					SitemapUsage=true
 				},
-
-			};
-		}
-
-		/*
-		public List<Link> GetLinks()
-		{
-			return new List<Link>
-			{
 				new Link
 				{
-					Index = TorahTuesday.Index,
-					Title = TorahTuesday.Title,
-					Icon = TorahTuesday.Icon,
+					Index = TorahTuesday.Anchors.Index,
+					Title = TorahTuesday.Anchors.Title,
+					Icon = TorahTuesday.Anchors.Icon,
 					HomeSidebarUsage=true,
 					HomeFloatRightHebrew="תּוֹרָה",
 					HomeTitleSuffix=" Torah H8451",
@@ -96,7 +94,7 @@ namespace LivingMessiah.Web.Data
 				new Link
 				{
 					Index = IndepthStudy.Index,
-					Title = IndepthStudy.Title, 
+					Title = IndepthStudy.Title,
 					Icon = IndepthStudy.Icon,
 					HomeSidebarUsage=true,
 					HomeFloatRightHebrew="תְּהוֹם",
@@ -104,11 +102,11 @@ namespace LivingMessiah.Web.Data
 					SitemapUsage=true
 					// Location  Index = "/Location";  Title = "Map"; "fas fa-map-signs";
 				},
-				new Link 
-				{ 
-					Index = About.Index,
-					Title = About.Title, 
-					Icon = About.Icon, 
+				new Link
+				{
+					Index = About.Anchors.Index,
+					Title = About.Anchors.Title,
+					Icon = About.Anchors.Icon,
 					HomeSidebarUsage=true,
 					HomeFloatRightHebrew="אודות",  // חָשַׁב
 					HomeTitleSuffix=" Odot H182",  // chashav H2803
@@ -116,9 +114,9 @@ namespace LivingMessiah.Web.Data
 				},
 				new Link
 				{
-					Index = Parasha.Index,
-					Title = Parasha.Title,
-					Icon = Parasha.Icon,
+					Index = Parasha.Anchors.Index,
+					Title = Parasha.Anchors.Title,
+					Icon = Parasha.Anchors.Icon,
 					HomeSidebarUsage=true,
 					HomeFloatRightHebrew="פָּרָשַׁת",
 					HomeTitleSuffix=" Parashat H6567",
@@ -126,9 +124,9 @@ namespace LivingMessiah.Web.Data
 				},
 				new Link
 				{
-					Index = ParashaArchive.Index,
-					Title = ParashaArchive.Title,
-					Icon = ParashaArchive.Icon,
+					Index = ParashaArchive.Anchors.Index,
+					Title = ParashaArchive.Anchors.Title,
+					Icon = ParashaArchive.Anchors.Icon,
 					HomeSidebarUsage=false,
 					HomeFloatRightHebrew="",
 					HomeTitleSuffix="",
@@ -156,9 +154,9 @@ namespace LivingMessiah.Web.Data
 				},
 				new Link
 				{
-					Index = Donate.Index,
-					Title = Donate.Title,
-					Icon = Donate.Icon,
+					Index = Donate.Anchors.Index,
+					Title = Donate.Anchors.Title,
+					Icon = Donate.Anchors.Icon,
 					HomeSidebarUsage=true,
 					HomeFloatRightHebrew="מוֹעֲדָי",
 					HomeTitleSuffix=" tzedakah H6666",
@@ -186,9 +184,9 @@ namespace LivingMessiah.Web.Data
 				},
 				new Link
 				{
-					Index = Store.Index,
-					Title = Store.Title,
-					Icon = Store.Icon,
+					Index = Store.Anchors.Index,
+					Title = Store.Anchors.Title,
+					Icon = Store.Anchors.Icon,
 					HomeSidebarUsage=true,
 					HomeFloatRightHebrew="כֻּתֹּנֶת",
 					HomeTitleSuffix=" Kuthoneth H3801",
@@ -196,19 +194,19 @@ namespace LivingMessiah.Web.Data
 				},
 				new Link
 				{
-					Index = BloodMoons.Index,
-					Title = BloodMoons.Title,
-					Icon = BloodMoons.Icon,
+					Index = BloodMoons.Anchors.Index,
+					Title = BloodMoons.Anchors.Title,
+					Icon = BloodMoons.Anchors.Icon,
 					HomeSidebarUsage=true,
 					HomeFloatRightHebrew="יָרֵחַ",
 					HomeTitleSuffix=" yareach H3394",
 					SitemapUsage=true
 				},
-				new Link 
-				{ 
-					Index = Articles.Index, 
-					Title = Articles.Title, 
-					Icon = Articles.Icon, 
+				new Link
+				{
+					Index = Articles.Index,
+					Title = Articles.Title,
+					Icon = Articles.Icon,
 					HomeSidebarUsage=true,
 					HomeFloatRightHebrew="כְּתֻבִים",
 					HomeTitleSuffix=" Ketuvim H3789",
@@ -216,9 +214,9 @@ namespace LivingMessiah.Web.Data
 				},
 				new Link
 				{
-					Index = FurtherStudies.Index,
-					Title = FurtherStudies.Title,
-					Icon = FurtherStudies.Icon,
+					Index = FurtherStudies.Anchors.Index,
+					Title = FurtherStudies.Anchors.Title,
+					Icon = FurtherStudies.Anchors.Icon,
 					HomeSidebarUsage=true,
 					HomeFloatRightHebrew="סֵפֶר",
 					HomeTitleSuffix=" sepher H5612",
@@ -226,9 +224,9 @@ namespace LivingMessiah.Web.Data
 				},
 				new Link
 				{
-					Index = ImportantLinks.Index,
-					Title = ImportantLinks.Title,
-					Icon = ImportantLinks.Icon,
+					Index = ImportantLinks.Anchors.Index,
+					Title = ImportantLinks.Anchors.Title,
+					Icon = ImportantLinks.Anchors.Icon,
 					HomeSidebarUsage=true,
 					HomeFloatRightHebrew="רָקַד",
 					HomeTitleSuffix=" rakad H7540",
@@ -244,40 +242,48 @@ namespace LivingMessiah.Web.Data
 					HomeTitleSuffix="",
 					SitemapUsage=true
 				},
-				new Link 
-				{ 
-					Index = BiblicalPermaculture.Index, 
-					Title = BiblicalPermaculture.Title, 
-					Icon = BiblicalPermaculture.Icon, 
-					HomeSidebarUsage=false, 
-					SitemapUsage=true
-				},
 				new Link
 				{
-					Index = ShowLow.Index,
-					Title = ShowLow.Title,
-					Icon = ShowLow.Icon,
+					Index = BiblicalPermaculture.Anchors.Index,
+					Title = BiblicalPermaculture.Anchors.Title,
+					Icon = BiblicalPermaculture.Anchors.Icon,
 					HomeSidebarUsage=false,
 					SitemapUsage=true
 				},
 				new Link
 				{
-					Index = Mishpocha.Index,
-					Title = Mishpocha.Title,
-					Icon = Mishpocha.Icon,
+					Index = Links.ShowLow.Index,
+					Title = Links.ShowLow.Title,
+					Icon = Links.ShowLow.Icon,
 					HomeSidebarUsage=false,
 					SitemapUsage=true
 				},
-				new Link 
-				{ 
-					Index = Gallery.Index, 
-					Title = Gallery.Title, 
-					Icon = Gallery.Icon, 
-					HomeSidebarUsage=false, 
+				new Link
+				{
+					Index = Links.Mishpocha.Index,
+					Title = Links.Mishpocha.Title,
+					Icon = Links.Mishpocha.Icon,
+					HomeSidebarUsage=false,
 					SitemapUsage=true
 				},
+				new Link
+				{
+					Index = Links.Gallery.Index,
+					Title = Links.Gallery.Title,
+					Icon = Links.Gallery.Icon,
+					HomeSidebarUsage=false,
+					SitemapUsage=true
+				}
+
+
 			};
 		}
+
+		/*
+		public List<Link> GetLinks()
+		{
+			return new List<Link>
+			{
 		*/
 
 

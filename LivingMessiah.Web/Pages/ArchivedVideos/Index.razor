@@ -1,0 +1,104 @@
+﻿@page "/ArchivedVideos"
+@using static LivingMessiah.Web.ArchivedVideos
+
+<div class="pb-2 mt-4 mb-3">
+	<h2><i class="@Anchors.Icon"></i> @Anchors.Title</h2>
+</div>
+
+
+@if (ArchivedVideos != null)
+{
+	<table class="table table-striped table-sm">
+		<thead>
+			<tr>
+				<th>Video Type</th>
+				<th>YouTube Id</th>
+				<th>Title</th>
+				<th>Bk/Ch</th>
+				@*<th>Event Date</th>*@
+			</tr>
+		</thead>
+
+		<tbody>
+
+			@foreach (var item in ArchivedVideos)
+			{
+
+				@if (item.TypeId == 1 & item.RowNum != 1)
+				{
+					<tr><td colspan="4">&nbsp;</td></tr>
+				}
+
+				@if (item.TypeId == 1)
+				{
+					<tr>
+						<td colspan="5" align="center">
+							--- <b>@item.ShabbatDate.ToString("MMM dd")</b> <small><sup>@item.ShabbatWeekId</sup></small> ---
+						</td>
+					</tr>
+				}
+
+
+				<tr>
+
+
+					<td>@item.Descr <small><sup class="text-black-50">@item.TypeId</sup></small></td>
+
+					<td>
+						@if (item.YouTubeId != null)
+						{
+							<a href="@item.Url()" target="_blank"
+								 title="@item.Url()">
+								<u>@item.YouTubeId</u>
+								<i class="fas fa-external-link-square-alt"></i>
+							</a>
+						}
+						else
+						{
+							<p class="text-info"><i>Missing</i></p>
+						}
+
+					</td>
+
+					<td>@item.Title</td>
+
+
+					@if (item.TypeId == 3 | item.TypeId == 4)
+					{
+						<td><small><i>@item.Book/@item.Chapter</i></small></td>
+					}
+					else
+					{
+						<td></td>
+					}
+
+					@*@if (item.TypeId == 4)
+						{
+							<td><small><i>@item.EventDate().ToString("MMM dd")</i></small></td>
+						}
+						else
+						{
+							<td></td>
+						}*@
+
+				</tr>
+
+			}
+
+		</tbody>
+	</table>
+
+	<p class="text-right mt-5 bg-light">
+		<Anchor Href="https://www.youtube.com/results?search_query=living+messiah"
+						Descr="YouTube Search=living+messiah" UsePrefixIcon="false">
+		</Anchor>
+	</p>
+}
+else if (ReadOperationFailed)
+{
+	<h1 class="text-danger">Database operation <b>Read</b> failed.</h1>
+}
+else
+{
+	<p><em>Loading...</em></p>
+}

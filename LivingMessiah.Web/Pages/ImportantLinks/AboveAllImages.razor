@@ -1,0 +1,26 @@
+﻿@using static LivingMessiah.Web.Links.AboveAllImages
+
+<h2 id="@Id">
+	<span class="badge badge-warning">@Title</span>
+</h2>
+
+<div class="card">
+	<img src="@Blobs.UrlImportantLinks(Image)"
+			 class="card-img-top" alt="@Title" />
+	<div class="card-body">
+		<p class="card-text">
+			Ralphie and Peribeth Cratty own and operate a small business,
+			<a href="@Url" target="_blank">@Title</a>
+			They have a selection of products that feature the Living Messiah logo which are available through their website.
+			Also, they are able to produce custom caps, tee shirts, and other things with your own logo or text.
+			(As a gifted and trained graphics artist, Ralphie is also able to generate whatever graphics you might need.)
+		</p>
+
+		<a href="@Url" class="btn btn-primary" target="_blank">
+			@UrlSimple &nbsp;
+			<i class="fas fa-external-link-square-alt"></i>
+		</a>
+
+	</div>
+</div>
+

@@ -1,0 +1,40 @@
+﻿<div class="col-12">
+	<div class="accordion" id="accordion">
+
+		@if (People == null)
+		{
+			<p><em>Loading...</em></p>
+		}
+		else
+		{
+			@foreach (var person in People)
+			{
+				<div class="card">
+					<div class="card-header collapsed text-white bg-warning"
+							 data-toggle="collapse" href="#@person.IdXs" data-parent="#accordion">
+						<a class="card-title">
+							<div class="media">
+								<img src="@Blobs.Leadership(person.IconFile)"
+										 class="mr-3 rounded-circle" alt="@person.Name @person.Title">
+								<div class="media-body">
+									<h5 class="mt-0">@person.Name</h5>
+									<i>@person.Title</i>
+								</div>
+							</div>
+						</a>
+					</div>
+
+					<div id="@person.IdXs" class="@person.CollapseClass">
+						<div class="card-body">
+							<Office Person="@person"></Office>
+
+						</div>
+					</div>
+				</div>
+
+
+			}
+		}
+
+	</div>
+</div> @* col-12 *@

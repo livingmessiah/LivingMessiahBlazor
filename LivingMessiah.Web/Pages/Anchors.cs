@@ -102,7 +102,7 @@
 	{
 		public static class Anchors
 		{
-			public const string Index = "/Donate/Index";
+			public const string Index = "/Donate";
 			public const string Title = "Donate";
 			public const string Icon = "fab fa-paypal";
 			public const string Href = "https://LivingMessiah.com/Donate";
@@ -336,8 +336,8 @@
 	{
 		public static class Anchors
 		{
-			public const string Index = "/TorahTuesday/Index";
-			public const string Title = "Torah";
+			public const string Index = "/TorahTuesday";
+			public const string Title = "Torah Tuesday";
 			public const string Title2 = "Tuesday Torah Study";
 			public const string Icon = "fas fa-torah";
 		}

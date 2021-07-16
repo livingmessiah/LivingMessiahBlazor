@@ -1,0 +1,19 @@
+﻿
+@if (IsValid)
+{
+	<ol class="breadcrumb">
+		<li>
+			<i class="fas fa-chevron-left"></i>&nbsp;
+			<a href='@Href'> @ParentTitle</a>
+		</li>
+	</ol>
+
+	<div class="pb-2 mt-4 mb-2 border-bottom">
+		<h2><span class="text-warning @Icon"></span> @Title</h2>
+	</div>
+
+}
+else
+{
+	<small>bread crumb invalid</small>
+}
