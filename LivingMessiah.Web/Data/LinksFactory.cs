@@ -62,9 +62,9 @@ namespace LivingMessiah.Web.Data
 				},
 				new Link
 				{
-					Index = UpcomingEvents.Anchors.Index,
-					Title = UpcomingEvents.Anchors.Title,
-					Icon = UpcomingEvents.Anchors.Icon,
+					Index = UpcomingEvents.Index,
+					Title = UpcomingEvents.Title,
+					Icon = UpcomingEvents.Icon,
 					HomeSidebarUsage=true,
 					//Commented out not because it's wrong, but it's too wide
 					//HomeFloatRightHebrew="שׁוֹפָר",
@@ -154,9 +154,9 @@ namespace LivingMessiah.Web.Data
 				},
 				new Link
 				{
-					Index = Donate.Anchors.Index,
-					Title = Donate.Anchors.Title,
-					Icon = Donate.Anchors.Icon,
+					Index = Donate.Index,
+					Title = Donate.Title,
+					Icon = Donate.Icon,
 					HomeSidebarUsage=true,
 					HomeFloatRightHebrew="מוֹעֲדָי",
 					HomeTitleSuffix=" tzedakah H6666",

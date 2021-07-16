@@ -41,18 +41,6 @@
 		public const string Title = "Articles";
 		public const string Icon = "fas fa-pencil-alt";
 
-		/*
-				public static class MakingChallahBread
-				{
-					public static class Anchors
-					{
-						public const string Index = "/articles/MakingChallahBread";
-						public const string Title = "Challah Bread";
-						public const string Icon = "fas fa-bread-slice";
-					}
-				} 
-		*/
-
 	}
 	public static class BiblicalPermaculture
 	{
@@ -95,6 +83,13 @@
 		public const string Index = "/HeavensDeclare";
 		public const string Title = "Heavens Declare";
 		public const string Icon = "fas fa-cloud-moon";
+	}
+
+	public static class Home
+	{
+		public const string Index = "/";
+		//public const string Title = "Home";
+		//public const string Icon = "fas fa-home";
 	}
 
 	public static class ImportantLinks

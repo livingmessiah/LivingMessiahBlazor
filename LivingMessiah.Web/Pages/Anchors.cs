@@ -98,17 +98,6 @@
 		public const string Descr = "Community Bulletin Board";
 	}
 
-	public static class Donate
-	{
-		public static class Anchors
-		{
-			public const string Index = "/Donate";
-			public const string Title = "Donate";
-			public const string Icon = "fab fa-paypal";
-			public const string Href = "https://LivingMessiah.com/Donate";
-		}
-	}
-
 	public static class ImportantLinks
 	{
 		public static class Anchors
@@ -342,16 +331,6 @@
 			public const string Icon = "fas fa-torah";
 		}
 
-	}
-
-	public static class UpcomingEvents
-	{
-		public static class Anchors
-		{
-			public const string Index = "/UpcomingEvents/";
-			public const string Title = "Upcoming Events";
-			public const string Icon = "far fa-clock";
-		}
 	}
 
 	public static class WeeklyVideos
