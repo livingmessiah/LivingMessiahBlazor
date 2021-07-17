@@ -7,6 +7,13 @@
 		public const string Icon = "fas fa-info";
 	}
 
+	public static class AboutUs
+	{
+		public const string Title = "About Us";
+		public const string FragmentId = "AboutUs";
+		public const string Descr = "About Us";
+	}
+
 	public static class AboveAllImages
 	{
 		public const string Id = "AboveAllImages";
@@ -35,11 +42,40 @@
 		public const string IconProfile = "fas fa-user";
 	}
 
+	public static class ArchivedVideos
+	{
+		public const string Index = "/ArchivedVideos/";
+		public const string Title = "Archived Videos";
+		public const string Icon = "fab fa-youtube";
+	}
+
 	public static class Articles
 	{
 		public const string Index = "/Articles";
 		public const string Title = "Articles";
 		public const string Icon = "fas fa-pencil-alt";
+
+		public static class MakingChallahBread
+		{
+			public const string Index = "/articles/MakingChallahBread";
+			public const string Title = "Challah Bread";
+			public const string Icon = "fas fa-bread-slice";
+		}
+
+		public static class Pesach
+		{
+			public const string Index = "/articles/pesach";
+			//public const string Title = "** dynamically created **";
+			public const string Icon = "";
+
+		}
+		public static class Prepared
+		{
+			public const string Index = "/articles/Prepared";
+			public const string Title = "Preparing";
+			public const string Icon = "";
+		}
+
 
 	}
 	public static class BiblicalPermaculture
@@ -56,12 +92,11 @@
 		public const string Icon = "far fa-moon";
 	}
 
-	public static class Donate
+	public static class Community
 	{
-		public const string Index = "/Donate";
-		public const string Title = "Donate";
-		public const string Icon = "fab fa-paypal";
-		public const string Href = "https://LivingMessiah.com/Donate";
+		public const string Title = "Community";
+		public const string FragmentId = "Community";
+		public const string Descr = "Community Bulletin Board";
 	}
 
 	public static class FurtherStudies
@@ -176,6 +211,41 @@
 		}
 	}
 
+
+
+	//public static class Donate
+	//{
+	//	public const string Index = "/Donate";
+	//	
+	//	public const string Icon = "fab fa-paypal";
+	//	public const string Href = "https://LivingMessiah.com/Donate";
+	//}
+
+	public static class PayPal
+	{
+		public static class Donate
+		{
+			public const string Index = "/donate";
+			public const string Title = "Donate";
+			public const string TitleLMM = "Living Messiah Ministries";
+			public const string Icon = "fab fa-paypal";
+		}
+		public static class CancelDonation
+		{
+			public const string Index = "/cancel_donation.html";
+			public const string Title = "Donation Cancelation";
+			public const string Icon = "fab fa-paypal";
+		}
+		public static class ConfirmDonation
+		{
+			public const string Index = "/confirm_donation.html";
+			public const string Title = "Donation Confirmation";
+			public const string Icon = "fab fa-paypal";
+		}
+
+	}
+
+
 	public static class Pesach
 	{
 		public const string Index = "/Pesach";
@@ -199,6 +269,18 @@
 		public const string Index = "/ShabbatService";
 		public const string Title = "Shabbat Service";
 		public const string Icon = "far fa-hand-spock";
+
+		public static class LiveFeed
+		{
+			public const string IndepthStudyTopId = "IndepthStudyTop";  // ToDo: Anchor Fragment's don't work in Blazor 3.1
+			public const string IndepthStudyTitle = "In-depth Study";
+
+			public const string ShabbatServiceTopId = "ShabbatServiceTop"; // ToDo: Anchor Fragment's don't work in Blazor 3.1
+			public const string ShabbatServiceTitle = "Main Shabbat Service";
+
+			public const string ShabbatServiceEspTopId = "ShabbatServiceEspTop"; // ToDo: Anchor Fragment's don't work in Blazor 3.1
+			public const string ShabbatServiceEspTitle = "Servicio principal de Shabat";
+		}
 	}
 
 	public static class Shavuot
@@ -239,6 +321,7 @@
 		}
 	}
 
+
 	public static class Sukkot
 	{
 		public const string Index = "/Sukkot";
@@ -261,6 +344,14 @@
 	}
 
 
+	public static class ThankYou
+	{
+		public const string TopId = "ThankYouTop";
+		public const string Title = "ThankYou";
+		public const string FragmentId = "ThankYou";
+		public const string Descr = "Thank You !!!";
+	}
+
 	public static class TorahTuesday
 	{
 		public const string Index = "/TorahTuesday";
@@ -269,11 +360,38 @@
 		public const string Icon = "fas fa-torah";
 	}
 
+
 	public static class UpcomingEvents
 	{
 		public const string Index = "/UpcomingEvents/";
 		public const string Title = "Upcoming Events";
 		public const string Icon = "far fa-clock";
+	}
+
+
+	public static class WeeklyVideos
+	{
+		public const string Index = "/Admin/WeeklyVideos";
+		public const string Title = "Weekly Videos";
+		public const string Icon = "fab fa-youtube";
+
+		public const string AddIcon = "fas fa-plus";
+		public const string AddButtonColor = "btn btn-success";
+		public const string AddText = "Add";
+		public const string AddModalText = "Save";
+
+		public const string EditIcon = "fas fa-pencil-alt";
+		public const string EditButtonColor = "btn btn-primary";
+		public const string EditText = "Edit";
+		public const string EditModalText = "Update";
+
+		public const string DeleteIcon = "fa fa-times";
+		public const string DeleteButtonColor = "btn btn-danger";
+		public const string DeleteText = "Delete";
+
+		public const string SaveIcon = "fas fa-save";
+
+		public const string CancelIcon = "fas fa-window-close"; //"far fa-window-close";
 	}
 
 	public static class WindmillRanch
@@ -283,5 +401,8 @@
 		//public const string Icon = "fas fa-tractor";
 		public const string Icon = "fas fa-dharmachakra";
 		public const string Descr = "Landing page for the Windmill Ranch project";
+		public const string IndexCodeOfConduct = "/CodeOfConduct/";
+		public const string TitleCodeOfConduct = "Code Of Conduct";
+		public const string IconCodeOfConduct = "fas fa-handshake";
 	}
 }

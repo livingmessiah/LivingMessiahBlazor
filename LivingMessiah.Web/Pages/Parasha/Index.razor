@@ -1,5 +1,5 @@
 ﻿@page  "/Parasha"
-@using static LivingMessiah.Web.Parasha.Anchors
+@using static LivingMessiah.Web.Links.Parasha
 
 @*
 	ToDo: figure out how to make this work
@@ -14,11 +14,6 @@
 
 <hr class="warning" />
 
-@*
-	<Current> is a wrapper around these two componeonts
-		<CurrentParashaButton> 
-		<ParashaCalendar>
-*@
 <Current></Current>
 
 @*
@@ -63,8 +58,8 @@
 	<div class="d-none d-sm-block">
 		<HebrewMonthsStatic></HebrewMonthsStatic>
 		<a href="#hebMonths" data-toggle="modal"><i class="far fa-moon"></i> Hebrew Months</a><br />
-		<a href="@LivingMessiah.Web.ParashaArchive.Anchors.Index">
-			<i class="@LivingMessiah.Web.ParashaArchive.Anchors.Icon"></i>
+		<a href="@LivingMessiah.Web.Links.ParashaArchive.Index">
+			<i class="@LivingMessiah.Web.Links.ParashaArchive.Icon"></i>
 			@Title
 		</a>
 	</div>

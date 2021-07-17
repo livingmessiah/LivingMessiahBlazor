@@ -1,5 +1,4 @@
 ﻿@page "/InDepthStudy"
-@using LivingMessiah.Web.Anchors
 @using static LivingMessiah.Web.Links.IndepthStudy
 
 <div class="pb-2 mt-4 mb-2 border-bottom">
@@ -33,7 +32,8 @@
 
 			<li>
 				<i class="text-warning far fa-clock"></i> 1:30 - 2:15 pm at <b>Living Messiah</b>
-				<AnchorInDepthStudy AnchorEnum="AnchorEnums.Location"></AnchorInDepthStudy>
+				<LinkComponent LinkComponentEnum="@LinkComponentEnum.Location">
+				</LinkComponent>
 			</li>
 			<li>
 				<span class="far fa-envelope"></span>&nbsp;Contact

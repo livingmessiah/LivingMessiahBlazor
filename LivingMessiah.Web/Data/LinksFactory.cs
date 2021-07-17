@@ -43,9 +43,9 @@ namespace LivingMessiah.Web.Data
 				},
 				new Link
 				{
-					Index = WindmillRanch.Anchors.Index,
-					Title = WindmillRanch.Anchors.Title,
-					Icon = WindmillRanch.Anchors.Icon,
+					Index = WindmillRanch.Index,
+					Title = WindmillRanch.Title,
+					Icon = WindmillRanch.Icon,
 					HomeSidebarUsage=true,
 					SitemapUsage=true
 				},
@@ -73,9 +73,9 @@ namespace LivingMessiah.Web.Data
 				},
 				new Link
 				{
-					Index = Podcast.Anchors.Index,
-					Title = Podcast.Anchors.Title,
-					Icon = Podcast.Anchors.Icon,
+					Index = Podcast.Index,
+					Title = Podcast.Title,
+					Icon = Podcast.Icon,
 					HomeSidebarUsage=true,
 					HomeFloatRightHebrew="דָּבַר",
 					HomeTitleSuffix=" Dabar H1696",
@@ -83,9 +83,9 @@ namespace LivingMessiah.Web.Data
 				},
 				new Link
 				{
-					Index = TorahTuesday.Anchors.Index,
-					Title = TorahTuesday.Anchors.Title,
-					Icon = TorahTuesday.Anchors.Icon,
+					Index = TorahTuesday.Index,
+					Title = TorahTuesday.Title,
+					Icon = TorahTuesday.Icon,
 					HomeSidebarUsage=true,
 					HomeFloatRightHebrew="תּוֹרָה",
 					HomeTitleSuffix=" Torah H8451",
@@ -104,9 +104,9 @@ namespace LivingMessiah.Web.Data
 				},
 				new Link
 				{
-					Index = About.Anchors.Index,
-					Title = About.Anchors.Title,
-					Icon = About.Anchors.Icon,
+					Index = About.Index,
+					Title = About.Title,
+					Icon = About.Icon,
 					HomeSidebarUsage=true,
 					HomeFloatRightHebrew="אודות",  // חָשַׁב
 					HomeTitleSuffix=" Odot H182",  // chashav H2803
@@ -114,9 +114,9 @@ namespace LivingMessiah.Web.Data
 				},
 				new Link
 				{
-					Index = Parasha.Anchors.Index,
-					Title = Parasha.Anchors.Title,
-					Icon = Parasha.Anchors.Icon,
+					Index = Parasha.Index,
+					Title = Parasha.Title,
+					Icon = Parasha.Icon,
 					HomeSidebarUsage=true,
 					HomeFloatRightHebrew="פָּרָשַׁת",
 					HomeTitleSuffix=" Parashat H6567",
@@ -124,9 +124,9 @@ namespace LivingMessiah.Web.Data
 				},
 				new Link
 				{
-					Index = ParashaArchive.Anchors.Index,
-					Title = ParashaArchive.Anchors.Title,
-					Icon = ParashaArchive.Anchors.Icon,
+					Index = ParashaArchive.Index,
+					Title = ParashaArchive.Title,
+					Icon = ParashaArchive.Icon,
 					HomeSidebarUsage=false,
 					HomeFloatRightHebrew="",
 					HomeTitleSuffix="",
@@ -154,9 +154,9 @@ namespace LivingMessiah.Web.Data
 				},
 				new Link
 				{
-					Index = Donate.Index,
-					Title = Donate.Title,
-					Icon = Donate.Icon,
+					Index = PayPal.Donate.Index,
+					Title = PayPal.Donate.Title,
+					Icon = PayPal.Donate.Icon,
 					HomeSidebarUsage=true,
 					HomeFloatRightHebrew="מוֹעֲדָי",
 					HomeTitleSuffix=" tzedakah H6666",
@@ -184,9 +184,9 @@ namespace LivingMessiah.Web.Data
 				},
 				new Link
 				{
-					Index = Store.Anchors.Index,
-					Title = Store.Anchors.Title,
-					Icon = Store.Anchors.Icon,
+					Index = Store.Index,
+					Title = Store.Title,
+					Icon = Store.Icon,
 					HomeSidebarUsage=true,
 					HomeFloatRightHebrew="כֻּתֹּנֶת",
 					HomeTitleSuffix=" Kuthoneth H3801",
@@ -194,9 +194,9 @@ namespace LivingMessiah.Web.Data
 				},
 				new Link
 				{
-					Index = BloodMoons.Anchors.Index,
-					Title = BloodMoons.Anchors.Title,
-					Icon = BloodMoons.Anchors.Icon,
+					Index = BloodMoons.Index,
+					Title = BloodMoons.Title,
+					Icon = BloodMoons.Icon,
 					HomeSidebarUsage=true,
 					HomeFloatRightHebrew="יָרֵחַ",
 					HomeTitleSuffix=" yareach H3394",
@@ -214,9 +214,9 @@ namespace LivingMessiah.Web.Data
 				},
 				new Link
 				{
-					Index = FurtherStudies.Anchors.Index,
-					Title = FurtherStudies.Anchors.Title,
-					Icon = FurtherStudies.Anchors.Icon,
+					Index = FurtherStudies.Index,
+					Title = FurtherStudies.Title,
+					Icon = FurtherStudies.Icon,
 					HomeSidebarUsage=true,
 					HomeFloatRightHebrew="סֵפֶר",
 					HomeTitleSuffix=" sepher H5612",
@@ -224,9 +224,9 @@ namespace LivingMessiah.Web.Data
 				},
 				new Link
 				{
-					Index = ImportantLinks.Anchors.Index,
-					Title = ImportantLinks.Anchors.Title,
-					Icon = ImportantLinks.Anchors.Icon,
+					Index = ImportantLinks.Index,
+					Title = ImportantLinks.Title,
+					Icon = ImportantLinks.Icon,
 					HomeSidebarUsage=true,
 					HomeFloatRightHebrew="רָקַד",
 					HomeTitleSuffix=" rakad H7540",
@@ -244,9 +244,9 @@ namespace LivingMessiah.Web.Data
 				},
 				new Link
 				{
-					Index = BiblicalPermaculture.Anchors.Index,
-					Title = BiblicalPermaculture.Anchors.Title,
-					Icon = BiblicalPermaculture.Anchors.Icon,
+					Index = BiblicalPermaculture.Index,
+					Title = BiblicalPermaculture.Title,
+					Icon = BiblicalPermaculture.Icon,
 					HomeSidebarUsage=false,
 					SitemapUsage=true
 				},

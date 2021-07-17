@@ -3,6 +3,7 @@ using LivingMessiah.Web.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
+using static LivingMessiah.Web.Links.ShabbatService.LiveFeed;
 
 namespace LivingMessiah.Web.Pages.ShabbatService
 {
@@ -62,8 +63,8 @@ namespace LivingMessiah.Web.Pages.ShabbatService
 			const string Icon = "<i class='fas fa-satellite'></i>";
 			string Title =
 				(ShowSpanish) ?
-				Helper.ShabbatService.LiveFeed.ShabbatServiceEspTitle :
-				Helper.ShabbatService.LiveFeed.ShabbatServiceTitle;
+				ShabbatServiceEspTitle :
+				ShabbatServiceTitle;
 
 			if (!IsPrinterFriendly)
 			{

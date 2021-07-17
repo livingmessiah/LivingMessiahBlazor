@@ -1,9 +1,9 @@
 ﻿@page "/Admin/WeeklyVideos"
-@using static LivingMessiah.Web.WeeklyVideos
+@using static LivingMessiah.Web.Links.WeeklyVideos
 
 
 <div class="pb-2 mt-4 mb-3">
-	<h1><span class="text-warning"><i class="@Anchors.Icon"></i></span> @Anchors.Title</h1>
+	<h1><span class="text-warning"><i class="@Icon"></i></span> @Title</h1>
 </div>
 
 @if (MakeModalVisible)
@@ -87,8 +87,8 @@
 					@if (CrudOperation == CRUD.Add)
 					{
 						<button type="button" @onclick="SaveModal_ButtonClick"
-										class="@Anchors.AddButtonColor" data-dismiss="modal">
-							@Anchors.AddModalText <i class="@Anchors.SaveIcon"></i>
+										class="@AddButtonColor" data-dismiss="modal">
+							@AddModalText <i class="@SaveIcon"></i>
 						</button>
 					}
 					else
@@ -96,15 +96,15 @@
 						@if (CrudOperation == CRUD.Edit)
 						{
 							<button type="button" @onclick="SaveModal_ButtonClick"
-											class="@Anchors.EditButtonColor" data-dismiss="modal">
-								@Anchors.EditModalText <i class="@Anchors.EditIcon"></i>
+											class="@EditButtonColor" data-dismiss="modal">
+								@EditModalText <i class="@EditIcon"></i>
 							</button>
 						}
 						else
 						{
 							<button type="button" @onclick="SaveModal_ButtonClick"
-											class="@Anchors.DeleteButtonColor" data-dismiss="modal">
-								@Anchors.DeleteText <i class="@Anchors.DeleteIcon"></i>
+											class="@DeleteButtonColor" data-dismiss="modal">
+								@DeleteText <i class="@DeleteIcon"></i>
 							</button>
 						}
 
@@ -112,7 +112,7 @@
 
 					<button type="button" @onclick="CancelModal_ButtonClick"
 									class="btn btn-light" data-dismiss="modal">
-						<i class="@Anchors.CancelIcon"></i> Cancel
+						<i class="@CancelIcon"></i> Cancel
 					</button>
 
 				</div>
@@ -196,21 +196,21 @@
 				@if (item.YouTubeId != null)
 				{
 					<button @onclick="@(() => ShowModal_ButtonClick(CRUD.Edit, item))"
-									type="button" class="@Anchors.EditButtonColor btn-sm">
-						<i class="@Anchors.EditIcon"></i> @Anchors.EditText
+									type="button" class="@EditButtonColor btn-sm">
+						<i class="@EditIcon"></i> @EditText
 					</button>
 
 					<button @onclick="@(() => ShowModal_ButtonClick(CRUD.Delete, item))"
-									type="button" class="@Anchors.DeleteButtonColor btn-sm">
-						<i class="@Anchors.DeleteIcon"></i> @Anchors.DeleteText
+									type="button" class="@DeleteButtonColor btn-sm">
+						<i class="@DeleteIcon"></i> @DeleteText
 					</button>
 
 				}
 				else
 				{
 					<button @onclick="@(() => ShowModal_ButtonClick(CRUD.Add, item))"
-									type="button" class="@Anchors.AddButtonColor btn-sm">
-						<i class="@Anchors.AddIcon"></i> @Anchors.AddText
+									type="button" class="@AddButtonColor btn-sm">
+						<i class="@AddIcon"></i> @AddText
 					</button>
 				}
 			</td>

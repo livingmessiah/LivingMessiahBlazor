@@ -1,5 +1,5 @@
 ﻿@page "/Articles"
-@using static LivingMessiah.Web.Articles2.Index.Anchors
+@using static LivingMessiah.Web.Links.Articles
 
 @*	border-bottom*@
 <div class="pb-2 mt-4 mb-2">
@@ -9,15 +9,15 @@
 <div class="list-group">
 	@*<a href="#" class="list-group-item list-group-item-action active">Active Example</a>*@
 	<a class="list-group-item list-group-item-action list-group-item-warning"
-		 href="/Articles/MakingChallahBread">
-		<i class="fas fa-link"></i> Making Challa Bread
+		 href="@LivingMessiah.Web.Links.Articles.MakingChallahBread.Index">
+		<i class="fas fa-link"></i> @LivingMessiah.Web.Links.Articles.MakingChallahBread.Title
 	</a>
 	<a class="list-group-item list-group-item-action list-group-item-warning"
-		 href="/Articles/Prepared">
-		<i class="fas fa-link"></i> Prepared
+		 href="@LivingMessiah.Web.Links.Articles.Prepared.Index">
+		<i class="fas fa-link"></i> @LivingMessiah.Web.Links.Articles.Prepared.Title
 	</a>
 	<a class="list-group-item list-group-item-action list-group-item-warning"
-		 href="/Articles/Pesach">
+		 href="@LivingMessiah.Web.Links.Articles.Pesach.Index">
 		<i class="fas fa-link"></i> Pesach
 	</a>
 	@* ToDo: Fix CreateTagHelper reference <a class="list-group-item list-group-item-action list-group-item-warning" href="PesachRP"><i class="fas fa-link"></i>  @CreateTagHelper<global::Microsoft.AspNetCore.Mvc.TagHelpers.AnchorTagHelper>()</a>*@

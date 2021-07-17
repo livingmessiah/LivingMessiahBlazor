@@ -1,5 +1,4 @@
-﻿@using LivingMessiah.Web.Anchors
-@inherits IntroductionBase
+﻿@inherits IntroductionBase
 @*
 	Using an href that includes a fragment doesn't in Blazor out of the box
 		See Task #647 https://livingmessiah.visualstudio.com/LivingMessiah/_queries/edit/647/?triage=true
@@ -64,8 +63,11 @@ else
 			<li class="lead">
 				<span class="text-warning"><i class="fa-li fas fa-caret-right"></i></span>
 				We also have an
-				<AnchorInDepthStudy AnchorEnum="AnchorEnums.InternalBtnSm"></AnchorInDepthStudy>
-
+				<LinkComponent LinkComponentEnum="LinkComponentEnum.InternalBtnSm"
+											 Index="@LivingMessiah.Web.Links.IndepthStudy.Index"
+											 Title="@LivingMessiah.Web.Links.IndepthStudy.Title"
+											 Icon="@LivingMessiah.Web.Links.IndepthStudy.Icon">
+				</LinkComponent>
 				which starts earlier at <i class="text-warning far fa-clock"></i> 1:30 - 2:15 pm
 			</li>
 			<li class="lead">

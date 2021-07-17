@@ -1,16 +1,14 @@
 ﻿@page "/store"
-@using static LivingMessiah.Web.Store.Anchors;
-@using static LivingMessiah.Web.Store.Items;
-
+@using static LivingMessiah.Web.Links.Store;
 
 <div class="pb-2 mt-4 mb-2 border-bottom">
 	<h2><i class="@Icon"></i> @Title</h2>
 </div>
 
-<h3> <i class="@IconCalendar"></i>  <span class="badge badge-warning mt-2">LMM Calendar - ORDER IT NOW!!!</span> </h3>
+<h3> <i class="@Items.IconCalendar"></i>  <span class="badge badge-warning mt-2">LMM Calendar - ORDER IT NOW!!!</span> </h3>
 <p>Click the image below to order <i class="fas fa-share fa-rotate-90"></i></p>
 <a href="https://aboveallimages.net/shop/ols/products/calendar-2021" target="_blank">
-	<img src="@Blobs.UrlRoot("lmm-calendar-2021-800-540.jpg")" class="img-fluid" alt="@TitleCalendar">
+	<img src="@Blobs.UrlRoot("lmm-calendar-2021-800-540.jpg")" class="img-fluid" alt="@Items.TitleCalendar">
 </a>
 
 @*<br />
@@ -28,7 +26,7 @@
 
 <hr class="warning" />
 
-<h3> <i class="@IconTShirt"></i> <span class="badge badge-warning mt-3">Living Messiah T-shirts!</span></h3>
+<h3> <i class="@Items.IconTShirt"></i> <span class="badge badge-warning mt-3">Living Messiah T-shirts!</span></h3>
 <a href="https://aboveallimages.net/shop?olsPage=t/living-messiah-merchandise" target="_blank">
 	<img src="@Blobs.UrlRoot("lmm-logo-t-shirt.png")" class="img-fluid">
 </a>

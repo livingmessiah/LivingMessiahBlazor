@@ -1,0 +1,37 @@
+﻿@switch (LinkComponentEnum)
+{
+	case LinkComponentEnum.Simple:
+		<a href="@Index" title="@Title">
+			<i class="@Icon" aria-hidden="true"></i>
+		</a>
+		break;
+
+	case LinkComponentEnum.InternalBtnSm:
+		<a href="@Index" class="btn btn-outline-primary btn-sm"
+			 title="@Title">
+			<i class="@Icon"></i>
+			@Title
+		</a>
+		break;
+
+	case LinkComponentEnum.InternalHome:
+		<a href="@Index"
+			 title="@Title" class="list-group-item list-group-item-warning ">
+			<i class="@Icon fa-fw fa-3x" aria-hidden="true"></i>
+			<span class="home-page-xs"><b>@Title</b></span>
+			@if (!String.IsNullOrEmpty(FloatRightHebrew))
+			{
+				<span class="float-right text-info"> <span class="hebrew">@FloatRightHebrew</span>	</span>
+			}
+		</a>
+		break;
+
+	case LinkComponentEnum.Location:
+		<a href="@LivingMessiah.Web.Links.Location.Index" title="@LivingMessiah.Web.Links.Location.Title">
+			<i class="@LivingMessiah.Web.Links.Location.Icon" aria-hidden="true"></i>
+		</a>
+		break;
+
+	default:
+		break;
+}

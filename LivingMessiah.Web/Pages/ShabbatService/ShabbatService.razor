@@ -1,12 +1,12 @@
 ﻿@page "/shabbatservice"
 @using LivingMessiah.Web.Shared;
-@using LivingMessiah.Web.Anchors;
-@using static LivingMessiah.Web.Helper.ShabbatService;
+@using LivingMessiah.Web.Links;
+@using static LivingMessiah.Web.Links.ShabbatService;
 @inherits ShabbatServiceBase
 
 
 <div class="d-print-none float-right">
-	<a class="btn btn-sm btn-default" href="@Anchors.Index"
+	<a class="btn btn-sm btn-default" href="@LivingMessiah.Web.Links.ShabbatService.Index"
 		 @onclick="@PrintFriendly_Button_Click">
 		@((MarkupString)_oppositeIcon) @_oppositeToggleMsg
 	</a>
@@ -21,19 +21,19 @@
 	</div>
 
 	<h4 class="text-center">
-		Living Messiah Ministries @Anchors.Title
+		Living Messiah Ministries @Title
 		@*Shabbat: @Html.GetNextShabbat()*@
 	</h4>
 }
 else
 {
-	<h2><i class="@Anchors.Icon"></i> @Anchors.Title</h2>
+<h2><i class="@LivingMessiah.Web.Links.ShabbatService.Icon"></i> @LivingMessiah.Web.Links.ShabbatService.Title</h2>
 	<ShabbatMeter IsMini="true"
 								Format="MMMM dd"
 								IsPrinterFriendly="@_isPrinterFriendly"
 								AdjustDaysOverride="0"></ShabbatMeter>
 	<ul class="list-inline">
-		<li><a href="@Anchors.Index"><small><b>@_printMsg</b></small></a></li>
+		<li><a href="@LivingMessiah.Web.Links.ShabbatService.Index"><small><b>@_printMsg</b></small></a></li>
 	</ul>
 }
 
@@ -399,10 +399,10 @@ else
 					<li class="lead">
 						<span class="text-warning"><i class="fa-li fas fa-caret-right"></i></span>
 						Besides the website, see us on-line on YouTube, Facebook and see our
-						<a href="@Podcast.Anchors.Index"
-							 title="@Podcast.Anchors.Title2" class="btn btn-outline-primary btn-sm">
-							<i class="@Podcast.Anchors.Icon" aria-hidden="true"></i>
-							&nbsp;<b>@Podcast.Anchors.Title2</b>
+						<a href="@Podcast.Index"
+							 title="@Podcast.Title2" class="btn btn-outline-primary btn-sm">
+							<i class="@Podcast.Icon" aria-hidden="true"></i>
+							&nbsp;<b>@Podcast.Title2</b>
 						</a>
 					</li>
 
@@ -414,23 +414,27 @@ else
 					<li class="lead">
 						<span class="text-warning"><i class="fa-li fas fa-caret-right"></i></span>
 						Please see
-						<a href="@LivingMessiah.Web.Links.UpcomingEvents.Index"
-							 title="@LivingMessiah.Web.Links.UpcomingEvents.Title" class="btn btn-outline-primary btn-sm">
-							<i class="@LivingMessiah.Web.Links.UpcomingEvents.Icon" aria-hidden="true"></i>
-							&nbsp;<b>@LivingMessiah.Web.Links.UpcomingEvents.Title</b>
+						<a href="@UpcomingEvents.Index"
+							 title="@UpcomingEvents.Title" class="btn btn-outline-primary btn-sm">
+							<i class="@UpcomingEvents.Icon" aria-hidden="true"></i>
+							&nbsp;<b>@UpcomingEvents.Title</b>
 						</a>
 						for detail information about upcoming events like
-						<a href="@TorahTuesday.Anchors.Index"
-							 title="@TorahTuesday.Anchors.Title2" class="btn btn-outline-primary btn-sm">
-							<i class="@TorahTuesday.Anchors.Icon" aria-hidden="true"></i>
-							&nbsp;<b>@TorahTuesday.Anchors.Title2</b>
+						<a href="@TorahTuesday.Index"
+							 title="@TorahTuesday.Title2" class="btn btn-outline-primary btn-sm">
+							<i class="@TorahTuesday.Icon" aria-hidden="true"></i>
+							&nbsp;<b>@TorahTuesday.Title2</b>
 						</a>
 
 					</li>
 					<li class="lead">
 						<span class="text-warning"><i class="fa-li fas fa-caret-right"></i></span>
 						We also have an
-						<AnchorInDepthStudy AnchorEnum="AnchorEnums.InternalBtnSm"></AnchorInDepthStudy>
+						<LinkComponent LinkComponentEnum="LinkComponentEnum.InternalBtnSm"
+													 Index="@LivingMessiah.Web.Links.IndepthStudy.Index"
+													 Title="@LivingMessiah.Web.Links.IndepthStudy.Title"
+													 Icon="@LivingMessiah.Web.Links.IndepthStudy.Icon">
+						</LinkComponent>
 						which starts earlier at <i class="text-warning far fa-clock"></i> 1:30 - 2:15 pm
 					</li>
 
@@ -441,10 +445,10 @@ else
 						<span class="text-warning"><i class="fa-li fas fa-caret-right"></i></span>
 						Your giving helps meet the needs that come before this fellowship. You may also give online by clicking here
 
-						<a href="@LivingMessiah.Web.Links.Donate.Index"
-							 title="@LivingMessiah.Web.Links.Donate.Title" class="btn btn-primary btn-sm">
-							<i class="@LivingMessiah.Web.Links.Donate.Icon" aria-hidden="true"></i>
-							<b>@LivingMessiah.Web.Links.Donate.Title</b>
+						<a href="@PayPal.Donate.Index"
+							 title="@PayPal.Donate.Title" class="btn btn-primary btn-sm">
+							<i class="@PayPal.Donate.Icon" aria-hidden="true"></i>
+							<b>@PayPal.Donate.Title</b>
 						</a>
 
 						Back to Wellness	- Bags of Kindness
@@ -547,10 +551,10 @@ else
 
 			<p class="lead">
 				Click
-				<a href="@Parasha.Anchors.Index"
-					 title="@Parasha.Anchors.Title" class="btn btn-outline-warning btn-sm">
-					<i class="@Parasha.Anchors.Icon" aria-hidden="true"></i>
-					&nbsp;<b>@TorahTuesday.Anchors.Title</b>
+				<a href="@Parasha.Index"
+					 title="@Parasha.Title" class="btn btn-outline-warning btn-sm">
+					<i class="@Parasha.Icon" aria-hidden="true"></i>
+					&nbsp;<b>@TorahTuesday.Title</b>
 				</a>
 				to see the a list of the readings.
 			</p>
@@ -717,7 +721,8 @@ else
 
 <hr class="warning" />
 
-<ThankYou IsPrinterFriendly="@_isPrinterFriendly"></ThankYou>
+<LivingMessiah.Web.Shared.ThankYou IsPrinterFriendly="@_isPrinterFriendly">
+</LivingMessiah.Web.Shared.ThankYou>
 
 <hr class="warning" />
 
