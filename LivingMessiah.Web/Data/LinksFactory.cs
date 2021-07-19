@@ -8,12 +8,31 @@ namespace LivingMessiah.Web.Data
 	{
 		List<Link> GetLinks();
 		//List<Link> GetFeastLinks();
-		//List<LinkBasic> GetDashboardLinks();
+		List<LinkBasic> GetDashboardLinks();
+		List<LinkBasic> GetVideoProductionLinks();
+		List<LinkBasic> GetEldersLinks();
 		//List<LinkBasic> GetMarkdownLinks();
 	}
 
 	public class LinksFactory : ILinksFactory
 	{
+
+		public List<LinkBasic> GetVideoProductionLinks()
+		{
+			return new List<LinkBasic>
+			{
+				new LinkBasic {Index = WeeklyVideos.Index, Title = WeeklyVideos.Title, Icon = WeeklyVideos.Icon, },
+ 			};
+		}
+
+		public List<LinkBasic> GetEldersLinks()
+		{
+			return new List<LinkBasic>
+			{
+				new LinkBasic {Index = PsalmsAndProverbs.Index, Title = PsalmsAndProverbs.Title, Icon = PsalmsAndProverbs.Icon, },
+ 			};
+		}
+
 		public List<LinkBasic> GetDashboardLinks()
 		{
 			return new List<LinkBasic>
@@ -279,12 +298,6 @@ namespace LivingMessiah.Web.Data
 			};
 		}
 
-		/*
-		public List<Link> GetLinks()
-		{
-			return new List<Link>
-			{
-		*/
 
 
 		/*

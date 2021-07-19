@@ -27,6 +27,7 @@
 	{
 		public const string Login = "/Account/Login";
 		public const string Logout = "/Account/Logout";
+		public const string LogoutAction = "Account/LogOut";
 		public const string Profile = "/Account/Profile";
 
 		public const string TitleAccessDenied = "Access Denied.";
@@ -211,16 +212,6 @@
 		}
 	}
 
-
-
-	//public static class Donate
-	//{
-	//	public const string Index = "/Donate";
-	//	
-	//	public const string Icon = "fab fa-paypal";
-	//	public const string Href = "https://LivingMessiah.com/Donate";
-	//}
-
 	public static class PayPal
 	{
 		public static class Donate
@@ -245,7 +236,6 @@
 
 	}
 
-
 	public static class Pesach
 	{
 		public const string Index = "/Pesach";
@@ -254,6 +244,14 @@
 		public const string Icon = "fas fa-door-open";
 		//public const string Icon = "fas fa-door-closed"
 		//public const string Icon = "fas fa-frog";
+	}
+
+	public static class PsalmsAndProverbs
+	{
+		public const string Index = "/PsalmsAndProverbs";
+		public const string Index2 = "/PandP";
+		public const string Title = "Upcoming Psalms And Proverbs";
+		public const string Icon = "fab fa-readme";
 	}
 
 	public static class Podcast

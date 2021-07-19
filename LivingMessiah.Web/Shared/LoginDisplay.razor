@@ -1,49 +1,36 @@
-﻿<div class="row">
-	<div class="col-12">
-		<span class="float-right mt-0 mb-4">
-			<AuthorizeView>
-				<Authorized>
-					<form method="post" action="Account/LogOut">
-						<button type="submit" class="nav-link btn btn-link">Log out</button>
+﻿@using static LivingMessiah.Web.Links.Account
+
+<div class="container-fluid bg-light">
+
+	<AuthorizeView>
+		<Authorized>
+			<div class="row">
+
+				<div class="col-8">
+					<a href="@Profile"  title="Role: @Role; IsAdmin:@IsAdmin; Email:@EmailAddress">
+						<span class="text-success"><b>Shalom @Name!</b></span> @((MarkupString)BlueCheck)
+					</a>
+				</div>
+				<div class="col-4">
+					<form method="post" action="@LogoutAction">
+						<button type="submit" class="btn btn-sm btn-outline-info float-right text-black-50">
+							<u>Log out</u> <i class="fas fa-sign-out-alt"></i>
+						</button>
 					</form>
+				</div>
+			</div>
+		</Authorized>
 
-
-					@*@if (context.User.Verified())
-		{
-			<a href="@LivingMessiah.Web.Links.Account.Profile">
-				<span class="text-black-50">Shalom @context.User.Identity.Name! </span>
-				<span class="text-primary"><i class="fas fa-check"></i></span>
-			</a>
-		}
-		else
-		{
-			<a href="@LivingMessiah.Web.Links.Account.Profile">
-				<span class="text-black-50">Shalom @context.User.Identity.Name!</span>
-				<span class="text-danger"><i class="fas fa-question"></i></span>
-			</a>
-		}*@
-
-					<a href="@LivingMessiah.Web.Links.Account.Profile">
-						<span class="text-black-50">Shalom @context.User.Identity.Name!</span>
-						<span class="text-danger"><i class="fas fa-question"></i></span>
+		<NotAuthorized>
+			<div class="row">
+				<div class="col-12">
+					<a href="@Login" class="btn btn-sm btn-outline-info float-right text-black-50">
+						<u>Log in</u> <i class="fas fa-sign-in-alt"></i>
 					</a>
+				</div>
+			</div>
+		</NotAuthorized>
+	</AuthorizeView>
 
-					<br />
-					<a class="float-right" href="@LivingMessiah.Web.Links.Account.Logout">
-						<span class="text-black-50"><u>Logout</u></span>
-						<i class="fas fa-sign-out-alt"></i>
-					</a>
-				</Authorized>
-				<NotAuthorized>
-					<a href="@LivingMessiah.Web.Links.Account.Login">
-						<span class="text-black-50"><u>Login</u></span>
-						<i class="fas fa-sign-in-alt"></i>
-					</a>
-				</NotAuthorized>
-
-			</AuthorizeView>
-
-		</span>
-	</div>
 </div>
 

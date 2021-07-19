@@ -5,10 +5,12 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Components.Authorization;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LivingMessiah.Web.Pages.Account
 {
-	public partial class Claims
+  [Authorize]
+  public partial class Claims
 	{
     [Inject] 
     public AuthenticationStateProvider AuthenticationStateProvider { get; set; }
@@ -17,12 +19,13 @@ namespace LivingMessiah.Web.Pages.Account
     public string Name { get; set; }
     public string ProfileImage { get; set; }
     public string Country { get; set; }
-    public bool Verified { get; set; }
+    public bool IsAdmin { get; set; }
     public string Role { get; set; }
 
     private string _authMessage;
-    private string _surnameMessage;
     private IEnumerable<Claim> _claims = Enumerable.Empty<Claim>();
+
+    protected List<Claim> ClaimList;
 
     protected override async Task OnInitializedAsync()
     {
@@ -34,8 +37,7 @@ namespace LivingMessiah.Web.Pages.Account
       EmailAddress = user.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
       ProfileImage = user.Claims.FirstOrDefault(c => c.Type == "picture")?.Value;
       Country = user.Claims.FirstOrDefault(c => c.Type == "country")?.Value;
-      //Verified = user.Verified();
-      //Role = user.GetRoles();
+      Role = user.Claims.FirstOrDefault(c => c.Type == "https://schemas.livingmessiah.com/roles")?.Value;
     }
 
     private async Task GetClaimsPrincipalData()
@@ -47,42 +49,17 @@ namespace LivingMessiah.Web.Pages.Account
       {
         _authMessage = $"{user.Identity.Name} is authenticated.";
         _claims = user.Claims;
-        _surnameMessage =
-            $"Surname: {user.FindFirst(c => c.Type == ClaimTypes.Surname)?.Value}";
+        //_surnameMessage = $"Surname: {user.FindFirst(c => c.Type == ClaimTypes.Surname)?.Value}";
+        ClaimList = _claims.ToList();
       }
       else
       {
         _authMessage = "The user is NOT authenticated.";
       }
+
+
     }
 
-    public string BlueCheck
-    {
-      get
-      {
-        if (Verified)
-        {
-          return "<span class='text-primary'><i class='fas fa-check'></i></span>";
-        }
-        else
-        {
-          return "<span class='text-danger'>Unverified<i class='fas fa-question'></i></span>";
-        }
 
-      }
-    }
-
-    /*
-    // https://docs.microsoft.com/en-us/aspnet/core/blazor/components/?view=aspnetcore-5.0#attribute-splatting-and-arbitrary-parameters
-    private Dictionary<string, object> TableAttributes { get; set; } =
-     new()
-     {
-       //{ "maxlength", "10" },
-       { "class", "table table-striped table-sm" }
-     };
-
-
-
-     */
   }
 }

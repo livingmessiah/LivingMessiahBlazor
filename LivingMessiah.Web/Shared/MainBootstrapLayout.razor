@@ -1,0 +1,26 @@
+@inherits LayoutComponentBase
+
+<div class="page">
+
+	<header>
+		<NavBootstrapMenu UseDarkMode="true"></NavBootstrapMenu>
+	</header>
+
+	<div class="container">
+		<div class="main">
+			<div class="top-row px-1">
+				<LoginDisplay />
+			</div>
+
+			<div class="content px-4">
+				@Body
+			</div>
+		</div>
+
+		<footer class="text-muted">
+			<NavBarFooter />
+		</footer>
+
+
+	</div>
+</div>

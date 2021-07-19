@@ -5,10 +5,13 @@ using Microsoft.Extensions.Logging;
 using System;
 using LivingMessiah.Web.Services;
 using LivingMessiah.Domain;
+
+using Microsoft.AspNetCore.Authorization;
 //using Microsoft.AspNetCore.Components.Forms;
 
 namespace LivingMessiah.Web.Pages.Admin.WeeklyVideos
 {
+	[Authorize(Roles = "admin")]
 	public partial class Index
 	{
 		const bool IsDebug = true;

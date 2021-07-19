@@ -2,7 +2,7 @@
 <HomeImage></HomeImage>
 
 <div class="d-md-none">
-	<AuthorizeView>
+	<AuthorizeView Roles="admin">
 		<Admin></Admin>
 	</AuthorizeView>
 
@@ -24,7 +24,9 @@
 			<IntroductionAndWelcome></IntroductionAndWelcome>
 		</div>
 		<div class="col-5">
-			<Admin></Admin>
+			<AuthorizeView Roles="admin">
+				<Admin></Admin>
+			</AuthorizeView>
 			<AuthorizeView>
 				<DashboardButton></DashboardButton>
 			</AuthorizeView>
@@ -45,7 +47,9 @@
 		</div>
 		<div class="col-4">
 
-			<Admin></Admin>
+			<AuthorizeView Roles="admin">
+				<Admin></Admin>
+			</AuthorizeView>
 			<AuthorizeView>
 				<DashboardButton></DashboardButton>
 			</AuthorizeView>

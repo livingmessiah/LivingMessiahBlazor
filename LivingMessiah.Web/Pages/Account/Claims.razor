@@ -1,40 +1,49 @@
 ﻿@page "/account/profile"
 
-@{
-	int rowNo = 1;
-}
 <h3><i class="fab fa-superpowers"></i> User Claims</h3>
 
-<button @onclick="GetClaimsPrincipalData">Get ClaimsPrincipal Data</button>
+<button class="btn btn-lg btn-outline-primary my-3" @onclick="GetClaimsPrincipalData">
+	Get ClaimsPrincipal Data
+</button>
 
-<p>@_authMessage</p>
-
-@*
-	@attributes="@TableAttributes" *@
-
-@if (_claims.Count() > 0)
+@if (ClaimList != null)
 {
+	@if (ClaimList.Any())
+	{
+		<div class="card my-5" style="max-width: 540px;">
+			<div class="row no-gutters">
+				<div class="col-md-4">
+					<img src="@ProfileImage" alt="" class="img-fluid rounded" />
+				</div>
+				<div class="col-md-8">
+					<div class="card-body">
+						<p class="card-title">@_authMessage</p>
 
-	<ul>
-		@foreach (var claim in _claims)
-		{
-			<li>@claim.Type: @claim.Value</li>
-		}
-	</ul>
-
-	@*<TableTemplate Items="@_claims">
-		<TableHeader>
-			<th>#</th>
-			<th>Claim</th>
-			<th>Value</th>
-
-		</TableHeader>
-		<RowTemplate>
-			<td>@rowNo</td>
-			<td>@claim.Type</td>
-			<td>@claim.Value</td>
-		</RowTemplate>
-	</TableTemplate>*@
-
+					</div>
+				</div>
+			</div>
+		</div>
+	}
 }
 
+
+@if (ClaimList != null)
+{
+	@if (ClaimList.Any())
+	{
+		<h3 class="text-warning mt-5 mb-0">Claims List</h3>
+		<TableTemplate Items="@ClaimList">
+			<TableHeader>
+
+				<th>Claim</th>
+				<th>Value</th>
+
+			</TableHeader>
+			<RowTemplate>
+				<td>@context.Type</td>
+				<td>@context.Value</td>
+			</RowTemplate>
+		</TableTemplate>
+
+	}
+}

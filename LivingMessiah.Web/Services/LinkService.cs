@@ -35,8 +35,7 @@ namespace LivingMessiah.Web.Services
 		public List<LinkBasic> GetAdminLinks()
 		{
 			LinksFactory links = new LinksFactory();
-			//return links.GetDashboardLinks().Union(links.GetMarkdownLinks()).ToList();
-			return links.GetDashboardLinks().ToList();
+			return links.GetVideoProductionLinks().Union(links.GetEldersLinks()).ToList();
 		}
 
 		public List<LinkBasic> GetDashboardLinks()
@@ -45,8 +44,6 @@ namespace LivingMessiah.Web.Services
 			return links.GetDashboardLinks().ToList();
 		}
 		/*
-
-
 
 		public List<LinkBasic> GetMarkdownLinks()
 		{
