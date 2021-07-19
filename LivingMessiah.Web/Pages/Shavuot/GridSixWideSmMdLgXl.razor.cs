@@ -15,11 +15,11 @@ namespace LivingMessiah.Web.Pages.Shavuot
 		{
 			if (day < CurrentDay)
 			{
-				return "<span class='text-warning'><i class='far fa-calendar-check fa-stack-2x'></i></span>";
+				return "<span class='text-warning'><i class='far fa-calendar-check'></i></span>";
 			}
 			else
 			{
-				return "<i class='far fa-calendar fa-stack-2x'></i>";
+				return "<i class='far fa-calendar'></i>";
 			}
 		}
 
