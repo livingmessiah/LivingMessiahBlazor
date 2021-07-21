@@ -2,11 +2,7 @@
 @using LivingMessiah.Web.Pages.Parasha
 @using static LivingMessiah.Web.Links.TorahTuesday
 
-<div class="pb-2 mt-4 mb-2 border-bottom">
-	<h1 class="@Icon fa-2x"> @Title</h1>
-</div>
-
-<br />
+<PageHeader Icon="@Icon" Title="@Title" AddBreak="true"></PageHeader>
 
 <TuesdayTorahStudy></TuesdayTorahStudy>
 

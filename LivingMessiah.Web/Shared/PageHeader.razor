@@ -1,98 +1,103 @@
 ﻿
-@if (Icon != null && Title !=null)
+<div class="pb-2 mt-4 mb-2 border-bottom">
+	<h1><i class="@Icon"></i> @Title</h1>
+</div>
+
+@if (AddBreak)
 {
-	<div class="pb-2 mt-4 mb-2 border-bottom">
-		<h1 class="@Icon fa-2x"> @Title</h1>
-	</div>
-}
-@*else if (LoadFailed)
-{
-	<p class="text-danger"><em>Could not load because of an Error</em></p>
-}*@
-else
-{
-	<p><em>Loading...</em></p>
+	<br />
 }
 
 @*
+	fa-2x
 
-	ToDo This needs a lot of thinking
+		else if (LoadFailed)
+	{
+		<p class="text-danger"><em>Could not load because of an Error</em></p>
+	}
+	else
+	{
+		<p><em>Loading...</em></p>
+	}
 
-		<h1><span class="text-warning"><i class="@Icon"></i></span> @Title</h1>
+	@*
 
-			<h1 class="@LinkLocal.Icon fa-2x"> @LinkLocal.Title</h1>
-												See LivingMessiah.Web\Pages\UpcomingEvents\Index.razor
+		ToDo This needs a lot of thinking
 
-												<div class="d-print-none">
-													<h2><i class="@Icon"></i> @Title</h2>
-												</div>
+			<h1><span class="text-warning"><i class="@Icon"></i></span> @Title</h1>
 
-												<div class="d-none d-print-block">
-													<h1 class="text-center">@Title</h1>
-												</div>
+				<h1><i class="@Icon fa-2x"> @LinkLocal.Title</h1>
+													See LivingMessiah.Web\Pages\UpcomingEvents\Index.razor
 
-										PodCast
+													<div class="d-print-none">
+														<h2><i class="@Icon"></i> @Title</h2>
+													</div>
+
+													<div class="d-none d-print-block">
+														<h1 class="text-center">@Title</h1>
+													</div>
+
+											PodCast
+												<h2>
+													<i class="@Icon fa-2x"></i> @Title
+												</h2>
+
+											Donate
 											<h2>
-												<i class="@Icon fa-2x"></i> @Title
+												<span class="text-primary @LivingMessiah.Web.Links.PayPal.Donate.Icon mb-3">
+												</span> @LivingMessiah.Web.Links.PayPal.Donate.Title
 											</h2>
 
-										Donate
-										<h2>
-											<span class="text-primary @LivingMessiah.Web.Links.PayPal.Donate.Icon mb-3">
-											</span> @LivingMessiah.Web.Links.PayPal.Donate.Title
-										</h2>
+										Confirm_donation
+											<div class="pb-2 mt-4 mb-2 border-bottom">
+											<h1><span class="text-success @Icon"></span> @Title</h1>
+										</div>
 
-									Confirm_donation
-										<div class="pb-2 mt-4 mb-2 border-bottom">
-										<h1><span class="text-success @Icon"></span> @Title</h1>
-									</div>
+								Cancel_donation
+								<div class="pb-2 mt-4 mb-2 border-bottom">
+									<h1><span class="text-warning @Icon"></span> @Title</h1>
+								</div>
 
-							Cancel_donation
+
 							<div class="pb-2 mt-4 mb-2 border-bottom">
-								<h1><span class="text-warning @Icon"></span> @Title</h1>
+								<h1><i class="@Icon fa-2x"> @Title</h1>
+								<ul class="nav nav-pills">
+									<li role="presentation" class="nav-item">
+										<a class="nav-link active" data-toggle="pill"
+											 href="#@Fragments.Leviticus">Leviticus</a>
+									</li>
+									<li role="presentation" class="nav-item">
+										<a class="nav-link" data-toggle="pill"
+											 href="#@Fragments.Numbers">Numbers</a>
+									</li>
+									<li role="presentation" class="nav-item">
+										<a class="nav-link" href="@CurrentIndex">
+											Current Index <i class="far fa-arrow-alt-circle-left"></i>
+										</a>
+									</li>
+								</ul>
+
 							</div>
 
 
-						<div class="pb-2 mt-4 mb-2 border-bottom">
-							<h1 class="@Icon fa-2x"> @Title</h1>
-							<ul class="nav nav-pills">
-								<li role="presentation" class="nav-item">
-									<a class="nav-link active" data-toggle="pill"
-										 href="#@Fragments.Leviticus">Leviticus</a>
-								</li>
-								<li role="presentation" class="nav-item">
-									<a class="nav-link" data-toggle="pill"
-										 href="#@Fragments.Numbers">Numbers</a>
-								</li>
-								<li role="presentation" class="nav-item">
-									<a class="nav-link" href="@CurrentIndex">
-										Current Index <i class="far fa-arrow-alt-circle-left"></i>
-									</a>
-								</li>
-							</ul>
+						Parasha
+						<h2>
+							<i class="@Icon"></i> @Title
+							<br />
+						</h2>
 
-						</div>
-
-
-					Parasha
 					<h2>
-						<i class="@Icon"></i> @Title
+						<i class="@Icon"></i> @Title <b><u>Next Book</u></b>
 						<br />
 					</h2>
 
-				<h2>
-					<i class="@Icon"></i> @Title <b><u>Next Book</u></b>
-					<br />
-				</h2>
 
+				MyHebrewBible
+					@using static LivingMessiah.Web.Pages.ImportantLinks.Constants.MyHebrewBible
 
-			MyHebrewBible
-				@using static LivingMessiah.Web.Pages.ImportantLinks.Constants.MyHebrewBible
-
-			<h2 id="@Id"><span class="badge badge-warning">@Title</span></h2>
+				<h2 id="@Id"><span class="badge badge-warning">@Title</span></h2>
 
 
 *@
 
 @* Optional *@
-<br />

@@ -1,0 +1,14 @@
+﻿@inject NavigationManager NavigationManager
+
+@code{
+	//https://stackoverflow.com/questions/59728006/how-do-i-pass-returnurl-to-login-page-in-blazor-server-application
+	[Parameter]
+	public string ReturnUrl { get; set; } = LivingMessiah.Web.Links.Sukkot.ReturnUrlSukkotRegistration;
+
+	protected override void OnInitialized()
+	{
+		ReturnUrl = "~/" + ReturnUrl;
+		NavigationManager.NavigateTo($"{LivingMessiah.Web.Links.Account.Login}?returnUrl={ReturnUrl}",
+			 forceLoad: true);
+	}
+}

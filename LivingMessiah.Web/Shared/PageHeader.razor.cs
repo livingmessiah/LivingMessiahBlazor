@@ -12,5 +12,9 @@ namespace LivingMessiah.Web.Shared
 
 		[Parameter]
 		public string Icon { get; set; }
+
+		[Parameter]
+		public bool AddBreak { get; set; } = false;
+
 	}
 }

@@ -1,0 +1,69 @@
+﻿@using static LivingMessiah.Web.Links.Sukkot 
+
+@{
+	string classActive = ""; // "active"
+
+	//<ol class="breadcrumb mx-auto justify-content-center">
+}
+
+<div class="d-print-none">
+		<ol class="breadcrumb mx-n3 mt-n3">
+			<li>
+				<a class="badge badge-secondary" href="@LivingMessiah.Web.Links.Sukkot.Index"><i class="fas fa-campground"></i>&nbsp;<sup>Home</sup></a>&nbsp;&nbsp;
+			</li>
+
+			<li class="@classActive">
+				<a class="badge badge-light" href="@RegistrationList"><i class="fa fa-table"></i>&nbsp;<sup>Registration</sup></a>&nbsp;&nbsp;
+			</li>
+
+
+			<li class="@classActive">
+				<a class="badge badge-warning" href="@AttendanceAllFeastDays"><i class="fas fa-chart-line"></i>&nbsp;<sup>Attend</sup></a>&nbsp;&nbsp;
+			</li>
+
+			<li class="@classActive">
+				<a class="badge badge-info" href="@LodgingDays.PivotOnCampCode"><i class="fa fa-truck"></i>&nbsp;<sup>Lodge</sup></a>&nbsp;&nbsp;
+			</li>
+
+
+			<li class="@classActive">
+				<a class="badge badge-success" href="@Donations.Index"><i class="fas fa-dollar-sign"></i>&nbsp;<sup>Donate</sup></a>&nbsp;&nbsp;
+			</li>
+
+			<li class="@classActive">
+				<a class="badge badge-danger" href="@Errors.ErrorLog"><i class="fas fa-bug"></i>&nbsp;<sup>Errors</sup></a>
+			</li>
+
+		</ol>
+
+		@if (LivingMessiah.Web.Pages.Sukkot.Constants.Other.IsMealsAvailable)
+		{
+			<ol class="breadcrumb">
+
+				<li class="@classActive">
+					<a class="badge badge-primary" href="@Meals.PlannerReport"><i class="fa fa-list-ol"></i>&nbsp;<sup>Meal Planner</sup></a>&nbsp;&nbsp;
+				</li>
+
+				<li class="@classActive">
+					<a class="badge badge-primary" href="@Meals.Index"><i class="fas fa-ticket-alt"></i>&nbsp;<sup>Meal Tickets</sup></a>&nbsp;&nbsp;
+				</li>
+
+				<li class="@classActive">
+					<a class="badge badge-primary" href="@Meals.TicketsPunched">
+						<i class="fas fa-money-bill-wave-alt"></i>&nbsp;<sup>Punched</sup>
+					</a>&nbsp;&nbsp;
+				</li>
+
+				<li class="@classActive">
+					<a class="badge badge-primary" href="@Meals.ListMealPlanMenu">
+						<i class="far fa-map"></i>&nbsp;<sup>Menu List</sup>
+					</a>&nbsp;&nbsp;
+				</li>
+
+				<li class="@classActive">
+					<a class="badge badge-primary" href="@KitchenWork.Index"><i class="fas fa-utensils"></i>&nbsp;<sup>Kitchen Work</sup></a>&nbsp;&nbsp;
+				</li>
+				@* asp-route-mealTicketEnum="@SukkotApi.Domain.MealTicketEnum.Day01Brunch" ToDo, cant see this??? *@
+			</ol>
+		}
+</div>

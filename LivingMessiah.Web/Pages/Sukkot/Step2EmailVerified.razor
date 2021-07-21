@@ -1,0 +1,31 @@
+﻿@using LivingMessiah.Web.Pages.Sukkot.Constants
+@using LivingMessiah.Web.Pages.Sukkot.RegistrationEnums
+@using static LivingMessiah.Web.Links.Account
+
+@if (StatusFlagEnum.HasFlag(StatusFlagEnum.EmailConfirmation) == false)
+{
+	<p class="lead">
+		Sign Up for an account or use one previously created.
+		<ol class="lead">
+			<li>
+				Click <RedirectToLogin></RedirectToLogin>
+				@*
+		<a class="btn btn-primary btn-sm"
+			 href="@Login" asp-route-returnUrl="@LivingMessiah.Web.Links.Sukkot.ReturnUrlSukkotRegistration">
+			Login
+		</a>
+				*@
+				to create an account.
+			</li>
+			<li>Verify the account (an email with a link will be sent to you)</li>
+			<li>Once that is done, you will be returned to this page so you can continue with the Registration.</li>
+			<li><b>Note</b>, close the browser that you used to sign up for you Living Messiah account before you log back in.  The cache needs to be cleared otherwise it won't recognize the verification process.</li>
+		</ol>
+	</p>
+
+}
+else
+{
+	<p class="lead"><b>Task completed</b></p>
+}
+

@@ -1,0 +1,62 @@
+﻿@using LivingMessiah.Web.Pages.Sukkot.RegistrationEnums
+@using static LivingMessiah.Web.Links.Sukkot
+
+@{
+	//bool IsXs2 = (ViewData[VDD.IsXs] == null) ? false : (bool)ViewData[VDD.IsXs];
+}
+
+
+@if (StatusFlagEnum.HasFlag(StatusFlagEnum.EmailConfirmation) == true)
+{
+	@if (StatusFlagEnum.HasFlag(StatusFlagEnum.RegistrationFormCompleted) == false)
+	{
+		<HouseRulesConfirmationModal IsXs="true"></HouseRulesConfirmationModal>
+	}
+	else
+	{
+
+		if (StatusFlagEnum.HasFlag(StatusFlagEnum.FullyPaid) == true)
+		{
+			<p class="lead"><b>Task completed</b></p>
+			<p>Registration Id: <b>@Model.Id</b>; ToDo Add PDF Link</p>
+		}
+		else
+		{
+			<p class="lead"><b>Task completed</b></p>
+			<p>Registration Id: <b>@Model.Id</b></p>
+
+			if (StatusFlagEnum.HasFlag(StatusFlagEnum.MealsFormCompleted) == false)
+			{
+				<p class="lead">
+					The first step of the registration process is complete.
+					You can continue on to the next step (editing you meal ticket) or View, Edit or even Delete you registration.
+				</p>
+			}
+
+			<a class="btn-primary btn-sm"
+				 href="@LivingMessiah.Web.Links.Sukkot.CreateEdit"
+				 asp-route-id="@Model.Id">
+				<i class="far fa-edit"></i> Edit
+			</a>
+
+			<text>&nbsp;</text>
+			<a class="btn-info btn-sm" href="@Details"
+				 asp-route-id="@Model.Id">
+				<i class="fas fa-info"></i> View
+			</a>
+
+			if (StatusFlagEnum.HasFlag(StatusFlagEnum.PartiallyPaid) == false)
+			{
+				<text>&nbsp;</text>
+				<a class="btn-danger btn-sm" href="@DeleteConfirmation"
+					 asp-route-id="@Model.Id">
+					<i class="fas fa-times"></i> Delete
+				</a>
+			}
+
+		}
+
+	}
+}
+
+

@@ -32,10 +32,10 @@ namespace LivingMessiah.Web
 				.AddSingleton<IUpcomingEventsRepository, UpcomingEventsRepository>()
 
 
-				//.AddTransient<ISukkotService, SukkotService>()
+				.AddTransient<ISukkotService, SukkotService>()
 				.AddTransient<ISukkotAdminService, SukkotAdminService>()
 
-				//.AddTransient<ISukkotRepository, SukkotRepository>()
+				.AddTransient<ISukkotRepository, SukkotRepository>()
 				.AddTransient<ISukkotAdminRepository, SukkotAdminRepository>()
 				.AddSingleton<IUpcomingEventService, UpcomingEventService>()
 				.AddSingleton<ILiturgyService, LiturgyService>();

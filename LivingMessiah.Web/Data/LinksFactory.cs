@@ -52,6 +52,16 @@ namespace LivingMessiah.Web.Data
 			{
 				new Link
 				{
+					Index = Links.Sukkot.Index,
+					Title = Links.Sukkot.Title,
+					Icon = Links.Sukkot.Icon,
+					HomeSidebarUsage=true,
+					HomeFloatRightHebrew="סֻכּוֹת",
+					HomeTitleSuffix=" Sukkot H5523",
+					SitemapUsage=false
+				},
+				new Link
+				{
 					Index = HeavensDeclare.Index,
 					Title = HeavensDeclare.Title,
 					Icon = HeavensDeclare.Icon,

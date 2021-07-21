@@ -1,7 +1,6 @@
 ﻿using System;
 
 namespace LivingMessiah.Web.Pages.Sukkot.Constants
-
 {
 	public static class PayPal
 	{
@@ -57,7 +56,6 @@ namespace LivingMessiah.Web.Pages.Sukkot.Constants
 		public const string PaymentSummaryXs = "_PaymentSummaryXs";
 
 		public const string ErrorRP = "~/Pages/Shared/ErrorRP.cshtml";
-		public const string HouseRulesConfirmationModal = "_HouseRulesConfirmationModal";
 		public const string Message = "_Message";
 
 	}
@@ -105,22 +103,14 @@ namespace LivingMessiah.Web.Pages.Sukkot.Constants
 		}
 	}
 
-	public static class VDD
-	{
-		public const string MealGroup = "MealGroup";
-		public const string MealCost = "MealCost";
-		public const string TableClass = "TableClass";
-		public const string IsXs = "IsXs";
-		public const string IsXs2 = "IsXs2";
-	}
-
 	public static class Other
 	{
+		public const bool IsMealsAvailable = false;
 		public const string Banner = "2020-sukkot-banner-1039-400-3d.jpg";
-		public const string BannerAlt = "2020 Sukkot Registration Banner";
-		public const string DetailsTitle = "Living Messiah Sukkot Registration 2020";
+		public const string BannerAlt = "2021 Sukkot Registration Banner";
+		public const string DetailsTitle = "Living Messiah Sukkot Registration 2021";
 		public const string MealTicketTitle = "LMM Sukkot 2020 Meal Ticket";
-		public const string ReturnUrlSukkotRegistration = "/Sukkot/Registration";
+		//public const string ReturnUrlSukkotRegistration = "/Sukkot/Registration";
 		public const bool IsRvHookupsAvailable = true;
 		public const bool IsRegistrationClosed = false;
 		public const bool IsSukkotOver = false;  //Task 409
@@ -133,7 +123,7 @@ you can choose where to print your registration form.
 If for some reason you can not print the form that is OK, it just makes it convenient to process and it shows clearly the intent of your check.
 <br /><br />The address of Living Messiah Ministries will be on the bottom of the form.
 Make the check payable to <b>Living Messiah</b> and attach it to the printed out form before you mail it.
-<br /><br />Please put the <b>registration id</b> on the check and write <b>Sukkot 2020 Payment</b>.  
+<br /><br />Please put the <b>registration id</b> on the check and write <b>Sukkot 2021 Payment</b>.  
 <br /><br />Thanks!
 ";
 	}

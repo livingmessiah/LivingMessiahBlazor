@@ -1,9 +1,7 @@
 ﻿@page "/Sitemap"
 @using static LivingMessiah.Web.Links.Sitemap;
 
-<div class="pb-2 mt-4 mb-2 border-bottom">
-	<h1 class="@Icon fa-2x"> @Title</h1>
-</div>
+<PageHeader Icon="@Icon" Title="@Title"></PageHeader>
 
 <DataList Data="@Links" Type="LinkTypeEnum.Sitemap">
 	<span class="fa-li"><i class="@context.Icon"></i></span>

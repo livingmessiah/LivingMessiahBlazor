@@ -324,9 +324,55 @@
 	{
 		public const string Index = "/Sukkot";
 		public const string Title = "Sukkot";
+		public const string Title2 = "Sukkot 2021";
 		public const string Icon = "fas fa-campground";
-		//public const string Registration = "/Sukkot/RegistrationShell"; // See Startup.cs options.Conventions.AddPageRoute("/Sukkot/RegistrationShell", "/Sukkot/Registration");
-		//public const string CreateEdit = "/Sukkot/CreateEdit";
+		public const string RegistrationShell = "/Sukkot/RegistrationShell"; // See Startup.cs options.Conventions.AddPageRoute("/Sukkot/RegistrationShell", "/Sukkot/Registration");
+		public const string CreateEdit = "/Sukkot/CreateEdit";
+		public const string Details = "/Sukkot/Details";
+		public const string DeleteConfirmation = "/Sukkot/DeleteConfirmation";
+		public const string RegistrationList = "/SukkotAdmin/RegistrationList";
+		public const string Notes = "/SukkotAdmin/Notes";
+		public const string AttendanceAllFeastDays = "/SukkotAdmin/AttendanceAllFeastDays";
+		public const string AttendanceChart = "/SukkotAdmin/AttendanceChart";
+		public const string ReturnUrlSukkotRegistration = "/Sukkot/Registration";
+
+		public static class Donations
+		{
+			public const string Index = "/SukkotAdmin/Donations/Index";
+			public const string FormInsert = "/SukkotAdmin/Donations/FormInsert";
+			public const string ByRegistration = "/SukkotAdmin/Donations/ByRegistration";
+			public const string ByRegistrationId = "/SukkotAdmin/Donations/ByRegistrationId";
+			public const string CreateDonation = "/SukkotAdmin/CreateDonation";
+		}
+
+		public static class LodgingDays
+		{
+			public const string All = "/SukkotAdmin/LodgingDaysAll";
+			public const string Chart = "/SukkotAdmin/LodgingDaysChart";
+			public const string PivotOnCampCode = "/SukkotAdmin/LodgingDaysPivotOnCampCode";
+			public const string Details = "/SukkotAdmin/LodgingDetails";
+		}
+
+		public static class Errors
+		{
+			public const string LogErrorTest = "/SukkotAdmin/LogErrorTest";
+			public const string ErrorLog = "/SukkotAdmin/ErrorLog";
+			public const string ErrorLogEmpty = "/SukkotAdmin/ErrorLogEmpty";
+		}
+
+		public static class Meals
+		{
+			public const string Index = "/SukkotAdmin/Meals/Index";  // MealTickets = "/SukkotAdmin/Meals/Tickets";
+			public const string TicketsPunched = "/SukkotAdmin/Meals/TicketsPunched";
+			public const string PlannerReport = "/SukkotAdmin/Meals/PlannerReport";
+			public const string ListMealPlanMenu = "/SukkotAdmin/Meals/ListMealPlanMenu";
+		}
+
+		public static class KitchenWork
+		{
+			public const string Index = "/SukkotAdmin/KitchenWork/Index";
+			public const string Edit = "/SukkotAdmin/KitchenWork/Edit";
+		}
 
 		//public const string DeleteConfirmation = "/Sukkot/DeleteConfirmation";
 		//public const string DeleteHandler = "delete";
@@ -335,9 +381,6 @@
 		//public const string DetailsMealTicket = "/Sukkot/DetailsMealTicket";
 		//public const string KitchenWork = "/Sukkot/KitchenWork";
 		//public const string Payment = "/Sukkot/Payment";
-
-		//public const string Title = "Sukkot";
-		//public const string Title2 = "Sukkot 2020";
 		//public const string TitleMealPlanner = "Sukkot Meal Planner";
 	}
 
