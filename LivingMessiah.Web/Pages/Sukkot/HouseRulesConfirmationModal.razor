@@ -1,83 +1,95 @@
 ﻿@using LivingMessiah.Web.Pages.Sukkot.Constants
 @using LivingMessiah.Web.Pages.Sukkot.RegistrationEnums
-@using static LivingMessiah.Web.Links.Sukkot
+
 
 <p class="lead">
 	Click this
-	<button type="button" class="btn btn-success btn-lg" bs-toggle-modal="@ModalId">
+	<button type="button" @onclick="BeginRegistration_ButtonClick"
+					class="btn btn-success btn-lg">
 		<i class="fas fa-plus"></i> Register
 	</button>
-	&nbsp;button to begin the process.<br />
+	&nbsp;button to begin the process.
 </p>
 
-<div id="@ModalId" class="modal fade" role="dialog">
-	<div class="modal-dialog">
+@*<p><small>ModalId: @ModalId; IsXs: @IsXs</small></p>*@
 
-		<div class="modal-content">
-			<div class="modal-header">
-				<h2 class="modal-title text-primary">House Rules Confirmation</h2>
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+@if (MakeModalVisible)
+{
+	<div id="@ModalId" class="modal" role="dialog" style="display:block">
+		<div class="modal-dialog modal-dialog-scrollable">
+
+			<div class="modal-content">
+				<div class="modal-header">
+					<h2 class="modal-title text-primary">House Rules Confirmation</h2>
+					<button type="button" @onclick="CancelModal_ButtonClick"
+									class="close" data-dismiss="modal" aria-hidden="true">
+						&times;
+					</button>
+				</div>
+
+				<div class="modal-body">
+
+					<p class="@FormatSize">
+						Before you can start the registration application process you <u>must</u> agree to and <u>abide</u> by the House Rules.
+					</p>
+					<ul class="@FormatSize">
+						<li>
+							<a class="btn btn-sm btn-info" href="@LivingMessiah.Web.Pages.Sukkot.Constants.Blobs.UrlPDF(PDFs.HouseRules)"
+								 target="_blank">
+								<i class="fas fa-file-pdf"></i> House Rules <i class='fas fa-external-link-square-alt'></i>
+							</a> Please Review
+						</li>
+					</ul>
+
+					<h3 class="text text-primary">Important stuff...</h3>
+
+					<ul class="@FormatSize">
+						<li>
+							<i>Living Messiah Sukkot @Year at Wilderness Ranch</i> is an event wholly sponsored by Living Messiah and is a private event <u>not open to the public</u>.
+						</li>
+
+						<li>If you have not been preapproved by an invitation email <sup><i class="far fa-envelope"></i></sup> the approval process will be initiated upon completion of the registration application form.</li>
+						<li>
+							Regardless of pre approval to attend this event you <b><u>must</u></b> fill out the registration application form and sign the <b><u>liability waiver form</u></b>.
+							<ul class="@FormatSize">
+								<li>
+									<a class="btn btn-sm btn-info" href="@LivingMessiah.Web.Pages.Sukkot.Constants.Blobs.UrlPDF(PDFs.LiabilityWaiver)"
+										 target="_blank">
+										<i class="fas fa-file-pdf"></i> Liability Waiver Form <i class='fas fa-external-link-square-alt'></i>
+									</a> Please Sign
+								</li>
+							</ul>
+						</li>
+						<li>The approval process is done by the Elders of Living Messiah.</li>
+					</ul>
+
+					<h3 class="text text-primary">finally...</h3>
+					<ul class="@FormatSize">
+						<li>
+							In order to have a wonderful and blessed Sukkot we seek clarity among all who attend so please familiarize yourself and your family with these
+							<a href="@LivingMessiah.Web.Pages.Sukkot.Constants.Blobs.UrlPDF(PDFs.HouseRules)" target="_blank">rules</a>. <i class="far fa-smile text-success"></i>
+						</li>
+
+					</ul>
+
+				</div>
+
+				<div class="modal-footer">
+
+					<button type="button" @onclick="DoNotAgree_ButtonClick"
+									class="btn btn-danger" data-dismiss="modal">
+						<i class="far fa-hand-paper"></i> No, I Do NOT Agree
+					</button>
+
+					<button type="button" @onclick="Agree_ButtonClick"
+									class="btn btn-success" data-dismiss="modal">
+						<i class="fas fa-check"></i> Yes, I Agree
+					</button>
+
+				</div>
 			</div>
 
-			<div class="modal-body">
-
-				<p class="@FormatSize">
-					Before you can start the registration application process you <u>must</u> agree to and <u>abide</u> by the House Rules.
-				</p>
-				<ul class="@FormatSize">
-					<li>
-						<a class="btn btn-sm btn-info" href="@LivingMessiah.Web.Pages.Sukkot.Constants.Blobs.UrlPDF(PDFs.HouseRules)"
-							 target="_blank">
-							<i class="fas fa-file-pdf"></i> House Rules <i class='fas fa-external-link-square-alt'></i>
-						</a> Please Review
-					</li>
-				</ul>
-
-				<h3 class="text text-primary">Important stuff...</h3>
-
-				<ul class="@FormatSize">
-					<li>
-						<i>Living Messiah Sukkot @Year at Wilderness Ranch</i> is an event wholly sponsored by Living Messiah and is a private event <u>not open to the public</u>.
-					</li>
-
-					<li>If you have not been preapproved by an invitation email <sup><i class="far fa-envelope-o"></i></sup> the approval process will be initiated upon completion of the registration application form.</li>
-					<li>
-						Regardless of pre approval to attend this event you <b><u>must</u></b> fill out the registration application form and sign the <b><u>liability waiver form</u></b>.
-						<ul class="@FormatSize">
-							<li>
-								<a class="btn btn-sm btn-info" href="@LivingMessiah.Web.Pages.Sukkot.Constants.Blobs.UrlPDF(PDFs.LiabilityWaiver)"
-									 target="_blank">
-									<i class="fas fa-file-pdf"></i> Liability Waiver Form <i class='fas fa-external-link-square-alt'></i>
-								</a> Please Sign
-							</li>
-						</ul>
-					</li>
-					<li>The approval process is done by the Elders of Living Messiah.</li>
-				</ul>
-
-				<h3 class="text text-primary">finally...</h3>
-				<ul class="@FormatSize">
-					<li>
-						In order to have a wonderful and blessed Sukkot we seek clarity among all who attend so please familiarize yourself and your family with these
-						<a href="@LivingMessiah.Web.Pages.Sukkot.Constants.Blobs.UrlPDF(PDFs.HouseRules)" target="_blank">rules</a>. <i class="far fa-smile text-success"></i>
-					</li>
-
-				</ul>
-
-			</div>
-
-			<div class="modal-footer">
-
-				<button type="button" class="btn btn-danger" data-dismiss="modal">
-					<i class="fa fa-hand-paper-o"></i> No, I Do NOT Agree
-				</button>
-
-				<a class="btn btn-md btn-success" href="@LivingMessiah.Web.Links.Sukkot.CreateEdit">
-					<i class="fa fa-check"></i> Yes, I Agree
-				</a>
-
-			</div>
 		</div>
-
 	</div>
-</div>
+
+}

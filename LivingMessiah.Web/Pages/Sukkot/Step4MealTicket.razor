@@ -1,0 +1,47 @@
+﻿@using LivingMessiah.Web.Pages.Sukkot.RegistrationEnums
+@using static LivingMessiah.Web.Links.Sukkot
+
+@if (StatusFlagEnum.HasFlag(StatusFlagEnum.RegistrationFormCompleted) == true)
+{
+	@if (StatusFlagEnum.HasFlag(StatusFlagEnum.MealsFormCompleted) == false)
+	{
+		<p class="lead">
+			The first part of the registration form has been completed.<br />
+			The next step is to configure your meal tickets (this is optional).<br />
+		</p>
+	}
+	else
+	{
+		<p class="lead"><b>Task completed</b></p>
+	}
+
+	// ToDo: is this nececcary ... Html.DisplayFor(modelItem => MealCost)
+	<p>Meal Count: <b>@vwRegistrationShell.MealCount</b>, Meal Cost: <b> @vwRegistrationShell.MealCost</b></p>
+
+	@if (StatusFlagEnum.HasFlag(StatusFlagEnum.FullyPaid) != true)
+	{
+		//ToDo: asp-route-registrationId
+		<a class="btn-primary btn-sm" href="@Links2.EditMeals"  
+			 asp-route-registrationId="@vwRegistrationShell.Id">
+			<i class="fas fa-pencil-alt-square-o"></i> Edit
+		</a>
+
+	}
+
+	//ToDo: asp-route-registrationId
+
+	<text>&nbsp;</text>
+	<a class="btn-info btn-sm" href="@Links2.DetailsMealTicket"
+		 asp-route-registrationId="@vwRegistrationShell.Id">
+		<i class="fas fa-info"></i> View
+	</a>
+	<text>&nbsp;</text>
+	<a class="btn-success btn-sm" href="@KitchenWork.Index"
+		 asp-route-registrationId="@vwRegistrationShell.Id">
+		<i class="fa fa-spoon"></i> Kitchen Help
+	</a>
+
+}
+
+
+

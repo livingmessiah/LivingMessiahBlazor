@@ -1,5 +1,6 @@
 ﻿@using LivingMessiah.Web.Pages.Sukkot.Constants
 @using LivingMessiah.Web.Pages.Sukkot.RegistrationEnums
+@inherits BaseRegistrationBody
 
 <hr class="warning" />
 
@@ -20,7 +21,7 @@
 				Print out this
 				<a href="@LivingMessiah.Web.Pages.Sukkot.Constants.Blobs.UrlPDF(PDFs.RegistrationWalkThrough)"
 					 class="btn btn-primary btn-sm" target="_blank">
-					<i class="fas fa-file-pdf"> PDF </i>
+					<i class="fas fa-file-pdf"></i> PDF
 				</a>
 				or leave it open in another window as it will be helpful with the next step.
 			</p>
@@ -86,8 +87,10 @@
 		}
 	</div>
 	<div class="col-9">
-		<Step3Registration IsXs="@IsXs" Model="" StatusFlagEnum="@StatusFlagEnum">
-
+		<p class="text-black-50"><small><sup>IsXs: @IsXs</sup></small>></p>
+		<Step3Registration IsXs="@IsXs"
+											 RegistrationId="@Id"
+											 StatusFlagEnum="@StatusFlagEnum">
 		</Step3Registration>
 	</div>
 </div>
@@ -113,7 +116,9 @@
 			}
 		</div>
 		<div class="col-9">
-			<partial name=@PartialViews.Step4MealTicket model="Model" />
+			<Step4MealTicket StatusFlagEnum="@StatusFlagEnum"
+											 vwRegistrationShell="@vwRegistrationShell">
+			</Step4MealTicket>
 		</div>
 	</div>
 }
@@ -137,7 +142,6 @@ else
 	</div>
 
 }
-
 
 <hr class="warning" />
 
@@ -172,7 +176,9 @@ else
 		}
 
 	</div>
-	<div class="col-9">
-		<partial name=@PartialViews.Step5Payment model="Model" />
+	<div class="col-9">	
+		<Step5Payment StatusFlagEnum="@StatusFlagEnum"
+									vwRegistrationShell="@vwRegistrationShell">
+		</Step5Payment>
 	</div>
 </div>

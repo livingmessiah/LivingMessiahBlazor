@@ -1,16 +1,13 @@
 ﻿@using LivingMessiah.Web.Pages.Sukkot.RegistrationEnums
 @using static LivingMessiah.Web.Links.Sukkot
 
-@{
-	//bool IsXs2 = (ViewData[VDD.IsXs] == null) ? false : (bool)ViewData[VDD.IsXs];
-}
-
-
 @if (StatusFlagEnum.HasFlag(StatusFlagEnum.EmailConfirmation) == true)
 {
 	@if (StatusFlagEnum.HasFlag(StatusFlagEnum.RegistrationFormCompleted) == false)
 	{
-		<HouseRulesConfirmationModal IsXs="true"></HouseRulesConfirmationModal>
+		<HouseRulesConfirmationModal IsXs="@IsXs">
+
+		</HouseRulesConfirmationModal>
 	}
 	else
 	{
@@ -18,12 +15,12 @@
 		if (StatusFlagEnum.HasFlag(StatusFlagEnum.FullyPaid) == true)
 		{
 			<p class="lead"><b>Task completed</b></p>
-			<p>Registration Id: <b>@Model.Id</b>; ToDo Add PDF Link</p>
+			<p>Registration Id: <b>@RegistrationId</b>; ToDo Add PDF Link</p>
 		}
 		else
 		{
 			<p class="lead"><b>Task completed</b></p>
-			<p>Registration Id: <b>@Model.Id</b></p>
+			<p>Registration Id: <b>@RegistrationId</b></p>
 
 			if (StatusFlagEnum.HasFlag(StatusFlagEnum.MealsFormCompleted) == false)
 			{
@@ -35,13 +32,13 @@
 
 			<a class="btn-primary btn-sm"
 				 href="@LivingMessiah.Web.Links.Sukkot.CreateEdit"
-				 asp-route-id="@Model.Id">
+				 asp-route-id="@RegistrationId">
 				<i class="far fa-edit"></i> Edit
 			</a>
 
 			<text>&nbsp;</text>
 			<a class="btn-info btn-sm" href="@Details"
-				 asp-route-id="@Model.Id">
+				 asp-route-id="@RegistrationId">
 				<i class="fas fa-info"></i> View
 			</a>
 
@@ -49,7 +46,7 @@
 			{
 				<text>&nbsp;</text>
 				<a class="btn-danger btn-sm" href="@DeleteConfirmation"
-					 asp-route-id="@Model.Id">
+					 asp-route-id="@RegistrationId">
 					<i class="fas fa-times"></i> Delete
 				</a>
 			}

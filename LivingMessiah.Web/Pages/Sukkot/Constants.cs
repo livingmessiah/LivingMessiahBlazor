@@ -30,12 +30,12 @@ namespace LivingMessiah.Web.Pages.Sukkot.Constants
 	{
 		public const string MenuBar = SukkotAdmin.Constants.PartialViews.MenuBar;
 
-		public const string RegistrationBody = "_RegistrationBody";
-		public const string RegistrationBodyXs = "_RegistrationBodyXs";
-		public const string Step2EmailVerified = "_Step2EmailVerified";
-		public const string Step3Registration = "_Step3Registration";
-		public const string Step4MealTicket = "_Step4MealTicket";
-		public const string Step5Payment = "_Step5Payment";
+		//public const string RegistrationBody = "_RegistrationBody";
+		//public const string RegistrationBodyXs = "_RegistrationBodyXs";
+		//public const string Step2EmailVerified = "_Step2EmailVerified";
+		//public const string Step3Registration = "_Step3Registration";
+		//public const string Step4MealTicket = "_Step4MealTicket";
+		//public const string Step5Payment = "_Step5Payment";
 
 		public const string Details = "_Details";
 		public const string CostAccountStyle = "_CostAccountStyle";

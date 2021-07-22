@@ -26,30 +26,20 @@ namespace LivingMessiah.Web.Pages.Sukkot
 		[Inject]
 		public ILogger<RegistrationShell> Logger { get; set; }
 
+		public vwRegistrationShell vwRegistrationShell { get; set; } = new vwRegistrationShell();
 
 		public StatusFlagEnum StatusFlagEnum { get; set; }
 		public int sf { get; set; }
 		public int Id { get; set; }
-		public int StatusId { get; set; }
+		public int StatusId { get; set; } = 0;
 
 		public ClaimsPrincipal User { get; set; }
 		public string EmailAddress { get; set; }
 		public string UserName { get; set; }
-		//public bool Verified { get; set; }
-		//public string Role { get; set; }
 
 		public string Title { get; set; }
-		
 
 		public bool IsMealsAvailable { get; set; } = false;
-
-		public int MealCount { get; set; }
-		public decimal MealCost { get; set; }
-		public decimal CampCost { get; set; }
-		public decimal TotalCost { get; set; }
-		public decimal RemainingCost { get; set; }
-		public decimal TotalDonation { get; set; }
-
 		
 		private IEnumerable<Claim> _claims = Enumerable.Empty<Claim>();
 
@@ -59,41 +49,21 @@ namespace LivingMessiah.Web.Pages.Sukkot
 			var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
 			User = authState.User;
 
-			//if (User.Identity.IsAuthenticated)
-			//{
-			//	Verified = true;
-			//	_claims = User.Claims;
-			//}
-			//else
-			//{
-			//	Verified = false;
-			//}
-
-			//Name = User.Identity.Name;
-			//EmailAddress = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
-			//Role = User.Claims.FirstOrDefault(c => c.Type == "https://schemas.livingmessiah.com/roles")?.Value;
-
 			LoadUserData();
 
 			if (StatusFlagEnum.HasFlag(StatusFlagEnum.EmailConfirmation))
 			{
-				vwRegistrationShell vw;
 				try
 				{
 					Logger.LogDebug($"Inside {nameof(RegistrationShell)}!{nameof(OnInitializedAsync)}, calling {nameof(db.ByEmail)}");
-					vw = await db.ByEmail(EmailAddress);
+					vwRegistrationShell = await db.ByEmail(EmailAddress);
 
-					if (vw != null)
+					if (vwRegistrationShell != null)
 					{
-						Id = vw.Id;
-						StatusId = vw.StatusId;
-						MealCount = vw.MealCount;
-						MealCost = vw.MealCost;
-						CampCost = vw.CampCost;
-						TotalCost = vw.TotalCost;
-						RemainingCost = vw.RemainingCost;
-						TotalDonation = vw.TotalDonation;
-						FinalizeStatusFlag(vw.StatusId);
+						Id = vwRegistrationShell.Id;
+						StatusId = vwRegistrationShell.StatusId;
+						FinalizeStatusFlag(vwRegistrationShell.StatusId);
+						
 					}
 				}
 				catch (Exception ex)
@@ -101,15 +71,17 @@ namespace LivingMessiah.Web.Pages.Sukkot
 					Logger.LogError(ex, $"EmailAddress={EmailAddress}");
 				}
 			}
-
+			sf = (int)StatusFlagEnum;
 		}
 
 		private void LoadUserData()
 		{
+
 			if (User.Verified()) //Verified
 			{
 				StatusFlagEnum = StatusFlagEnum | StatusFlagEnum.EmailConfirmation;
 			}
+
 			UserName = User.GetUserName();
 			EmailAddress = User.GetUserEmail();
 
@@ -123,11 +95,11 @@ namespace LivingMessiah.Web.Pages.Sukkot
 			}
 		}
 
-
 		private void FinalizeStatusFlag(int statusId)
 		{
 			StatusFlagEnum = StatusFlagEnum | StatusFlagEnum.RegistrationFormCompleted;
-			if (MealCount > 0)
+			//if (MealCount > 0)
+			if (vwRegistrationShell.MealCount > 0)
 			{
 				StatusFlagEnum = StatusFlagEnum | StatusFlagEnum.MealsFormCompleted;
 			}
@@ -143,7 +115,7 @@ namespace LivingMessiah.Web.Pages.Sukkot
 					StatusFlagEnum = StatusFlagEnum | StatusFlagEnum.MealsFormCompleted | StatusFlagEnum.PartiallyPaid;
 				}
 			}
-			sf = (int)StatusFlagEnum;
+			
 		}
 
 	}

@@ -26,11 +26,16 @@
 <br />
 
 <div class="d-block d-sm-none">
-	<RegistrationBodyXs IsXs="true" ModalId="@ModalIdHouseRulesXs" StatusFlagEnum="@StatusFlagEnum">
+	<RegistrationBodyXs IsXs="true"
+											StatusFlagEnum="@StatusFlagEnum" 
+											vwRegistrationShell="@vwRegistrationShell">
 	</RegistrationBodyXs>
 </div>
 <div class="d-none d-sm-block">
-	<RegistrationBody IsXs="false" ModalId="@ModalIdHouseRules" StatusFlagEnum="@StatusFlagEnum">
+	<RegistrationBody 
+										IsXs="false"
+										StatusFlagEnum="@StatusFlagEnum" 
+										vwRegistrationShell="@vwRegistrationShell">
 	</RegistrationBody>
 </div>
 

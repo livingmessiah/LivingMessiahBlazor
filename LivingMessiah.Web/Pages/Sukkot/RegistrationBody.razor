@@ -1,5 +1,6 @@
 ﻿@using LivingMessiah.Web.Pages.Sukkot.Constants
 @using LivingMessiah.Web.Pages.Sukkot.RegistrationEnums
+@inherits BaseRegistrationBody
 
 <div class="row">
 	<div class="col-sm-1">
@@ -35,7 +36,7 @@
 				Print out this
 				<a href="@LivingMessiah.Web.Pages.Sukkot.Constants.Blobs.UrlPDF(PDFs.RegistrationWalkThrough)"
 					 class="btn btn-primary btn-sm" target="_blank">
-					<i class="fas fa-file-pdf"> PDF </i>
+					<i class="fas fa-file-pdf"></i> PDF
 				</a> or leave it open in another window as it will be helpful with the next step.
 			</p>
 
@@ -79,10 +80,11 @@
 
 	<div class="col-sm-10">
 		<h4>Task - Registration</h4>
-		<Step3Registration IsXs="@IsXs" Model="" StatusFlagEnum="@StatusFlagEnum">
-
+		@*<p class="text-black-50"><small><sup>IsXs: @IsXs</sup></small></p>*@
+		<Step3Registration IsXs="@IsXs" 
+											 RegistrationId="@Id"
+											 StatusFlagEnum="@StatusFlagEnum">
 		</Step3Registration>
-
 	</div>
 </div>
 
@@ -106,7 +108,9 @@
 
 		<div class="col-sm-10">
 			<h4>Task - Meal Ticket (optional)</h4>
-			<partial name=@PartialViews.Step4MealTicket model="Model" />
+			<Step4MealTicket StatusFlagEnum="@StatusFlagEnum" 
+											 vwRegistrationShell="@vwRegistrationShell">
+			</Step4MealTicket>
 		</div>
 	}
 	else
@@ -120,14 +124,9 @@
 		</div>
 
 	}
-
-
-
 </div>
 
 <hr />
-
-
 
 <div class="row">
 	<div class="col-sm-1">
@@ -157,7 +156,8 @@
 		{
 			<h4>Task - Payment</h4>
 		}
-
-		<partial name=@PartialViews.Step5Payment model="Model" />
+		<Step5Payment StatusFlagEnum="@StatusFlagEnum" 
+									vwRegistrationShell="@vwRegistrationShell">
+		</Step5Payment>
 	</div>
 </div>

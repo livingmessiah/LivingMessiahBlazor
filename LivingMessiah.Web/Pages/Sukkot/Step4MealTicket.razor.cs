@@ -1,19 +1,15 @@
 ﻿using LivingMessiah.Web.Pages.Sukkot.RegistrationEnums;
 using Microsoft.AspNetCore.Components;
-using static LivingMessiah.Web.Pages.Sukkot.Constants.Other;
+using SukkotApi.Domain;
 
 namespace LivingMessiah.Web.Pages.Sukkot
 {
-	public partial class Step3Registration
+	public partial class Step4MealTicket
 	{
-		[Parameter]
-		public bool IsXs { get; set; }
-
 		[Parameter]
 		public StatusFlagEnum StatusFlagEnum { get; set; }
 
 		[Parameter]
-		public int RegistrationId { get; set; }
-
+		public vwRegistrationShell vwRegistrationShell { get; set; }
 	}
 }
