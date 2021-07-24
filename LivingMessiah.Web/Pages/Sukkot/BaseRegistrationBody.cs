@@ -16,7 +16,5 @@ namespace LivingMessiah.Web.Pages.Sukkot
 		[Parameter]
 		public vwRegistrationShell vwRegistrationShell { get; set; }
 
-		//public int Id { get; set; }
-
 	}
 }

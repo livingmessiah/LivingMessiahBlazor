@@ -1,0 +1,35 @@
+﻿@using static LivingMessiah.Web.Pages.Sukkot.Constants.Other
+@using SukkotApi.Domain
+
+<div class="row">
+
+	<div class="col-4">
+		<h4>Cost</h4>
+	</div>
+
+	<div class="col-8">
+		<dl class="row">
+			<dt class="col-6">Registration Cost:</dt>
+			<dd class="col-4"><span class="float-right">@vwRegistration.RegistrationFee</span></dd>
+			<dt class="col-6">Lodging Cost:</dt>
+			<dd class="col-4"><span class="float-right">@vwRegistration.CampCost</span></dd>
+
+			@if (IsMealsAvailable)
+			{
+				<dt class="col-6">Adult Meals:</dt>
+				<dd class="col-4"><span class="float-right">@vwRegistration.TotalAdultMeals</span></dd>
+				<dt class="col-6">Adult Meal Cost:</dt>
+				<dd class="col-4"><span class="float-right">@vwRegistration.AdultMealCost</span></dd>
+
+				<dt class="col-6">Big Child Meals:</dt>
+				<dd class="col-4"><span class="float-right">@vwRegistration.TotalChildBigMeals</span></dd>
+				<dt class="col-6">Big Child Meal Cost:</dt>
+				<dd class="col-4"><span class="float-right">@vwRegistration.ChildBigMealCost</span></dd>
+			}
+
+			<dt class="col-6">Total:</dt>
+			<dd class="col-6"><span class="float-right"><b>@vwRegistration.TotalCost</b></span></dd>
+		</dl>
+	</div>
+
+</div>

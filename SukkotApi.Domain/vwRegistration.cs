@@ -145,12 +145,12 @@ namespace SukkotApi.Domain
 
 		public string AttendanceBitwiseToString(Enums.SukkotAttendanceDays day)
 		{
-			return AttendanceBitwiseEnum.HasFlag(day) ? "<span class='fa fa-check'></span>" : "";
+			return AttendanceBitwiseEnum.HasFlag(day) ? "<span class='fas fa-check'></span>" : "";
 		}
 
 		public string LodgingDaysBitwiseToString(SukkotApi.Domain.SukkotLodgingDays day)
 		{
-			return LodgingDaysBitwiseEnum.HasFlag(day) ? "<span class='fa fa-check'></span>" : "";
+			return LodgingDaysBitwiseEnum.HasFlag(day) ? "<span class='fas fa-check'></span>" : "";
 		}
 
 	}

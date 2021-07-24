@@ -18,6 +18,7 @@
 				</p>
 			</text>
 		}
+
 		<p class="lead">
 			Two Payment Options
 			<ol class="lead">
@@ -31,8 +32,8 @@
 
 					@* class="btn btn-warning btn-sm
 
-		showPrintInstructionMessage
-		" *@
+						showPrintInstructionMessage
+						" *@
 
 					button and follow the instructions.
 					<br />See the
@@ -48,12 +49,10 @@
 
 					Pay via <u>Check</u>.  Click
 
-					<button @onclick="@(e => PrintInstructions_ButtonClick(e, vwRegistrationShell.Id, true))"
+					<button @onclick="@(e => Details_ButtonClick(e, vwRegistrationShell.Id, true))"
 									class="btn-info btn-sm">
 						<i class="fa fa-print"></i> Print
 					</button> and follow the instructions.
-
-
 
 				</li>
 			</ol>
@@ -64,11 +63,10 @@
 	{
 		<p class="lead"><b>Task Completed</b></p>
 
-		<a href="@Details" asp-route-id="@vwRegistrationShell.Id"
-			 class="btn-info btn-sm">
+		<button @onclick="@(e => Details_ButtonClick(e, vwRegistrationShell.Id, false))"
+						class="btn-info btn-sm">
 			<i class="fas fa-info"></i> View Your Registration
-		</a>
-
+		</button>
 	}
 
 

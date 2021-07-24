@@ -137,7 +137,7 @@
 				<div class="form-group">
 					<label asp-for="Registration.AttendanceDayList" class="control-label"></label>
 					<select asp-for="Registration.AttendanceDayList" class="form-control"
-						asp-items="Model.AttendanceDays" id="attendanceDayMSDD">
+						asp-items="AttendanceDays" id="attendanceDayMSDD">
 					</select>
 					<span asp-validation-for="Registration.AttendanceDayList" class="text-danger"></span>
 				</div>
@@ -235,7 +235,7 @@
 
 					@*<label asp-for="Registration.LodgingDayList" class="control-label"></label>
 						<select asp-for="Registration.LodgingDayList" class="form-control"
-										asp-items="Model.LodgingDays" id="lodgingDayMSDD">
+										asp-items="LodgingDays" id="lodgingDayMSDD">
 						</select>
 						<span asp-validation-for="Registration.LodgingDayList" class="text-danger"></span>*@
 

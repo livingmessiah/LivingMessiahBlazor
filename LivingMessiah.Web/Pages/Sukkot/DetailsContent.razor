@@ -1,0 +1,260 @@
+﻿@using LivingMessiah.Web.Pages.Sukkot.Constants
+@using SukkotApi.Domain
+@using SukkotApi.Domain.Enums
+@*@using LivingMessiah.Web.Pages.Shared.Constants*@
+
+@{
+	string Phone2 = !String.IsNullOrEmpty(@vwRegistration.Phone) ? $"Phone: {@vwRegistration.Phone}, " : "";
+}
+
+@* General <div class="row"></div> *@
+<div class="d-print-none">
+	<div class="d-none d-sm-block">
+
+		<div class="row">
+			<div class="col-sm-12">
+				@* @Html.DisplayFor(model => vwRegistration.EMail) ...  @Html.DisplayFor(model => vwRegistration.Status) *@
+				<small class="float-right">EMail: @vwRegistration.EMail), @Phone2 Status: @vwRegistration.Status</small>
+				<h4>General</h4>
+			</div>
+		</div>
+
+	</div>
+
+	<div class="d-block d-sm-none">
+
+		<div class="row">
+			<div class="col-2">
+				<h4>General</h4>
+			</div>
+			<div class="col-10">
+				<ul>
+
+					@*<li>Registration#: @Html.DisplayFor(model => vwRegistration.Id)</li>
+					<li>EMail: @vwRegistration.EMail</li>
+					<li>Phone: @Html.DisplayFor(model => vwRegistration.Phone)</li>
+					<li>Status: @Html.DisplayFor(model => vwRegistration.Status)</li>*@
+
+
+					<li>Registration#: @vwRegistration.Id</li>
+					<li>EMail: @vwRegistration.EMail</li>
+					<li>Phone: @vwRegistration.Phone</li>
+					<li>Status: @vwRegistration.Status</li>
+
+				</ul>
+			</div>
+		</div>
+
+	</div>
+
+
+
+</div>
+
+<div class="row d-none d-print-block">
+	<div class="col-5">
+		<h3>General</h3>
+	</div>
+	<div class="col-7">
+		<ul>
+			<li>Registration#: @vwRegistration.Id</li>
+			<li>EMail: @vwRegistration.EMail</li>
+			<li>Phone: @vwRegistration.Phone</li>
+			<li>Status: @vwRegistration.Status</li>
+		</ul>
+	</div>
+</div>
+
+@* Lodging *@
+<hr class="warning d-print-none" />
+
+<div class="d-print-none">
+
+	<div class="row">
+		<div class="col-sm-12">
+			<h4>Lodging: @vwRegistration.Camp</h4>
+		</div>
+	</div>
+
+</div>
+
+<div class="d-none d-print-block">
+
+	<div class="row">
+		<div class="col-12">
+			<h3>Lodging: @vwRegistration.Camp</h3>
+		</div>
+	</div>
+
+</div>
+
+@if (vwRegistration.LodgingDaysTotal != 0)
+{
+
+	<div class="row">
+
+		<div class="col-sm-12">
+			<table class="table table-condensed">
+				<tr class="bg-info">
+					<th>&nbsp;</th>
+					@((MarkupString)SukkotApi.Domain.LodgeDate.TableHeadingHtml)
+					<th style="text-align:center"><small>Total<br />Days</small></th>
+				</tr>
+				<tr>
+					<td>&nbsp;</td>
+					<td>@((MarkupString)vwRegistration.LodgingDaysBitwiseToString(SukkotLodgingDays.Sep_30_Wed))</td>
+					<td>@((MarkupString)vwRegistration.LodgingDaysBitwiseToString(SukkotLodgingDays.Oct_01_Thu))</td>
+					<td>@((MarkupString)vwRegistration.LodgingDaysBitwiseToString(SukkotLodgingDays.Oct_02_Fri))</td>
+					<td>@((MarkupString)vwRegistration.LodgingDaysBitwiseToString(SukkotLodgingDays.Oct_03_Sat))</td>
+					<td>@((MarkupString)vwRegistration.LodgingDaysBitwiseToString(SukkotLodgingDays.Oct_04_Sun))</td>
+					<td>@((MarkupString)vwRegistration.LodgingDaysBitwiseToString(SukkotLodgingDays.Oct_05_Mon))</td>
+					<td>@((MarkupString)vwRegistration.LodgingDaysBitwiseToString(SukkotLodgingDays.Oct_06_Tue))</td>
+					<td>@((MarkupString)vwRegistration.LodgingDaysBitwiseToString(SukkotLodgingDays.Oct_07_Wed))</td>
+					<td>@((MarkupString)vwRegistration.LodgingDaysBitwiseToString(SukkotLodgingDays.Oct_08_Thu))</td>
+					@*<td>@((MarkupString)vwRegistration.LodgingDaysBitwiseToString(SukkotLodgingDays.Oct_09_Fri))</td>
+						<td>@((MarkupString)vwRegistration.LodgingDaysBitwiseToString(SukkotLodgingDays.Oct_10_Sat))</td>
+						<td>@((MarkupString)vwRegistration.LodgingDaysBitwiseToString(SukkotLodgingDays.Oct_11_Sun))</td>*@
+					<td style="text-align:center"><b>@vwRegistration.LodgingDaysTotal</b></td>
+				</tr>
+			</table>
+		</div>
+	</div>
+
+}
+else
+{
+	<p>No Lodging Days Selected</p>
+}
+
+@* Attendance    *@
+<hr class="warning d-print-none" />
+
+<div class="d-print-none">
+	<div class="d-none d-sm-block">
+
+		<div class="row">
+			<div class="col">
+				<span class="float-right"><small>Adults: @vwRegistration.Adults, Child (Big): @vwRegistration.ChildBig, Child (Small): @vwRegistration.ChildSmall</small></span>
+				<h4>Attendance </h4>
+			</div>
+		</div>
+	</div>
+
+	@* Non-Print (visible-xs) *@
+	<div class="d-block d-sm-none">
+
+		<div class="row">
+			<div class="col-4">
+				<h4>Attendance</h4>
+			</div>
+			<div class="col-8">
+				<ul>
+					<li>Adults: <span class="float-right">@vwRegistration.Adults</span></li>
+					<li>Child (Big):  <span class="float-right">@vwRegistration.ChildBig</span></li>
+					<li>Child (Small):  <span class="float-right">@vwRegistration.ChildSmall</span></li>
+				</ul>
+			</div>
+		</div>
+
+	</div>
+
+</div>
+
+<div class="row d-none d-print-block">
+	<div class="col-5">
+		<h3>Attendance</h3>
+	</div>
+	<div class="col-7">
+		<ul>
+			<li>Adults: <span class="float-right">@vwRegistration.Adults</span></li>
+			<li>Child (Big):<span class="float-right">@vwRegistration.ChildBig</span></li>
+			<li>Child (Small):<span class="float-right">@vwRegistration.ChildSmall</span></li>
+		</ul>
+	</div>
+</div>
+
+<br />
+
+<div class="row">
+	<div class="col-sm-12">
+		<table class="table table-condensed">
+			<tr class="bg-info">
+				<th>&nbsp;</th>
+				@((MarkupString)SukkotApi.Domain.Enums.AttendanceDays.TableHeadingHtml)
+				<th style="text-align:center"><small>Total<br />Days</small></th>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td>@((MarkupString)vwRegistration.AttendanceBitwiseToString(SukkotAttendanceDays.Oct_01_Thu))</td>
+				<td>@((MarkupString)vwRegistration.AttendanceBitwiseToString(SukkotAttendanceDays.Oct_02_Fri))</td>
+				<td>@((MarkupString)vwRegistration.AttendanceBitwiseToString(SukkotAttendanceDays.Oct_03_Sat))</td>
+				<td>@((MarkupString)vwRegistration.AttendanceBitwiseToString(SukkotAttendanceDays.Oct_04_Sun))</td>
+				<td>@((MarkupString)vwRegistration.AttendanceBitwiseToString(SukkotAttendanceDays.Oct_05_Mon))</td>
+				<td>@((MarkupString)vwRegistration.AttendanceBitwiseToString(SukkotAttendanceDays.Oct_06_Tue))</td>
+				<td>@((MarkupString)vwRegistration.AttendanceBitwiseToString(SukkotAttendanceDays.Oct_07_Wed))</td>
+				<td>@((MarkupString)vwRegistration.AttendanceBitwiseToString(SukkotAttendanceDays.Oct_08_Thu))</td>
+				<td>@((MarkupString)vwRegistration.AttendanceBitwiseToString(SukkotAttendanceDays.Oct_09_Fri))</td>
+				@*<td>@((MarkupString)vwRegistration.AttendanceBitwiseToString(SukkotAttendanceDays.Oct_10_Sat))</td>*@
+				<td style="text-align:center"><b>@vwRegistration.AttendanceTotal</b></td>
+			</tr>
+		</table>
+	</div>
+</div>
+
+@* Cost *@
+<hr class="warning d-print-none" />
+
+@* Cost Non-Print (hidden-xs) *@
+<div class="d-print-none">
+	<div class="d-none d-sm-block">
+		<CostAccountStyle vwRegistration="@vwRegistration"></CostAccountStyle>
+	</div>
+
+	@* Cost Non-Print (visible-xs) *@
+	<div class="d-block d-sm-none">
+		<div class="row">
+
+			<div class="col-2">
+				<h4>Cost</h4>
+			</div>
+			<div class="col-10">
+				<ul class="">
+					<li>Registration Cost: <span class="float-right">@vwRegistration.RegistrationFee)</span></li>
+					<li>Lodging Cost: <span class="float-right">@vwRegistration.CampCost)</span></li>
+					<li>Adult Meals: <span class="float-right">@vwRegistration.TotalAdultMeals)</span></li>
+					<li>Adult Meal Cost: <span class="float-right">@vwRegistration.AdultMealCost)</span></li>
+					<li>Big Child Meals: <span class="float-right">@vwRegistration.TotalChildBigMeals)</span></li>
+					<li>Big Child Meal Cost: <span class="float-right">@vwRegistration.ChildBigMealCost)</span></li>
+					<li>Total: <span class="float-right"><b>@vwRegistration.TotalCost)</b></span></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+@* Cost Print *@
+<div class="d-none d-print-block">
+	<CostAccountStyle vwRegistration="@vwRegistration"></CostAccountStyle>
+</div>
+
+@if (!String.IsNullOrEmpty(vwRegistration.Notes))
+{
+	<hr class="warning d-print-none" />
+	<div class="row">
+		<div class="col-sm-2">
+			<h4>Notes</h4>
+		</div>
+		<div class="col-sm-10">
+			@vwRegistration.Notes)
+		</div>
+	</div>
+
+}
+
+<div class="row d-none d-print-block">
+	<br />
+	<div class="col-12">
+		<b>Mailing Address</b>: Living Messiah Ministries, 19 North Robson #106, Mesa, AZ 85201
+	</div>
+</div>

@@ -22,9 +22,10 @@ namespace LivingMessiah.Web.Pages.Sukkot
 			NavManager.NavigateTo(Links2.Payment + "/" + id);
 		}
 
-		void PrintInstructions_ButtonClick(MouseEventArgs e, int id, bool showPrintMsg)
+		void Details_ButtonClick(MouseEventArgs e, int id, bool showPrintMsg)
 		{
-			NavManager.NavigateTo(Details + "/" + id + "/" + showPrintMsg);
+			NavManager.NavigateTo(LivingMessiah.Web.Links.Sukkot.Details + "/" + id + "/" + showPrintMsg);
 		}
+
 	}
 }

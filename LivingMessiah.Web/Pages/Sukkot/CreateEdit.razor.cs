@@ -34,9 +34,6 @@ namespace LivingMessiah.Web.Pages.Sukkot
 		[Inject]
 		NavigationManager NavManager { get; set; }
 
-		//[Parameter]
-		//public vwRegistrationShell Model { get; set; }
-
 		public UI UI { get; set; }
 
 		public Registration Registration { get; set; }
@@ -87,14 +84,11 @@ namespace LivingMessiah.Web.Pages.Sukkot
 			catch (Exception ex)
 			{
 				LoadFailed = true;
-				Logger.LogError(ex, $"Failed to load page {nameof(CreateEdit)}");
-
-				//ExceptionMessage = svc.ExceptionMessage;
-				//return RedirectToPage(Anchors.Error.RedirectPageName);
+				ExceptionMessage = svc.ExceptionMessage;
+				NavManager.NavigateTo(LivingMessiah.Web.Links.Home.Error);
 			}
 
-			Logger.LogInformation($"Finishing {nameof(CreateEdit)}!{nameof(OnInitializedAsync)}, return Page()");
-			//return Page();
+			Logger.LogInformation($"Finished {nameof(CreateEdit)}!{nameof(OnInitializedAsync)}");
 		}
 
 		protected string Title = "";
@@ -130,8 +124,6 @@ namespace LivingMessiah.Web.Pages.Sukkot
 
 			if (UI.EditMode)
 			{
-
-
 				UI = new UI(SukkotEnums.CRUD.Edit);
 				int count = 0;
 				try
@@ -140,8 +132,7 @@ namespace LivingMessiah.Web.Pages.Sukkot
 				}
 				catch (Exception)
 				{
-					ExceptionMessage = svc.ExceptionMessage;
-					//Logger.LogError($"Call to {nameof(svc.Edit)} failed."); // Log is handled in the service
+					ExceptionMessage = svc.ExceptionMessage; // Log is handled in the service
 					NavManager.NavigateTo(LivingMessiah.Web.Links.Home.Error);
 				}
 
@@ -159,8 +150,7 @@ namespace LivingMessiah.Web.Pages.Sukkot
 				}
 				catch (Exception)
 				{
-					ExceptionMessage = svc.ExceptionMessage;
-					//Logger.LogError(ex, $"Call to {nameof(svc.Create)} failed.");  // Log is handled in the service
+					ExceptionMessage = svc.ExceptionMessage; // Log is handled in the service
 					NavManager.NavigateTo(LivingMessiah.Web.Links.Home.Error);
 				}
 				AlertMsg = $"Registration created! Id={newId}";
@@ -168,9 +158,6 @@ namespace LivingMessiah.Web.Pages.Sukkot
 				NavManager.NavigateTo(LivingMessiah.Web.Links.Sukkot.RegistrationShell);
 
 			}
-
-			//log.LogInformation($"RedirectToPage {Anchors.Sukkot.Registration}, Id={newId}");
-			//return RedirectToPage(Anchors.Sukkot.Registration, new { simpleAlertMsg = $"Registration created! Id={newId}" });
 		}
 
 		public SukkotApi.Domain.Enums.CampType CampType { get; set; }

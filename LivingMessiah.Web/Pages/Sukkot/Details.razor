@@ -1,8 +1,6 @@
-﻿@page "/Sukkot/Details/{Id:int}"
+﻿@page "/Sukkot/Details/{Id:int}/{showPrintInstructionMessage:bool}"
 @using LivingMessiah.Web.Pages.Sukkot.Constants
-@using LivingMessiah.Domain
 @using LivingMessiah.Web.Infrastructure;
-@using SukkotApi.Domain
 @using static LivingMessiah.Web.Links.Sukkot
 @using static LivingMessiah.Web.Services.Auth0
 @using LivingMessiah.Web.Shared.Sukkot
@@ -13,13 +11,20 @@
 
 <p class="text-info">ToDo: Port GlobalSharedPartialViews.Message for=Message</p>
 
+
+
 <div class="d-print-none float-right">
 	<a class="btn btn-sm btn-default" href="javascript:window.print()">
 		<span class="fas fa-print"></span> Print
 	</a>
 </div>
 
-@if (!String.IsNullOrEmpty(Model.vwRegistration.PayWithCheckMessage))
+<LoadingComponent IsLoading="vwRegistration == null">
+
+</LoadingComponent>
+
+
+@if (!String.IsNullOrEmpty(vwRegistration.PayWithCheckMessage))
 {
 	<div class="d-print-none">
 		<button type="button" class="btn btn-danger btn-lg mb-4" bs-toggle-modal="instructions">
@@ -36,7 +41,7 @@
 					</div>
 
 					<div class="modal-body">
-						@Html.Raw(Model.vwRegistration.PayWithCheckMessage)
+						@((MarkupString)vwRegistration.PayWithCheckMessage)
 					</div>
 
 					<div class="modal-footer">
@@ -62,30 +67,31 @@
 
 <h2 class="mb-4">
 	@Other.DetailsTitle
-	<br /><small><i>@Model.vwRegistration.FullName(false)</i> - Registration#: <b>@Model.vwRegistration.Id</b></small>
-	<br /><small><i>@Model.vwRegistration.OtherNames</i></small>
+	<br /><small><i>@vwRegistration.FullName(false)</i> - Registration#: <b>@vwRegistration.Id</b></small>
+	<br /><small><i>@vwRegistration.OtherNames</i></small>
 </h2>
 
 
-<partial name=@PartialViews.Details model="Model.vwRegistration" />
+<partial name=@PartialViews.Details model="Registration" />
 
 <hr class="warning d-print-none" />
 
 <div class="row d-print-none">
 	<div class="col-12">
 
-		@if (Model.vwRegistration.StatusId != (int)SukkotApi.Domain.Enums.Status.FullyPaid)
-		{
+		@if (!String.IsNullOrEmpty(vwRegistration.PayWithCheckMessage))
 
-			<a asp-page="@Anchors.Sukkot.CreateEdit"
-				 asp-route-id="@Model.vwRegistration.Id"
-				 class="btn btn-primary">
-				<i class="far fa-edit"></i> Edit
-			</a>
-		}
+			if (vwRegistration.StatusId != (int)SukkotApi.Domain.Enums.Status.FullyPaid)
+			{
 
-		<a asp-page="@Anchors.Sukkot.Registration"
-			 class="btn btn-info" title="Sukkot Introduction">
+				<button @onclick="@(e => Edit_ButtonClick(e, vwRegistration.Id))"
+								class="btn-primary btn-sm">
+					<i class="fas fa-edit"></i> Edit
+				</button>
+			}
+
+		<a asp-page="@LivingMessiah.Web.Links.Sukkot.RegistrationShell"
+			 class="btn btn-info" title="Back to Registration Shell">
 			<i class="far fa-arrow-alt-circle-left"></i> Back to Registration
 		</a>
 

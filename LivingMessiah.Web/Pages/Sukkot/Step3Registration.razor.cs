@@ -21,7 +21,7 @@ namespace LivingMessiah.Web.Pages.Sukkot
 
 		void Details_ButtonClick(MouseEventArgs e, int id)
 		{
-			NavManager.NavigateTo(Details + "/" + id);
+			NavManager.NavigateTo(LivingMessiah.Web.Links.Sukkot.Links2.Details + "/" + id);
 		}
 
 		void Edit_ButtonClick(MouseEventArgs e, int id)
