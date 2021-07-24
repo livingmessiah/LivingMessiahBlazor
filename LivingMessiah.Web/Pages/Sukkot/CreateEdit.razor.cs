@@ -14,6 +14,8 @@ using System.Security.Claims;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using static LivingMessiah.Web.Links.Sukkot;
+
 
 namespace LivingMessiah.Web.Pages.Sukkot
 {
@@ -29,15 +31,14 @@ namespace LivingMessiah.Web.Pages.Sukkot
 		[Inject]
 		public ILogger<CreateEdit> Logger { get; set; }
 
+		[Inject]
+		NavigationManager NavManager { get; set; }
+
 		//[Parameter]
 		//public vwRegistrationShell Model { get; set; }
 
 		public UI UI { get; set; }
 
-		public CrudEnum CrudEnum { get; set; }
-
-		//ToDo what goes here?
-		//[BindProperty]
 		public Registration Registration { get; set; }
 
 		public ClaimsPrincipal User { get; set; }
@@ -55,8 +56,8 @@ namespace LivingMessiah.Web.Pages.Sukkot
 
 			int Id2 = id.HasValue ? id.Value : 0; // if id? is null, Id2 is set to 0 and...
 			UI = (Id2 == 0) ? new UI(SukkotEnums.CRUD.Add) : new UI(SukkotEnums.CRUD.Edit); // ...  an Add is assumed (i.e. SukkotEnums.CRUD.Add)
-			CrudEnum = (Id2 == 0) ? CrudEnum.Add : CrudEnum.Edit;
-			Logger.LogDebug($"Inside {nameof(CreateEdit)}!{nameof(OnInitializedAsync)}, id2={Id2}, UI.CRUD={UI.CRUD}, CrudEnum: {CrudEnum}");
+																																											
+			Logger.LogDebug($"Inside {nameof(CreateEdit)}!{nameof(OnInitializedAsync)}, id2={Id2}, UI.CRUD={UI.CRUD}");
 
 			try
 			{
@@ -120,11 +121,61 @@ namespace LivingMessiah.Web.Pages.Sukkot
 			}
 		}
 
-		void Add_ButtonClick()
+		protected string AlertMsg = "";
+		protected string ExceptionMessage = "";
+
+		protected async Task HandleValidSubmit()
 		{
-			Logger.LogDebug($"Event: {nameof(Add_ButtonClick)} clicked");
-			//StateHasChanged();
+			Logger.LogDebug($"Inside {nameof(HandleValidSubmit)}, UI.EditMode: {UI.EditMode} ");
+
+			if (UI.EditMode)
+			{
+
+
+				UI = new UI(SukkotEnums.CRUD.Edit);
+				int count = 0;
+				try
+				{
+					count = await svc.Edit(Registration, User);
+				}
+				catch (Exception)
+				{
+					ExceptionMessage = svc.ExceptionMessage;
+					//Logger.LogError($"Call to {nameof(svc.Edit)} failed."); // Log is handled in the service
+					NavManager.NavigateTo(LivingMessiah.Web.Links.Home.Error);
+				}
+
+				AlertMsg = $"Registration Updated!";
+				Logger.LogInformation(AlertMsg);
+				NavManager.NavigateTo(LivingMessiah.Web.Links.Sukkot.RegistrationShell);
+
+			}
+			else
+			{
+				int newId = 0;
+				try
+				{
+					newId = await svc.Create(Registration, User);
+				}
+				catch (Exception)
+				{
+					ExceptionMessage = svc.ExceptionMessage;
+					//Logger.LogError(ex, $"Call to {nameof(svc.Create)} failed.");  // Log is handled in the service
+					NavManager.NavigateTo(LivingMessiah.Web.Links.Home.Error);
+				}
+				AlertMsg = $"Registration created! Id={newId}";
+				Logger.LogInformation(AlertMsg);
+				NavManager.NavigateTo(LivingMessiah.Web.Links.Sukkot.RegistrationShell);
+
+			}
+
+			//log.LogInformation($"RedirectToPage {Anchors.Sukkot.Registration}, Id={newId}");
+			//return RedirectToPage(Anchors.Sukkot.Registration, new { simpleAlertMsg = $"Registration created! Id={newId}" });
 		}
+
+		public SukkotApi.Domain.Enums.CampType CampType { get; set; }
+		public SukkotApi.Domain.Enums.Status StatusEnum { get; set; }
+		public SukkotApi.Domain.Enums.SukkotAttendanceDays AttendanceDaysEnum { get; set; }
 
 	}
 }

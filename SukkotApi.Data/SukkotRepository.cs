@@ -40,23 +40,38 @@ namespace SukkotApi.Data
 				ChildSmall = registration.ChildSmall,
 				CampId = registration.CampId,
 				StatusId = registration.StatusId,
-				AttendanceBitwise = registration.AttendanceBitwise,
-				LodgingDaysBitwise = registration.LodgingDaysBitwise,
+
+				//ToDo: Change this back...
+				AttendanceBitwise = 1, //registration.AttendanceBitwise,
+				LodgingDaysBitwise = 1, // registration.LodgingDaysBitwise,
+
+
 				AssignedLodging = "",
 				LmmDonation = 0,
 				WillHelpWithMeals = 0,
 				Avitar = registration.Avitar,
 				Notes = registration.Notes,
-			});
+			});;
 
 			base.Parms.Add("@NewId", dbType: DbType.Int32, direction: ParameterDirection.Output);
-			//base.Parms.Add("@RC", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue);
 
 			return await WithConnectionAsync(async connection =>
 			{
+				base.log.LogDebug($"Inside {nameof(SukkotRepository)}!{nameof(Create)}; About to execute sql:{base.Sql}");
 				var affectedrows = await connection.ExecuteAsync(sql: base.Sql, param: base.Parms, commandType: System.Data.CommandType.StoredProcedure);
-				int newID = base.Parms.Get<int>("NewId");
-				return newID;
+				int? x = base.Parms.Get<int?>("NewId");
+				if (x==null)
+				{
+					base.log.LogWarning($"NewId is null; returning as 0; Check dbo.ErrorLog for IX_Registration_EMail_Unique duplication Error; registration.EMail: {@registration.EMail}");
+					return 0;
+				}
+				else
+				{
+					int NewId = int.TryParse(x.ToString(), out NewId) ? NewId : 0;
+					base.log.LogDebug($"Return NewId:{NewId}");
+					return NewId;
+				}
+
 			});
 		}
 

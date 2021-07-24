@@ -5,9 +5,9 @@ namespace LivingMessiah.Web.Pages.Sukkot
 {
 	public partial class RegistrationBody : BaseRegistrationBody
 	{
-		protected override void OnInitialized()
-		{
-			Id = vwRegistrationShell.Id;
-		}
+		//protected override void OnInitialized()
+		//{
+		//	Id = vwRegistrationShell.Id;
+		//}
 	}
 }

@@ -29,7 +29,8 @@ namespace LivingMessiah.Web.Pages.Sukkot
 		public string ButtonColor { get; private set; }
 		public string Icon { get; set; }
 
-		private CrudLocal(CrudEnum crudEnum, string title, string onClickEvent, string databaseCommand, bool isEditMode, string buttonColor, string icon)
+		private CrudLocal(CrudEnum crudEnum, string title, string onClickEvent, string databaseCommand, 
+										  bool isEditMode, string buttonColor, string icon)
 		{
 			CrudEnum = crudEnum;
 			//Id = id;  , int id
@@ -63,3 +64,20 @@ namespace LivingMessiah.Web.Pages.Sukkot
 
 	} // class Season
 } // namespace
+
+/*
+ 		//public CrudEnum CrudEnum { get; set; }
+
+//CrudEnum = (Id2 == 0) ? CrudEnum.Add : CrudEnum.Edit; ... , CrudEnum: {CrudEnum}
+
+					@*<CrudButton CrudLocal="@CrudLocal.FromEnum(CrudEnum)"></CrudButton>*@
+					@*<button asp-page-handler="@UI.Handler"
+						class="btn btn-primary btn-lg">
+			<i class="fa fa-save"></i> @UI.DatabaseCommand
+		</button>*@
+
+					@*<button type="button" @onclick="Add_ButtonClick"
+											class="@CrudLocal.ButtonColor"
+			<i class="@CrudLocal.Icon"></i> @CrudLocal.DatabaseCommand
+		</button>*@ 
+ */

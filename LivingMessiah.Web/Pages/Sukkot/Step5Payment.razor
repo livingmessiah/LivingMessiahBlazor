@@ -23,9 +23,17 @@
 			<ol class="lead">
 				<li>
 					<b>Preferred Option</b>.  Pay with <u>Debit or Credit Card</u>.  Click the
-					<a href="@Links2.Payment" asp-route-id="@vwRegistrationShell.Id" class="btn btn-warning btn-sm">
+
+					<button @onclick="@(e => Payment_ButtonClick(e, vwRegistrationShell.Id))"
+									class="btn-warning btn-sm">
 						<i class="fab fa-paypal"></i> Donation
-					</a>
+					</button>
+
+					@* class="btn btn-warning btn-sm
+
+		showPrintInstructionMessage
+		" *@
+
 					button and follow the instructions.
 					<br />See the
 
@@ -39,10 +47,14 @@
 				<li>
 
 					Pay via <u>Check</u>.  Click
-					<a href="@Details" asp-route-id="@vwRegistrationShell.Id" asp-route-showPrintInstructionMessage=true
-						 class="btn btn-info btn-sm">
+
+					<button @onclick="@(e => PrintInstructions_ButtonClick(e, vwRegistrationShell.Id, true))"
+									class="btn-info btn-sm">
 						<i class="fa fa-print"></i> Print
-					</a> and follow the instructions.
+					</button> and follow the instructions.
+
+
+
 				</li>
 			</ol>
 		</p>

@@ -126,6 +126,7 @@
 		public const string Index = "/";
 		//public const string Title = "Home";
 		//public const string Icon = "fas fa-home";
+		public const string Error = "/Error";
 	}
 
 	public static class ImportantLinks

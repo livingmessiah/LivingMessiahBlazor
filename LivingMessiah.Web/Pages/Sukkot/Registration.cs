@@ -56,16 +56,30 @@ namespace LivingMessiah.Web.Pages.Sukkot
 		public int ChildSmall { get; set; }
 
 		public int StatusId { get; set; }
+		public SukkotApi.Domain.Enums.Status StatusEnum { get; set; }
 
 		[Required]
 		[DisplayName("Options")]
 		public int CampId { get; set; }
+		public SukkotApi.Domain.Enums.CampType CampType { get; set; }
+
+
+		[Required]
+		[DisplayName("Options")]
+		public int CampId2 { get; set; }
+		public SukkotApi.Domain.Enums.CampType CampTypeNoMoreRvHookups { get; set; }
+
+
+		public SukkotApi.Domain.Enums.SukkotAttendanceDays SukkotAttendanceDays { get; set; }
+
+		public SukkotApi.Domain.LodgeDateEnum LodgeDateEnum { get; set; }
 
 		[DisplayName("Attendance Bitwise")]
 		public int AttendanceBitwise { get; set; }
 
+		//ToDo: make the required message work
 		[DisplayName("Days of attendance")]
-		[Required(ErrorMessage = "At least 1 day of attendance required")]
+		//[Required(ErrorMessage = "At least 1 day of attendance required")]
 		public IEnumerable<string> AttendanceDayList { get; set; }
 
 		[DisplayName("Lodging Days Bitwise")]

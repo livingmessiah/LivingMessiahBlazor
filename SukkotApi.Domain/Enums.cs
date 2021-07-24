@@ -116,8 +116,9 @@ namespace SukkotApi.Domain.Enums
 	}
 
 	#region Attendance
-
-	[Flags]
+	/*
+	No Display Attributes
+		[Flags]
 	public enum SukkotAttendanceDays
 	{
 		Oct_01_Thu = 1,
@@ -128,6 +129,38 @@ namespace SukkotApi.Domain.Enums
 		Oct_06_Tue = 32,
 		Oct_07_Wed = 64,
 		Oct_08_Thu = 128,
+		Oct_09_Fri = 256 //, 		Oct_10_Sat = 512
+	}
+
+	*/
+	[Flags]
+	public enum SukkotAttendanceDays
+	{
+		[Display(Name = "Oct 01, Thu")]
+		Oct_01_Thu = 1,
+		
+		[Display(Name = "Oct 02, Fri")]
+		Oct_02_Fri = 2,
+		
+		[Display(Name = "Oct 03, Sat")]
+		Oct_03_Sat = 4,
+		
+		[Display(Name = "Oct 04, Sun")]
+		Oct_04_Sun = 8,
+		
+		[Display(Name = "Oct 05, Mon")]
+		Oct_05_Mon = 16,
+		
+		[Display(Name = "Oct 06, Tue")]
+		Oct_06_Tue = 32,
+		
+		[Display(Name = "Oct 07, Wed")]
+		Oct_07_Wed = 64,
+		
+		[Display(Name = "Oct 08, Thu")]
+		Oct_08_Thu = 128,
+		
+		[Display(Name = "Oct 09, Fri")]
 		Oct_09_Fri = 256 //, 		Oct_10_Sat = 512
 	}
 

@@ -30,25 +30,24 @@
 				</p>
 			}
 
-			<a class="btn-primary btn-sm"
-				 href="@LivingMessiah.Web.Links.Sukkot.CreateEdit"
-				 asp-route-id="@RegistrationId">
-				<i class="far fa-edit"></i> Edit
-			</a>
+			<button @onclick="@(e => Edit_ButtonClick(e, RegistrationId))"
+							class="btn-primary btn-sm">
+				<i class="fas fa-edit"></i> Edit
+			</button>
 
 			<text>&nbsp;</text>
-			<a class="btn-info btn-sm" href="@Details"
-				 asp-route-id="@RegistrationId">
+			<button @onclick="@(e => Details_ButtonClick(e, RegistrationId))"
+							class="btn-info btn-sm">
 				<i class="fas fa-info"></i> View
-			</a>
+			</button>
 
 			if (StatusFlagEnum.HasFlag(StatusFlagEnum.PartiallyPaid) == false)
 			{
 				<text>&nbsp;</text>
-				<a class="btn-danger btn-sm" href="@DeleteConfirmation"
-					 asp-route-id="@RegistrationId">
+				<button @onclick="@(e => DeleteConfirmation_ButtonClick(e, RegistrationId))"
+								class="btn-danger btn-sm">
 					<i class="fas fa-times"></i> Delete
-				</a>
+				</button>
 			}
 
 		}

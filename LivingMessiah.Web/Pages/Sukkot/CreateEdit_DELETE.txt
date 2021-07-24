@@ -1,0 +1,341 @@
+﻿
+@page "/Sukkot/CreateEdit/{Id:int?}"
+@using LivingMessiah.Web.Pages.Sukkot
+@using LivingMessiah.Web.Pages.Sukkot.Constants
+@using LivingMessiah.Web.Infrastructure;
+@using LivingMessiah.Web.Services
+@using SukkotApi.Domain.Enums
+@using static SukkotApi.Domain.Constants
+@using static LivingMessiah.Web.Links.Sukkot
+@using static LivingMessiah.Web.Services.Auth0
+@using LivingMessiah.Web.Shared.Sukkot
+
+<AuthorizeView Roles="@Roles.SukkotMenuBar">
+	<SukkotAdminMenubar></SukkotAdminMenubar>
+</AuthorizeView>
+<p class="text-info">ToDo: Port GlobalSharedPartialViews.Message for=Message</p>
+
+<h3>@Title<br /><small><i>@Title2</i></small></h3>
+<h5></h5>
+<hr class="warning" />
+
+@if (Registration != null && UI !=null)
+{
+	<form method="post" asp-antiforgery="true">
+
+		<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+		@if (User.GetRoles() == @Auth0.Roles.Admin | User.GetRoles() == @Auth0.Roles.Sukkot)
+		{
+
+		}
+		else
+		{
+			<input type="hidden" asp-for="Registration.StatusId" />
+			<input type="hidden" asp-for="Registration.EMail" />
+		}
+
+		@{
+			if (UI.EditMode)
+			{
+				<input type="hidden" asp-for="Registration.Id" />
+			}
+		}
+
+		<fieldset>
+			<legend class="text-danger"><b><i>Administration</i></b></legend>
+			<div class="row">
+
+				<div class="col-sm-4">
+					<div class="form-group">
+						<label asp-for="Registration.StatusId" class="control-label"></label>
+						<select asp-for="Registration.StatusId" class="form-control" asp-items="Model.StatusItems"></select>
+						<span asp-validation-for="Registration.StatusId" class="text-danger"></span>
+					</div>
+				</div>
+
+				<div class="col-sm-4">
+					<div class="form-group">
+						<label asp-for="Registration.EMail" class="control-label"></label>
+						<input asp-for="Registration.EMail" class="form-control" />
+						<span asp-validation-for="Registration.EMail" class="text-danger"></span>
+					</div>
+				</div>
+
+				<div class="col-sm-4">
+					<div class="form-group">
+						<label asp-for="Registration.AssignedLodging" class="control-label"></label>
+						<input asp-for="Registration.AssignedLodging" class="form-control" />
+						<span asp-validation-for="Registration.AssignedLodging" class="text-danger"></span>
+					</div>
+				</div>
+
+			</div>
+		</fieldset>
+
+		<fieldset>
+			<legend class="text-primary">Contact Information</legend>
+
+			<div class="row">
+
+				<div class="col-sm-4">
+					<div class="form-group">
+						<label asp-for="Registration.FamilyName" class="control-label"></label>
+						<input asp-for="Registration.FamilyName" class="form-control" />
+						<span asp-validation-for="Registration.FamilyName" class="text-danger"></span>
+					</div>
+				</div>
+
+				<div class="col-sm-4">
+					<div class="form-group">
+						<label asp-for="Registration.FirstName" class="control-label"></label>
+						<input asp-for="Registration.FirstName" class="form-control" />
+						<span asp-validation-for="Registration.FirstName" class="text-danger"></span>
+					</div>
+				</div>
+
+				<div class="col-sm-4">
+					<div class="form-group">
+						<label asp-for="Registration.SpouseName" class="control-label"></label>
+						<input asp-for="Registration.SpouseName" class="form-control" placeholder="Spouse (optional)" />
+						<span asp-validation-for="Registration.SpouseName" class="text-danger"></span>
+					</div>
+				</div>
+
+			</div>
+
+
+			<div class="row">
+
+				<div class="col-sm-4">
+					<div class="form-group">
+						<label asp-for="Registration.OtherNames" class="control-label"></label>
+						<input asp-for="Registration.OtherNames" class="form-control" placeholder="children / others (optional)" />
+						<span asp-validation-for="Registration.OtherNames" class="text-danger"></span>
+					</div>
+				</div>
+
+				<div class="col-sm-4">
+					<div class="form-group">
+						<label asp-for="Registration.Phone" class="control-label"></label>
+						<input asp-for="Registration.Phone" class="form-control" placeholder="phone (optional)" />
+						<span asp-validation-for="Registration.Phone" class="text-danger"></span>
+					</div>
+				</div>
+
+				<div class="col-sm-4">
+					<div class="form-group">
+						<label asp-for="Registration.Avitar" class="control-label"></label>
+						<input asp-for="Registration.Avitar" class="form-control" placeholder="picture (optional)" />
+						<span asp-validation-for="Registration.Avitar" class="text-danger"></span>
+					</div>
+				</div>
+
+			</div>
+
+
+		</fieldset>
+
+		<fieldset>
+			<legend class="text-primary">Attendance</legend>
+			<div class="row">
+				<div class="col-sm-9">
+					<div class="form-group">
+						<label asp-for="Registration.AttendanceDayList" class="control-label"></label>
+						<select asp-for="Registration.AttendanceDayList" class="form-control"
+										asp-items="Model.AttendanceDays" id="attendanceDayMSDD">
+						</select>
+						<span asp-validation-for="Registration.AttendanceDayList" class="text-danger"></span>
+					</div>
+				</div>
+				<div class="col-sm-3">
+					<div class="well well-sm">
+						What days will you be attending?<br />This helps us with planning meals
+					</div>
+				</div>
+			</div>
+		</fieldset>
+
+		<fieldset>
+			<legend class="text-primary">Lodging</legend>
+			<div class="row">
+
+				@if (Other.IsRvHookupsAvailable)
+				{
+					<div class="col-sm-3">
+						<div class="form-group">
+							<label asp-for="Registration.CampId" class="control-label"></label>
+							<select asp-for="Registration.CampId" class="form-control" asp-items="Html.GetEnumSelectList<CampType>()"></select>
+							<span asp-validation-for="Registration.CampId" class="text-danger"></span>
+						</div>
+					</div>
+					<div class="col-sm-4">
+						<b>Cost Details</b>
+						<ul class=" fa-ul">
+							<li><i class="fa-li fas fa-caret-right"></i>Tent (@LodgingRate.ToString("C0") per day for entire family)</li>
+							<li><i class="fa-li fas fa-caret-right"></i>RV or Camp Trailer (@LodgingRate.ToString("C0") per day for entire family)</li>
+							<li>
+								<i class="fa-li fas fa-caret-right"></i>Indoor Facility (@LodgingRate.ToString("C0") per day per person)<br />
+								<b>You need to bring your own bedding, towels and toiletries</b>
+							</li>
+						</ul>
+					</div>
+
+				}
+				else
+				{
+					<div class="col-sm-3">
+						<div class="form-group">
+							<label asp-for="Registration.CampId" class="control-label"></label>
+							<select asp-for="Registration.CampId" class="form-control" asp-items="Html.GetEnumSelectList<CampTypeNoMoreRvHookups>()"></select>
+							<span asp-validation-for="Registration.CampId" class="text-danger"></span>
+						</div>
+					</div>
+					<div class="col-sm-4">
+						<b>Cost Details</b>
+						<ul class=" fa-ul">
+							<li><i class="fa-li fas fa-caret-right"></i>Tent (@LodgingRate.ToString("C0") per day for entire family)</li>
+							<li>
+								<i class="fa-li fas fa-caret-right"></i>RV or Camp Trailer (@LodgingRate.ToString("C0") per day for entire family)<br />
+								Sorry, no more sites with hookups<br />
+								<b>DRY CAMPING ONLY</b>
+							</li>
+							<li>
+								<i class="fa-li fas fa-caret-right"></i>Indoor Facility (@LodgingRate.ToString("C0") per day per person)<br />
+								<b>You need to bring your own bedding, towels and toiletries</b>
+							</li>
+						</ul>
+					</div>
+
+				}
+
+				<div class="col-sm-5">
+					<div class="form-group">
+						<label asp-for="Registration.LodgingDayList" class="control-label"></label>
+						<select asp-for="Registration.LodgingDayList" class="form-control"
+										asp-items="Model.LodgingDays" id="lodgingDayMSDD">
+						</select>
+						<span asp-validation-for="Registration.LodgingDayList" class="text-danger"></span>
+					</div>
+				</div>
+			</div>
+
+		</fieldset>
+
+		<fieldset>
+			<legend class="text-primary">People Count</legend>
+
+			<div class="row">
+				<div class="col-sm-3">
+
+					<div class="form-group">
+						<label asp-for="Registration.Adults" class="control-label"></label>
+						<input asp-for="Registration.Adults" class="form-control" />
+						<span asp-validation-for="Registration.Adults" class="text-danger"></span>
+					</div>
+				</div>
+
+				<div class="col-sm-3">
+					<div class="form-group">
+						<label asp-for="Registration.ChildBig" class="control-label"></label>
+						<input asp-for="Registration.ChildBig" class="form-control" />
+						<span asp-validation-for="Registration.ChildBig" class="text-danger"></span>
+					</div>
+				</div>
+
+				<div class="col-sm-3">
+					<div class="form-group">
+						<label asp-for="Registration.ChildSmall" class="control-label"></label>
+						<input asp-for="Registration.ChildSmall" class="form-control" />
+						<span asp-validation-for="Registration.ChildSmall" class="text-danger"></span>
+					</div>
+				</div>
+
+				<div class="col-sm-3">
+
+				</div>
+
+			</div>
+		</fieldset>
+
+		<fieldset>
+			<legend class="text-primary">Other</legend>
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="form-group">
+						<label asp-for="Registration.Notes" class="control-label"></label>
+						<textarea asp-for="Registration.Notes" class="form-control"></textarea>
+						<span asp-validation-for="Registration.Notes" class="text-danger"></span>
+					</div>
+				</div>
+			</div>
+		</fieldset>
+
+		<div class="row">
+			<div class="col-sm-6">
+				<div class="form-group">
+
+					@if (UI.EditMode)
+					{
+						<button onclick="Edit_ButtonClick"
+										class="btn btn-primary btn-lg">
+							<i class="fas fa-save"></i> @UI.DatabaseCommand
+						</button>
+
+					}
+					else
+					{
+						<button onclick="Add_ButtonClick"
+										class="btn btn-primary btn-lg">
+							<i class="fas fa-save"></i> @UI.DatabaseCommand
+						</button>
+
+					}
+
+				</div>
+
+			</div>
+		</div>
+
+	</form>
+
+}
+else if (LoadFailed)
+{
+	<p class="text-danger"><em>Could not load because of an Error</em></p>
+}
+else
+{
+	<p><em>Loading...</em></p>
+}
+
+<a href="@Registration"
+	 class="btn btn-info" title="Sukkot Introduction">
+	<i class="far fa-arrow-alt-circle-left"></i> Back to Registration
+</a>
+
+
+
+@*
+	ToDo: Fix This
+
+		@section Scripts {
+		@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+		<script>
+			$(function () {
+				$("#attendanceDayMSDD").chosen({
+					width: "100%"
+				});
+			});
+
+			$(function () {
+				$("#lodgingDayMSDD").chosen({
+					width: "100%"
+				});
+			});
+		</script>
+	}
+
+*@
+

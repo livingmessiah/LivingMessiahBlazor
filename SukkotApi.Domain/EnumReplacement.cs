@@ -162,7 +162,6 @@ namespace SukkotApi.Domain
 
 	}
 
-
 	#region LodgingDays
 	[Flags]
 	public enum SukkotLodgingDays
@@ -175,25 +174,46 @@ namespace SukkotApi.Domain
 		Oct_05_Mon = 32,
 		Oct_06_Tue = 64,
 		Oct_07_Wed = 128,
-		Oct_08_Thu = 256 //,
-		//Oct_09_Fri = 512,
-		//Oct_10_Sat = 1024,
-		//Oct_11_Sun = 2048
+		Oct_08_Thu = 256,
+		Oct_09_Fri = 512,
+		Oct_10_Sat = 1024,
+		Oct_11_Sun = 2048
 	}
 
 	public enum LodgeDateEnum
 	{
+		[Display(Name = "Wed, Sep 30")]
 		Day01 = 1,
+
+		[Display(Name = "Thu, Oct 02")]
 		Day02 = 2,
+
+		[Display(Name = "Fri, Oct 03")]
 		Day03 = 3,
+
+		[Display(Name = "Sat, Oct 04")]
 		Day04 = 4,
+
+		[Display(Name = "Sun, Oct 05")]
 		Day05 = 5,
+
+		[Display(Name = "Mon, Oct 06")]
 		Day06 = 6,
+
+		[Display(Name = "Tue, Oct 07")]
 		Day07 = 7,
-		Day08 = 8 //,
-		//Day09 = 9,
-		//Day10 = 10,
-		//Day11 = 11,
+
+		[Display(Name = "Wed, Oct 08")]
+		Day08 = 8,
+
+		[Display(Name = "Thu, Oct 09")]
+		Day09 = 9,
+
+		[Display(Name = "Fri, Oct 10")]
+		Day10 = 10,
+
+		[Display(Name = "Sat, Oct 11")]
+		Day11 = 11,
 		//Day12 = 12
 	}
 
@@ -209,9 +229,9 @@ namespace SukkotApi.Domain
 		public static LodgeDate Day06 { get; } = new LodgeDate(LodgeDateEnum.Day06, SukkotLodgingDays.Oct_05_Mon, "2020-10-05", "Mon, Oct 05<sup>th</sup>");
 		public static LodgeDate Day07 { get; } = new LodgeDate(LodgeDateEnum.Day07, SukkotLodgingDays.Oct_06_Tue, "2020-10-06", "Tue, Oct 06<sup>th</sup>");
 		public static LodgeDate Day08 { get; } = new LodgeDate(LodgeDateEnum.Day08, SukkotLodgingDays.Oct_07_Wed, "2020-10-07", "Wed, Oct 07<sup>th</sup>");
-		//public static LodgeDate Day09 { get; } = new LodgeDate(LodgeDateEnum.Day09, SukkotLodgingDays.Oct_08_Thu, "2020-10-08", "Thu, Oct 08<sup>th</sup>");
-		//public static LodgeDate Day10 { get; } = new LodgeDate(LodgeDateEnum.Day10, SukkotLodgingDays.Oct_09_Fri, "2020-10-09", "Fri, Oct 09<sup>th</sup>");  // &dagger;
-		//public static LodgeDate Day11 { get; } = new LodgeDate(LodgeDateEnum.Day11, SukkotLodgingDays.Oct_10_Sat, "2020-10-10", "Sat, Oct 10<sup>th</sup>");  // &Dagger;
+		public static LodgeDate Day09 { get; } = new LodgeDate(LodgeDateEnum.Day09, SukkotLodgingDays.Oct_08_Thu, "2020-10-08", "Thu, Oct 08<sup>th</sup>");
+		public static LodgeDate Day10 { get; } = new LodgeDate(LodgeDateEnum.Day10, SukkotLodgingDays.Oct_09_Fri, "2020-10-09", "Fri, Oct 09<sup>th</sup>");  // &dagger;
+		public static LodgeDate Day11 { get; } = new LodgeDate(LodgeDateEnum.Day11, SukkotLodgingDays.Oct_10_Sat, "2020-10-10", "Sat, Oct 10<sup>th</sup>");  // &Dagger;
 		//public static LodgeDate Day12 { get; } = new LodgeDate(LodgeDateEnum.Day12, SukkotLodgingDays.Oct_11_Sun,  "2020-10-11", "Sun, Oct 11<sup>th</sup>");  // &bull;
 
 		public LodgeDateEnum LodgeDateEnum { get; private set; }

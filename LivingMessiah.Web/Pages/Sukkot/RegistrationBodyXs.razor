@@ -34,7 +34,7 @@
 	<div class="col-3">
 		@if (StatusFlagEnum.HasFlag(StatusFlagEnum.EmailConfirmation) == true)
 		{
-			<i class="fa fa-check fa-3x"></i>
+			<i class="fas fa-check fa-3x"></i>
 		}
 	</div>
 	<div class="col-9">
@@ -59,7 +59,7 @@
 	<div class="col-3">
 		@if (StatusFlagEnum.HasFlag(StatusFlagEnum.EmailConfirmation) == true)
 		{
-			<i class="fa fa-check fa-3x"></i>
+			<i class="fas fa-check fa-3x"></i>
 		}
 	</div>
 	<div class="col-9">
@@ -83,13 +83,14 @@
 	<div class="col-3">
 		@if (StatusFlagEnum.HasFlag(StatusFlagEnum.RegistrationFormCompleted) == true)
 		{
-			<i class="fa fa-check fa-3x"></i>
+			<i class="fas fa-check fa-3x"></i>
 		}
 	</div>
 	<div class="col-9">
-		<p class="text-black-50"><small><sup>IsXs: @IsXs</sup></small>></p>
+		@*<p class="text-black-50"><small><sup>IsXs: @IsXs</sup></small>></p>*@
+		@*<p class="text-black-50"><small><sup>vwRegistrationShell.Id: @vwRegistrationShell.Id</sup></small></p>*@
 		<Step3Registration IsXs="@IsXs"
-											 RegistrationId="@Id"
+											 RegistrationId="@vwRegistrationShell.Id"
 											 StatusFlagEnum="@StatusFlagEnum">
 		</Step3Registration>
 	</div>
@@ -112,7 +113,7 @@
 		<div class="col-3">
 			@if (StatusFlagEnum.HasFlag(StatusFlagEnum.MealsFormCompleted) == true)
 			{
-				<i class="fa fa-check fa-3x"></i>
+				<i class="fas fa-check fa-3x"></i>
 			}
 		</div>
 		<div class="col-9">
@@ -165,13 +166,14 @@ else
 	<div class="col-3">
 		@if (StatusFlagEnum.HasFlag(StatusFlagEnum.FullyPaid) == true)
 		{
-			<i class="fa fa-check fa-3x"></i>
+			<i class="fas fa-check fa-3x"></i>
 		}
 		else
 		{
 			@if (StatusFlagEnum.HasFlag(StatusFlagEnum.PartiallyPaid) == true)
 			{
-				<i class="fa fa-star-half-empty fa-3x text-muted"></i>
+				<i class="fas fa-star-half fa-3x text-muted"></i>
+				
 			}
 		}
 

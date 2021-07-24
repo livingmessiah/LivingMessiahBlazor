@@ -14,7 +14,7 @@ namespace SukkotApi.Data
 		const string configationConnectionKey = "ConnectionStrings:Sukkot";
 
 		private readonly IConfiguration config;
-		private readonly ILogger log;
+		protected readonly ILogger log;
 		protected BaseRepositoryAsync(IConfiguration config, ILogger<BaseRepositoryAsync> logger)
 		{
 			this.config = config;
