@@ -1,0 +1,62 @@
+﻿@page  "/Sukkot/DeleteConfirmation/{Id:int}"
+
+@using LivingMessiah.Web.Pages.Sukkot.Constants
+@using LivingMessiah.Domain
+
+@using static LivingMessiah.Web.Links.Sukkot
+@using LivingMessiah.Web.Shared.Sukkot
+@using static LivingMessiah.Web.Services.Auth0
+
+<AuthorizeView Roles="@Roles.SukkotMenuBar">
+	<SukkotAdminMenubar></SukkotAdminMenubar>
+</AuthorizeView>
+
+<p class="text-info">ToDo: Port GlobalSharedPartialViews.Message for=Message</p>
+
+<h2>@Title [#@Id]</h2>
+
+<hr class="warning" />
+
+<br />
+
+@*<form method="post" action="">
+		<div class="jumbotron">
+			<h2 class="text-danger">Confirm Registration Deletion</h2><br />
+			Click the <b>Delete Registration</b> button to complete the process
+		</div>
+
+		<div class="row">
+			<div class="col-sm-6">
+				<div class="form-group">
+					<button asp-page-handler="@Anchors.Sukkot.DeleteHandler"
+									class="btn btn-danger">
+						<i class="fas fa-times"></i>	Yes, Delete Registration
+					</button>
+				</div>
+			</div>
+		</div>
+
+	</form>*@
+
+<div class="jumbotron">
+	<h2 class="text-danger">Confirm Registration Deletion</h2><br />
+	Click the <b>Delete Registration</b> button to complete the process
+</div>
+<div class="row">
+	<div class="col-sm-6">
+		<button @onclick="@(e => Delete_ButtonClick(vwRegistration.Id))"
+						class="btn btn-danger">
+			<i class="fas fa-times"></i>	Yes, Delete Registration
+		</button>
+	</div>
+</div>
+
+
+<div class="row">
+	<div class="col-12">
+		<a href="@LivingMessiah.Web.Links.Sukkot.RegistrationShell"
+			 class="btn btn-primary" title="Cancel Sukkot Registration Deletion">
+			<i class="far fa-hand-paper"></i>	Cancel
+		</a>
+	</div>
+</div>

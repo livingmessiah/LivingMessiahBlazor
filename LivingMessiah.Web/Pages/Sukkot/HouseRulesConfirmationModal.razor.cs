@@ -31,8 +31,6 @@ namespace LivingMessiah.Web.Pages.Sukkot
 
 			ModalId = IsXs ? ModalIdHouseRulesXs : ModalIdHouseRules;  //IsXs2 ?
 			FormatSize = IsXs ? "" : "lead"; // IsXs2 ?
-			
-
 		}
 
 

@@ -19,9 +19,9 @@ namespace LivingMessiah.Web.Pages.Sukkot
 		[Parameter]
 		public int RegistrationId { get; set; }
 
-		void Details_ButtonClick(MouseEventArgs e, int id)
+		void Details_ButtonClick(MouseEventArgs e, int id, bool showPrintMsg)
 		{
-			NavManager.NavigateTo(LivingMessiah.Web.Links.Sukkot.Links2.Details + "/" + id);
+			NavManager.NavigateTo(LivingMessiah.Web.Links.Sukkot.Details + "/" + id + "/" + showPrintMsg);
 		}
 
 		void Edit_ButtonClick(MouseEventArgs e, int id)
@@ -31,7 +31,7 @@ namespace LivingMessiah.Web.Pages.Sukkot
 
 		void DeleteConfirmation_ButtonClick(MouseEventArgs e, int id)
 		{
-			NavManager.NavigateTo(DeleteConfirmation + "/" + id);
+			NavManager.NavigateTo(Links.Sukkot.DeleteConfirmation + "/" + id);
 		}
 	}
 }

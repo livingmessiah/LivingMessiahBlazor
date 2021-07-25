@@ -1,0 +1,98 @@
+﻿@inherits BasePaymentSummary
+
+<div class="row">
+	<div class="col-12">
+		<h5 class="text-center">Detailed Costs</h5>
+	</div>
+</div>
+
+<br />
+
+<div class="row">
+	<div class="col-sm-6">
+		<dl class="row">
+			<dt class="col-6">Registration Fee:</dt>
+			<dd class="col-6"><span class="float-right">@RegistrationSummary.RegistrationFee.ToString("C0")</span></dd>
+		</dl>
+	</div>
+	<div class="col-sm-6">
+		Early or Regular Fee
+	</div>
+</div>
+
+
+@if (LivingMessiah.Web.Pages.Sukkot.Constants.Other.IsMealsAvailable)
+{
+	<div class="row">
+		<div class="col-sm-6">
+			<dl class="row">
+				<dt class="col-6">Adult Meal Cost:</dt>
+				<dd class="col-6"><span class="float-right">@RegistrationSummary.MealTotalCostAdult.ToString("C0")</span></dd>
+			</dl>
+		</div>
+		<div class="col-sm-6">
+			@RegistrationSummary.Adults adult(s) at $@RegistrationSummary.AdultRate.ToString("C0") / meal
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-sm-6">
+			<dl class="row">
+				<dt class="col-6">Child Meal Cost:</dt>
+				<dd class="col-6"><span class="float-right">@RegistrationSummary.MealTotalCostChildBig.ToString("C0")</span></dd>
+			</dl>
+		</div>
+		<div class="col-sm-6">
+			@RegistrationSummary.ChildBig child(ren) (big) at $@RegistrationSummary.ChildRate.ToString("C0") / meal
+		</div>
+	</div>
+}
+
+<div class="row">
+	<div class="col-sm-6">
+		<dl class="row">
+			<dt class="col-6">Camp Cost:</dt>
+			<dd class="col-6"><span class="float-right">@RegistrationSummary.CampCost.ToString("C0")</span></dd>
+		</dl>
+	</div>
+	<div class="col-sm-6">
+		@RegistrationSummary.CampDescr<br />Days: @RegistrationSummary.CampDays<br /><br />
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-sm-6">
+		<dl class="row">
+			<dt class="col-6">Total Cost:</dt>
+			<dd class="col-6"><span class="float-right">@RegistrationSummary.TotalCost.ToString("C0")</span></dd>
+		</dl>
+	</div>
+	<div class="col-sm-6">
+		@RegistrationSummary.RegistrationFee.ToString("C0") + @RegistrationSummary.MealTotalCostAdult.ToString("C0") + @RegistrationSummary.MealTotalCostChildBig.ToString("C0") + @RegistrationSummary.CampCost.ToString("C0")  <small>(Reg Fee + Adult + Child + Camp)</small>
+	</div>
+</div>
+
+
+<div class="row">
+	<div class="col-sm-6">
+		<dl class="row">
+			<dt class="col-6">Prior Donation(s):</dt>
+			<dd class="col-6"><span class="float-right">@RegistrationSummary.TotalDonation.ToString("C0")</span></dd>
+		</dl>
+	</div>
+	<div class="col-sm-6">
+		Summation of prior donation(s) (if any).
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-sm-6">
+		<dl class="row">
+			<dt class="col-6">Remaining Cost:</dt>
+			<dd class="col-6"><span class="text-success float-right"><u><b>@RegistrationSummary.RemainingCost.ToString("C0")</b></u></span></dd>
+		</dl>
+	</div>
+	<div class="col-sm-6">
+		@RegistrationSummary.TotalCost.ToString("C0") - @RegistrationSummary.TotalDonation.ToString("C0") <small>(Cost - Donation)</small>
+	</div>
+</div>

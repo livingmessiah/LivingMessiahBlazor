@@ -5,13 +5,13 @@
 @using static LivingMessiah.Web.Services.Auth0
 @using LivingMessiah.Web.Shared.Sukkot
 
+@* @page "/Sukkot/Details/{Id:int}" *@
+
 <AuthorizeView Roles="@Roles.SukkotMenuBar">
 	<SukkotAdminMenubar></SukkotAdminMenubar>
 </AuthorizeView>
 
 <p class="text-info">ToDo: Port GlobalSharedPartialViews.Message for=Message</p>
-
-
 
 <div class="d-print-none float-right">
 	<a class="btn btn-sm btn-default" href="javascript:window.print()">
@@ -21,80 +21,89 @@
 
 <LoadingComponent IsLoading="vwRegistration == null">
 
-</LoadingComponent>
+	@if (!String.IsNullOrEmpty(vwRegistration.PayWithCheckMessage))
+	{
+		<div class="d-print-none">
+			<button type="button" @onclick="PaymentInstructions_ButtonClick"
+							bs-toggle-modal="instructions"
+							class="btn btn-danger btn-lg mb-4">
+				Payment Instructions
+			</button>
 
+			<div id="instructions" class="modal fade" role="dialog">
+				<div class="modal-dialog">
 
-@if (!String.IsNullOrEmpty(vwRegistration.PayWithCheckMessage))
-{
-	<div class="d-print-none">
-		<button type="button" class="btn btn-danger btn-lg mb-4" bs-toggle-modal="instructions">
-			Payment Instructions
-		</button>
+					<div class="modal-content">
+						<div class="modal-header">
+							<h2 class="modal-title text-primary">Check Payment Instructions</h2>
+							<button type="button" @onclick="CancelModal_ButtonClick"
+											class="close" data-dismiss="modal" aria-hidden="true">
+								&times;
+							</button>
+						</div>
 
-		<div id="instructions" class="modal fade" role="dialog">
-			<div class="modal-dialog">
+						<div class="modal-body">
+							@((MarkupString)vwRegistration.PayWithCheckMessage)
+						</div>
 
-				<div class="modal-content">
-					<div class="modal-header">
-						<h2 class="modal-title text-primary">Check Payment Instructions</h2>
-						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<div class="modal-footer">
+
+							<button type="button" class="btn btn-danger"
+											data-dismiss="modal">
+								<i class="far fa-window-close"></i> Cancel
+							</button>
+
+							<a href="javascript:window.print()"
+								 class="btn btn-md btn-info">
+								<i class="fa fa-print"></i> Print
+							</a>
+
+						</div>
 					</div>
 
-					<div class="modal-body">
-						@((MarkupString)vwRegistration.PayWithCheckMessage)
-					</div>
-
-					<div class="modal-footer">
-
-						<button type="button" class="btn btn-danger" data-dismiss="modal">
-							<i class="far fa-window-close"></i> Cancel
-						</button>
-
-						<a href="javascript:window.print()"
-							 class="btn btn-md btn-info">
-							<i class="fa fa-print"></i> Print
-						</a>
-
-					</div>
 				</div>
-
 			</div>
+
+
 		</div>
+	}
+
+	<h2 class="mb-4">
+		@Other.DetailsTitle
+		<br /><small><i>@vwRegistration.FullName(false)</i> - Registration#: <b>@vwRegistration.Id</b></small>
+		<br /><small><i>@vwRegistration.OtherNames</i></small>
+	</h2>
+
+	<DetailsContent vwRegistration="@vwRegistration"></DetailsContent>
+
+	<hr class="warning d-print-none" />
+
+	<div class="row d-print-none">
+		<div class="col-12">
+
+			@if (!String.IsNullOrEmpty(vwRegistration.PayWithCheckMessage))
+
+				if (vwRegistration.StatusId != (int)SukkotApi.Domain.Enums.Status.FullyPaid)
+				{
+
+					<button @onclick="@(e => Edit_ButtonClick(e, vwRegistration.Id))"
+									class="btn-primary btn-sm">
+						<i class="fas fa-edit"></i> Edit
+					</button>
+				}
 
 
+
+
+		</div>
 	</div>
-}
-
-<h2 class="mb-4">
-	@Other.DetailsTitle
-	<br /><small><i>@vwRegistration.FullName(false)</i> - Registration#: <b>@vwRegistration.Id</b></small>
-	<br /><small><i>@vwRegistration.OtherNames</i></small>
-</h2>
-
-
-<partial name=@PartialViews.Details model="Registration" />
-
-<hr class="warning d-print-none" />
+</LoadingComponent>
 
 <div class="row d-print-none">
 	<div class="col-12">
-
-		@if (!String.IsNullOrEmpty(vwRegistration.PayWithCheckMessage))
-
-			if (vwRegistration.StatusId != (int)SukkotApi.Domain.Enums.Status.FullyPaid)
-			{
-
-				<button @onclick="@(e => Edit_ButtonClick(e, vwRegistration.Id))"
-								class="btn-primary btn-sm">
-					<i class="fas fa-edit"></i> Edit
-				</button>
-			}
-
-		<a asp-page="@LivingMessiah.Web.Links.Sukkot.RegistrationShell"
+		<a href="@LivingMessiah.Web.Links.Sukkot.RegistrationShell"
 			 class="btn btn-info" title="Back to Registration Shell">
 			<i class="far fa-arrow-alt-circle-left"></i> Back to Registration
 		</a>
-
-
 	</div>
 </div>

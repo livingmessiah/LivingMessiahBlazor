@@ -379,8 +379,6 @@
 		{
 			public const string EditMeals = "/Sukkot/EditMeals";
 			public const string DetailsMealTicket = "/Sukkot/DetailsMealTicket";
-			public const string DeleteConfirmation = "/Sukkot/DeleteConfirmation";
-			public const string DeleteHandler = "delete";
 			public const string Details = "/Sukkot/Details";
 			public const string Payment = "/Sukkot/Payment";
 			public const string KitchenWork = "/Sukkot/KitchenWork";

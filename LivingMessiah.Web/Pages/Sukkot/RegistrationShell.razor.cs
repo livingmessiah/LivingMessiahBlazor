@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using Sukkot.Web.Service;
 using LivingMessiah.Web.Pages.Sukkot.RegistrationEnums;
 using LivingMessiah.Web.Infrastructure;
 using SukkotApi.Data;
@@ -9,9 +8,7 @@ using SukkotApi.Domain;
 using SukkotApi.Domain.Enums;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components;
-using System.Collections.Generic;
 using System.Security.Claims;
-using System.Linq;
 
 namespace LivingMessiah.Web.Pages.Sukkot
 {
@@ -25,6 +22,9 @@ namespace LivingMessiah.Web.Pages.Sukkot
 
 		[Inject]
 		public ILogger<RegistrationShell> Logger { get; set; }
+
+		[Inject]
+		NavigationManager NavManager { get; set; }
 
 		public vwRegistrationShell vwRegistrationShell { get; set; } = new vwRegistrationShell();
 
@@ -40,22 +40,18 @@ namespace LivingMessiah.Web.Pages.Sukkot
 		public string Title { get; set; }
 
 		public bool IsMealsAvailable { get; set; } = false;
-		
-		private IEnumerable<Claim> _claims = Enumerable.Empty<Claim>();
 
 		protected override async Task OnInitializedAsync()
 		{
-			base.OnInitialized();
 			var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
 			User = authState.User;
-
 			LoadUserData();
 
 			if (StatusFlagEnum.HasFlag(StatusFlagEnum.EmailConfirmation))
 			{
 				try
 				{
-					Logger.LogDebug($"Inside {nameof(RegistrationShell)}!{nameof(OnInitializedAsync)}, calling {nameof(db.ByEmail)}");
+					Logger.LogDebug($"Inside {nameof(RegistrationShell)}!{nameof(OnInitializedAsync)} calling {nameof(db.ByEmail)} with EmailAddress:{EmailAddress}");
 					vwRegistrationShell = await db.ByEmail(EmailAddress);
 
 					if (vwRegistrationShell != null)
@@ -63,12 +59,19 @@ namespace LivingMessiah.Web.Pages.Sukkot
 						Id = vwRegistrationShell.Id;
 						StatusId = vwRegistrationShell.StatusId;
 						FinalizeStatusFlag(vwRegistrationShell.StatusId);
-						
 					}
+					else
+					{
+						//Logger.LogDebug($"vwRegistrationShell is null, navigating to {nameof(Links.Sukkot.CreateEdit)}");
+						//NavManager.NavigateTo(Links.Sukkot.CreateEdit);
+						StatusId = 1;
+					}
+
 				}
 				catch (Exception ex)
 				{
 					Logger.LogError(ex, $"EmailAddress={EmailAddress}");
+					NavManager.NavigateTo(Links.Home.Error);
 				}
 			}
 			sf = (int)StatusFlagEnum;
@@ -76,8 +79,7 @@ namespace LivingMessiah.Web.Pages.Sukkot
 
 		private void LoadUserData()
 		{
-
-			if (User.Verified()) //Verified
+			if (User.Verified())
 			{
 				StatusFlagEnum = StatusFlagEnum | StatusFlagEnum.EmailConfirmation;
 			}

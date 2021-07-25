@@ -81,7 +81,7 @@ namespace LivingMessiah.Web.Pages.Sukkot
 				Logger.LogWarning(e, $"Failed to load page {nameof(CreateEdit)}");
 			}
 
-			catch (Exception ex)
+			catch (Exception)
 			{
 				LoadFailed = true;
 				ExceptionMessage = svc.ExceptionMessage;

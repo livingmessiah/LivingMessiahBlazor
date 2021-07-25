@@ -57,10 +57,27 @@ namespace LivingMessiah.Web.Pages.Sukkot
 			
 		}
 
+		protected bool MakeModalVisible = false;
+
+		void PaymentInstructions_ButtonClick()
+		{
+			Logger.LogDebug($"Event: {nameof(PaymentInstructions_ButtonClick)} clicked");
+			MakeModalVisible = true;
+			StateHasChanged();
+
+		}
+		void CancelModal_ButtonClick()
+		{
+			Logger.LogDebug($"Event: {nameof(CancelModal_ButtonClick)} clicked");
+			MakeModalVisible = false;
+			StateHasChanged();
+		}
+
 		void Edit_ButtonClick(MouseEventArgs e, int id)
 		{
 			NavManager.NavigateTo(Links.Sukkot.CreateEdit + "/" + id);
 		}
+
 
 	}
 }

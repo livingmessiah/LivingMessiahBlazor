@@ -5,8 +5,8 @@ namespace LivingMessiah.Web.Pages.Sukkot.Constants
 	public static class PayPal
 	{
 		public const string HostedButton = "7S848U88V95UA";
-		public const string ItemMessage = "Sukkot 2020 Payment";
-		public const string PaymentQuestionsEmail = "mailto:jerry@livingmessiah.com";
+		public const string ItemMessage = "Sukkot 2021 Payment";
+		public const string PaymentQuestionsEmail = "mailto:peribeth@livingmessiah.com";
 	}
 
 	public static class Routing

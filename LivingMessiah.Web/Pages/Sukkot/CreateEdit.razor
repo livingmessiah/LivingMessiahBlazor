@@ -257,7 +257,7 @@
 
 				<div class="form-group">
 
-					<label for="adults" class="control-label"></label>
+					<label for="adults" class="control-label">Adults</label>
 					<InputNumber id="adults" class="form-control" @bind-Value="Registration.Adults" />
 					<ValidationMessage For="@(() => Registration.Adults)" />
 
@@ -266,7 +266,7 @@
 
 			<div class="col-sm-3">
 				<div class="form-group">
-					<label for="childBig" class="control-label"></label>
+					<label for="childBig" class="control-label">Child <sup>big</sup></label>
 					<InputNumber id="childBig" class="form-control" @bind-Value="Registration.ChildBig" />
 					<ValidationMessage For="@(() => Registration.ChildBig)" />
 				</div>
@@ -274,7 +274,7 @@
 
 			<div class="col-sm-3">
 				<div class="form-group">
-					<label for="childSmall" class="control-label"></label>
+					<label for="childSmall" class="control-label">Child <sup>small</sup></label>
 					<InputNumber id="childSmall" class="form-control" @bind-Value="Registration.ChildSmall" />
 					<ValidationMessage For="@(() => Registration.ChildSmall)" />
 				</div>
@@ -304,11 +304,6 @@
 	<div class="row">
 		<div class="col-sm-6">
 			<div class="form-group">
-
-				@*
-					onclick="Edit_ButtonClick @UI.DatabaseCommand"
-					onclick="Add_ButtonClick @UI.DatabaseCommand"
-				*@
 
 				@if (UI.EditMode)
 				{
