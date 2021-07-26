@@ -16,7 +16,7 @@ namespace LivingMessiah.Web.Pages.Sukkot
 	{
 		[Inject]
 		public AuthenticationStateProvider AuthenticationStateProvider { get; set; }
-		
+
 		[Inject]
 		public ISukkotRepository db { get; set; }
 
@@ -29,9 +29,6 @@ namespace LivingMessiah.Web.Pages.Sukkot
 		public vwRegistrationShell vwRegistrationShell { get; set; } = new vwRegistrationShell();
 
 		public StatusFlagEnum StatusFlagEnum { get; set; }
-		public int sf { get; set; }
-		public int Id { get; set; }
-		public int StatusId { get; set; } = 0;
 
 		public ClaimsPrincipal User { get; set; }
 		public string EmailAddress { get; set; }
@@ -40,12 +37,32 @@ namespace LivingMessiah.Web.Pages.Sukkot
 		public string Title { get; set; }
 
 		public bool IsMealsAvailable { get; set; } = false;
+		protected bool LoadFailed = false;
+
+		private vwRegistrationShell GetDefaultModel() 
+		{
+			return new vwRegistrationShell 
+			{ 
+				StatusId=(int)StatusFlagEnum.EmailConfirmation,
+				Id = 0, CampCost=0, FamilyName="", MealCost=0, MealCount=0, TotalDonation=0  
+			};
+		}
 
 		protected override async Task OnInitializedAsync()
 		{
-			var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-			User = authState.User;
-			LoadUserData();
+			Logger.LogDebug($"Inside {nameof(RegistrationShell)}!{nameof(OnInitializedAsync)}");
+			try
+			{
+				var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+				User = authState.User;
+				LoadUserData();
+			}
+			catch (Exception ex)
+			{
+				Logger.LogError(ex, $"...Error authenticating user; EmailAddress={EmailAddress}");
+				LoadFailed = true;
+				NavManager.NavigateTo(Links.Home.Error);
+			}
 
 			if (StatusFlagEnum.HasFlag(StatusFlagEnum.EmailConfirmation))
 			{
@@ -56,25 +73,23 @@ namespace LivingMessiah.Web.Pages.Sukkot
 
 					if (vwRegistrationShell != null)
 					{
-						Id = vwRegistrationShell.Id;
-						StatusId = vwRegistrationShell.StatusId;
 						FinalizeStatusFlag(vwRegistrationShell.StatusId);
 					}
 					else
 					{
-						//Logger.LogDebug($"vwRegistrationShell is null, navigating to {nameof(Links.Sukkot.CreateEdit)}");
-						//NavManager.NavigateTo(Links.Sukkot.CreateEdit);
-						StatusId = 1;
+						Logger.LogDebug($"...vwRegistrationShell not found so calling {nameof(GetDefaultModel)}");
+						vwRegistrationShell = GetDefaultModel();
 					}
 
 				}
 				catch (Exception ex)
 				{
-					Logger.LogError(ex, $"EmailAddress={EmailAddress}");
+					Logger.LogError(ex, $"...EmailAddress={EmailAddress}");
+					LoadFailed = true;
 					NavManager.NavigateTo(Links.Home.Error);
 				}
 			}
-			sf = (int)StatusFlagEnum;
+
 		}
 
 		private void LoadUserData()
@@ -100,24 +115,24 @@ namespace LivingMessiah.Web.Pages.Sukkot
 		private void FinalizeStatusFlag(int statusId)
 		{
 			StatusFlagEnum = StatusFlagEnum | StatusFlagEnum.RegistrationFormCompleted;
-			//if (MealCount > 0)
+
 			if (vwRegistrationShell.MealCount > 0)
 			{
 				StatusFlagEnum = StatusFlagEnum | StatusFlagEnum.MealsFormCompleted;
 			}
 
-			if (statusId == (int)Status.FullyPaid)
+			if (statusId == (int)StatusEnum.FullyPaid)
 			{
 				StatusFlagEnum = StatusFlagEnum | StatusFlagEnum.MealsFormCompleted | StatusFlagEnum.FullyPaid;
 			}
 			else
 			{
-				if (statusId == (int)Status.PartiallyPaid)
+				if (statusId == (int)StatusEnum.PartiallyPaid)
 				{
 					StatusFlagEnum = StatusFlagEnum | StatusFlagEnum.MealsFormCompleted | StatusFlagEnum.PartiallyPaid;
 				}
 			}
-			
+
 		}
 
 	}

@@ -1,4 +1,8 @@
 ﻿@page "/Sukkot/CreateEdit/{Id:int?}"
+
+@using Microsoft.AspNetCore.Hosting
+@using Microsoft.Extensions.Hosting
+
 @using LivingMessiah.Web.Pages.Sukkot
 @using LivingMessiah.Web.Pages.Sukkot.Constants
 @using LivingMessiah.Web.Infrastructure;
@@ -9,177 +13,179 @@
 @using static LivingMessiah.Web.Services.Auth0
 @using LivingMessiah.Web.Shared.Sukkot
 
+@inject IWebHostEnvironment Env
+
 <AuthorizeView Roles="@Roles.SukkotMenuBar">
 	<SukkotAdminMenubar></SukkotAdminMenubar>
 </AuthorizeView>
+
 <p class="text-info">ToDo: Port GlobalSharedPartialViews.Message for=Message</p>
 
-<h3>@Title<br /><small><i>@Title2</i></small></h3>
-<h5></h5>
-<hr class="warning" />
+@*<LoadingComponent IsLoading="Registration==null">
+	</LoadingComponent>*@
+
 
 @if (Registration != null && UI != null)
 {
-<EditForm Model="Registration"
-					OnValidSubmit="HandleValidSubmit"
-					class="card card-body bg-light mt-5">
-	<DataAnnotationsValidator />
-	<ValidationSummary />
 
-	<input type="hidden" asp-for="Registration.StatusId" />
-	<input type="hidden" asp-for="Registration.EMail" />
-	<input type="hidden" asp-for="UI.EditMode" />
-	@*id="custId" name="custId" value="3487">*@
+	@if (Env.IsDevelopment())
+	{
+		<p class="float-right">
+			<sup> Registration.StatusEnum: @Registration.StatusEnum </sup>
+		</p>
 
-	<fieldset>
-		<legend class="text-danger"><b><i>Administration</i></b></legend>
-		<div class="row bg-warning">
+	}
 
-			<div class="col-sm-4">
-				<div class="form-group">
+	<h3>@Title<br /><small><i>@Title2</i></small></h3>
+	<h5></h5>
+	<hr class="warning" />
 
-					<label for="status" class="control-label">Status</label>
-					<InputSelectEnum @bind-Value="Registration.StatusEnum" />
-					<span>Selected value: @StatusEnum</span>
+	<EditForm Model="Registration"
+						OnValidSubmit="HandleValidSubmit"
+						class="card card-body bg-light mt-5">
+		<DataAnnotationsValidator />
+		<ValidationSummary />
 
+		<input type="hidden" asp-for="Registration.StatusId" />
+		<input type="hidden" asp-for="Registration.EMail" />
+		<input type="hidden" asp-for="UI.EditMode" />
+
+		<fieldset disabled>
+			<legend class="text-danger"><b><i>Administration</i></b></legend>
+			<div class="row bg-warning">
+
+				<div class="col-sm-4">
+					<div class="form-group">
+						<label for="status" class="control-label">Status</label>
+						<InputSelectEnum @bind-Value="Registration.StatusEnum" />
+					</div>
 				</div>
+
+				<div class="col-sm-4">
+					<div class="form-group">
+						<label for="eMail" class="control-label">EMail</label>
+						<InputText id="eMail" class="form-control" @bind-Value="Registration.EMail" />
+						<ValidationMessage For="@(() => Registration.EMail)" />
+
+					</div>
+				</div>
+
+				<div class="col-sm-4">
+					<div class="form-group">
+						<label for="assignedLodging" class="control-label">Assigned Lodging</label>
+						<InputText id="assignedLodging" class="form-control" @bind-Value="Registration.AssignedLodging" />
+						<ValidationMessage For="@(() => Registration.AssignedLodging)" />
+					</div>
+				</div>
+
+			</div>
+		</fieldset>
+
+		<fieldset>
+			<legend class="text-primary mt-4">Contact Information</legend>
+
+			<div class="row">
+
+				<div class="col-sm-4">
+					<div class="form-group">
+						<label for="familyName" class="control-label">Family Name</label>
+						<InputText id="familyName" class="form-control" @bind-Value="Registration.FamilyName" />
+						<ValidationMessage For="@(() => Registration.FamilyName)" />
+					</div>
+				</div>
+
+				<div class="col-sm-4">
+					<div class="form-group">
+						<label for="firstName" class="control-label">First Name</label>
+						<InputText id="firstName" class="form-control" @bind-Value="Registration.FirstName" />
+						<ValidationMessage For="@(() => Registration.FirstName)" />
+					</div>
+				</div>
+
+				<div class="col-sm-4">
+					<div class="form-group">
+						<label for="spouseName" class="control-label">Spouses Name</label>
+						<InputText id="spouseName" class="form-control" @bind-Value="Registration.SpouseName" />
+						<ValidationMessage For="@(() => Registration.SpouseName)" />
+					</div>
+				</div>
+
 			</div>
 
-			<div class="col-sm-4">
-				<div class="form-group">
-					<label for="eMail" class="control-label">EMail</label>
-					<InputText id="eMail" class="form-control" @bind-Value="Registration.EMail" />
-					<ValidationMessage For="@(() => Registration.EMail)" />
 
+			<div class="row">
+
+				<div class="col-sm-4">
+					<div class="form-group">
+						<label for="otherNames" class="control-label">Other Names</label>
+						<InputText id="otherNames" class="form-control" @bind-Value="Registration.OtherNames" />
+						<ValidationMessage For="@(() => Registration.OtherNames)" />
+					</div>
 				</div>
+
+				<div class="col-sm-4">
+					<div class="form-group">
+						<label for="phone" class="control-label">Phone</label>
+						<InputText id="phone" class="form-control" @bind-Value="Registration.Phone" placeholder="phone (optional)" />
+						<ValidationMessage For="@(() => Registration.Phone)" />
+					</div>
+				</div>
+
+				<div class="col-sm-4">
+					<div class="form-group">
+						<label for="avitar" class="control-label">Avitar</label>
+						<InputText id="avitar" class="form-control" @bind-Value="Registration.Avitar" placeholder="picture (optional)" />
+						<ValidationMessage For="@(() => Registration.Avitar)" />
+					</div>
+				</div>
+
 			</div>
 
-			<div class="col-sm-4">
-				<div class="form-group">
-					<label for="assignedLodging" class="control-label">Assigned Lodging</label>
-					<InputText id="assignedLodging" class="form-control" @bind-Value="Registration.AssignedLodging" />
-					<ValidationMessage For="@(() => Registration.AssignedLodging)" />
+		</fieldset>
+
+		<fieldset>
+			<legend class="text-primary">Attendance</legend>
+			<div class="row">
+				<div class="col-sm-9">
+					<div class="form-group">
+						@*
+
+							<div class="form-group">
+								<label asp-for="Registration.AttendanceDayList" class="control-label"></label>
+								<select asp-for="Registration.AttendanceDayList" class="form-control"
+									asp-items="AttendanceDays" id="attendanceDayMSDD">
+								</select>
+								<span asp-validation-for="Registration.AttendanceDayList" class="text-danger"></span>
+							</div>
+
+							The type of the enum (TEnum) is detected by the type of the bound property which is just awesome!
+
+							 AdditionalAttributes=""
+
+						*@
+						<label for="attendanceDays" class="control-label">Days of Attendance</label>
+						<InputSelectEnum @bind-Value="Registration.SukkotAttendanceDays" @attributes="InputAttributesAD" class="form-control" />
+						<ValidationMessage For="@(() => Registration.SukkotAttendanceDays)" />
+
+					</div>
+				</div>
+				<div class="col-sm-3">
+					<div class="well well-sm">
+						What days will you be attending?<br />This helps us with planning meals
+					</div>
 				</div>
 			</div>
+		</fieldset>
 
-		</div>
-	</fieldset>
+		<fieldset>
+			<legend class="text-primary">Lodging</legend>
+			<div class="row">
 
-	<fieldset>
-		<legend class="text-primary">Contact Information</legend>
-
-		<div class="row">
-
-			<div class="col-sm-4">
-				<div class="form-group">
-					<label for="familyName" class="control-label">Family Name</label>
-					<InputText id="familyName" class="form-control" @bind-Value="Registration.FamilyName" />
-					<ValidationMessage For="@(() => Registration.FamilyName)" />
-				</div>
-			</div>
-
-			<div class="col-sm-4">
-				<div class="form-group">
-					<label for="firstName" class="control-label">First Name</label>
-					<InputText id="firstName" class="form-control" @bind-Value="Registration.FirstName" />
-					<ValidationMessage For="@(() => Registration.FirstName)" />
-				</div>
-			</div>
-
-			<div class="col-sm-4">
-				<div class="form-group">
-					<label for="spouseName" class="control-label">Spouses Name</label>
-					<InputText id="spouseName" class="form-control" @bind-Value="Registration.SpouseName" />
-					<ValidationMessage For="@(() => Registration.SpouseName)" />
-				</div>
-			</div>
-
-		</div>
-
-
-		<div class="row">
-
-			<div class="col-sm-4">
-				<div class="form-group">
-					<label for="otherNames" class="control-label">Other Names</label>
-					<InputText id="otherNames" class="form-control" @bind-Value="Registration.OtherNames" />
-					<ValidationMessage For="@(() => Registration.OtherNames)" />
-				</div>
-			</div>
-
-			<div class="col-sm-4">
-				<div class="form-group">
-					<label for="phone" class="control-label">Phone</label>
-					<InputText id="phone" class="form-control" @bind-Value="Registration.Phone" placeholder="phone (optional)" />
-					<ValidationMessage For="@(() => Registration.Phone)" />
-				</div>
-			</div>
-
-			<div class="col-sm-4">
-				<div class="form-group">
-					<label for="avitar" class="control-label">Avitar</label>
-					<InputText id="avitar" class="form-control" @bind-Value="Registration.Avitar" placeholder="picture (optional)" />
-					<ValidationMessage For="@(() => Registration.Avitar)" />
-				</div>
-			</div>
-
-		</div>
-
-	</fieldset>
-
-	<fieldset>
-		<legend class="text-primary">Attendance</legend>
-		<div class="row">
-			<div class="col-sm-9">
-				<div class="form-group">
-					@*
-
-				<div class="form-group">
-					<label asp-for="Registration.AttendanceDayList" class="control-label"></label>
-					<select asp-for="Registration.AttendanceDayList" class="form-control"
-						asp-items="AttendanceDays" id="attendanceDayMSDD">
-					</select>
-					<span asp-validation-for="Registration.AttendanceDayList" class="text-danger"></span>
-				</div>
-
-				The type of the enum (TEnum) is detected by the type of the bound property which is just awesome!
-
-				 AdditionalAttributes=""
-
-					*@
-					<label for="attendanceDays" class="control-label">Days of Attendance</label>
-					<InputSelectEnum @bind-Value="Registration.SukkotAttendanceDays" class="form-control" />
-					<ValidationMessage For="@(() => Registration.SukkotAttendanceDays)" />
-					<span>Selected value: @Registration.SukkotAttendanceDays</span>
-
-				</div>
-			</div>
-			<div class="col-sm-3">
-				<div class="well well-sm">
-					What days will you be attending?<br />This helps us with planning meals
-				</div>
-			</div>
-		</div>
-	</fieldset>
-
-	<fieldset>
-		<legend class="text-primary">Lodging</legend>
-		<div class="row">
-
-			@if (Other.IsRvHookupsAvailable)
-			{
 				<div class="col-sm-3">
 					<div class="form-group">
-
-						@*<label asp-for="Registration.CampId" class="control-label"></label>
-		<select asp-for="Registration.CampId" class="form-control" asp-items="Html.GetEnumSelectList<CampType>()"></select>
-		<span asp-validation-for="Registration.CampId" class="text-danger"></span>*@
-
 						<label for="campType" class="control-label">Camp Type</label>
-						<InputSelectEnum @bind-Value="Registration.CampType" class="form-control" />
-						<ValidationMessage For="@(() => Registration.CampType)" />
-						<span>Selected value: @Registration.CampType</span>
-
+						<InputSelectEnum @bind-Value="Registration.CampTypeEnum" class="form-control" />
+						<ValidationMessage For="@(() => Registration.CampTypeEnum)" />
 					</div>
 				</div>
 				<div class="col-sm-4">
@@ -194,140 +200,101 @@
 					</ul>
 				</div>
 
-			}
-			else
-			{
-				<div class="col-sm-3">
+				<div class="col-sm-5">
 					<div class="form-group">
 
-						@*<label asp-for="Registration.CampId" class="control-label"></label>
-		<select asp-for="Registration.CampId" class="form-control" asp-items="Html.GetEnumSelectList<CampTypeNoMoreRvHookups>()"></select>
-		<span asp-validation-for="Registration.CampId" class="text-danger"></span>*@
+						@*<label asp-for="Registration.LodgingDayList" class="control-label"></label>
+							<select asp-for="Registration.LodgingDayList" class="form-control"
+											asp-items="LodgingDays" id="lodgingDayMSDD">
+							</select>
+							<span asp-validation-for="Registration.LodgingDayList" class="text-danger"></span>*@
 
-						<label for="campTypeNoMoreRvHookups" class="control-label">Camp Type</label>
-						<InputSelectEnum @bind-Value="Registration.CampTypeNoMoreRvHookups" class="form-control" />
-						<ValidationMessage For="@(() => Registration.CampTypeNoMoreRvHookups)" />
-						<span>Selected value: @Registration.CampTypeNoMoreRvHookups</span>
-
+						<label for="lodgeDateEnum" class="control-label">Lodge Dates</label>
+						<InputSelectEnum @bind-Value="Registration.LodgeDateEnum"  @attributes="InputAttributesLD" class="form-control" />
 
 					</div>
 				</div>
-				<div class="col-sm-4">
-					<b>Cost Details <sup class="text-black-50">2</sup></b>
-					<ul class=" fa-ul">
-						<li><i class="fa-li fas fa-caret-right"></i>Tent (@LodgingRate.ToString("C0") per day for entire family)</li>
-						<li>
-							<i class="fa-li fas fa-caret-right"></i>RV or Camp Trailer (@LodgingRate.ToString("C0") per day for entire family)<br />
-							Sorry, no more sites with hookups<br />
-							<b>DRY CAMPING ONLY</b>
-						</li>
-						<li>
-							<i class="fa-li fas fa-caret-right"></i>Indoor Facility (@LodgingRate.ToString("C0") per day per person)<br />
-							<b>You need to bring your own bedding, towels and toiletries</b>
-						</li>
-					</ul>
+			</div>
+
+		</fieldset>
+
+		<fieldset>
+			<legend class="text-primary">People Count</legend>
+
+			<div class="row">
+				<div class="col-sm-3">
+
+					<div class="form-group">
+
+						<label for="adults" class="control-label">Adults</label>
+						<InputNumber id="adults" class="form-control" @bind-Value="Registration.Adults" />
+						<ValidationMessage For="@(() => Registration.Adults)" />
+
+					</div>
 				</div>
 
-			}
+				<div class="col-sm-3">
+					<div class="form-group">
+						<label for="childBig" class="control-label">Child <sup>big</sup></label>
+						<InputNumber id="childBig" class="form-control" @bind-Value="Registration.ChildBig" />
+						<ValidationMessage For="@(() => Registration.ChildBig)" />
+					</div>
+				</div>
 
-			<div class="col-sm-5">
-				<div class="form-group">
+				<div class="col-sm-3">
+					<div class="form-group">
+						<label for="childSmall" class="control-label">Child <sup>small</sup></label>
+						<InputNumber id="childSmall" class="form-control" @bind-Value="Registration.ChildSmall" />
+						<ValidationMessage For="@(() => Registration.ChildSmall)" />
+					</div>
+				</div>
 
-					@*<label asp-for="Registration.LodgingDayList" class="control-label"></label>
-						<select asp-for="Registration.LodgingDayList" class="form-control"
-										asp-items="LodgingDays" id="lodgingDayMSDD">
-						</select>
-						<span asp-validation-for="Registration.LodgingDayList" class="text-danger"></span>*@
+				<div class="col-sm-3">
 
-					<label for="lodgeDateEnum" class="control-label">Lodge Dates</label>
-					<InputSelectEnum @bind-Value="Registration.LodgeDateEnum" class="form-control" />
-					<span>Selected value: @Registration.LodgeDateEnum</span>
+				</div>
 
+			</div>
+		</fieldset>
+
+		<fieldset>
+			<legend class="text-primary">Other</legend>
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="form-group">
+						<label for="notes" class="control-label"></label>
+						<InputTextArea id="notes" class="form-control" @bind-Value="Registration.Notes" />
+						<ValidationMessage For="@(() => Registration.Notes)" />
+
+					</div>
 				</div>
 			</div>
-		</div>
-
-	</fieldset>
-
-	<fieldset>
-		<legend class="text-primary">People Count</legend>
+		</fieldset>
 
 		<div class="row">
-			<div class="col-sm-3">
-
+			<div class="col-sm-6">
 				<div class="form-group">
 
-					<label for="adults" class="control-label">Adults</label>
-					<InputNumber id="adults" class="form-control" @bind-Value="Registration.Adults" />
-					<ValidationMessage For="@(() => Registration.Adults)" />
+					@if (UI.EditMode)
+					{
+						<button type="submit" class="btn btn-primary btn-lg">
+							<i class="fas fa-save"></i> Update
+						</button>
+
+					}
+					else
+					{
+						<button class="btn btn-success btn-lg">
+							<i class="fas fa-save"></i> Save
+						</button>
+
+					}
 
 				</div>
-			</div>
 
-			<div class="col-sm-3">
-				<div class="form-group">
-					<label for="childBig" class="control-label">Child <sup>big</sup></label>
-					<InputNumber id="childBig" class="form-control" @bind-Value="Registration.ChildBig" />
-					<ValidationMessage For="@(() => Registration.ChildBig)" />
-				</div>
-			</div>
-
-			<div class="col-sm-3">
-				<div class="form-group">
-					<label for="childSmall" class="control-label">Child <sup>small</sup></label>
-					<InputNumber id="childSmall" class="form-control" @bind-Value="Registration.ChildSmall" />
-					<ValidationMessage For="@(() => Registration.ChildSmall)" />
-				</div>
-			</div>
-
-			<div class="col-sm-3">
-
-			</div>
-
-		</div>
-	</fieldset>
-
-	<fieldset>
-		<legend class="text-primary">Other</legend>
-		<div class="row">
-			<div class="col-sm-12">
-				<div class="form-group">
-					<label for="notes" class="control-label"></label>
-					<InputTextArea id="notes" class="form-control" @bind-Value="Registration.Notes" />
-					<ValidationMessage For="@(() => Registration.Notes)" />
-
-				</div>
 			</div>
 		</div>
-	</fieldset>
 
-	<div class="row">
-		<div class="col-sm-6">
-			<div class="form-group">
-
-				@if (UI.EditMode)
-				{
-					<button type="submit" class="btn btn-primary btn-lg">
-						<i class="fas fa-save"></i> Update
-					</button>
-
-				}
-				else
-				{
-					<button class="btn btn-success btn-lg">
-						<i class="fas fa-save"></i> Save
-					</button>
-
-				}
-
-			</div>
-
-		</div>
-	</div>
-
-
-
-</EditForm>
+	</EditForm>
 
 
 }

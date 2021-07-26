@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Components.Rendering;
 
 namespace LivingMessiah.Web.Shared
 {
-
+	//https://www.meziantou.net/creating-a-inputselect-component-for-enumerations-in-blazor.htm
 	// Inherit from InputBase so the hard work is already implemented 😊
 	// Note that adding a constraint on TEnum (where T : Enum) doesn't work when used in the view, Razor raises an error at build time. Also, this would prevent using nullable types...
 	public sealed class InputSelectEnum<TEnum> : InputBase<TEnum>

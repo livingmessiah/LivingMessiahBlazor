@@ -17,8 +17,9 @@ namespace SukkotApi.Domain
 		public int Adults { get; set; }
 		public int ChildBig { get; set; }
 		public int ChildSmall { get; set; }
-		public int StatusId { get; set; }
-		public int CampId { get; set; }
+		public CampType CampTypeEnum { get; set; }
+		public StatusEnum StatusEnum { get; set; }
+
 		public int AttendanceBitwise { get; set; }
 		public IEnumerable<string> AttendanceDayList { get; set; }
 		public int LodgingDaysBitwise { get; set; }

@@ -4,7 +4,6 @@
 @using Microsoft.Extensions.Hosting;
 @using LivingMessiah.Web.Shared.Sukkot
 @using static LivingMessiah.Web.Services.Auth0
-@using static LivingMessiah.Web.Pages.Sukkot.Constants.Other
 
 @inject IWebHostEnvironment Env
 
@@ -18,26 +17,29 @@
 
 @if (Env.IsDevelopment())
 {
-	<p class="float-right"><sup>Status Id: @StatusId | @StatusFlagEnum - &Sigma; @sf </sup></p>
+	<p class="float-right"><sup> StatusFlagEnum: @StatusFlagEnum</sup></p>
 }
 
 
 <h4>To register for Sukkot, you must complete these steps</h4>
 <br />
 
-<div class="d-block d-sm-none">
-	<RegistrationBodyXs IsXs="true"
-											StatusFlagEnum="@StatusFlagEnum" 
+
+<LoadingComponent IsLoading="vwRegistrationShell==null">
+	<div class="d-block d-sm-none">
+		<RegistrationBodyXs IsXs="true"
+												StatusFlagEnum="@StatusFlagEnum"
+												vwRegistrationShell="@vwRegistrationShell">
+		</RegistrationBodyXs>
+	</div>
+	<div class="d-none d-sm-block">
+		<RegistrationBody IsXs="false"
+											StatusFlagEnum="@StatusFlagEnum"
 											vwRegistrationShell="@vwRegistrationShell">
-	</RegistrationBodyXs>
-</div>
-<div class="d-none d-sm-block">
-	<RegistrationBody 
-										IsXs="false"
-										StatusFlagEnum="@StatusFlagEnum" 
-										vwRegistrationShell="@vwRegistrationShell">
-	</RegistrationBody>
-</div>
+		</RegistrationBody>
+	</div>
+</LoadingComponent>
+
 
 <hr />
 

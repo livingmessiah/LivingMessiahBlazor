@@ -2,20 +2,13 @@
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Sukkot.Web.Service;
-using LivingMessiah.Web.Pages.Sukkot.RegistrationEnums;
 using LivingMessiah.Web.Infrastructure;
-using SukkotApi.Data;
-using SukkotApi.Domain;
 using SukkotApi.Domain.Enums;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components;
-using System.Collections.Generic;
 using System.Security.Claims;
-using System.Linq;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using static LivingMessiah.Web.Links.Sukkot;
-
+using System.Collections.Generic;
 
 namespace LivingMessiah.Web.Pages.Sukkot
 {
@@ -43,6 +36,21 @@ namespace LivingMessiah.Web.Pages.Sukkot
 		[Parameter]
 		public int? id { get; set; }
 
+		// https://www.pragimtech.com/blog/blazor/blazor-attribute-splatting/
+		[Parameter]
+		public Dictionary<string, object> InputAttributesAD { get; set; } =
+				new Dictionary<string, object>()
+				{
+						{ "id", "attendanceDayMSDD" }
+				};
+
+		[Parameter]
+		public Dictionary<string, object> InputAttributesLD { get; set; } =
+				new Dictionary<string, object>()
+				{
+						{ "id", "lodgingDayMSDD" }
+				};
+
 		protected bool LoadFailed;
 
 		protected override async Task OnInitializedAsync()
@@ -54,7 +62,7 @@ namespace LivingMessiah.Web.Pages.Sukkot
 			int Id2 = id.HasValue ? id.Value : 0; // if id? is null, Id2 is set to 0 and...
 			UI = (Id2 == 0) ? new UI(SukkotEnums.CRUD.Add) : new UI(SukkotEnums.CRUD.Edit); // ...  an Add is assumed (i.e. SukkotEnums.CRUD.Add)
 																																											
-			Logger.LogDebug($"Inside {nameof(CreateEdit)}!{nameof(OnInitializedAsync)}, id2={Id2}, UI.CRUD={UI.CRUD}");
+			Logger.LogDebug($"..., id2={Id2}, UI.CRUD={UI.CRUD}");
 
 			try
 			{
@@ -62,7 +70,7 @@ namespace LivingMessiah.Web.Pages.Sukkot
 				{
 					Registration = new Registration
 					{
-						Id = 0,
+						Id = 0, StatusEnum = StatusEnum.EmailConfirmation,
 						//HouseRulesAgreement = DateTime.UtcNow, // Task 687: Persist the moment House Rules were agreed to database
 						EMail = User.GetUserEmail()
 					};
@@ -159,10 +167,6 @@ namespace LivingMessiah.Web.Pages.Sukkot
 
 			}
 		}
-
-		public SukkotApi.Domain.Enums.CampType CampType { get; set; }
-		public SukkotApi.Domain.Enums.Status StatusEnum { get; set; }
-		public SukkotApi.Domain.Enums.SukkotAttendanceDays AttendanceDaysEnum { get; set; }
 
 	}
 }

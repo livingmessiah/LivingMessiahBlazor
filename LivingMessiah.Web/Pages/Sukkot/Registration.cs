@@ -55,20 +55,11 @@ namespace LivingMessiah.Web.Pages.Sukkot
 		[Range(0, 12, ErrorMessage = "{0} must be between {1} and {2}")]
 		public int ChildSmall { get; set; }
 
-		public int StatusId { get; set; }
-		public SukkotApi.Domain.Enums.Status StatusEnum { get; set; }
+		public SukkotApi.Domain.Enums.StatusEnum StatusEnum { get; set; }
 
 		[Required]
 		[DisplayName("Options")]
-		public int CampId { get; set; }
-		public SukkotApi.Domain.Enums.CampType CampType { get; set; }
-
-
-		[Required]
-		[DisplayName("Options")]
-		public int CampId2 { get; set; }
-		public SukkotApi.Domain.Enums.CampType CampTypeNoMoreRvHookups { get; set; }
-
+		public SukkotApi.Domain.Enums.CampType CampTypeEnum { get; set; }
 
 		public SukkotApi.Domain.Enums.SukkotAttendanceDays SukkotAttendanceDays { get; set; }
 

@@ -141,7 +141,8 @@ namespace Sukkot.Web.Service
 					log.LogWarning(ExceptionMessage);
 					throw new UserNotAuthoirizedException(ExceptionMessage);
 				}
-				if (registrationPOCO.StatusId == (int)Status.FullyPaid & !AdminOrSukkotOverride(user))
+				//if (registrationPOCO.StatusId == (int)Status.FullyPaid & !AdminOrSukkotOverride(user))
+				if (registrationPOCO.StatusEnum == StatusEnum.FullyPaid & !AdminOrSukkotOverride(user))
 				{
 					throw new RegistratationException("Can not edit registration that has been fully paid.");
 				}
@@ -170,17 +171,17 @@ namespace Sukkot.Web.Service
 				{
 					// This is nonsensical and superfalous 
 					// I think it's here because making the if a Not makes it hard to understand
-					registration.StatusId = registration.StatusId;  
+					registration.StatusEnum = registration.StatusEnum;  
 				}
 				else
 				{
-					registration.StatusId = (int)Status.RegistrationFormCompleted;
+					registration.StatusEnum = StatusEnum.RegistrationFormCompleted;
 				}
 				registration.LodgingDaysBitwise = (registration.LodgingDayList == null) ? 0 : SumUpLodging(registration.LodgingDayList);
 				registration.AttendanceBitwise = (registration.LodgingDayList == null) ? 0 : SumUpAttendance(registration.AttendanceDayList);
 
 				newId = await db.Create(DTO(registration));
-				log.LogInformation($"Registration created for {registration.FamilyName}/{registration.EMail}; newId={newId}, registration.StatusId={registration.StatusId}");
+				log.LogInformation($"Registration created for {registration.FamilyName}/{registration.EMail}; newId={newId}, registration.StatusId={registration.StatusEnum}");
 			}
 			catch (Exception ex)
 			{
@@ -188,7 +189,6 @@ namespace Sukkot.Web.Service
 				log.LogError(ex, ExceptionMessage);
 				ExceptionMessage += ex.Message ?? "-- ex.Message was null --";
 				throw new InvalidOperationException(ExceptionMessage);
-
 			}
 			return newId;
 		}
@@ -207,8 +207,8 @@ namespace Sukkot.Web.Service
 				Adults = registration.Adults,
 				ChildBig = registration.ChildBig,
 				ChildSmall = registration.ChildSmall,
-				CampId = registration.CampId,
-				StatusId = registration.StatusId,
+				CampTypeEnum = registration.CampTypeEnum,  //CampId = registration.CampTypeEnum,
+				StatusEnum = registration.StatusEnum,  //StatusId = registration.StatusEnum,
 				AttendanceBitwise = registration.AttendanceBitwise,
 				LodgingDaysBitwise = registration.LodgingDaysBitwise,
 				AssignedLodging = registration.AssignedLodging,
@@ -234,8 +234,8 @@ namespace Sukkot.Web.Service
 				Adults = poco.Adults,
 				ChildBig = poco.ChildBig,
 				ChildSmall = poco.ChildSmall,
-				CampId = poco.CampId,
-				StatusId = poco.StatusId,
+				CampTypeEnum = poco.CampTypeEnum, // poco.CampId,
+				StatusEnum = poco.StatusEnum, // poco.StatusId,
 				AttendanceBitwise = poco.AttendanceBitwise,
 				AttendanceDayList = poco.AttendanceDayList,
 				LodgingDaysBitwise = poco.LodgingDaysBitwise,
@@ -246,6 +246,9 @@ namespace Sukkot.Web.Service
 				Avitar = poco.Avitar,
 				Notes = poco.Notes
 			};
+
+			log.LogDebug($"Inside {nameof(SukkotService)}!{nameof(UpdateDTO)}.  registration.StatusEnum: {registration.StatusEnum}, registration.CampTypeEnum: {registration.CampTypeEnum}");
+
 			return registration;
 		}
 
@@ -257,11 +260,12 @@ namespace Sukkot.Web.Service
 			{
 				if (user.GetRoles() == Auth0.Roles.Admin | user.GetRoles() == Auth0.Roles.Sukkot)
 				{
-					registration.StatusId = registration.StatusId;
+					registration.StatusEnum = registration.StatusEnum;
 				}
 				else
 				{
-					registration.StatusId = (int)Status.RegistrationFormCompleted;
+					//registration.StatusEnum = (int)Status.RegistrationFormCompleted;
+					registration.StatusEnum = StatusEnum.RegistrationFormCompleted;
 				}
 
 				registration.LodgingDaysBitwise = (registration.LodgingDayList == null) ? 0 : SumUpLodging(registration.LodgingDayList);

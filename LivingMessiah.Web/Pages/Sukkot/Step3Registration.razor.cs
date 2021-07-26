@@ -1,6 +1,7 @@
 ﻿using LivingMessiah.Web.Pages.Sukkot.RegistrationEnums;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.Extensions.Logging;
 using static LivingMessiah.Web.Links.Sukkot;
 
 namespace LivingMessiah.Web.Pages.Sukkot
@@ -9,6 +10,9 @@ namespace LivingMessiah.Web.Pages.Sukkot
 	{
 		[Inject]
 		NavigationManager NavManager { get; set; }
+		
+		[Inject]
+		public ILogger<Step3Registration> Logger { get; set; }
 
 		[Parameter]
 		public bool IsXs { get; set; }
@@ -26,6 +30,7 @@ namespace LivingMessiah.Web.Pages.Sukkot
 
 		void Edit_ButtonClick(MouseEventArgs e, int id)
 		{
+			Logger.LogDebug($"Inside {nameof(Step3Registration)}!{nameof(Edit_ButtonClick)}, id:{id}");
 			NavManager.NavigateTo(Links.Sukkot.CreateEdit + "/" + id);
 		}
 

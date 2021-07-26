@@ -38,8 +38,8 @@ namespace SukkotApi.Data
 				Adults = registration.Adults,
 				ChildBig = registration.ChildBig,
 				ChildSmall = registration.ChildSmall,
-				CampId = registration.CampId,
-				StatusId = registration.StatusId,
+				CampId = registration.CampTypeEnum, // registration.CampId,
+				StatusId = registration.StatusEnum, // registration.StatusId,
 
 				//ToDo: Change this back...
 				AttendanceBitwise = 1, //registration.AttendanceBitwise,
@@ -84,6 +84,8 @@ namespace SukkotApi.Data
 
 		public async Task<int> Update(RegistrationPOCO registration)
 		{
+			//{registration.StatusId},
+			//CampId = {registration.CampId},
 			base.Sql = $@"
 UPDATE Sukkot.Registration SET 
 	FamilyName = N'{registration.FamilyName}',
@@ -96,8 +98,8 @@ UPDATE Sukkot.Registration SET
 	ChildBig = {registration.ChildBig},
 	ChildSmall = {registration.ChildSmall},
 	LodgingDaysBitwise = {registration.LodgingDaysBitwise},
-	CampId = {registration.CampId},
-	StatusId = {registration.StatusId},
+	CampId = {(int)registration.CampTypeEnum},
+	StatusId = {(int)registration.StatusEnum},  
 	AttendanceBitwise = {registration.AttendanceBitwise},
 	WillHelpWithMeals = {registration.WillHelpWithMealsToInt}, 
 	LmmDonation = {registration.LmmDonation},
@@ -145,7 +147,12 @@ WHERE Id = {registration.Id};
 
 		public async Task<RegistrationPOCO> ById2(int id)
 		{
-			base.Sql = $@"SELECT TOP 1 * FROM Sukkot.Registration WHERE Id = {id}";
+			base.Sql = $@"
+SELECT TOP 1 
+Id, FamilyName, FirstName, SpouseName, OtherNames, EMail, Phone, Adults, ChildBig, ChildSmall
+, CampId AS CampTypeEnum, StatusId AS StatusEnum
+, AttendanceBitwise, LodgingDaysBitwise, AssignedLodging, LmmDonation, WillHelpWithMeals, Notes, Avitar
+FROM Sukkot.Registration WHERE Id = {id}";
 			return await WithConnectionAsync(async connection =>
 			{
 				var rows = await connection.QueryAsync<RegistrationPOCO>(sql: base.Sql);

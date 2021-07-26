@@ -20,22 +20,7 @@ namespace SukkotApi.Domain.Enums
 		RvDryCampOnly = 4
 	}
 
-	public enum CampTypeNoMoreRvHookups
-	{
-		[Display(Name = "OffSite [e.g. Hotel]")]
-		OffSite = 0,
-
-		Tent = 1,
-
-		[Display(Name = "Indoor Facility")]
-		CabinOrBunkhouse = 3,
-
-		[Display(Name = "RV Dry Camp Only, NO HOOKUPs")]
-		RvDryCampOnly = 4
-	}
-
-
-	public enum Status
+	public enum StatusEnum
 	{
 		[Display(Name = "eMail Not Confirmed (Step 1)")]
 		EmailNotConfirmed = 0,

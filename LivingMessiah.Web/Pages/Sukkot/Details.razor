@@ -83,7 +83,7 @@
 
 			@if (!String.IsNullOrEmpty(vwRegistration.PayWithCheckMessage))
 
-				if (vwRegistration.StatusId != (int)SukkotApi.Domain.Enums.Status.FullyPaid)
+				if (vwRegistration.StatusId != (int)SukkotApi.Domain.Enums.StatusEnum.FullyPaid)
 				{
 
 					<button @onclick="@(e => Edit_ButtonClick(e, vwRegistration.Id))"
