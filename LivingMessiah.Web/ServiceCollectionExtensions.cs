@@ -48,7 +48,6 @@ namespace LivingMessiah.Web
 				this IServiceCollection services,
 				 Microsoft.Extensions.Configuration.IConfiguration Configuration)
 		{
-
 			services.AddAuthentication(options =>
 			{
 				options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;

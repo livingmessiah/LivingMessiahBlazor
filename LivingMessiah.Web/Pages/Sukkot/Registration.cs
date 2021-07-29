@@ -61,9 +61,8 @@ namespace LivingMessiah.Web.Pages.Sukkot
 		[DisplayName("Options")]
 		public SukkotApi.Domain.Enums.CampType CampTypeEnum { get; set; }
 
-		public SukkotApi.Domain.Enums.SukkotAttendanceDays SukkotAttendanceDays { get; set; }
-
-		public SukkotApi.Domain.LodgeDateEnum LodgeDateEnum { get; set; }
+		public DateTime? AttendanceStartDate { get; set; }
+		public DateTime? AttendanceEndDate { get; set; }
 
 		[DisplayName("Attendance Bitwise")]
 		public int AttendanceBitwise { get; set; }
@@ -73,11 +72,11 @@ namespace LivingMessiah.Web.Pages.Sukkot
 		//[Required(ErrorMessage = "At least 1 day of attendance required")]
 		public IEnumerable<string> AttendanceDayList { get; set; }
 
+		public DateTime? LodgingStartDate { get; set; }
+		public DateTime? LodgingEndDate { get; set; }
+
 		[DisplayName("Lodging Days Bitwise")]
 		public int LodgingDaysBitwise { get; set; }
-
-		[DisplayName("Lodging Days")]
-		public string[] LodgingDayList { get; set; }
 
 		[DisplayName("Comments or Special Requests")]
 		[DataType(DataType.MultilineText)]

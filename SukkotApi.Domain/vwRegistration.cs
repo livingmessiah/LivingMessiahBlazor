@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using static SukkotApi.Domain.Constants;
 
@@ -44,8 +43,6 @@ namespace SukkotApi.Domain
 
 		public int LodgingDaysBitwise { get; set; }
 
-		public SukkotApi.Domain.SukkotLodgingDays LodgingDaysBitwiseEnum { get; set; }
-
 		[DisplayName("Attendance Total")]
 		public int AttendanceTotal { get; set; }
 
@@ -85,7 +82,6 @@ namespace SukkotApi.Domain
 		public int TotalChildSmallDinVeg { get; set; }
 
 		public int AttendanceBitwise { get; set; }
-		public Enums.SukkotAttendanceDays AttendanceBitwiseEnum { get; set; }
 
 		public string PayWithCheckMessage { get; set; }
 
@@ -143,16 +139,5 @@ namespace SukkotApi.Domain
 			}
 		}
 
-		public string AttendanceBitwiseToString(Enums.SukkotAttendanceDays day)
-		{
-			return AttendanceBitwiseEnum.HasFlag(day) ? "<span class='fas fa-check'></span>" : "";
-		}
-
-		public string LodgingDaysBitwiseToString(SukkotApi.Domain.SukkotLodgingDays day)
-		{
-			return LodgingDaysBitwiseEnum.HasFlag(day) ? "<span class='fas fa-check'></span>" : "";
-		}
-
 	}
-
 }

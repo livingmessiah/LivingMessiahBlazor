@@ -33,23 +33,19 @@ namespace LivingMessiah.Web.Pages.Sukkot
 
 		public ClaimsPrincipal User { get; set; }
 
+
+		#region Change Range to Multi
+		public DateRangeLocal DateRangeAttendance { get; set; } = DateRangeLocal.FromEnum(DateRangeEnum.AttendanceDays);
+		public DateRangeLocal DateRangeLodging { get; set; } = DateRangeLocal.FromEnum(DateRangeEnum.LodgingDays);
+
+		public DateTime[] MultipleValues { get; set; } = new DateTime[] { 
+			  new DateTime(DateTime.Now.Year, DateTime.Now.Month, 10),
+				new DateTime(DateTime.Now.Year, DateTime.Now.Month, 15),
+				new DateTime(DateTime.Now.Year, DateTime.Now.Month, 25) };
+		#endregion
+
 		[Parameter]
 		public int? id { get; set; }
-
-		// https://www.pragimtech.com/blog/blazor/blazor-attribute-splatting/
-		[Parameter]
-		public Dictionary<string, object> InputAttributesAD { get; set; } =
-				new Dictionary<string, object>()
-				{
-						{ "id", "attendanceDayMSDD" }
-				};
-
-		[Parameter]
-		public Dictionary<string, object> InputAttributesLD { get; set; } =
-				new Dictionary<string, object>()
-				{
-						{ "id", "lodgingDayMSDD" }
-				};
 
 		protected bool LoadFailed;
 

@@ -5,7 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
-
+using Syncfusion.Blazor;
 
 namespace LivingMessiah.Web
 {
@@ -21,14 +21,14 @@ namespace LivingMessiah.Web
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddRazorPages();
-			services.AddServerSideBlazor();
 			services.AddOptions();
+			services.AddServerSideBlazor();
 			services.AddDataStores();
 			services.AddSession();
 			services.AddCustomAuthentication(Configuration);
-
 			services
 				.Configure<AppSettings>(options => Configuration.GetSection("AppSettings").Bind(options));
+			services.AddSyncfusionBlazor();
 		}
 
 
@@ -44,6 +44,7 @@ namespace LivingMessiah.Web
 				app.UseHsts();
 			}
 
+			Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense(Configuration["SyncfusionLicense"]);
 			app.UseHttpsRedirection();
 			app.UseStaticFiles();
 			app.UseSerilogRequestLogging();

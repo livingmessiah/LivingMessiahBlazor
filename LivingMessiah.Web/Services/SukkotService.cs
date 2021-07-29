@@ -3,16 +3,14 @@ using System.Threading.Tasks;
 using SukkotApi.Domain;
 using SukkotApi.Domain.Enums;
 using LivingMessiah.Web.Pages.Sukkot;
-using LivingMessiah.Web.Pages.Sukkot.RegistrationEnums;
 using LivingMessiah.Web.Pages.Sukkot.Constants;
 using LivingMessiah.Web.Infrastructure;
 using LivingMessiah.Web.Services;
 using Microsoft.Extensions.Logging;
 using SukkotApi.Data;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
-using System.Collections.Generic;
+using static LivingMessiah.Web.Services.BitwiseHelper;
 
 namespace Sukkot.Web.Service
 {
@@ -78,8 +76,6 @@ namespace Sukkot.Web.Service
 			try
 			{
 				vm = await db.ById(id);
-				vm.AttendanceBitwiseEnum = (SukkotAttendanceDays)vm.AttendanceBitwise;
-				vm.LodgingDaysBitwiseEnum = (SukkotLodgingDays)vm.LodgingDaysBitwise;
 				if (showPrintInstructionMessage)
 				{
 					vm.PayWithCheckMessage = Other.PayWithCheckModalMessage;
@@ -146,8 +142,17 @@ namespace Sukkot.Web.Service
 				{
 					throw new RegistratationException("Can not edit registration that has been fully paid.");
 				}
-				registrationPOCO.LodgingDayList = FromLodgeBitwiseToStringArray(registrationPOCO.LodgingDaysBitwise);
-				registrationPOCO.AttendanceDayList = FromBitwiseToStringArray(registrationPOCO.AttendanceBitwise);
+
+				Tuple<DateTime?, DateTime?> DateRangeTuple;
+
+				log.LogDebug($"... Calling {nameof(HydrateDatesFromBitwise)}");
+				DateRangeTuple = HydrateDatesFromBitwise(registrationPOCO.LodgingDaysBitwise, LodgingMinDate, LodgingMaxDate);
+				registrationPOCO.LodgingStartDate = DateRangeTuple.Item1;
+				registrationPOCO.LodgingEndDate = DateRangeTuple.Item2;
+
+				DateRangeTuple = HydrateDatesFromBitwise(registrationPOCO.AttendanceBitwise, AttendanceMinDate, AttendanceMaxDate);
+				registrationPOCO.AttendanceStartDate = DateRangeTuple.Item1;
+				registrationPOCO.AttendanceEndDate = DateRangeTuple.Item2;
 			}
 			catch (Exception ex)
 			{
@@ -177,8 +182,26 @@ namespace Sukkot.Web.Service
 				{
 					registration.StatusEnum = StatusEnum.RegistrationFormCompleted;
 				}
-				registration.LodgingDaysBitwise = (registration.LodgingDayList == null) ? 0 : SumUpLodging(registration.LodgingDayList);
-				registration.AttendanceBitwise = (registration.LodgingDayList == null) ? 0 : SumUpAttendance(registration.AttendanceDayList);
+
+				if (registration.LodgingStartDate == null || registration.LodgingEndDate == null)
+				{
+					registration.LodgingDaysBitwise = 0;
+				}
+				else
+				{
+					registration.LodgingDaysBitwise = GetDaysBitwise(registration.LodgingStartDate, registration.LodgingEndDate);
+				}
+				log.LogDebug($"Lodging Dates: {registration.LodgingStartDate?.ToString("MM/dd/yyyy")} - {registration.LodgingEndDate?.ToString("MM/dd/yyyy")}");
+
+				if (registration.AttendanceStartDate == null || registration.AttendanceEndDate == null)
+				{
+					registration.AttendanceBitwise = 0;
+				}
+				else
+				{
+					registration.AttendanceBitwise = GetDaysBitwise(registration.AttendanceStartDate, registration.AttendanceEndDate);
+				}
+				log.LogDebug($"Attendance Dates: {registration.AttendanceStartDate?.ToString("MM/dd/yyyy")} - {registration.AttendanceEndDate?.ToString("MM/dd/yyyy")}");
 
 				newId = await db.Create(DTO(registration));
 				log.LogInformation($"Registration created for {registration.FamilyName}/{registration.EMail}; newId={newId}, registration.StatusId={registration.StatusEnum}");
@@ -192,6 +215,7 @@ namespace Sukkot.Web.Service
 			}
 			return newId;
 		}
+
 
 		private RegistrationPOCO DTO(Registration registration)
 		{
@@ -237,9 +261,7 @@ namespace Sukkot.Web.Service
 				CampTypeEnum = poco.CampTypeEnum, // poco.CampId,
 				StatusEnum = poco.StatusEnum, // poco.StatusId,
 				AttendanceBitwise = poco.AttendanceBitwise,
-				AttendanceDayList = poco.AttendanceDayList,
 				LodgingDaysBitwise = poco.LodgingDaysBitwise,
-				LodgingDayList = poco.LodgingDayList,
 				AssignedLodging = poco.AssignedLodging,
 				LmmDonation = poco.LmmDonation,
 				WillHelpWithMeals = poco.WillHelpWithMeals,
@@ -249,6 +271,19 @@ namespace Sukkot.Web.Service
 
 			log.LogDebug($"Inside {nameof(SukkotService)}!{nameof(UpdateDTO)}.  registration.StatusEnum: {registration.StatusEnum}, registration.CampTypeEnum: {registration.CampTypeEnum}");
 
+			Tuple<DateTime?, DateTime?> DateRangeTuple;
+
+			log.LogDebug($"... Calling {nameof(HydrateDatesFromBitwise)}; AttendanceBitwise:{registration.AttendanceBitwise}; LodgingDaysBitwise:{registration.LodgingDaysBitwise}");
+			DateRangeTuple = HydrateDatesFromBitwise(registration.LodgingDaysBitwise, LodgingMinDate, LodgingMaxDate);
+			registration.LodgingStartDate = DateRangeTuple.Item1;
+			registration.LodgingEndDate = DateRangeTuple.Item2;
+
+			DateRangeTuple = HydrateDatesFromBitwise(registration.AttendanceBitwise, AttendanceMinDate, AttendanceMaxDate);
+			registration.AttendanceStartDate = DateRangeTuple.Item1;
+			registration.AttendanceEndDate = DateRangeTuple.Item2;
+
+			log.LogDebug($"... Lodge Dates: {registration.LodgingStartDate?.ToString("MM/dd/yyyy")} - {registration.LodgingEndDate?.ToString("MM/dd/yyyy")}");
+			log.LogDebug($"... Attendance Dates: {registration.AttendanceStartDate?.ToString("MM/dd/yyyy")} - {registration.AttendanceEndDate?.ToString("MM/dd/yyyy")}");
 			return registration;
 		}
 
@@ -268,8 +303,27 @@ namespace Sukkot.Web.Service
 					registration.StatusEnum = StatusEnum.RegistrationFormCompleted;
 				}
 
-				registration.LodgingDaysBitwise = (registration.LodgingDayList == null) ? 0 : SumUpLodging(registration.LodgingDayList);
-				registration.AttendanceBitwise = (registration.LodgingDayList == null) ? 0 : SumUpAttendance(registration.AttendanceDayList);
+				if (registration.LodgingStartDate == null || registration.LodgingEndDate == null)
+				{
+					registration.LodgingDaysBitwise = 0;
+				}
+				else
+				{
+					registration.LodgingDaysBitwise = GetDaysBitwise(registration.LodgingStartDate, registration.LodgingEndDate);
+				}
+				log.LogDebug($"registration.LodgingDaysBitwise:{registration.LodgingDaysBitwise}");
+
+
+				if (registration.AttendanceStartDate == null || registration.AttendanceEndDate == null)
+				{
+					
+					registration.AttendanceBitwise = 0;
+				}
+				else
+				{
+					registration.AttendanceBitwise = GetDaysBitwise(registration.AttendanceStartDate, registration.AttendanceEndDate);
+				}
+				log.LogDebug($"registration.AttendanceBitwise:{registration.AttendanceBitwise}");
 
 				log.LogInformation($"Calling {nameof(db.Update)}");
 				count = await db.Update(DTO(registration));
@@ -566,66 +620,6 @@ namespace Sukkot.Web.Service
 			return count;
 		}
 
-		/*
-		private int LodgingDayListToBitwise
-		{
-			get
-			{
-				if (LodgingDayList == null)
-				{
-					return 0;
-				}
-				else
-				{
-					return SumUpLodging(LodgingDayList);
-				}
-
-			}
-		}
-		*/
-
-		private static int SumUpLodging(IEnumerable<string> days)
-		{
-			int bitwise = 0;
-
-			foreach (var item in days)
-			{
-				bitwise += (item == SukkotLodgingDays.Sep_30_Wed.ToString()) ? (int)SukkotLodgingDays.Sep_30_Wed : 0;
-				bitwise += (item == SukkotLodgingDays.Oct_01_Thu.ToString()) ? (int)SukkotLodgingDays.Oct_01_Thu : 0;
-				bitwise += (item == SukkotLodgingDays.Oct_02_Fri.ToString()) ? (int)SukkotLodgingDays.Oct_02_Fri : 0;
-				bitwise += (item == SukkotLodgingDays.Oct_03_Sat.ToString()) ? (int)SukkotLodgingDays.Oct_03_Sat : 0;
-				bitwise += (item == SukkotLodgingDays.Oct_04_Sun.ToString()) ? (int)SukkotLodgingDays.Oct_04_Sun : 0;
-				bitwise += (item == SukkotLodgingDays.Oct_05_Mon.ToString()) ? (int)SukkotLodgingDays.Oct_05_Mon : 0;
-				bitwise += (item == SukkotLodgingDays.Oct_06_Tue.ToString()) ? (int)SukkotLodgingDays.Oct_06_Tue : 0;
-				bitwise += (item == SukkotLodgingDays.Oct_07_Wed.ToString()) ? (int)SukkotLodgingDays.Oct_07_Wed : 0;
-				bitwise += (item == SukkotLodgingDays.Oct_08_Thu.ToString()) ? (int)SukkotLodgingDays.Oct_08_Thu : 0;
-				//bitwise += (item == SukkotLodgingDays.Oct_09_Fri.ToString()) ? (int)SukkotLodgingDays.Oct_09_Fri : 0;
-				//bitwise += (item == SukkotLodgingDays.Oct_10_Sat.ToString()) ? (int)SukkotLodgingDays.Oct_10_Sat : 0;
-				//bitwise += (item == SukkotLodgingDays.Oct_11_Sun.ToString()) ? (int)SukkotLodgingDays.Oct_11_Sun : 0;
-			}
-			return bitwise;
-		}
-
-		private static int SumUpAttendance(IEnumerable<string> days)
-		{
-			int bitwise = 0;
-
-			foreach (var item in days)
-			{
-				bitwise += (item == SukkotAttendanceDays.Oct_01_Thu.ToString()) ? (int)SukkotAttendanceDays.Oct_01_Thu : 0;
-				bitwise += (item == SukkotAttendanceDays.Oct_02_Fri.ToString()) ? (int)SukkotAttendanceDays.Oct_02_Fri : 0;
-				bitwise += (item == SukkotAttendanceDays.Oct_03_Sat.ToString()) ? (int)SukkotAttendanceDays.Oct_03_Sat : 0;
-				bitwise += (item == SukkotAttendanceDays.Oct_04_Sun.ToString()) ? (int)SukkotAttendanceDays.Oct_04_Sun : 0;
-				bitwise += (item == SukkotAttendanceDays.Oct_05_Mon.ToString()) ? (int)SukkotAttendanceDays.Oct_05_Mon : 0;
-				bitwise += (item == SukkotAttendanceDays.Oct_06_Tue.ToString()) ? (int)SukkotAttendanceDays.Oct_06_Tue : 0;
-				bitwise += (item == SukkotAttendanceDays.Oct_07_Wed.ToString()) ? (int)SukkotAttendanceDays.Oct_07_Wed : 0;
-				bitwise += (item == SukkotAttendanceDays.Oct_08_Thu.ToString()) ? (int)SukkotAttendanceDays.Oct_08_Thu : 0;
-				bitwise += (item == SukkotAttendanceDays.Oct_09_Fri.ToString()) ? (int)SukkotAttendanceDays.Oct_09_Fri : 0;
-				//bitwise += (item == SukkotAttendanceDays.Oct_10_Sat.ToString()) ? (int)SukkotAttendanceDays.Oct_10_Sat : 0;
-			}
-			return bitwise;
-		}
-
 
 		private bool AdminOrSukkotOverride(ClaimsPrincipal user)
 		{
@@ -637,24 +631,6 @@ namespace Sukkot.Web.Service
 			{
 				return false;
 			}
-		}
-
-		private string[] FromBitwiseToStringArray(int bitwise)
-		{
-			SukkotAttendanceDays days;
-			days = (SukkotAttendanceDays)bitwise;
-			string s = days.ToString();
-			s = s.Replace(" ", "");
-			return s.Split(',').ToArray();
-		}
-
-		private string[] FromLodgeBitwiseToStringArray(int bitwise)
-		{
-			SukkotLodgingDays days;
-			days = (SukkotLodgingDays)bitwise;
-			string s = days.ToString();
-			s = s.Replace(" ", "");
-			return s.Split(',').ToArray();
 		}
 
 		private bool IsUserAuthoirized(string registrationEmail, int id, ClaimsPrincipal user)

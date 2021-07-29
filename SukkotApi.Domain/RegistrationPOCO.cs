@@ -21,9 +21,13 @@ namespace SukkotApi.Domain
 		public StatusEnum StatusEnum { get; set; }
 
 		public int AttendanceBitwise { get; set; }
-		public IEnumerable<string> AttendanceDayList { get; set; }
+		public DateTime? AttendanceStartDate { get; set; }
+		public DateTime? AttendanceEndDate { get; set; }
+
 		public int LodgingDaysBitwise { get; set; }
-		public string[] LodgingDayList { get; set; }
+		public DateTime? LodgingStartDate { get; set; }
+		public DateTime? LodgingEndDate { get; set; }
+
 		public string Notes { get; set; }
 		public string Avitar { get; set; }
 		public string AssignedLodging { get; set; }
@@ -54,32 +58,6 @@ namespace SukkotApi.Domain
 				}
 
 			}
-		}
-
-		public int TotalLodgingDays
-		{
-			get
-			{
-				return CountLodging((SukkotLodgingDays)LodgingDaysBitwise);
-			}
-		}
-
-		private static int CountLodging(SukkotLodgingDays days)
-		{
-			int count = 0;
-			count += days.HasFlag(SukkotLodgingDays.Sep_30_Wed) ? 1 : 0;
-			count += days.HasFlag(SukkotLodgingDays.Oct_01_Thu) ? 1 : 0;
-			count += days.HasFlag(SukkotLodgingDays.Oct_02_Fri) ? 1 : 0;
-			count += days.HasFlag(SukkotLodgingDays.Oct_03_Sat) ? 1 : 0;
-			count += days.HasFlag(SukkotLodgingDays.Oct_04_Sun) ? 1 : 0;
-			count += days.HasFlag(SukkotLodgingDays.Oct_05_Mon) ? 1 : 0;
-			count += days.HasFlag(SukkotLodgingDays.Oct_06_Tue) ? 1 : 0;
-			count += days.HasFlag(SukkotLodgingDays.Oct_07_Wed) ? 1 : 0;
-			count += days.HasFlag(SukkotLodgingDays.Oct_08_Thu) ? 1 : 0;
-			//count += days.HasFlag(SukkotLodgingDays.Oct_09_Fri) ? 1 : 0;
-			//count += days.HasFlag(SukkotLodgingDays.Oct_10_Sat) ? 1 : 0;
-			//count += days.HasFlag(SukkotLodgingDays.Oct_11_Sun) ? 1 : 0;
-			return count;
 		}
 		#endregion
 	}

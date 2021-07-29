@@ -41,10 +41,8 @@ namespace SukkotApi.Data
 				CampId = registration.CampTypeEnum, // registration.CampId,
 				StatusId = registration.StatusEnum, // registration.StatusId,
 
-				//ToDo: Change this back...
-				AttendanceBitwise = 1, //registration.AttendanceBitwise,
-				LodgingDaysBitwise = 1, // registration.LodgingDaysBitwise,
-
+				AttendanceBitwise = registration.AttendanceBitwise,
+				LodgingDaysBitwise = registration.LodgingDaysBitwise,
 
 				AssignedLodging = "",
 				LmmDonation = 0,
@@ -97,10 +95,12 @@ UPDATE Sukkot.Registration SET
 	Adults = {registration.Adults},
 	ChildBig = {registration.ChildBig},
 	ChildSmall = {registration.ChildSmall},
+
+	AttendanceBitwise = {registration.AttendanceBitwise},
 	LodgingDaysBitwise = {registration.LodgingDaysBitwise},
+
 	CampId = {(int)registration.CampTypeEnum},
 	StatusId = {(int)registration.StatusEnum},  
-	AttendanceBitwise = {registration.AttendanceBitwise},
 	WillHelpWithMeals = {registration.WillHelpWithMealsToInt}, 
 	LmmDonation = {registration.LmmDonation},
 	AssignedLodging = N'{registration.AssignedLodging}',

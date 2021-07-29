@@ -94,29 +94,9 @@
 	<div class="row">
 
 		<div class="col-sm-12">
-			<table class="table table-condensed">
-				<tr class="bg-info">
-					<th>&nbsp;</th>
-					@((MarkupString)SukkotApi.Domain.LodgeDate.TableHeadingHtml)
-					<th style="text-align:center"><small>Total<br />Days</small></th>
-				</tr>
-				<tr>
-					<td>&nbsp;</td>
-					<td>@((MarkupString)vwRegistration.LodgingDaysBitwiseToString(SukkotLodgingDays.Sep_30_Wed))</td>
-					<td>@((MarkupString)vwRegistration.LodgingDaysBitwiseToString(SukkotLodgingDays.Oct_01_Thu))</td>
-					<td>@((MarkupString)vwRegistration.LodgingDaysBitwiseToString(SukkotLodgingDays.Oct_02_Fri))</td>
-					<td>@((MarkupString)vwRegistration.LodgingDaysBitwiseToString(SukkotLodgingDays.Oct_03_Sat))</td>
-					<td>@((MarkupString)vwRegistration.LodgingDaysBitwiseToString(SukkotLodgingDays.Oct_04_Sun))</td>
-					<td>@((MarkupString)vwRegistration.LodgingDaysBitwiseToString(SukkotLodgingDays.Oct_05_Mon))</td>
-					<td>@((MarkupString)vwRegistration.LodgingDaysBitwiseToString(SukkotLodgingDays.Oct_06_Tue))</td>
-					<td>@((MarkupString)vwRegistration.LodgingDaysBitwiseToString(SukkotLodgingDays.Oct_07_Wed))</td>
-					<td>@((MarkupString)vwRegistration.LodgingDaysBitwiseToString(SukkotLodgingDays.Oct_08_Thu))</td>
-					@*<td>@((MarkupString)vwRegistration.LodgingDaysBitwiseToString(SukkotLodgingDays.Oct_09_Fri))</td>
-						<td>@((MarkupString)vwRegistration.LodgingDaysBitwiseToString(SukkotLodgingDays.Oct_10_Sat))</td>
-						<td>@((MarkupString)vwRegistration.LodgingDaysBitwiseToString(SukkotLodgingDays.Oct_11_Sun))</td>*@
-					<td style="text-align:center"><b>@vwRegistration.LodgingDaysTotal</b></td>
-				</tr>
-			</table>
+
+			<h1 class="text-danger">ToDo: Replace Table with Calendar</h1>
+
 		</div>
 	</div>
 
@@ -175,31 +155,7 @@ else
 
 <br />
 
-<div class="row">
-	<div class="col-sm-12">
-		<table class="table table-condensed">
-			<tr class="bg-info">
-				<th>&nbsp;</th>
-				@((MarkupString)SukkotApi.Domain.Enums.AttendanceDays.TableHeadingHtml)
-				<th style="text-align:center"><small>Total<br />Days</small></th>
-			</tr>
-			<tr>
-				<td>&nbsp;</td>
-				<td>@((MarkupString)vwRegistration.AttendanceBitwiseToString(SukkotAttendanceDays.Oct_01_Thu))</td>
-				<td>@((MarkupString)vwRegistration.AttendanceBitwiseToString(SukkotAttendanceDays.Oct_02_Fri))</td>
-				<td>@((MarkupString)vwRegistration.AttendanceBitwiseToString(SukkotAttendanceDays.Oct_03_Sat))</td>
-				<td>@((MarkupString)vwRegistration.AttendanceBitwiseToString(SukkotAttendanceDays.Oct_04_Sun))</td>
-				<td>@((MarkupString)vwRegistration.AttendanceBitwiseToString(SukkotAttendanceDays.Oct_05_Mon))</td>
-				<td>@((MarkupString)vwRegistration.AttendanceBitwiseToString(SukkotAttendanceDays.Oct_06_Tue))</td>
-				<td>@((MarkupString)vwRegistration.AttendanceBitwiseToString(SukkotAttendanceDays.Oct_07_Wed))</td>
-				<td>@((MarkupString)vwRegistration.AttendanceBitwiseToString(SukkotAttendanceDays.Oct_08_Thu))</td>
-				<td>@((MarkupString)vwRegistration.AttendanceBitwiseToString(SukkotAttendanceDays.Oct_09_Fri))</td>
-				@*<td>@((MarkupString)vwRegistration.AttendanceBitwiseToString(SukkotAttendanceDays.Oct_10_Sat))</td>*@
-				<td style="text-align:center"><b>@vwRegistration.AttendanceTotal</b></td>
-			</tr>
-		</table>
-	</div>
-</div>
+<h1 class="text-danger">ToDo: Replace Table with Calendar</h1>
 
 @* Cost *@
 <hr class="warning d-print-none" />

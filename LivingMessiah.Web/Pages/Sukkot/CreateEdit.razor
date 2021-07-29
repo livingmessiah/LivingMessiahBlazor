@@ -146,32 +146,32 @@
 		<fieldset>
 			<legend class="text-primary">Attendance</legend>
 			<div class="row">
-				<div class="col-sm-9">
+				<div class="col-sm-4">
 					<div class="form-group">
-						@*
-
-							<div class="form-group">
-								<label asp-for="Registration.AttendanceDayList" class="control-label"></label>
-								<select asp-for="Registration.AttendanceDayList" class="form-control"
-									asp-items="AttendanceDays" id="attendanceDayMSDD">
-								</select>
-								<span asp-validation-for="Registration.AttendanceDayList" class="text-danger"></span>
-							</div>
-
-							The type of the enum (TEnum) is detected by the type of the bound property which is just awesome!
-
-							 AdditionalAttributes=""
-
-						*@
 						<label for="attendanceDays" class="control-label">Days of Attendance</label>
-						<InputSelectEnum @bind-Value="Registration.SukkotAttendanceDays" @attributes="InputAttributesAD" class="form-control" />
-						<ValidationMessage For="@(() => Registration.SukkotAttendanceDays)" />
+
+						@*<SfCalendar TValue="DateTime?"
+												IsMultiSelection="true"
+												Values="@MultipleValues"
+												Min="@DateRangeAttendance.DateRange.MinDate"
+												Max="@DateRangeAttendance.DateRange.MaxDate">
+
+						</SfCalendar>*@
+
+
+						<SfDateRangePicker TValue="DateTime?"
+		@bind-StartDate="@Registration.AttendanceStartDate"
+		@bind-EndDate="@Registration.AttendanceEndDate"
+		Placeholder="@DateRangeAttendance.Placeholder"
+		Min="@DateRangeAttendance.DateRange.MinDate"
+		Max="@DateRangeAttendance.DateRange.MaxDate" />
+						@*<ValidationMessage For="@(() => Registration.SukkotAttendanceDays)" />*@
 
 					</div>
 				</div>
-				<div class="col-sm-3">
+				<div class="col-sm-8">
 					<div class="well well-sm">
-						What days will you be attending?<br />This helps us with planning meals
+						What days will you be attending?<br />This helps us with planning.
 					</div>
 				</div>
 			</div>
@@ -181,14 +181,14 @@
 			<legend class="text-primary">Lodging</legend>
 			<div class="row">
 
-				<div class="col-sm-3">
+				<div class="col-sm-4">
 					<div class="form-group">
 						<label for="campType" class="control-label">Camp Type</label>
 						<InputSelectEnum @bind-Value="Registration.CampTypeEnum" class="form-control" />
 						<ValidationMessage For="@(() => Registration.CampTypeEnum)" />
 					</div>
 				</div>
-				<div class="col-sm-4">
+				<div class="col-sm-5">
 					<b>Cost Details <sup class="text-black-50">1</sup></b>
 					<ul class=" fa-ul">
 						<li><i class="fa-li fas fa-caret-right"></i>Tent (@LodgingRate.ToString("C0") per day for entire family)</li>
@@ -200,17 +200,16 @@
 					</ul>
 				</div>
 
-				<div class="col-sm-5">
+				<div class="col-sm-3">
 					<div class="form-group">
+						<label for="lodgeDate" class="control-label">Lodge Dates</label>
 
-						@*<label asp-for="Registration.LodgingDayList" class="control-label"></label>
-							<select asp-for="Registration.LodgingDayList" class="form-control"
-											asp-items="LodgingDays" id="lodgingDayMSDD">
-							</select>
-							<span asp-validation-for="Registration.LodgingDayList" class="text-danger"></span>*@
-
-						<label for="lodgeDateEnum" class="control-label">Lodge Dates</label>
-						<InputSelectEnum @bind-Value="Registration.LodgeDateEnum"  @attributes="InputAttributesLD" class="form-control" />
+						<SfDateRangePicker TValue="DateTime?"
+								@bind-StartDate="@Registration.LodgingStartDate" 
+								@bind-EndDate="@Registration.LodgingEndDate"
+								Placeholder="@DateRangeLodging.Placeholder"
+								Min="@DateRangeLodging.DateRange.MinDate"
+								Max="@DateRangeLodging.DateRange.MaxDate" />
 
 					</div>
 				</div>
