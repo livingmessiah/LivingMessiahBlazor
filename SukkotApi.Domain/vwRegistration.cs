@@ -1,4 +1,6 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using static SukkotApi.Domain.Constants;
 
@@ -42,9 +44,11 @@ namespace SukkotApi.Domain
 		public int LodgingDaysTotal { get; set; }
 
 		public int LodgingDaysBitwise { get; set; }
+		public string LodgingDatesCSV { get; set; }
 
 		[DisplayName("Attendance Total")]
 		public int AttendanceTotal { get; set; }
+		public string AttendanceDatesCSV { get; set; }
 
 		public string Camp { get; set; }
 		public string CampCD { get; set; }
@@ -101,6 +105,56 @@ namespace SukkotApi.Domain
 				return TotalAdultLun + TotalAdultDin + TotalAdultLunVeg + TotalAdultDinVeg;
 			}
 		}
+
+		public DateTime[] AttendanceDateList
+		{
+			get
+			{
+				if (!String.IsNullOrEmpty(AttendanceDatesCSV))
+				{
+					int length = AttendanceDatesCSV.Split(",").Length;
+					DateTime[] list = new DateTime[length];
+					string[] array = AttendanceDatesCSV.Split(',');
+					int i = 0;
+					foreach (string value in array)
+					{
+						list[i]=(DateTime.Parse(value));
+						i += 1;
+					}
+					return list;
+				}
+				else
+				{
+					return null;
+				}
+			}
+		}
+
+		public DateTime[] LodgingDateList
+		{
+			get
+			{
+				if (!String.IsNullOrEmpty(LodgingDatesCSV))
+				{
+					int length = LodgingDatesCSV.Split(",").Length;
+					DateTime[] list = new DateTime[length];
+					string[] array = LodgingDatesCSV.Split(',');
+					int i = 0;
+					foreach (string value in array)
+					{
+						list[i] = (DateTime.Parse(value));
+						i += 1;
+					}
+					return list;
+				}
+				else
+				{
+					return null;
+				}
+			}
+		}
+
+
 
 		[DataType(DataType.Currency)]
 		public decimal AdultMealCost

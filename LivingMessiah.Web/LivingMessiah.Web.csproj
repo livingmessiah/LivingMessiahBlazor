@@ -32,4 +32,5 @@
     <PackageReference Include="Syncfusion.Blazor.Calendars" Version="19.2.0.48" />
   </ItemGroup>
 
+
 </Project>

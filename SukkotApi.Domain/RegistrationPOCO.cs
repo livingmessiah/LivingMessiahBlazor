@@ -23,6 +23,8 @@ namespace SukkotApi.Domain
 		public int AttendanceBitwise { get; set; }
 		public DateTime? AttendanceStartDate { get; set; }
 		public DateTime? AttendanceEndDate { get; set; }
+		//public List<DateTime> AttendanceDateList { get; set; }
+		public DateTime[] AttendanceDateList { get; set; }
 
 		public int LodgingDaysBitwise { get; set; }
 		public DateTime? LodgingStartDate { get; set; }

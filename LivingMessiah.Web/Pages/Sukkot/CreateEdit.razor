@@ -150,21 +150,22 @@
 					<div class="form-group">
 						<label for="attendanceDays" class="control-label">Days of Attendance</label>
 
-						@*<SfCalendar TValue="DateTime?"
-												IsMultiSelection="true"
-												Values="@MultipleValues"
-												Min="@DateRangeAttendance.DateRange.MinDate"
-												Max="@DateRangeAttendance.DateRange.MaxDate">
+						<SfCalendar TValue="DateTime?"
+													IsMultiSelection="true"
+													@bind-Values="@Registration.AttendanceDateList"
+													Min="@DateRangeAttendance.DateRange.MinDate"
+													Max="@DateRangeAttendance.DateRange.MaxDate">
+							</SfCalendar>
 
-						</SfCalendar>*@
+						@*@bind-Values="@Registration.AttendanceDateList.ToArray()"*@
 
+						@*<SfDateRangePicker TValue="DateTime?"
+															 @bind-StartDate="@Registration.AttendanceStartDate"
+															 @bind-EndDate="@Registration.AttendanceEndDate"
+															 Placeholder="@DateRangeAttendance.Placeholder"
+															 Min="@DateRangeAttendance.DateRange.MinDate"
+															 Max="@DateRangeAttendance.DateRange.MaxDate" />*@
 
-						<SfDateRangePicker TValue="DateTime?"
-		@bind-StartDate="@Registration.AttendanceStartDate"
-		@bind-EndDate="@Registration.AttendanceEndDate"
-		Placeholder="@DateRangeAttendance.Placeholder"
-		Min="@DateRangeAttendance.DateRange.MinDate"
-		Max="@DateRangeAttendance.DateRange.MaxDate" />
 						@*<ValidationMessage For="@(() => Registration.SukkotAttendanceDays)" />*@
 
 					</div>
@@ -205,11 +206,11 @@
 						<label for="lodgeDate" class="control-label">Lodge Dates</label>
 
 						<SfDateRangePicker TValue="DateTime?"
-								@bind-StartDate="@Registration.LodgingStartDate" 
-								@bind-EndDate="@Registration.LodgingEndDate"
-								Placeholder="@DateRangeLodging.Placeholder"
-								Min="@DateRangeLodging.DateRange.MinDate"
-								Max="@DateRangeLodging.DateRange.MaxDate" />
+															 @bind-StartDate="@Registration.LodgingStartDate"
+															 @bind-EndDate="@Registration.LodgingEndDate"
+															 Placeholder="@DateRangeLodging.Placeholder"
+															 Min="@DateRangeLodging.DateRange.MinDate"
+															 Max="@DateRangeLodging.DateRange.MaxDate" />
 
 					</div>
 				</div>

@@ -150,9 +150,10 @@ namespace Sukkot.Web.Service
 				registrationPOCO.LodgingStartDate = DateRangeTuple.Item1;
 				registrationPOCO.LodgingEndDate = DateRangeTuple.Item2;
 
-				DateRangeTuple = HydrateDatesFromBitwise(registrationPOCO.AttendanceBitwise, AttendanceMinDate, AttendanceMaxDate);
-				registrationPOCO.AttendanceStartDate = DateRangeTuple.Item1;
-				registrationPOCO.AttendanceEndDate = DateRangeTuple.Item2;
+				//DateRangeTuple = HydrateDatesFromBitwise(registrationPOCO.AttendanceBitwise, AttendanceMinDate, AttendanceMaxDate);
+				//registrationPOCO.AttendanceStartDate = DateRangeTuple.Item1;
+				//registrationPOCO.AttendanceEndDate = DateRangeTuple.Item2;
+				//registrationPOCO.AttendanceDateList = GetDateArray(registrationPOCO.AttendanceStartDate, registrationPOCO.AttendanceEndDate);
 			}
 			catch (Exception ex)
 			{
@@ -261,6 +262,7 @@ namespace Sukkot.Web.Service
 				CampTypeEnum = poco.CampTypeEnum, // poco.CampId,
 				StatusEnum = poco.StatusEnum, // poco.StatusId,
 				AttendanceBitwise = poco.AttendanceBitwise,
+				AttendanceDateList = poco.AttendanceDateList,
 				LodgingDaysBitwise = poco.LodgingDaysBitwise,
 				AssignedLodging = poco.AssignedLodging,
 				LmmDonation = poco.LmmDonation,
@@ -310,13 +312,16 @@ namespace Sukkot.Web.Service
 				else
 				{
 					registration.LodgingDaysBitwise = GetDaysBitwise(registration.LodgingStartDate, registration.LodgingEndDate);
+
+					// ToDo: Convert from GetDaysBitwise to GetDaysBitwise(registration.LodgingDateList);
 				}
 				log.LogDebug($"registration.LodgingDaysBitwise:{registration.LodgingDaysBitwise}");
 
-
+				//string sDateList = string.Join(", ", registration.AttendanceDateList.ToString());
+				//log.LogDebug($"registration.AttendanceDateList:{registration.AttendanceDateList}");
+				//log.LogDebug($"registration.AttendanceDateList:{sDateList}");
 				if (registration.AttendanceStartDate == null || registration.AttendanceEndDate == null)
 				{
-					
 					registration.AttendanceBitwise = 0;
 				}
 				else

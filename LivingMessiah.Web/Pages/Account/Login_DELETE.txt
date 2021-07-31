@@ -1,0 +1,30 @@
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+
+namespace LivingMessiah.Web.Pages.Account
+{
+	public partial class Login
+	{
+		[Inject]
+		public ILogger<Login> Logger { get; set; }
+
+		//public AuthenticationProperties ChallengeResult 
+		//{
+		//	get 
+		//	{
+		//		AuthenticationProperties c = new AuthenticationProperties();
+		//		c.RedirectUri = returnUrl;
+		//		return c;
+		//		//return Challenge(new AuthenticationProperties() { RedirectUri = returnUrl }, "Auth0");
+		//	}
+
+		//}
+
+		public ChallengeResult OnGet(string returnUrl = "/")
+		{
+			return Challenge(new AuthenticationProperties() { RedirectUri = returnUrl }, "Auth0");
+		}
+	}
+}

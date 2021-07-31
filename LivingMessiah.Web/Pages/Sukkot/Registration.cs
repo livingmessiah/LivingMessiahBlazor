@@ -68,9 +68,10 @@ namespace LivingMessiah.Web.Pages.Sukkot
 		public int AttendanceBitwise { get; set; }
 
 		//ToDo: make the required message work
-		[DisplayName("Days of attendance")]
+		//[DisplayName("Days of attendance")]
 		//[Required(ErrorMessage = "At least 1 day of attendance required")]
-		public IEnumerable<string> AttendanceDayList { get; set; }
+		//public List<DateTime> AttendanceDateList { get; set; }
+		public DateTime[] AttendanceDateList { get; set; }
 
 		public DateTime? LodgingStartDate { get; set; }
 		public DateTime? LodgingEndDate { get; set; }

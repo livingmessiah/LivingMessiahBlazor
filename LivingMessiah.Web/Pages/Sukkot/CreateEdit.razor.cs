@@ -38,10 +38,12 @@ namespace LivingMessiah.Web.Pages.Sukkot
 		public DateRangeLocal DateRangeAttendance { get; set; } = DateRangeLocal.FromEnum(DateRangeEnum.AttendanceDays);
 		public DateRangeLocal DateRangeLodging { get; set; } = DateRangeLocal.FromEnum(DateRangeEnum.LodgingDays);
 
-		public DateTime[] MultipleValues { get; set; } = new DateTime[] { 
-			  new DateTime(DateTime.Now.Year, DateTime.Now.Month, 10),
-				new DateTime(DateTime.Now.Year, DateTime.Now.Month, 15),
-				new DateTime(DateTime.Now.Year, DateTime.Now.Month, 25) };
+
+		//public DateTime[] AttendanceDateList;
+		//public DateTime[] MultipleValues { get; set; } = new DateTime[] { 
+		//	  new DateTime(DateTime.Now.Year, DateTime.Now.Month, 10),
+		//		new DateTime(DateTime.Now.Year, DateTime.Now.Month, 15),
+		//		new DateTime(DateTime.Now.Year, DateTime.Now.Month, 25) };
 		#endregion
 
 		[Parameter]
@@ -74,6 +76,7 @@ namespace LivingMessiah.Web.Pages.Sukkot
 				else
 				{
 					Registration = await svc.Update(Id2, User);
+					//AttendanceDateList = Registration.AttendanceDateList.ToArray();
 				}
 
 				SetTitle();
@@ -118,6 +121,7 @@ namespace LivingMessiah.Web.Pages.Sukkot
 				Title2 = "Model.Registration is null";
 			}
 		}
+
 
 		protected string AlertMsg = "";
 		protected string ExceptionMessage = "";

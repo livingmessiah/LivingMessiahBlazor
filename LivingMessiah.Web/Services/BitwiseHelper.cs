@@ -116,6 +116,34 @@ namespace LivingMessiah.Web.Services
 			return new Tuple<DateTime?, DateTime?>(start, end);
 		}
 
+		public static DateTime[] GetDateArray(DateTime? start, DateTime? end)
+		{
+			if (start == null | end == null) { return null; }
+			int length = ((DateTime)start - (DateTime)end).Days;
+			DateTime[] list = new DateTime[length];
+
+			int i = 0;
+			foreach (DateTime day in EachDay((DateTime)start, (DateTime)end))
+			{
+				list[i] = day;
+				i += 1;
+			}
+			return list;
+
+		}
+
+		//ToDo Delete?
+		public static List<DateTime> GetDateList(DateTime? Start, DateTime? End)
+		{
+			if (Start == null | End == null) { return null;	}
+			List<DateTime> dateList = new List<DateTime>();
+			foreach (DateTime day in EachDay((DateTime)Start, (DateTime)End))
+			{
+				dateList.Add(day);
+			}
+			return dateList;
+		}
+
 
 		private static List<int> GetDateRange(DateTime Start, DateTime End, int beginCount = 0)
 		{
