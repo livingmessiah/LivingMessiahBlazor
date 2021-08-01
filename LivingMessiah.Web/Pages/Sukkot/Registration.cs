@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
@@ -61,23 +60,15 @@ namespace LivingMessiah.Web.Pages.Sukkot
 		[DisplayName("Options")]
 		public SukkotApi.Domain.Enums.CampType CampTypeEnum { get; set; }
 
-		public DateTime? AttendanceStartDate { get; set; }
-		public DateTime? AttendanceEndDate { get; set; }
 
 		[DisplayName("Attendance Bitwise")]
 		public int AttendanceBitwise { get; set; }
-
-		//ToDo: make the required message work
-		//[DisplayName("Days of attendance")]
-		//[Required(ErrorMessage = "At least 1 day of attendance required")]
-		//public List<DateTime> AttendanceDateList { get; set; }
 		public DateTime[] AttendanceDateList { get; set; }
-
-		public DateTime? LodgingStartDate { get; set; }
-		public DateTime? LodgingEndDate { get; set; }
 
 		[DisplayName("Lodging Days Bitwise")]
 		public int LodgingDaysBitwise { get; set; }
+		public DateTime[] LodgingDateList { get; set; }
+
 
 		[DisplayName("Comments or Special Requests")]
 		[DataType(DataType.MultilineText)]

@@ -50,7 +50,7 @@ namespace LivingMessiah.Web.Pages.Sukkot
 
 		protected override async Task OnInitializedAsync()
 		{
-			Logger.LogDebug($"Inside {nameof(RegistrationShell)}!{nameof(OnInitializedAsync)}");
+			//Logger.LogDebug($"Inside {nameof(RegistrationShell)}!{nameof(OnInitializedAsync)}");
 			try
 			{
 				var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
@@ -68,7 +68,7 @@ namespace LivingMessiah.Web.Pages.Sukkot
 			{
 				try
 				{
-					Logger.LogDebug($"Inside {nameof(RegistrationShell)}!{nameof(OnInitializedAsync)} calling {nameof(db.ByEmail)} with EmailAddress:{EmailAddress}");
+					//Logger.LogDebug($"Inside {nameof(RegistrationShell)}!{nameof(OnInitializedAsync)} calling {nameof(db.ByEmail)} with EmailAddress:{EmailAddress}");
 					vwRegistrationShell = await db.ByEmail(EmailAddress);
 
 					if (vwRegistrationShell != null)
@@ -77,7 +77,7 @@ namespace LivingMessiah.Web.Pages.Sukkot
 					}
 					else
 					{
-						Logger.LogDebug($"...vwRegistrationShell not found so calling {nameof(GetDefaultModel)}");
+						//Logger.LogDebug($"...vwRegistrationShell not found so calling {nameof(GetDefaultModel)}");
 						vwRegistrationShell = GetDefaultModel();
 					}
 

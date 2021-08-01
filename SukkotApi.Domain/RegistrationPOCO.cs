@@ -21,14 +21,11 @@ namespace SukkotApi.Domain
 		public StatusEnum StatusEnum { get; set; }
 
 		public int AttendanceBitwise { get; set; }
-		public DateTime? AttendanceStartDate { get; set; }
-		public DateTime? AttendanceEndDate { get; set; }
-		//public List<DateTime> AttendanceDateList { get; set; }
-		public DateTime[] AttendanceDateList { get; set; }
+		public string AttendanceDatesCSV { get; set; }
 
 		public int LodgingDaysBitwise { get; set; }
-		public DateTime? LodgingStartDate { get; set; }
-		public DateTime? LodgingEndDate { get; set; }
+		public string LodgingDatesCSV { get; set; }
+
 
 		public string Notes { get; set; }
 		public string Avitar { get; set; }
@@ -38,6 +35,58 @@ namespace SukkotApi.Domain
 		#endregion
 
 		#region HelperMethods
+
+
+		public DateTime[] AttendanceDateList
+		{
+			get
+			{
+				if (!String.IsNullOrEmpty(AttendanceDatesCSV))
+				{
+					int length = AttendanceDatesCSV.Split(",").Length;
+					DateTime[] list = new DateTime[length];
+					string[] array = AttendanceDatesCSV.Split(',');
+					int i = 0;
+					foreach (string value in array)
+					{
+						list[i] = (DateTime.Parse(value));
+						i += 1;
+					}
+					return list;
+				}
+				else
+				{
+					return null;
+				}
+			}
+		}
+
+		public DateTime[] LodgingDateList
+		{
+			get
+			{
+				if (!String.IsNullOrEmpty(LodgingDatesCSV))
+				{
+					int length = LodgingDatesCSV.Split(",").Length;
+					DateTime[] list = new DateTime[length];
+					string[] array = LodgingDatesCSV.Split(',');
+					int i = 0;
+					foreach (string value in array)
+					{
+						list[i] = (DateTime.Parse(value));
+						i += 1;
+					}
+					return list;
+				}
+				else
+				{
+					return null;
+				}
+			}
+		}
+
+
+
 		public int WillHelpWithMealsToInt
 		{
 			get

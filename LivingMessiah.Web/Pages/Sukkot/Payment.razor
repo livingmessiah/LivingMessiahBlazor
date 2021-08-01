@@ -11,17 +11,19 @@
 	<h4 class="text-center">Registration Id: @RegistrationSummary.Id, Family: @RegistrationSummary.FamilyName</h4>
 
 	<div class="d-none d-sm-block">
-		<div class="well well-sm">
-
-			<PaymentSummary RegistrationSummary="@RegistrationSummary"></PaymentSummary>
-
+		<div class="card border-primary mb-3">
+			<div class="card-body">
+				<PaymentSummary RegistrationSummary="@RegistrationSummary"></PaymentSummary>
+			</div>
 		</div>
 	</div>
 
 	<div class="d-block d-sm-none">
-		<hr />
-		<PaymentSummaryXs RegistrationSummary="@RegistrationSummary"></PaymentSummaryXs>
-		<hr />
+		<div class="card border-primary mb-4">
+			<div class="card-body">
+				<PaymentSummaryXs RegistrationSummary="@RegistrationSummary"></PaymentSummaryXs>
+			</div>
+		</div>
 	</div>
 
 

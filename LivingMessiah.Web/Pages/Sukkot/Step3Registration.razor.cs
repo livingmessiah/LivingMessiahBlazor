@@ -30,7 +30,7 @@ namespace LivingMessiah.Web.Pages.Sukkot
 
 		void Edit_ButtonClick(MouseEventArgs e, int id)
 		{
-			Logger.LogDebug($"Inside {nameof(Step3Registration)}!{nameof(Edit_ButtonClick)}, id:{id}");
+			//Logger.LogDebug($"Inside {nameof(Step3Registration)}!{nameof(Edit_ButtonClick)}, id:{id}");
 			NavManager.NavigateTo(Links.Sukkot.CreateEdit + "/" + id);
 		}
 

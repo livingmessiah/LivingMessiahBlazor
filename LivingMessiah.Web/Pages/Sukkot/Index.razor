@@ -11,14 +11,14 @@
 	<SukkotAdminMenubar></SukkotAdminMenubar>
 </AuthorizeView>
 
-<p class="text-info">ToDo: Port GlobalSharedPartialViews.Message</p>
+@*<p class="text-info">ToDo: Port GlobalSharedPartialViews.Message</p>*@
 
 <AuthorizeView>
 	<Authorized>
-		<h1>Hello, @context.User.Identity.Name!</h1>
+		<h3>Hello, @context.User.Identity.Name!</h3>
 		<ul>
-			<li>IsAuthenticated: @context.User.Identity.IsAuthenticated</li>
-			<li>IsInRole admin: @context.User.IsInRole("admin")</li>
+			@*<li>IsAuthenticated: @context.User.Identity.IsAuthenticated</li>
+				<li>IsInRole admin: @context.User.IsInRole("admin")</li>*@
 			@*<li>Claims: @context.User.Claims.ToString</li>*@
 		</ul>
 	</Authorized>
@@ -52,27 +52,31 @@
 		</h3>
 	</div>
 }
-else
-{
-	<div class="card" style="width: 18rem;">
-		<div class="card-body">
-			<h2><span class="text-danger">Last Minute Changes</span></h2>
-			<p class="card-text">
-				<span class="text-danger">
-					Please notes the date changes in <b>red</b>.
-				</span>
-			</p>
-		</div>
-	</div>
-}
+
 
 <br />
 <p class="lead">
 	We will be celebrating Sukkot this year from <b>sundown </b>
 	<span class="far fa-calendar"></span>&nbsp; @((MarkupString)Dates),
-	at <b>Wilderness Ranch</b> near <b>Show Low, AZ</b>.
+	at three different places (you choose).
+	<ol>
+		<li><b>Wilderness Ranch</b> near <b>Show Low, AZ</b>.</li>
+		<li><b>Green House Trolley Hobby Farm</b> near <b>Sierra Vista, AZ</b>.</li>
+		<li><b>Windmill Ranch</b> near <b>Bisee, AZ</b>.</li>
+	</ol>
+</p>
+
+<h3><span class="badge badge-warning">Windmill Ranch</span></h3>
+<p class="lead">
 	Go to <a href="http://www.wildernessranch.org/">www.wildernessranch.org</a> to have a look.
 	Also, here is an informative <i class="fab fa-youtube"></i> <a href="https://youtu.be/FrLjByPhJGg">video</a> showing the Wilderness Ranch facilities.
+	Here are directions to <a href="http://www.wildernessranch.org/maps.html" target="_blank">Wilderness Ranch</a>
+	or <a href="https://goo.gl/maps/ky76HExS7HN2">Google Map</a>&nbsp;<i class="fa fa-map-pin"></i>.
+</p>
+
+<h3><span class="badge badge-warning">Green House Trolley</span></h3>
+<p class="lead">
+	Go to this Hip Camp<a href="https://www.hipcamp.com/en-US/discover/arizona/the-greenhouse-trolley-hobby-fa">link</a> to have a look.
 	Here are directions to <a href="http://www.wildernessranch.org/maps.html" target="_blank">Wilderness Ranch</a>
 	or <a href="https://goo.gl/maps/ky76HExS7HN2">Google Map</a>&nbsp;<i class="fa fa-map-pin"></i>.
 </p>
@@ -158,14 +162,6 @@ else
 		</address>
 	</p>
 
-	<blockquote class="text-warning">CHANGES FROM PREVIOUS YEARS <b>BOLD</b></blockquote>
-	<p class="lead">
-		<ul>
-			<li><b>A registration fee had been added</b> (charged per family)</li>
-			<li>Early Registration period is up to and including <b>@EarlyRegistrationLastDay</b>; the fee is <b>@EarlyRegistrationFee</b>, after that the fee is <b>@RegistrationFee</b></li>
-			<li>In all cases, your total amount must be paid by <b>@FinalRegistrationDay</b></li>
-		</ul>
-	</p>
 
 	<p class="lead">
 		Please see any of the leadership team if you have any questions about the facility, the food, or registration.

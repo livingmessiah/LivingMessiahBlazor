@@ -152,6 +152,8 @@ SELECT TOP 1
 Id, FamilyName, FirstName, SpouseName, OtherNames, EMail, Phone, Adults, ChildBig, ChildSmall
 , CampId AS CampTypeEnum, StatusId AS StatusEnum
 , AttendanceBitwise, LodgingDaysBitwise, AssignedLodging, LmmDonation, WillHelpWithMeals, Notes, Avitar
+, Sukkot.udfLodgingDatesConcat(Id) AS LodgingDatesCSV
+, Sukkot.udfAttendanceDatesConcat(Id) AS AttendanceDatesCSV
 FROM Sukkot.Registration WHERE Id = {id}";
 			return await WithConnectionAsync(async connection =>
 			{

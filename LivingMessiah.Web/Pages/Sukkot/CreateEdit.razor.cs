@@ -34,18 +34,10 @@ namespace LivingMessiah.Web.Pages.Sukkot
 		public ClaimsPrincipal User { get; set; }
 
 
-		#region Change Range to Multi
+		//ToDo this shoud come from the Sukkot.Constants and saved in cache		
 		public DateRangeLocal DateRangeAttendance { get; set; } = DateRangeLocal.FromEnum(DateRangeEnum.AttendanceDays);
 		public DateRangeLocal DateRangeLodging { get; set; } = DateRangeLocal.FromEnum(DateRangeEnum.LodgingDays);
-
-
-		//public DateTime[] AttendanceDateList;
-		//public DateTime[] MultipleValues { get; set; } = new DateTime[] { 
-		//	  new DateTime(DateTime.Now.Year, DateTime.Now.Month, 10),
-		//		new DateTime(DateTime.Now.Year, DateTime.Now.Month, 15),
-		//		new DateTime(DateTime.Now.Year, DateTime.Now.Month, 25) };
-		#endregion
-
+		
 		[Parameter]
 		public int? id { get; set; }
 
@@ -53,14 +45,14 @@ namespace LivingMessiah.Web.Pages.Sukkot
 
 		protected override async Task OnInitializedAsync()
 		{
-			Logger.LogDebug($"Inside {nameof(CreateEdit)}!{nameof(OnInitializedAsync)}, id: {id}");
+			//Logger.LogDebug($"Inside {nameof(CreateEdit)}!{nameof(OnInitializedAsync)}, id: {id}");
 			var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
 			User = authState.User;
 
 			int Id2 = id.HasValue ? id.Value : 0; // if id? is null, Id2 is set to 0 and...
 			UI = (Id2 == 0) ? new UI(SukkotEnums.CRUD.Add) : new UI(SukkotEnums.CRUD.Edit); // ...  an Add is assumed (i.e. SukkotEnums.CRUD.Add)
 																																											
-			Logger.LogDebug($"..., id2={Id2}, UI.CRUD={UI.CRUD}");
+			//Logger.LogDebug($"..., id2={Id2}, UI.CRUD={UI.CRUD}");
 
 			try
 			{
@@ -76,7 +68,6 @@ namespace LivingMessiah.Web.Pages.Sukkot
 				else
 				{
 					Registration = await svc.Update(Id2, User);
-					//AttendanceDateList = Registration.AttendanceDateList.ToArray();
 				}
 
 				SetTitle();
@@ -128,7 +119,7 @@ namespace LivingMessiah.Web.Pages.Sukkot
 
 		protected async Task HandleValidSubmit()
 		{
-			Logger.LogDebug($"Inside {nameof(HandleValidSubmit)}, UI.EditMode: {UI.EditMode} ");
+			//Logger.LogDebug($"Inside {nameof(HandleValidSubmit)}, UI.EditMode: {UI.EditMode} ");
 
 			if (UI.EditMode)
 			{

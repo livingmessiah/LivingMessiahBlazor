@@ -18,7 +18,7 @@ namespace LivingMessiah.Web.Pages.Sukkot
 		public const string ContactEmail = "ralphie@livingmessiah.com";
 		public const string Title1 = "Late Sukkot Registration Question";
 		//public const string Dates = "Thursday, October 1, through sundown Saturday, October 10"; <span class="text-warning">
-		public const string Dates = "Thursday, October 1, through sundown <strike>Saturday, October 10</strike> <b class='text-danger'><u>Friday, October 9th</u></b>";
+		public const string Dates = "Tuesday, October 19, through sundown Thursday, October 28th";
 		public const string ArrivalDate = "Wednesday September 30th";
 		//public const string CleanupDate = "Sunday October 11th";
 		public const string CleanupDate = "<strike>Sunday October 11th</strike><b class='text-danger'><u> Saturday, October 10th</u></b>";

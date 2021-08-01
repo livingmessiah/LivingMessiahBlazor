@@ -114,7 +114,7 @@ namespace SukkotApi.Domain
 				{
 					int length = AttendanceDatesCSV.Split(",").Length;
 					DateTime[] list = new DateTime[length];
-					string[] array = AttendanceDatesCSV.Split(',');
+					string[] array = AttendanceDatesCSV.Split(",");
 					int i = 0;
 					foreach (string value in array)
 					{
@@ -138,7 +138,7 @@ namespace SukkotApi.Domain
 				{
 					int length = LodgingDatesCSV.Split(",").Length;
 					DateTime[] list = new DateTime[length];
-					string[] array = LodgingDatesCSV.Split(',');
+					string[] array = LodgingDatesCSV.Split(",");
 					int i = 0;
 					foreach (string value in array)
 					{

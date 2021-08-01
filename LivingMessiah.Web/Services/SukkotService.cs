@@ -10,7 +10,6 @@ using Microsoft.Extensions.Logging;
 using SukkotApi.Data;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
-using static LivingMessiah.Web.Services.BitwiseHelper;
 
 namespace Sukkot.Web.Service
 {
@@ -33,13 +32,13 @@ namespace Sukkot.Web.Service
 	{
 		#region Constructor and DI
 		private readonly ISukkotRepository db;
-		private readonly ILogger log;
+		private readonly ILogger Logger;
 
 		public SukkotService(
 			ISukkotRepository sukkotRepository, ILogger<SukkotService> logger)
 		{
 			db = sukkotRepository;
-			log = logger;
+			Logger = logger;
 		}
 		#endregion
 
@@ -55,7 +54,7 @@ namespace Sukkot.Web.Service
 			catch (Exception ex)
 			{
 				ExceptionMessage = $"Inside {nameof(Summary)}, {nameof(db.GetRegistrationSummary)}";
-				log.LogError(ex, ExceptionMessage);
+				Logger.LogError(ex, ExceptionMessage);
 				ExceptionMessage += ex.Message ?? "-- ex.Message was null --";
 				throw new InvalidOperationException(ExceptionMessage);
 			}
@@ -63,7 +62,7 @@ namespace Sukkot.Web.Service
 			if (!IsUserAuthoirized(vm.EMail, id, user))
 			{
 				ExceptionMessage = $"Inside {nameof(Summary)}, logged in user:{vm.EMail} lacks authority for id={id}";
-				log.LogWarning(ExceptionMessage);
+				Logger.LogWarning(ExceptionMessage);
 				throw new UserNotAuthoirizedException(ExceptionMessage);
 			}
 
@@ -84,7 +83,7 @@ namespace Sukkot.Web.Service
 			catch (Exception ex)
 			{
 				ExceptionMessage = $"Inside {nameof(Details)}, {nameof(db.ById)}";
-				log.LogError(ex, ExceptionMessage, id, showPrintInstructionMessage);
+				Logger.LogError(ex, ExceptionMessage, id, showPrintInstructionMessage);
 				ExceptionMessage += ex.Message ?? "-- ex.Message was null --";
 				throw new InvalidOperationException(ExceptionMessage);
 			}
@@ -92,7 +91,7 @@ namespace Sukkot.Web.Service
 			if (!IsUserAuthoirized(vm.EMail, id, user))
 			{
 				ExceptionMessage = $"Inside {nameof(Details)}, logged in user:{vm.EMail} lacks authority for id={id}";
-				log.LogWarning(ExceptionMessage);
+				Logger.LogWarning(ExceptionMessage);
 				throw new UserNotAuthoirizedException(ExceptionMessage);
 			}
 
@@ -109,7 +108,7 @@ namespace Sukkot.Web.Service
 			catch (Exception ex)
 			{
 				ExceptionMessage = $"Inside {nameof(DeleteConfirmation)}, {nameof(db.ById)}";
-				log.LogError(ex, ExceptionMessage, id);
+				Logger.LogError(ex, ExceptionMessage, id);
 				ExceptionMessage += ex.Message ?? "-- ex.Message was null --";
 				throw new InvalidOperationException(ExceptionMessage);
 			}
@@ -117,16 +116,17 @@ namespace Sukkot.Web.Service
 			if (!IsUserAuthoirized(vm.EMail, id, user))
 			{
 				ExceptionMessage = $"Inside {nameof(DeleteConfirmation)}, logged in user:{vm.EMail} lacks authority for id={id}";
-				log.LogWarning(ExceptionMessage);
+				Logger.LogWarning(ExceptionMessage);
 				throw new UserNotAuthoirizedException(ExceptionMessage);
 			}
 
 			return vm;
 		}
 
+		//
 		public async Task<Registration> Update(int id, ClaimsPrincipal user)
 		{
-			log.LogInformation($"Inside {nameof(SukkotService)}!{nameof(Update)}, id={id}");
+			Logger.LogInformation($"Inside {nameof(SukkotService)}!{nameof(Update)}, id={id}");
 			RegistrationPOCO registrationPOCO = new RegistrationPOCO();
 			try
 			{
@@ -134,7 +134,7 @@ namespace Sukkot.Web.Service
 				if (!IsUserAuthoirized(registrationPOCO.EMail, id, user))
 				{
 					ExceptionMessage = $"Inside {nameof(Update)}, logged in user:{registrationPOCO.EMail} lacks authority for id={id}";
-					log.LogWarning(ExceptionMessage);
+					Logger.LogWarning(ExceptionMessage);
 					throw new UserNotAuthoirizedException(ExceptionMessage);
 				}
 				//if (registrationPOCO.StatusId == (int)Status.FullyPaid & !AdminOrSukkotOverride(user))
@@ -142,26 +142,19 @@ namespace Sukkot.Web.Service
 				{
 					throw new RegistratationException("Can not edit registration that has been fully paid.");
 				}
-
-				Tuple<DateTime?, DateTime?> DateRangeTuple;
-
-				log.LogDebug($"... Calling {nameof(HydrateDatesFromBitwise)}");
-				DateRangeTuple = HydrateDatesFromBitwise(registrationPOCO.LodgingDaysBitwise, LodgingMinDate, LodgingMaxDate);
-				registrationPOCO.LodgingStartDate = DateRangeTuple.Item1;
-				registrationPOCO.LodgingEndDate = DateRangeTuple.Item2;
-
-				//DateRangeTuple = HydrateDatesFromBitwise(registrationPOCO.AttendanceBitwise, AttendanceMinDate, AttendanceMaxDate);
-				//registrationPOCO.AttendanceStartDate = DateRangeTuple.Item1;
-				//registrationPOCO.AttendanceEndDate = DateRangeTuple.Item2;
-				//registrationPOCO.AttendanceDateList = GetDateArray(registrationPOCO.AttendanceStartDate, registrationPOCO.AttendanceEndDate);
 			}
 			catch (Exception ex)
 			{
 				ExceptionMessage = $"Inside {nameof(Update)}";
-				log.LogError(ex, ExceptionMessage, id);
+				Logger.LogError(ex, ExceptionMessage, id);
 				ExceptionMessage += ex.Message ?? "-- ex.Message was null --";
 				throw new InvalidOperationException(ExceptionMessage);
 			}
+
+			//Logger.LogDebug($"...Calling {nameof(UpdateDTO)}");
+			//Logger.LogDebug($".....AttendanceDateList: {DumpDateRange(registrationPOCO.AttendanceDateList)}");
+			//Logger.LogDebug($".....LodgingDateList: {DumpDateRange(registrationPOCO.LodgingDateList)}");
+
 			return UpdateDTO(registrationPOCO);
 		}
 
@@ -171,52 +164,82 @@ namespace Sukkot.Web.Service
 
 			try
 			{
-				log.LogInformation($"Calling {nameof(db.Create)}");
+				Logger.LogInformation($"Calling {nameof(db.Create)}");
 
 				if (user.GetRoles() == Auth0.Roles.Admin | user.GetRoles() == Auth0.Roles.Sukkot)
 				{
 					// This is nonsensical and superfalous 
 					// I think it's here because making the if a Not makes it hard to understand
-					registration.StatusEnum = registration.StatusEnum;  
+					registration.StatusEnum = registration.StatusEnum;
 				}
 				else
 				{
 					registration.StatusEnum = StatusEnum.RegistrationFormCompleted;
 				}
 
-				if (registration.LodgingStartDate == null || registration.LodgingEndDate == null)
-				{
-					registration.LodgingDaysBitwise = 0;
-				}
-				else
-				{
-					registration.LodgingDaysBitwise = GetDaysBitwise(registration.LodgingStartDate, registration.LodgingEndDate);
-				}
-				log.LogDebug($"Lodging Dates: {registration.LodgingStartDate?.ToString("MM/dd/yyyy")} - {registration.LodgingEndDate?.ToString("MM/dd/yyyy")}");
-
-				if (registration.AttendanceStartDate == null || registration.AttendanceEndDate == null)
-				{
-					registration.AttendanceBitwise = 0;
-				}
-				else
-				{
-					registration.AttendanceBitwise = GetDaysBitwise(registration.AttendanceStartDate, registration.AttendanceEndDate);
-				}
-				log.LogDebug($"Attendance Dates: {registration.AttendanceStartDate?.ToString("MM/dd/yyyy")} - {registration.AttendanceEndDate?.ToString("MM/dd/yyyy")}");
+				registration.AttendanceBitwise = GetDaysBitwise(registration.AttendanceDateList, DateRangeEnum.AttendanceDays);
+				registration.LodgingDaysBitwise = GetDaysBitwise(registration.LodgingDateList, DateRangeEnum.LodgingDays);
 
 				newId = await db.Create(DTO(registration));
-				log.LogInformation($"Registration created for {registration.FamilyName}/{registration.EMail}; newId={newId}, registration.StatusId={registration.StatusEnum}");
+				Logger.LogInformation($"Registration created for {registration.FamilyName}/{registration.EMail}; newId={newId}, registration.StatusId={registration.StatusEnum}");
 			}
 			catch (Exception ex)
 			{
 				ExceptionMessage = $"Inside {nameof(Create)}, {nameof(db.Create)}";
-				log.LogError(ex, ExceptionMessage);
+				Logger.LogError(ex, ExceptionMessage);
 				ExceptionMessage += ex.Message ?? "-- ex.Message was null --";
 				throw new InvalidOperationException(ExceptionMessage);
 			}
 			return newId;
 		}
+		
+		public static string DumpDateRange(DateTime[] dateList)
+		{
+			if (dateList == null) { return ""; }
+			string s = "";
+			foreach (DateTime day in dateList)
+			{
+				s += day.ToString("MM/dd") + ", ";
+			}
+			//s = s.TrimEnd(",");
+			//s.TrimEnd("");
 
+			//s += "; Length: " + s.Length;
+			return s;
+		}
+	
+		private int GetDaysBitwise(DateTime[] dateList, DateRangeEnum dateRangeEnum)
+		{
+			if (dateList == null) { return 0; }
+
+			Logger.LogDebug($"Inside: {nameof(SukkotService)}!{nameof(GetDaysBitwise)}, dateRangeEnum: {dateRangeEnum}");
+			DateRangeLocal DateRangeLocal = DateRangeLocal.FromEnum(dateRangeEnum);
+
+			int bitwise = 0;
+
+			if (dateRangeEnum == DateRangeEnum.AttendanceDays)
+			{
+				int a = 0;
+				foreach (DateTime day in dateList)
+				{
+					a = DateFactory.GetAttendanceBitwise(day);
+					Logger.LogDebug($"......a:{a} for day:{day}");
+					bitwise = bitwise + a;
+				}
+			}
+			else
+			{
+				foreach (DateTime day in dateList)
+				{
+					int l = 0;
+					l = DateFactory.GetLodgingBitwise(day);
+					Logger.LogDebug($"......l:{l} for day:{day}");
+					bitwise = bitwise + l;
+				}
+			}
+			Logger.LogDebug($"...bitwise: {bitwise}");
+			return bitwise;
+		}
 
 		private RegistrationPOCO DTO(Registration registration)
 		{
@@ -264,6 +287,7 @@ namespace Sukkot.Web.Service
 				AttendanceBitwise = poco.AttendanceBitwise,
 				AttendanceDateList = poco.AttendanceDateList,
 				LodgingDaysBitwise = poco.LodgingDaysBitwise,
+				LodgingDateList = poco.LodgingDateList,
 				AssignedLodging = poco.AssignedLodging,
 				LmmDonation = poco.LmmDonation,
 				WillHelpWithMeals = poco.WillHelpWithMeals,
@@ -271,27 +295,16 @@ namespace Sukkot.Web.Service
 				Notes = poco.Notes
 			};
 
-			log.LogDebug($"Inside {nameof(SukkotService)}!{nameof(UpdateDTO)}.  registration.StatusEnum: {registration.StatusEnum}, registration.CampTypeEnum: {registration.CampTypeEnum}");
-
-			Tuple<DateTime?, DateTime?> DateRangeTuple;
-
-			log.LogDebug($"... Calling {nameof(HydrateDatesFromBitwise)}; AttendanceBitwise:{registration.AttendanceBitwise}; LodgingDaysBitwise:{registration.LodgingDaysBitwise}");
-			DateRangeTuple = HydrateDatesFromBitwise(registration.LodgingDaysBitwise, LodgingMinDate, LodgingMaxDate);
-			registration.LodgingStartDate = DateRangeTuple.Item1;
-			registration.LodgingEndDate = DateRangeTuple.Item2;
-
-			DateRangeTuple = HydrateDatesFromBitwise(registration.AttendanceBitwise, AttendanceMinDate, AttendanceMaxDate);
-			registration.AttendanceStartDate = DateRangeTuple.Item1;
-			registration.AttendanceEndDate = DateRangeTuple.Item2;
-
-			log.LogDebug($"... Lodge Dates: {registration.LodgingStartDate?.ToString("MM/dd/yyyy")} - {registration.LodgingEndDate?.ToString("MM/dd/yyyy")}");
-			log.LogDebug($"... Attendance Dates: {registration.AttendanceStartDate?.ToString("MM/dd/yyyy")} - {registration.AttendanceEndDate?.ToString("MM/dd/yyyy")}");
+			Logger.LogDebug($"Inside {nameof(SukkotService)}!{nameof(UpdateDTO)}");
+			//Logger.LogDebug($"...registration.StatusEnum: {registration.StatusEnum}, registration.CampTypeEnum: {registration.CampTypeEnum}");
+			Logger.LogDebug($"...AttendanceDateList: {registration.AttendanceDateList}; LodgingDateList: {registration.LodgingDateList}");
+			Logger.LogDebug($"...AttendanceBitwise: {registration.AttendanceBitwise}; LodgingDaysBitwise: {registration.LodgingDaysBitwise}");
 			return registration;
 		}
 
 		public async Task<int> Edit(Registration registration, ClaimsPrincipal user)
 		{
-			log.LogInformation($"Inside {nameof(SukkotService)}!{nameof(Edit)}");
+			Logger.LogInformation($"Inside {nameof(SukkotService)}!{nameof(Edit)}");
 			int count = 0;
 			try
 			{
@@ -305,34 +318,12 @@ namespace Sukkot.Web.Service
 					registration.StatusEnum = StatusEnum.RegistrationFormCompleted;
 				}
 
-				if (registration.LodgingStartDate == null || registration.LodgingEndDate == null)
-				{
-					registration.LodgingDaysBitwise = 0;
-				}
-				else
-				{
-					registration.LodgingDaysBitwise = GetDaysBitwise(registration.LodgingStartDate, registration.LodgingEndDate);
+				registration.AttendanceBitwise = GetDaysBitwise(registration.AttendanceDateList, DateRangeEnum.AttendanceDays);
+				registration.LodgingDaysBitwise = GetDaysBitwise(registration.LodgingDateList, DateRangeEnum.LodgingDays);
 
-					// ToDo: Convert from GetDaysBitwise to GetDaysBitwise(registration.LodgingDateList);
-				}
-				log.LogDebug($"registration.LodgingDaysBitwise:{registration.LodgingDaysBitwise}");
-
-				//string sDateList = string.Join(", ", registration.AttendanceDateList.ToString());
-				//log.LogDebug($"registration.AttendanceDateList:{registration.AttendanceDateList}");
-				//log.LogDebug($"registration.AttendanceDateList:{sDateList}");
-				if (registration.AttendanceStartDate == null || registration.AttendanceEndDate == null)
-				{
-					registration.AttendanceBitwise = 0;
-				}
-				else
-				{
-					registration.AttendanceBitwise = GetDaysBitwise(registration.AttendanceStartDate, registration.AttendanceEndDate);
-				}
-				log.LogDebug($"registration.AttendanceBitwise:{registration.AttendanceBitwise}");
-
-				log.LogInformation($"Calling {nameof(db.Update)}");
+				Logger.LogInformation($"Calling {nameof(db.Update)}");
 				count = await db.Update(DTO(registration));
-				log.LogInformation($"Registration updated for {registration.FamilyName}/{registration.EMail}; count={count}");
+				Logger.LogInformation($"Registration updated for {registration.FamilyName}/{registration.EMail}; count={count}");
 
 				/*
 				// Task 683 Add IsMealsAvailable to appsettings.json and code for it 
@@ -345,7 +336,7 @@ namespace Sukkot.Web.Service
 			catch (Exception ex)
 			{
 				ExceptionMessage = $"Inside {nameof(Edit)}, {nameof(db.Update)}";
-				log.LogError(ex, ExceptionMessage);
+				Logger.LogError(ex, ExceptionMessage);
 				ExceptionMessage += ex.Message ?? "-- ex.Message was null --";
 				throw new InvalidOperationException(ExceptionMessage);
 			}
@@ -357,14 +348,14 @@ namespace Sukkot.Web.Service
 			int count = 0;
 			try
 			{
-				log.LogInformation($"Delete meals and registration in one call");
+				Logger.LogInformation($"Delete meals and registration in one call");
 				count = await db.Delete(id);
-				log.LogInformation($"Registration and meals deleted for id={id}; affected rows={count}");
+				Logger.LogInformation($"Registration and meals deleted for id={id}; affected rows={count}");
 			}
 			catch (Exception ex)
 			{
 				ExceptionMessage = $"Inside {nameof(DeleteConfirmed)}, {nameof(db.Delete)}, id={id}";
-				log.LogError(ex, ExceptionMessage);
+				Logger.LogError(ex, ExceptionMessage);
 				ExceptionMessage += ex.Message ?? "-- ex.Message was null --";
 				throw new InvalidOperationException(ExceptionMessage);
 			}
@@ -373,7 +364,7 @@ namespace Sukkot.Web.Service
 
 		public async Task<EditMealsVM> Meals(int registrationId, ClaimsPrincipal user)
 		{
-			log.LogInformation($"Inside {nameof(Meals)}, registrationId={registrationId}");
+			Logger.LogInformation($"Inside {nameof(Meals)}, registrationId={registrationId}");
 			MealsRelatedRegistrationData RegistrationData = new MealsRelatedRegistrationData();
 			RegistrationData = await GetRegistrationDataAndCheckAuthority(registrationId, user);
 			var vm = new EditMealsVM();
@@ -391,7 +382,7 @@ namespace Sukkot.Web.Service
 			catch (Exception ex)
 			{
 				ExceptionMessage = $"Inside {nameof(GetRegistrationDataAndCheckAuthority)}, {nameof(db.MealsRelatedRegistrationData)}, registrationId={registrationId}";
-				log.LogError(ex, ExceptionMessage);
+				Logger.LogError(ex, ExceptionMessage);
 				ExceptionMessage += ex.Message ?? "-- ex.Message was null --";
 				throw new InvalidOperationException(ExceptionMessage);
 			}
@@ -399,7 +390,7 @@ namespace Sukkot.Web.Service
 			if (!IsUserAuthoirized(RegistrationData.EMail, registrationId, user))
 			{
 				ExceptionMessage = $"Inside {nameof(GetRegistrationDataAndCheckAuthority)}, logged in user:{RegistrationData.EMail} lacks authority for registrationId={registrationId}";
-				log.LogWarning(ExceptionMessage);
+				Logger.LogWarning(ExceptionMessage);
 				throw new UserNotAuthoirizedException(ExceptionMessage);
 			}
 
@@ -409,7 +400,7 @@ namespace Sukkot.Web.Service
 		private async Task<EditMealsVM> GetMeals(MealsRelatedRegistrationData registrationData)
 		{
 			var vm = new EditMealsVM();
-			log.LogInformation("Get Meals");
+			Logger.LogInformation("Get Meals");
 
 			vm.RegistrationId = registrationData.Id;
 			vm.Title = Other.MealTicketTitle;
@@ -441,7 +432,7 @@ namespace Sukkot.Web.Service
 			catch (Exception ex)
 			{
 				ExceptionMessage = $"Inside {nameof(GetMeals)}, registrationData.Id={registrationData.Id}";
-				log.LogError(ex, ExceptionMessage);
+				Logger.LogError(ex, ExceptionMessage);
 				ExceptionMessage += ex.Message ?? "-- ex.Message was null --";
 				throw new InvalidOperationException(ExceptionMessage);
 			}
@@ -592,7 +583,7 @@ namespace Sukkot.Web.Service
 		public async Task<int> UpdateMeals(EditMealsVM vm)
 		{
 			int count = 0;
-			log.LogInformation($"Calling {nameof(db.UpdateMeal)}");
+			Logger.LogInformation($"Calling {nameof(db.UpdateMeal)}");
 
 			try
 			{
@@ -618,7 +609,7 @@ namespace Sukkot.Web.Service
 			catch (Exception ex)
 			{
 				ExceptionMessage = $"Inside {nameof(UpdateMeals)}";
-				log.LogError(ex, ExceptionMessage);
+				Logger.LogError(ex, ExceptionMessage);
 				ExceptionMessage += ex.Message ?? "-- ex.Message was null --";
 				throw new InvalidOperationException(ExceptionMessage);
 			}

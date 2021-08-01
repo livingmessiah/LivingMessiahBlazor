@@ -6,8 +6,8 @@ namespace LivingMessiah.Web.Pages.Sukkot
 {
 	public enum DateRangeEnum
 	{
-		AttendanceDays=1,
-		LodgingDays=2
+		AttendanceDays = 1,
+		LodgingDays = 2
 	}
 
 	public class DateRangeLocal
@@ -21,7 +21,7 @@ namespace LivingMessiah.Web.Pages.Sukkot
 
 		public static DateRangeLocal LodgingDays { get; } = new DateRangeLocal(
 				DateRangeEnum.LodgingDays
-			, new DateRange(DateTime.Parse("10/20/2021"), DateTime.Parse("10/28/2021"))
+			, new DateRange(DateTime.Parse("10/18/2021"), DateTime.Parse("10/29/2021"))
 			, "Select lodging days");
 
 		public DateRangeEnum DateRangeEnum { get; private set; }
@@ -62,19 +62,67 @@ namespace LivingMessiah.Web.Pages.Sukkot
 		public DateTime MaxDate { get; set; }
 		public DateRange(DateTime x, DateTime y) => (MinDate, MaxDate) = (x, y);
 	}
-}
 
-/*
 
-		public DateTime MinDate { get; set; }
-		public DateTime MaxDate { get; set; }
-
-return $"{VersesBaseUrl}Verse/{book.Abrv}-{chapter}-{vr.BegVerse}-{vr.EndVerse}/Englishonly";
-
-	public class VerseRange
+	public static class DateFactory
 	{
-		public int BegVerse { get; set; }
-		public int EndVerse { get; set; }
-		public VerseRange(int x, int y) => (BegVerse, EndVerse) = (x, y);
+		public static int GetAttendanceBitwise(DateTime dateTime)
+		{
+			bool found = _AttendanceDictionary.TryGetValue(dateTime, out int bitwise);
+			if (found)
+			{
+				return bitwise;
+			}
+			else
+			{
+				return 0;
+			}
+		}
+
+		static Dictionary<DateTime, int> _AttendanceDictionary = new Dictionary<DateTime, int>
+		{
+			{ Convert.ToDateTime("2021-10-19"), 1 },
+			{ Convert.ToDateTime("2021-10-20"), 2 },
+			{ Convert.ToDateTime("2021-10-21"), 4 },
+			{ Convert.ToDateTime("2021-10-22"), 8 },
+			{ Convert.ToDateTime("2021-10-23"), 16 },
+			{ Convert.ToDateTime("2021-10-24"), 32 },
+			{ Convert.ToDateTime("2021-10-25"), 64 },
+			{ Convert.ToDateTime("2021-10-26"), 128 },
+			{ Convert.ToDateTime("2021-10-27"), 256 },
+			{ Convert.ToDateTime("2021-10-28"), 512 },
+		};
+
+		public static int GetLodgingBitwise(DateTime dateTime)
+		{
+			bool found = _LodgingDictionary.TryGetValue(dateTime, out int bitwise);
+			if (found)
+			{
+				return bitwise;
+			}
+			else
+			{
+				return 0;
+			}
+		}
+
+		static Dictionary<DateTime, int> _LodgingDictionary = new Dictionary<DateTime, int>
+		{
+			{ Convert.ToDateTime("2021-10-18"), 1 },
+			{ Convert.ToDateTime("2021-10-19"), 2 },
+			{ Convert.ToDateTime("2021-10-20"), 4 },
+			{ Convert.ToDateTime("2021-10-21"), 8 },
+			{ Convert.ToDateTime("2021-10-22"), 16 },
+			{ Convert.ToDateTime("2021-10-23"), 32 },
+			{ Convert.ToDateTime("2021-10-24"), 64 },
+			{ Convert.ToDateTime("2021-10-25"), 128 },
+			{ Convert.ToDateTime("2021-10-26"), 256 },
+			{ Convert.ToDateTime("2021-10-27"), 512 },
+			{ Convert.ToDateTime("2021-10-28"), 1024 },
+			{ Convert.ToDateTime("2021-10-29"), 2048 }
+		};
+
 	}
-*/
+
+
+}

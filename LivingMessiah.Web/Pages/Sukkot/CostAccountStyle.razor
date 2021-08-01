@@ -10,25 +10,25 @@
 	<div class="col-8">
 		<dl class="row">
 			<dt class="col-6">Registration Cost:</dt>
-			<dd class="col-4"><span class="float-right">@vwRegistration.RegistrationFee</span></dd>
+			<dd class="col-4"><span class="float-right">@vwRegistration.RegistrationFee.ToString("C0")</span></dd>
 			<dt class="col-6">Lodging Cost:</dt>
-			<dd class="col-4"><span class="float-right">@vwRegistration.CampCost</span></dd>
+			<dd class="col-4"><span class="float-right">@vwRegistration.CampCost.ToString("C0")</span></dd>
 
 			@if (IsMealsAvailable)
 			{
 				<dt class="col-6">Adult Meals:</dt>
 				<dd class="col-4"><span class="float-right">@vwRegistration.TotalAdultMeals</span></dd>
 				<dt class="col-6">Adult Meal Cost:</dt>
-				<dd class="col-4"><span class="float-right">@vwRegistration.AdultMealCost</span></dd>
+				<dd class="col-4"><span class="float-right">@vwRegistration.AdultMealCost.ToString("C0")</span></dd>
 
 				<dt class="col-6">Big Child Meals:</dt>
-				<dd class="col-4"><span class="float-right">@vwRegistration.TotalChildBigMeals</span></dd>
+				<dd class="col-4"><span class="float-right">@vwRegistration.TotalChildBigMeals.ToString("C0")</span></dd>
 				<dt class="col-6">Big Child Meal Cost:</dt>
-				<dd class="col-4"><span class="float-right">@vwRegistration.ChildBigMealCost</span></dd>
+				<dd class="col-4"><span class="float-right">@vwRegistration.ChildBigMealCost.ToString("C0")</span></dd>
 			}
 
 			<dt class="col-6">Total:</dt>
-			<dd class="col-6"><span class="float-right"><b>@vwRegistration.TotalCost</b></span></dd>
+			<dd class="col-6"><span class="float-right"><b>@vwRegistration.TotalCost.ToString("C0")</b></span></dd>
 		</dl>
 	</div>
 
