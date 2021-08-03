@@ -57,7 +57,11 @@ namespace LivingMessiah.Web.Pages.Sukkot
 		public SukkotApi.Domain.Enums.StatusEnum StatusEnum { get; set; }
 
 		[Required]
-		[DisplayName("Options")]
+		[DisplayName("Location")]
+		public SukkotApi.Domain.Enums.LocationEnum LocationEnum { get; set; }
+
+		[Required]
+		[DisplayName("Camp")]
 		public SukkotApi.Domain.Enums.CampType CampTypeEnum { get; set; }
 
 

@@ -17,6 +17,9 @@ namespace SukkotApi.Domain
 		public int Adults { get; set; }
 		public int ChildBig { get; set; }
 		public int ChildSmall { get; set; }
+
+		public LocationEnum LocationEnum { get; set; }
+
 		public CampType CampTypeEnum { get; set; }
 		public StatusEnum StatusEnum { get; set; }
 

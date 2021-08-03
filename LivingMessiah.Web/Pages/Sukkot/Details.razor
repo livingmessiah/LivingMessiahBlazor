@@ -68,11 +68,33 @@
 		</div>
 	}
 
-	<h2 class="mb-4">
+	<h4 class="mb-4">
 		@Other.DetailsTitle
-		<br /><small><i>@vwRegistration.FullName(false)</i> - Registration#: <b>@vwRegistration.Id</b></small>
-		<br /><small><i>@vwRegistration.OtherNames</i></small>
-	</h2>
+	</h4>
+
+	<div class="card border-primary mb-3">
+
+		@*<div class="card-header">
+			<h4 class="card-title">@Title</h4>
+		</div>*@
+
+		<div class="body">
+			<ul class="lead">
+				<li>
+					Name: @vwRegistration.FullName(false); <i>@vwRegistration.OtherNames</i>
+				</li>
+				<li>
+					Registration#: @vwRegistration.Id
+				</li>
+				<li>
+					Location: @vwRegistration.LocationDescr
+				</li>
+			</ul>
+
+		</div>
+	</div>
+
+
 
 	<DetailsContent vwRegistration="@vwRegistration"></DetailsContent>
 

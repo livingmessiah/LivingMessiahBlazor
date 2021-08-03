@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace SukkotApi.Domain.Enums
 {
@@ -19,6 +21,55 @@ namespace SukkotApi.Domain.Enums
 		[Display(Name = "RV Dry Camp Only, NO HOOKUPs")]
 		RvDryCampOnly = 4
 	}
+
+
+	public enum LocationSimpleEnum
+	{
+		GreenHouseTrolleyHobbyFarm,
+		WildernessRanch,
+		WindmillRanch
+	}
+
+	//[Display(Name = "Green House Trolley Hobby Farm (Near Sierra Vista")]
+	//[Display(Name = "Wilderness Ranch (Near Show Low)")]
+	//[Display(Name = "Windmill Ranch (Near Bisbee)")]
+	public enum LocationEnum
+	{
+		GreenHouseTrolleyHobbyFarm = 1,
+		WildernessRanch = 2,
+		WindmillRanch = 3
+	}
+
+	public class Location
+	{
+		public static List<Location> All { get; } = new List<Location>();
+		public static Location GreenHouseTrolleyHobbyFarm { get; } = new Location(LocationEnum.GreenHouseTrolleyHobbyFarm, "Green House Trolley Hobby Farm (Near Sierra Vista)");  
+		public static Location WildernessRanch { get; } = new Location(LocationEnum.WildernessRanch, "Wilderness Ranch (Near Show Low)");
+		public static Location WindmillRanch { get; } = new Location(LocationEnum.WildernessRanch, "Windmill Ranch (Near Bisbee)");
+
+		public LocationEnum LocationEnum { get; private set; }
+		public int Id { get; private set; }
+		public string Name { get; private set; }
+
+		private Location(LocationEnum locationsEnum, string name)
+		{
+			LocationEnum = locationsEnum;
+			Id = (int)locationsEnum;
+			Name = name;
+			All.Add(this);
+		}
+
+		public static Location FromEnum(LocationEnum enumValue)
+		{
+			return All.SingleOrDefault(r => r.LocationEnum == enumValue);
+		}
+
+		public static Location FromString(string formatString)
+		{
+			return All.SingleOrDefault(r => String.Equals(r.Name, formatString, StringComparison.OrdinalIgnoreCase));
+		}
+	}
+
 
 	public enum StatusEnum
 	{

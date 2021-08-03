@@ -38,6 +38,7 @@ namespace SukkotApi.Data
 				Adults = registration.Adults,
 				ChildBig = registration.ChildBig,
 				ChildSmall = registration.ChildSmall,
+				LocationEnum = registration.LocationEnum,
 				CampId = registration.CampTypeEnum, // registration.CampId,
 				StatusId = registration.StatusEnum, // registration.StatusId,
 
@@ -98,7 +99,7 @@ UPDATE Sukkot.Registration SET
 
 	AttendanceBitwise = {registration.AttendanceBitwise},
 	LodgingDaysBitwise = {registration.LodgingDaysBitwise},
-
+	LocationEnum = {(int)registration.LocationEnum},
 	CampId = {(int)registration.CampTypeEnum},
 	StatusId = {(int)registration.StatusEnum},  
 	WillHelpWithMeals = {registration.WillHelpWithMealsToInt}, 
@@ -150,7 +151,7 @@ WHERE Id = {registration.Id};
 			base.Sql = $@"
 SELECT TOP 1 
 Id, FamilyName, FirstName, SpouseName, OtherNames, EMail, Phone, Adults, ChildBig, ChildSmall
-, CampId AS CampTypeEnum, StatusId AS StatusEnum
+, LocationEnum, CampId AS CampTypeEnum, StatusId AS StatusEnum
 , AttendanceBitwise, LodgingDaysBitwise, AssignedLodging, LmmDonation, WillHelpWithMeals, Notes, Avitar
 , Sukkot.udfLodgingDatesConcat(Id) AS LodgingDatesCSV
 , Sukkot.udfAttendanceDatesConcat(Id) AS AttendanceDatesCSV

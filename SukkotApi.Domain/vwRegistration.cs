@@ -50,6 +50,9 @@ namespace SukkotApi.Domain
 		public int AttendanceTotal { get; set; }
 		public string AttendanceDatesCSV { get; set; }
 
+		public SukkotApi.Domain.Enums.LocationEnum LocationEnum { get; set; }
+		public string LocationDescr { get; set; }
+
 		public string Camp { get; set; }
 		public string CampCD { get; set; }
 		public string Status { get; set; }

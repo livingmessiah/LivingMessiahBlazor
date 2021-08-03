@@ -50,36 +50,37 @@
 		<input type="hidden" asp-for="Registration.EMail" />
 		<input type="hidden" asp-for="UI.EditMode" />
 
-		<fieldset disabled>
-			<legend class="text-danger"><b><i>Administration</i></b></legend>
-			<div class="row bg-warning">
+		@*<fieldset disabled>
 
-				<div class="col-sm-4">
-					<div class="form-group">
-						<label for="status" class="control-label">Status</label>
-						<InputSelectEnum @bind-Value="Registration.StatusEnum" />
+				<legend class="text-danger"><b><i>Administration</i></b></legend>
+				<div class="row bg-warning">
+
+					<div class="col-sm-6">
+						<div class="form-group">
+							<label for="status" class="control-label">Status</label>
+							<InputSelectEnum @bind-Value="Registration.StatusEnum" />
+						</div>
 					</div>
-				</div>
 
-				<div class="col-sm-4">
-					<div class="form-group">
-						<label for="eMail" class="control-label">EMail</label>
-						<InputText id="eMail" class="form-control" @bind-Value="Registration.EMail" />
-						<ValidationMessage For="@(() => Registration.EMail)" />
+					<div class="col-sm-6">
+						<div class="form-group">
+							<label for="eMail" class="control-label">EMail</label>
+							<InputText id="eMail" class="form-control" @bind-Value="Registration.EMail" />
+							<ValidationMessage For="@(() => Registration.EMail)" />
 
+						</div>
 					</div>
-				</div>
 
-				<div class="col-sm-4">
-					<div class="form-group">
-						<label for="assignedLodging" class="control-label">Assigned Lodging</label>
-						<InputText id="assignedLodging" class="form-control" @bind-Value="Registration.AssignedLodging" />
-						<ValidationMessage For="@(() => Registration.AssignedLodging)" />
+					<div class="col-sm-4">
+						<div class="form-group">
+							<label for="assignedLodging" class="control-label">Assigned Lodging</label>
+							<InputText id="assignedLodging" class="form-control" @bind-Value="Registration.AssignedLodging" />
+							<ValidationMessage For="@(() => Registration.AssignedLodging)" />
+						</div>
 					</div>
-				</div>
 
-			</div>
-		</fieldset>
+				</div>
+			</fieldset>*@
 
 		<fieldset class="mt-3">
 			<legend class="text-primary">Contact Information</legend>
@@ -115,7 +116,7 @@
 
 			<div class="row">
 
-				<div class="col-sm-4">
+				<div class="col-sm-6">
 					<div class="form-group">
 						<label for="otherNames" class="control-label">Other Names</label>
 						<InputText id="otherNames" class="form-control" @bind-Value="Registration.OtherNames" />
@@ -123,7 +124,7 @@
 					</div>
 				</div>
 
-				<div class="col-sm-4">
+				<div class="col-sm-6">
 					<div class="form-group">
 						<label for="phone" class="control-label">Phone</label>
 						<InputText id="phone" class="form-control" @bind-Value="Registration.Phone" placeholder="phone (optional)" />
@@ -131,27 +132,93 @@
 					</div>
 				</div>
 
-				<div class="col-sm-4">
-					<div class="form-group">
-						<label for="avitar" class="control-label">Avitar</label>
-						<InputText id="avitar" class="form-control" @bind-Value="Registration.Avitar" placeholder="picture (optional)" />
-						<ValidationMessage For="@(() => Registration.Avitar)" />
-					</div>
-				</div>
+				@*<div class="col-sm-4">
+						<div class="form-group">
+							<label for="avitar" class="control-label">Avitar</label>
+							<InputText id="avitar" class="form-control" @bind-Value="Registration.Avitar" placeholder="picture (optional)" />
+							<ValidationMessage For="@(() => Registration.Avitar)" />
+						</div>
+					</div>*@
 
 			</div>
 
 		</fieldset>
 
+
+		<fieldset class="mt-3">
+			<legend class="text-primary">Location</legend>
+			<div class="row mt-n2">
+
+				<div class="col-sm-4">
+					<div class="card bg-light mb-3">
+						@*<div class="card-header"></div>*@
+						<div class="card-body">
+							@*<h4 class="card-title">Attendance</h4>*@
+							<p class="card-text">Sukkot 2021 is a unique year in that we have <b>three</b> locations which to select from.</p>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-sm-8">
+					<InputSelectEnum @bind-Value="Registration.LocationEnum" class="form-control" />
+					<ValidationMessage For="@(() => Registration.LocationEnum)" />
+				</div>
+
+				@*<div class="col-sm-4">
+			<div class="form-group">
+				<SfListBox TValue="@SukkotApi.Domain.Enums.LocationSimpleEnum"
+									 TItem="string"
+									 @bind-Value="@LocationSelected"
+									 DataSource="@LocationSimpleEnumValues">
+				</SfListBox>
+			</div>
+		</div>
+
+		<div class="col-sm-4">
+			<div class="form-group">
+				<SfListBox TValue="@SukkotApi.Domain.Enums.LocationEnum"
+									 TItem="string"
+									 @bind-Value="@LocationSelected"
+									 DataSource="@LocationEnumValues">
+				</SfListBox>
+			</div>
+		</div>*@
+
+				@*<div class="col-sm-4">
+			<div class="form-group">
+				<SfListBox TValue="@SukkotApi.Domain.Enums.LocationEnum"
+									 TItem="string"
+									 @bind-Value="@LocationSelected"
+									 DataSource="@SukkotApi.Domain.Enums.Location.FromEnum()">
+					<ListBoxEvents TValue="string[]" ValueChange="HandleLocationChange" TItem="@SukkotApi.Domain.Enums.Location"></ListBoxEvents>
+				</SfListBox>
+			</div>
+		</div>*@
+
+			</div>
+		</fieldset>
+
+
 		<fieldset class="mt-3">
 			<legend class="text-primary">Attendance</legend>
 			<div class="row mt-n2">
+
+				<div class="col-sm-4">
+					<div class="card bg-light mb-3">
+						@*<div class="card-header"></div>*@
+						<div class="card-body">
+							@*<h4 class="card-title">Attendance</h4>*@
+							<p class="card-text">What days will you be attending?  This helps us with planning.</p>
+						</div>
+					</div>
+				</div>
+
 				<div class="col-sm-8">
 					<div class="form-group">
 						@*<label for="attendanceDays" class="control-label">Select Dates</label>*@
 
 						<SfCalendar TValue="DateTime?"
-												IsMultiSelection="true"
+												IsMultiSelection="true" ShowTodayButton="false"
 												@bind-Values="@Registration.AttendanceDateList"
 												Min="@DateRangeAttendance.DateRange.MinDate"
 												Max="@DateRangeAttendance.DateRange.MaxDate">
@@ -159,15 +226,7 @@
 
 					</div>
 				</div>
-				<div class="col-sm-4">
-					<div class="card bg-light mb-3">
-						@*<div class="card-header"></div>*@
-						<div class="card-body">
-							<h4 class="card-title">Attendance</h4>
-							<p class="card-text">What days will you be attending?  This helps us with planning.</p>
-						</div>
-					</div>
-				</div>
+
 			</div>
 		</fieldset>
 
@@ -196,10 +255,20 @@
 			</div>
 
 			<div class="row">
+
+				<div class="col-sm-4">
+					<div class="card bg-light mb-3">
+						<div class="card-body">
+							@*<h4 class="card-title">Lodge Dates</h4>*@
+							<p class="card-text">What days will you be lodging?</p>
+						</div>
+					</div>
+				</div>
+
 				<div class="col-sm-8">
 					<div class="form-group">
 						@*<label for="lodgeDate" class="control-label">Select Dates</label>*@
-						<SfCalendar TValue="DateTime?"
+						<SfCalendar TValue="DateTime?" ShowTodayButton="false"
 												IsMultiSelection="true"
 												@bind-Values="@Registration.LodgingDateList"
 												Min="@DateRangeLodging.DateRange.MinDate"
@@ -207,15 +276,7 @@
 						</SfCalendar>
 					</div>
 				</div>
-					<div class="col-sm-4">
-						<div class="card bg-light mb-3">
-							<div class="card-body">
-								<h4 class="card-title">Lodge Dates</h4>
-								<p class="card-text">What days will you be lodging?</p>
-							</div>
-						</div>
-					
-				</div>
+
 			</div>
 		</fieldset>
 
