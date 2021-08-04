@@ -11,8 +11,12 @@
 		<dl class="row">
 			<dt class="col-6">Registration Cost:</dt>
 			<dd class="col-4"><span class="float-right">@vwRegistration.RegistrationFee.ToString("C0")</span></dd>
-			<dt class="col-6">Lodging Cost:</dt>
-			<dd class="col-4"><span class="float-right">@vwRegistration.CampCost.ToString("C0")</span></dd>
+
+			@if (vwRegistration.IncludeCampCost)
+			{
+				<dt class="col-6">Lodging Cost:</dt>
+				<dd class="col-4"><span class="float-right">@vwRegistration.CampCost.ToString("C0")</span></dd>
+			}
 
 			@if (IsMealsAvailable)
 			{

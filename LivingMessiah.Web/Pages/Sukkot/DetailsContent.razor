@@ -14,7 +14,7 @@
 		<div class="row">
 			<div class="col-sm-12">
 				@* @Html.DisplayFor(model => vwRegistration.EMail) ...  @Html.DisplayFor(model => vwRegistration.Status) *@
-				<small class="float-right">EMail: @vwRegistration.EMail), @Phone2 Status: @vwRegistration.Status</small>
+				<small class="float-right">EMail: @vwRegistration.EMail, @Phone2 Status: @vwRegistration.Status</small>
 				<h4>General</h4>
 			</div>
 		</div>
@@ -29,26 +29,15 @@
 			</div>
 			<div class="col-10">
 				<ul>
-
-					@*<li>Registration#: @Html.DisplayFor(model => vwRegistration.Id)</li>
-					<li>EMail: @vwRegistration.EMail</li>
-					<li>Phone: @Html.DisplayFor(model => vwRegistration.Phone)</li>
-					<li>Status: @Html.DisplayFor(model => vwRegistration.Status)</li>*@
-
-
 					<li>Registration#: @vwRegistration.Id</li>
 					<li>EMail: @vwRegistration.EMail</li>
 					<li>Phone: @vwRegistration.Phone</li>
 					<li>Status: @vwRegistration.Status</li>
-
 				</ul>
 			</div>
 		</div>
 
 	</div>
-
-
-
 </div>
 
 <div class="row d-none d-print-block">
@@ -66,45 +55,53 @@
 </div>
 
 @* Lodging *@
-<hr class="warning d-print-none" />
 
-<div class="d-print-none">
-
-	<div class="row">
-		<div class="col-sm-12">
-			<h4>Lodging: @vwRegistration.Camp</h4>
-		</div>
-	</div>
-
-</div>
-
-<div class="d-none d-print-block">
-
-	<div class="row">
-		<div class="col-12">
-			<h3>Lodging: @vwRegistration.Camp</h3>
-		</div>
-	</div>
-
-</div>
-
-@if (vwRegistration.LodgingDaysTotal != 0)
+@if (vwRegistration.IncludeCampCost)
 {
-
-	<div class="row">
-
-		<div class="col-sm-12">
+	<hr class="warning d-print-none" />
 
 
-			<h1 class="text-danger">ToDo: Replace Table with Calendar</h1>
+	<div class="d-print-none">
 
+		<div class="row">
+			<div class="col-sm-12">
+				<h4>Lodging: @vwRegistration.Camp</h4>
+			</div>
 		</div>
+
 	</div>
 
-}
-else
-{
-	<p>No Lodging Days Selected</p>
+	<div class="d-none d-print-block">
+
+		<div class="row">
+			<div class="col-12">
+				<h3>Lodging: @vwRegistration.Camp</h3>
+			</div>
+		</div>
+
+	</div>
+
+	@if (vwRegistration.LodgingDaysTotal != 0 && vwRegistration.LodgingDateList != null)
+	{
+		<div class="row">
+
+			<div class="col-sm-6">
+
+				<SfCalendar TValue="DateTime?" ShowTodayButton="false"
+										IsMultiSelection="true" Values="@vwRegistration.LodgingDateList"
+										Min="@DateRangeLodging.DateRange.MinDate"
+										Max="@DateRangeLodging.DateRange.MaxDate">
+				</SfCalendar>
+
+			</div>
+		</div>
+
+	}
+	else
+	{
+		<p>No Lodging Days Selected</p>
+	}
+
 }
 
 @* Attendance    *@
@@ -114,49 +111,101 @@ else
 	<div class="d-none d-sm-block">
 
 		<div class="row">
-			<div class="col">
-				<span class="float-right"><small>Adults: @vwRegistration.Adults, Child (Big): @vwRegistration.ChildBig, Child (Small): @vwRegistration.ChildSmall</small></span>
-				<h4>Attendance </h4>
+			<div class="col-6">
+				<h4>Attendance</h4>
+
+				<SfCalendar TValue="DateTime?"
+										IsMultiSelection="true" ShowTodayButton="false"
+										Values="@vwRegistration.AttendanceDateList"
+										Min="@DateRangeAttendance.DateRange.MinDate"
+										Max="@DateRangeAttendance.DateRange.MaxDate">
+				</SfCalendar>
+
 			</div>
+
+			<div class="col-6">
+				<div class="card border-primary mb-3">
+					<div class="body">
+						<ul>
+							<li>Adults: <span class="">@vwRegistration.Adults</span></li>
+							<li>Child (Big):  <span class="">@vwRegistration.ChildBig</span></li>
+							<li>Child (Small):  <span class="">@vwRegistration.ChildSmall</span></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+
 		</div>
 	</div>
 
 	@* Non-Print (visible-xs) *@
-	<div class="d-block d-sm-none">
+<div class="d-block d-sm-none">
 
-		<div class="row">
-			<div class="col-4">
-				<h4>Attendance</h4>
-			</div>
-			<div class="col-8">
-				<ul>
-					<li>Adults: <span class="float-right">@vwRegistration.Adults</span></li>
-					<li>Child (Big):  <span class="float-right">@vwRegistration.ChildBig</span></li>
-					<li>Child (Small):  <span class="float-right">@vwRegistration.ChildSmall</span></li>
-				</ul>
+	<div class="row">
+		<div class="col-12">
+			<h4>Attendance</h4>
+		</div>
+
+		<div class="col-12">
+			<div class="card border-primary mb-3">
+				<div class="body">
+					<ul>
+						<li>Adults: <span class="">@vwRegistration.Adults</span></li>
+						<li>Child (Big):  <span class="">@vwRegistration.ChildBig</span></li>
+						<li>Child (Small):  <span class="">@vwRegistration.ChildSmall</span></li>
+					</ul>
+				</div>
 			</div>
 		</div>
 
 	</div>
 
+	<div class="row">
+		<div class="col-12">
+
+			<SfCalendar TValue="DateTime?"
+									IsMultiSelection="true" ShowTodayButton="false" 
+									Values="@vwRegistration.AttendanceDateList"
+									Min="@DateRangeAttendance.DateRange.MinDate"
+									Max="@DateRangeAttendance.DateRange.MaxDate">
+			</SfCalendar>
+
+		</div>
+	</div>
+
+</div>
+
 </div>
 
 <div class="row d-none d-print-block">
-	<div class="col-5">
+	<div class="col-4">
 		<h3>Attendance</h3>
+
+		<SfCalendar TValue="DateTime?"
+								IsMultiSelection="true" ShowTodayButton="false"
+								Values="@vwRegistration.AttendanceDateList"
+								Min="@DateRangeAttendance.DateRange.MinDate"
+								Max="@DateRangeAttendance.DateRange.MaxDate">
+		</SfCalendar>
+
+
 	</div>
-	<div class="col-7">
-		<ul>
-			<li>Adults: <span class="float-right">@vwRegistration.Adults</span></li>
-			<li>Child (Big):<span class="float-right">@vwRegistration.ChildBig</span></li>
-			<li>Child (Small):<span class="float-right">@vwRegistration.ChildSmall</span></li>
-		</ul>
+	<div class="col-8">
+
+		<div class="card border-primary mb-3">
+
+			<div class="body">
+				<ul>
+					<li>Adults: <span class="">@vwRegistration.Adults</span></li>
+					<li>Child (Big):<span class="">@vwRegistration.ChildBig</span></li>
+					<li>Child (Small):<span class="">@vwRegistration.ChildSmall</span></li>
+				</ul>
+			</div>
+		</div>
 	</div>
 </div>
 
-<br />
 
-<h1 class="text-danger">ToDo: Replace Table with Calendar</h1>
 
 @* Cost *@
 <hr class="warning d-print-none" />
@@ -177,11 +226,16 @@ else
 			<div class="col-10">
 				<ul class="">
 					<li>Registration Cost: <span class="float-right">@vwRegistration.RegistrationFee</span></li>
-					<li>Lodging Cost: <span class="float-right">@vwRegistration.CampCost</span></li>
-					<li>Adult Meals: <span class="float-right">@vwRegistration.TotalAdultMeals</span></li>
+					@if (vwRegistration.IncludeCampCost)
+					{
+						<li>Lodging Cost: <span class="float-right">@vwRegistration.CampCost</span></li>
+					}
+
+					@*<li>Adult Meals: <span class="float-right">@vwRegistration.TotalAdultMeals</span></li>
 					<li>Adult Meal Cost: <span class="float-right">@vwRegistration.AdultMealCost</span></li>
 					<li>Big Child Meals: <span class="float-right">@vwRegistration.TotalChildBigMeals</span></li>
-					<li>Big Child Meal Cost: <span class="float-right">@vwRegistration.ChildBigMealCost</span></li>
+					<li>Big Child Meal Cost: <span class="float-right">@vwRegistration.ChildBigMealCost</span></li>*@
+
 					<li>Total: <span class="float-right"><b>@vwRegistration.TotalCost</b></span></li>
 				</ul>
 			</div>

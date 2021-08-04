@@ -237,6 +237,7 @@ FROM Sukkot.tvfMealSummary(@id)
 			base.Sql = $@"
 SELECT Id, EMail, FamilyName, Adults, ChildBig, ChildSmall, StatusId
 , AttendanceBitwise, MealTotalCostAdult, MealTotalCostChildBig
+, LocationEnum
 , RegistrationFee, CampCost, CampDescr, CampDays, AdultRate, ChildRate, TotalDonation
 FROM Sukkot.tvfRegistrationSummary(@id)
 ";

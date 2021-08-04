@@ -7,5 +7,8 @@ namespace LivingMessiah.Web.Pages.Sukkot
 	{
 		[Parameter]
 		public RegistrationSummary RegistrationSummary { get; set; }
+
+
+
 	}
 }

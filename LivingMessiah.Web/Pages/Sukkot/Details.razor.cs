@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Components.Web;
 using Microsoft.Extensions.Logging;
 using Sukkot.Web.Service;
 using SukkotApi.Domain;
+using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
 //using static LivingMessiah.Web.Links.Sukkot;
@@ -35,6 +36,7 @@ namespace LivingMessiah.Web.Pages.Sukkot
 		public ClaimsPrincipal User { get; set; }
 
 		protected string ExceptionMessage = "";
+		//protected bool LoadFailed;  // using <LoadingComponent>
 
 		protected override async Task OnInitializedAsync()
 		{
@@ -48,13 +50,14 @@ namespace LivingMessiah.Web.Pages.Sukkot
 				Logger.LogDebug($"Calling {nameof(svc.Details)}");
 				vwRegistration = await svc.Details(Id, User, showPrintInstructionMessage);
 			}
-			catch (System.Exception)
+			catch (Exception)
 			{
-
-				throw;
+				//LoadFailed = true;
+				ExceptionMessage = svc.ExceptionMessage;
+				NavManager.NavigateTo(LivingMessiah.Web.Links.Home.Error);
 			}
 
-			
+
 		}
 
 		protected bool MakeModalVisible = false;

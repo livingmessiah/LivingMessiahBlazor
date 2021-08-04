@@ -43,16 +43,7 @@ namespace LivingMessiah.Web.Pages.Sukkot
 		public int? id { get; set; }
 
 		protected bool LoadFailed;
-
-		//public string[] LocationEnumValues = Enum.GetNames(typeof(SukkotApi.Domain.Enums.LocationEnum));
-		//public string[] LocationSimpleEnumValues = Enum.GetNames(typeof(SukkotApi.Domain.Enums.LocationSimpleEnum));
-		//public SukkotApi.Domain.Enums.LocationSimpleEnum LocationSelected { get; set; } = SukkotApi.Domain.Enums.LocationSimpleEnum.GreenHouseTrolleyHobbyFarm;
-
-		//private void HandleLocationChange(ListBoxChangeEventArgs<string[], VehicleData> args)
-		//{
-		//	//Triggers when value changed
-		//	Logger.LogDebug("");
-		//}
+		protected bool CanEditCampType => Registration.LocationEnum == LocationEnum.WildernessRanch;  
 
 		protected override async Task OnInitializedAsync()
 		{

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SukkotApi.Domain.Enums;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace SukkotApi.Domain
@@ -36,6 +37,9 @@ namespace SukkotApi.Domain
 
 		[DisplayFormat(DataFormatString = "{0:C0}")]
 		public decimal TotalDonation { get; set; }
+
+		public Enums.LocationEnum LocationEnum { get; set; }
+		public bool IncludeCampCost => LocationEnum == LocationEnum.WildernessRanch;
 
 		[DisplayFormat(DataFormatString = "{0:C0}")]
 		public decimal TotalCost

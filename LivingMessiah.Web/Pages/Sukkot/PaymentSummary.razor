@@ -48,6 +48,8 @@
 	</div>
 }
 
+@if(RegistrationSummary.IncludeCampCost)
+{
 <div class="row">
 	<div class="col-sm-6">
 		<dl class="row">
@@ -56,9 +58,11 @@
 		</dl>
 	</div>
 	<div class="col-sm-6">
-		@RegistrationSummary.CampDescr<br />Days: @RegistrationSummary.CampDays<br /><br />
+		@RegistrationSummary.CampDescr<br /><br />
+		@*@RegistrationSummary.CampDescr<br />Days: @RegistrationSummary.CampDays<br /><br />*@
 	</div>
 </div>
+}
 
 <div class="row">
 	<div class="col-sm-6">

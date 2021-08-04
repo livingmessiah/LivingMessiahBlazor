@@ -50,37 +50,7 @@
 		<input type="hidden" asp-for="Registration.EMail" />
 		<input type="hidden" asp-for="UI.EditMode" />
 
-		@*<fieldset disabled>
-
-				<legend class="text-danger"><b><i>Administration</i></b></legend>
-				<div class="row bg-warning">
-
-					<div class="col-sm-6">
-						<div class="form-group">
-							<label for="status" class="control-label">Status</label>
-							<InputSelectEnum @bind-Value="Registration.StatusEnum" />
-						</div>
-					</div>
-
-					<div class="col-sm-6">
-						<div class="form-group">
-							<label for="eMail" class="control-label">EMail</label>
-							<InputText id="eMail" class="form-control" @bind-Value="Registration.EMail" />
-							<ValidationMessage For="@(() => Registration.EMail)" />
-
-						</div>
-					</div>
-
-					<div class="col-sm-4">
-						<div class="form-group">
-							<label for="assignedLodging" class="control-label">Assigned Lodging</label>
-							<InputText id="assignedLodging" class="form-control" @bind-Value="Registration.AssignedLodging" />
-							<ValidationMessage For="@(() => Registration.AssignedLodging)" />
-						</div>
-					</div>
-
-				</div>
-			</fieldset>*@
+		@*<Administrative>*@
 
 		<fieldset class="mt-3">
 			<legend class="text-primary">Contact Information</legend>
@@ -159,41 +129,12 @@
 					</div>
 				</div>
 
+
 				<div class="col-sm-8">
-					<InputSelectEnum @bind-Value="Registration.LocationEnum" class="form-control" />
+					<InputSelectEnum @bind-Value="Registration.LocationEnum"
+													 class="form-control" />
 					<ValidationMessage For="@(() => Registration.LocationEnum)" />
 				</div>
-
-				@*<div class="col-sm-4">
-			<div class="form-group">
-				<SfListBox TValue="@SukkotApi.Domain.Enums.LocationSimpleEnum"
-									 TItem="string"
-									 @bind-Value="@LocationSelected"
-									 DataSource="@LocationSimpleEnumValues">
-				</SfListBox>
-			</div>
-		</div>
-
-		<div class="col-sm-4">
-			<div class="form-group">
-				<SfListBox TValue="@SukkotApi.Domain.Enums.LocationEnum"
-									 TItem="string"
-									 @bind-Value="@LocationSelected"
-									 DataSource="@LocationEnumValues">
-				</SfListBox>
-			</div>
-		</div>*@
-
-				@*<div class="col-sm-4">
-			<div class="form-group">
-				<SfListBox TValue="@SukkotApi.Domain.Enums.LocationEnum"
-									 TItem="string"
-									 @bind-Value="@LocationSelected"
-									 DataSource="@SukkotApi.Domain.Enums.Location.FromEnum()">
-					<ListBoxEvents TValue="string[]" ValueChange="HandleLocationChange" TItem="@SukkotApi.Domain.Enums.Location"></ListBoxEvents>
-				</SfListBox>
-			</div>
-		</div>*@
 
 			</div>
 		</fieldset>
@@ -229,6 +170,10 @@
 
 			</div>
 		</fieldset>
+
+
+		@if (CanEditCampType)
+		{ 
 
 		<fieldset class="mt-3">
 			<legend class="text-primary">Lodging</legend>
@@ -279,6 +224,9 @@
 
 			</div>
 		</fieldset>
+
+		}
+
 
 		<fieldset class="mt-3">
 			<legend class="text-primary">People Count</legend>

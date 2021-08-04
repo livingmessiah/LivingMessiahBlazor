@@ -50,7 +50,10 @@ namespace SukkotApi.Domain
 		public int AttendanceTotal { get; set; }
 		public string AttendanceDatesCSV { get; set; }
 
-		public SukkotApi.Domain.Enums.LocationEnum LocationEnum { get; set; }
+		public Enums.LocationEnum LocationEnum { get; set; }
+
+		public bool IncludeCampCost => LocationEnum == Enums.LocationEnum.WildernessRanch;
+
 		public string LocationDescr { get; set; }
 
 		public string Camp { get; set; }
@@ -192,7 +195,15 @@ namespace SukkotApi.Domain
 		{
 			get
 			{
-				return CampCost + AdultMealCost + ChildBigMealCost + RegistrationFee;
+				if (IncludeCampCost)
+				{
+					return CampCost + AdultMealCost + ChildBigMealCost + RegistrationFee;
+				}
+				else
+				{
+					return AdultMealCost + ChildBigMealCost + RegistrationFee;
+				}
+				
 			}
 		}
 

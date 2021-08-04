@@ -4,7 +4,7 @@
 
 	<AuthorizeView>
 		<Authorized>
-			<div class="row">
+			<div class="row d-print-none">
 
 				<div class="col-8">
 					<a href="@Profile"  title="Role: @Role; IsAdmin:@IsAdmin; Email:@EmailAddress">
@@ -22,7 +22,7 @@
 		</Authorized>
 
 		<NotAuthorized>
-			<div class="row">
+			<div class="row d-print-none">
 				<div class="col-12">
 					<a href="@Login" class="btn btn-sm btn-outline-info float-right text-black-50">
 						<u>Log in</u> <i class="fas fa-sign-in-alt"></i>
