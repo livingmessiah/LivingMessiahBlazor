@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 using System.Collections.Generic;
 using Syncfusion.Blazor.DropDowns;
 
-namespace LivingMessiah.Web.Pages.Sukkot
+namespace LivingMessiah.Web.Pages.Sukkot.CreateEdit
 {
 	[Authorize]
 	public partial class CreateEdit
@@ -30,7 +30,7 @@ namespace LivingMessiah.Web.Pages.Sukkot
 
 		public UI UI { get; set; }
 
-		public Registration Registration { get; set; }
+		public RegistrationVM Registration { get; set; }
 
 		public ClaimsPrincipal User { get; set; }
 
@@ -60,7 +60,7 @@ namespace LivingMessiah.Web.Pages.Sukkot
 			{
 				if (UI.CRUD == SukkotEnums.CRUD.Add)
 				{
-					Registration = new Registration
+					Registration = new RegistrationVM
 					{
 						Id = 0, StatusEnum = StatusEnum.EmailConfirmation,
 						//HouseRulesAgreement = DateTime.UtcNow, // Task 687: Persist the moment House Rules were agreed to database

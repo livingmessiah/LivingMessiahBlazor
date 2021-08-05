@@ -30,12 +30,6 @@ namespace LivingMessiah.Web.Pages.Sukkot.Constants
 	{
 		public const string MenuBar = SukkotAdmin.Constants.PartialViews.MenuBar;
 
-		//public const string RegistrationBody = "_RegistrationBody";
-		//public const string RegistrationBodyXs = "_RegistrationBodyXs";
-		//public const string Step2EmailVerified = "_Step2EmailVerified";
-		//public const string Step3Registration = "_Step3Registration";
-		//public const string Step4MealTicket = "_Step4MealTicket";
-		//public const string Step5Payment = "_Step5Payment";
 
 		public const string Details = "_Details";
 		public const string CostAccountStyle = "_CostAccountStyle";
@@ -106,7 +100,7 @@ namespace LivingMessiah.Web.Pages.Sukkot.Constants
 	public static class Other
 	{
 		public const bool IsMealsAvailable = false;
-		public const string Banner = "2020-sukkot-banner-1039-400-3d.jpg";
+		public const string Banner = "2021-sukkot-banner-1024-385-3d.jpg"; // 2021-sukkot-banner-1039-x-530.jpg
 		public const string BannerAlt = "2021 Sukkot Registration Banner";
 		public const string DetailsTitle = "Living Messiah Sukkot Registration 2021";
 		public const string MealTicketTitle = "LMM Sukkot 2020 Meal Ticket";

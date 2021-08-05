@@ -129,10 +129,11 @@
 					</div>
 				</div>
 
-
+				@* Required ValidationMessage doesn't work *@
 				<div class="col-sm-8">
+					<label for="locationEnum" class="control-label">Location</label>
 					<InputSelectEnum @bind-Value="Registration.LocationEnum"
-													 class="form-control" />
+													 class="form-control" id="locationEnum" />
 					<ValidationMessage For="@(() => Registration.LocationEnum)" />
 				</div>
 

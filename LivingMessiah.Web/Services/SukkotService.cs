@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using LivingMessiah.Web.Pages.Sukkot.CreateEdit;
 using SukkotApi.Domain;
 using SukkotApi.Domain.Enums;
 using LivingMessiah.Web.Pages.Sukkot;
@@ -18,9 +19,9 @@ namespace Sukkot.Web.Service
 		string ExceptionMessage { get; set; }
 		Task<vwRegistration> Details(int id, ClaimsPrincipal user, bool showPrintInstructionMessage = false);
 		Task<vwRegistration> DeleteConfirmation(int id, ClaimsPrincipal user);
-		Task<Registration> Update(int id, ClaimsPrincipal user);
-		Task<int> Create(Registration registration, ClaimsPrincipal user);
-		Task<int> Edit(Registration registration, ClaimsPrincipal user);
+		Task<RegistrationVM> Update(int id, ClaimsPrincipal user);
+		Task<int> Create(RegistrationVM registration, ClaimsPrincipal user);
+		Task<int> Edit(RegistrationVM registration, ClaimsPrincipal user);
 		Task<int> DeleteConfirmed(int id);
 		Task<EditMealsVM> Meals(int registrationId, ClaimsPrincipal user);
 		Task<int> UpdateMeals(EditMealsVM vm);
@@ -124,7 +125,7 @@ namespace Sukkot.Web.Service
 		}
 
 		//
-		public async Task<Registration> Update(int id, ClaimsPrincipal user)
+		public async Task<RegistrationVM> Update(int id, ClaimsPrincipal user)
 		{
 			Logger.LogInformation($"Inside {nameof(SukkotService)}!{nameof(Update)}, id={id}");
 			RegistrationPOCO registrationPOCO = new RegistrationPOCO();
@@ -158,7 +159,7 @@ namespace Sukkot.Web.Service
 			return UpdateDTO(registrationPOCO);
 		}
 
-		public async Task<int> Create(Registration registration, ClaimsPrincipal user)
+		public async Task<int> Create(RegistrationVM registration, ClaimsPrincipal user)
 		{
 			int newId = 0;
 
@@ -241,7 +242,7 @@ namespace Sukkot.Web.Service
 			return bitwise;
 		}
 
-		private RegistrationPOCO DTO(Registration registration)
+		private RegistrationPOCO DTO(RegistrationVM registration)
 		{
 			RegistrationPOCO poco = new RegistrationPOCO
 			{
@@ -269,9 +270,9 @@ namespace Sukkot.Web.Service
 			return poco;
 		}
 
-		private Registration UpdateDTO(RegistrationPOCO poco)
+		private RegistrationVM UpdateDTO(RegistrationPOCO poco)
 		{
-			Registration registration = new Registration
+			RegistrationVM registration = new RegistrationVM
 			{
 				Id = poco.Id,
 				FamilyName = poco.FamilyName,
@@ -305,7 +306,7 @@ namespace Sukkot.Web.Service
 			return registration;
 		}
 
-		public async Task<int> Edit(Registration registration, ClaimsPrincipal user)
+		public async Task<int> Edit(RegistrationVM registration, ClaimsPrincipal user)
 		{
 			Logger.LogInformation($"Inside {nameof(SukkotService)}!{nameof(Edit)}");
 			int count = 0;

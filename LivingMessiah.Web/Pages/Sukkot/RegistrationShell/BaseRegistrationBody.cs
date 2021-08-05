@@ -2,7 +2,7 @@
 using LivingMessiah.Web.Pages.Sukkot.RegistrationEnums;
 using SukkotApi.Domain;
 
-namespace LivingMessiah.Web.Pages.Sukkot
+namespace LivingMessiah.Web.Pages.Sukkot.RegistrationShell
 {
 	//https://www.ripteq.com.au/blog/blazor-code-behinds-and-base-classes
 	public abstract class BaseRegistrationBody : ComponentBase

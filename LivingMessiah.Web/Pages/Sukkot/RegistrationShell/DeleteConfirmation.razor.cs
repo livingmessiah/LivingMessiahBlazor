@@ -7,12 +7,12 @@ using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace LivingMessiah.Web.Pages.Sukkot
+namespace LivingMessiah.Web.Pages.Sukkot.RegistrationShell
 {
 	public partial class DeleteConfirmation
 	{
 		[Inject]
-		public ILogger<Payment> Logger { get; set; }
+		public ILogger<DeleteConfirmation> Logger { get; set; }
 
 		[Inject]
 		public ISukkotService svc { get; set; }

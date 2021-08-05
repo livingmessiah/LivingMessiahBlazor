@@ -4,7 +4,7 @@ using SukkotApi.Domain;
 using Microsoft.AspNetCore.Components.Web;
 using static LivingMessiah.Web.Links.Sukkot;
 
-namespace LivingMessiah.Web.Pages.Sukkot
+namespace LivingMessiah.Web.Pages.Sukkot.RegistrationShell
 {
 	public partial class Step5Payment
 	{

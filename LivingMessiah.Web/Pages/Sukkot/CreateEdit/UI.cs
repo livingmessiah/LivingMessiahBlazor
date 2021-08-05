@@ -1,4 +1,4 @@
-﻿namespace LivingMessiah.Web.Pages.Sukkot
+﻿namespace LivingMessiah.Web.Pages.Sukkot.CreateEdit
 {
 	public class UI
 	{

@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using static LivingMessiah.Web.Pages.Sukkot.Constants.Other;
 using static LivingMessiah.Web.Links.Sukkot;
 
-namespace LivingMessiah.Web.Pages.Sukkot
+namespace LivingMessiah.Web.Pages.Sukkot.RegistrationShell
 {
 	public partial class HouseRulesConfirmationModal
 	{

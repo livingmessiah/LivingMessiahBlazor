@@ -2,9 +2,10 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace LivingMessiah.Web.Pages.Sukkot
+namespace LivingMessiah.Web.Pages.Sukkot.CreateEdit
 {
-	public class Registration
+
+	public class RegistrationVM
 	{
 		[Required]
 		[Key]
@@ -56,12 +57,15 @@ namespace LivingMessiah.Web.Pages.Sukkot
 
 		public SukkotApi.Domain.Enums.StatusEnum StatusEnum { get; set; }
 
-		[Required]
+		/*
+		ToDo: 
+		  The Required attribute when used with InputSelectEnum doesn't work.
+		  A work around was to create a default value
+		 */
+		[Required(ErrorMessage = "A location is required")]
 		[DisplayName("Location")]
-		public SukkotApi.Domain.Enums.LocationEnum LocationEnum { get; set; }
-
-		public SukkotApi.Domain.Enums.LocationSimpleEnum LocationSimpleEnum { get; set; }
-
+		public SukkotApi.Domain.Enums.LocationEnum LocationEnum { get; set; } = SukkotApi.Domain.Enums.LocationEnum.GreenHouseTrolleyHobbyFarm;
+	
 		[Required]
 		[DisplayName("Camp")]
 		public SukkotApi.Domain.Enums.CampType CampTypeEnum { get; set; }

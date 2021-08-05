@@ -3,7 +3,7 @@ using SukkotApi.Domain;
 using SukkotApi.Domain.Enums;
 using System;
 
-namespace LivingMessiah.Web.Pages.Sukkot
+namespace LivingMessiah.Web.Pages.Sukkot.Details
 {
 	public partial class DetailsContent
 	{

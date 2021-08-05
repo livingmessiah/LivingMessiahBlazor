@@ -23,7 +23,7 @@
 		</ul>
 	</Authorized>
 	<NotAuthorized>
-		<h1>NOT AUTHORIZED</h1>
+		@*<h1>NOT AUTHORIZED</h1>*@
 	</NotAuthorized>
 </AuthorizeView>
 
@@ -53,6 +53,38 @@
 	</div>
 }
 
+@*<SfTab>
+	<TabItems>
+		<TabItem>
+			<ChildContent>
+				<TabHeader Text="Green House Trolley Hobby Farm"></TabHeader>
+			</ChildContent>
+			<ContentTemplate>
+				<div>
+					Go to this Hip Camp <a href="https://www.hipcamp.com/en-US/discover/arizona/the-greenhouse-trolley-hobby-fa">link</a> to have a look.
+					Here is a <a href="https://goo.gl/maps/ky76HExS7HN2">Google Map</a>&nbsp;<i class="fa fa-map-pin"></i>.
+				</div>
+			</ContentTemplate>
+		</TabItem>
+		<TabItem>
+			<ChildContent>
+				<TabHeader Text="Wilderness Ranch"></TabHeader>
+			</ChildContent>
+			<ContentTemplate>
+				<div>
+					<b>Wilderness Ranch</b> near <b>Show Low, AZ</b>
+				</div>
+			</ContentTemplate>
+		</TabItem>
+		<TabItem>
+			<ChildContent>
+				<TabHeader Text="Windmill Ranch"></TabHeader>
+			</ChildContent>
+			<ContentTemplate>@DynamicContent</ContentTemplate>
+			Windmill Ranch near Bisbee, AZ
+		</TabItem>
+	</TabItems>
+</SfTab>*@
 
 <br />
 <p class="lead">
@@ -68,8 +100,8 @@
 
 <h3><span class="badge badge-warning">Green House Trolley</span></h3>
 <p class="lead">
-	Go to this Hip Camp<a href="https://www.hipcamp.com/en-US/discover/arizona/the-greenhouse-trolley-hobby-fa">link</a> to have a look.
-	Her is a <a href="https://goo.gl/maps/ky76HExS7HN2">Google Map</a>&nbsp;<i class="fa fa-map-pin"></i>.
+	Go to this Hip Camp <a href="https://www.hipcamp.com/en-US/discover/arizona/the-greenhouse-trolley-hobby-fa">link</a> to have a look.
+	Here is a <a href="https://goo.gl/maps/ky76HExS7HN2">Google Map</a>&nbsp;<i class="fa fa-map-pin"></i>.
 </p>
 
 <h3><span class="badge badge-warning">Wilderness Ranch</span></h3>
@@ -80,18 +112,7 @@
 	or <a href="https://goo.gl/maps/ky76HExS7HN2">Google Map</a>&nbsp;<i class="fa fa-map-pin"></i>.
 </p>
 
-<h3><span class="badge badge-warning">Windmill Ranch</span></h3>
-<p class="lead">
-	Go to <a href="https://livingmessiah.com/windmillranch/">here</a> to have a look.
-	or <a href="https://goo.gl/maps/uYyVHisDgExpQLXL7">Google Map</a>&nbsp;<i class="fa fa-map-pin"></i>.
-</p>
-
-<ul class="lead">
-	<li>We are planning to arrive at the camp on @ArrivalDate to begin setting up and will clean up camp on @((MarkupString)CleanupDate)</li>
-	<li>We will be holding Shabbat Service on @ShabbatServiceDate at the Wilderness Ranch in Show Low Arizona</li>
-</ul>
-
-<h3><span class="badge badge-warning">Camping</span></h3>
+<h5><span class="badge badge-warning">Camping</span></h5>
 <p class="lead">
 	The facility has many different camping arrangements.
 	There are several fully equipped RV sites as well as numerous tent camping sites.
@@ -99,6 +120,18 @@
 	The rates are @LodgingRate.ToString("C0") per night for the RV or tent camp sites, regardless of how many people are in the group.
 	The individual cabins and bunkhouses are @LodgingRate.ToString("C0") per night per person.
 </p>
+
+
+<h3><span class="badge badge-warning">Windmill Ranch</span></h3>
+<p class="lead">
+	Have a look <a href="https://livingmessiah.com/windmillranch/">here</a> on our website for more information.
+	Also, check out the <a href="https://goo.gl/maps/uYyVHisDgExpQLXL7">Google Map</a>&nbsp;<i class="fa fa-map-pin"></i>.
+</p>
+
+@*<ul class="lead">
+		<li>We are planning to arrive at the camp on @ArrivalDate to begin setting up and will clean up camp on @((MarkupString)CleanupDate)</li>
+		<li>We will be holding Shabbat Service on @ShabbatServiceDate at the Wilderness Ranch in Show Low Arizona</li>
+	</ul>*@
 
 <h3><span class="badge badge-warning">Meals</span></h3>
 

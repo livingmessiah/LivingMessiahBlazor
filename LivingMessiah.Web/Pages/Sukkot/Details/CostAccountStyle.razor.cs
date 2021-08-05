@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using SukkotApi.Domain;
 
-namespace LivingMessiah.Web.Pages.Sukkot
+namespace LivingMessiah.Web.Pages.Sukkot.Details
 {
 	public partial class CostAccountStyle
 	{

@@ -5,7 +5,7 @@ using LivingMessiah.Web.Pages.Sukkot.RegistrationEnums;
 using static LivingMessiah.Web.Links.Sukkot;
 
 
-namespace LivingMessiah.Web.Pages.Sukkot
+namespace LivingMessiah.Web.Pages.Sukkot.RegistrationShell
 {
 	public partial class Step4MealTicket
 	{

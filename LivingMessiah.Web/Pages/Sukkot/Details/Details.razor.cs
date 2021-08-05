@@ -10,7 +10,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 //using static LivingMessiah.Web.Links.Sukkot;
 
-namespace LivingMessiah.Web.Pages.Sukkot
+namespace LivingMessiah.Web.Pages.Sukkot.Details
 {
 	public partial class Details
 	{
