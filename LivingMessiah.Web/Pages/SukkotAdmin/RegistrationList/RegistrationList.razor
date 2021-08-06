@@ -1,0 +1,181 @@
+﻿@page "/SukkotAdmin/RegistrationList/"
+@using LivingMessiah.Web.Pages.SukkotAdmin.Constants
+@using LivingMessiah.Web.Pages.Sukkot.CreateEdit
+@using SukkotApi.Domain.Enums
+
+@using static LivingMessiah.Web.Services.Auth0
+@using LivingMessiah.Web.Shared.Sukkot
+
+
+@{
+	string sortField = (RegistrationSort == RegistrationSort.FamilyName) ? "Name" : "Id";
+	int rowCount = 0;
+}
+
+<AuthorizeView Roles="@Roles.SukkotMenuBar">
+	<SukkotAdminMenubar></SukkotAdminMenubar>
+</AuthorizeView>
+
+<div class="pb-2 mt-4 mb-4 border-bottom">
+	<h3><i class="fas fa-table"></i> Registration List</h3>
+	<h5 class="text-muted">
+		Sorted by @sortField
+
+		@*<a href="@LivingMessiah.Web.Pages.SukkotAdmin.Constants.Anchors.Notes" class="btn btn-primary btn-sm float-right">
+			<i class="far fa-sticky-note"></i> Notes <i class="fas fa-caret-right"></i>
+		</a>*@
+
+	</h5>
+</div>
+
+<AuthorizeView Roles="@Roles.AdminOrSukkot">
+	<button @onclick="@(e => Add_ButtonClick(e))"
+					class="btn-success btn-lg">
+		<i class="fas fa-plus"></i> Add
+	</button>
+</AuthorizeView>
+
+@if (Registrations == null)
+{
+	<h3 class="text-danger">No Registrations Yet</h3>
+}
+else
+{
+	<ul class="list-inline">
+		<li class="list-inline-item"><small><b>Lodging</b></small></li>
+		<li class="list-inline-item"><small>Off S: Offsite</small></li>
+		<li class="list-inline-item"><small>Tent: Tent</small></li>
+		<li class="list-inline-item"><small>RV: RV or Camp Trailer</small></li>
+		<li class="list-inline-item"><small>CorBH: Cabin or Bunkhouse</small></li>
+	</ul>
+
+	<div class="table-responsive">
+		<table class="table table-bordered table-striped">
+			<thead>
+				<tr>
+					<th>
+
+						@*<a asp-page="@LivingMessiah.Web.Pages.SukkotAdmin.Constants.Anchors.RegistrationList"
+							 asp-route-sort="@RegistrationSort.Id">Id</a> <i class="fa fa-sort"></i>*@
+
+					</th>
+					<th>
+
+						@*<a asp-page="@LivingMessiah.Web.Pages.SukkotAdmin.Constants.Anchors.RegistrationList"
+							 asp-route-sort="@RegistrationSort.FamilyName">Name</a> <i class="fa fa-sort"></i><br />EMail<br />Phone*@
+
+					</th>
+					<th>Lodging<br />Donation Status</th>
+					<th>Registration</th>
+
+					@if (IsMealsAvailable)
+					{
+						<th>Meals</th>
+					}
+					<th>Other</th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (var item in Registrations)
+				{
+					rowCount += 1;
+				<tr>
+					<td>@Id)</td>
+					<td>
+						@* @Html.Truncate(item.FullName(false), 35) *@
+						FullName(false)<br />
+						item.EMail
+						<br />@item.Phone
+					</td>
+					@* @Html.Truncate(item.Status, 15) *@
+					<td>@item.CampCD <br /> item.Status</td>
+
+					<AuthorizeView Roles="@Roles.Admin">
+
+						<Authorized>
+							<td>
+								<div class="btn-group">
+									
+									@*<a class="btn btn-default btn-sm" title="Registration View"
+										 asp-page="@LivingMessiah.Web.Pages.Anchors.Sukkot.Details" asp-route-id="@item.Id">
+										<i class="fas fa-info text-info"></i>
+										View
+									</a>
+
+									<a class="btn btn-default btn-sm" title="Registration Edit"
+										 asp-page="@LivingMessiah.Web.Pages.Anchors.Sukkot.CreateEdit" asp-route-id="@item.Id" asp-route-crud="@SukkotEnums.CRUD.Edit">
+										<span class="fas fa-pencil-alt text-success"></span>
+										Edit
+									</a>*@
+
+								</div>
+							</td>
+
+							@if (IsMealsAvailable)
+							{
+								<td>
+									<div class="btn-group">
+										<button @onclick="@(e => DetailsMealTicket_ButtonClick(e, Id))"
+														class="btn-default btn-sm" title="Meal View">
+											<i class="fas fa-info text-info"></i> View
+										</button>
+										<button @onclick="@(e => EditMeals_ButtonClick(e, Id))"
+														class="btn-default btn-sm" title="Meal View">
+											<i class="fas fa-pencil-alt text-warning"></i> Edit
+										</button>
+
+									</div>
+								</td>
+							}
+
+							<td>
+								<div class="btn-group">
+									<button @onclick="@(e => Payment_ButtonClick(e, Id))"
+													class="btn-default btn-sm" title="Payment">
+										<i class="fas fa-dollar-sign text-success"></i> Pay
+									</button>
+								</div>
+							</td>
+
+						</Authorized>
+
+						<NotAuthorized>
+							<td>
+								<div class="btn-group">
+
+									@*<a class="btn btn-default btn-sm" title="Registration"
+										 asp-page="@LivingMessiah.Web.Pages.Anchors.Sukkot.Details" asp-route-id="@item.Id">
+										Regis.
+									</a>*@
+
+								</div>
+							</td>
+							<td>
+								<div class="btn-group">
+
+									@*<a class="btn btn-default btn-sm" title="Meal"
+										 asp-page="@LivingMessiah.Web.Pages.Anchors.Sukkot.DetailsMealTicket" asp-route-registrationId="@item.Id">
+										Meals
+									</a>*@
+
+								</div>
+							</td>
+							<td></td>
+						</NotAuthorized>
+					</AuthorizeView>
+
+
+				</tr>
+				}
+
+				<tr>
+					<td><h2><span class="badge badge-success"><b>@rowCount</b></span></h2></td>
+					<td><h2><span class="badge badge-success">Total</span></h2></td>
+					<td colspan="4">&nbsp;</td>
+				</tr>
+
+			</tbody>
+		</table>
+	</div>
+
+}

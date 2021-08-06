@@ -1,0 +1,24 @@
+﻿@page  "/SukkotAdmin/"
+@using LivingMessiah.Web.Pages.SukkotAdmin.Constants
+@using static LivingMessiah.Web.Services.Auth0
+@using LivingMessiah.Web.Shared.Sukkot
+
+<AuthorizeView Roles="@Roles.SukkotMenuBar">
+	<SukkotAdminMenubar></SukkotAdminMenubar>
+</AuthorizeView>
+
+@*<PageHeader Icon="@Icon" Title="@Title"></PageHeader>*@
+<div class="pb-2 mt-4 mb-2 border-bottom">
+	<h3>
+		<i class="fas fa-fighter-jet"></i>
+		<span class="text-danger">Sukkot Admin</span>
+	</h3>
+</div>
+
+<div class="d-block d-sm-none">
+	<IndexButtonList IsXs="true" BtnGroupCss="btn-group " />
+</div>
+
+<div class="d-none d-sm-block">
+	<IndexButtonList IsXs="false" BtnGroupCss="btn-group btn-group-lg " />
+</div>

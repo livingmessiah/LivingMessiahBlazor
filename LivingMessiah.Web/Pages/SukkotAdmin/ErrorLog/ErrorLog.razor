@@ -1,0 +1,54 @@
+﻿@page  "/SukkotAdmin/ErrorLog/"
+
+@using static LivingMessiah.Web.Services.Auth0
+@using LivingMessiah.Web.Shared.Sukkot
+
+@using LivingMessiah.Web.Pages.SukkotAdmin.Constants
+@using LivingMessiah.Domain
+@using LivingMessiah.Web.Pages
+
+<AuthorizeView Roles="@Roles.SukkotMenuBar">
+	<SukkotAdminMenubar></SukkotAdminMenubar>
+</AuthorizeView>
+
+<div class="btn-group btn-group-sm" role="group">
+
+	<button type="button" @onclick="LogErrorTest_ButtonClick"	
+					class="btn btn-danger btn-sm mr-2">
+		<i class="fas fa-bomb"></i> Log Error Test>
+	</button>
+
+	<button type="button" @onclick="EmptyErrorLog_ButtonClick" 
+					class="btn btn-danger btn-sm mr-2">
+		<i class="fas fa-times"></i> Empty Log>
+	</button>
+
+</div>
+
+<LoadingComponent IsLoading="ErrorLogs == null">
+	<h4 class="mt-3">
+		<i class="fas fa-bug"></i> Database Error Log
+		<br />
+		<small>Affected Rows=@AffectedRows</small>
+	</h4>
+
+	<TableTemplate Items="ErrorLogs">
+		<TableHeader>
+			<th>SPROC</th>
+			<th>Line</th>
+			<th>Error Message</th>
+			<th>Id</th>
+			<th>How<br />Old</th>
+			<th>Error Time</th>
+		</TableHeader>
+		<RowTemplate>
+			<td>@context.ErrorProcedure</td>
+			<td>@context.ErrorLine</td>
+			<td>@context.ErrorMessage</td>
+			<td>@context.ErrorLogID</td>
+			<td>@context.HowLongAgoHMS</td>
+			<td>@context.ErrorTime2</td>
+		</RowTemplate>
+	</TableTemplate>
+
+</LoadingComponent>

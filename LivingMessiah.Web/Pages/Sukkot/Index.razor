@@ -5,11 +5,11 @@
 @using static LivingMessiah.Web.Services.Auth0
 @using LivingMessiah.Web.Shared.Sukkot
 
-<PageHeader Icon="@Icon" Title="@Title"></PageHeader>
-
 <AuthorizeView Roles="@Roles.SukkotMenuBar">
 	<SukkotAdminMenubar></SukkotAdminMenubar>
 </AuthorizeView>
+
+<PageHeader Icon="@Icon" Title="@Title"></PageHeader>
 
 @*<p class="text-info">ToDo: Port GlobalSharedPartialViews.Message</p>*@
 
@@ -54,37 +54,37 @@
 }
 
 @*<SfTab>
-	<TabItems>
-		<TabItem>
-			<ChildContent>
-				<TabHeader Text="Green House Trolley Hobby Farm"></TabHeader>
-			</ChildContent>
-			<ContentTemplate>
-				<div>
-					Go to this Hip Camp <a href="https://www.hipcamp.com/en-US/discover/arizona/the-greenhouse-trolley-hobby-fa">link</a> to have a look.
-					Here is a <a href="https://goo.gl/maps/ky76HExS7HN2">Google Map</a>&nbsp;<i class="fa fa-map-pin"></i>.
-				</div>
-			</ContentTemplate>
-		</TabItem>
-		<TabItem>
-			<ChildContent>
-				<TabHeader Text="Wilderness Ranch"></TabHeader>
-			</ChildContent>
-			<ContentTemplate>
-				<div>
-					<b>Wilderness Ranch</b> near <b>Show Low, AZ</b>
-				</div>
-			</ContentTemplate>
-		</TabItem>
-		<TabItem>
-			<ChildContent>
-				<TabHeader Text="Windmill Ranch"></TabHeader>
-			</ChildContent>
-			<ContentTemplate>@DynamicContent</ContentTemplate>
-			Windmill Ranch near Bisbee, AZ
-		</TabItem>
-	</TabItems>
-</SfTab>*@
+		<TabItems>
+			<TabItem>
+				<ChildContent>
+					<TabHeader Text="Green House Trolley Hobby Farm"></TabHeader>
+				</ChildContent>
+				<ContentTemplate>
+					<div>
+						Go to this Hip Camp <a href="https://www.hipcamp.com/en-US/discover/arizona/the-greenhouse-trolley-hobby-fa">link</a> to have a look.
+						Here is a <a href="https://goo.gl/maps/ky76HExS7HN2">Google Map</a>&nbsp;<i class="fa fa-map-pin"></i>.
+					</div>
+				</ContentTemplate>
+			</TabItem>
+			<TabItem>
+				<ChildContent>
+					<TabHeader Text="Wilderness Ranch"></TabHeader>
+				</ChildContent>
+				<ContentTemplate>
+					<div>
+						<b>Wilderness Ranch</b> near <b>Show Low, AZ</b>
+					</div>
+				</ContentTemplate>
+			</TabItem>
+			<TabItem>
+				<ChildContent>
+					<TabHeader Text="Windmill Ranch"></TabHeader>
+				</ChildContent>
+				<ContentTemplate>@DynamicContent</ContentTemplate>
+				Windmill Ranch near Bisbee, AZ
+			</TabItem>
+		</TabItems>
+	</SfTab>*@
 
 <br />
 <p class="lead">

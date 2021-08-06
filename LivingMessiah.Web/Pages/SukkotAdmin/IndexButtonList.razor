@@ -1,0 +1,86 @@
+﻿@using static LivingMessiah.Web.Links.Sukkot;
+
+<div class="row">
+	<div class="col-12">
+		<h2 class="mt-4">Registration</h2>
+		<div class="@BtnGroupCss" role="group">
+			<a href="@LivingMessiah.Web.Links.Sukkot.RegistrationList" class="btn btn-info mr-2">	<i class="fas fa-table fa-lg"></i> Registration List</a>
+			<a href="@Notes" class="btn btn-info">	<i class="far fa-sticky-note fa-lg"></i> Notes</a>
+		</div>
+
+	</div>
+</div>
+
+@if (IsMealsAvailable)
+{
+	<div class="row">
+		<div class="col-12">
+			<h2 class="mt-4">Meals</h2>
+			<div class="@BtnGroupCss" role="group">
+				<a href="@Meals.PlannerReport" class="btn btn-info mr-2">	<i class="fas fa-list-ol fa-lg"></i> Meal Planner</a>
+				<a href="@Meals.Index" class="btn btn-info mr-2"><i class="fas fa-ticket-alt fa-lg"></i> Meals Tickets</a>
+				<a href="@Meals.ListMealPlanMenu" class="btn btn-info mr-2"><i class="fas fa-utensils fa-lg"></i> List Meal Plan Menu</a>
+				<a href="@KitchenWork.Index" class="btn btn-info"><i class="fas fa-utensils fa-lg"></i> Kitchen Work</a>
+			</div>
+
+		</div>
+	</div>
+}
+
+<div class="row">
+	<div class="col-12">
+		<h2 class="mt-4">Attendance</h2>
+		<div class="@BtnGroupCss" role="group">
+			<a href="@AttendanceChart" class="btn btn-info">	<i class="fas fa-chart-line fa-lg"></i> Attendance</a>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-12">
+		<h2 class="mt-4">Lodging</h2>
+		<div class="@BtnGroupCss" role="group">
+			<a href="@LodgingDays.PivotOnCampCode" class="btn btn-info mr-2">	<i class="far fa-calendar fa-lg"></i> Lodging &Sigma; by Day</a>
+			<a href="@LodgingDays.Details" class="btn btn-info">	<i class="fas fa-table fa-lg"></i> Lodging Details</a>
+		</div>
+
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-12">
+		<h2 class="mt-4">Donations</h2>
+		<div class="@BtnGroupCss" role="group">
+			@* 	 asp-route-donationStatusEnum="@DonationStatusEnum.FullList"  *@
+			<a href="@LivingMessiah.Web.Links.Sukkot.Donations.Index"
+				 class="btn btn-info">
+				<i class="fas fa-dollar-sign fa-lg"></i>
+				Donations
+			</a>
+		</div>
+	</div>
+</div>
+
+
+<div class="row">
+	<div class="col-12">
+		<h2 class="mt-4">Passport</h2>
+		<div class="@BtnGroupCss" role="group">
+			<a href="@LivingMessiah.Web.Pages.Sukkot.Constants.Blobs.UrlPDF(@LivingMessiah.Web.Pages.Sukkot.Constants.PDFs.Passport)"
+				 class="btn btn-info" target="_blank">
+				<i class="fas fa-passport"></i> Download PDF
+			</a>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-12">
+		<h2 class="mt-4">Error Logging</h2>
+		<div class="@BtnGroupCss" role="group">
+			<a href="@Errors.ErrorLog" class="btn btn-info">	<i class="fas fa-bug fa-lg"></i> Error Log	</a>
+		</div>
+	</div>
+</div>
+
+
