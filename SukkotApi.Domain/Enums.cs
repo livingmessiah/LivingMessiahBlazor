@@ -148,7 +148,8 @@ namespace SukkotApi.Domain.Enums
 	public enum RegistrationSort
 	{
 		Id = 1,
-		FamilyName = 2
+		FamilyName = 2,
+		FirstName = 3
 	}
 
 	[Flags]

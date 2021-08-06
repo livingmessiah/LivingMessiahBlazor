@@ -331,6 +331,8 @@
 		public const string CreateEdit = "/Sukkot/CreateEdit";
 		public const string Details = "/Sukkot/Details";
 		public const string DeleteConfirmation = "/Sukkot/DeleteConfirmation";
+
+		public const string AdminIndex = "/SukkotAdmin";
 		public const string RegistrationList = "/SukkotAdmin/RegistrationList";
 		public const string Notes = "/SukkotAdmin/Notes";
 		public const string AttendanceAllFeastDays = "/SukkotAdmin/AttendanceAllFeastDays";

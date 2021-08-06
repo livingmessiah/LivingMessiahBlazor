@@ -121,7 +121,13 @@ ORDER BY {sortField}
 
 		public async Task<List<vwRegistration>> GetAll(RegistrationSort sort)
 		{
-			string sortField = (sort == RegistrationSort.FamilyName) ? "FamilyName" : "Id";
+			string sortField = sort switch
+			{
+				RegistrationSort.Id => "Id",
+				RegistrationSort.FamilyName => "FamilyName",
+				RegistrationSort.FirstName => "FirstName",
+				_ => "Id",
+			};
 
 			base.Sql = $@"
 SELECT TOP 500 Id, FamilyName, FirstName, SpouseName, OtherNames

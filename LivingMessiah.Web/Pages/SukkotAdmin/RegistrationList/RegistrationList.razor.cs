@@ -24,7 +24,6 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.RegistrationList
 		[Inject]
 		NavigationManager NavManager { get; set; }
 
-		//[TempData]
 		public string ExceptionMessage { get; set; }
 
 		public RegistrationSort Sort { get; private set; }
@@ -32,17 +31,17 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.RegistrationList
 		
 		public bool IsMealsAvailable { get; set; } = Sukkot.Constants.Other.IsMealsAvailable;
 
-
 		public RegistrationSort RegistrationSort { get; set; } = RegistrationSort.FamilyName;
 
-		[Parameter]
-		public int Id { get; set; }
+		public int RecordCount { get; set; } = 0;
 
-		public async Task OnInitializedAsync()
+		protected override async Task OnInitializedAsync()
 		{
 			try
 			{
+				Logger.LogDebug($"Inside: {nameof(RegistrationList)}!{nameof(OnInitializedAsync)}, RegistrationSort:{RegistrationSort}, calling {nameof(svc.GetAll)}");
 				Registrations = await svc.GetAll(RegistrationSort);
+				if (Registrations != null) { RecordCount = Registrations.Count; }
 			}
 			catch (Exception)
 			{
@@ -51,34 +50,58 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.RegistrationList
 			}
 		}
 
-		void Add_ButtonClick(MouseEventArgs e)
+		async Task Sort_ButtonClick(RegistrationSort sort)
+		{
+			Logger.LogDebug($"Inside: {nameof(RegistrationList)}!{nameof(Sort_ButtonClick)}, sort:{sort}");
+
+			RegistrationSort = sort;
+			RecordCount = 0;
+			try
+			{
+				Registrations = await svc.GetAll(RegistrationSort);
+				if (Registrations != null) { RecordCount = Registrations.Count; }
+			}
+			catch (Exception)
+			{
+				ExceptionMessage = svc.ExceptionMessage;
+				NavManager.NavigateTo(LivingMessiah.Web.Links.Home.Error);
+			}
+			StateHasChanged();
+		}
+
+		void Add_ButtonClick()
 		{
 			NavManager.NavigateTo(Links.Sukkot.CreateEdit + "/");
 		}
 
-		void DeleteConfirmation_ButtonClick(MouseEventArgs e, int id)
+		void DeleteConfirmation_ButtonClick(int id)
 		{
 			NavManager.NavigateTo(Links.Sukkot.DeleteConfirmation + "/" + id);
 		}
 
-		void Payment_ButtonClick(MouseEventArgs e, int id)
+		void Payment_ButtonClick(int id)
 		{
-			NavManager.NavigateTo(Links.Sukkot.Donations.Index + "/" + id);
+			NavManager.NavigateTo(Links.Sukkot.Links2.Payment + "/" + id);
 		}
 
-		void DetailsMealTicket_ButtonClick(MouseEventArgs e, int id)
+		void Details_ButtonClick(int id)
 		{
-			NavManager.NavigateTo(Links.Sukkot.Meals.Index + "/" + id);
+			NavManager.NavigateTo(Links.Sukkot.Details + "/" + id + "/False");
 		}
 
-		void EditMeals_ButtonClick(MouseEventArgs e, int id)
-		{
-			NavManager.NavigateTo(Links.Sukkot.Meals.Index + "/" + id);
-		}
-
-		void Edit_ButtonClick(MouseEventArgs e, int id)
+		void Edit_ButtonClick(int id)
 		{
 			NavManager.NavigateTo(Links.Sukkot.CreateEdit + "/" + id);
+		}
+
+		void DetailsMealTicket_ButtonClick(int id)
+		{
+			NavManager.NavigateTo(Links.Sukkot.Meals.Index + "/" + id);
+		}
+
+		void EditMeals_ButtonClick(int id)
+		{
+			NavManager.NavigateTo(Links.Sukkot.Meals.Index + "/" + id);
 		}
 	}
 }
