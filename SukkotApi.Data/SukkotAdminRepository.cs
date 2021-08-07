@@ -119,13 +119,13 @@ ORDER BY {sortField}
 		}
 
 
-		public async Task<List<vwRegistration>> GetAll(RegistrationSort sort)
+		public async Task<List<vwRegistration>> GetAll(RegistrationSortEnum sort)
 		{
 			string sortField = sort switch
 			{
-				RegistrationSort.Id => "Id",
-				RegistrationSort.FamilyName => "FamilyName",
-				RegistrationSort.FirstName => "FirstName",
+				RegistrationSortEnum.Id => "Id",
+				RegistrationSortEnum.LastName => "FamilyName",
+				RegistrationSortEnum.FirstName => "FirstName",
 				_ => "Id",
 			};
 
@@ -156,9 +156,9 @@ ORDER BY {sortField}
 		}
 
 
-		public async Task<List<Notes>> GetNotes(RegistrationSort sort)
+		public async Task<List<Notes>> GetNotes(RegistrationSortEnum sort)
 		{
-			string sortField = (sort == RegistrationSort.FamilyName) ? "FamilyName" : "Id";
+			string sortField = (sort == RegistrationSortEnum.LastName) ? "FamilyName" : "Id";
 
 			base.Sql = $@"
 SELECT TOP 500 Id, FirstName, FamilyName, Notes AS UserNotes, AssignedLodging, CampCD, Phone, EMail

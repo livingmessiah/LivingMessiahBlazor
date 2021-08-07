@@ -71,6 +71,7 @@ namespace SukkotApi.Domain.Enums
 	}
 
 
+
 	public enum StatusEnum
 	{
 		[Display(Name = "eMail Not Confirmed (Step 1)")]
@@ -145,12 +146,6 @@ namespace SukkotApi.Domain.Enums
 		ChildSmall = 3
 	}
 
-	public enum RegistrationSort
-	{
-		Id = 1,
-		FamilyName = 2,
-		FirstName = 3
-	}
 
 	[Flags]
 	public enum SukkotKitchenWorkCook1

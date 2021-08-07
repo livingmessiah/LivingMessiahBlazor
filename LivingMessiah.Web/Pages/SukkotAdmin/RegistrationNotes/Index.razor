@@ -1,0 +1,175 @@
+﻿@page "/SukkotAdmin/Notes/"
+@using SukkotApi.Domain.Enums
+@using static LivingMessiah.Web.Services.Auth0
+@using LivingMessiah.Web.Shared.Sukkot
+
+<AuthorizeView Roles="@Roles.SukkotMenuBar">
+	<SukkotAdminMenubar></SukkotAdminMenubar>
+</AuthorizeView>
+
+<div class="d-print-none">
+	<a class="btn btn-sm btn-default float-right" href="javascript:window.print()">
+		<span class="fa fa-print"></span> Print
+	</a>
+</div>
+
+<div class="pb-2 mt-4 mb-2 border-bottom">
+	<h3> <span class="text-warning"><i class="fa fa-sticky-note"></i></span> Registration Notes</h3>
+	<div class="d-print-none">
+		<h5 class="text-muted">
+			Sorted by @MySort.Name
+
+			@*<a asp-page="@RegistrationList" class="btn btn-primary btn-sm float-right">
+					<i class="fa fa-table"></i> Registration List <i class="fas fa-caret-right"></i>
+				</a>*@
+
+		</h5>
+	</div>
+
+</div>
+
+
+<div class="d-print-none">
+	<div class="row">
+
+		@if (MySort.RegistrationSortEnum == RegistrationSortEnum.LastName)
+		{
+			<div class="col-12">
+				@*<a asp-page="@LivingMessiah.Web.Pages.SukkotAdmin.Constants.Anchors.Notes"
+						 asp-route-sort="@RegistrationSortEnum.Id"
+						 class="btn btn-success btn-sm float-right">
+						Id <i class="fa fa-sort"></i>
+					</a>*@
+			</div>
+		}
+		else
+		{
+			<div class="col-12">
+				@*<a asp-page="@LivingMessiah.Web.Pages.SukkotAdmin.Constants.Anchors.Notes"
+						 asp-route-sort="@RegistrationSortEnum.LastName"
+						 class="btn btn-success btn-sm float-right">
+						Name <i class="fa fa-sort"></i>
+					</a>*@
+			</div>
+		}
+	</div>
+</div>
+
+<LoadingComponent IsLoading="NotesList == null">
+
+	@if (!NotesList.Any())
+	{
+		<h3 class="text-danger">No Registrations that have notes yet</h3>
+	}
+	else
+	{
+		@foreach (var item in NotesList)
+		{
+			rowCount += 1;
+
+			if (MySort.RegistrationSortEnum == RegistrationSortEnum.LastName)
+			{
+				<div class="row">
+					<div class="col-5">
+						<p class="size14">
+							<b>@item.FirstName @item.FamilyName</b>
+
+							@*<a title="Registration View"
+									 asp-page="@LivingMessiah.Web.Pages.Anchors.Sukkot.Details" asp-route-id="@item.Id">
+									<sup><u>@item.Id</u></sup>
+								</a>*@
+
+						</p>
+					</div>
+
+					<div class="col-5">
+
+						<div class="d-block d-sm-none">
+							<a href="mailto:@item.EMail" title="@item.EMail"><i class="far fa-envelope"></i></a>
+							&nbsp;
+							@if (!string.IsNullOrEmpty(item.Phone))
+							{
+								<a href="tel:@item.Phone" title="@item.Phone"><i class="fa fa-phone"></i></a>
+							}
+						</div>
+
+						<div class="d-none d-sm-block">
+							<div class="row">
+								<div class="col-4">
+									<i class="fa fa-phone"></i> @item.Phone
+								</div>
+								<div class="col-8">
+									<i class="far fa-envelope"></i> @item.EMail
+								</div>
+							</div>
+
+						</div>
+
+					</div>
+
+					<div class="col-2">
+						@item.CampCD
+					</div>
+				</div>
+
+			}
+			else
+			{
+				<div class="row">
+					<div class="col-5">
+						<p class="size14">
+
+							@*<a title="Registration View"
+									 asp-page="@LivingMessiah.Web.Pages.Anchors.Sukkot.Details"
+									 asp-route-id="@item.Id">
+									<b><u>@item.Id</u></b>
+								</a>*@
+
+							@item.FirstName @item.FamilyName
+						</p>
+					</div>
+
+					<div class="col-5">
+
+						<div class="d-block d-sm-none">
+							<a href="mailto:@item.EMail" title="@item.EMail"><i class="far fa-envelope"></i></a>
+							&nbsp;
+							@if (!string.IsNullOrEmpty(item.Phone))
+							{
+								<a href="tel:@item.Phone" title="@item.Phone"><i class="fa fa-phone"></i></a>
+							}
+						</div>
+
+						<div class="d-none d-sm-block">
+							<div class="row">
+								<div class="col-4">
+									<i class="fa fa-phone"></i> @item.Phone
+								</div>
+								<div class="col-8">
+									<i class="far fa-envelope"></i> @item.EMail
+								</div>
+							</div>
+
+						</div>
+
+					</div>
+					<div class="col-2">
+						@item.CampCD
+					</div>
+				</div>
+			}
+
+			<div class="row">
+				<div class="col-1">
+					&nbsp;
+				</div>
+
+				<div class="col-11">
+					@item.UserNotes
+				</div>
+			</div>
+			<hr />
+		}
+	}
+
+</LoadingComponent>

@@ -6,9 +6,8 @@
 @using static LivingMessiah.Web.Services.Auth0
 @using LivingMessiah.Web.Shared.Sukkot
 
-
 @{
-	string sortField = (RegistrationSort == RegistrationSort.FamilyName) ? "Name" : "Id";
+	string sortField = (RegistrationSort == RegistrationSortEnum.LastName) ? "Name" : "Id";
 	int rowCount = 0;
 }
 
@@ -60,17 +59,17 @@
 				<thead>
 					<tr>
 						<th>
-							<button @onclick="@(e => Sort_ButtonClick(RegistrationSort.Id))"
+							<button @onclick="@(e => Sort_ButtonClick(RegistrationSortEnum.Id))"
 											title="Sort by id">
 								<i class="fas fa-sort"></i>Id
 							</button>
 						</th>
 						<th>
-							<button @onclick="@(e => Sort_ButtonClick(RegistrationSort.FamilyName))"
+							<button @onclick="@(e => Sort_ButtonClick(RegistrationSortEnum.LastName))"
 											title="Sort by family name">
 								<i class="fas fa-sort"></i> Last Name
 							</button>
-							<button @onclick="@(e => Sort_ButtonClick(RegistrationSort.FirstName))"
+							<button @onclick="@(e => Sort_ButtonClick(RegistrationSortEnum.FirstName))"
 											title="Sort by family name">
 								<i class="fas fa-sort"></i> First Name
 							</button>

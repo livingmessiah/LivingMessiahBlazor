@@ -13,8 +13,8 @@ namespace LivingMessiah.Web.Services
 	{
 		string ExceptionMessage { get; set; }
 
-		Task<List<vwRegistration>> GetAll(RegistrationSort sort);
-		Task<List<Notes>> GetNotes(RegistrationSort sort);
+		Task<List<vwRegistration>> GetAll(RegistrationSortEnum sort);
+		Task<List<Notes>> GetNotes(RegistrationSortEnum sort);
 
 		Task<int> InsertRegistrationDonation(DonationInsertModel donation, string email);
 		Task<List<PreviousDonation>> GetRegistrationDonations(int id);
@@ -46,7 +46,7 @@ namespace LivingMessiah.Web.Services
 
 		public string ExceptionMessage { get; set; } = "";
 
-		public async Task<List<vwRegistration>> GetAll(RegistrationSort sort)
+		public async Task<List<vwRegistration>> GetAll(RegistrationSortEnum sort)
 		{
 			var vm = new List<vwRegistration>();
 			//var profiler = MiniProfiler.Current;
@@ -67,7 +67,7 @@ namespace LivingMessiah.Web.Services
 			return vm;
 		}
 
-		public async Task<List<Notes>> GetNotes(RegistrationSort sort)
+		public async Task<List<Notes>> GetNotes(RegistrationSortEnum sort)
 		{
 			var vm = new List<Notes>();
 			try

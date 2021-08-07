@@ -8,7 +8,6 @@ using Microsoft.Extensions.Logging;
 using SukkotApi.Domain;
 using SukkotApi.Domain.Enums;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
 
 namespace LivingMessiah.Web.Pages.SukkotAdmin.RegistrationList
 {
@@ -26,12 +25,12 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.RegistrationList
 
 		public string ExceptionMessage { get; set; }
 
-		public RegistrationSort Sort { get; private set; }
+		public RegistrationSortEnum Sort { get; private set; }
 		public List<vwRegistration> Registrations { get; set; }
 		
 		public bool IsMealsAvailable { get; set; } = Sukkot.Constants.Other.IsMealsAvailable;
 
-		public RegistrationSort RegistrationSort { get; set; } = RegistrationSort.FamilyName;
+		public RegistrationSortEnum RegistrationSort { get; set; } = RegistrationSortEnum.LastName;
 
 		public int RecordCount { get; set; } = 0;
 
@@ -50,7 +49,7 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.RegistrationList
 			}
 		}
 
-		async Task Sort_ButtonClick(RegistrationSort sort)
+		async Task Sort_ButtonClick(RegistrationSortEnum sort)
 		{
 			Logger.LogDebug($"Inside: {nameof(RegistrationList)}!{nameof(Sort_ButtonClick)}, sort:{sort}");
 

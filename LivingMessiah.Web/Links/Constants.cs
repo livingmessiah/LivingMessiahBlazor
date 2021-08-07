@@ -339,6 +339,12 @@
 		public const string AttendanceChart = "/SukkotAdmin/AttendanceChart";
 		public const string ReturnUrlSukkotRegistration = "/Sukkot/Registration";
 
+		public const string LodgingDaysAll = "/SukkotAdmin/LodgingDaysAll";
+		public const string LodgingDaysChart = "/SukkotAdmin/LodgingDaysChart";
+		public const string LodgingDaysPivotOnCampCode = "/SukkotAdmin/LodgingDaysPivotOnCampCode";
+		public const string LodgingDetails = "/SukkotAdmin/LodgingDetails";
+
+
 		public static class Donations
 		{
 			public const string Index = "/SukkotAdmin/Donations/Index";

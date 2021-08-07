@@ -58,14 +58,21 @@ namespace LivingMessiah.Web.Pages.Sukkot.Constants
 	{
 		public const string RegistrationWalkThrough = "sukkot-registration-walkthrough-users-manual.pdf";
 		public const string PayPalWalkThrough = "sukkot-making-a-payment-with-paypal.pdf";
+
 		
-		public const string HouseRules = "sukkot-2020-house-rules.pdf";
-		public const string Schedule = "sukkot-2020-schedule.pdf";
-		public const string LiabilityWaiver = "sukkot-2020-liability-waiver.pdf";
-		public const string ActivitiesForChildren = "sukkot-2019-activities.pdf";
+		
+		//welcome-vision-mission-resolve.pdf
+		//public const string HouseRules = "sukkot-2020-house-rules.pdf";
+
+		public const string WildernessRanchInfoPacket = "sukkot-2021-wilderness-ranch.pdf";
+		public const string WindmillRanchSupplementalRules = "windmill-ranch-supplemental-rules.pdf";
+		public const string WindmillRanchSurroundingArea = "windmill-ranch-surrounding-area.pdf";
+		public const string Schedule = "sukkot-2021-schedule.pdf";
+		public const string LiabilityWaiver = "sukkot-2021-liability-waiver.pdf";
+		//public const string ActivitiesForChildren = "sukkot-2019-activities.pdf";
 
 		// Task 682 Explore porting the Sukkot UI
-		public const string Menu = "sukkot-2019-menu.pdf";
+		//public const string Menu = "sukkot-2019-menu.pdf";
 		public const string Passport = "passport-v1.pdf";
 	}
 
