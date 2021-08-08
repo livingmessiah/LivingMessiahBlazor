@@ -5,7 +5,6 @@ using Microsoft.Extensions.Logging;
 using System;
 using LivingMessiah.Web.Services;
 using LivingMessiah.Domain;
-
 using Microsoft.AspNetCore.Authorization;
 //using Microsoft.AspNetCore.Components.Forms;
 
@@ -22,6 +21,9 @@ namespace LivingMessiah.Web.Pages.Admin.WeeklyVideos
 
 		[Inject]
 		public ILogger<Index> Logger { get; set; }
+
+		[Inject]
+		NavigationManager NavManager { get; set; }
 
 		protected IReadOnlyList<WeeklyVideoIndex> WeeklyVideos;
 
@@ -111,6 +113,7 @@ namespace LivingMessiah.Web.Pages.Admin.WeeklyVideos
 			{
 				CrudOperationFailed = true;
 				Logger.LogError(ex, $"<br /><br /> {nameof(Read)}");
+				NavManager.NavigateTo(LivingMessiah.Web.Links.Home.Error);
 			}
 			//Debug(nameof(Read) + "-End");
 		}
@@ -129,6 +132,7 @@ namespace LivingMessiah.Web.Pages.Admin.WeeklyVideos
 				{
 					CrudOperationFailed = true;
 					Logger.LogWarning(ex, $"Calling {nameof(svc.WeeklyVideoAdd)}");
+					NavManager.NavigateTo(LivingMessiah.Web.Links.Home.Error);
 				}
 			}
 			else
@@ -153,6 +157,7 @@ namespace LivingMessiah.Web.Pages.Admin.WeeklyVideos
 				{
 					CrudOperationFailed = true;
 					Logger.LogWarning(ex, $"Calling {nameof(svc.WeeklyVideoUpdate)}");
+					NavManager.NavigateTo(LivingMessiah.Web.Links.Home.Error);
 				}
 			}
 			else
@@ -174,6 +179,7 @@ namespace LivingMessiah.Web.Pages.Admin.WeeklyVideos
 			{
 				CrudOperationFailed = true;
 				Logger.LogWarning(ex, $"Calling {nameof(svc.WeeklyVideoDelete)}");
+				NavManager.NavigateTo(LivingMessiah.Web.Links.Home.Error);
 			}
 		}
 
@@ -193,7 +199,7 @@ namespace LivingMessiah.Web.Pages.Admin.WeeklyVideos
 				WeeklyVideoModel.Id = (int)weeklyVideoIndex.WeeklyVideoId;
 			}
 
-			WeeklyVideoModel.TypeId = weeklyVideoIndex.TypeId;
+			WeeklyVideoModel.WeeklyVideoTypeId = weeklyVideoIndex.TypeId;
 			WeeklyVideoModel.ShabbatWeekId = weeklyVideoIndex.ShabbatWeekId;
 			WeeklyVideoModel.YouTubeId = weeklyVideoIndex.YouTubeId;
 			WeeklyVideoModel.Title = weeklyVideoIndex.Title;

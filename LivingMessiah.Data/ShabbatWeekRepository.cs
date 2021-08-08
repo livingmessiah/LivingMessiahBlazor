@@ -258,19 +258,17 @@ ORDER BY ShabbatDate DESC, tvf.WeeklyVideoTypeId
 			base.Parms = new DynamicParameters(new
 			{
 				dto.ShabbatWeekId,
-				dto.TypeId,
+				dto.WeeklyVideoTypeId,
 				dto.YouTubeId,
 				dto.Title,
-				dto.GraphicFileRoot,
-				dto.NotesFileRoot,
 				dto.Book,
 				dto.Chapter
 			});
-
+			//dto.GraphicFileRoot,dto.NotesFileRoot, ... GraphicFile, NotesFile ... , @GraphicFile, @NotesFile
 			base.Sql = $@"
 INSERT INTO WeeklyVideo
-(ShabbatWeekId, WeeklyVideoTypeId, YouTubeId, Title, GraphicFile, NotesFile, Book, Chapter)
-VALUES (@ShabbatWeekId, @WeeklyVideoTypeId, @YouTubeId, @Title, @GraphicFile, @NotesFile, @Book, @Chapter)
+(ShabbatWeekId, WeeklyVideoTypeId, YouTubeId, Title, Book, Chapter)
+VALUES (@ShabbatWeekId, @WeeklyVideoTypeId, @YouTubeId, @Title, @Book, @Chapter)
 ; SELECT CAST(SCOPE_IDENTITY() as int)
 ";
 			int newId;
@@ -291,7 +289,7 @@ VALUES (@ShabbatWeekId, @WeeklyVideoTypeId, @YouTubeId, @Title, @GraphicFile, @N
 			{
 				dto.Id,
 				dto.ShabbatWeekId,
-				dto.TypeId,
+				dto.WeeklyVideoTypeId,
 				dto.YouTubeId,
 				dto.Title,
 				dto.GraphicFileRoot,

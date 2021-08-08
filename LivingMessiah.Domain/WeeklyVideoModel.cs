@@ -8,7 +8,7 @@ namespace LivingMessiah.Domain
 	public class WeeklyVideoModel
 	{
 		public int Id { get; set; }
-		public int TypeId { get; set; }
+		public int WeeklyVideoTypeId { get; set; }
 		public int ShabbatWeekId { get; set; }
 
 		[Required]
@@ -49,7 +49,7 @@ More static as it derived from the Book/Chapter
 
 		public override string ToString()
 		{
-			return $@"  Id: {Id}; Type Id: {TypeId}; ShabbatWeekId: {ShabbatWeekId}; YouTubeId: {YouTubeId}";
+			return $@"  Id: {Id}; Type Id: {WeeklyVideoTypeId}; ShabbatWeekId: {ShabbatWeekId}; YouTubeId: {YouTubeId}";
 		}
 	}
 }
