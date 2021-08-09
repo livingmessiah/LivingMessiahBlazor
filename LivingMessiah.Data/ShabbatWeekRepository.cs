@@ -292,8 +292,8 @@ VALUES (@ShabbatWeekId, @WeeklyVideoTypeId, @YouTubeId, @Title, @Book, @Chapter)
 				dto.WeeklyVideoTypeId,
 				dto.YouTubeId,
 				dto.Title,
-				dto.GraphicFileRoot,
-				dto.NotesFileRoot,
+				//dto.GraphicFileRoot,
+				//dto.NotesFileRoot,
 				dto.Book,
 				dto.Chapter
 
@@ -304,8 +304,8 @@ UPDATE WeeklyVideo SET
 , WeeklyVideoTypeId = @WeeklyVideoTypeId
 , YouTubeId = @YouTubeId
 , Title = @Title
-, GraphicFile = @GraphicFile
-, NotesFile = @NotesFile
+--, GraphicFile = @GraphicFile
+--, NotesFile = @NotesFile
 , Book = @Book
 , Chapter = @Chapter
 WHERE Id = @Id

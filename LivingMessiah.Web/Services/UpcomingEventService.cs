@@ -63,7 +63,7 @@ namespace LivingMessiah.Web.Services
 				}
 				else
 				{
-					log.LogWarning($"...hebrewYearAndChildren.Year == 0 WHICH IS WRONG!!!, so NOT saving to memoryCache. See 779-Bug-...");
+					log.LogInformation($"...hebrewYearAndChildren.Year == 0 WHICH IS WRONG!!!, so NOT saving to memoryCache. See 779-Bug-...");
 				}
 			}
 			else

@@ -20,6 +20,7 @@ namespace LivingMessiah.Web
 
 		public void ConfigureServices(IServiceCollection services)
 		{
+			services.AddApplicationInsightsTelemetry();
 			services.AddRazorPages();
 			services.AddOptions();
 			services.AddServerSideBlazor();

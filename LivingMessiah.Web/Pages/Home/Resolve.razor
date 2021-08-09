@@ -1,0 +1,165 @@
+﻿@*@if (MediaQueryEnum == MediaQueryEnum.Md )
+	{
+		<h3><span class="badge badge-warning">Our Resolve</span></h3>
+		<h5><span class="badge badge-warning">Community Guidelines and Code of Conduct</span></h5>
+	}
+	else
+	{
+		<h3><span class="badge badge-warning">Our Resolve - Community Guidelines and Code of Conduct</span></h3>
+	}*@
+
+@switch (MediaQueryEnum)
+{
+	case MediaQueryEnum.Xs:
+	case MediaQueryEnum.Sm:
+		<h3><span class="badge badge-warning">Our Resolve</span></h3>
+		<h5><span class="badge badge-warning">Community Guidelines and Code of Conduct</span></h5>
+		break;
+
+	case MediaQueryEnum.Md:
+	case MediaQueryEnum.Lg:
+		<h3><span class="badge badge-warning">Our Resolve</span></h3>
+		<h5><span class="badge badge-warning">Community Guidelines and Code of Conduct</span></h5>
+		break;
+
+	case MediaQueryEnum.Xl:
+	default:
+		<h3><span class="badge badge-warning">Our Resolve - Community Guidelines and Code of Conduct</span></h3>
+		break;
+
+}
+
+<h4>We Resolve To</h4>
+
+<ul class="fa-ul lead">
+	<li>
+		<i class="fa-li fas fa-caret-right"></i>
+		Be a Kingdom family, committed to the study of the entire Living Word of God, applying it in thought and deed to the best of our ability and understanding.
+	</li>
+
+	<li>
+		<i class="fa-li fas fa-caret-right"></i>
+		Gather on all Biblical Holy Days to worship, study, fellowship, fast and pray together.
+	</li>
+
+	<li>
+		<i class="fa-li fas fa-caret-right"></i>
+		Acknowledge Our Creator and Elohim of Abraham, Isaac, and Jacob, the Eternal One of Israel.
+	</li>
+
+	<li>
+		<i class="fa-li fas fa-caret-right"></i>
+		Acknowledge the work of The Holy Spirit past, present and future.
+	</li>
+
+	<li>
+		<i class="fa-li fas fa-caret-right"></i>
+		<p>
+			Acknowledge the work of <span class="text-danger"><b>Yahushua</b></span> the Messiah, who came to regather and reconcile the lost sheep of the house of Israel, and those that choose to be grafted in, back to <span class="hebrew">יהוה</span> who declares to restore the whole House of Israel. Exekiel 37:19
+		</p>
+	</li>
+
+	<li>
+		<i class="fa-li fas fa-caret-right"></i>
+		Acknowledge we are the children of Israel, those who have been grafted into the family or those who were dispersed and exiled into the nations some 2,700 years ago. We have thought carefully about the blessings and curses and have chose blessings. Deuteronomy 30
+	</li>
+
+	<li>
+		<i class="fa-li fas fa-caret-right"></i>
+		To be united in purpose without being uniform, sharing a common identity not particularly a common understanding or perception.
+	</li>
+
+	<li>
+		<i class="fa-li fas fa-caret-right"></i>
+		To be individuals with hearts filled with thanksgiving, praise, hospitality and charity.
+	</li>
+
+	<li>
+		<i class="fa-li fas fa-caret-right"></i>
+		Acknowledge <span class="hebrew">יהוה</span> has declared He will establish His covenant and His lovingkindness to those who love Him and keep His commandments.
+	</li>
+
+	<li>
+		<i class="fa-li fas fa-caret-right"></i>
+		Be built on love, displaying the fruit of the Spirit of Love, Joy, Peace,	Patience, Kindness, Goodness, Faithfulness, Gentleness and Self-Control.
+	</li>
+
+	<li>
+		<i class="fa-li fas fa-caret-right"></i>
+		Establish The Living Word of <span class="hebrew">יהוה</span> as the boundaries we choose to live by, repenting for our sins, iniquities and transgressions.
+	</li>
+
+	<li>
+		<i class="fa-li fas fa-caret-right"></i>
+		Gather with those that share our vision and mission.
+	</li>
+
+	<li>
+		<i class="fa-li fas fa-caret-right"></i>
+		Build relationships with mutual respect, accepting and supporting each other as we seek <span class="hebrew">יהוה</span> unique will for our lives.
+	</li>
+
+	<li>
+		<i class="fa-li fas fa-caret-right"></i>
+		Be patient with the guiding and gifts of the Holy Spirit at work in each of us.
+	</li>
+
+	<li>
+		<i class="fa-li fas fa-caret-right"></i>
+		Be humble servants, superior to no one.
+	</li>
+
+	<li>
+		<i class="fa-li fas fa-caret-right"></i>
+		Proclaim by our deeds, the redemptive, restoring and reconciling work of Messiah.
+	</li>
+
+	<li>
+		<i class="fa-li fas fa-caret-right"></i>
+		Disciple those that seek to apply The Living Word of <span class="hebrew">יהוה</span> by providing weekly opportunities to study and fellowship.
+	</li>
+
+	<li>
+		<i class="fa-li fas fa-caret-right"></i>
+		Gather during Holy convocations to worship, study, fellowship, fast and	pray together.
+	</li>
+
+	<li>
+		<i class="fa-li fas fa-caret-right"></i>
+		Honor boundaries established by the leadership covering.
+	</li>
+
+	<li>
+		<i class="fa-li fas fa-caret-right"></i>
+		Display respect and consideration towards others in conversation,	avoiding divisive debates, criticism and speaking ill of others.
+	</li>
+
+
+	<li>
+		<i class="fa-li fas fa-caret-right"></i>
+		Displaying discretion, dignity, honor and respect towards others by wearing	modest attire, so community focus remains on prayer, worship and study.
+	</li>
+
+	<li>
+		<i class="fa-li fas fa-caret-right"></i>
+		Establish LOVE, the Essence of The Kingdom.
+	</li>
+
+
+</ul>
+<p>
+	<blockquote class="blockquote mx-5">
+		<footer class="blockquote-footer">
+			Mark Webb<br />
+			Congregational Leader<br />
+			Revised and Reviewed 7-15-202<br />
+
+		</footer>
+	</blockquote>
+</p>
+
+
+@code {
+	[Parameter]
+	public MediaQueryEnum MediaQueryEnum { get; set; }
+}

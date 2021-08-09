@@ -1,53 +1,56 @@
 ﻿@page "/admin/dashboard/index"
+@using Microsoft.AspNetCore.Hosting
+@using Microsoft.Extensions.Hosting
+@using static LivingMessiah.Web.Services.Auth0
+@using static LivingMessiah.Web.Links.DashBoard
 
 <div class="pb-2 mt-4 mb-2 border-bottom">
 	<h2><i class="@Icon"></i> @Title</h2>
 </div>
 
-<p class="text-warning">ToDo: setup environment detection</p>
+@inject IWebHostEnvironment Env
 
-@*<environment names="Staging,Production">
-		HostingEnvironment.EnvironmentName is <strong><span class="text-danger">Staging or Production</span></strong>
-	</environment>
-	<environment names="Development">
-		HostingEnvironment.EnvironmentName is <strong><span class="text-warning">Development</span></strong>
-	</environment><br />*@
-
-
-<p class="text-warning">ToDo: setup authorization and authentication</p>
-
-@*<div asp-authorize asp-roles="@LivingMessiah.Web.Services.Auth0.Roles.Admin">
+<AuthorizeView Roles="@Roles.Admin">
 	<div class="card" style="width: 18rem;">
-		<div class="card-header">Inside asp-authorize</div>
+		<div class="card-header">Inside AuthorizeView Component</div>
+
 		<div class="card-body">
 			<h5 class="card-title">asp-authorize test</h5>
 			<p class="card-text">If you're logged in with Admin Role, you can see this section.</p>
 		</div>
+
+		<div class="card-body">
+			@if (Env.IsDevelopment() | Env.IsStaging())
+			{
+				<p >
+					HostingEnvironment.EnvironmentName is <strong><span class="text-danger">Staging or Production</span></strong>
+				</p>
+			}
+			else
+			{
+				<p>
+					HostingEnvironment.EnvironmentName is <strong><span class="text-warning">Development</span></strong>
+				</p>
+			}
+		</div>
+
 	</div>
-</div>
+</AuthorizeView>
 
-<hr class="warning" />*@
+@*<LivingMessiah.Web.Pages.Admin.Dashboard.ApplicationSettings>
 
-@* <div class="card" style="width: 25rem;" asp-authorize asp-roles="@LivingMessiah.Web.Services.Auth0.Roles.Admin"> *@
+</LivingMessiah.Web.Pages.Admin.Dashboard.ApplicationSettings>*@
 
 <div class="card" style="width: 25rem;">
-	<div class="card-header">Admin</div>
-	<div class="card-body">
-		<h5 class="card-title">card-body goes here</h5>
-		<p class="card-text">card-text goes here</p>
-	</div>
+	<div class="card-header">Admin Links</div>
+	@*<div class="card-body">
+			<h5 class="card-title">card-body goes here</h5>
+			<p class="card-text">card-text goes here</p>
+		</div>*@
+
 	<ul class="list-group list-group-flush">
-
 		<li class="list-group-item">
-			<a href="@DashBoard.Dump"
-				 title="Dump" class="list-group-item list-group-item-warning">
-				<b>Dump Settings</b>
-				<i class="fas fa-chevron-right"></i>
-			</a>
-		</li>
-
-		<li class="list-group-item">
-			<a href="@DashBoard.FontAwesome"
+			<a href="@FontAwesome"
 				 title="Font Awesome" class="list-group-item list-group-item-warning">
 				<b>FontAwesome</b>
 				<i class="fas fa-chevron-right"></i>
@@ -55,7 +58,7 @@
 		</li>
 
 		<li class="list-group-item">
-			<a href="@DashBoard.PerformanceCompliance"
+			<a href="@PerformanceCompliance"
 				 title="Performance Compliance" class="list-group-item list-group-item-warning">
 				<b>Performance Compliance</b>
 				<i class="fas fa-chevron-right"></i>
@@ -71,10 +74,10 @@
 		</li>
 
 		<li class="list-group-item">
-			<a href="@DashBoard.Routes"
-				 title="@DashBoard.RoutesTitle" class="list-group-item list-group-item-warning">
-				<i class="@DashBoard.RoutesIcon"></i>
-				<b>@DashBoard.RoutesTitle</b>
+			<a href="@Routes"
+				 title="@RoutesTitle" class="list-group-item list-group-item-warning">
+				<i class="@RoutesIcon"></i>
+				<b>@RoutesTitle</b>
 				<i class="fas fa-chevron-right"></i>
 			</a>
 		</li>
@@ -90,41 +93,17 @@
 	<br /> see also <a href="https://ardalis.com/debugging-aspnet-core-routes">ardalis.com/debugging-aspnet-core-routes</a>
 </p>
 
+@*
+	https://blazor.syncfusion.com/documentation/dashboard-layout/getting-started/
+	https://www.syncfusion.com/blazor-components/blazor-dashboard
+*@
 
-<h2>MiniProfiler</h2>
-<p>ToDo: Not ported, see ???</p>
+@*<h2>MiniProfiler</h2>
+	<p>ToDo: Not ported, see ???</p>*@
 
-@{
-	//string SomethingExpansive = "Add Content Please";
-}
 
 @*<h4>Not sure how this works exactly</h4>
 	<profile name="My Profiling Step via a <profile> Tag">
 		@{ @SomethingExpansive } Hello Mars!
 	</profile>*@
 
-
-
-@code {
-	const string Title = "Dashboard";
-	const string Icon = "fas fa-tachometer-alt";
-
-	public static class DashBoard
-	{
-		public const string Index = "/Index";
-		public const string Title = "DashBoard";
-		public const string Icon = "fas fa-tachometer-alt";
-
-		public const string ThrowException = "/ThrowException";
-		public const string FontAwesome = "/FontAwesome";
-		public const string Dump = "/Dump";
-
-		public const string PerformanceCompliance = "/PerformanceCompliance";
-		public const string Routes = "/Routes";
-		public const string RoutesTitle = "Show routing endpoints";
-		public const string RoutesIcon = "fas fa-route";
-
-		//public const string ErrorLog = "/DashBoard/ErrorLog";
-		//public const string OfflineMessage = "./OfflineMessage";
-	}
-}

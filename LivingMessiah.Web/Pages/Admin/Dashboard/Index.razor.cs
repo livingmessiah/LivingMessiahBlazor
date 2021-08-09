@@ -1,9 +1,13 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using System;
+using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
-using System;
+
+using static LivingMessiah.Web.Services.Auth0;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LivingMessiah.Web.Pages.Admin.Dashboard
 {
+	[Authorize(Roles = Roles.AdminOrSukkot)]
 	public partial class Index
 	{
 		[Inject]
@@ -27,7 +31,7 @@ namespace LivingMessiah.Web.Pages.Admin.Dashboard
 				}
 			}
 			*/
-			/**/
+	
 			try
 			{
 				for (int i = 0; i < 10; i++)
@@ -48,8 +52,12 @@ namespace LivingMessiah.Web.Pages.Admin.Dashboard
 				Logger.LogError(ex, $"We caught this exception inside {nameof(Index)}!{nameof(ThrowException_ButtonClick)}");
 				NavManager.NavigateTo(LivingMessiah.Web.Links.Home.Error, forceLoad: true);
 			}
-			
+
 
 		}
+
+		
+
+
 	}
 }

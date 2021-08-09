@@ -100,6 +100,22 @@
 		public const string Descr = "Community Bulletin Board";
 	}
 
+	public static class DashBoard
+	{
+		public const string Index = "/Admin/Dashboard/Index";
+		public const string Title = "DashBoard";
+		public const string Icon = "fas fa-tachometer-alt";
+
+		public const string ThrowException = "/Admin/ThrowException";
+		public const string FontAwesome = "/Admin/FontAwesome";
+
+		public const string PerformanceCompliance = "/Admin/PerformanceCompliance";
+
+		public const string Routes = "/Admin/Routes";
+		public const string RoutesTitle = "Show routing endpoints";
+		public const string RoutesIcon = "fas fa-route";
+	}
+
 	public static class FurtherStudies
 	{
 		public const string Index = "/Further";

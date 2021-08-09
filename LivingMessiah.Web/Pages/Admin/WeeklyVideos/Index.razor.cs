@@ -13,7 +13,7 @@ namespace LivingMessiah.Web.Pages.Admin.WeeklyVideos
 	[Authorize(Roles = "admin")]
 	public partial class Index
 	{
-		const bool IsDebug = true;
+		const bool IsDebug = false;
 		const bool IsWorkInProgress = false;
 
 		[Inject]

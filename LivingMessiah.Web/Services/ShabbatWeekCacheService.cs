@@ -124,7 +124,7 @@ namespace LivingMessiah.Web.Services
 				}
 				else
 				{
-					log.LogWarning($"...parasha.Id == 0 WHICH IS WRONG!!!, so NOT saving to memoryCache. See 779-Bug-...");
+					log.LogInformation($"...parasha.Id == 0 WHICH IS WRONG!!!, so NOT saving to memoryCache. See 779-Bug-...");
 				}
 			}
 			else
@@ -191,7 +191,7 @@ namespace LivingMessiah.Web.Services
 				}
 				else
 				{
-					log.LogWarning($"...currentWeeklyVideos.Count == 1 WHICH IS WRONG!!!, so NOT saving to memoryCache. Related to 779-Bug-...");
+					log.LogInformation($"...currentWeeklyVideos.Count == 1 WHICH IS WRONG!!!, so NOT saving to memoryCache. Related to 779-Bug-...");
 				}
 
 			}
