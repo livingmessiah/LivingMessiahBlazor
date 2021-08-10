@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace LivingMessiah.Web.Pages.Sukkot.Constants
+﻿namespace LivingMessiah.Web.Pages.Sukkot.Constants
 {
 	public static class PayPal
 	{
@@ -24,34 +22,6 @@ namespace LivingMessiah.Web.Pages.Sukkot.Constants
 		public const string Edit = "Edit";
 		public const string EditMeals = "EditMeals";
 		public const string KitchenWork = "KitchenWork";
-	}
-
-	public static class PartialViews
-	{
-		public const string MenuBar = SukkotAdmin.Constants.PartialViews.MenuBar;
-
-
-		public const string Details = "_Details";
-		public const string CostAccountStyle = "_CostAccountStyle";
-		
-		public const string Meals = "_Meals.cshtml";
-		public const string MealsPrint = "_MealsPrint.cshtml";
-
-		public const string StatusNavigation = "_StatusNavigation";
-		public const string Documents = "_Documents";
-		public const string SukkotBlurbFromRoot = "~/Pages/Sukkot/_Blurb.cshtml";
-		public const string SukkotBlurb2FromRoot = "~/Pages/Sukkot/_Blurb2.cshtml";
-		public const string SukkotTShirt = "~/Pages/Sukkot/_SukkotTShirt.cshtml";
-		public const string MealsFootnotes = "_MealsFootnotes";
-		public const string MealsTableHeader = "_MealsTableHeader";
-		public const string MealsTableHeaderPrint = "_MealsTableHeaderPrint";
-
-		public const string PaymentSummary = "_PaymentSummary";
-		public const string PaymentSummaryXs = "_PaymentSummaryXs";
-
-		public const string ErrorRP = "~/Pages/Shared/ErrorRP.cshtml";
-		public const string Message = "_Message";
-
 	}
 
 	public static class PDFs

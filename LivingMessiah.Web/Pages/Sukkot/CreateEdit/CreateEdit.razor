@@ -13,8 +13,6 @@
 	<SukkotAdminMenubar></SukkotAdminMenubar>
 </AuthorizeView>
 
-@*<p class="text-info">ToDo: Port GlobalSharedPartialViews.Message for=Message</p>*@
-
 @*<LoadingComponent IsLoading="Registration==null">
 	</LoadingComponent>*@
 
@@ -266,13 +264,29 @@
 			<div class="row mt-n2">
 				<div class="col-sm-12">
 					<div class="form-group">
-						<label for="notes" class="control-label"></label>
+						<label for="notes" class="control-label"><small>Notes / Emergency Contact / Fellowship Attending</small></label>
+						<p class="">
+							Please include emergency contact and name of fellowship or congregation currently attending, if none list a personal reference
+						</p>
 						<InputTextArea id="notes" class="form-control" @bind-Value="Registration.Notes" />
 						<ValidationMessage For="@(() => Registration.Notes)" />
 
 					</div>
 				</div>
 			</div>
+
+
+			@if (CanEditCampType)
+			{
+				<div class="row mt-n1 mb-4">
+					<div class="col-12">
+						<p class="float-right">
+							If you are interested in volunteering to help with <b>music</b> or <b>praise and worship</b>, please note that here.
+						</p>
+					</div>
+				</div>
+			}
+
 		</fieldset>
 
 		<div class="row">

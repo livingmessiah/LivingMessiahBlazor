@@ -11,8 +11,6 @@
 
 <PageHeader Icon="@Icon" Title="@Title"></PageHeader>
 
-@*<p class="text-info">ToDo: Port GlobalSharedPartialViews.Message</p>*@
-
 <AuthorizeView>
 	<Authorized>
 		<h3>Hello, @context.User.Identity.Name!</h3>
@@ -53,38 +51,6 @@
 	</div>
 }
 
-@*<SfTab>
-		<TabItems>
-			<TabItem>
-				<ChildContent>
-					<TabHeader Text="Green House Trolley Hobby Farm"></TabHeader>
-				</ChildContent>
-				<ContentTemplate>
-					<div>
-						Go to this Hip Camp <a href="https://www.hipcamp.com/en-US/discover/arizona/the-greenhouse-trolley-hobby-fa">link</a> to have a look.
-						Here is a <a href="https://goo.gl/maps/ky76HExS7HN2">Google Map</a>&nbsp;<i class="fa fa-map-pin"></i>.
-					</div>
-				</ContentTemplate>
-			</TabItem>
-			<TabItem>
-				<ChildContent>
-					<TabHeader Text="Wilderness Ranch"></TabHeader>
-				</ChildContent>
-				<ContentTemplate>
-					<div>
-						<b>Wilderness Ranch</b> near <b>Show Low, AZ</b>
-					</div>
-				</ContentTemplate>
-			</TabItem>
-			<TabItem>
-				<ChildContent>
-					<TabHeader Text="Windmill Ranch"></TabHeader>
-				</ChildContent>
-				<ContentTemplate>@DynamicContent</ContentTemplate>
-				Windmill Ranch near Bisbee, AZ
-			</TabItem>
-		</TabItems>
-	</SfTab>*@
 
 <br />
 <p class="lead">
@@ -92,51 +58,70 @@
 	<span class="far fa-calendar"></span>&nbsp; @((MarkupString)Dates),
 	at three different places (you choose).
 	<ol>
-		<li><b>Green House Trolley Hobby Farm</b> near <b>Sierra Vista, AZ</b>.</li>
-		<li><b>Wilderness Ranch</b> near <b>Show Low, AZ</b>.</li>
-		<li><b>Windmill Ranch</b> near <b>Bisbee, AZ</b>.</li>
+		<li><span class="text-success"><b>Green House Trolley Hobby Farm</b></span> near <b>Sierra Vista, AZ</b>.</li>
+		<li><span class="text-danger"><b>Wilderness Ranch</b></span> near <b>Show Low, AZ</b>.</li>
+		<li><span class="text-warning"><b>Windmill Ranch</b></span> near <b>Bisbee, AZ</b>.</li>
 	</ol>
 </p>
 
-<h3><span class="badge badge-warning">Green House Trolley</span></h3>
-<p class="lead">
-	Go to this Hip Camp <a href="https://www.hipcamp.com/en-US/discover/arizona/the-greenhouse-trolley-hobby-fa">link</a> to have a look.
-	Here is a <a href="https://goo.gl/maps/ky76HExS7HN2">Google Map</a>&nbsp;<i class="fa fa-map-pin"></i>.
-</p>
+<div class="card text-white bg-success">
+	<div class="card-header">
+		<h3><b>Green House Trolley</b></h3>
+	</div>
+	<div class="card-body">
+		<p class="lead">
+			Go to this Hip Camp <a href="https://www.hipcamp.com/en-US/discover/arizona/the-greenhouse-trolley-hobby-fa">link</a> to have a look.
+			Here is a <a href="https://goo.gl/maps/ky76HExS7HN2">Google Map</a>&nbsp;<i class="fa fa-map-pin"></i>.
+		</p>
+	</div>
+</div>
 
-<h3><span class="badge badge-warning">Wilderness Ranch</span></h3>
-<p class="lead">
-	Go to <a href="http://www.wildernessranch.org/">www.wildernessranch.org</a> to have a look.
-	Also, here is an informative <i class="fab fa-youtube"></i> <a href="https://youtu.be/FrLjByPhJGg">video</a> showing the Wilderness Ranch facilities.
-	Here are directions to <a href="http://www.wildernessranch.org/maps.html" target="_blank">Wilderness Ranch</a>
-	or <a href="https://goo.gl/maps/ky76HExS7HN2">Google Map</a>&nbsp;<i class="fa fa-map-pin"></i>.
-</p>
+<div class="card text-white bg-danger my-3">
+	<div class="card-header">
+		<h3><b>Wilderness Ranch</b></h3>
+	</div>
+	<div class="card-body">
+		<p class="lead">
+			Go to <a href="http://www.wildernessranch.org/"><u>www.wildernessranch.org</u></a> to have a look.
+			Also, here is an informative <i class="fab fa-youtube"></i> <a href="https://youtu.be/FrLjByPhJGg"><u>video</u></a> showing the Wilderness Ranch facilities.
+			Here are directions to <a href="http://www.wildernessranch.org/maps.html" target="_blank"><u>Wilderness Ranch</u></a>
+			or <a href="https://goo.gl/maps/ky76HExS7HN2"><u>Google Map</u></a>&nbsp;<i class="fa fa-map-pin"></i>.
+		</p>
+	</div>
+	<div class="card-body">
+		<div class="card-title">
+			<h5>Camping</h5>
+		</div>
+		<p class="lead">
+			The facility has many different camping arrangements.
+			There are several fully equipped RV sites as well as numerous tent camping sites.
+			There are various cabins and "bunk houses" available to suit both families and singles. The cost to camp is minimal.
+			The rates are @LodgingRate.ToString("C0") per night for the RV or tent camp sites, regardless of how many people are in the group.
+			The individual cabins and bunkhouses are @LodgingRate.ToString("C0") per night per person.
+		</p>
+	</div>
+</div>
 
-<h5><span class="badge badge-warning">Camping</span></h5>
-<p class="lead">
-	The facility has many different camping arrangements.
-	There are several fully equipped RV sites as well as numerous tent camping sites.
-	There are various cabins and "bunk houses" available to suit both families and singles. The cost to camp is minimal.
-	The rates are @LodgingRate.ToString("C0") per night for the RV or tent camp sites, regardless of how many people are in the group.
-	The individual cabins and bunkhouses are @LodgingRate.ToString("C0") per night per person.
-</p>
-
-
-<h3><span class="badge badge-warning">Windmill Ranch</span></h3>
-<p class="lead">
-	Have a look <a href="https://livingmessiah.com/windmillranch/">here</a> on our website for more information.
-	Also, check out the <a href="https://goo.gl/maps/uYyVHisDgExpQLXL7">Google Map</a>&nbsp;<i class="fa fa-map-pin"></i>.
-</p>
+<div class="card ext-white bg-warning">
+	<div class="card-header">
+		<h3><b>Windmill Ranch</b> <i class="@LivingMessiah.Web.Links.WindmillRanch.Icon"></i> </h3>
+	</div>
+	<div class="card-body">
+		<p class="lead">
+			Have a look <a href="https://livingmessiah.com/windmillranch/"><u>here</u></a> on our website for more information.
+			Also, check out the <a href="https://goo.gl/maps/uYyVHisDgExpQLXL7"><u>Google Map</u></a>&nbsp;<i class="fa fa-map-pin"></i>.
+		</p>
+	</div>
+</div>
 
 @*<ul class="lead">
 		<li>We are planning to arrive at the camp on @ArrivalDate to begin setting up and will clean up camp on @((MarkupString)CleanupDate)</li>
 		<li>We will be holding Shabbat Service on @ShabbatServiceDate at the Wilderness Ranch in Show Low Arizona</li>
 	</ul>*@
 
-<h3><span class="badge badge-warning">Meals</span></h3>
-
 @if (Other.IsMealsAvailable)
 {
+	<h3><span class="badge badge-warning">Meals</span></h3>
 	<p class="lead">
 		Because the facility has a good-sized commercial-grade kitchen, we are able to offer meals for those in our group who wish to partake.
 		Our own Chris Lengyel will be managing the kitchen and meal preparation and will need a good supply of helpers for preparation and clean-up - you will be asked to participate.
@@ -164,33 +149,56 @@
 }
 else
 {
-	<p class="display-4">
-		Sorry, no meals will be offered this year.
-	</p>
-
+	@*<p class="lead">
+			Sorry, no meals will be offered this year.
+		</p>*@
 }
-
 
 @if (!Other.IsRegistrationClosed)
 {
-	<h3><span class="badge badge-warning">Registration Form</span></h3>
-	<p class="lead">
-		Filling out the <a class="btn btn-success btn-sm" href="@LivingMessiah.Web.Links.Sukkot.RegistrationShell">registration form</a> is only available on line.
-		If you can not do that then contact one of the elders and we will fill it out for you.
-	</p>
+	<div class="card bg-light my-3">
+		<div class="card-header">
+			<h3><b>Registration</b></h3>
+		</div>
+		<div class="card-body">
+			<p class="lead">
+				Filling out the <a class="btn btn-success btn-sm" href="@LivingMessiah.Web.Links.Sukkot.RegistrationShell">registration form</a> is only available on line.
+				If you can not do that then contact one of the elders and we will fill it out for you.
+			</p>
+		</div>
+		<div class="card-body">
+			<h5 class="card-title mb-1">Registration Fee</h5>
+
+			<dl class="row ml-1">
+				<dt class="col-8">Early Registration Fee:</dt>
+				<dd class="col-4"><span class="float-right">@EarlyRegistrationFee.ToString("C0")</span></dd>
+				<dt class="col-8">Early Registration Last Day:</dt>
+				<dd class="col-4"><span class="float-right">@EarlyRegistrationLastDay.ToString("MMMM dd")</span></dd>
+			</dl>
+			<dl class="row ml-1">
+				<dt class="col-8">Regular Registration Fee:</dt>
+				<dd class="col-4"><span class="float-right">@RegistrationFee.ToString("C0")</span></dd>
+				<dt class="col-8">Registration Last Day:</dt>
+				<dd class="col-4"><span class="float-right">@RegistrationLastDay.ToString("MMMM dd")</span></dd>
+			</dl>
+
+			<p>Note, there is no lodging cost for <b>Green House Trolley Hobby Farm</b> or the <b>Windmill Ranch</b></p>
+
+		</div>
+	</div>
 
 	<h3><span class="badge badge-warning">Payment</span></h3>
 	<p class="lead">
 		We offer two methods of payment.<br />
 	</p>
 	<p class="lead">
-		<span class="badge badge-info">1</span> The first and <u>preferred method</u> is <b>on-line</b>.
-		Go to the <a class="btn btn-success btn-sm" href="@LivingMessiah.Web.Links.Sukkot.RegistrationShell">	Registration</a> page and fill it out
+		<span class="badge badge-info">1</span> The first and<u> preferred method</u> is <b>on-line</b>.
+		Go to the<a class="btn btn-success btn-sm" href="@LivingMessiah.Web.Links.Sukkot.RegistrationShell">	Registration</a> page and fill it out
 		(step 5 is the step to pay with PayPal).
 	</p>
 
 	<p class="lead">
-		<span class="badge badge-info">2</span> The second method is to pay with snail-mail <i class="far fa-envelope"></i>.
+		<span class="badge badge-info">2</span> The second method is to pay with snail-mail<i class="far fa-envelope"></i>.
 		Mail a print out of your registration form with your deposit attached.
 		<address>
 			<strong>Living Messiah Ministries</strong><br>

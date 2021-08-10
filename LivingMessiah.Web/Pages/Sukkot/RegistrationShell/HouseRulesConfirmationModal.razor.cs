@@ -16,7 +16,6 @@ namespace LivingMessiah.Web.Pages.Sukkot.RegistrationShell
 
 		[Parameter]
 		public bool IsXs { get; set; }
-		//bool IsXs2 = (ViewData[VDD.IsXs2] == null) ? false : (bool)ViewData[VDD.IsXs2];
 
 		protected string ModalId;
 		protected string FormatSize;

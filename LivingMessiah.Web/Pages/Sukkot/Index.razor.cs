@@ -1,15 +1,17 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
+using System;
 
 namespace LivingMessiah.Web.Pages.Sukkot
 {
 	[AllowAnonymous]
 	public partial class Index
 	{
-		public const string EarlyRegistrationLastDay = "August 31";
-		public const string EarlyRegistrationFee = "$25";
-		public const string FinalRegistrationDay = "September 20";
-		public const string RegistrationFee = "$40";
+		public DateTime EarlyRegistrationLastDay = DateTime.Parse("9/20/2021");
+		public const decimal EarlyRegistrationFee = 30.0m;
+		public DateTime RegistrationLastDay = DateTime.Parse("10/14/2021");
+		public const decimal RegistrationFee = 50.0m;
+
 		public const bool IsRegistrationClosed = false;
 
 		//ToDo: fix this
