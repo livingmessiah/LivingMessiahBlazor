@@ -1,0 +1,18 @@
+﻿
+<LoadingComponent IsLoading="WirecastVM==null">
+
+	<ul class="list-inline">
+		<li>Id: @WirecastVM.Wirecast.Id</li>
+		<li>Date: @WirecastVM.Wirecast.ShabbatDate.ToString()</li>
+	</ul>
+
+	<a href="@WirecastVM.Wirecast.WirecastLink"
+		 class="btn btn-success" title="Link to Wirecast">
+		<i class="fas fa-podcast fa-fw fa-3x" aria-hidden="true"></i>
+	</a>
+	<p><small>@WirecastVM.Wirecast.WirecastLink</small></p>
+	
+	<hr class="warning" />
+
+</LoadingComponent>
+

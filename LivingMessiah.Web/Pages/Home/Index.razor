@@ -1,12 +1,19 @@
 @page "/"
+@using static LivingMessiah.Web.Services.Auth0
+
 <HomeImage></HomeImage>
 
 <div class="d-md-none">
-	<AuthorizeView Roles="admin">
+
+	<AuthorizeView Roles=@Roles.Admin>
 		<Admin></Admin>
 	</AuthorizeView>
 
-	<AuthorizeView>
+	<AuthorizeView Roles=@Roles.AdminOrAudiovisual>
+		<AudioVisualButton></AudioVisualButton>
+	</AuthorizeView>
+
+	<AuthorizeView Roles=@Roles.Admin>
 		<DashboardButton></DashboardButton>
 	</AuthorizeView>
 
@@ -30,10 +37,15 @@
 			<IntroductionAndWelcome  MediaQueryEnum="MediaQueryEnum.Md" />
 		</div>
 		<div class="col-5">
-			<AuthorizeView Roles="admin">
+			<AuthorizeView Roles=@Roles.Admin>
 				<Admin></Admin>
 			</AuthorizeView>
-			<AuthorizeView>
+
+			<AuthorizeView Roles=@Roles.AdminOrAudiovisual>
+				<AudioVisualButton></AudioVisualButton>
+			</AuthorizeView>
+
+			<AuthorizeView Roles=@Roles.Admin>
 				<DashboardButton></DashboardButton>
 			</AuthorizeView>
 			<SidebarButtons></SidebarButtons>
@@ -53,10 +65,15 @@
 		</div>
 		<div class="col-4">
 
-			<AuthorizeView Roles="admin">
+			<AuthorizeView Roles=@Roles.Admin>
 				<Admin></Admin>
 			</AuthorizeView>
-			<AuthorizeView>
+
+			<AuthorizeView Roles=@Roles.AdminOrAudiovisual>
+				<AudioVisualButton></AudioVisualButton>
+			</AuthorizeView>
+
+			<AuthorizeView Roles=@Roles.Admin>
 				<DashboardButton></DashboardButton>
 			</AuthorizeView>
 			<SidebarButtons></SidebarButtons>

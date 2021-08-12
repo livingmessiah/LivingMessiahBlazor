@@ -77,8 +77,17 @@
 			public const string Icon = "";
 		}
 
-
 	}
+
+	public static class AudioVisual
+	{
+		public const string Index = "/Admin/AudioVisual/";
+		public const string Title = "Audio Visual";
+		public const string Icon = "fab fa-teamspeak";
+		//public const string Icon2 = "fas fa-theater-masks";
+		//public const string Icon3 = "fas fa-broadcast-tower";
+	}
+
 	public static class BiblicalPermaculture
 	{
 		public const string Index = "/WindmillRanch/Permaculture";
@@ -459,6 +468,14 @@
 		public const string SaveIcon = "fas fa-save";
 
 		public const string CancelIcon = "fas fa-window-close"; //"far fa-window-close";
+	}
+
+	public static class Wirecast
+	{
+		public const string Index = "/Wirecast/Index";
+		public const string Edit = "/Wirecast/Edit";
+		public const string Icon = "fas fa-podcast";  
+		public const string Title = "Wirecast Link";
 	}
 
 	public static class WindmillRanch

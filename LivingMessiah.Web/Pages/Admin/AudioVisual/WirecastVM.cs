@@ -1,6 +1,6 @@
 ﻿using LivingMessiah.Domain;
 
-namespace LivingMessiah.Web.Pages.Wirecast
+namespace LivingMessiah.Web.Pages.Admin.AudioVisual
 {
 	public class WirecastVM
 	{

@@ -120,7 +120,7 @@
 	</div>
 }
 
-@if (WeeklyVideos != null)
+@if (WeeklyVideoIndex != null)
 {
 	<table class="table table-striped table-sm">
 		<thead>
@@ -135,7 +135,7 @@
 
 		<tbody>
 
-			@foreach (var item in WeeklyVideos)
+			@foreach (var item in WeeklyVideoIndex)
 			{
 
 				@if (item.TypeId == 1 & item.RowNum != 1)
@@ -153,68 +153,68 @@
 				}
 
 
-		<tr>
+				<tr>
 
 
-			<td>@item.Descr <small><sup class="text-black-50">@item.TypeId</sup></small></td>
+					<td>@item.Descr <small><sup class="text-black-50">@item.TypeId</sup></small></td>
 
-			<td>
-				@if (item.YouTubeId != null)
-				{
-					<a href="@item.Url()" target="_blank"
-						 title="@item.Url()">
-						<u>@item.YouTubeId</u>
-						<i class="fas fa-external-link-square-alt"></i>
-					</a>
-				}
-				else
-				{
-					<p class="text-info"><i>Missing</i></p>
-				}
-				<br /> @item.Title
-			</td>
-			<td>
-				<small><i>@item.GraphicFile</i></small><br />
-				<small><i>@item.NotesFile</i></small>
-			</td>
+					<td>
+						@if (item.YouTubeId != null)
+						{
+							<a href="@item.Url()" target="_blank"
+								 title="@item.Url()">
+								<u>@item.YouTubeId</u>
+								<i class="fas fa-external-link-square-alt"></i>
+							</a>
+						}
+						else
+						{
+							<p class="text-info"><i>Missing</i></p>
+						}
+						<br /> @item.Title
+					</td>
+					<td>
+						<small><i>@item.GraphicFile</i></small><br />
+						<small><i>@item.NotesFile</i></small>
+					</td>
 
-			@if (item.TypeId == 3 | item.TypeId == 4)
-			{
-				<td><small><i>@item.Book/@item.Chapter</i></small></td>
-			}
-			else
-			{
-				<td></td>
-			}
+					@if (item.TypeId == 3 | item.TypeId == 4)
+					{
+						<td><small><i>@item.Book/@item.Chapter</i></small></td>
+					}
+					else
+					{
+						<td></td>
+					}
 
 
 
-			@*<td class="text-danger"><b>WORK IN PROGRESS</b></td>*@
+					@*<td class="text-danger"><b>WORK IN PROGRESS</b></td>*@
 
-			<td>
-				@if (item.YouTubeId != null)
-				{
-					<button @onclick="@(() => ShowModal_ButtonClick(CRUD.Edit, item))"
-									type="button" class="@EditButtonColor btn-sm">
-						<i class="@EditIcon"></i> @EditText
-					</button>
+					<td>
+						@if (item.YouTubeId != null)
+						{
+							<button @onclick="@(() => ShowModal_ButtonClick(CRUD.Edit, item))"
+											type="button" class="@EditButtonColor btn-sm">
+								<i class="@EditIcon"></i> @EditText
+							</button>
 
-					<button @onclick="@(() => ShowModal_ButtonClick(CRUD.Delete, item))"
-									type="button" class="@DeleteButtonColor btn-sm">
-						<i class="@DeleteIcon"></i> @DeleteText
-					</button>
+							<button @onclick="@(() => ShowModal_ButtonClick(CRUD.Delete, item))"
+											type="button" class="@DeleteButtonColor btn-sm">
+								<i class="@DeleteIcon"></i> @DeleteText
+							</button>
 
-				}
-				else
-				{
-					<button @onclick="@(() => ShowModal_ButtonClick(CRUD.Add, item))"
-									type="button" class="@AddButtonColor btn-sm">
-						<i class="@AddIcon"></i> @AddText
-					</button>
-				}
-			</td>
+						}
+						else
+						{
+							<button @onclick="@(() => ShowModal_ButtonClick(CRUD.Add, item))"
+											type="button" class="@AddButtonColor btn-sm">
+								<i class="@AddIcon"></i> @AddText
+							</button>
+						}
+					</td>
 
-		</tr>
+				</tr>
 
 			}
 

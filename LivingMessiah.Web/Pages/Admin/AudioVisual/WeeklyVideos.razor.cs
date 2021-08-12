@@ -6,12 +6,13 @@ using System;
 using LivingMessiah.Web.Services;
 using LivingMessiah.Domain;
 using Microsoft.AspNetCore.Authorization;
+using static LivingMessiah.Web.Services.Auth0;
 //using Microsoft.AspNetCore.Components.Forms;
 
-namespace LivingMessiah.Web.Pages.Admin.WeeklyVideos
+namespace LivingMessiah.Web.Pages.Admin.AudioVisual
 {
-	[Authorize(Roles = "admin")]
-	public partial class Index
+	[Authorize(Roles = Roles.AdminOrAudiovisual)]
+	public partial class WeeklyVideos
 	{
 		const bool IsDebug = false;
 		const bool IsWorkInProgress = false;
@@ -20,12 +21,12 @@ namespace LivingMessiah.Web.Pages.Admin.WeeklyVideos
 		public IShabbatWeekService svc { get; set; }
 
 		[Inject]
-		public ILogger<Index> Logger { get; set; }
+		public ILogger<WeeklyVideos> Logger { get; set; }
 
 		[Inject]
 		NavigationManager NavManager { get; set; }
 
-		protected IReadOnlyList<WeeklyVideoIndex> WeeklyVideos;
+		protected IReadOnlyList<WeeklyVideoIndex> WeeklyVideoIndex;
 
 		protected bool MakeModalVisible = false;
 		protected string CrudOperation = CRUD.Read;
@@ -106,7 +107,7 @@ namespace LivingMessiah.Web.Pages.Admin.WeeklyVideos
 
 			try
 			{
-				WeeklyVideos = await svc.GetTopWeeklyVideos(3);
+				WeeklyVideoIndex = await svc.GetTopWeeklyVideos(3);
 			}
 
 			catch (System.Exception ex)

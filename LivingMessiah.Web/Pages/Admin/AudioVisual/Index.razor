@@ -1,0 +1,31 @@
+﻿@page "/Admin/AudioVisual/"
+@using static LivingMessiah.Web.Links.AudioVisual
+
+<div class="pb-2 mt-4 mb-2 border-bottom">
+	<h2><i class="@Icon"></i> @Title</h2>
+</div>
+
+<div class="card" style="width: 25rem;">
+	<div class="card-header">Audio Visual Links</div>
+
+	<ul class="list-group list-group-flush">
+		<li class="list-group-item">
+			<a href="@LivingMessiah.Web.Links.WeeklyVideos.Index"
+				 title="@LivingMessiah.Web.Links.WeeklyVideos.Title"
+				 class="list-group-item list-group-item-warning">
+				<b>@LivingMessiah.Web.Links.WeeklyVideos.Title</b>
+				<i class="@LivingMessiah.Web.Links.WeeklyVideos.Icon"></i>
+			</a>
+		</li>
+
+		<li class="list-group-item">
+			<a href="@LivingMessiah.Web.Links.Wirecast.Index"
+				 title="@LivingMessiah.Web.Links.Wirecast.Title"
+				 class="list-group-item list-group-item-warning">
+				<b>@LivingMessiah.Web.Links.Wirecast.Title</b>
+				<i class="fas fa-chevron-right"></i>
+			</a>
+		</li>
+
+	</ul>
+</div>

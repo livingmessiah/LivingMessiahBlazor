@@ -1,4 +1,4 @@
-﻿namespace LivingMessiah.Web.Pages.Admin.WeeklyVideos
+﻿namespace LivingMessiah.Web.Pages.Admin.AudioVisual 
 {
 	public static class CRUD
 	{

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
+using LivingMessiah.Web.Pages.Admin.AudioVisual;
 
 namespace LivingMessiah.Web.Services
 {
@@ -8,7 +9,7 @@ namespace LivingMessiah.Web.Services
 	{
 		string ExceptionMessage { get; set; }
 
-		Task<LivingMessiah.Web.Pages.Wirecast.WirecastVM> GetCurrentWirecast();  
+		Task<LivingMessiah.Web.Pages.Admin.AudioVisual.WirecastVM> GetCurrentWirecast();  
 		Task<int> UpdateWirecastLink(int id, string wireCastLink);
 		Task<int> UpdateScratchpad(string wireCastLink);
 	}
@@ -30,9 +31,9 @@ namespace LivingMessiah.Web.Services
 
 		public string ExceptionMessage { get; set; } = "";
 
-		public async Task<LivingMessiah.Web.Pages.Wirecast.WirecastVM> GetCurrentWirecast()
+		public async Task<WirecastVM> GetCurrentWirecast()
 		{
-			var vm = new LivingMessiah.Web.Pages.Wirecast.WirecastVM();
+			var vm = new WirecastVM();
 			try
 			{
 				vm.Wirecast = await db.GetCurrentWirecast();
