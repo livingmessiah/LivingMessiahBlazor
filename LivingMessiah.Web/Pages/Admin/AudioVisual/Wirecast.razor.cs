@@ -2,8 +2,10 @@
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Authorization;
 using static LivingMessiah.Web.Services.Auth0;
-using LivingMessiah.Web.Services;
 using System.Threading.Tasks;
+using LivingMessiah.Data;
+using LivingMessiah.Domain;
+using System;
 
 namespace LivingMessiah.Web.Pages.Admin.AudioVisual
 {
@@ -11,37 +13,59 @@ namespace LivingMessiah.Web.Pages.Admin.AudioVisual
 	public partial class Wirecast
 	{
 		[Inject]
-		public IEldersService svc { get; set; }
-		
+		public IShabbatWeekRepository db { get; set; }
+
 		[Inject]
 		public ILogger<Wirecast> Logger { get; set; }
 
-		protected WirecastVM WirecastVM { get; set; }
-
+		public LivingMessiah.Domain.Wirecast WirecastVM { get; set; }
 		public LivingMessiah.Domain.ScratchPad ScratchPad { get; set; }
 
+		protected bool DatabaseError { get; set; } = false;
+		protected string DatabaseErrorMsg { get; set; }
 
-		protected bool LoadFailed;
+		protected int RowCount { get; set; } = 0;
+
 		protected override async Task OnInitializedAsync()
 		{
-			WirecastVM = await svc.GetCurrentWirecast();
-			ScratchPad = WirecastVM.ScratchPad;
-		}
+			Logger.LogDebug($"Inside {nameof(Wirecast)}!{nameof(OnInitializedAsync)}");
+			DatabaseError = false;
+			try
+			{
+				WirecastVM = await db.GetCurrentWirecast();
+				if (WirecastVM == null)
+				{
+					Logger.LogDebug($"Wirecast is null, Sql:{db.BaseSqlDump}");
+				}
 
-		protected bool UpdateFailed;
+				ScratchPad = await db.GetScratchPadWireCast();
+				if (ScratchPad == null)
+				{
+					Logger.LogDebug($"ScratchPad is null, Sql:{db.BaseSqlDump}");
+				}
+			}
+			catch (Exception ex)
+			{
+				DatabaseError = true;
+				DatabaseErrorMsg = $"Error reading database";
+				Logger.LogError(ex, $"...{DatabaseErrorMsg}");
+			}
+		}
 
 		protected async Task UpdateWirecastLink()
 		{
 			Logger.LogDebug($"Inside {nameof(Wirecast)}!{nameof(UpdateWirecastLink)}");
+			RowCount = 0;
+			DatabaseError = false;
 			try
 			{
-				UpdateFailed = false;
-				int count = await svc.UpdateWirecastLink(WirecastVM.Wirecast.Id, WirecastVM.Wirecast.WirecastLink);
+				RowCount = await db.UpdateWirecastLink(WirecastVM.Id, WirecastVM.WirecastLink);
 			}
 			catch (System.Exception ex)
 			{
-				UpdateFailed = true;
-				Logger.LogWarning(ex, $"Error calling {nameof(svc.UpdateWirecastLink)}");
+				DatabaseError = true;
+				DatabaseErrorMsg = $"Error updating database";
+				Logger.LogError(ex, $"...{DatabaseErrorMsg}");
 			}
 		}
 
@@ -50,13 +74,15 @@ namespace LivingMessiah.Web.Pages.Admin.AudioVisual
 			Logger.LogDebug($"Inside {nameof(Wirecast)}!{nameof(UpdateScratchPad)}");
 			try
 			{
-				UpdateFailed = false;
-				int count2 = await svc.UpdateScratchpad(WirecastVM.ScratchPad.WireCast);
+				DatabaseError = false;
+				RowCount = 0;
+				RowCount = await db.UpdateScratchpad(ScratchPad.WireCast);  //ScratchPad
 			}
-			catch (System.Exception ex)
+			catch (Exception ex)
 			{
-				UpdateFailed = true;
-				Logger.LogWarning(ex, $"Error calling {nameof(svc.UpdateWirecastLink)}");
+				DatabaseError = true;
+				DatabaseErrorMsg = $"Error updating database";
+				Logger.LogError(ex, $"...{DatabaseErrorMsg}");
 			}
 		}
 

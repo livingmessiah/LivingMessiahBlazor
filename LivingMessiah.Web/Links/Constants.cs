@@ -472,10 +472,13 @@
 
 	public static class Wirecast
 	{
-		public const string Index = "/Wirecast/Index";
+		// There is not Index because the link should only be known by the translators
 		public const string Edit = "/Wirecast/Edit";
-		public const string Icon = "fas fa-podcast";  
-		public const string Title = "Wirecast Link";
+		public const string Icon = "fas fa-podcast";
+		public const string IconEdit = "fas fa-pencil-alt ";  // fa-pencil-alt-square-o
+		public const string Title = "Wirecast Edit";
+		public const string Index = "/Wirecast";
+		public const string TitleIndex = "Wirecast Link for Translators";
 	}
 
 	public static class WindmillRanch

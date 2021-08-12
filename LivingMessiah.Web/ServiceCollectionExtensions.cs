@@ -23,7 +23,6 @@ namespace LivingMessiah.Web
 			services
 				.AddSingleton<ILeadershipService, LeadershipService>()
 				.AddSingleton<IAddressService, AddressService>()
-				.AddSingleton<IEldersService, EldersService>()
 				.AddSingleton<ILinkService, LinkService>()
 
 				.AddSingleton<IShabbatWeekService, ShabbatWeekService>()
