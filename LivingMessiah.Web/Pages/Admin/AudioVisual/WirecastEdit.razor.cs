@@ -10,16 +10,16 @@ using System;
 namespace LivingMessiah.Web.Pages.Admin.AudioVisual
 {
 	[Authorize(Roles = Roles.AdminOrAudiovisual)]
-	public partial class Wirecast
+	public partial class WirecastEdit
 	{
 		[Inject]
 		public IShabbatWeekRepository db { get; set; }
 
 		[Inject]
-		public ILogger<Wirecast> Logger { get; set; }
+		public ILogger<WirecastEdit> Logger { get; set; }
 
-		public LivingMessiah.Domain.Wirecast WirecastVM { get; set; }
-		public LivingMessiah.Domain.ScratchPad ScratchPad { get; set; }
+		public Wirecast Wirecast { get; set; }
+		public ScratchPad ScratchPad { get; set; }
 
 		protected bool DatabaseError { get; set; } = false;
 		protected string DatabaseErrorMsg { get; set; }
@@ -28,12 +28,12 @@ namespace LivingMessiah.Web.Pages.Admin.AudioVisual
 
 		protected override async Task OnInitializedAsync()
 		{
-			Logger.LogDebug($"Inside {nameof(Wirecast)}!{nameof(OnInitializedAsync)}");
+			Logger.LogDebug($"Inside {nameof(WirecastEdit)}!{nameof(OnInitializedAsync)}");
 			DatabaseError = false;
 			try
 			{
-				WirecastVM = await db.GetCurrentWirecast();
-				if (WirecastVM == null)
+				Wirecast = await db.GetCurrentWirecast();
+				if (Wirecast == null)
 				{
 					Logger.LogDebug($"Wirecast is null, Sql:{db.BaseSqlDump}");
 				}
@@ -54,12 +54,12 @@ namespace LivingMessiah.Web.Pages.Admin.AudioVisual
 
 		protected async Task UpdateWirecastLink()
 		{
-			Logger.LogDebug($"Inside {nameof(Wirecast)}!{nameof(UpdateWirecastLink)}");
+			Logger.LogDebug($"Inside {nameof(WirecastEdit)}!{nameof(UpdateWirecastLink)}");
 			RowCount = 0;
 			DatabaseError = false;
 			try
 			{
-				RowCount = await db.UpdateWirecastLink(WirecastVM.Id, WirecastVM.WirecastLink);
+				RowCount = await db.UpdateWirecastLink(Wirecast.Id, Wirecast.WirecastLink);
 			}
 			catch (System.Exception ex)
 			{
@@ -71,7 +71,7 @@ namespace LivingMessiah.Web.Pages.Admin.AudioVisual
 
 		protected async Task UpdateScratchPad()
 		{
-			Logger.LogDebug($"Inside {nameof(Wirecast)}!{nameof(UpdateScratchPad)}");
+			Logger.LogDebug($"Inside {nameof(WirecastEdit)}!{nameof(UpdateScratchPad)}");
 			try
 			{
 				DatabaseError = false;

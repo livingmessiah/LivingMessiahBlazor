@@ -9,7 +9,7 @@ namespace LivingMessiah.Domain
 		public Int32 Id { get; set; }
 
 		[Required]
-		public String ShabbatDate { get; set; }
+		public DateTime ShabbatDate { get; set; }
 
 		[Required]
 		[MaxLength(100)]
