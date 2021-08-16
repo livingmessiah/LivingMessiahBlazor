@@ -121,6 +121,7 @@ ORDER BY {sortField}
 
 		public async Task<List<vwRegistration>> GetAll(RegistrationSortEnum sort)
 		{
+			/*
 			string sortField = sort switch
 			{
 				RegistrationSortEnum.Id => "Id",
@@ -128,11 +129,24 @@ ORDER BY {sortField}
 				RegistrationSortEnum.FirstName => "FirstName",
 				_ => "Id",
 			};
+			*/
+
+			string sortField = sort switch
+			{
+				RegistrationSortEnum.Id => "LocationEnum, Id",
+				RegistrationSortEnum.LastName => "LocationEnum, FamilyName",
+				RegistrationSortEnum.FirstName => "LocationEnum, FirstName",
+				_ => "Id",
+			};
+
 
 			base.Sql = $@"
 SELECT TOP 500 Id, FamilyName, FirstName, SpouseName, OtherNames
 , EMail, Phone, Adults, ChildBig, ChildSmall, WillHelpWithMeals
 , CampId, StatusId, CampCD, StatusCD, Camp, Status, Notes, AssignedLodging
+
+, LocationDescr, LocationEnum
+
 , RegistrationFee, CampCost, LmmDonation
 , LodgingDaysBitWise, LodgingDaysTotal
 , AttendanceBitwise, AttendanceTotal

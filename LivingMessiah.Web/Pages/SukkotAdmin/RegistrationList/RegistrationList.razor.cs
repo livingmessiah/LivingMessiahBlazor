@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using SukkotApi.Domain;
 using SukkotApi.Domain.Enums;
 using Microsoft.AspNetCore.Components;
+using System.Linq;
 
 namespace LivingMessiah.Web.Pages.SukkotAdmin.RegistrationList
 {
@@ -27,7 +28,11 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.RegistrationList
 
 		public RegistrationSortEnum Sort { get; private set; }
 		public List<vwRegistration> Registrations { get; set; }
-		
+
+		public List<vwRegistration> RegistrationsGHTHF { get; set; }
+		public List<vwRegistration> RegistrationsWildernessRanch { get; set; }
+		public List<vwRegistration> RegistrationsWindmillRanch { get; set; }
+
 		public bool IsMealsAvailable { get; set; } = Sukkot.Constants.Other.IsMealsAvailable;
 
 		public RegistrationSortEnum RegistrationSort { get; set; } = RegistrationSortEnum.LastName;
@@ -39,8 +44,16 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.RegistrationList
 			try
 			{
 				Logger.LogDebug($"Inside: {nameof(RegistrationList)}!{nameof(OnInitializedAsync)}, RegistrationSort:{RegistrationSort}, calling {nameof(svc.GetAll)}");
+				//Seasons = CalendarYear.Seasons.Where(w => w.YearId == CalendarYear.Year).ToList();
 				Registrations = await svc.GetAll(RegistrationSort);
-				if (Registrations != null) { RecordCount = Registrations.Count; }
+				if (Registrations != null) 
+				{ 
+					RecordCount = Registrations.Count;
+					RegistrationsGHTHF = Registrations.Where(w => w.LocationEnum == LocationEnum.GreenHouseTrolleyHobbyFarm).ToList();
+					RegistrationsWildernessRanch = Registrations.Where(w => w.LocationEnum == LocationEnum.WildernessRanch).ToList();
+					RegistrationsWindmillRanch = Registrations.Where(w => w.LocationEnum == LocationEnum.WindmillRanch).ToList();
+				}
+				
 			}
 			catch (Exception)
 			{
