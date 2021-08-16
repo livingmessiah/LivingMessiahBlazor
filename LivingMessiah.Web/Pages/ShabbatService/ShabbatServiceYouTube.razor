@@ -1,7 +1,7 @@
 ﻿
 @if (CurrentWeeklyVideo != null)
 {
-	@if (!IsPrinterFriendly)
+	@if (!IsPrinterFriendly && !LoadQuickly)
 	{
 		<hr class="warning" />
 
@@ -23,5 +23,3 @@ else
 {
 	<p><em>Loading...</em></p>
 }
-
-

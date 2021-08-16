@@ -36,6 +36,7 @@ namespace LivingMessiah.Web.Shared
 		{
 			try
 			{
+				//Logger.LogDebug($"Inside {nameof(PsalmAndProverbCurrent)}!{nameof(OnInitializedAsync)}");
 				CurrentPsalmAndProverb = await svc.GetCurrentPsalmAndProverb();
 				ShabbatDateYMD = CurrentPsalmAndProverb.ShabbatDate.ToString("MMM dd");
 				PsalmsHeading = BuildHeading(CurrentPsalmAndProverb.PsalmsBCV, CurrentPsalmAndProverb.PsalmsTitle);
@@ -43,6 +44,7 @@ namespace LivingMessiah.Web.Shared
 
 				ProverbsHeading = BuildHeading(CurrentPsalmAndProverb.ProverbsBCV, "");
 				ProverbsVerses = ValidateHtml(CurrentPsalmAndProverb.ProverbsKJVHtmlConcat, hasNestedTags: true);
+				//Logger.LogDebug($"...{nameof(PsalmsHeading)}: {PsalmsHeading}; {nameof(ProverbsHeading)}: {ProverbsHeading}");
 			}
 			catch (Exception ex)
 			{

@@ -6,7 +6,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Shared\EnvComponent.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="..\.editorconfig" Link=".editorconfig" />
+    <None Include="Shared\EnvComponent.razor" />
   </ItemGroup>
 
   <ItemGroup>
@@ -33,6 +38,14 @@
     <PackageReference Include="Syncfusion.Blazor.Calendars" Version="19.2.0.51" />
     <PackageReference Include="Syncfusion.Blazor.DropDowns" Version="19.2.0.51" />
     <PackageReference Include="Syncfusion.Blazor.Navigations" Version="19.2.0.51" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Shared\EnvComponent.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Shared\EnvComponent.razor" />
   </ItemGroup>
 
 

@@ -1,10 +1,14 @@
 ﻿using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
+using Microsoft.Extensions.Options;
+using LivingMessiah.Web.Settings;
 
 namespace LivingMessiah.Web.Pages.ShabbatService
 {
 	public class ShabbatServiceBase : ComponentBase
 	{
+		[Inject]
+		public IOptions<AppSettings> AppSettings { get; set; }
+
 		protected bool _isPrinterFriendly = false;
 
 		protected string _printMsg;
@@ -12,12 +16,13 @@ namespace LivingMessiah.Web.Pages.ShabbatService
 		protected string _oppositeToggleMsg;
 				
 		public bool _ShowSpanish { get; set; } = false;
+		public bool LoadQuickly { get; set; }
 
 		protected override void OnInitialized()
 		{
+			LoadQuickly = AppSettings.Value.ShabbatServiceLoadQuickly;
 			SetPrintButton();
 		}
-
 
 		protected void LanguageSelectionChanged(bool showSpanish)
 		{

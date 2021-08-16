@@ -23,8 +23,8 @@ namespace LivingMessiah.Web.Pages.ShabbatService
 		AhronicBlessing = 15,
 		WineAndBread = 16,
 		NewsFlash = 17,
-		PsalmsAndProverbs = 18,  
-
+		PsalmsAndProverbs = 18,
+		ThankYou = 19,
 	}
 
 	public class Section
@@ -82,14 +82,15 @@ namespace LivingMessiah.Web.Pages.ShabbatService
 		public static Section PsalmsAndProverbs { get; } = new Section(
 			SectionEnum.PsalmsAndProverbs, "psalms-and-proverbs-1024-385.jpeg", "Psalms and Proverbs", "Toggle18", "", "");
 
+		public static Section ThankYou { get; } = new Section(
+			SectionEnum.ThankYou, "thank-you-1024-385.jpeg", "Thank You!!!", "Toggle19", "", "");
+
+		public SectionEnum SectionEnum { get; private set; }
 		public string GraphicUrl { get; private set; }
 		public string Title { get; private set; }
 		public string ToggleId { get; private set; }
 		public string CarouselId { get; private set; }
 		public string Time { get; private set; }
-		public SectionEnum SectionEnum { get; private set; }
-		public string ViewName { get; private set; }
-		//public static MealTime Bru { get; } = new MealTime(MealTimeEnum.Brunch, 9, 12); 
 
 		private Section(SectionEnum sectionEnum, string graphicUrl, string title, string toggleId, string carouselId, string time)
 		{

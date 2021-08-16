@@ -2,13 +2,14 @@
 @page "/PAndP"
 @using static LivingMessiah.Web.Pages.ImportantLinks.Constants.MyHebrewBible
 
-<PageHeader Icon="@LivingMessiah.Web.Links.PsalmsAndProverbs.Icon" 
+<PageHeader Icon="@LivingMessiah.Web.Links.PsalmsAndProverbs.Icon"
 						Title="@LivingMessiah.Web.Links.PsalmsAndProverbs.Title">
 
 </PageHeader>
 
-<PsalmAndProverbCurrent PerformHtmlValidation="true">
-</PsalmAndProverbCurrent>
+<div class="card border-primary my-3">
+	<PsalmAndProverbCurrent PerformHtmlValidation="true" />
+</div>
 
 @if (PsalmsAndProverbsList != null)
 {

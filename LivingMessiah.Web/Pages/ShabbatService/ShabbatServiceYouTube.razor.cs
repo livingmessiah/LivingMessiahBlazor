@@ -7,6 +7,7 @@ using static LivingMessiah.Web.Links.ShabbatService.LiveFeed;
 
 namespace LivingMessiah.Web.Pages.ShabbatService
 {
+	//public partial class ShabbatServiceYouTube : BaseSection
 	public partial class ShabbatServiceYouTube
 	{
 		[Inject]
@@ -16,12 +17,15 @@ namespace LivingMessiah.Web.Pages.ShabbatService
 		public ILogger<ShabbatServiceYouTube> Logger { get; set; }
 
 		[Parameter]
-		public bool IsPrinterFriendly { get; set; }
-
-		[Parameter]
 		public bool ShowSpanish { get; set; }
 
 		protected const string SubTitle = "Watch the video when it is live";
+
+		[Parameter]
+		public bool LoadQuickly { get; set; } = false;
+
+		[Parameter]
+		public bool IsPrinterFriendly { get; set; }
 
 		protected string Url { get; set; }
 

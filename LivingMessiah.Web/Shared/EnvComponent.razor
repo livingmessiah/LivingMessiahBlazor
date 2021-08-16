@@ -1,0 +1,23 @@
+﻿@using Microsoft.AspNetCore.Hosting
+@using Microsoft.Extensions.Hosting
+@inject IWebHostEnvironment Env
+
+@if (Env.IsDevelopment() | Env.IsStaging())
+{
+	@ChildContent
+}
+else
+{
+	@ChildContent
+}
+
+@code {
+	[Parameter]
+	public RenderFragment ChildContent { get; set; }
+
+	/*
+	Usage
+	<EnvComponent><h1>Test</h1></EnvComponent>
+
+	*/
+}

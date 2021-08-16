@@ -1,4 +1,6 @@
-﻿@inherits BaseSection
+﻿@using LivingMessiah.RazorClassLibrary
+
+@inherits BaseSection
 
 @if (!LoadQuickly)
 {
@@ -38,3 +40,15 @@
 	}
 
 </div>
+
+@if (!ShowCarousel)
+{
+	<div class="mt-3">
+		<Carousel imageset="@AssetImages" CssClass="col-12"></Carousel>
+	</div>
+
+}
+else
+{
+	<p class="text-black-50 float-lg-right"><small>Carousel of images not shown. <b>ToDo:</b> add text instead</small></p>
+}
