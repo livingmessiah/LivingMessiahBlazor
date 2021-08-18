@@ -1,61 +1,75 @@
 ﻿@page  "/Parasha"
 @using static LivingMessiah.Web.Links.Parasha
-
 @*
 	ToDo: figure out how to make this work
-	<br />
 	<HebrewDate></HebrewDate>
 *@
 
-<h2>
-	<i class="@Icon"></i> @Title
-	<br />
-</h2>
+<PageHeader Icon="@Icon"
+						Title="@Title"
+						AddBorderBottom="false" />
 
-<hr class="warning" />
+<LoadingComponent IsLoading="vwCurrentParasha==null && DatabaseWarning==false">
 
-<Current></Current>
+	<div class="card bg-light">
+		<div class="card-header text-center">
+			<h3> <i class="@IconCurrent"></i> Current Parasha</h3>
+		</div>
+		<div class="card-body">
+			<HelloWorld vwCurrentParasha="@vwCurrentParasha"></HelloWorld>
+		</div>
 
-@*
-	ToDo: See Note1
+	</div>
+</LoadingComponent>
 
-	<h4 class="pt-2">
-		<span class='badge badge-warning pb-15'>Weekly Torah Study</span>
+<ButtonToggleVisibility Title="Parasha Table">
+	<ChildContent>
+		<div class="card-body  m-0 px-4">
 
-		<button class="btn btn-outline-primary collapsed" type="button"
-						data-target="#DetailsId" data-toggle="collapse"
-						aria-controls="DetailsId" aria-expanded="false">
-			<i class="fas" aria-hidden="true"></i>
-			Details...
-		</button>
-	</h4>
-
-		<div class=" collapse" id="DetailsId">
-			Detailed Content, i.e. IndexTable Goes HERE!
-		</div>*@
-
-@if (ShowTable)
-{
-	<hr class="warning" />
-	<div class="row">
-		<div class="col">
-			<h2><span class="badge badge-warning">Weekly Torah Study</span></h2>		<h6>
+			<h6>
 				We are currently studying the Torah on a three year cycle which allows us more time to delve deeper into His Word.
 			</h6>
 			<ul class="list-inline">
 				<li><a href="@IndexPrint"><small><b>Print Version</b></small></a></li>
 			</ul>
+
+			<div class="d-none d-sm-block">
+				<IndexTable IsXs="false"></IndexTable>
+			</div>
+			<div class="d-block d-sm-none">
+				<IndexTable IsXs="true"></IndexTable>
+			</div>
+
 		</div>
-	</div>
+	</ChildContent>
+</ButtonToggleVisibility>
 
-	<div class="row d-none d-sm-block">
-		<IndexTable IsXs="false"></IndexTable>
-	</div>
-	<div class="d-block d-sm-none">
-		<IndexTable IsXs="true"></IndexTable>
-	</div>
 
-	<div class="d-none d-sm-block">
+@if (DatabaseError)
+{
+	<p class="text-danger"><em>@DatabaseErrorMsg</em></p>
+}
+else
+{
+	if (DatabaseWarning)
+	{
+		<p class="text-warning">@DatabaseWarning</p>
+	}
+}
+
+@*<div class="d-none d-sm-block">
+	<button type="button" @onclick="HebrewMonthsStatic_ButtonClick"
+					bs-toggle-modal="instructions"
+					class="btn btn-danger btn-lg mb-4">
+		<i class="far fa-moon"></i> Hebrew Months
+	</button>
+	@if (MakeModalVisible)
+	{
+		<HebrewMonthsStatic></HebrewMonthsStatic>
+	}
+</div>*@
+
+@*<div class="d-none d-sm-block">
 		<HebrewMonthsStatic></HebrewMonthsStatic>
 		<a href="#hebMonths" data-toggle="modal"><i class="far fa-moon"></i> Hebrew Months</a><br />
 		<a href="@LivingMessiah.Web.Links.ParashaArchive.Index">
@@ -66,31 +80,19 @@
 	<div class="d-block d-sm-none">
 		<HebrewMonthsXsStatic></HebrewMonthsXsStatic>
 		<a href="#hebMonthsXs" data-toggle="modal"> Hebrew Months</a>
-	</div>
-}
+	</div>*@
 
-
-@* ToDo: is this a better way  @onclick="@(e => ChangeContent(e, PartialViewEnum.Intro))"> *@
-<div class="row">
-	<div class="col">
-		<button class="my-3 btn btn-xlarge btn-primary"
-						@onclick="@ShowTable_Button_Click">
-			@((MarkupString)OppositeIcon) @OppositeToggleMsg
-		</button>
-	</div>
+<h1 class="mt-5 mb-1">Related</h1>
+<div class="list-group">
+	<a href="@TorahTuesdayLink.Index" title="@TorahTuesdayLink.Title @TorahTuesdayLink.HomeTitleSuffix"
+		 class="list-group-item list-group-item-warning ">
+		<i class="@TorahTuesdayLink.Icon fa-fw fa-3x" aria-hidden="true"></i>
+		<span class="home-page-xs"><b>@TorahTuesdayLink.Title</b></span>
+		<span class="float-right text-info">
+			<span class="hebrew">@TorahTuesdayLink.HomeFloatRightHebrew</span>
+		</span>
+	</a>
 </div>
 
-<hr class="warning" />
 
-<TuesdayTorahStudy></TuesdayTorahStudy>
 <AlephBetFooter></AlephBetFooter>
-
-@*
-	Note 1:
-	 It would be nice to figure out how manually open the details (i.e. <IndexTable>),
-		so that I could load the contents of that table at that time.
-		Bootstrap does this via JS
-		See C:\Source\LivingMessiahWiki\Toggle-Button-Group.png
-		See C:\Source\LivingMessiahBackup\774 Parasha is not showing the right reading date\ToggleButtonGroup-src
-
-*@

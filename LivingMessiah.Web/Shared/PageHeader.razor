@@ -1,5 +1,5 @@
 ﻿
-<div class="pb-2 mt-4 mb-2 border-bottom">
+<div class="@(AddBorderBottom? "pb-2 mt-4 mb-2 border-bottom" : "pb-2 mt-4 mb-2")">
 	<h2><i class="@Icon"></i> @Title</h2>
 </div>
 
@@ -9,6 +9,7 @@
 }
 
 @*
+	<a class="@(User.Identity.IsAuthenticated ? "auth" : "anon")">My link here</a>
 	fa-2x
 
 		else if (LoadFailed)

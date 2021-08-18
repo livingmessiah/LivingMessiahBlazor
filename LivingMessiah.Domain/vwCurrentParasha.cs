@@ -23,5 +23,13 @@
 			string x = $"Id: {Id}; TriNum: {TriNum}, Torah: {Torah}, Name: {Name}";
 			return x;
 		}
+
+		public string ParashaHref
+		{
+			get
+			{
+				return $"{Constants.ParashaBaseUrl}/{Id}?slug={NameUrl}/";
+			}
+		}
 	}
 }

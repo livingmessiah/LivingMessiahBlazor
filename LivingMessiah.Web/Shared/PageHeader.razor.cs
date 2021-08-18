@@ -16,5 +16,8 @@ namespace LivingMessiah.Web.Shared
 		[Parameter]
 		public bool AddBreak { get; set; } = false;
 
+		[Parameter]
+		public bool AddBorderBottom { get; set; } = true;
+
 	}
 }

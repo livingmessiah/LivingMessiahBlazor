@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components.Web;
 
-namespace LivingMessiah.Web.Shared
+namespace LivingMessiah.Web.Pages.WindmillRanch
 {
 	public enum PartialViewEnum
 	{
