@@ -17,5 +17,14 @@
 		public bool IsNewBook { get; set; }
 		public System.DateTime ShabbatDate { get; set; }
 		public string BaseParashaUrl { get; set; }
+
+
+		public string ParashaHref
+		{
+			get
+			{
+				return $"{Constants.ParashaBaseUrl}/{Id}?slug={NameUrl}/";
+			}
+		}
 	}
 }

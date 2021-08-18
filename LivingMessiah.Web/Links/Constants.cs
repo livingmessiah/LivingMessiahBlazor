@@ -228,9 +228,12 @@
 	public static class ParashaArchive
 	{
 		public const string Index = "/Parasha/Archive";
+		public const string IndexLeviticus = "/Parasha/Archive/Leviticus";
+		public const string IndexNumbers = "/Parasha/Archive/Numbers";
 		public const string Icon = "fas fa-archive";
 		public const string Title = "Parashot Archive";
 		public const string CurrentIndex = Parasha.Index;
+
 		public static class Fragments
 		{
 			public const string Leviticus = "leviticus";

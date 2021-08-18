@@ -10,16 +10,40 @@
 						AddBorderBottom="false" />
 
 <LoadingComponent IsLoading="vwCurrentParasha==null && DatabaseWarning==false">
+	<div class="d-md-none">
+		<div class="card bg-light text-center">
+			<div class="card-header">
+				<h3> <i class="@IconCurrent"></i> Current Parasha</h3>
+			</div>
 
-	<div class="card bg-light">
-		<div class="card-header text-center">
-			<h3> <i class="@IconCurrent"></i> Current Parasha</h3>
-		</div>
-		<div class="card-body">
-			<HelloWorld vwCurrentParasha="@vwCurrentParasha"></HelloWorld>
-		</div>
+			<div class="card-body">
+				<CurrentParasha vwCurrentParasha="@vwCurrentParasha"
+												CssUlClass="h5 mt-2"
+												CssUlStyle="list-style-type:none"
+												IsXsOrSm="true">
+				</CurrentParasha>
+			</div>
 
+		</div>
 	</div>
+
+	<div class="d-none d-md-block">
+		<div class="card bg-light">
+			<div class="card-header text-center">
+				<h3> <i class="@IconCurrent"></i> Current Parasha</h3>
+			</div>
+
+			<div class="card-body">
+				<CurrentParasha vwCurrentParasha="@vwCurrentParasha"
+												CssUlClass="fa-ul h5 mt-3"
+												CssUlStyle=""
+												IsXsOrSm="false">
+				</CurrentParasha>
+			</div>
+
+		</div>
+	</div>
+
 </LoadingComponent>
 
 <ButtonToggleVisibility Title="Parasha Table">
@@ -43,7 +67,7 @@
 		</div>
 	</ChildContent>
 </ButtonToggleVisibility>
-
+<a href="@LivingMessiah.Web.Links.ParashaArchive.Index">Archive</a>
 
 @if (DatabaseError)
 {
@@ -58,16 +82,16 @@ else
 }
 
 @*<div class="d-none d-sm-block">
-	<button type="button" @onclick="HebrewMonthsStatic_ButtonClick"
-					bs-toggle-modal="instructions"
-					class="btn btn-danger btn-lg mb-4">
-		<i class="far fa-moon"></i> Hebrew Months
-	</button>
-	@if (MakeModalVisible)
-	{
-		<HebrewMonthsStatic></HebrewMonthsStatic>
-	}
-</div>*@
+		<button type="button" @onclick="HebrewMonthsStatic_ButtonClick"
+						bs-toggle-modal="instructions"
+						class="btn btn-danger btn-lg mb-4">
+			<i class="far fa-moon"></i> Hebrew Months
+		</button>
+		@if (MakeModalVisible)
+		{
+			<HebrewMonthsStatic></HebrewMonthsStatic>
+		}
+	</div>*@
 
 @*<div class="d-none d-sm-block">
 		<HebrewMonthsStatic></HebrewMonthsStatic>
@@ -95,4 +119,6 @@ else
 </div>
 
 
+
 <AlephBetFooter></AlephBetFooter>
+
