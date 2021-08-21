@@ -9,15 +9,15 @@
 						Title="@Title"
 						AddBorderBottom="false" />
 
-<LoadingComponent IsLoading="vwCurrentParasha==null && DatabaseWarning==false">
+<LoadingComponent IsLoading="Parasha==null && DatabaseWarning==false">
 	<div class="d-md-none">
 		<div class="card bg-light text-center">
 			<div class="card-header">
-				<h3> <i class="@IconCurrent"></i> Current Parasha</h3>
+				<h3> <i class="@IconCurrent"></i> Current Parasha <sup><small># @Parasha.TriNum</small></sup></h3>
 			</div>
 
 			<div class="card-body">
-				<CurrentParasha vwCurrentParasha="@vwCurrentParasha"
+				<CurrentParasha Parasha="@Parasha"
 												CssUlClass="h5 mt-2"
 												CssUlStyle="list-style-type:none"
 												IsXsOrSm="true">
@@ -34,7 +34,7 @@
 			</div>
 
 			<div class="card-body">
-				<CurrentParasha vwCurrentParasha="@vwCurrentParasha"
+				<CurrentParasha Parasha="@Parasha"
 												CssUlClass="fa-ul h5 mt-3"
 												CssUlStyle=""
 												IsXsOrSm="false">
@@ -58,10 +58,11 @@
 			</ul>
 
 			<div class="d-none d-sm-block">
-				<IndexTable IsXs="false"></IndexTable>
+				<IndexTable IsXs="false" BookId="@Parasha.BookId"></IndexTable>
 			</div>
 			<div class="d-block d-sm-none">
-				<IndexTable IsXs="true"></IndexTable>
+				<IndexTable IsXs="true" BookId="@Parasha.BookId"></IndexTable>
+				<IndexGridXsSm></IndexGridXsSm>
 			</div>
 
 		</div>
@@ -117,8 +118,6 @@ else
 		</span>
 	</a>
 </div>
-
-
 
 <AlephBetFooter></AlephBetFooter>
 

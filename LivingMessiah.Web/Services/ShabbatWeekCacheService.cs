@@ -17,7 +17,7 @@ namespace LivingMessiah.Web.Services
 		Task<PsalmAndProverb> GetCurrentPsalmAndProverb();
 
 		// Parasha
-		Task<vwCurrentParasha> GetCurrentParasha();
+		Task<LivingMessiah.Domain.Parasha.Queries.Parasha> GetCurrentParasha();
 		//Task<IReadOnlyList<Parasha>> GetParashotByBookId(int bookId);
 
 		// Weekly Videos
@@ -69,6 +69,7 @@ namespace LivingMessiah.Web.Services
 			}
 			else
 			{
+				await Task.Delay(0);
 				//log.LogDebug($"{msg}; Key found in cache");
 			}
 			return null; // shabbatWeeksList.Where(w => w.IsCurrentShabbat = true).ToList();
@@ -99,17 +100,17 @@ namespace LivingMessiah.Web.Services
 		}
 
 		// Parasha
-		public async Task<vwCurrentParasha> GetCurrentParasha()
+		public async Task<LivingMessiah.Domain.Parasha.Queries.Parasha> GetCurrentParasha()
 		{
 
 			var cacheKey = Settings.Constants.ParashaCache.Key;
 
 			log.LogDebug($"Inside {nameof(ShabbatWeekCacheService)}!{nameof(GetCurrentParasha)}; cacheKey:{cacheKey}");
-			if (!memoryCache.TryGetValue(cacheKey, out vwCurrentParasha parasha))
+			if (!memoryCache.TryGetValue(cacheKey, out LivingMessiah.Domain.Parasha.Queries.Parasha parasha))
 			{
-				log.LogDebug($"...Key NOT found in cache, calling {nameof(db.GetCurrentParasha)}");
-				parasha = await db.GetCurrentParasha();
-				log.LogDebug($"...After calling {nameof(db.GetCurrentParasha)}; parasha: {parasha}");
+				log.LogDebug($"...Key NOT found in cache, calling {nameof(db.GetCurrentParashaAndChildren)}");
+				parasha = await db.GetCurrentParashaAndChildren();
+				log.LogDebug($"...After calling {nameof(db.GetCurrentParashaAndChildren)}; parasha: {parasha}");
 
 
 				if (parasha != null && parasha.Id != 0)

@@ -21,14 +21,14 @@ namespace LivingMessiah.Web.Pages.Parasha
 
 		protected bool LoadFailed;
 
-		protected IReadOnlyList<vwParasha> Parasha;
+		protected IReadOnlyList<LivingMessiah.Domain.Parasha.Queries.ParashaList> ParashaList;
 		protected BibleBook Book { get; set; }
-		protected vwCurrentParasha CurrentParasha;
+		protected LivingMessiah.Domain.Parasha.Queries.Parasha Parasha;
 
 		[Parameter]
 		public bool IsXs { get; set; }
 
-		//[Parameter]
+		[Parameter]
 		public int BookId { get; set; }
 
 		protected string Colspan;
@@ -40,9 +40,9 @@ namespace LivingMessiah.Web.Pages.Parasha
 			{
 				LoadFailed = false;
 				Colspan = (!IsXs) ? "8" : "6";
-				CurrentParasha = await SvcCache.GetCurrentParasha();
-				BookId = CurrentParasha.BookId;  // why can't I pass this in as a Parameter? 
-				Parasha = await Svc.GetParashotByBookId(BookId);
+				//Parasha = await SvcCache.GetCurrentParasha();
+				//BookId = Parasha.BookId;  // why can't I pass this in as a Parameter? 
+				ParashaList = await Svc.GetParashotByBookId(BookId);
 				Book = await SvcCache.GetCurrentParashaTorahBookById(BookId);
 			}
 			catch (System.Exception ex)
@@ -52,12 +52,13 @@ namespace LivingMessiah.Web.Pages.Parasha
 			}
 		}
 
-		public static string CurrentReadDateTextFormat(DateTime readDate, string textColor = "text-success")
+		public static string CurrentReadDateTextFormat(DateTime readDate)
 		{
 			DateTime compareDate = DateTime.Today;
 			if (readDate >= compareDate & readDate <= compareDate.AddDays(6))
 			{
 				return "text-danger";
+				//<span class='badge-danger'>@Title</span>
 			}
 			else
 			{

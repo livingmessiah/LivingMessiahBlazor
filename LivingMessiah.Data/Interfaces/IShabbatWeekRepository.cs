@@ -30,8 +30,8 @@ namespace LivingMessiah.Data
 		Task<BibleBook> GetTorahBookById(int id);
 
 		//Parasha
-		Task<vwCurrentParasha> GetCurrentParasha();
-		Task<IReadOnlyList<vwParasha>> GetParashotByBookId(int bookId);
+		Task<LivingMessiah.Domain.Parasha.Queries.Parasha> GetCurrentParashaAndChildren();
+		Task<IReadOnlyList<LivingMessiah.Domain.Parasha.Queries.ParashaList>> GetParashotByBookId(int bookId);
 
 		#region ToDo: Move somewhere else
 

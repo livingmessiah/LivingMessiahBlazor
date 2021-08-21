@@ -17,7 +17,7 @@ namespace LivingMessiah.Web.Shared
 		public bool IsPrinterFriendly { get; set; }
 		protected bool _isPrinterFriendly;
 				
-		protected vwCurrentParasha Parasha;
+		protected LivingMessiah.Domain.Parasha.Queries.Parasha Parasha;
 		protected string ParashaAnchor;
 		protected string ParashaHref;
 		protected bool CurrentParashaFound;
@@ -38,7 +38,7 @@ namespace LivingMessiah.Web.Shared
 					CurrentParashaFound = true;
 					_isPrinterFriendly = IsPrinterFriendly;
 					ParashaHref = MyHebrewBible.ParashaUrl(Parasha.Id, Parasha.NameUrl);
-					ParashaAnchor = GetParashaAnchor(ParashaHref, Parasha.Torah);
+					ParashaAnchor = GetParashaAnchor(ParashaHref, Parasha.TorahLong);
 				}
 				else
 				{

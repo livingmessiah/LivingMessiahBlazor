@@ -1,6 +1,10 @@
 ﻿@inherits BaseIndexTable
 
-@if (Parasha != null)
+@* 
+ToDo: fix	
+*@
+
+@if (ParashaList != null)
 {
 <table class="table table-sm table-hover">
 	<thead>
@@ -22,7 +26,7 @@
 	</thead>
 	<tbody>
 
-		@foreach (var item in Parasha)
+		@foreach (var item in ParashaList)
 			{
 				if (item.RowCntByBookId == 1)
 				{
@@ -60,7 +64,7 @@
 			</td>
 
 
-			<td>@item.Torah</td>
+			<td>@item.TorahLong</td>
 			<td>@item.Haftorah</td>
 			<td>@item.Brit</td>
 

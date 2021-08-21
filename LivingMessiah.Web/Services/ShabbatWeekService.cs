@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using LivingMessiah.Domain;
+using LivingMessiah.Domain.Parasha.Queries;
 
 namespace LivingMessiah.Web.Services
 {
@@ -16,7 +17,7 @@ namespace LivingMessiah.Web.Services
 		Task<int> WeeklyVideoDelete(int id);
 
 		// Parasha
-		Task<IReadOnlyList<vwParasha>> GetParashotByBookId(int bookId);
+		Task<IReadOnlyList<LivingMessiah.Domain.Parasha.Queries.ParashaList>> GetParashotByBookId(int bookId);
 
 	}
 
@@ -35,6 +36,8 @@ namespace LivingMessiah.Web.Services
 			db = dbRepository;
 			//log = logger;
 		}
+
+
 		#endregion
 
 		public async Task<List<vwPsalmsAndProverbs>> GetPsalmsAndProverbsList()
@@ -65,19 +68,14 @@ namespace LivingMessiah.Web.Services
 		}
 		#endregion
 
+
+
 		// Parasha
-		public async Task<IReadOnlyList<vwParasha>> GetParashotByBookId(int bookId)
+		public async Task<IReadOnlyList<LivingMessiah.Domain.Parasha.Queries.ParashaList>> GetParashotByBookId(int bookId)
 		{
 			return await db.GetParashotByBookId(bookId);
 		}
-
 	}
-
-
-	/*
-	 The above example also demonstrates how a projection / mapping from an entity to a view model can be reused by creating an Expression<Func<EntityType, ViewModelType>>
-	 */
-
 
 }
 

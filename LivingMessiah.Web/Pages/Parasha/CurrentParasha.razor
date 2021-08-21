@@ -2,27 +2,27 @@
 
 @if (IsXsOrSm)
 {
-	<p class="mb-4"><i class="far fa-calendar"></i> @vwCurrentParasha.ShabbatDate.ToString("MMMM dd-yyyy")</p>
+	<p class="mb-4"><i class="far fa-calendar"></i> @Parasha.ShabbatDate.ToString("MMMM dd-yyyy")</p>
 }
 else
 {
-	<p class="float-right"><i class="far fa-calendar"></i> @vwCurrentParasha.ShabbatDate.ToString("MMMM dd-yyyy")</p>
+	<p class="float-right"><i class="far fa-calendar"></i> @Parasha.ShabbatDate.ToString("MMMM dd-yyyy")</p>
 }
 
 
-<a href='@vwCurrentParasha.ParashaHref'
+<a href='@Parasha.ParashaHref'
 	 class='btn-primary btn-lg mt-3' title='The current weekly reading (parasha)' target='_blank'>
 	<i class='fas fa-external-link-alt'></i>
-	@vwCurrentParasha.Torah
+	@Parasha.TorahLong
 </a>
 
 <ul style="@CssUlStyle" class="@CssUlClass">
 
-	@if (!String.IsNullOrEmpty(vwCurrentParasha.Haftorah))
+	@if (!String.IsNullOrEmpty(Parasha.Haftorah))
 	{
 		<li>
 			@GetWarningCaretRight()
-			Haftorah: @vwCurrentParasha.Haftorah
+			Haftorah: @Parasha.Haftorah
 		</li>
 	}
 	else
@@ -34,11 +34,11 @@ else
 	}
 
 
-	@if (!String.IsNullOrEmpty(vwCurrentParasha.Brit))
+	@if (!String.IsNullOrEmpty(Parasha.Brit))
 	{
 		<li>
 			@GetWarningCaretRight()
-			Brit: @vwCurrentParasha.Brit
+			Brit: @Parasha.Brit
 		</li>
 	}
 	else
@@ -49,13 +49,13 @@ else
 		</li>
 	}
 
-	@if (!String.IsNullOrEmpty(vwCurrentParasha.AhavtaURL))
+	@if (!String.IsNullOrEmpty(Parasha.AhavtaURL))
 	{
 		<li>
 			@GetWarningCaretRight()
-			<a href="@vwCurrentParasha.AhavtaURL"
+			<a href="@Parasha.AhavtaURL"
 				 class='btn-primary btn-sm'
-				 title="Ahavta URL [@vwCurrentParasha.Id]" target="_blank">
+				 title="Ahavta URL [@Parasha.Id]" target="_blank">
 				<i class="fas fa-external-link-alt"></i>
 				Commentary by Ahavta
 			</a>
@@ -72,6 +72,7 @@ else
 
 </ul>
 
+@*<p>PrevId: @Parasha.PrevId / NextId: @Parasha.NextId</p>*@
 
 @*
 
@@ -81,7 +82,7 @@ else
 	{
 		<li>
 			<span class="text-warning"><i class="fa-li fas fa-caret-right"></i></span>
-			<small>@vwCurrentParasha.ParashaHref</small>
+			<small>@Parasha.ParashaHref</small>
 		</li>
 	}
 *@

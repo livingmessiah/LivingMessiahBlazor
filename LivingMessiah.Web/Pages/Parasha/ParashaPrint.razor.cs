@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using LivingMessiah.Web.Services;
-using LivingMessiah.Domain;
+using LivingMessiah.Domain.Parasha.Queries;
 
 namespace LivingMessiah.Web.Pages.Parasha
 {
@@ -17,17 +17,16 @@ namespace LivingMessiah.Web.Pages.Parasha
 		//[Parameter]
 		public int BookId { get; set; }
 
-		protected IReadOnlyList<vwParasha> Parasha;
-		protected BibleBook Book { get; set; }
-		protected vwCurrentParasha CurrentParasha;
+		protected IReadOnlyList<ParashaList> ParashaList;
+		//protected LivingMessiah.Domain.Parasha.Queries.BibleBook Book { get; set; }
+		protected LivingMessiah.Domain.Parasha.Queries.Parasha CurrentParasha;
 
 		protected override async Task OnInitializedAsync()
 		{
 			CurrentParasha = await SvcCache.GetCurrentParasha();
 			BookId = CurrentParasha.BookId;
-			Parasha = await Svc.GetParashotByBookId(BookId);
-			Book = await SvcCache.GetCurrentParashaTorahBookById(BookId);
-			
+			ParashaList = await Svc.GetParashotByBookId(BookId);
+			//Book = await SvcCache.GetCurrentParashaTorahBookById(BookId);
 		}
 	}
 }

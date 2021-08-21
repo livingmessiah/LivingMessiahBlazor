@@ -1,4 +1,4 @@
-﻿using LivingMessiah.Domain;
+﻿using LivingMessiah.Domain.Parasha.Queries;
 using Microsoft.AspNetCore.Components;
 
 namespace LivingMessiah.Web.Pages.Parasha
@@ -6,7 +6,7 @@ namespace LivingMessiah.Web.Pages.Parasha
 	public partial class CurrentParasha
 	{
 		[Parameter]
-		public vwCurrentParasha vwCurrentParasha { get; set; }
+		public LivingMessiah.Domain.Parasha.Queries.Parasha Parasha { get; set; }
 
 		[Parameter]
 		public bool IsXsOrSm { get; set; }

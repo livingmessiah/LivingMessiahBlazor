@@ -1,6 +1,6 @@
 ﻿using System;
 using Microsoft.AspNetCore.Components;
-using LivingMessiah.Domain;
+using LivingMessiah.Domain.Parasha.Queries;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 using System.Linq;
@@ -18,7 +18,7 @@ namespace LivingMessiah.Web.Pages.Parasha
 		[Inject]
 		public Services.ILinkService LinkService { get; set; }
 
-		protected vwCurrentParasha vwCurrentParasha;
+		protected LivingMessiah.Domain.Parasha.Queries.Parasha Parasha;
 
 		protected Domain.Link TorahTuesdayLink { get; set; }
 
@@ -34,15 +34,15 @@ namespace LivingMessiah.Web.Pages.Parasha
 			{
 				TorahTuesdayLink = GetTorahTuesdayLink();
 
-				vwCurrentParasha = await Svc.GetCurrentParasha();
-				if (vwCurrentParasha != null)  // if (Parasha is not null C# 9)
+				Parasha = await Svc.GetCurrentParasha();
+				if (Parasha != null)  // if (Parasha is not null C# 9)
 				{
-					Logger.LogDebug($"vwCurrentParasha found. Parasha.ToString(): {vwCurrentParasha}");
+					Logger.LogDebug($"Parasha found. Parasha.ToString(): {Parasha}");
 				}
 				else
 				{
 					DatabaseWarning = true;
-					DatabaseErrorMsg = $"No current parasha found";
+					DatabaseErrorMsg = $"No parasha found";
 				}
 			}
 			catch (Exception ex)

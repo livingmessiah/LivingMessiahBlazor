@@ -332,7 +332,7 @@ WHERE Id = @Id
 
 		#region Bible
 
-
+		//ToDo: Deprecated, see GetCurrentParashaAndChildren
 		public async Task<BibleBook> GetTorahBookById(int id)
 		{
 			base.Parms = new DynamicParameters(new { Id = id });
@@ -353,40 +353,58 @@ WHERE Id = @Id
 
 		#region Parasha
 
-		public async Task<vwCurrentParasha> GetCurrentParasha()
+		public async Task<LivingMessiah.Domain.Parasha.Queries.Parasha> GetCurrentParashaAndChildren()
 		{
 			base.Sql = $@"
 SELECT 
-Id, ShabbatWeekId, BookId, Torah, Name, TriNum, ParashaName, NameUrl, AhavtaURL
-, Meaning, Haftorah, Brit, ShabbatDate, CurrentParashaUrl
-FROM Bible.vwCurrentParasha
+Id, TriNum, ShabbatDate
+, PrevId, NextId, BookId
+, TorahLong, Haftorah, Brit
+, ParashaName, AhavtaURL, NameUrl
+, BaseParashaUrl
+-- , Name, Meaning, ShabbatWeekId
+FROM Bible.vwCurrentParasha;
+
+SELECT Id, Abrv, Title AS EnglishTitle, HebrewTitle, HebrewName 
+FROM Bible.Book
+--WHERE Id = @Id
 ";
 			return await WithConnectionAsync(async connection =>
 			{
-				var rows = await connection.QueryAsync<vwCurrentParasha>(sql: base.Sql);
-				//return rows.SingleOrDefault();
-				return rows.Single();
+				var multi = await connection.QueryMultipleAsync(sql: base.Sql);
+				/*
+				*** NOTE THE ORDER OF THE  `multi.ReadAsync<foo>` MATTERS AND MUST MATCH UP WITH `base.Sql` ***
+				*/
+				var Parasha = await multi.ReadSingleOrDefaultAsync<LivingMessiah.Domain.Parasha.Queries.Parasha>();    // #1
+				if (Parasha != null)
+				{
+					Parasha.BibleBook = (await multi.ReadAsync<LivingMessiah.Domain.Parasha.Queries.BibleBook>())
+					.Where(w => w.Id == Parasha.BookId).SingleOrDefault();   // #2
+				}
+				return Parasha;
 			});
+
 		}
 
-		public async Task<IReadOnlyList<vwParasha>> GetParashotByBookId(int bookId)
+		public async Task<IReadOnlyList<LivingMessiah.Domain.Parasha.Queries.ParashaList>> GetParashotByBookId(int bookId)
 		{
 			base.Parms = new DynamicParameters(new { BookId = bookId });
 			base.Sql = $@"
 SELECT
 Id
 , ROW_NUMBER() OVER(PARTITION BY BookId ORDER BY Id ) AS RowCntByBookId
-, ShabbatWeekId, BookId, Torah, Name, TriNum, ParashaName
+, BookId, Torah, Name, TriNum, ParashaName
 , NameUrl, AhavtaURL, Meaning, IsNewBook, Haftorah, Brit
 , ShabbatDate
 , BaseParashaUrl, CurrentParashaUrl
+--, ShabbatWeekId
 FROM Bible.vwParasha
 WHERE BookId = @BookId
 ORDER BY Id
 ";
 			return await WithConnectionAsync(async connection =>
 			{
-				var rows = await connection.QueryAsync<vwParasha>(sql: base.Sql, param: base.Parms);
+				var rows = await connection.QueryAsync<LivingMessiah.Domain.Parasha.Queries.ParashaList>(sql: base.Sql, param: base.Parms);
 				return rows.ToList();
 			});
 		}
