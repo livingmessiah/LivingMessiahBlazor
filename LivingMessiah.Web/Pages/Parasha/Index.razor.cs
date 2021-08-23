@@ -42,7 +42,7 @@ namespace LivingMessiah.Web.Pages.Parasha
 				else
 				{
 					DatabaseWarning = true;
-					DatabaseErrorMsg = $"No parasha found";
+					DatabaseWarningMsg = $"No parasha found";
 				}
 			}
 			catch (Exception ex)
@@ -60,8 +60,6 @@ namespace LivingMessiah.Web.Pages.Parasha
 			MakeModalVisible = true;
 			StateHasChanged();
 		}
-
-
 
 		private Domain.Link GetTorahTuesdayLink()
 		{

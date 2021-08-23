@@ -1,5 +1,7 @@
 ﻿@page  "/Parasha"
 @using static LivingMessiah.Web.Links.Parasha
+@inherits BaseButtonToggleVisibility
+
 @*
 	ToDo: figure out how to make this work
 	<HebrewDate></HebrewDate>
@@ -46,29 +48,68 @@
 
 </LoadingComponent>
 
-<ButtonToggleVisibility Title="Parasha Table">
-	<ChildContent>
-		<div class="card-body  m-0 px-4">
+<!-- IsXsOrSm="true" -->
+<div class="d-md-none">
+	<div class="row">
+		<div class="col-12">
 
-			<h6>
-				We are currently studying the Torah on a three year cycle which allows us more time to delve deeper into His Word.
-			</h6>
-			<ul class="list-inline">
-				<li><a href="@IndexPrint"><small><b>Print Version</b></small></a></li>
-			</ul>
+			<div class="card mt-2 border-primary my-3" style="width: 100%">
+				<div class="card-header h4 px-2">
+					<span class='badge badge-warning'>Parasha Table</span>
 
-			<div class="d-none d-sm-block">
-				<IndexTable IsXs="false" BookId="@Parasha.BookId"></IndexTable>
-			</div>
-			<div class="d-block d-sm-none">
-				<IndexTable IsXs="true" BookId="@Parasha.BookId"></IndexTable>
-				<IndexGridXsSm></IndexGridXsSm>
+					<span class="float-right">
+
+						<button @onclick="@(e => ToggleButtonClick(IsCollapsed))"
+										class="btn-primary btn-sm float-right">
+							@ButtonText <i class='@ButtonChevron'></i>
+						</button>
+					</span>
+
+				</div>
 			</div>
 
 		</div>
-	</ChildContent>
-</ButtonToggleVisibility>
-<a href="@LivingMessiah.Web.Links.ParashaArchive.Index">Archive</a>
+	</div>
+
+	<div class="row col-12">
+		@if (!IsCollapsed && Parasha != null)
+		{
+			<h6>We are currently studying the Torah on a three year cycle which allows us more time to delve deeper into His Word.</h6>
+			<IndexTable IsXsOrSm="true" BookId="@Parasha.BookId"></IndexTable>
+		}
+	</div>
+
+</div>
+
+<!-- IsXsOrSm="false" -->
+<div class="d-none d-md-block">
+
+	<ButtonToggleVisibility Title="Parasha Table">
+		<ChildContent>
+			<div class="card-body  m-0 px-4">
+
+				<h6>
+					We are currently studying the Torah on a three year cycle which allows us more time to delve deeper into His Word.
+				</h6>
+				<ul class="list-inline">
+					<li><a href="@IndexPrint"><small><b>Print Version</b></small></a></li>
+				</ul>
+
+				<IndexTable IsXsOrSm="false" BookId="@Parasha.BookId"></IndexTable>
+
+			</div>
+		</ChildContent>
+	</ButtonToggleVisibility>
+
+</div>
+
+<div class="row col-12">
+	<a class="btn btn-outline-primary btn-sm"
+		 href="@LivingMessiah.Web.Links.ParashaArchive.Index">
+		<small>Archive</small>
+	</a>
+</div>
+
 
 @if (DatabaseError)
 {
@@ -78,7 +119,7 @@ else
 {
 	if (DatabaseWarning)
 	{
-		<p class="text-warning">@DatabaseWarning</p>
+		<p class="text-warning">@DatabaseWarningMsg</p>
 	}
 }
 

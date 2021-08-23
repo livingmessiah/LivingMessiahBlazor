@@ -48,5 +48,14 @@
     <_ContentIncludedByDefault Remove="Shared\EnvComponent.razor" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="Pages\BlazorExamples\EventCallbackChild - Copy - Copy.razor.cs">
+      <DependentUpon>EventCallbackChild - Copy.razor.cs</DependentUpon>
+    </Compile>
+    <Compile Update="Pages\BlazorExamples\EventCallbackChild - Copy.razor.cs">
+      <DependentUpon>EventCallbackChild.razor.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
 
 </Project>

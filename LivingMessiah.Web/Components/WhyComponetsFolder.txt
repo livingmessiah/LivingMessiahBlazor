@@ -1,0 +1,6 @@
+﻿Why have a Components folder when you can just put those things in the Shared folder?
+
+It was suggected by Ed Charbeneau (https://github.com/EdCharbeneau/) that...
+  the components in the Shared folder should be for those in common among your project.
+And...
+ the components in the Components folder are more global and could be potentially ported to a RCL (Razor Class Library)

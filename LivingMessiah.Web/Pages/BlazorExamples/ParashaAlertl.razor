@@ -1,0 +1,13 @@
+﻿@using LivingMessiah.Web.Services
+
+<h3>ParashaAlertl</h3>
+
+@inject IShabbatWeekService Svc
+
+@code {
+	protected IReadOnlyList<LivingMessiah.Domain.Parasha.Queries.ParashaList> ParashaList;
+	protected override async Task OnInitializedAsync()
+	{
+		ParashaList = await Svc.GetParashotByBookId(1);
+	}
+}

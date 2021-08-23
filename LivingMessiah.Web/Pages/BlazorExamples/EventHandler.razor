@@ -1,0 +1,63 @@
+﻿@page "/EventHandlerExample"
+<h1>EventHandlerExample</h1>
+
+@page "/event-handler-example-1"
+
+<h1>@currentHeading</h1>
+
+<p>
+	<label>
+		New title
+		<input @bind="newHeading" />
+	</label>
+	<button @onclick="UpdateHeading">
+		Update heading
+	</button>
+</p>
+
+<p>
+	<label>
+		<input type="checkbox" @onchange="CheckChanged" />
+		@checkedMessage
+	</label>
+</p>
+
+<hr class="warning" />
+
+<h1>Lambda expressions</h1>
+
+@*<p>
+		<button @onclick="@(e => heading = "THIS DOES NOT GET PASSED!!!")">
+			Update heading
+		</button>
+	</p>*@
+
+
+<hr class="warning" />
+
+<h1>Iteration Stuff</h1>
+<h3>@heading2</h3>
+<p>Iterating over a set of elements.</p>
+
+@for (var i = 1; i < 4; i++)
+{
+	var buttonNumber = i;
+	//Do not use a loop variable (e.g. i above) directly in a lambda expression
+	<p>
+		<button @onclick="@(e => UpdateHeading(e, buttonNumber))">
+			Button #@i
+		</button>
+	</p>
+}
+
+
+<hr class="warning" />
+<h1>EventCallback</h1>
+<p>A common scenario with nested components executes a parent component's method when a child component event occurs.</p>
+
+
+
+<hr class="warning" />
+<ul>
+	<li><a href="https://docs.microsoft.com/en-us/aspnet/core/blazor/components/event-handling?view=aspnetcore-5.0">Docs</a></li>
+</ul>

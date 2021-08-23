@@ -2,7 +2,7 @@
 
 namespace LivingMessiah.Web.Pages.Parasha
 {
-	public partial class ButtonToggleVisibility
+	public abstract class BaseButtonToggleVisibility : ComponentBase
 	{
 		[Parameter]
 		public RenderFragment ChildContent { get; set; }
@@ -16,11 +16,16 @@ namespace LivingMessiah.Web.Pages.Parasha
 		[Parameter]
 		public string Title { get; set; }
 
+		public string ButtonText { get; set; } = "Details";
+		public string ButtonChevron { get; set; } = " fas fa-chevron-down";
+
 		public bool IsCollapsed { get; set; } = true;
 
-		protected void Collapsed_ButtonClick()
+		protected void ToggleButtonClick(bool isCollapsed)
 		{
-			IsCollapsed = !IsCollapsed;
+			IsCollapsed = !isCollapsed;
+			ButtonText = IsCollapsed ? "Details" : "Hide";
+			ButtonChevron = IsCollapsed ? "fas fa-chevron-down" : "fas fa-chevron-up";
 		}
 
 	}

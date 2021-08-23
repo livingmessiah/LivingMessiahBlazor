@@ -1,0 +1,23 @@
+﻿
+<div @attributes="AdditionalAttributes" class="alert">
+	<button @onclick="OnToggleClick"
+					class="btn-primary btn-sm  @ButtonFloat">
+		Detail <i class='fas fa-chevron-down'></i>
+	</button>
+	@ChildContent
+</div>
+
+@*@if (IsCollapsed)
+	{
+		<Button @onclick="OnToggleClick"
+						class="btn-primary btn-sm  float-right">
+			Detail <i class='fas fa-chevron-down'></i>
+		</Button>
+	}
+	else
+	{
+		<Button @onclick="OnToggleClick"
+						class="btn-primary btn-sm float-right">
+			Hide <i class='fas fa-chevron-up'></i>
+		</Button>
+	}*@

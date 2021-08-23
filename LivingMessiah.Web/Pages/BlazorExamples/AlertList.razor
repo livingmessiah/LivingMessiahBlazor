@@ -1,0 +1,17 @@
+﻿@using LivingMessiah.Web.Services
+
+<h3>AlertList</h3>
+@typeparam TItem
+
+<AlertBox class="alert-dark">
+
+
+
+	<span> Child Content 2 using Attribute Splatting</span>
+</AlertBox>
+
+@code {
+
+	[Parameter]
+	public IEnumerable<TItem> Data { get; set; }
+}
