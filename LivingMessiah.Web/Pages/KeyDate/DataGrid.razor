@@ -1,0 +1,25 @@
+﻿@page "/KeyDatesDataGrid"
+@using LivingMessiah.Domain.KeyDates.Commands
+
+<h3 class="badge-warning">Date Union List</h3>
+<SfGrid DataSource="@DateUnionList" Toolbar="@(new List<string>() { "Update", "Cancel" })" AllowFiltering="true" AllowPaging="false">
+	<GridColumns>
+		<GridEditSettings AllowEditing="true" AllowAdding="false" AllowDeleting="false" Mode="EditMode.Batch"></GridEditSettings>
+		<GridColumn Field=@nameof(DateUnion.Id) HeaderText="Id" IsPrimaryKey="true" AllowEditing="false" Type="ColumnType.Number" Width="50"></GridColumn>
+		<GridColumn Field=@nameof(DateUnion.DateTypeEnum) HeaderText=" Date Type" AllowEditing="false" Type="ColumnType.Number" Width="90"></GridColumn>
+		<GridColumn Field=@nameof(DateUnion.Date) HeaderText=" Date" EditType="EditType.DefaultEdit" Format="d" Type="ColumnType.Date" TextAlign="TextAlign.Right" Width="130"></GridColumn>
+		<GridColumn Field=@nameof(DateUnion.Descr) HeaderText="Description" AllowEditing="false" Type="ColumnType.String"></GridColumn>
+	</GridColumns>
+</SfGrid>
+
+@*
+	<GridColumn Field=@nameof(OrdersDetails.Freight) HeaderText="Freight" ValidationRules="@(new ValidationRules{ Required=true, Range = new double[]{1, 1000}})" EditType="EditType.NumericEdit" Format="C2" TextAlign="TextAlign.Right"  Width="140"></GridColumn>
+
+		 <div class="col-lg-12 control-section">
+				 <div class="content-wrapper">
+						 <div class="row">
+
+					 </div>
+			 </div>
+	 </div>
+*@

@@ -16,6 +16,7 @@ namespace LivingMessiah.Data
 		string BaseSqlDump { get; }
 		Task<List<UpcomingEvent>> GetEvents(int daysAhead, int daysPast);
 		Task<CalendarYear> GetHebrewYearAndChildren(RelativeYearEnum relativeYear);
+		Task<List<Domain.KeyDates.Commands.DateUnion>> GetDateUnionList(RelativeYearEnum relativeYear); 
 	}
 
 	public class UpcomingEventsRepository : BaseRepositoryAsync, IUpcomingEventsRepository
@@ -46,9 +47,7 @@ FROM KeyDate.vwUpcomingEvent
 WHERE DATEADD(d, @DaysAhead, GETUTCDATE()) >= EventDate
   AND DATEADD(d, @DaysPast, GETUTCDATE()) <= EventDate
 ORDER BY EventDate
-
 ";
-
 			var inside = "UpcomingEventsRepository!GetEvents";
 			var dump = base.Sql;
 			var whereclause = $"WHERE DATEADD(d, {@daysAhead}, GETUTCDATE()) >= EventDate AND DATEADD(d, {@daysPast}, GETUTCDATE()) <= EventDate";
@@ -63,14 +62,7 @@ ORDER BY EventDate
 
 		public async Task<CalendarYear> GetHebrewYearAndChildren(RelativeYearEnum relativeYear)
 		{
-			string yearId = relativeYear switch
-			{
-				RelativeYearEnum.Previous => "c.PreviousYear",
-				RelativeYearEnum.Current => "c.CurrentYear",
-				RelativeYearEnum.Next => "c.NextYear",
-				RelativeYearEnum.None => "0",
-				_ => "c.CurrentYear",
-			};
+			string yearId = GetYearId(relativeYear);
 
 			base.Sql = $@"
 
@@ -170,6 +162,41 @@ FROM KeyDate.FeastDayDetail
 				return calendarYear;
 			});
 		}
+
+
+		private string GetYearId(RelativeYearEnum relativeYear) 
+		{
+			return relativeYear switch
+			{
+				RelativeYearEnum.Previous => "c.PreviousYear",
+				RelativeYearEnum.Current => "c.CurrentYear",
+				RelativeYearEnum.Next => "c.NextYear",
+				RelativeYearEnum.None => "0",
+				_ => "c.CurrentYear",
+			};
+
+		}
+
+		#region Command
+
+		public async Task<List<Domain.KeyDates.Commands.DateUnion>> GetDateUnionList(RelativeYearEnum relativeYear)
+		{
+			base.Sql = $@"
+SELECT Id, Date, DateTypeId AS DateTypeEnum, Descr
+FROM KeyDate.vwDateUnion
+CROSS JOIN KeyDate.Constants c
+WHERE YearId = {GetYearId(relativeYear)}
+ORDER BY Date
+";
+			return await WithConnectionAsync(async connection =>
+			{
+				var rows = await connection.QueryAsync<Domain.KeyDates.Commands.DateUnion>(sql: base.Sql, param: base.Parms);
+				return rows.ToList();
+			});
+		}
+
+
+		#endregion
 
 	}
 }
