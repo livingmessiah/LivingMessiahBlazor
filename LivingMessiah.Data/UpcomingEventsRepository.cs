@@ -21,7 +21,7 @@ namespace LivingMessiah.Data
 
 	public class UpcomingEventsRepository : BaseRepositoryAsync, IUpcomingEventsRepository
 	{
-		public UpcomingEventsRepository(IConfiguration config, ILogger<ShabbatWeekRepository> logger) : base(config, logger)
+		public UpcomingEventsRepository(IConfiguration config, ILogger<UpcomingEventsRepository> logger) : base(config, logger)
 		{
 		}
 

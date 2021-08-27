@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Sukkot.Web.Service;
 using SukkotApi.Data;
+using LivingMessiah.Data.Commands;
 
 //using Markdig;
 //using Markdig.Extensions.AutoIdentifiers;
@@ -29,7 +30,7 @@ namespace LivingMessiah.Web
 				.AddSingleton<IShabbatWeekCacheService, ShabbatWeekCacheService>()
 				.AddSingleton<IShabbatWeekRepository, ShabbatWeekRepository>()
 				.AddSingleton<IUpcomingEventsRepository, UpcomingEventsRepository>()
-
+				.AddSingleton<IUpcomingEvents, UpcomingEvents>()
 
 				.AddTransient<ISukkotService, SukkotService>()
 				.AddTransient<ISukkotAdminService, SukkotAdminService>()

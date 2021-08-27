@@ -35,10 +35,11 @@
     <PackageReference Include="Serilog.Settings.Configuration" Version="3.2.0" />
     <PackageReference Include="Serilog.Sinks.Console" Version="4.0.0" />
     <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
-    <PackageReference Include="Syncfusion.Blazor.Calendars" Version="19.2.0.56" />
-    <PackageReference Include="Syncfusion.Blazor.DropDowns" Version="19.2.0.56" />
-    <PackageReference Include="Syncfusion.Blazor.Grid" Version="19.2.0.56" />
-    <PackageReference Include="Syncfusion.Blazor.Navigations" Version="19.2.0.56" />
+    <PackageReference Include="Syncfusion.Blazor.Calendars" Version="19.2.0.57" />
+    <PackageReference Include="Syncfusion.Blazor.DropDowns" Version="19.2.0.57" />
+    <PackageReference Include="Syncfusion.Blazor.Grid" Version="19.2.0.57" />
+    <PackageReference Include="Syncfusion.Blazor.Navigations" Version="19.2.0.57" />
+    <PackageReference Include="Syncfusion.Blazor.Schedule" Version="19.2.0.57" />
   </ItemGroup>
 
   <ItemGroup>
