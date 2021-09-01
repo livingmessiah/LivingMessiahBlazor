@@ -21,7 +21,6 @@ namespace LivingMessiah.Web.Services
 		//Task<IReadOnlyList<Parasha>> GetParashotByBookId(int bookId);
 
 		// Weekly Videos
-		//Task<IReadOnlyList<WeeklyVideoIndex>> GetTopWeeklyVideos(int top);
 		Task<IReadOnlyList<vwCurrentWeeklyVideo>> GetCurrentWeeklyVideos();
 		Task<vwCurrentWeeklyVideo> GetCurrentWeeklyVideoByTypeId(int typeId);
 
@@ -177,8 +176,10 @@ namespace LivingMessiah.Web.Services
 			{
 				//sourceOfData = "Not Cache";
 				log.LogDebug($"...Key NOT found in cache, calling {nameof(db.GetCurrentWeeklyVideos)}");
-				currentWeeklyVideos = await db.GetCurrentWeeklyVideos();
+				currentWeeklyVideos = await db.GetCurrentWeeklyVideos(daysOld:12);
 				log.LogDebug($"...After calling {nameof(db.GetCurrentWeeklyVideos)}; currentWeeklyVideos.Count: {currentWeeklyVideos.Count}");
+
+				log.LogDebug($"db.BaseSqlDump: {Environment.NewLine} {db.BaseSqlDump}");
 
 				if (currentWeeklyVideos.Count != 1)
 				{

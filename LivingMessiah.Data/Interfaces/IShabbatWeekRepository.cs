@@ -20,7 +20,7 @@ namespace LivingMessiah.Data
 		Task<List<vwPsalmsAndProverbs>> GetPsalmsAndProverbsList();
 
 		// Weekly Videos
-		Task<IReadOnlyList<vwCurrentWeeklyVideo>> GetCurrentWeeklyVideos();
+		Task<IReadOnlyList<vwCurrentWeeklyVideo>> GetCurrentWeeklyVideos(int daysOld);
 		Task<IReadOnlyList<WeeklyVideoIndex>> GetTopWeeklyVideos(int top);
 		Task<int> WeeklyVideoAdd(WeeklyVideoModel dto);
 		Task<int> WeeklyVideoUpdate(WeeklyVideoModel dto);

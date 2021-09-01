@@ -26,22 +26,37 @@ namespace LivingMessiah.Web.Pages.UpcomingEvents
 		protected string MonthMarginTop;
 		*/
 
-		protected bool LoadFailed = false;
+		protected bool DatabaseError { get; set; } = false;
+		protected string DatabaseErrorMsg { get; set; }
+		protected bool DatabaseWarning = false;
+		protected string DatabaseWarningMsg { get; set; }
 
 		protected override async Task OnInitializedAsync()
 		{
-			LoadFailed = false;
 			try
 			{
-				UpcomingEventList = await Svc.GetEvents(daysAhead:100, daysPast:-3);
-				Logger.LogDebug($"Inside {nameof(Index)}!{nameof(OnInitializedAsync)}; UpcomingEventList.Count:{UpcomingEventList.Count}");
+				Logger.LogDebug($"Inside {nameof(Index)}!{nameof(OnInitializedAsync)}");
+				UpcomingEventList = await Svc.GetEvents(daysAhead: 100, daysPast: -3);
+				if (UpcomingEventList is not null)
+				{
+					Logger.LogDebug($"...UpcomingEventList.Count:{UpcomingEventList.Count}");
+				}
+				else
+				{
+					DatabaseWarning = true;
+					DatabaseWarningMsg = $"{nameof(UpcomingEventList)} NOT FOUND";
+					//Logger.LogDebug($"{nameof(UpcomingEventList)} is null, Sql:{db.BaseSqlDump}");
+				}
 			}
 			catch (Exception ex)
 			{
-				LoadFailed = true;
-				Logger.LogError(ex, $"Failed to load page {nameof(UpcomingEvents)}");
+				DatabaseError = true;
+				DatabaseErrorMsg = $"Error reading database";
+				Logger.LogError(ex, $"...{DatabaseErrorMsg}");
 			}
 		}
 
+
 	}
 }
+

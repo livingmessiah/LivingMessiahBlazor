@@ -169,8 +169,9 @@ ORDER BY ShabbatWeekId
 
 		#region Weekly Video
 
-		public async Task<IReadOnlyList<vwCurrentWeeklyVideo>> GetCurrentWeeklyVideos()
+		public async Task<IReadOnlyList<vwCurrentWeeklyVideo>> GetCurrentWeeklyVideos(int daysOld)
 		{
+			base.Parms = new DynamicParameters(new { DaysOld = daysOld });
 			base.Sql = $@"
 SELECT
 Id
@@ -192,12 +193,12 @@ Id
 , ParashaName
 , BiblicalUrlReference
 FROM dbo.vwCurrentWeeklyVideo
+WHERE DATEADD(d, -@DaysOld, GETUTCDATE()) <= ShabbatDate
 ORDER BY ShabbatWeekId DESC, wvtId
-
 		";
 			return await WithConnectionAsync(async connection =>
 			{
-				var rows = await connection.QueryAsync<vwCurrentWeeklyVideo>(sql: base.Sql);
+				var rows = await connection.QueryAsync<vwCurrentWeeklyVideo>(sql: base.Sql, param: base.Parms);
 				return rows.ToList();
 			});
 		}

@@ -87,23 +87,17 @@ namespace LivingMessiah.Data
 				s = Sql ?? "SQL IS NULL";
 				if (Parms != null)
 				{
-					/*
-					This won't compile
-					Error	CS0656	Missing compiler required member 'Microsoft.CSharp.RuntimeBinder.CSharpArgumentInfo.Create'	
-				  The use of <dynamic> and  the next line below it cause the error
-
-
 					string v = "";
 					var sb = new StringBuilder();
-					foreach (var name in Parms.ParameterNames)
+					foreach (var name in Parms.ParameterNames) // Why is this empty? 
 					{
-						var pValue = Parms.Get<dynamic>(name);
+						var pValue = Parms.Get<dynamic>(name);  
 						v = (pValue != null) ? pValue.ToString() : "null";
 						sb.AppendFormat($"name {name}={v}\n");
 					}
 
 					s += ", parameter: " + sb.ToString();
-					*/
+			
 				}
 				return s;
 			}
