@@ -8,17 +8,17 @@
 
 <h3 class="badge-warning">Key Dates Calendar Update</h3>
 <div class="row">
-	<div class="col-5">
+	<div class="col-md-5">
 		<SfGrid DataSource="@DateUnionList" Toolbar="@(new List<string>() { "Update", "Cancel" })" AllowFiltering="false" AllowPaging="false">
 			<GridColumns>
-				<GridEditSettings AllowEditing="true" AllowAdding="false" AllowDeleting="false" 
+				<GridEditSettings AllowEditing="true" AllowAdding="false" AllowDeleting="false"
 													Mode="EditMode.Batch" ShowConfirmDialog="false" />
 
 				<GridEvents OnBatchSave="OnSave" TValue="DateUnion" />
 
 				<GridColumn Field=@nameof(DateUnion.Id) HeaderText="Id" IsPrimaryKey="true" Visible="false"
 										AllowEditing="false" Type="ColumnType.Number" Width="70" />
-				<GridColumn Field=@nameof(DateUnion.DateTypeEnum) HeaderText="Type" AllowEditing="false" 
+				<GridColumn Field=@nameof(DateUnion.DateTypeEnum) HeaderText="Type" AllowEditing="false"
 										Type="ColumnType.Number" Width="80" />
 				<GridColumn Field=@nameof(DateUnion.Date) HeaderText=" Date" EditType="EditType.DefaultEdit" Format="d"
 										ValidationRules="@(new Syncfusion.Blazor.Grids.ValidationRules{ Required= true })"
@@ -45,7 +45,7 @@
 
 	</div>
 
-	<div class="col-7">
+	<div class="col-md-7">
 
 		<SfSchedule TValue="LivingMessiah.Domain.KeyDates.Queries.AppointmentData"
 								CssClass="year-view" MonthsCount="@NumberOfMonths" FirstMonthOfYear="@FirstMonthOfYear">
@@ -72,34 +72,36 @@
 	</div>
 </div>
 
-<LoadingComponent IsLoading="AppointmentDataList==null">
-	<h3 class="mt-3 badge-warning">Appointment DataList</h3>
-	<div class="row">
-		<div class="col-12">
-			<TableTemplate Items="@AppointmentDataList">
-				<TableHeader>
+@*
+	<LoadingComponent IsLoading="AppointmentDataList==null">
+		<h3 class="mt-3 badge-warning">Appointment DataList</h3>
+		<div class="row">
+			<div class="col-12">
+				<TableTemplate Items="@AppointmentDataList">
+					<TableHeader>
 
-					<th>Id</th>
-					<th>Subject</th>
-					<th>Description</th>
-					<th>Date</th>
+						<th>Id</th>
+						<th>Subject</th>
+						<th>Description</th>
+						<th>Date</th>
 
-				</TableHeader>
-				<RowTemplate>
-					<td>@context.Id</td>
-					<td>@context.Subject</td>
-					<td>@context.Description</td>
-					<td>@context.StartTime</td>
-				</RowTemplate>
-			</TableTemplate>
+					</TableHeader>
+					<RowTemplate>
+						<td>@context.Id</td>
+						<td>@context.Subject</td>
+						<td>@context.Description</td>
+						<td>@context.StartTime</td>
+					</RowTemplate>
+				</TableTemplate>
+			</div>
 		</div>
-	</div>
 
-</LoadingComponent>
+	</LoadingComponent>
+*@
 
 @*
 			<label class="showhide" style="padding: 10px 5px 10px 0"> Order ID </label>
-		<SfSwitch ValueChange="@((Syncfusion.Blazor.Buttons.ChangeEventArgs<bool> args) => { change("Order ID", args); })" 
+		<SfSwitch ValueChange="@((Syncfusion.Blazor.Buttons.ChangeEventArgs<bool> args) => { change("Order ID", args); })"
 				@bind-Checked="@Check" TChecked="bool"></SfSwitch>
 
 		<ScheduleEventSettings DataSource="@AppointmentDataList"></ScheduleEventSettings>
