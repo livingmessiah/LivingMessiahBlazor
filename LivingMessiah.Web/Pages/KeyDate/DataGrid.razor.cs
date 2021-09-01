@@ -9,9 +9,12 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 using Syncfusion.Blazor.Grids;
 using LivingMessiah.Data.Commands;
+using Microsoft.AspNetCore.Authorization;
+using static LivingMessiah.Web.Services.Auth0;
 
 namespace LivingMessiah.Web.Pages.KeyDate
 {
+	[Authorize(Roles = Roles.AdminOrAudiovisual)]
 	public partial class DataGrid 
 	{
 		[Inject]

@@ -34,6 +34,7 @@ namespace LivingMessiah.Web.Services
 			public const string AdminOrAnnouncements = "admin, announcements";
 			public const string AdminOrSukkotOrElder = "admin, sukkot, elder";
 			public const string AdminOrAudiovisual = "admin, audiovisual";
+			public const string AdminOrKeyDates = "admin, keydates";
 			public const string SukkotMenuBar = Elder + "," + Admin + "," + SuperUser + "," + Sukkot;
 
 		}
