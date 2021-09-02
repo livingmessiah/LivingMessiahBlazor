@@ -26,6 +26,7 @@ namespace LivingMessiah.Web.Services
 			public const string User = "user";
 			public const string SuperUser = "superuser";
 			public const string Sukkot = "sukkot";
+			public const string KeyDates = "keydates";
 			public const string Elder = "elder";
 			public const string AudioVisual = "audiovisual";
 			public const string AdminOrElder = "admin, elder";

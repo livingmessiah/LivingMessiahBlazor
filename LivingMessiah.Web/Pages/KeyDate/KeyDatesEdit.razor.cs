@@ -14,8 +14,8 @@ using static LivingMessiah.Web.Services.Auth0;
 
 namespace LivingMessiah.Web.Pages.KeyDate
 {
-	[Authorize(Roles = Roles.AdminOrAudiovisual)]
-	public partial class DataGrid 
+	[Authorize(Roles = Roles.AdminOrKeyDates)]
+	public partial class KeyDatesEdit
 	{
 		[Inject]
 		public IUpcomingEventsRepository db { get; set; }
@@ -24,7 +24,7 @@ namespace LivingMessiah.Web.Pages.KeyDate
 		public IUpcomingEvents dbCommands { get; set; }
 
 		[Inject]
-		public ILogger<DataGrid> Logger { get; set; }
+		public ILogger<KeyDatesEdit> Logger { get; set; }
 
 		[Parameter]
 		public RelativeYearEnum RelativeYear { get; set; } = RelativeYearEnum.Next;
@@ -52,7 +52,7 @@ namespace LivingMessiah.Web.Pages.KeyDate
 
 		protected override async Task OnInitializedAsync()
 		{
-			Logger.LogDebug($"Inside {nameof(DataGrid)}!{nameof(OnInitializedAsync)}");
+			Logger.LogDebug($"Inside {nameof(KeyDatesEdit)}!{nameof(OnInitializedAsync)}");
 			try
 			{
 				DateUnionList = await db.GetDateUnionList(RelativeYear);
@@ -73,7 +73,7 @@ namespace LivingMessiah.Web.Pages.KeyDate
 				Logger.LogError(ex, $"...{DatabaseErrorMsg}");
 			}
 
-			
+
 		}
 
 		private void LoadAppointmentDataLista()
@@ -84,16 +84,16 @@ namespace LivingMessiah.Web.Pages.KeyDate
 			{
 				AppointmentDataList.Add(new LivingMessiah.Domain.KeyDates.Queries.AppointmentData
 				{
-					Id= item.Id,
-					Subject=item.Descr,
+					Id = item.Id,
+					Subject = item.Descr,
 					Description = item.Descr,
-					StartTime=item.Date,
-					EndTime=item.Date,
+					StartTime = item.Date,
+					EndTime = item.Date,
 					IsAllDay = true
 				}
 				);
 			}
-			
+
 
 		}
 
@@ -111,7 +111,7 @@ namespace LivingMessiah.Web.Pages.KeyDate
 					{
 						rows += await dbCommands.UpdateKeyDate(item.Id, item.Date);
 					}
-					
+
 				}
 				catch (Exception ex)
 				{

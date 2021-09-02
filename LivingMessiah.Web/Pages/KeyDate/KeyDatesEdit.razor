@@ -1,6 +1,4 @@
-﻿@page "/KeyDatesDataGrid"
-@*@using Syncfusion.Blazor.Schedule*@
-
+﻿@page "/Admin/KeyDatesEdit"
 @using Syncfusion.Blazor.DropDowns
 @using Syncfusion.Blazor.Inputs
 
@@ -28,8 +26,6 @@
 
 			</GridColumns>
 		</SfGrid>
-
-		@* ValidationRules="@(new Syncfusion.Blazor.Grids.ValidationRules{ Required= true })" *@
 
 		@if (DatabaseError)
 		{
@@ -72,62 +68,3 @@
 	</div>
 </div>
 
-@*
-	<LoadingComponent IsLoading="AppointmentDataList==null">
-		<h3 class="mt-3 badge-warning">Appointment DataList</h3>
-		<div class="row">
-			<div class="col-12">
-				<TableTemplate Items="@AppointmentDataList">
-					<TableHeader>
-
-						<th>Id</th>
-						<th>Subject</th>
-						<th>Description</th>
-						<th>Date</th>
-
-					</TableHeader>
-					<RowTemplate>
-						<td>@context.Id</td>
-						<td>@context.Subject</td>
-						<td>@context.Description</td>
-						<td>@context.StartTime</td>
-					</RowTemplate>
-				</TableTemplate>
-			</div>
-		</div>
-
-	</LoadingComponent>
-*@
-
-@*
-			<label class="showhide" style="padding: 10px 5px 10px 0"> Order ID </label>
-		<SfSwitch ValueChange="@((Syncfusion.Blazor.Buttons.ChangeEventArgs<bool> args) => { change("Order ID", args); })"
-				@bind-Checked="@Check" TChecked="bool"></SfSwitch>
-
-		<ScheduleEventSettings DataSource="@AppointmentDataList"></ScheduleEventSettings>
-	 public static List<EventData> AppointmentData = GenerateEvents();
-
-	<ScheduleViewGroup Resources="@ResourceName"></ScheduleViewGroup>
-	ResourceName
-	public string[] ResourceName = { "Categories" };
-
-
-	@bind-SelectedDate="@CurrentDate"  ">
-
-	<GridEvents OnBatchSave="@((args)=>BatchSaveHandler(args,"Grid"))"/>
-
-	 <GridEditSettings AllowEditing="true" Mode="EditMode.Batch" ShowConfirmDialog="true"></GridEditSettings>
-		<GridEvents OnToolbarClick="ToolbarClickHandler" OnBatchSave="@((args)=>BatchSaveHandler(args,"Grid"))"
-	ValidationRules{ Required= true, Min=2021-09-22, Max=2022-12-05 }
-
-			[Range(1, 10, ErrorMessage = "{0} must be between {1} and {2}")]
-	<GridColumn Field=@nameof(OrdersDetails.Freight) HeaderText="Freight" ValidationRules="@(new ValidationRules{ Required=true, Range = new double[]{1, 1000}})" EditType="EditType.NumericEdit" Format="C2" TextAlign="TextAlign.Right"  Width="140"></GridColumn>
-
-		 <div class="col-lg-12 control-section">
-				 <div class="content-wrapper">
-						 <div class="row">
-
-					 </div>
-			 </div>
-	 </div>
-*@

@@ -176,6 +176,15 @@
 		public const string Icon = "far fa-calendar-check";
 	}
 
+
+	public static class KeyDatesEdit
+	{
+		public const string Index = "/Admin/KeyDatesEdit/";
+		public const string Title = "Key Dates Edit";
+		public const string Icon = "far fa-calendar-check";
+	}
+
+
 	public static class Leadership
 	{
 		public const string Index = "/Leadership";
