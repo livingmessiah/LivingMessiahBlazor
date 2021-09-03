@@ -13,6 +13,10 @@
 		<AudioVisualButton></AudioVisualButton>
 	</AuthorizeView>
 
+	<AuthorizeView Roles=@Roles.AdminOrKeyDates>
+		<KeyDatesEditButton></KeyDatesEditButton>
+	</AuthorizeView>
+
 	<AuthorizeView Roles=@Roles.Admin>
 		<DashboardButton></DashboardButton>
 	</AuthorizeView>
@@ -43,6 +47,10 @@
 
 			<AuthorizeView Roles=@Roles.AdminOrAudiovisual>
 				<AudioVisualButton></AudioVisualButton>
+			</AuthorizeView>
+			
+			<AuthorizeView Roles=@Roles.AdminOrKeyDates>
+				<KeyDatesEditButton></KeyDatesEditButton>
 			</AuthorizeView>
 
 			<AuthorizeView Roles=@Roles.Admin>

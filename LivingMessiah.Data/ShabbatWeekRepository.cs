@@ -334,6 +334,8 @@ WHERE Id = @Id
 		#region Bible
 
 		//ToDo: Deprecated, see GetCurrentParashaAndChildren
+		//Not True: used by Services\ShabbatWeekCacheService!GetCurrentParashaTorahBookById 
+		//  via Book = await SvcCache.GetCurrentParashaTorahBookById(BookId); inside Pages\Parasha\IndexTable.razor.cs
 		public async Task<BibleBook> GetTorahBookById(int id)
 		{
 			base.Parms = new DynamicParameters(new { Id = id });

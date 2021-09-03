@@ -6,6 +6,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Pages\BlazorExamples\SampleBaseComponent.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Pages\BlazorExamples\Wizard.razor" />
     <Content Remove="Shared\EnvComponent.razor" />
   </ItemGroup>
 
