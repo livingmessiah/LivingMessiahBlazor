@@ -1,254 +1,266 @@
 ﻿@page  "/further"
 @using static LivingMessiah.Web.Links.FurtherStudies
 
+@using Syncfusion.Blazor.Popups
+@using Syncfusion.Blazor.Buttons
+
 <div class="pb-2 mt-4 mb-2 border-bottom">
 	<h2><i class="@Icon"></i> @Title</h2>
 </div>
 
-@* active *@
+<SfTab>
+	<TabItems>
 
-<ul class="nav nav-pills">
-	<li role="presentation" class="nav-item"><a class="nav-link active" data-toggle="pill" href="#hebrew">Hebrew</a></li>
-	<li role="presentation" class="nav-item"><a class="nav-link" data-toggle="pill" href="#moon">Moons</a></li>
-	<li role="presentation" class="nav-item"><a class="nav-link" data-toggle="pill" href="#yeshua">Yeshua in OT</a></li>
-	<li role="presentation" class="nav-item"><a class="nav-link" data-toggle="pill" href="#other">Other</a></li>
-</ul>
+		<!--Hebrew-->
+		<TabItem>
+			<ChildContent>
+				<TabHeader Text="Hebrew"></TabHeader>
+			</ChildContent>
+			<ContentTemplate>
 
-<div class="tab-content">
+				<h2><span class="badge badge-warning">Learning Hebrew</span></h2>
 
-	<!--Hebrew-->
-	<div id="hebrew" class="tab-pane active" role="tabpanel">
-		<h2><span class="badge badge-warning">Learning Hebrew</span></h2>
+				<p class="h5">
+					<strong>Why Learn Hebrew?</strong>
+					<br />There are several good reasons to learn a little Hebrew:
 
-		<p class="h5">
-			<strong>Why Learn Hebrew?</strong>
-			<br />There are several good reasons to learn a little Hebrew:
-			<ul class="fa-ul size16">
-				<li><i class="fa-li fas fa-caret-right text-warning"></i>In your personal Bible study, knowing some of the Hebrew words from which the English words were translated can often lead to additional insights.</li>
-				<li><i class="fa-li fas fa-caret-right text-warning"></i>Knowing a little Hebrew can be of great help if you ever travel to Israel.</li>
-			</ul>
-		</p>
-
-		<div class="card card-body bg-light">
-			<h4>Consider this verse found in the New King Jame Version which reads</h4>
-			<blockquote>
-				For then I will restore to the peoples a pure language, that they all may call on the name of the Lord, to serve Him with one accord.
-				<small>Zephaniah 3:9</small>
-			</blockquote>
-
-			<p class="h5">
-				Do you suppose that the "pure language" might be Hebrew?<br />
-				<a href="https://myhebrewbible.com/Hebrew/Zepc3v8"
-					 class="btn-primary btn-sm float-right" target="_blank">
-					<span class="fas fa-external-link-alt"></span> Learn More...
-				</a>
-			</p>
-
-			<br /><br />
-
-			<img src="@Blobs.UrlRoot("Alephbet.jpg")" alt="Hebrew Alephbet" class="img-fluid rounded" style="margin:auto" />
-
-		</div>
-
-
-		<br />
-
-		<h2><span class="badge badge-warning">Hebrew Basics</span></h2>
-
-		<p class="h5">
-			There are many tools on-line to help you learn the <b>alphabet</b> and <b>how to count.</b>  Here are just a few:
-			<br>
-		</p>
-		<ul class="size16">
-			<li>Animated <a href="https://www.youtube.com/embed/UiCzoTs1AdE" target="_blank">Hebrew Alephbet song</a> on YouTube</li>
-			<li><a href="http://www.jewfaq.org/alephbet.htm" target="_blank">Concise Reference Document</a> from Judaism 101</li>
-			<li>Cute video of people from 1 to 100 <a href="https://www.youtube.com/watch?v=7WwQL6hr02A" target="_blank">speaking their age in Hebrew</a></li>
-			<li>The website <a href="http://hebrew4christians.com" target="_blank"> Hebrew4Christians </a> is a great source for all sorts of learning and teaching aids.  This <a href="http://www.hebrew4christians.com/Grammar/Unit_One/Homeschool/homeschool.html" target="_blank"> page </a> in particular is useful for those just starting out.</li>
-		</ul>
-
-		<h3><u>More Tools to Learn Hebrew</u></h3>
-		<ul class="size16">
-			<li>
-				Our own Craig Peters (see below) has written several articles for those who are trying to learn or improve their knowledge of Hebrew.
-				<a href="@Blobs.UrlLearningHebrew()" target="_blank">
-					Learning Hebrew - Featuring Basic	Hebrew Prefixes and Suffixes
-				</a> is one such article.  (This article was presented as an In-Depth Bible Study at Living Messiah in early 2015)
-			</li>
-			<li>
-				This is a fourteen part YouTube Series by Jim Staley (Passion for Truth Ministries) on the
-				<a href="https://youtu.be/vRgmSdOA9kI" target="_blank"> Ancient Hebrew Alephbet</a>
-			</li>
-		</ul>
-
-		<h2><span class="badge badge-warning">Learning Hebrew Together</span></h2>
-
-		<p class="h5">
-			Some time ago, we conducted a beginning level Hebrew class entitled, <b>"Families Learning Hebrew Together."</b>
-			There were handouts that accompanied each week's lesson.
-			For those of you who were unable to receive copies of these handouts, they are available here for you to print out.
-			These handouts are useful if you are teaching beginning Hebrew to your family or friends or if you are learning it yourself.
-			<br>
-			We also recorded them on YouTube <span class="fab fa-youtube"></span>.
-		</p>
-
-		<a href="https://www.youtube.com/watch?v=PUlcfZ4eT5M&list=PLAmg7YxItfMS_XSvPQm6Tw-3H0OEOYXVb"
-			 class="btn btn-primary btn-sm"
-			 title="Videos Recored at Living Messiah">
-			<i class="fab fa-youtube fa-2x pull-left"></i>
-			Learning Hebrew Class <br />Taught by Matthew
-		</a>
-
-		<h3 class="mt-5"><u>PDF Handouts</u></h3>
-
-		<table class="table table-striped table-sm table-primary">
-
-			<tr>
-				<th>From <i>Aleph</i> to <i>Kaph</i></th>
-				<th>From <i>Lamed</i> to <i>Meym</i></th>
-			</tr>
-
-			<tr>
-				<td><a href="@Blobs.UrlHebrewHandouts("aleph-01.pdf")" target="_blank">Aleph (Lesson 1)</a> <i class="fas fa-file-pdf"></i></td>
-				<td><a href="@Blobs.UrlHebrewHandouts("lamed-12.pdf")" target="_blank">Lamed (Lesson 12)</a> <i class="fas fa-file-pdf"></i></td>
-			</tr>
-
-			<tr>
-				<td><a href="@Blobs.UrlHebrewHandouts("bet-02.pdf")" target="_blank">Bet (Lesson 2)</a> <i class="fas fa-file-pdf"></i></td>
-				<td><a href="@Blobs.UrlHebrewHandouts("meym-13.pdf")" target="_blank">Meym (Lesson 13)</a> <i class="fas fa-file-pdf"></i></td>
-			</tr>
-
-			<tr>
-				<td><a href="@Blobs.UrlHebrewHandouts("gimel-03.pdf")" target="_blank">Gimel (Lesson 3)</a> <i class="fas fa-file-pdf"></i></td>
-				<td><a href="@Blobs.UrlHebrewHandouts("nun-14.pdf")" target="_blank">Nun (Lesson 14)</a> <i class="fas fa-file-pdf"></i></td>
-			</tr>
-
-			<tr>
-				<td><a href="@Blobs.UrlHebrewHandouts("dalet-04.pdf")" target="_blank">Dalet (Lesson 4)</a> <i class="fas fa-file-pdf"></i></td>
-				<td><a href="@Blobs.UrlHebrewHandouts("samekh-15.pdf")" target="_blank">Samekh (Lesson 15)</a> <i class="fas fa-file-pdf"></i></td>
-			</tr>
-
-			<tr>
-				<td><a href="@Blobs.UrlHebrewHandouts("heh-05.pdf")" target="_blank">Heh (Lesson 5)</a> <i class="fas fa-file-pdf"></i></td>
-				<td><a href="@Blobs.UrlHebrewHandouts("ayin-16.pdf")" target="_blank">Ayin (Lesson 16)</a> <i class="fas fa-file-pdf"></i></td>
-			</tr>
-
-			<tr>
-				<td><a href="@Blobs.UrlHebrewHandouts("vav-06.pdf")" target="_blank">Vav (Lesson 6)</a> <i class="fas fa-file-pdf"></i></td>
-				<td><a href="@Blobs.UrlHebrewHandouts("peh-17.pdf")" target="_blank">Peh (Lesson 17)</a> <i class="fas fa-file-pdf"></i></td>
-			</tr>
-
-			<tr>
-				<td>
-					<a href="@Blobs.UrlHebrewHandouts("zayin-07.pdf")" target="_blank">Zayin (Lesson 7)</a> <i class="fas fa-file-pdf"></i><br />
-					<a href="@Blobs.UrlHebrewHandouts("zayin-coloring-page.pdf")" target="_blank">(coloring page)</a>
-				</td>
-				<td><a href="@Blobs.UrlHebrewHandouts("tsadee-18.pdf")" target="_blank">Tsadee (Lesson 18)</a> <i class="fas fa-file-pdf"></i></td>
-			</tr>
-
-			<tr>
-				<td>
-					<a href="@Blobs.UrlHebrewHandouts("khet-08.pdf")" target="_blank">Khet (Lesson 8)</a> <i class="fas fa-file-pdf"></i><br />
-					<a href="@Blobs.UrlHebrewHandouts("chet-coloring-page.pdf")" target="_blank">(coloring page)</a>
-				</td>
-				<td><a href="@Blobs.UrlHebrewHandouts("kof-19.pdf")" target="_blank">Kof (Lesson 19)</a> <i class="fas fa-file-pdf"></i></td>
-			</tr>
-
-			<tr>
-				<td><a href="#" target="_blank">Tet (Lesson 9 MISSING)</a> <i class="fas fa-file-pdf"></i></td>
-				<td><a href="@Blobs.UrlHebrewHandouts("reysh-20.pdf")" target="_blank">Resh (Lesson 20)</a> <i class="fas fa-file-pdf"></i></td>
-			</tr>
-
-			<tr>
-				<td><a href="@Blobs.UrlHebrewHandouts("yod-10.pdf")" target="_blank">Yod (Lesson 10)</a> <i class="fas fa-file-pdf"></i></td>
-				<td><a href="@Blobs.UrlHebrewHandouts("shin-21.pdf")" target="_blank">Shin (Lesson 21)</a> <i class="fas fa-file-pdf"></i></td>
-			</tr>
-
-			<tr>
-				<td><a href="@Blobs.UrlHebrewHandouts("caph-11.pdf")" target="_blank">Caph (Lesson 11)</a> <i class="fas fa-file-pdf"></i></td>
-				<td><a href="@Blobs.UrlHebrewHandouts("tav-22.pdf")" target="_blank">Tav (Lesson 22)</a> <i class="fas fa-file-pdf"></i></td>
-			</tr>
-		</table>
-
-
-
-	</div>
-
-	<!--NewMoonPresentation-->
-	<div id="moon" class="tab-pane" role="tabpanel">
-
-		<h2><span class="badge badge-warning"><i class="fas fa-book"></i> Moons (Blood and New)</span></h2>
-		<h3>Presentations by Mark Webb</h3>
-		<h3><i class="far fa-moon fa-2x text-success"></i> New Moons</h3>
-		<div class="row">
-			<div class="col-6">
-				<p class="lead">
-					Recently, Mark Webb, our congregation leader, was invited to give a presentation on the ancient Hebrew celebration of the New Moon.
-					His presentation was video taped and is available through YouTube <span class="fab fa-youtube"></span>.
-					You can view Mark's presentation in five parts by clicking on the links to the right &rarr;.
+					@* <ul class="fa-ul size16"> This doesnt work      *@
+					<ul class="fa-ul lead">
+						<li><i class="fa-li fas fa-caret-right text-warning"></i>In your personal Bible study, knowing some of the Hebrew words from which the English words were translated can often lead to additional insights.</li>
+						<li><i class="fa-li fas fa-caret-right text-warning"></i>Knowing a little Hebrew can be of great help if you ever travel to Israel.</li>
+					</ul>
 				</p>
 
-			</div>
-			<div class="col-6">
-				<br />
-				<div class="card card-body bg-danger">
-					<h4><span class="fab fa-youtube fa-2x"></span> <small>Video Links</small></h4>
-					<ul class="list-inline">
-						<li class="list-inline-item"><a href="http://youtu.be/VWM81wVx0Vc" target="_blank"><u>Part 1</u></a>, </li>
-						<li class="list-inline-item"><a href="http://www.youtube.com/watch?v=DBf0QwHK-7c" target="_blank"><u>Part 2</u></a>,</li>
-						<li class="list-inline-item"><a href="http://www.youtube.com/watch?v=Pifz9lRQifo" target="_blank"><u>Part 3</u></a>,</li>
-						<li class="list-inline-item"><a href="http://www.youtube.com/watch?v=xy0Xz7pbiMc" target="_blank"><u>Part 4</u></a>,</li>
-						<li class="list-inline-item"><a href="http://www.youtube.com/watch?v=VIfuux1rDpw" target="_blank"><u>Part 5</u></a>.</li>
-					</ul>
+				<div class="card card-body bg-light">
+					<h4>Consider this verse found in the New King Jame Version which reads</h4>
+					<blockquote class="blockquote">
+						For then I will restore to the peoples a pure language, that they all may call on the name of the Lord, to serve Him with one accord.
+						<small>Zephaniah 3:9</small>
+					</blockquote>
+
+					<p class="h5">
+						Do you suppose that the "pure language" might be Hebrew?<br />
+						<a href="https://myhebrewbible.com/Hebrew/Zepc3v8"
+							 class="btn-primary btn-sm float-right" target="_blank">
+							<span class="fas fa-external-link-alt"></span> Learn More...
+						</a>
+					</p>
+
+					<br /><br />
+
+					<img src="@Blobs.UrlRoot("Alephbet.jpg")" alt="Hebrew Alephbet" class="img-fluid rounded" style="margin:auto" />
+
 				</div>
 
-			</div>
-		</div>
+				<h2 class="mt-3"><span class="badge badge-warning">Hebrew Basics</span></h2>
 
-		<h3><i class="far fa-moon fa-2x text-danger"></i> Blood Moons</h3>
-		<p class="h5">
-			<a class="float-right" href="BloodMoons/">
-				<img src="@Blobs.UrlRoot("RedMoonSm.jpg")" class="img-fluid" />
-			</a>
-			<br />
-			Mark Webb has also developed an Internet presentation entitled, "<strong>Blood <span class="text-danger">Red</span> Moons</strong>."
-			It is a fascinating	look at when in history we've had these curious occurrences.
-			<br />
-			Click <a href="BloodMoons" class="btn btn-sm btn-primary"> <u>here</u></a> to view this presentation.
-		</p>
+				<p class="h5">
+					There are many tools on-line to help you learn the <b>alphabet</b> and <b>how to count.</b>  Here are just a few:
+					<br>
+				</p>
+				<ul class="lead">
+					<li>Animated <a href="https://www.youtube.com/embed/UiCzoTs1AdE" target="_blank">Hebrew Alephbet song</a> on YouTube</li>
+					<li><a href="http://www.jewfaq.org/alephbet.htm" target="_blank">Concise Reference Document</a> from Judaism 101</li>
+					<li>Cute video of people from 1 to 100 <a href="https://www.youtube.com/watch?v=7WwQL6hr02A" target="_blank">speaking their age in Hebrew</a></li>
+					<li>The website <a href="http://hebrew4christians.com" target="_blank"> Hebrew4Christians </a> is a great source for all sorts of learning and teaching aids.  This <a href="http://www.hebrew4christians.com/Grammar/Unit_One/Homeschool/homeschool.html" target="_blank"> page </a> in particular is useful for those just starting out.</li>
+				</ul>
 
-	</div>
+				<h3><u>More Tools to Learn Hebrew</u></h3>
+				<ul class="lead">
+					<li>
+						Our own Craig Peters (see below) has written several articles for those who are trying to learn or improve their knowledge of Hebrew.
+						<a href="@Blobs.UrlLearningHebrew()" target="_blank">
+							Learning Hebrew - Featuring Basic	Hebrew Prefixes and Suffixes
+						</a> is one such article.  (This article was presented as an In-Depth Bible Study at Living Messiah in early 2015)
+					</li>
+					<li>
+						This is a fourteen part YouTube Series by Jim Staley (Passion for Truth Ministries) on the
+						<a href="https://youtu.be/vRgmSdOA9kI" target="_blank"> Ancient Hebrew Alephbet</a>
+					</li>
+				</ul>
 
-	<!--YeshuaOtVerses-->
-	<div id="yeshua" class="tab-pane" role="tabpanel">
+				<h2><span class="badge badge-warning">Learning Hebrew Together</span></h2>
 
-		<h2><span class="badge badge-warning"><i class="fab fa-leanpub"></i> Yeshua in the Tanakh</span></h2>
-		<p class="text-muted"><small><i>Tanakh</i> is the Old Testament</small></p>
+				<p class="h5">
+					Some time ago, we conducted a beginning level Hebrew class entitled, <b>"Families Learning Hebrew Together."</b>
+					There were handouts that accompanied each week's lesson.
+					For those of you who were unable to receive copies of these handouts, they are available here for you to print out.
+					These handouts are useful if you are teaching beginning Hebrew to your family or friends or if you are learning it yourself.
+					<br>
+					We also recorded them on YouTube <span class="fab fa-youtube"></span>.
+				</p>
 
-		<p class="h5">
-			<b>Luke 24:13-34</b> tells the story of two disciples who were walking on the road to Emmaus, talking with each other about the recent death of Yeshua.
-			They were joined on their journey by the resurrected Messiah.
-		</p>
+				<a href="https://www.youtube.com/watch?v=PUlcfZ4eT5M&list=PLAmg7YxItfMS_XSvPQm6Tw-3H0OEOYXVb"
+					 class="btn btn-primary btn-sm"
+					 title="Videos Recored at Living Messiah">
+					<i class="fab fa-youtube fa-2x pull-left"></i>
+					Learning Hebrew Class <br />Taught by Matthew
+				</a>
 
-		<i class="fas fa-quote-left fa-2x fa-pull-left fa-border" aria-hidden="true"></i>
-		<blockquote class="blockquote">
-			Then beginning with Moses and with all the prophets, He explained to them the things concerning Himself in all the Scriptures.
-			<footer class="blockquote-footer"><cite title="">Luke 24:27</cite></footer>
-		</blockquote>
+				<h3 class="mt-5"><u>PDF Handouts</u></h3>
 
-		<p class="lead">
-			Listed below are some of the Scriptures in the Tanakh (Old Testament) that Yeshua probably used when speaking with these two men on the road to Emmaus.
-		</p>
+				<table class="table table-striped table-sm table-primary">
 
+					<tr>
+						<th>From <i>Aleph</i> to <i>Kaph</i></th>
+						<th>From <i>Lamed</i> to <i>Meym</i></th>
+					</tr>
 
-		<div class="row">
-			<div class="col-sm-3">
-				<button type="button" class="btn btn-info btn-sm" bs-toggle-modal="Gen4910">
-					Genesis 49:10
-				</button>
+					<tr>
+						<td><a href="@Blobs.UrlHebrewHandouts("aleph-01.pdf")" target="_blank">Aleph (Lesson 1)</a> <i class="fas fa-file-pdf"></i></td>
+						<td><a href="@Blobs.UrlHebrewHandouts("lamed-12.pdf")" target="_blank">Lamed (Lesson 12)</a> <i class="fas fa-file-pdf"></i></td>
+					</tr>
 
-				<modal id="Gen4910" title="The Scepter and Judah">
-					<modal-body>
-						<blockquote>
+					<tr>
+						<td><a href="@Blobs.UrlHebrewHandouts("bet-02.pdf")" target="_blank">Bet (Lesson 2)</a> <i class="fas fa-file-pdf"></i></td>
+						<td><a href="@Blobs.UrlHebrewHandouts("meym-13.pdf")" target="_blank">Meym (Lesson 13)</a> <i class="fas fa-file-pdf"></i></td>
+					</tr>
+
+					<tr>
+						<td><a href="@Blobs.UrlHebrewHandouts("gimel-03.pdf")" target="_blank">Gimel (Lesson 3)</a> <i class="fas fa-file-pdf"></i></td>
+						<td><a href="@Blobs.UrlHebrewHandouts("nun-14.pdf")" target="_blank">Nun (Lesson 14)</a> <i class="fas fa-file-pdf"></i></td>
+					</tr>
+
+					<tr>
+						<td><a href="@Blobs.UrlHebrewHandouts("dalet-04.pdf")" target="_blank">Dalet (Lesson 4)</a> <i class="fas fa-file-pdf"></i></td>
+						<td><a href="@Blobs.UrlHebrewHandouts("samekh-15.pdf")" target="_blank">Samekh (Lesson 15)</a> <i class="fas fa-file-pdf"></i></td>
+					</tr>
+
+					<tr>
+						<td><a href="@Blobs.UrlHebrewHandouts("heh-05.pdf")" target="_blank">Heh (Lesson 5)</a> <i class="fas fa-file-pdf"></i></td>
+						<td><a href="@Blobs.UrlHebrewHandouts("ayin-16.pdf")" target="_blank">Ayin (Lesson 16)</a> <i class="fas fa-file-pdf"></i></td>
+					</tr>
+
+					<tr>
+						<td><a href="@Blobs.UrlHebrewHandouts("vav-06.pdf")" target="_blank">Vav (Lesson 6)</a> <i class="fas fa-file-pdf"></i></td>
+						<td><a href="@Blobs.UrlHebrewHandouts("peh-17.pdf")" target="_blank">Peh (Lesson 17)</a> <i class="fas fa-file-pdf"></i></td>
+					</tr>
+
+					<tr>
+						<td>
+							<a href="@Blobs.UrlHebrewHandouts("zayin-07.pdf")" target="_blank">Zayin (Lesson 7)</a> <i class="fas fa-file-pdf"></i><br />
+							<a href="@Blobs.UrlHebrewHandouts("zayin-coloring-page.pdf")" target="_blank">(coloring page)</a>
+						</td>
+						<td><a href="@Blobs.UrlHebrewHandouts("tsadee-18.pdf")" target="_blank">Tsadee (Lesson 18)</a> <i class="fas fa-file-pdf"></i></td>
+					</tr>
+
+					<tr>
+						<td>
+							<a href="@Blobs.UrlHebrewHandouts("khet-08.pdf")" target="_blank">Khet (Lesson 8)</a> <i class="fas fa-file-pdf"></i><br />
+							<a href="@Blobs.UrlHebrewHandouts("chet-coloring-page.pdf")" target="_blank">(coloring page)</a>
+						</td>
+						<td><a href="@Blobs.UrlHebrewHandouts("kof-19.pdf")" target="_blank">Kof (Lesson 19)</a> <i class="fas fa-file-pdf"></i></td>
+					</tr>
+
+					<tr>
+						<td><a href="#" target="_blank">Tet (Lesson 9 MISSING)</a> <i class="fas fa-file-pdf"></i></td>
+						<td><a href="@Blobs.UrlHebrewHandouts("reysh-20.pdf")" target="_blank">Resh (Lesson 20)</a> <i class="fas fa-file-pdf"></i></td>
+					</tr>
+
+					<tr>
+						<td><a href="@Blobs.UrlHebrewHandouts("yod-10.pdf")" target="_blank">Yod (Lesson 10)</a> <i class="fas fa-file-pdf"></i></td>
+						<td><a href="@Blobs.UrlHebrewHandouts("shin-21.pdf")" target="_blank">Shin (Lesson 21)</a> <i class="fas fa-file-pdf"></i></td>
+					</tr>
+
+					<tr>
+						<td><a href="@Blobs.UrlHebrewHandouts("caph-11.pdf")" target="_blank">Caph (Lesson 11)</a> <i class="fas fa-file-pdf"></i></td>
+						<td><a href="@Blobs.UrlHebrewHandouts("tav-22.pdf")" target="_blank">Tav (Lesson 22)</a> <i class="fas fa-file-pdf"></i></td>
+					</tr>
+				</table>
+
+			</ContentTemplate>
+		</TabItem>
+
+		<!--NewMoonPresentation-->
+		<TabItem>
+			<ChildContent>
+				<TabHeader Text="Moons"></TabHeader>
+			</ChildContent>
+			<ContentTemplate>
+
+				<h2><span class="badge badge-warning"><i class="fas fa-book"></i> Moons (Blood and New)</span></h2>
+				<h3>Presentations by Mark Webb</h3>
+				<h3><i class="far fa-moon fa-2x text-success"></i> New Moons</h3>
+				<div class="row">
+					<div class="col-6">
+						<p class="lead">
+							Recently, Mark Webb, our congregation leader, was invited to give a presentation on the ancient Hebrew celebration of the New Moon.
+							His presentation was video taped and is available through YouTube <span class="fab fa-youtube"></span>.
+							You can view Mark's presentation in five parts by clicking on the links to the right &rarr;.
+						</p>
+
+					</div>
+					<div class="col-6">
+						<br />
+						<div class="card card-body bg-danger">
+							<h4><span class="fab fa-youtube fa-2x"></span> <small>Video Links</small></h4>
+							<ul class="list-inline">
+								<li class="list-inline-item"><a href="http://youtu.be/VWM81wVx0Vc" target="_blank"><u>Part 1</u></a>, </li>
+								<li class="list-inline-item"><a href="http://www.youtube.com/watch?v=DBf0QwHK-7c" target="_blank"><u>Part 2</u></a>,</li>
+								<li class="list-inline-item"><a href="http://www.youtube.com/watch?v=Pifz9lRQifo" target="_blank"><u>Part 3</u></a>,</li>
+								<li class="list-inline-item"><a href="http://www.youtube.com/watch?v=xy0Xz7pbiMc" target="_blank"><u>Part 4</u></a>,</li>
+								<li class="list-inline-item"><a href="http://www.youtube.com/watch?v=VIfuux1rDpw" target="_blank"><u>Part 5</u></a>.</li>
+							</ul>
+						</div>
+
+					</div>
+				</div>
+
+				<h3><i class="far fa-moon fa-2x text-danger"></i> Blood Moons</h3>
+				<p class="h5">
+					<a class="float-right" href="BloodMoons/">
+						<img src="@Blobs.UrlRoot("RedMoonSm.jpg")" class="img-fluid" />
+					</a>
+					<br />
+					Mark Webb has also developed an Internet presentation entitled, "<strong>Blood <span class="text-danger">Red</span> Moons</strong>."
+					It is a fascinating	look at when in history we've had these curious occurrences.
+					<br />
+					Click <a href="BloodMoons" class="btn btn-sm btn-primary"> <u>here</u></a> to view this presentation.
+				</p>
+
+			</ContentTemplate>
+		</TabItem>
+
+		<!--YeshuaOtVerses-->
+		<TabItem>
+			<ChildContent>
+				<TabHeader Text="Yeshua in OT"></TabHeader>
+			</ChildContent>
+			<ContentTemplate>
+
+				<h2><span class="badge badge-warning"><i class="fab fa-leanpub"></i> Yeshua in the Tanakh</span></h2>
+
+				<p class="text-muted"><small><i>Tanakh</i> is the Old Testament</small></p>
+
+				<p class="h5">
+					<b>Luke 24:13-34</b> tells the story of two disciples who were walking on the road to Emmaus, talking with each other about the recent death of Yeshua.
+					They were joined on their journey by the resurrected Messiah.
+				</p>
+
+				@*
+					THIS DOESN'T WORK, EVEN THOUGH I HAVE NO ISSUES AT https://localhost:5001/Leadership (see the quote from Psalms 19:1)
+					THE DIFFERENCE IS THAT HERE IT IS WRAPPED iNSIDE <ContentTemplate></ContentTemplate>
+					SOLUTION: Wrap the <i> and <blockquote> inside a <div>
+				*@
+
+				<div>
+					<i class="fa fa-quote-left fa-2x fa-pull-left fa-border" aria-hidden="true"></i>
+					<blockquote class="blockquote">
+						Then beginning with Moses and with all the prophets, He explained to them the things concerning Himself in all the Scriptures.
+						<footer class="blockquote-footer"><cite title="">Luke 24:27</cite></footer>
+					</blockquote>
+				</div>
+				<p class="lead">
+					Listed below are some of the Scriptures in the Tanakh (Old Testament) that Yeshua probably used when speaking with these two men on the road to Emmaus.
+				</p>
+
+				<div class="row">
+					<div class="col-sm-3">
+
+						<button type="button" class="btn btn-info btn-sm" @onclick="@(e => ToggleVersePopupClick(IsCollapsed, 1))">
+							Genesis 49:10
+						</button>
+						<blockquote class="blockquote">
 							<sup>10</sup> The scepter shall not depart from Judah,<br />
 							Nor the ruler’s staff from between his feet,<br />
 							Until Shiloh comes*,<br />
@@ -256,49 +268,37 @@
 							* Or <i>Until he comes to Shiloh</i>; or <i>Until he comes to whom it belongs</i><br /><br />
 							<small><b>Genesis 49:10</b></small>
 						</blockquote>
-					</modal-body>
-					<modal-footer dismiss-text="Close"></modal-footer>
-				</modal>
 
-			</div>
+					</div>
 
-			<div class="col-sm-3">
-				<button type="button" class="btn btn-info btn-sm" bs-toggle-modal="Deu1815">
-					Deuteronomy 18:15
-				</button>
-				<modal id="Deu1815" title="YHVH will raise a prophet">
-					<modal-body>
-						<blockquote>
+					<div class="col-sm-3">
+						<button type="button" class="btn btn-info btn-sm" @onclick="@(e => ToggleVersePopupClick(IsCollapsed, 2))">
+							Deuteronomy 18:15
+						</button>
+						<blockquote class="blockquote">
 							<sup>15</sup> The LORD your God will raise up for you a prophet like me from among you, from your countrymen, you shall listen to him.
 							<small><b>Deuteronomy 18:15</b></small>
 						</blockquote>
-					</modal-body>
-					<modal-footer dismiss-text="Close"></modal-footer>
-				</modal>
-			</div>
+					</div>
 
-			<div class="col-sm-3">
-				<button type="button" class="btn btn-info btn-sm" bs-toggle-modal="Isa0714">
-					Isaiah 7:14
-				</button>
-				<modal id="Isa0714" title="call His name Immanuel">
-					<modal-body>
-						<blockquote>
-							<sup>14</sup> Therefore the Lord Himself will give you a sign: Behold, a virgin will be with child and bear a son, and she will call His name Immanuel.
-							<small><b>Isaiah 7:14</b></small>
-						</blockquote>
-					</modal-body>
-					<modal-footer dismiss-text="Close"></modal-footer>
-				</modal>
-			</div>
+					<div class="col-sm-3">
+						<div class="card card-body bg-light">
 
-			<div class="col-sm-3">
-				<button type="button" class="btn btn-info btn-sm" bs-toggle-modal="Isa0906to07">
-					Isaiah 9:6-7
-				</button>
-				<modal id="Isa0906to07" title="Wonderful Counselor, Mighty God,	Eternal Father, Prince of Peace">
-					<modal-body>
-						<blockquote>
+							<button type="button" class="btn btn-info btn-sm" @onclick="@(e => ToggleVersePopupClick(IsCollapsed, 3))">
+								Isaiah 7:14
+							</button>
+							<blockquote class="blockquote">
+								<sup>14</sup> Therefore the Lord Himself will give you a sign: Behold, a virgin will be with child and bear a son, and she will call His name Immanuel.
+								<small><b>Isaiah 7:14</b></small>
+							</blockquote>
+						</div>
+					</div>
+
+					<div class="col-sm-3">
+						<button type="button" class="btn btn-info btn-sm" @onclick="@(e => ToggleVersePopupClick(IsCollapsed, 4))">
+							Isaiah 9:6-7
+						</button>
+						<blockquote class="blockquote">
 							<sup>6</sup> For a child will be born to us, a son will be given to us;
 							And the government will rest on His shoulders;
 							And His name will be called Wonderful Counselor, Mighty God,
@@ -310,41 +310,47 @@
 							The zeal of the Lord of hosts will accomplish this.
 							<small><b>Isaiah 9:6-7</b></small>
 						</blockquote>
-					</modal-body>
-					<modal-footer dismiss-text="Close"></modal-footer>
-				</modal>
-			</div>
-		</div>
-	</div>
+					</div>
+				</div>
 
-	<!--ResourceLinks-->
-	<div id="other" class="tab-pane" role="tabpanel">
+				<div class="row col-12">
+					<p class="text-muted">ToDo: this modal function is not working yet</p>
+				</div>
 
-		<h2><span class="badge badge-warning">Other Resources</span></h2>
 
-		<blockquote>
-			There are many on-line tools available to you as you pursue your own personal Bible study.
-			<br /><i class="fas fa-exclamation-triangle"></i> You should be somewhat cautious, however, as many websites may contain false or misleading information.
-		</blockquote>
+			</ContentTemplate>
+		</TabItem>
 
-		<ul class="size16">
-			@*
-		Note: Changed the link from http to https because with out the https it would give an offencive pop-up modal/alert when you go to that site.
-			*@
-			<li>
-				A detailed and interactive map <span class="fas fa-map"></span> of ancient Israel at the time of Joshua and Judges.
 
-				<a href="https://www.bible-history.com/geography/ancient-israel/israel-old-testament.html"
-					 class="btn-primary btn-sm" target="_blank">
-					<i class="fas fa-external-link-alt"></i>...
-				</a>
-			</li>
-			<li>
-				If you know of any resources that you have found useful, please let us know. <i class="fas fa-question"></i>
-			</li>
-		</ul>
+		<TabItem>
+			<ChildContent>
+				<TabHeader Text="Other"></TabHeader>
+			</ChildContent>
+			<ContentTemplate>
+				<!--ResourceLinks-->
+				<h2><span class="badge badge-warning">Other Resources</span></h2>
 
-	</div>
+				<blockquote class="blockquote">
+					There are many on-line tools available to you as you pursue your own personal Bible study.
+					<br /><i class="fas fa-exclamation-triangle"></i> You should be somewhat cautious, however, as many websites may contain false or misleading information.
+				</blockquote>
 
-</div>
+				<ul class="h5">
 
+					<li>
+						A detailed and interactive map <span class="fas fa-map-signs"></span> of ancient Israel at the time of Joshua and Judges.
+
+						<a href="https://www.bible-history.com/index.php"
+							 class="btn-primary btn-sm" target="_blank">
+							<i class="fas fa-external-link-alt"></i>...
+						</a>
+					</li>
+					<li>
+						If you know of any resources that you have found useful, please let us know. <i class="fas fa-question"></i>
+					</li>
+				</ul>
+			</ContentTemplate>
+		</TabItem>
+
+	</TabItems>
+</SfTab>

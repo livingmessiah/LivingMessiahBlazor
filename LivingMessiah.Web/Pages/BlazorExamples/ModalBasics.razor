@@ -1,0 +1,161 @@
+﻿@page "/dialog/modalbasics"
+
+<h3>ModalBasics</h3>
+
+
+@using Syncfusion.Blazor.Popups
+
+@*@inherits SampleBaseComponent;*@
+
+
+<p>This sample demonstrates the default rendering of the Dialog component with minimum configuration. Click close or press ESC to close the dialog. Click “Open” to show the dialog again, if it is closed.</p>
+
+<p>The Dialog component is used to display information and get input from the user. The dialog component is classified as modal and non-modal dialog depend on its interaction with parent application.</p>
+<ul>
+	<li>Modal - It creates overlay that disables interaction with the parent application, and the user should respond with modal before continuing with other applications.</li>
+	<li>Non-modal - It does not prevent user interaction with parent application.</li>
+</ul>
+
+<p><code>DialogButton IsPrimary="true"</code> Allows the appearance of the Button to be enhanced and visually appealing when set to true.</p>
+
+<p>
+	<blockquote>
+		<sup>10</sup> The scepter shall not depart from Judah,<br />
+		Nor the ruler’s staff from between his feet,<br />
+		Until Shiloh comes*,<br />
+		And to him shall be the obedience of the peoples.<br /><br />
+		* Or <i>Until he comes to Shiloh</i>; or <i>Until he comes to whom it belongs</i><br /><br />
+		<small><b>Genesis 49:10</b></small>
+	</blockquote>
+	<a class='btn btn-outline-primary' href='https://myhebrewbible.com/Verse/gen-49-10/Englishonly' target='_blank'>Gen 49:10 <i class='fas fa-external-link-alt'></i></a>
+</p>
+
+@*<div class="col-lg-12 control-section" id="target"></div>*@
+@* <SfDialog Width="100px" ShowCloseIcon="true" @bind-Visible="Visibility1"> *@
+
+<div class="row">
+	<div class="col-sm-6">
+		<div>
+			@if (this.ShowButton1)
+			{
+				//<button class="e-btn" @onclick="@OnBtnClick1">Open</button>
+				<button type="button" class="btn btn-info btn-sm" @onclick="@OnBtnClick1">
+					Genesis 49:10
+				</button>
+			}
+		</div>
+
+		<SfDialog Height="75%" Width="300px" ShowCloseIcon="true" @bind-Visible="Visibility1">
+			<DialogTemplates>
+
+				<Header>
+					<style class="badge badge-warning">
+						Genesis 49:10
+					</style>
+				</Header>
+				<Content>
+					<p>
+						<blockquote>
+							<sup>10</sup> The scepter shall not depart from Judah,<br />
+							Nor the ruler’s staff from between his feet,<br />
+							Until Shiloh comes*,<br />
+							And to him shall be the obedience of the peoples.<br /><br />
+							* Or <i>Until he comes to Shiloh</i>; or <i>Until he comes to whom it belongs</i><br /><br />
+							<small><b>Genesis 49:10</b></small>
+						</blockquote>
+					</p>
+				</Content>
+			</DialogTemplates>
+			<DialogEvents OnOpen="@DialogOpen1" Closed="@DialogClose1"></DialogEvents>
+			<DialogButtons>
+				<DialogButton Content="<a class='btn btn-outline-primary' href='https://myhebrewbible.com/Verse/gen-49-10/Englishonly' target='_blank'>Gen 49:10 <i class='fas fa-external-link-alt'></i></a>" OnClick="@OnBtnClick1" />
+			</DialogButtons>
+		</SfDialog>
+	</div>
+
+	@* (<a href="https://www.myhebrewbible.com/Article/153/Economy-of-God-G3622-oikonomia-G3623-oikonomos-dispensation-steward">God's Economy <i class='fas fa-external-link-alt'></i></a>) *@
+
+	<div class="col-sm-6">
+		<div>
+			@if (this.ShowButton2)
+			{
+				//<button class="e-btn" @onclick="@OnBtnClick2">Open</button>
+				<button type="button" class="btn btn-info btn-sm" @onclick="@OnBtnClick2">
+					Deuteronomy 18:15
+				</button>
+			}
+		</div>
+
+		<SfDialog Height="75%" Width="300px" ShowCloseIcon="true" @bind-Visible="Visibility2">
+			<DialogTemplates>
+				<Header>
+					<style class="badge badge-warning">
+						Deuteronomy 18:15
+					</style>
+				</Header>
+				<Content>
+					<p>
+						<blockquote>
+							<sup>15</sup> The LORD your God will raise up for you a prophet like me from among you, from your countrymen, you shall listen to him.
+							<small><b>Deuteronomy 18:15</b></small>
+						</blockquote>
+					</p>
+				</Content>
+			</DialogTemplates>
+			<DialogEvents OnOpen="@DialogOpen2" Closed="@DialogClose2"></DialogEvents>
+			<DialogButtons>
+				@*<DialogButton IsPrimary="true" Content="<a id='newTab' href='https://myhebrewbible.com/Verse/deu-18-15/Englishonly' target='_blank'>MHB Deu 18:15</a>" OnClick="@OnBtnClick2" />*@
+				<DialogButton Content="<a id='newTab' href='https://myhebrewbible.com/Verse/deu-18-15/Englishonly' target='_blank'>MHB Deu 18:15</a>" OnClick="@OnBtnClick2" />
+			</DialogButtons>
+		</SfDialog>
+
+	</div>
+</div>
+
+
+@code {
+
+	private bool Visibility1 { get; set; } = false;
+	private bool ShowButton1 { get; set; } = true;
+
+	private void OnBtnClick1()
+	{
+		this.Visibility1 = true;
+	}
+
+	private void DialogOpen1(Object args)
+	{
+		this.ShowButton1 = false;
+	}
+
+	private void DialogClose1(Object args)
+	{
+		this.ShowButton1 = true;
+	}
+
+
+
+	private bool Visibility2 { get; set; } = false;
+	private bool ShowButton2 { get; set; } = true;
+
+	private void OnBtnClick2()
+	{
+		this.Visibility2 = true;
+	}
+
+	private void DialogOpen2(Object args)
+	{
+		this.ShowButton2 = false;
+	}
+
+	private void DialogClose2(Object args)
+	{
+		this.ShowButton2 = true;
+	}
+
+
+}
+
+
+<style>
+</style>
