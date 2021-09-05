@@ -1,0 +1,115 @@
+﻿@page "/BibleBooks"
+@using LivingMessiah.Domain.Bible
+
+<h1>Bible Books</h1>
+<p class="text-muted"><small>Test <i>SmartEnum</i></small></p>
+
+
+<h4 class="pb-2 mt-4 mb-2 border-bottom text-center">Direct reference to properties</h4>
+<dl class="row">
+	<dt class="col-6"><span class="float-right"><code>Book.Deuteronomy</code>:</span></dt>
+	<dd class="col-6">@Book.Deuteronomy</dd>
+</dl>
+<dl class="row">
+	<dt class="col-6"><span class="float-right"><code>Book.Proverbs</code> | <code>Book.Proverbs.BookGroupEnum</code>:</span></dt>
+	<dd class="col-6">@Book.Proverbs | @Book.Proverbs.BookGroupEnum</dd>
+</dl>
+
+<h4 class="pb-2 mt-4 mb-2 border-bottom text-center"><code>FromValue</code> and <code>FromName</code></h4>
+<dl class="row">
+	<dt class="col-6"><span class="float-right"><code>Book.FromValue(3)</code>:</span></dt>
+	<dd class="col-6">@Book.FromValue(3)</dd>
+</dl>
+<dl class="row">
+	<dt class="col-6"><span class="float-right"><code>Book.FromName('Genesis')</code>:</span></dt>
+	<dd class="col-6">@Book.FromName("Genesis")</dd>
+</dl>
+
+<h4 class="pb-2 mt-4 mb-2 border-top text-center"><code>Book.List.ToList()</code></h4>
+<p class="mt-0 text-center"><code><small>Book.List.Count</small></code>: @Book.List.Count</p>
+<TableTemplate Items="Book.List.ToList()">
+	<TableHeader>
+		<th class="text-info">Id</th>
+		<th class="text-primary">Name</th>
+		<th class="text-danger">Abrv</th>
+		<th class="text-warning">Group</th>
+	</TableHeader>
+	<RowTemplate>
+		<td>@context.Value</td>
+		<td>@context.Name</td>
+		<td>@context.Abrv</td>
+		<td>@context.BookGroupEnum</td>
+	</RowTemplate>
+</TableTemplate>
+
+
+<div class="card mb-3 border-warning">
+	<div class="card-header">
+		<h4 class="card-title text-center"><code>Book.List.OrderBy(o => o.Value)</code></h4>
+	</div>
+	<div class="card-body">
+
+
+		@foreach (var item in Book.List.OrderBy(o => o.Value))
+		{
+			<ul class="list-inline">
+				<li class="list-inline-item">Value: <b>@item.Value</b>, Name: @item.Name, Group: @item.BookGroupEnum</li>
+			</ul>
+		}
+
+		@*
+
+					Check out Shared\DataList.razor and make something like that here...looks like maybe I could use the Fluent feature
+
+					<DataList Data="@Book.List.ToList()"
+									Type="LinkTypeEnum.Admin">
+					<a href="@context" title="@context.Title">
+						<i class="@context.Icon" aria-hidden="true"></i>
+						@context.Title
+					</a>
+				</DataList>*@
+
+	</div>
+</div>
+@*
+	log.LogWarning($"{Environment.NewLine}foreach Book.List OrderBy Value...");
+	foreach (var option in Book.List.OrderBy(o => o.Value))
+		log.LogWarning($"...{option.Value}, {option.Name}, {option.Abrv}, {option.BookGroupEnum}");
+
+*@
+
+<h4 class="pb-2 mt-4 mb-2 border-top text-center"><code>Book.List.ToList() Where BookGroupEnum == Poetry</code></h4>
+<p class="mt-0 text-center"><code><small>Book.List.Where(w => w.BookGroupEnum == BookGroupEnum.Poetry).Count()</small></code>: @Book.List.Where(w => w.BookGroupEnum == BookGroupEnum.Poetry).Count()</p>
+<TableTemplate Items="Book.List.Where(x => x.BookGroupEnum == BookGroupEnum.Poetry).ToList()">
+	<TableHeader>
+		<th class="text-info">Id</th>
+		<th class="text-primary">Name</th>
+		<th class="text-danger">Abrv</th>
+		<th class="text-warning">Group</th>
+	</TableHeader>
+	<RowTemplate>
+		<td>@context.Value</td>
+		<td>@context.Name</td>
+		<td>@context.Abrv</td>
+		<td>@context.BookGroupEnum</td>
+	</RowTemplate>
+</TableTemplate>
+
+
+<h4 class="pb-2 mt-4 mb-2 border-bottom text-center">Fluent Interface</h4>
+<p>FluentResult: @FluentResult</p>
+
+@code {
+	Book myNumbersSmartEnum = Book.FromName("Numbers");
+
+	string FluentResult = "";
+
+	protected override void OnInitialized()
+	{
+		myNumbersSmartEnum
+							.When(Book.Genesis).Then(() => FluentResult = "...Book.Genesis")
+						.When(Book.Numbers).Then(() => FluentResult = "...Book.Numbers");
+
+	}
+
+}
