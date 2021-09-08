@@ -22,6 +22,32 @@
 		AcceptedHouseRules = 32
 	}	
 
+	public StatusFlagEnum StatusFlagEnum { get; set; }
+	if (User.Verified())
+	{
+		StatusFlagEnum = StatusFlagEnum | StatusFlagEnum.EmailConfirmation;
+	}
+
+	private void FinalizeStatusFlag(int statusId)
+	{
+		StatusFlagEnum = StatusFlagEnum | StatusFlagEnum.RegistrationFormCompleted;
+
+		if (vwRegistrationShell.MealCount > 0)
+		{
+			StatusFlagEnum = StatusFlagEnum | StatusFlagEnum.MealsFormCompleted;
+		}
+
+		if (statusId == (int)StatusEnum.FullyPaid)
+		{
+			StatusFlagEnum = StatusFlagEnum | StatusFlagEnum.MealsFormCompleted | StatusFlagEnum.FullyPaid;
+		}
+		else
+		{
+			if (statusId == (int)StatusEnum.PartiallyPaid)
+			{
+				StatusFlagEnum = StatusFlagEnum | StatusFlagEnum.MealsFormCompleted | StatusFlagEnum.PartiallyPaid;
+			}
+		}
 */
 
 namespace SukkotApi.Domain
@@ -41,6 +67,8 @@ namespace SukkotApi.Domain
 		private RegistrationStep(string name, int value) : base(name, value)
 		{
 		}
+		
+		public abstract string Abrv { get; }
 
 		private static class Id
 		{
@@ -49,27 +77,41 @@ namespace SukkotApi.Domain
 			internal const int FormCompletion = 3;
 			internal const int FullyPaid = 4;
 			internal const int Cancelled = 5;
-
 		}
 
-
+		public string Dump
+		{
+			get
+			{
+				string s = "";
+				s += $" {(this.CanTransitionTo(EmailConfirmation) ? EmailConfirmation.Abrv : "__")  }";
+				s += $" {(this.CanTransitionTo(AcceptedHouseRules) ? AcceptedHouseRules.Abrv : "__")  }";
+				s += $" {(this.CanTransitionTo(FormCompletion) ? FormCompletion.Abrv : "__")  }";
+				s += $" {(this.CanTransitionTo(FullyPaid) ? FullyPaid.Abrv : "__")  }";
+				s += $" {(this.CanTransitionTo(Cancelled) ? Cancelled.Abrv : "__")  }";
+				return s;
+							
+			}
+		}
 
 		public abstract bool CanTransitionTo(RegistrationStep next);
 
 		private sealed class EmailConfirmationStep : RegistrationStep
 		{
-			public EmailConfirmationStep() : base("EmailConfirmation", Id.EmailConfirmation)
+			public EmailConfirmationStep() : base($"{nameof(Id.EmailConfirmation)}", Id.EmailConfirmation)
 			{
 			}
+			public override string Abrv => "EC";
 			public override bool CanTransitionTo(RegistrationStep next) =>
 					next == RegistrationStep.AcceptedHouseRules || next == RegistrationStep.Cancelled;
 		}
 
 		private sealed class AcceptedHouseRulesStep : RegistrationStep
 		{
-			public AcceptedHouseRulesStep() : base("AcceptedHouseRules", Id.AcceptedHouseRules)
+			public AcceptedHouseRulesStep() : base($"{nameof(Id.AcceptedHouseRules)}", Id.AcceptedHouseRules)
 			{
 			}
+			public override string Abrv => "AH";
 			public override bool CanTransitionTo(RegistrationStep next) =>
 					next == RegistrationStep.FormCompletion || next == RegistrationStep.Cancelled;
 		}
@@ -77,9 +119,10 @@ namespace SukkotApi.Domain
 
 		private sealed class FormCompletionStep : RegistrationStep
 		{
-			public FormCompletionStep() : base("FormCompletion", Id.FormCompletion)
+			public FormCompletionStep() : base($"{nameof(Id.FormCompletion)}", Id.FormCompletion)
 			{
 			}
+			public override string Abrv => "FC";
 			public override bool CanTransitionTo(RegistrationStep next) =>
 					next == RegistrationStep.FullyPaid || next == RegistrationStep.Cancelled;
 		}
@@ -87,18 +130,20 @@ namespace SukkotApi.Domain
 
 		private sealed class FullyPaidStep : RegistrationStep
 		{
-			public FullyPaidStep() : base("FullyPaid", Id.FullyPaid)
+			public FullyPaidStep() : base($"{nameof(Id.FullyPaid)}", Id.FullyPaid)
 			{
 			}
+			public override string Abrv => "FP";
 			public override bool CanTransitionTo(RegistrationStep next) =>
 					next == RegistrationStep.Cancelled;
 		}
 
 		private sealed class CancelledStep : RegistrationStep
 		{
-			public CancelledStep() : base("Cancelled", Id.Cancelled)
+			public CancelledStep() : base($"{nameof(Id.Cancelled)}", Id.Cancelled)
 			{
 			}
+			public override string Abrv => "Cn";
 			public override bool CanTransitionTo(RegistrationStep next) =>
 					false;
 		}

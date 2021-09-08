@@ -29,9 +29,15 @@ namespace LivingMessiah.Domain.Bible
 		{
 		}
 
-
 		public abstract string Abrv { get; }
 		public abstract BookGroupEnum BookGroupEnum { get; }
+
+		public string Dump 
+		{
+			get {
+				return  $" {this.Value}-{this.Abrv}-{this.Name}-{this.BookGroupEnum}";
+			}
+		}
 
 		/*
 		Extra attributes I could add if I want to
