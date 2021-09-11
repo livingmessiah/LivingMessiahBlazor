@@ -5,8 +5,9 @@ namespace LivingMessiah.Web.Pages.UpcomingEvents
 {
 	partial class LunarMonth : BaseKeyDates
 	{
-		[Parameter]
-		public LunarMonthLocal LunarMonthLocal { get; set; }
+		public const string Icon = "far fa-moon";
+
+		[Parameter] public LunarMonthSmartEnum LunarMonthSmartEnum { get; set; }
 
 	}
 }

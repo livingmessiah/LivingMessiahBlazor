@@ -5,7 +5,7 @@
 {
 	case DateTypeEnum.Month:
 		<LunarMonth EventDate="@UpcomingEvent.EventDate" DaysAhead="@UpcomingEvent.DaysAhead" IsXsOrSm="@IsXsOrSm"
-								LunarMonthLocal="@LunarMonthLocal.FromInt(UpcomingEvent.EnumId)">
+								LunarMonthSmartEnum="@LunarMonthSmartEnum.FromValue(UpcomingEvent.EnumId)">
 		</LunarMonth>
 		break;
 

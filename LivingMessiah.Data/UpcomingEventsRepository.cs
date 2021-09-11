@@ -16,7 +16,8 @@ namespace LivingMessiah.Data
 		string BaseSqlDump { get; }
 		Task<List<UpcomingEvent>> GetEvents(int daysAhead, int daysPast);
 		Task<CalendarYear> GetHebrewYearAndChildren(RelativeYearEnum relativeYear);
-		Task<List<Domain.KeyDates.Commands.DateUnion>> GetDateUnionList(RelativeYearEnum relativeYear); 
+		Task<List<Domain.KeyDates.Commands.DateUnion>> GetDateUnionList(RelativeYearEnum relativeYear);
+		Task<List<DateExplode>> GetDateExplode(RelativeYearEnum relativeYear);
 	}
 
 	public class UpcomingEventsRepository : BaseRepositoryAsync, IUpcomingEventsRepository
@@ -175,6 +176,29 @@ FROM KeyDate.FeastDayDetail
 				_ => "c.CurrentYear",
 			};
 
+		}
+
+		public async Task<List<DateExplode>> GetDateExplode(RelativeYearEnum relativeYear)
+		{
+			base.Sql = $@"
+SELECT 
+	YearId, Date, GregorianYear, DateTypeId AS DateTypeEnum, DateTypeEnumId
+
+--Id, DateYMD, RowCntByGregorianYear, IsDateTypeContiguous, DateType, DateTypeValue
+
+FROM KeyDate.vwDateExplode
+CROSS JOIN KeyDate.Constants c
+WHERE YearId = {GetYearId(relativeYear)}
+ORDER BY Date
+
+
+
+";
+			return await WithConnectionAsync(async connection =>
+			{
+				var rows = await connection.QueryAsync<DateExplode>(sql: base.Sql, param: base.Parms);
+				return rows.ToList();
+			});
 		}
 
 		#region Command
