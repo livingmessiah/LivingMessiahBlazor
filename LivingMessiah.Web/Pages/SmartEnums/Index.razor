@@ -1,14 +1,47 @@
 ﻿@page "/SmartEnums"
+@using LivingMessiah.Domain.KeyDates.Queries
 
 <h3>Smart Enums</h3>
 
 @*<ul>
-	<li><a href="/SmartEnums/BibleBooks">Bible Books</a></li>
-	<li><a href="/SmartEnums/LunarMonths">Lunar Months</a></li>
-	<li><a href="/SmartEnums/FeastDays">Feast Days</a></li>
-	<li><a href="/SmartEnums/Seasons">Seasons</a></li>
-</ul>*@
+		<li><a href="/SmartEnums/BibleBooks">Bible Books</a></li>
+		<li><a href="/SmartEnums/LunarMonths">Lunar Months</a></li>
+		<li><a href="/SmartEnums/FeastDays">Feast Days</a></li>
+		<li><a href="/SmartEnums/Seasons">Seasons</a></li>
+	</ul>*@
 
+<LoadingComponent IsLoading="DateExplodeList==null">
+
+	<div class="card mb-3 border-warning">
+		<div class="card-header">
+			<h4 class="card-title text-center">Seasons</h4>
+		</div>
+		<div class="card-body">
+			<TableTemplate Items="DateExplodeList">
+				<TableHeader>
+					<th>Year</th>
+					<th>Gregorian Year</th>
+					<th>Date</th>
+					<th>DateTypeEnum</th>
+					<th>DateTypeEnumId</th>
+				</TableHeader>
+				<RowTemplate>
+					<td>@context.Year</td>
+					<td>@context.GregorianYear</td>
+					<td>@context.Date</td>
+					<td>@context.DateTypeEnum</td>
+					<td>@context.DateTypeEnumId</td>
+				</RowTemplate>
+			</TableTemplate>
+		</div>
+		<p class="card-footer text-center">
+			Count: @DateExplodeList.Count
+			<br /><span class="text-black-50"><small>Source: DateExplodeList</small></span>
+		</p>
+
+	</div>
+
+</LoadingComponent>
 <LunarMonths></LunarMonths>
 <FeastDays></FeastDays>
 <Seasons></Seasons>

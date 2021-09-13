@@ -19,7 +19,7 @@ namespace LivingMessiah.Web.Pages.SmartEnums
 		public ILogger<Index> Logger { get; set; }
 
 		[Parameter]
-		public RelativeYearEnum RelativeYear { get; set; }
+		public RelativeYearEnum RelativeYear { get; set; } = RelativeYearEnum.Current;
 
 		protected List<DateExplode> DateExplodeList;
 

@@ -183,20 +183,16 @@ FROM KeyDate.FeastDayDetail
 			base.Sql = $@"
 SELECT 
 	YearId, Date, GregorianYear, DateTypeId AS DateTypeEnum, DateTypeEnumId
-
 --Id, DateYMD, RowCntByGregorianYear, IsDateTypeContiguous, DateType, DateTypeValue
-
 FROM KeyDate.vwDateExplode
 CROSS JOIN KeyDate.Constants c
 WHERE YearId = {GetYearId(relativeYear)}
 ORDER BY Date
-
-
-
 ";
+			//base.log.LogDebug($"Inside {nameof(GetDateExplode)}, Sql: {Sql}");
 			return await WithConnectionAsync(async connection =>
 			{
-				var rows = await connection.QueryAsync<DateExplode>(sql: base.Sql, param: base.Parms);
+				var rows = await connection.QueryAsync<DateExplode>(sql: base.Sql);
 				return rows.ToList();
 			});
 		}
