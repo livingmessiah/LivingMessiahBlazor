@@ -9,6 +9,10 @@ using Microsoft.Extensions.Logging;
 using SukkotApi.Domain.Enums;
 using SukkotApi.Domain;
 
+using SukkotApi.Domain.Donations.Commands;
+using SukkotApi.Domain.Donations.Enums;
+using SukkotApi.Domain.Donations.Queries;
+using SukkotApi.Domain.Registrations.Enums;
 
 namespace SukkotApi.Data
 {
@@ -23,12 +27,12 @@ namespace SukkotApi.Data
 		public async Task<List<PreviousDonation>> GetRegistrationDonations(int id)
 		{
 			//SELECT d.Id, RegistrationId, Detail, Amount, d.Notes, ReferenceId, CreatedBy, CreateDate, r.FamilyName
-			base.Parms = new DynamicParameters(new { id = id });
+			base.Parms = new DynamicParameters(new { Id = id });
 			base.Sql = $@"
 SELECT Detail, Amount, d.Notes, ReferenceId, CreatedBy, CreateDate
 FROM Sukkot.Donation d
 INNER JOIN Sukkot.Registration r on d.RegistrationId = r.Id
-WHERE RegistrationId = @id
+WHERE RegistrationId = @Id
 ORDER BY Detail
 ";
 			return await WithConnectionAsync(async connection =>
@@ -38,30 +42,17 @@ ORDER BY Detail
 			});
 		}
 
-		public async Task<List<DonationReport>> GetDonationReport(DonationStatusEnum donationStatusEnum, string sortField)
+		public async Task<List<DonationReport>> GetDonationReport(int donationStatus, string sortAndOrder)
 		{
-			var enumRepl = DonationStatus.FromEnum(donationStatusEnum);
+			base.Parms = new DynamicParameters(new { DonationStatus = donationStatus });
+			//base.Parms = new DynamicParameters(new { SortAndOrder = sortAndOrder });
 
-			if (enumRepl.StatusId2 == null)
-			{
-				base.Parms = new DynamicParameters(new { StatusId1 = enumRepl.StatusId1 });
-				base.Sql = $@"
-SELECT Id, EMail, FirstName, FamilyName, StatusId, StatusDescr, MealTotalCost, RegistrationFee, CampCost, TotalDonation, AmountDue
-FROM Sukkot.vwDonationReport
-WHERE StatusId = @StatusId1 OR @StatusId1 IS NULL
-ORDER BY {sortField}
+			base.Sql = $@"
+SELECT Id, EMail, FamilyName, FirstName, StatusId, StatusDescr, MealTotalCost, RegistrationFee, CampCost, TotalDonation, AmountDue, LocationEnum
+FROM Sukkot.tvfDonationReport(@DonationStatus)
+ORDER BY {sortAndOrder}
 ";
-			}
-			else
-			{
-				base.Parms = new DynamicParameters(new { StatusId1 = enumRepl.StatusId1, StatusId2 = enumRepl.StatusId2 });
-				base.Sql = $@"
-SELECT Id, EMail, FamilyName, StatusId, StatusDescr, MealTotalCost, CampCost, TotalDonation, AmountDue
-FROM Sukkot.vwDonationReport
-WHERE StatusId = @StatusId1 OR StatusId = @StatusId2
-ORDER BY {sortField}
-";
-			}
+			base.log.LogDebug($"Inside {nameof(GetDonationReport)}, Sql: {Sql}");
 
 			return await WithConnectionAsync(async connection =>
 			{
@@ -70,30 +61,36 @@ ORDER BY {sortField}
 			});
 		}
 
-		public async Task<List<vwDonationsByRegistration>> GetDonationsByRegistration()
+		public async Task<List<DonationsByRegistration>> GetDonationsByRegistration()
 		{
-			base.Sql = $@"SELECT * FROM Sukkot.vwDonationsByRegistration ORDER BY FamilyName, Detail";
-
+			base.Sql = $@"
+	SELECT 
+	Id, FamilyName, FirstName, StatusId, TotalDonation, AmountDue, Detail
+	, ISNULL(Amount, 0) AS Amount, NOTES, ReferenceId, LocationEnum, CreatedBy, CreateDateMDY
+	FROM Sukkot.vwDonationsByRegistration 
+	ORDER BY Id, Detail
+";
+			base.log.LogDebug($"Inside {nameof(DonationsByRegistration)}, Sql: {Sql}");
 			return await WithConnectionAsync(async connection =>
 			{
-				var rows = await connection.QueryAsync<vwDonationsByRegistration>(base.Sql);
+				var rows = await connection.QueryAsync<DonationsByRegistration>(base.Sql);
 				return rows.ToList();
 			});
 		}
 
 		//ToDo: maybe merge with GetRegistrationDonations
-		public async Task<List<vwDonationDetail>> GetDonationsByRegistrationId(int id)
+		public async Task<List<DonationDetail>> GetDonationsByRegistrationId(int id)
 		{
 			base.Parms = new DynamicParameters(new { Id = id });
 			base.Sql = $@"
- SELECT RegistrationId, Detail, Amount, Notes, ReferenceId, CreateDate, CreatedBy, FamilyName
+ SELECT RegistrationId, Detail, Amount, Notes, ReferenceId, CreateDate, CreatedBy, FamilyName, LocationEnum
  FROM Sukkot.vwDonationDetail 
  WHERE RegistrationId=@Id
  ORDER BY Detail
 ";
 			return await WithConnectionAsync(async connection =>
 			{
-				var rows = await connection.QueryAsync<vwDonationDetail>(base.Sql, base.Parms);
+				var rows = await connection.QueryAsync<DonationDetail>(base.Sql, base.Parms);
 				return rows.ToList();
 			});
 		}

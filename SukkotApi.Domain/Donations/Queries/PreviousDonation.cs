@@ -1,8 +1,6 @@
 ﻿using System;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 
-namespace SukkotApi.Domain
+namespace SukkotApi.Domain.Donations.Queries
 {
 	public class PreviousDonation
 	{

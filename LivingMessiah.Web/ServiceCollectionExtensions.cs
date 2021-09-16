@@ -35,6 +35,10 @@ namespace LivingMessiah.Web
 				.AddTransient<ISukkotService, SukkotService>()
 				.AddTransient<ISukkotAdminService, SukkotAdminService>()
 
+				//ToDo Remove before publishing 
+				.AddTransient<Pages.BlazorExamples.ToDoSort.IFileService, Pages.BlazorExamples.ToDoSort.FileService>()
+				.AddScoped<Pages.BlazorExamples.ToDoSort.IToDoService, Pages.BlazorExamples.ToDoSort.ToDoService>()
+
 				.AddTransient<ISukkotRepository, SukkotRepository>()
 				.AddTransient<ISukkotAdminRepository, SukkotAdminRepository>()
 				.AddSingleton<IUpcomingEventService, UpcomingEventService>()
@@ -85,26 +89,26 @@ namespace LivingMessiah.Web
 						// Add handling of logout
 						options.Events = new OpenIdConnectEvents
 						{
-								OnRedirectToIdentityProviderForSignOut = (context) =>
+							OnRedirectToIdentityProviderForSignOut = (context) =>
+						{
+							var logoutUri = $"https://{Configuration[Auth0.Configuration.Domain]}/v2/logout?client_id={Configuration[Auth0.Configuration.ClientId]}";
+
+							var postLogoutUri = context.Properties.RedirectUri;
+							if (!string.IsNullOrEmpty(postLogoutUri))
 							{
-								var logoutUri = $"https://{Configuration[Auth0.Configuration.Domain]}/v2/logout?client_id={Configuration[Auth0.Configuration.ClientId]}";
-
-								var postLogoutUri = context.Properties.RedirectUri;
-								if (!string.IsNullOrEmpty(postLogoutUri))
+								if (postLogoutUri.StartsWith("/"))
 								{
-									if (postLogoutUri.StartsWith("/"))
-									{
-										var request = context.Request;
-										postLogoutUri = request.Scheme + "://" + request.Host + request.PathBase + postLogoutUri;
-									}
-									logoutUri += $"&returnTo={ Uri.EscapeDataString(postLogoutUri)}";
+									var request = context.Request;
+									postLogoutUri = request.Scheme + "://" + request.Host + request.PathBase + postLogoutUri;
 								}
-
-								context.Response.Redirect(logoutUri);
-								context.HandleResponse();
-
-								return Task.CompletedTask;
+								logoutUri += $"&returnTo={ Uri.EscapeDataString(postLogoutUri)}";
 							}
+
+							context.Response.Redirect(logoutUri);
+							context.HandleResponse();
+
+							return Task.CompletedTask;
+						}
 						};
 					}
 			);

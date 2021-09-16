@@ -6,6 +6,9 @@ using Microsoft.Extensions.Logging;
 using SukkotApi.Domain;
 using SukkotApi.Domain.Enums;
 using LivingMessiah.Web.Pages.SukkotAdmin.Donations;
+using SukkotApi.Domain.Donations.Queries;
+using SukkotApi.Domain.Donations.Commands;
+using SukkotApi.Domain.Registrations.Enums;
 
 namespace LivingMessiah.Web.Services
 {
@@ -18,7 +21,7 @@ namespace LivingMessiah.Web.Services
 
 		Task<int> InsertRegistrationDonation(DonationInsertModel donation, string email);
 		Task<List<PreviousDonation>> GetRegistrationDonations(int id);
-		Task<List<vwDonationDetail>> GetDonationsByRegistrationId(int id);
+		Task<List<DonationDetail>> GetDonationsByRegistrationId(int id);
 
 		Task<int> LogErrorTest();
 		Task<List<zvwErrorLog>> GetzvwErrorLog();
@@ -116,9 +119,9 @@ namespace LivingMessiah.Web.Services
 			return poco;
 		}
 
-		public async Task<List<vwDonationDetail>> GetDonationsByRegistrationId(int id)
+		public async Task<List<DonationDetail>> GetDonationsByRegistrationId(int id)
 		{
-			var vm = new List<vwDonationDetail>();
+			var vm = new List<DonationDetail>();
 			try
 			{
 				vm = await db.GetDonationsByRegistrationId(id);

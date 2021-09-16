@@ -5,17 +5,14 @@ using LivingMessiah.Web.Services;
 using static LivingMessiah.Web.Services.Auth0;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Logging;
-using SukkotApi.Domain;
-using SukkotApi.Domain.Enums;
 using Microsoft.AspNetCore.Components;
+using SukkotApi.Domain.Registrations.Enums;
 
 namespace LivingMessiah.Web.Pages.SukkotAdmin.RegistrationNotes
-//        LivingMessiah.Web\Pages\SukkotAdmin\RegistrationNotes\Index.razor
 {
 	[Authorize(Roles = Roles.AdminOrSukkot)]
 	public partial class Index
 	{
-
 		[Inject]
 		protected ILogger<Index> Logger { get; set; }
 

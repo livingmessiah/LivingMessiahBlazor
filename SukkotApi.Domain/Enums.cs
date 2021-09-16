@@ -22,20 +22,9 @@ namespace SukkotApi.Domain.Enums
 		RvDryCampOnly = 4
 	}
 
-
-	public enum LocationSimpleEnum
-	{
-		GreenHouseTrolleyHobbyFarm,
-		WildernessRanch,
-		WindmillRanch
-	}
-
-	//[Display(Name = "Green House Trolley Hobby Farm (Near Sierra Vista")]
-	//[Display(Name = "Wilderness Ranch (Near Show Low)")]
-	//[Display(Name = "Windmill Ranch (Near Bisbee)")]
 	public enum LocationEnum
 	{
-		GreenHouseTrolleyHobbyFarm = 1,
+		GreenhouseTrolleyHobbyFarm = 1,
 		WildernessRanch = 2,
 		WindmillRanch = 3
 	}
@@ -43,19 +32,23 @@ namespace SukkotApi.Domain.Enums
 	public class Location
 	{
 		public static List<Location> All { get; } = new List<Location>();
-		public static Location GreenHouseTrolleyHobbyFarm { get; } = new Location(LocationEnum.GreenHouseTrolleyHobbyFarm, "Green House Trolley Hobby Farm (Near Sierra Vista)");  
-		public static Location WildernessRanch { get; } = new Location(LocationEnum.WildernessRanch, "Wilderness Ranch (Near Show Low)");
-		public static Location WindmillRanch { get; } = new Location(LocationEnum.WildernessRanch, "Windmill Ranch (Near Bisbee)");
+		public static Location GreenHouseTrolleyHobbyFarm { get; } = new Location(LocationEnum.GreenhouseTrolleyHobbyFarm, "Greenhouse Trolley Hobby Farm (Near Sierra Vista)", "GTHF", "text-success");  
+		public static Location WildernessRanch { get; } = new Location(LocationEnum.WildernessRanch, "Wilderness Ranch (Near Show Low)", "Wilderness", "text-danger");
+		public static Location WindmillRanch { get; } = new Location(LocationEnum.WindmillRanch, "Windmill Ranch (Near Bisbee)", "Windmill", "text-warning");
 
 		public LocationEnum LocationEnum { get; private set; }
 		public int Id { get; private set; }
 		public string Name { get; private set; }
+		public string ShortDescr{ get; private set; }
+		public string TextColor { get; private set; }
 
-		private Location(LocationEnum locationsEnum, string name)
+		private Location(LocationEnum locationsEnum, string name, string shortDescr, string textColor)
 		{
 			LocationEnum = locationsEnum;
 			Id = (int)locationsEnum;
 			Name = name;
+			ShortDescr = shortDescr;
+			TextColor = textColor;
 			All.Add(this);
 		}
 

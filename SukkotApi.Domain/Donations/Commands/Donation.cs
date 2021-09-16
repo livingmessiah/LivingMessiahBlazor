@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SukkotApi.Domain
+namespace SukkotApi.Domain.Donations.Commands
 {
 	public class Donation
 	{

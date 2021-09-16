@@ -9,6 +9,7 @@ using SukkotApi.Domain;
 using SukkotApi.Domain.Enums;
 using Microsoft.AspNetCore.Components;
 using System.Linq;
+using SukkotApi.Domain.Registrations.Enums;
 
 namespace LivingMessiah.Web.Pages.SukkotAdmin.RegistrationList
 {
@@ -49,7 +50,7 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.RegistrationList
 				if (Registrations != null) 
 				{ 
 					RecordCount = Registrations.Count;
-					RegistrationsGHTHF = Registrations.Where(w => w.LocationEnum == LocationEnum.GreenHouseTrolleyHobbyFarm).ToList();
+					RegistrationsGHTHF = Registrations.Where(w => w.LocationEnum == LocationEnum.GreenhouseTrolleyHobbyFarm).ToList();
 					RegistrationsWildernessRanch = Registrations.Where(w => w.LocationEnum == LocationEnum.WildernessRanch).ToList();
 					RegistrationsWindmillRanch = Registrations.Where(w => w.LocationEnum == LocationEnum.WindmillRanch).ToList();
 				}

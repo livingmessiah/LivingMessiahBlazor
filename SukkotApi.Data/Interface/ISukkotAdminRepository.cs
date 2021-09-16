@@ -2,6 +2,10 @@
 using SukkotApi.Domain.Enums;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using SukkotApi.Domain.Donations.Commands;
+using SukkotApi.Domain.Donations.Enums;
+using SukkotApi.Domain.Donations.Queries;
+using SukkotApi.Domain.Registrations.Enums;
 
 namespace SukkotApi.Data
 {
@@ -12,9 +16,9 @@ namespace SukkotApi.Data
 
 		Task<int> InsertRegistrationDonation(Donation donation);
 		Task<List<PreviousDonation>> GetRegistrationDonations(int id);
-		Task<List<DonationReport>> GetDonationReport(DonationStatusEnum donationStatusEnum, string sort);
-		Task<List<vwDonationDetail>> GetDonationsByRegistrationId(int id);
-		Task<List<vwDonationsByRegistration>> GetDonationsByRegistration();
+		Task<List<DonationReport>> GetDonationReport(int , string sortAndOrder);
+		Task<List<DonationDetail>> GetDonationsByRegistrationId(int id);
+		Task<List<DonationsByRegistration>> GetDonationsByRegistration();
 
 		//ToDo: 
 		Task<int> LogErrorTest();

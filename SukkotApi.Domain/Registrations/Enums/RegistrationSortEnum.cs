@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SukkotApi.Domain.Enums
+namespace SukkotApi.Domain.Registrations.Enums
 {
-
 	public enum RegistrationSortEnum
 	{
 		Id = 1,
@@ -43,4 +42,5 @@ namespace SukkotApi.Domain.Enums
 			return All.SingleOrDefault(r => String.Equals(r.Name, formatString, StringComparison.OrdinalIgnoreCase));
 		}
 	}
+
 }

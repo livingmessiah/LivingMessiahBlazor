@@ -1,0 +1,59 @@
+﻿@using LivingMessiah.Domain
+@using LivingMessiah.Web.Pages.SukkotAdmin.Constants
+@using SukkotApi.Domain
+@using SukkotApi.Domain.Donations.Enums
+
+@* 
+	@model SukkotApi.Domain.DonationStatus
+	Location SukkotApi.Domain\EnumReplacement.cs
+*@
+
+
+<div class="d-print-none">
+	<div class="d-none d-sm-block">
+		<div class="float-right">
+			@foreach (var item in DonationStatus.All)
+			{
+				//ToDo: Fix This; <a href="@Donations.Index" asp-route-donationStatusEnum="@item.DonationStatusEnum"
+				<a href="/" 
+					 class="btn btn-primary btn-sm @ActiveFilter(item.DonationStatusEnum)">
+					@item.Name &nbsp;<i class="fas fa-chevron-circle-right"></i>
+				</a>
+			}
+		</div>
+
+	</div>
+	<div class="d-block d-sm-none">
+		<div class="float-right">
+
+			<div class="float-right">
+				<div class="col-1">
+				</div>
+				<div class="col-11">
+					<div class="btn-group">
+						<button type="button" class="btn btn-info">More...</button>
+
+						<button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+							<span class="fa fa-chevron-down"></span>
+							<span class="sr-only">Toggle Dropdown</span>
+						</button>
+
+						<ul class="dropdown-menu" role="menu">
+							@foreach (var item in DonationStatus.All)
+							{
+							<li>
+								@*ToDo: Fix this <a href="@Donations.Index" asp-route-donationStatusEnum="@item.DonationStatusEnum" *@
+								<a asp-href="/"
+									 class="btn btn-default btn-sm @ActiveFilter(item.DonationStatusEnum)">
+									@item.Name &nbsp;<i class="fas fa-chevron-circle-right"></i>
+								</a>
+							</li>
+							}
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>

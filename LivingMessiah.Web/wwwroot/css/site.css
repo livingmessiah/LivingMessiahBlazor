@@ -117,3 +117,9 @@ hr.warning {
 .calendar-text {
   margin-top: .3em;
 }
+
+.sort-link {
+  cursor: pointer;
+  color: blue;
+  text-decoration: underline;
+}

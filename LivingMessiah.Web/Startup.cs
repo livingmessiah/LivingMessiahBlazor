@@ -23,7 +23,15 @@ namespace LivingMessiah.Web
 			services.AddApplicationInsightsTelemetry();
 			services.AddRazorPages();
 			services.AddOptions();
-			services.AddServerSideBlazor();
+
+			//services.AddServerSideBlazor();
+			services.AddServerSideBlazor()
+					.AddCircuitOptions(options =>
+					{
+						//can toggle detailed errors on or off from app settings
+						options.DetailedErrors = System.Convert.ToBoolean(Configuration["DetailedErrors"]);
+					});
+
 			services.AddDataStores();
 			services.AddSession();
 			services.AddCustomAuthentication(Configuration);

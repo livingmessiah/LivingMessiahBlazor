@@ -1,0 +1,28 @@
+﻿@using Microsoft.AspNetCore.Components;
+@using SukkotApi.Domain.Donations.Enums
+@using SukkotApi.Domain.Registrations.Enums
+
+<IndexFilter DonationStatus="@DonationStatus"></IndexFilter>
+
+<div class="pb-2 mt-4 mb-4 border-bottom">
+	<h3><i class="fas fa-dollar-sign"></i> Donation Report</h3>
+	<h4>Fitler: <span class="text-primary">@DonationStatus.Name</span>	</h4>
+</div>
+
+<h5 class="text-muted">
+	<a href="@LivingMessiah.Web.Links.Sukkot.Donations.ByRegistration"
+		 class="btn btn-primary btn-sm float-right">
+		<i class="fa fa-table"></i> Details <i class="fas fa-caret-right"></i>
+	</a>
+</h5>
+
+<h5 class="text-muted">Sorted by @RegistrationSort.Name</h5>
+
+@code {
+	[Parameter]
+	public DonationStatus DonationStatus { get; set; }
+
+	[Parameter]
+	public RegistrationSort RegistrationSort { get; set; }
+
+}

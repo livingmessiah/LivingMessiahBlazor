@@ -1,0 +1,31 @@
+﻿@page "/SukkotAdmin/Donations/ByRegistrationId/"
+@using LivingMessiah.Web.Pages.SukkotAdmin.Constants
+@using static LivingMessiah.Web.Links.Sukkot
+@using static LivingMessiah.Web.Services.Auth0
+@using LivingMessiah.Web.Shared.Sukkot
+@using SukkotApi.Domain
+
+<AuthorizeView Roles="@Roles.SukkotMenuBar">
+	<SukkotAdminMenubar></SukkotAdminMenubar>
+</AuthorizeView>
+
+<div class="pb-2 mt-4 mb-2">
+	<h3 class="bg-light">
+		<i class="fas fa-dollar-sign"></i> Donations by -
+		@FamilyName]  #@RegistrationId]
+	</h3>
+</div>
+
+
+
+@*<ByRegistrationTable></ByRegistrationTable>*@
+
+@code {
+	[Parameter]
+	public string FamilyName { get; set; }
+
+	[Parameter]
+	public int RegistrationId { get; set; }
+
+}
+

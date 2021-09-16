@@ -1,8 +1,9 @@
-﻿using System;
+﻿using SukkotApi.Domain.Enums;
+using System;
 
-namespace SukkotApi.Domain
+namespace SukkotApi.Domain.Donations.Queries
 {
-	public class vwDonationDetail
+	public class DonationDetail
 	{
 		public Int32 RegistrationId { get; set; }
 		public Int32 Detail { get; set; }
@@ -12,6 +13,6 @@ namespace SukkotApi.Domain
 		public DateTime CreateDate { get; set; }
 		public String CreatedBy { get; set; }
 		public String FamilyName { get; set; }
+		public LocationEnum LocationEnum { get; set; }
 	}
-
 }

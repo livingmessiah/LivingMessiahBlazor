@@ -1,0 +1,193 @@
+﻿@using LivingMessiah.Web.Pages.SukkotAdmin.Constants
+@using SukkotApi.Domain.Donations.Enums
+@using static LivingMessiah.Web.Links.Sukkot
+@*@using static LivingMessiah.Web.Infrastructure.StringExtensions*@
+@using LivingMessiah.Web.Infrastructure
+@using SukkotApi.Domain.Enums
+@using SukkotApi.Domain.Registrations.Enums
+
+<TableHeaderExplanation></TableHeaderExplanation>
+
+<LoadingComponent IsLoading="DonationReportList==null && DatabaseWarning==false">
+
+	@if (!DonationReportList.Any())
+	{
+		<h3 class="text-danger">No Records</h3>
+	}
+	else
+	{
+		<div class="table-responsive table-sm">
+			<table class="table table-bordered table-striped">
+				<thead>
+					<tr>
+						<th>
+							<span class="sort-link" @onclick="@(e => SortByIdClick(RegistrationSortEnum.Id))">Id</span>
+							@*<span class="fa @(GetSortStyle("Id"))"></span>*@
+						</th>
+
+						@if (DonationStatus.DonationStatusEnum != DonationStatusEnum.NoPayments)
+						{
+							<th>&nbsp;</th>
+						}
+
+					<th>
+						<span class="sort-link" @onclick="@(e => SortByIdClick(RegistrationSortEnum.LastName))">Last Name</span>
+						@*<span class="fa @(GetSortStyle("LastName"))"></span>*@
+
+					</th>
+						<th>EMail</th>
+						<th>LocId</th>
+						<th>SId</th>
+
+						@if (IsMealsAvailable)
+						{
+							<th>Meals</th>
+						}
+
+						<th class="text-center">Reg.</th>
+						<th class="text-center">Lodge</th>
+						<th class="text-center">Donations</th>
+						<th class="text-center">Amount Due</th>
+						<th>&nbsp;</th>
+						<th>Add</th>
+					</tr>
+				</thead>
+				<tbody>
+
+					@foreach (var item in DonationReportList)
+					{
+						rowCount += 1;
+						totalDonation += item.TotalDonation;
+						totalSurplus += item.AmountDue;
+						totalGrand += (item.TotalDonation + (-1 * item.AmountDue));
+						<tr>
+							<td>
+								<a href="/" title="View"><u>@item.Id <b>Fix</b></u></a>
+
+								@*<a asp-page="@LivingMessiah.Web.Pages.Anchors.Sukkot.Details" asp-route-id="@item.Id">*@
+
+							</td>
+
+							@if (DonationStatus.DonationStatusEnum != DonationStatusEnum.NoPayments)
+							{
+								<td>
+									@if (item.StatusId != 2 & item.StatusId != 3)
+									{
+
+										<div class="btn-group">
+											<a class="btn btn-default btn-sm" title="Drill down" href="/">
+												<i class="fas fa-level-down-alt"></i> <b>Fix</b>
+											</a>
+										</div>
+
+
+										@* asp-page="@Anchors.Donations.ByRegistrationId"	 asp-route-id="@item.Id" asp-route-familyName="@item.FamilyName">*@
+
+									}
+								</td>
+							}
+
+							<td>@StringExtensions.Truncate(item.FirstName, 20) @StringExtensions.Truncate(item.FamilyName, 20)</td>
+
+							<td>@item.EMail</td>
+							<td class="@Location.FromEnum(item.LocationEnum).TextColor">@Location.FromEnum(item.LocationEnum).ShortDescr</td>
+							<td>@item.StatusId</td>
+
+							@if (IsMealsAvailable)
+							{
+								<td><span class="float-right">@item.MealTotalCost.ToString("C0")</span></td>
+							}
+
+
+							<td><span class="float-right text-danger">@item.RegistrationFee.ToString("C0")</span></td>
+							<td><span class="float-right text-danger">@item.CampCost.ToString("C0")</span></td>
+							<td><span class="float-right text-success">@item.TotalDonation.ToString("C0")</span></td>
+							<td>
+								@if (item.AmountDue < 0)
+								{
+									<span class="text-success float-right"><b>@item.AmountDue.ToString("C0")</b></span>
+								}
+								else
+								{
+									<span class="float-right text-warning">@item.AmountDue.ToString("C0")</span>
+								}
+							</td>
+
+							<td>
+								@if (item.StatusId == 5)
+								{
+									<i class="fa fa-2x fa-check"></i>
+								}
+							</td>
+
+
+							<td>
+
+								<div class="btn-group">
+									<a class="btn btn-success btn-sm" title="Donations" href="/">
+										<i class="fa fa-plus"></i> <b>Fix</b>
+									</a>
+								</div>
+
+								@*asp-page="@Anchors.Donations.FormInsert" asp-route-id="@item.Id" asp-route-name="@item.FamilyName"*@
+
+							</td>
+
+						</tr>
+					}
+
+					<tr>
+						<td><span class="badge badge-primary">@rowCount &Sigma;</span></td>
+
+						@if (DonationStatus.DonationStatusEnum != DonationStatusEnum.NoPayments)
+						{
+							<td colspan="7"><span class="float-right">Total</span></td>
+						}
+						else
+						{
+							<td colspan="6"><span class="float-right">Total</span></td>
+						}
+
+
+						<td><span class="float-right"><b>@totalDonation.ToString("C")</b></span></td>
+						<td><span class="text-success float-right"><b>@totalSurplus.ToString("C")</b></span></td>
+						<td></td>
+						<td></td>
+					</tr>
+
+					<tr>
+
+						@if (DonationStatus.DonationStatusEnum != DonationStatusEnum.NoPayments)
+						{
+							<td colspan="9"><span class="float-right">Grand Total: Donations - Amount Due</span></td>
+						}
+						else
+						{
+							<td colspan="8"><span class="float-right">Grand Total: Donations - Amount Due</span></td>
+						}
+						<td><span class="text-success float-right"><u><b>@totalGrand.ToString("C")</b></u></span></td>
+						<td></td>
+						<td></td>
+					</tr>
+
+				</tbody>
+			</table>
+		</div>
+	}
+
+
+</LoadingComponent>
+
+
+@if (DatabaseError)
+{
+	<p class="text-danger"><em>@DatabaseErrorMsg</em></p>
+}
+else
+{
+	if (DatabaseWarning)
+	{
+		<p class="text-warning">@DatabaseWarningMsg</p>
+	}
+}
+

@@ -1,0 +1,44 @@
+﻿
+<LoadingComponent IsLoading="DonationDetails == null">
+	<div class="table-responsive">
+		<table class="table table-bordered table-striped table-sm">
+			<thead>
+				<tr>
+					<th>Detail</th>
+					<th>Amount</th>
+					<th>Notes</th>
+					<th>Reference Id</th>
+					<th>Created By</th>
+					<th>Create Date</th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (var item in DonationDetails)
+
+				{
+					<tr>
+						<td>@item.Detail.ToString("C0")</td>
+						<td>@item.Amount.ToString("C0")</td>
+						<td>@item.Notes</td>
+						<td>@item.ReferenceId</td>
+						<td>@item.CreatedBy)</td>
+						<td>@item.CreateDate.ToString("MM/dd/yy hh:mm tt")</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+	</div>
+
+</LoadingComponent>
+
+@if (DatabaseError)
+{
+	<p class="text-danger"><em>@DatabaseErrorMsg</em></p>
+}
+else
+{
+	if (DatabaseWarning)
+	{
+		<p class="text-warning">@DatabaseWarningMsg</p>
+	}
+}

@@ -1,10 +1,11 @@
 ﻿@page "/SukkotAdmin/RegistrationList/"
 @using LivingMessiah.Web.Pages.SukkotAdmin.Constants
 @using LivingMessiah.Web.Pages.Sukkot.CreateEdit
-@using SukkotApi.Domain.Enums
+@using SukkotApi.Domain.Registrations.Enums
 
 @using static LivingMessiah.Web.Services.Auth0
 @using LivingMessiah.Web.Shared.Sukkot
+@using LivingMessiah.Web.Infrastructure
 
 @{
 	string sortField = (RegistrationSort == RegistrationSortEnum.LastName) ? "Name" : "Id";
@@ -95,102 +96,100 @@
 					@foreach (var item in RegistrationsGHTHF)
 					{
 						rowCount += 1;
-						<tr>
-							<td>@item.Id</td>
-							<td>
-								@* @Html.Truncate(item.FullName(false), 35) *@
-								@item.FullName(false)<br />@item.EMail<br />@item.Phone
-							</td>
-							@* @Html.Truncate(item.Status, 15) *@
-							<td>@item.CampCD <br /> @item.Status</td>
+					<tr>
+						<td>@item.Id</td>
+						<td>@StringExtensions.Truncate(item.FullName(false), 30)<br />@item.EMail<br />@item.Phone</td>
 
-							<AuthorizeView Roles="@Roles.AdminOrSukkot">
-								<Authorized>
+						@* @Html.Truncate(item.Status, 15) *@
+						<td>@item.CampCD <br /> @item.Status</td>
+
+						<AuthorizeView Roles="@Roles.AdminOrSukkot">
+							<Authorized>
+								<td>
+									<div class="btn-group">
+										<button @onclick="@(e => Details_ButtonClick(item.Id))"
+														class="btn-default btn-sm" title="Registration View">
+											<i class="fas fa-info text-info"></i> View
+										</button>
+										<button @onclick="@(e => Edit_ButtonClick(item.Id))"
+														class="btn-default btn-sm" title="Registration Edit">
+											<i class="fas fa-pencil-alt text-success"></i> Edit
+										</button>
+
+									</div>
+								</td>
+
+								@if (IsMealsAvailable)
+								{
 									<td>
 										<div class="btn-group">
-											<button @onclick="@(e => Details_ButtonClick(item.Id))"
-															class="btn-default btn-sm" title="Registration View">
-												<i class="fas fa-info text-info"></i> View
-											</button>
-											<button @onclick="@(e => Edit_ButtonClick(item.Id))"
-															class="btn-default btn-sm" title="Registration Edit">
-												<i class="fas fa-pencil-alt text-success"></i> Edit
-											</button>
-
-										</div>
-									</td>
-
-									@if (IsMealsAvailable)
-									{
-										<td>
-											<div class="btn-group">
-												<button @onclick="@(e => DetailsMealTicket_ButtonClick(item.Id))"
-																class="btn-default btn-sm" title="Meal View">
-													<i class="fas fa-info text-info"></i> View
-												</button>
-												<button @onclick="@(e => EditMeals_ButtonClick(item.Id))"
-																class="btn-default btn-sm" title="Meal Edit">
-													<i class="fas fa-pencil-alt text-warning"></i> Edit
-												</button>
-
-											</div>
-										</td>
-									}
-
-									<td>
-
-										<div class="btn-group">
-											<button @onclick="@(e => Payment_ButtonClick(item.Id))"
-															class="btn-default btn-sm" title="Payment">
-												<i class="fas fa-dollar-sign text-success"></i> Pay
-											</button>
-
-											<button @onclick="@(e => DeleteConfirmation_ButtonClick(item.Id))"
-															class="btn-default btn-sm" title="Delete">
-												<i class="fas fa-times text-danger"></i> Del
-											</button>
-
-											@*<AuthorizeView Roles="@Roles.Admin">
-													<Authorized>
-													ToDo: It look like you can not have nested authirze views, to put
-													SEE BUTTON ABOVE
-													</Authorized>
-
-													<NotAuthorized>
-														<i class="fa fa-times text-danger"></i>
-													</NotAuthorized>
-												</AuthorizeView>*@
-
-
-										</div>
-									</td>
-
-								</Authorized>
-
-								<NotAuthorized>
-									<td>
-										<div class="btn-group">
-											<button @onclick="@(e => Details_ButtonClick(item.Id))"
-															class="btn-default btn-sm" title="Registration">
-												<i class="fas fa-info text-info"></i>
-											</button>
-										</div>
-									</td>
-									<td>
-										<div class="btn-group">
-
 											<button @onclick="@(e => DetailsMealTicket_ButtonClick(item.Id))"
 															class="btn-default btn-sm" title="Meal View">
-												<i class="fas fa-info text-info"></i> Meals
+												<i class="fas fa-info text-info"></i> View
+											</button>
+											<button @onclick="@(e => EditMeals_ButtonClick(item.Id))"
+															class="btn-default btn-sm" title="Meal Edit">
+												<i class="fas fa-pencil-alt text-warning"></i> Edit
 											</button>
 
 										</div>
 									</td>
-									<td></td>
-								</NotAuthorized>
-							</AuthorizeView>
+								}
 
-						</tr>
+								<td>
+
+									<div class="btn-group">
+										<button @onclick="@(e => Payment_ButtonClick(item.Id))"
+														class="btn-default btn-sm" title="Payment">
+											<i class="fas fa-dollar-sign text-success"></i> Pay
+										</button>
+
+										<button @onclick="@(e => DeleteConfirmation_ButtonClick(item.Id))"
+														class="btn-default btn-sm" title="Delete">
+											<i class="fas fa-times text-danger"></i> Del
+										</button>
+
+										@*<AuthorizeView Roles="@Roles.Admin">
+							<Authorized>
+							ToDo: It look like you can not have nested authirze views, to put
+							SEE BUTTON ABOVE
+							</Authorized>
+
+							<NotAuthorized>
+								<i class="fa fa-times text-danger"></i>
+							</NotAuthorized>
+						</AuthorizeView>*@
+
+
+									</div>
+								</td>
+
+							</Authorized>
+
+							<NotAuthorized>
+								<td>
+									<div class="btn-group">
+										<button @onclick="@(e => Details_ButtonClick(item.Id))"
+														class="btn-default btn-sm" title="Registration">
+											<i class="fas fa-info text-info"></i>
+										</button>
+									</div>
+								</td>
+								<td>
+									<div class="btn-group">
+
+										<button @onclick="@(e => DetailsMealTicket_ButtonClick(item.Id))"
+														class="btn-default btn-sm" title="Meal View">
+											<i class="fas fa-info text-info"></i> Meals
+										</button>
+
+									</div>
+								</td>
+								<td></td>
+							</NotAuthorized>
+						</AuthorizeView>
+
+					</tr>
 					}
 
 					<tr>
@@ -215,11 +214,11 @@
 	}
 	else
 	{
-<div class="card text-white bg-danger my-3">
-	<div class="card-header">
-		<h3><b>Wilderness Ranch</b></h3>
-	</div>
-</div>
+		<div class="card text-white bg-danger my-3">
+			<div class="card-header">
+				<h3><b>Wilderness Ranch</b></h3>
+			</div>
+		</div>
 
 		<ul class="list-inline">
 			<li class="list-inline-item"><small><b>Lodging</b></small></li>

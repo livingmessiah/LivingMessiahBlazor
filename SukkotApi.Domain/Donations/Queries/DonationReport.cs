@@ -1,9 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using SukkotApi.Domain.Enums;
+using System.ComponentModel.DataAnnotations;
 
-namespace SukkotApi.Domain
+namespace SukkotApi.Domain.Donations.Queries
 {
 	public class DonationReport
-    {
+	{
 		public int Id { get; set; }
 		public string EMail { get; set; }
 		public string FamilyName { get; set; }
@@ -26,5 +27,8 @@ namespace SukkotApi.Domain
 
 		[DataType(DataType.Currency)]
 		public decimal AmountDue { get; set; }
+
+		public LocationEnum LocationEnum { get; set; }
+
 	}
 }
