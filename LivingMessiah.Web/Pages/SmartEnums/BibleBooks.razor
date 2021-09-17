@@ -1,33 +1,9 @@
 ﻿@page "/SmartEnums/BibleBooks"
 @using LivingMessiah.Domain.Bible
-@using SukkotApi.Domain 
-
-<h1>Registration Steps</h1>
-<p class="text-muted"><small>Test <i>SmartEnum</i> to map <b>state</b></small></p>
-<div class="card mb-3 border-warning">
-	<div class="card-header">
-		<h4 class="card-title text-center"><code>item.Dump</code></h4>
-	</div>
-
-	<div class="card-body">
-		<TableTemplate Items="RegistrationStep.List.OrderBy(o => o.Value).ToList()">
-			<TableHeader>
-				<th>Id</th>
-				<th>Name</th>
-				<th>Abrv</th>
-				<th>CanTransitionTo</th>
-			</TableHeader>
-			<RowTemplate>
-				<td>@context.Value</td>
-				<td>@context.Name</td>
-				<td>@context.Abrv</td>
-				<td>@context.Dump</td>
-			</RowTemplate>
-		</TableTemplate>
-	</div>
+@using SukkotApi.Domain
+@using SukkotApi.Domain.Enums
 
 
-</div>
 
 <h1>Bible Books</h1>
 <p class="text-muted"><small>Test <i>SmartEnum</i></small></p>
@@ -96,7 +72,7 @@
 	<div class="card-header">
 		<h4 class="card-title text-center"><code>item.Dump of Book.List.OrderBy(o => o.Value)</code></h4>
 	</div>
-	
+
 	<div class="card-body">
 
 		@foreach (var item in Book.List.OrderBy(o => o.Value))

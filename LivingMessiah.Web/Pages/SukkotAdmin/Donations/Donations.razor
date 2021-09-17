@@ -119,7 +119,7 @@
 						@if (CurrentFilter != BaseDonationStatusFilterSmartEnum.NoPayments)
 						{
 							<td>
-								@if (item.StatusId != BaseStatusSmartEnum. & item.StatusId != 3)
+								@if (item.StatusId != BaseStatusSmartEnum.EmailConfirmation & item.StatusId != BaseStatusSmartEnum.MealsFormCompleted)
 								{
 									<div class="btn-group">
 										<a class="btn btn-default btn-sm" title="Drill down" href="/">
@@ -167,7 +167,7 @@
 
 
 						<td>
-							@if (item.StatusId == 5)
+							@if (item.StatusId == BaseStatusSmartEnum.FullyPaid)
 							{
 
 								<text><b>X</b></text>
@@ -225,3 +225,5 @@ else
 		<p class="text-warning">@DatabaseWarningMsg</p>
 	}
 }
+
+@*<StatusSmartEnum></StatusSmartEnum>*@

@@ -4,6 +4,7 @@ using System.Linq;
 
 namespace SukkotApi.Domain.Registrations.Enums
 {
+	//ToDo: Replace with BaseRegistrationSortSmartEnum
 	public enum RegistrationSortEnum
 	{
 		Id = 1,

@@ -5,6 +5,7 @@ using System.Linq;
 
 namespace SukkotApi.Domain.Enums
 {
+	// ToDo: Delete CampType afte finding all the references and replace them with BaseCampTypeSmartEnum
 	public enum CampType
 	{
 		[Display(Name = "OffSite [e.g. Hotel]")]
@@ -64,7 +65,7 @@ namespace SukkotApi.Domain.Enums
 	}
 
 
-
+	// ToDo: Delete StatusType afte finding all the references and replace them with BaseStatusSmartEnum
 	public enum StatusEnum
 	{
 		[Display(Name = "eMail Not Confirmed (Step 1)")]
