@@ -42,9 +42,9 @@ ORDER BY Detail
 			});
 		}
 
-		public async Task<List<DonationReport>> GetDonationReport(int donationStatus, string sortAndOrder)
+		public async Task<List<DonationReport>> GetDonationReport(BaseDonationStatusFilterSmartEnum filter, string sortAndOrder)
 		{
-			base.Parms = new DynamicParameters(new { DonationStatus = donationStatus });
+			base.Parms = new DynamicParameters(new { DonationStatus = filter.Value });
 			//base.Parms = new DynamicParameters(new { SortAndOrder = sortAndOrder });
 
 			base.Sql = $@"
@@ -52,6 +52,7 @@ SELECT Id, EMail, FamilyName, FirstName, StatusId, StatusDescr, MealTotalCost, R
 FROM Sukkot.tvfDonationReport(@DonationStatus)
 ORDER BY {sortAndOrder}
 ";
+			base.log.LogDebug($"Inside {nameof(GetDonationReport)}, filter.Name/filter.Value: {filter.Name}/{filter.Value}");
 			base.log.LogDebug($"Inside {nameof(GetDonationReport)}, Sql: {Sql}");
 
 			return await WithConnectionAsync(async connection =>

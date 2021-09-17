@@ -7,16 +7,35 @@
 @using SukkotApi.Domain.Registrations.Enums
 
 @*<AuthorizeView Roles="@Roles.SukkotMenuBar">
-	<SukkotAdminMenubar></SukkotAdminMenubar>
-</AuthorizeView>
+		<SukkotAdminMenubar></SukkotAdminMenubar>
+	</AuthorizeView>
+*@
 
-<Header DonationStatus="@DonationStatus"
-				RegistrationSort="@RegistrationSort">
-</Header>*@
+@foreach (var item in BaseDonationStatusFilterSmartEnum.List.OrderBy(o => o.Value))
+{
+	<a @onclick="@(() => OnClickFilter(item))" title="Filter by @item.ButtonName"
+		 class="btn btn-outline-primary btn-sm @ActiveFilter(item)">
+		@item.ButtonName &nbsp;<i class="fas fa-chevron-circle-right"></i>
+	</a>
+}
 
-@*<IndexTable></IndexTable>*@
+<div class="pb-2 mt-4 mb-4 border-bottom">
+	<h3><i class="fas fa-dollar-sign"></i> Donation Report</h3>
+	<h5>
+		Fitler: <span class="text-primary">@CurrentFilter.ButtonName</span>;
+		Sort: <span class="text-primary">@CurrentSortAndDirection.ColumnName</span>
+		<span class="text-black-50">@CurrentSortAndDirection.Order</span>
+	</h5>
+</div>
 
-@*<TableHeaderExplanation></TableHeaderExplanation>*@
+<h5 class="text-muted">
+	<a href="@LivingMessiah.Web.Links.Sukkot.Donations.ByRegistration"
+		 class="btn btn-primary btn-sm float-right">
+		<i class="fa fa-table"></i> Details <i class="fas fa-caret-right"></i>
+	</a>
+</h5>
+
+<TableHeaderExplanation></TableHeaderExplanation>
 
 <LoadingComponent IsLoading="DonationReportList==null && DatabaseWarning==false">
 
@@ -30,24 +49,39 @@
 			<table class="table table-bordered table-striped">
 				<thead>
 					<tr>
-						<th>
+						<th>Id</th>
 
-
-							<span class="sort-link" @onclick="@(() => SortTable(RegistrationSort.))">Id</span>
-							<span>@RegistrationSort.IconUpDownOpposite></span>
-						</th>
-
-						@if (DonationStatus != DonationStatusEnum.NoPayments)
+						@if (CurrentFilter != BaseDonationStatusFilterSmartEnum.NoPayments)
 						{
 							<th>&nbsp;</th>
 						}
 
-					<th>
-						<span class="sort-link" @onclick="@(() => SortTable(RegistrationSortEnum.LastName, "LastName"))">Last Name</span>
+						<th>
+							First Name<br />
+							<button @onclick="@(() => SortByFirstName())" class="btn-primary btn-sm"
+											title="Sort by first name ascending order">
+								<i class='fas fa-chevron-down'></i>
+							</button>
 
-						<span>@RegistrationSort.IconUpDownOpposite></span>
+							&nbsp;
 
-					</th>
+							<button @onclick="@(() => SortByFirstNameDesc())" class="btn-primary btn-sm"
+											title="Sort by first name descending order">
+								<i class='fas fa-chevron-up'></i>
+							</button>
+						</th>
+
+						<th>
+							Last Name<br />
+							<button @onclick="@(() => SortByLastName())" class="btn-primary btn-sm">
+								<i class='fas fa-chevron-down'></i>
+							</button>
+							&nbsp;
+							<button @onclick="@(() => SortByLastNameDesc())" class="btn-primary btn-sm">
+								<i class='fas fa-chevron-up'></i>
+							</button>
+						</th>
+
 						<th>EMail</th>
 						<th>LocId</th>
 						<th>SId</th>
@@ -59,10 +93,14 @@
 
 						<th class="text-center">Reg.</th>
 						<th class="text-center">Lodge</th>
+
 						<th class="text-center">Donations</th>
 						<th class="text-center">Amount Due</th>
+
 						<th>&nbsp;</th>
+
 						<th>Add</th>
+
 					</tr>
 				</thead>
 				<tbody>
@@ -73,41 +111,36 @@
 						totalDonation += item.TotalDonation;
 						totalSurplus += item.AmountDue;
 						totalGrand += (item.TotalDonation + (-1 * item.AmountDue));
+
 					<tr>
-						<td>
-							<a href="/" title="View"><u>@item.Id <b>Fix</b></u></a>
+						<td>@item.Id</td>
 
-							@*<a asp-page="@LivingMessiah.Web.Pages.Anchors.Sukkot.Details" asp-route-id="@item.Id">*@
 
-						</td>
-
-						@if (DonationStatus.DonationStatusEnum != DonationStatusEnum.NoPayments)
+						@if (CurrentFilter != BaseDonationStatusFilterSmartEnum.NoPayments)
 						{
 							<td>
-								@if (item.StatusId != 2 & item.StatusId != 3)
+								@if (item.StatusId != BaseStatusSmartEnum. & item.StatusId != 3)
 								{
-
 									<div class="btn-group">
 										<a class="btn btn-default btn-sm" title="Drill down" href="/">
-											<i class="fas fa-level-down-alt"></i> <b>Fix</b>
+											<i class="fas fa-level-down-alt"></i>
 										</a>
 									</div>
-
-
-									@* asp-page="@Anchors.Donations.ByRegistrationId"	 asp-route-id="@item.Id" asp-route-familyName="@item.FamilyName">*@
-
+									@* 
+										asp-page="@Anchors.Donations.ByRegistrationId"	 
+										asp-route-id="@item.Id" 
+										asp-route-familyName="@item.FamilyName">
+									*@
 								}
 							</td>
+
 						}
 
-						<td>@StringExtensions.Truncate(item.FirstName, 20) @StringExtensions.Truncate(item.FamilyName, 20)</td>
-						
+						<td>@StringExtensions.Truncate(item.FirstName, 12)</td>
+						<td>@StringExtensions.Truncate(item.FamilyName, 12)</td>
 
 						<td>@item.EMail</td>
-						
 						<td class="@Location.FromEnum(item.LocationEnum).TextColor">@Location.FromEnum(item.LocationEnum).ShortDescr</td>
-						
-
 						<td>@item.StatusId</td>
 
 						@if (IsMealsAvailable)
@@ -115,10 +148,12 @@
 							<td><span class="float-right">@item.MealTotalCost.ToString("C0")</span></td>
 						}
 
-
 						<td><span class="float-right text-danger">@item.RegistrationFee.ToString("C0")</span></td>
 						<td><span class="float-right text-danger">@item.CampCost.ToString("C0")</span></td>
+
 						<td><span class="float-right text-success">@item.TotalDonation.ToString("C0")</span></td>
+
+
 						<td>
 							@if (item.AmountDue < 0)
 							{
@@ -130,19 +165,24 @@
 							}
 						</td>
 
+
 						<td>
 							@if (item.StatusId == 5)
 							{
-								<i class="fa fa-2x fa-check"></i>
+
+								<text><b>X</b></text>
+							}
+							else
+							{
+								<text>&nbsp;</text>
 							}
 						</td>
-
 
 						<td>
 
 							<div class="btn-group">
 								<a class="btn btn-success btn-sm" title="Donations" href="/">
-									<i class="fa fa-plus"></i> <b>Fix</b>
+									<i class="fas fa-plus"></i>
 								</a>
 							</div>
 
@@ -153,42 +193,20 @@
 					</tr>
 					}
 
-					<tr>
-						<td><span class="badge badge-primary">@rowCount &Sigma;</span></td>
-
-						@if (DonationStatus.DonationStatusEnum != DonationStatusEnum.NoPayments)
-						{
-							<td colspan="7"><span class="float-right">Total</span></td>
-						}
-						else
-						{
-							<td colspan="6"><span class="float-right">Total</span></td>
-						}
-
-
-						<td><span class="float-right"><b>@totalDonation.ToString("C")</b></span></td>
-						<td><span class="text-success float-right"><b>@totalSurplus.ToString("C")</b></span></td>
-						<td></td>
-						<td></td>
-					</tr>
-
-					<tr>
-
-						@if (DonationStatus.DonationStatusEnum != DonationStatusEnum.NoPayments)
-						{
-							<td colspan="9"><span class="float-right">Grand Total: Donations - Amount Due</span></td>
-						}
-						else
-						{
-							<td colspan="8"><span class="float-right">Grand Total: Donations - Amount Due</span></td>
-						}
-						<td><span class="text-success float-right"><u><b>@totalGrand.ToString("C")</b></u></span></td>
-						<td></td>
-						<td></td>
-					</tr>
-
 				</tbody>
 			</table>
+
+
+			<div class="row col-12">
+				Sort by Id &nbsp;
+				<button @onclick="@(() => SortById())" class="btn-primary btn-sm" title="Sort by id ascending order">
+					<i class='fas fa-chevron-up'></i>
+				</button>
+				&nbsp;
+				<button @onclick="@(() => SortByIdDesc())" class="btn-primary btn-sm" title="Sort by id descending order">
+					<i class='fas fa-chevron-down'></i>
+				</button>
+			</div>
 		</div>
 	}
 

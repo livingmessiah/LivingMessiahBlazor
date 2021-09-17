@@ -30,45 +30,45 @@ namespace SukkotApi.Domain.Registrations.Enums
 
 		#region Extra Fields
 		public abstract string ColumnName { get; }
+		public abstract string SqlTableColumnName { get; }
 		public abstract string Order { get; }
-		public abstract string IconUpDownOpposite { get; }
 		#endregion
 
 		#region Explicit ie Named Instances
 		private sealed class ByIdSE : BaseRegistrationSortSmartEnum
 		{
 			public ByIdSE() : base($"{nameof(Id.ById)}", Id.ById) { }
-			public override string ColumnName => "Id"; public override string Order => ""; public override string IconUpDownOpposite => "▼";
+			public override string ColumnName => "Id"; public override string SqlTableColumnName => "Id"; public override string Order => "";
 		}
 
 		private sealed class ByLastNameSE : BaseRegistrationSortSmartEnum
 		{
 			public ByLastNameSE() : base($"{nameof(Id.ByLastName)}", Id.ByLastName) { }
-			public override string ColumnName => "Last Name"; public override string Order => ""; public override string IconUpDownOpposite => "▼";
+			public override string ColumnName => "Last Name"; public override string SqlTableColumnName => "FamilyName"; public override string Order => "";
 		}
 
 		private sealed class ByFirstNameSE : BaseRegistrationSortSmartEnum
 		{
 			public ByFirstNameSE() : base($"{nameof(Id.ByFirstName)}", Id.ByFirstName) { }
-			public override string ColumnName => "First Name"; public override string Order => ""; public override string IconUpDownOpposite => "▼";
+			public override string ColumnName => "First Name"; public override string SqlTableColumnName => "FirstName"; public override string Order => "";
 		}
 
 		private sealed class ByIdDescSE : BaseRegistrationSortSmartEnum
 		{
 			public ByIdDescSE() : base($"{nameof(Id.ByIdDesc)}", Id.ByIdDesc) { }
-			public override string ColumnName => "Id"; public override string Order => " Desc"; public override string IconUpDownOpposite => "▲";
+			public override string ColumnName => "Id"; public override string SqlTableColumnName => "Id"; public override string Order => " Desc";
 		}
 
 		private sealed class ByLastNameDescSE : BaseRegistrationSortSmartEnum
 		{
 			public ByLastNameDescSE() : base($"{nameof(Id.ByLastNameDesc)}", Id.ByLastNameDesc) { }
-			public override string ColumnName => "Last Name"; public override string Order => " Desc"; public override string IconUpDownOpposite => "▲";
+			public override string ColumnName => "Last Name"; public override string SqlTableColumnName => "FamilyName"; public override string Order => " Desc";
 		}
 
 		private sealed class ByFirstNameDescSE : BaseRegistrationSortSmartEnum
 		{
 			public ByFirstNameDescSE() : base($"{nameof(Id.ByFirstNameDesc)}", Id.ByFirstNameDesc) { }
-			public override string ColumnName => "First Name"; public override string Order => " Desc"; public override string IconUpDownOpposite => "▲";
+			public override string ColumnName => "First Name"; public override string SqlTableColumnName => "FirstName"; public override string Order => " Desc";
 		}
 
 		#endregion

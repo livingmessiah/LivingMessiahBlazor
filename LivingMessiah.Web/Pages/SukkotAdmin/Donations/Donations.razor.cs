@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Components;
 
 using SukkotApi.Data;
 using SukkotApi.Domain.Donations.Queries;
+using SukkotApi.Domain.Donations.Enums;
 using SukkotApi.Domain.Registrations.Enums;
 
 namespace LivingMessiah.Web.Pages.SukkotAdmin.Donations
@@ -14,10 +15,6 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Donations
 	//[Authorize(Roles = Roles.AdminOrSukkot)]
 	public partial class Donations
 	{
-
-		public BaseDonationStatusFilterSmartEnum DonationStatus { get; set; } = BaseDonationStatusFilterSmartEnum.FullList;
-		public BaseRegistrationSortSmartEnum RegistrationSort { get; set; } = BaseRegistrationSortSmartEnum.ByLastName;
-
 		[Inject]
 		public ILogger<Donations> Logger { get; set; }
 
@@ -26,10 +23,10 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Donations
 
 		public List<DonationReport> DonationReportList { get; set; }
 
-		decimal totalDonation = 0;
-		decimal totalSurplus = 0;
-		decimal totalGrand = 0;
-		int rowCount = 0;
+		protected decimal totalDonation = 0;
+		private decimal totalSurplus = 0;
+		private decimal totalGrand = 0;
+		private int rowCount = 0;
 
 		protected bool DatabaseError { get; set; } = false;
 		protected string DatabaseErrorMsg { get; set; }
@@ -38,20 +35,24 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Donations
 
 		public bool IsMealsAvailable { get; set; } = Sukkot.Constants.Other.IsMealsAvailable;
 
-		private async Task GetData(BaseDonationStatusFilterSmartEnum smartEnumFilter, BaseRegistrationSortSmartEnum smartEnumSort)
-		{
-			
-			string sort = smartEnumSort.Name + smartEnumSort.Order;
-			/*
-			 smartEnumSort
-				.When(BaseRegistrationSortSmartEnum.ById).Then(() => sort = "Id")
-				.When(BaseRegistrationSortSmartEnum.ByIdDesc).Then(() => sort = "Id DESC");
-			*/
+		public BaseDonationStatusFilterSmartEnum CurrentFilter { get; set; } = BaseDonationStatusFilterSmartEnum.FullList;
+		public BaseRegistrationSortSmartEnum CurrentSortAndDirection { get; set; } = BaseRegistrationSortSmartEnum.ByLastName;
 
-			Logger.LogDebug($"Inside {nameof(Donations)}!{nameof(GetData)}; smartEnumFilter.Name:{smartEnumFilter.Name}; sort:{sort}");
+		protected override async Task OnInitializedAsync()
+		{
+			CurrentFilter = BaseDonationStatusFilterSmartEnum.FullList;
+			CurrentSortAndDirection = BaseRegistrationSortSmartEnum.ByFirstNameDesc;
+			await GetDataWithParms(CurrentFilter, CurrentSortAndDirection);
+		}
+
+		private async Task GetDataWithParms(BaseDonationStatusFilterSmartEnum filter, BaseRegistrationSortSmartEnum sortAndDirection)
+		{
+			string sort = sortAndDirection.SqlTableColumnName + sortAndDirection.Order;
+
+			Logger.LogDebug($"Inside {nameof(Donations)}!{nameof(GetDataWithParms)}; smartEnumFilter.Name:{filter.Name}; sort:{sort}");
 			try
 			{
-				DonationReportList = await db.GetDonationReport(smartEnumFilter.Value, sort);
+				DonationReportList = await db.GetDonationReport(filter, sort);
 				if (DonationReportList == null)
 				{
 					DatabaseWarning = true;
@@ -64,55 +65,65 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Donations
 				DatabaseErrorMsg = $"Error reading database";
 				Logger.LogError(ex, $"...{DatabaseErrorMsg}");
 			}
+			StateHasChanged();  // https://stackoverflow.com/questions/56436577/blazor-form-submit-needs-two-clicks-to-refresh-view
 		}
 
-		protected override async Task OnInitializedAsync()
+		protected async void SortById()
 		{
-			
-			await GetData(BaseDonationStatusFilterSmartEnum.FullList, BaseRegistrationSortSmartEnum.ByLastName);
+			CurrentSortAndDirection = BaseRegistrationSortSmartEnum.ById;
+			await GetDataWithParms(CurrentFilter, CurrentSortAndDirection);
 		}
 
-		protected async void SortById(BaseRegistrationSortSmartEnum registrationSortEnum)
+		protected async void SortByIdDesc()
 		{
-			RegistrationSort = RegistrationSort.FromEnum(registrationSortEnum);
+			CurrentSortAndDirection = BaseRegistrationSortSmartEnum.ByIdDesc;
+			await GetDataWithParms(CurrentFilter, CurrentSortAndDirection);
 		}
 
+		protected async void SortByFirstName()
+		{
+			CurrentSortAndDirection = BaseRegistrationSortSmartEnum.ByFirstName;
+			await GetDataWithParms(CurrentFilter, CurrentSortAndDirection);
+		}
 
-		//protected async void SortTable(BaseRegistrationSortSmartEnum registrationSortEnum)
-		//{
-		//	RegistrationSort = RegistrationSort.FromEnum(registrationSortEnum);
-		//}
+		protected async void SortByFirstNameDesc()
+		{
+			CurrentSortAndDirection = BaseRegistrationSortSmartEnum.ByFirstNameDesc;
+			await GetDataWithParms(CurrentFilter, CurrentSortAndDirection);
+		}
 
-		//private bool IsSortedIdAscending;
-		//private bool IsSortedLastNameAscending;
-		//private string CurrentSortColumn;
+		protected async void SortByLastName()
+		{
+			CurrentSortAndDirection = BaseRegistrationSortSmartEnum.ByLastName;
+			await GetDataWithParms(CurrentFilter, CurrentSortAndDirection);
+		}
+
+		protected async void SortByLastNameDesc()
+		{
+			CurrentSortAndDirection = BaseRegistrationSortSmartEnum.ByLastNameDesc;
+			await GetDataWithParms(CurrentFilter, CurrentSortAndDirection);
+		}
+
+		protected async void OnClickFilter(BaseDonationStatusFilterSmartEnum newFilter)
+		{
+			CurrentFilter = newFilter;
+			Logger.LogDebug($"Inside {nameof(OnClickFilter)}; {newFilter.Name} is now the current filter");
+			await GetDataWithParms(newFilter, CurrentSortAndDirection);
+		}
+
+		public string ActiveFilter(BaseDonationStatusFilterSmartEnum filter)
+		{
+			if (filter == CurrentFilter)
+			{
+				Logger.LogDebug($"Inside {nameof(ActiveFilter)}; {filter.Name} now active");
+				return "active";
+			}
+			else
+			{
+				return "";
+			}
+		}
 
 	}
 }
 
-
-
-//protected void SortByIdClick(RegistrationSortEnum registrationSortEnum)
-//protected async void SortByIdClick(RegistrationSortEnum registrationSortEnum)
-//{
-//	Logger.LogDebug($"Inside {nameof(Donations)}!{nameof(SortByIdClick)}; registrationSortEnum={registrationSortEnum}");
-//	await GetData(registrationSortEnum);
-
-//	/*
-
-//	RegistrationSort = RegistrationSort.FromEnum(registrationSortEnum);
-//	if (registrationSortEnum == RegistrationSortEnum.Id)
-//	{
-//		Logger.LogDebug($"...do OrderBy(x => x.Id).ToList()");
-//		DonationReportList = DonationReportList.OrderBy(x => x.Id).ToList();
-
-//	}
-//	else
-//	{
-//		Logger.LogDebug($"...do OrderBy(x => x.FamilyName).ToList()");
-//		DonationReportList = DonationReportList.OrderBy(x => x.FamilyName).ToList();
-//	}
-//	*/
-//	//IsSortedAscending = !IsSortedAscending;
-//	//StateHasChanged();
-//}
