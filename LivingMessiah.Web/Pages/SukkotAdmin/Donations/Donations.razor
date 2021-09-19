@@ -6,10 +6,10 @@
 @using SukkotApi.Domain.Enums
 @using SukkotApi.Domain.Registrations.Enums
 
-@*<AuthorizeView Roles="@Roles.SukkotMenuBar">
+<AuthorizeView Roles="@Roles.SukkotMenuBar">
 		<SukkotAdminMenubar></SukkotAdminMenubar>
-	</AuthorizeView>
-*@
+</AuthorizeView>
+
 
 @foreach (var item in BaseDonationStatusFilterSmartEnum.List.OrderBy(o => o.Value))
 {

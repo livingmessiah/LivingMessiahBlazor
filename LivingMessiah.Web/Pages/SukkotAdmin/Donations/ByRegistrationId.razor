@@ -12,20 +12,27 @@
 <div class="pb-2 mt-4 mb-2">
 	<h3 class="bg-light">
 		<i class="fas fa-dollar-sign"></i> Donations by -
-		@FamilyName]  #@RegistrationId]
+		@FamilyName  #@RegistrationId
 	</h3>
 </div>
 
 
+<LoadingComponent IsLoading="Donations==null && DatabaseWarning==false">
+	@*<ByRegistrationTable></ByRegistrationTable>*@
+</LoadingComponent>
 
-@*<ByRegistrationTable></ByRegistrationTable>*@
 
-@code {
-	[Parameter]
-	public string FamilyName { get; set; }
+@if (DatabaseError)
+		{
+<p class="text-danger"><em>@DatabaseErrorMsg</em></p>
+		}
+		else
+		{
+			if (DatabaseWarning)
+			{
+<p class="text-warning">@DatabaseWarningMsg</p>
+			}
+		}
 
-	[Parameter]
-	public int RegistrationId { get; set; }
 
-}
 

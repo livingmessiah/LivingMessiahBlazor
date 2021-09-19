@@ -10,9 +10,12 @@ using SukkotApi.Domain.Donations.Queries;
 using SukkotApi.Domain.Donations.Enums;
 using SukkotApi.Domain.Registrations.Enums;
 
+using static LivingMessiah.Web.Services.Auth0;
+using Microsoft.AspNetCore.Authorization;
+
 namespace LivingMessiah.Web.Pages.SukkotAdmin.Donations
 {
-	//[Authorize(Roles = Roles.AdminOrSukkot)]
+	[Authorize(Roles = Roles.AdminOrSukkot)]
 	public partial class Donations
 	{
 		[Inject]
