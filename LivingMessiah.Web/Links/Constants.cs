@@ -382,7 +382,7 @@
 
 		public static class Donations
 		{
-			public const string Index = "/SukkotAdmin/Donations/Index";
+			public const string Grid = "/SukkotAdmin/DonationsGrid";
 			public const string FormInsert = "/SukkotAdmin/Donations/FormInsert";
 			public const string ByRegistration = "/SukkotAdmin/Donations/ByRegistration";
 			public const string ByRegistrationId = "/SukkotAdmin/Donations/ByRegistrationId";

@@ -29,7 +29,9 @@ namespace Sukkot.Web.Service
 		//Task<KitchenWorkVM> KitchenJobs(int registrationId, ClaimsPrincipal user); NOT YET IMPLEMENTED
 	}
 
-	public class SukkotService : ControllerBase, ISukkotService
+	//ToDo: Where does SukkotService use  ControllerBase
+	//public class SukkotService : ControllerBase, ISukkotService
+	public class SukkotService : ISukkotService
 	{
 		#region Constructor and DI
 		private readonly ISukkotRepository db;

@@ -1,4 +1,5 @@
 ﻿using SukkotApi.Domain.Enums;
+using SukkotApi.Domain.Registrations.Enums;
 using System.ComponentModel.DataAnnotations;
 
 namespace SukkotApi.Domain.Donations.Queries
@@ -28,7 +29,23 @@ namespace SukkotApi.Domain.Donations.Queries
 		[DataType(DataType.Currency)]
 		public decimal AmountDue { get; set; }
 
-		public LocationEnum LocationEnum { get; set; }
+		public int LocationInt { get; set; }
+
+		public string LocationName
+		{
+			get
+			{
+				return BaseLocationSmartEnum.FromValue(LocationInt).Name;
+			} 
+		}
+
+		public string FullyPaidIcon
+		{
+			get
+			{
+				return SukkotApi.Domain.Enums.BaseStatusSmartEnum.FromValue(StatusId) == BaseStatusSmartEnum.FullyPaid ? "X" : "";
+			}
+		}
 
 	}
 }

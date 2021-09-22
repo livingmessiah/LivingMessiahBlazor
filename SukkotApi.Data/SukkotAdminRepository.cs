@@ -48,7 +48,9 @@ ORDER BY Detail
 			//base.Parms = new DynamicParameters(new { SortAndOrder = sortAndOrder });
 
 			base.Sql = $@"
-SELECT Id, EMail, FamilyName, FirstName, StatusId, StatusDescr, MealTotalCost, RegistrationFee, CampCost, TotalDonation, AmountDue, LocationEnum
+SELECT Id, EMail, FamilyName, FirstName, StatusId, StatusDescr, MealTotalCost, RegistrationFee
+, CampCost, TotalDonation, AmountDue
+, LocationEnum AS LocationInt
 FROM Sukkot.tvfDonationReport(@DonationStatus)
 ORDER BY {sortAndOrder}
 ";

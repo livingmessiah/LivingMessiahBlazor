@@ -19,7 +19,7 @@ namespace LivingMessiah.Web.Services
 		Task<List<vwRegistration>> GetAll(RegistrationSortEnum sort);
 		Task<List<Notes>> GetNotes(RegistrationSortEnum sort);
 
-		Task<int> InsertRegistrationDonation(DonationInsertModel donation, string email);
+		Task<int> InsertRegistrationDonation(DonationInsertModel donation);
 		Task<List<PreviousDonation>> GetRegistrationDonations(int id);
 		Task<List<DonationDetail>> GetDonationsByRegistrationId(int id);
 
@@ -38,12 +38,14 @@ namespace LivingMessiah.Web.Services
 		#region Constructor and DI
 		private readonly ISukkotAdminRepository db;
 		private readonly ILogger log;
+		private readonly ISecurityClaimsService svcClaims;
 
 		public SukkotAdminService(
-			ISukkotAdminRepository dbRepository, ILogger<SukkotAdminService> logger)
+			ISukkotAdminRepository dbRepository, ILogger<SukkotAdminService> logger, ISecurityClaimsService serviceClaims)
 		{
 			db = dbRepository;
 			log = logger;
+			svcClaims = serviceClaims;
 		}
 		#endregion
 
@@ -87,10 +89,10 @@ namespace LivingMessiah.Web.Services
 			return vm;
 		}
 
-		// , ClaimsPrincipal user
-		public async Task<int> InsertRegistrationDonation(DonationInsertModel donationInsertModel, string email)
+		public async Task<int> InsertRegistrationDonation(DonationInsertModel donationInsertModel)
 		{
 			int count = 0;
+			string email = await svcClaims.GetEmail();
 			try
 			{
 				count = await db.InsertRegistrationDonation(DTO(donationInsertModel, email));
@@ -248,14 +250,13 @@ namespace LivingMessiah.Web.Services
 			}
 			catch (Exception ex)
 			{
-				ExceptionMessage = $"Inside {nameof(MealTicketPunchInsert)}, {nameof(db.InsertRegistrationDonation)}";
+				ExceptionMessage = $"Inside {nameof(MealTicketPunchInsert)}, {nameof(db.MealTicketPunchInsert)}";
 				log.LogError(ex, ExceptionMessage); // , donation.ToString()
 				ExceptionMessage += ex.Message ?? "-- ex.Message was null --";
 				throw new InvalidOperationException(ExceptionMessage);
 			}
 			return count;
 		}
-
 
 	}
 }

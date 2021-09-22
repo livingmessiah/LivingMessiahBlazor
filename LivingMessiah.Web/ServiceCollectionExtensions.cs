@@ -32,6 +32,7 @@ namespace LivingMessiah.Web
 				.AddSingleton<IUpcomingEventsRepository, UpcomingEventsRepository>()
 				.AddSingleton<IUpcomingEvents, UpcomingEvents>()
 
+				.AddTransient<ISecurityClaimsService, SecurityClaimsService>()
 				.AddTransient<ISukkotService, SukkotService>()
 				.AddTransient<ISukkotAdminService, SukkotAdminService>()
 
