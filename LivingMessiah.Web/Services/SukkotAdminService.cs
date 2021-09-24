@@ -9,6 +9,7 @@ using LivingMessiah.Web.Pages.SukkotAdmin.Donations;
 using SukkotApi.Domain.Donations.Queries;
 using SukkotApi.Domain.Donations.Commands;
 using SukkotApi.Domain.Registrations.Enums;
+using LivingMessiah.Web.Pages.SukkotAdmin.Donations.Data;
 
 namespace LivingMessiah.Web.Services
 {
@@ -21,7 +22,6 @@ namespace LivingMessiah.Web.Services
 
 		Task<int> InsertRegistrationDonation(DonationInsertModel donation);
 		Task<List<PreviousDonation>> GetRegistrationDonations(int id);
-		Task<List<DonationDetail>> GetDonationsByRegistrationId(int id);
 
 		Task<int> LogErrorTest();
 		Task<List<zvwErrorLog>> GetzvwErrorLog();
@@ -120,24 +120,7 @@ namespace LivingMessiah.Web.Services
 			};
 			return poco;
 		}
-
-		public async Task<List<DonationDetail>> GetDonationsByRegistrationId(int id)
-		{
-			var vm = new List<DonationDetail>();
-			try
-			{
-				vm = await db.GetDonationsByRegistrationId(id);
-			}
-			catch (Exception ex)
-			{
-				ExceptionMessage = $"Inside {nameof(GetDonationsByRegistrationId)}, {nameof(db.GetDonationsByRegistrationId)}";
-				log.LogError(ex, ExceptionMessage, id);
-				ExceptionMessage += ex.Message ?? "-- ex.Message was null --";
-				throw new InvalidOperationException(ExceptionMessage);
-			}
-			return vm;
-		}
-
+			
 		public async Task<List<PreviousDonation>> GetRegistrationDonations(int id)
 		{
 			var vm = new List<PreviousDonation>();

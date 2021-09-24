@@ -3,13 +3,12 @@
 @using static LivingMessiah.Web.Services.Auth0
 @using LivingMessiah.Web.Shared.Sukkot
 
-@using SukkotApi.Domain.Donations.Queries;
-
-@using LivingMessiah.Web.Infrastructure
+@using LivingMessiah.Web.Pages.SukkotAdmin.Donations.Domain
+@using LivingMessiah.Web.Pages.SukkotAdmin.Donations.Data
+ 
 @using SukkotApi.Domain.Donations.Enums
 @using SukkotApi.Domain.Enums
 @using SukkotApi.Domain.Registrations.Enums
-
 
 @using Syncfusion.Blazor.Grids
 @using Syncfusion.Blazor.Data
@@ -74,16 +73,17 @@
 			<div class="e-statustext badge badge-info mt-3">Detail Donations Records for <b>@SelectedRegistrant</b></div>
 
 			<SfGrid DataSource="@DonationDetails" Query="@(new Query().Where("Id", "equal", RowIndex))"
-							Toolbar="@(new List<string>() { "Add", "Edit", "Update", "Cancel", })">
-				<GridEvents OnBatchSave="BatchSaveHandler" TValue="DonationsByRegistration"></GridEvents>
+							Toolbar="@(new List<string>() { "Add", "Edit", "Update", "Delete", "Cancel" })">
+				<SfDataManager AdaptorInstance="typeof(SyncFusionAdaptor)" Adaptor="Adaptors.CustomAdaptor"></SfDataManager>
 				<GridColumns>
-					<GridEditSettings AllowEditing="true" AllowAdding="true" ShowConfirmDialog="false" />
-					<GridColumn Field=@nameof(DonationsByRegistration.Detail) HeaderText="#" Width="25" AllowAdding="false" AllowEditing="false"> </GridColumn>
-					<GridColumn Field=@nameof(DonationsByRegistration.Amount) HeaderText="Amount" Width="110" Format="c0" TextAlign="TextAlign.Right"></GridColumn>
-					<GridColumn Field=@nameof(DonationsByRegistration.NOTES) HeaderText="Notes" Width="110"></GridColumn>
-					<GridColumn Field=@nameof(DonationsByRegistration.ReferenceId) HeaderText="Reference" Width="70"></GridColumn>
-					<GridColumn Field=@nameof(DonationsByRegistration.CreateDateMDY) HeaderText="Created" Width="50" AllowEditing="false"></GridColumn>
-					<GridColumn Field=@nameof(DonationsByRegistration.CreatedBy) HeaderText="Created by" Width="70" AllowEditing="false"></GridColumn>
+					<GridEditSettings AllowEditing="true" AllowAdding="true" AllowDeleting="true" ShowConfirmDialog="false" />
+					<GridColumn Field="@nameof(DonationDetail.Id)" IsPrimaryKey="true" Visible="false"></GridColumn>
+					<GridColumn Field="@nameof(DonationDetail.RegistrationId)" Visible="false"></GridColumn>
+					<GridColumn Field=@nameof(DonationDetail.Detail) HeaderText="#" Width="25" AllowAdding="false" AllowEditing="false"> </GridColumn>
+					<GridColumn Field=@nameof(DonationDetail.Amount) HeaderText="Amount" Width="110" Format="c0" TextAlign="TextAlign.Right"></GridColumn>
+					<GridColumn Field=@nameof(DonationDetail.Notes) HeaderText="Notes" Width="110"></GridColumn>
+					<GridColumn Field=@nameof(DonationDetail.ReferenceId) HeaderText="Reference" Width="70"></GridColumn>
+					<GridColumn Field=@nameof(DonationDetail.CreatedBy) HeaderText="Created by" Width="70" AllowEditing="false"></GridColumn>
 				</GridColumns>
 			</SfGrid>
 

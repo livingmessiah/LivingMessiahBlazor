@@ -23,7 +23,6 @@ namespace SukkotApi.Data
 		{
 		}
 
-		//ToDo: maybe merge with GetDonationsByRegistrationId
 		public async Task<List<PreviousDonation>> GetRegistrationDonations(int id)
 		{
 			//SELECT d.Id, RegistrationId, Detail, Amount, d.Notes, ReferenceId, CreatedBy, CreateDate, r.FamilyName
@@ -60,40 +59,6 @@ ORDER BY {sortAndOrder}
 			return await WithConnectionAsync(async connection =>
 			{
 				var rows = await connection.QueryAsync<DonationReport>(base.Sql, base.Parms);
-				return rows.ToList();
-			});
-		}
-
-		public async Task<List<DonationsByRegistration>> GetDonationsByRegistration()
-		{
-			base.Sql = $@"
-	SELECT 
-	Id, FamilyName, FirstName, StatusId, TotalDonation, AmountDue, Detail
-	, ISNULL(Amount, 0) AS Amount, NOTES, ReferenceId, LocationEnum, CreatedBy, CreateDateMDY
-	FROM Sukkot.vwDonationsByRegistration 
-	ORDER BY Id, Detail
-";
-			base.log.LogDebug($"Inside {nameof(DonationsByRegistration)}, Sql: {Sql}");
-			return await WithConnectionAsync(async connection =>
-			{
-				var rows = await connection.QueryAsync<DonationsByRegistration>(base.Sql);
-				return rows.ToList();
-			});
-		}
-
-		//ToDo: maybe merge with GetRegistrationDonations
-		public async Task<List<DonationDetail>> GetDonationsByRegistrationId(int id)
-		{
-			base.Parms = new DynamicParameters(new { Id = id });
-			base.Sql = $@"
- SELECT RegistrationId, Detail, Amount, Notes, ReferenceId, CreateDate, CreatedBy, FamilyName, LocationEnum
- FROM Sukkot.vwDonationDetail 
- WHERE RegistrationId=@Id
- ORDER BY Detail
-";
-			return await WithConnectionAsync(async connection =>
-			{
-				var rows = await connection.QueryAsync<DonationDetail>(base.Sql, base.Parms);
 				return rows.ToList();
 			});
 		}
@@ -532,6 +497,7 @@ UPDATE Sukkot.KitchenWork SET
 				return count;
 			});
 		}
+
 
 	}
 }

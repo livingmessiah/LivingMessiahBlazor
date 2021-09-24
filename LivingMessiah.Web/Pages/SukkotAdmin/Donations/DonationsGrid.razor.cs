@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Components;
 
-using SukkotApi.Data;
-using SukkotApi.Domain.Donations.Queries;
+using LivingMessiah.Web.Pages.SukkotAdmin.Donations.Data; // using SukkotApi.Data;
+using LivingMessiah.Web.Pages.SukkotAdmin.Donations.Domain; //using SukkotApi.Domain.Donations.Queries;
 using SukkotApi.Domain.Donations.Enums;
 using SukkotApi.Domain.Registrations.Enums;
 
@@ -14,7 +14,6 @@ using static LivingMessiah.Web.Services.Auth0;
 using Microsoft.AspNetCore.Authorization;
 
 using LivingMessiah.Web.Services;
-
 using Syncfusion.Blazor.Grids;
 
 
@@ -27,13 +26,13 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Donations
 		public ILogger<DonationsGrid> Logger { get; set; }
 
 		[Inject]
-		public ISukkotAdminRepository db { get; set; }
+		public IDonationRepository db { get; set; }  
 
 		[Inject]
 		public ISukkotAdminService svc { get; set; }
 
 		public IEnumerable<DonationReport> DonationReportList { get; set; }
-		public IEnumerable<DonationsByRegistration> DonationDetails { get; set; }
+		public IEnumerable<DonationDetail> DonationDetails { get; set; }
 
 
 		public string SelectedRegistrant { get; set; }
@@ -80,28 +79,6 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Donations
 			}
 		}
 
-		//public void
-		public async Task<int> BatchSaveHandler(BeforeBatchSaveArgs<DonationsByRegistration> args)
-		{
-			// Here you can customize your code
-			int count = 0;
-			Logger.LogDebug($"Inside {nameof(DonationsGrid)}!{nameof(BatchSaveHandler)}");
-
-			DonationInsertModel donationInsertModel = new DonationInsertModel();
-			//donationInsertModel.Amount= args
-
-
-			try
-			{
-				count = await svc.InsertRegistrationDonation(donationInsertModel);
-			}
-			catch (Exception)
-			{
-				DatabaseError = true;
-				DatabaseErrorMsg = $"Error Insertint registration donation detail record to the database";
-			}
-			return count;
-		}
 
 		//public async Task<int> InsertRegistrationDonation(DonationInsertModel donationInsertModel)
 		//{
@@ -126,7 +103,7 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Donations
 				else
 				{
 					//ToDo make this a be one call to the db
-					DonationDetails = await db.GetDonationsByRegistration();
+					DonationDetails = await db.GetDonationDetailsAll();
 				}
 			}
 			catch (Exception ex)

@@ -18,8 +18,6 @@ namespace SukkotApi.Data
 		Task<int> InsertRegistrationDonation(Donation donation);
 		Task<List<PreviousDonation>> GetRegistrationDonations(int id);
 		Task<List<DonationReport>> GetDonationReport(BaseDonationStatusFilterSmartEnum filter, string sortAndOrder);
-		Task<List<DonationDetail>> GetDonationsByRegistrationId(int id);
-		Task<List<DonationsByRegistration>> GetDonationsByRegistration();
 
 		//ToDo: 
 		Task<int> LogErrorTest();

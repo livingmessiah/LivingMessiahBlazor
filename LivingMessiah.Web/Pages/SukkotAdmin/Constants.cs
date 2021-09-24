@@ -77,15 +77,6 @@
 		//public const string ErrorLog = "/SukkotAdmin/ErrorLog";
 		//public const string ErrorLogEmpty = "/SukkotAdmin/ErrorLogEmpty";
 
-
-		//public static class Donations
-		//{
-		//	public const string Index = "/SukkotAdmin/Donations/Index";
-		//	public const string FormInsert = "/SukkotAdmin/Donations/FormInsert";
-		//	public const string ByRegistration = "/SukkotAdmin/Donations/ByRegistration";
-		//	public const string ByRegistrationId = "/SukkotAdmin/Donations/ByRegistrationId";
-		//}
-
 		//public const string CreateDonation = "/SukkotAdmin/CreateDonation";
 	}
 

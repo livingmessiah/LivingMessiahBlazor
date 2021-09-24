@@ -11,6 +11,7 @@ using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Sukkot.Web.Service;
 using SukkotApi.Data;
 using LivingMessiah.Data.Commands;
+using LivingMessiah.Web.Pages.SukkotAdmin.Donations.Data;
 
 //using Markdig;
 //using Markdig.Extensions.AutoIdentifiers;
@@ -34,6 +35,8 @@ namespace LivingMessiah.Web
 
 				.AddTransient<ISecurityClaimsService, SecurityClaimsService>()
 				.AddTransient<ISukkotService, SukkotService>()
+				
+				.AddTransient<IDonationRepository, DonationRepository>()
 				.AddTransient<ISukkotAdminService, SukkotAdminService>()
 
 				//ToDo Remove before publishing 

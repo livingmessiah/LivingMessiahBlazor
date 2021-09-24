@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace LivingMessiah.Web.Pages.SukkotAdmin.Donations
+namespace LivingMessiah.Web.Pages.SukkotAdmin.Donations.Data
 {
 	public class DonationInsertModel
 	{

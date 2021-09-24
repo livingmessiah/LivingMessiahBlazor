@@ -1,3 +1,4 @@
+using LivingMessiah.Web.Pages.SukkotAdmin.Donations.Data;
 using LivingMessiah.Web.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -37,6 +38,7 @@ namespace LivingMessiah.Web
 			services.AddCustomAuthentication(Configuration);
 			services
 				.Configure<AppSettings>(options => Configuration.GetSection("AppSettings").Bind(options));
+			services.AddScoped<SyncFusionAdaptor>();
 			services.AddSyncfusionBlazor();
 		}
 
