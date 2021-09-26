@@ -13,7 +13,7 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Donations.Data
 {
 	public interface IDonationRepository
 	{
-		Task<int> InsertRegistrationDonation(Donation donation);
+		Task<int> InsertRegistrationDonation(Donation donation, string email);
 		Task<List<DonationReport>> GetDonationReport(BaseDonationStatusFilterSmartEnum filter, string sortAndOrder);
 		Task<List<DonationDetail>> GetDonationDetails(int registrationId);
 		Task<List<DonationDetail>> GetDonationDetailsAll();
@@ -23,11 +23,12 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Donations.Data
 	}
 	public class DonationRepository : BaseRepositoryAsync, IDonationRepository
 	{
+		//ISecurityClaimsService svcClaims
 		public DonationRepository(IConfiguration config, ILogger<DonationRepository> logger) : base(config, logger)
 		{
 		}
 
-		public async Task<int> InsertRegistrationDonation(Donation donation)
+		public async Task<int> InsertRegistrationDonation(Donation donation, string email)
 		{
 			base.Sql = "Sukkot.stpDonationInsert ";
 			base.Parms = new DynamicParameters(new
@@ -36,11 +37,11 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Donations.Data
 				Amount = donation.Amount,
 				Notes = donation.Notes,
 				ReferenceId = donation.ReferenceId,
-				CreatedBy = donation.CreatedBy,
+				CreatedBy = email,
 				CreateDate = donation.CreateDate
 			});
 
-			base.log.LogDebug($"Inside {nameof(InsertRegistrationDonation)}, Sql: {Sql}");
+			base.log.LogDebug($"Inside {nameof(DonationRepository)}!{nameof(DonationRepository)}!{nameof(InsertRegistrationDonation)}, Sql: {Sql}");
 
 			return await WithConnectionAsync(async connection =>
 			{
@@ -54,7 +55,7 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Donations.Data
 			_ = await UpdateDonationProcess(donationDetail);
 			DonationDetail NewDonation = new DonationDetail();
 			NewDonation = await GetDonationDetail(donationDetail.Id);
-			base.log.LogDebug($"Inside {nameof(UpdateDonationDetail)}, Sql: {Sql}");
+			base.log.LogDebug($"Inside {nameof(DonationRepository)}!{nameof(UpdateDonationDetail)}, Sql: {Sql}");
 			return NewDonation;
 		}
 
@@ -83,7 +84,7 @@ UPDATE Sukkot.Donation SET
 , CreatedBy = @CreatedBy
 WHERE Id=@Id
 ";
-			base.log.LogDebug($"Inside {nameof(UpdateDonationProcess)}, Sql: {Sql}");
+			base.log.LogDebug($"Inside {nameof(DonationRepository)}!{nameof(UpdateDonationProcess)}, Sql: {Sql}");
 
 			return await WithConnectionAsync(async connection =>
 			{
@@ -105,8 +106,8 @@ FROM Sukkot.tvfDonationReport(@DonationStatus)
 ORDER BY {sortAndOrder}
 ";
 
-			//base.log.LogDebug($"Inside {nameof(GetDonationReport)}, filter.Name/filter.Value: {filter.Name}/{filter.Value}");
-			//base.log.LogDebug($"Inside {nameof(GetDonationReport)}, Sql: {Sql}");
+			//base.log.LogDebug($"Inside {nameof(DonationRepository)}!{nameof(GetDonationReport)}, filter.Name/filter.Value: {filter.Name}/{filter.Value}");
+			//base.log.LogDebug($"Inside {nameof(DonationRepository)}!{nameof(GetDonationReport)}, Sql: {Sql}");
 
 			return await WithConnectionAsync(async connection =>
 			{
@@ -120,12 +121,14 @@ ORDER BY {sortAndOrder}
 			base.Parms = new DynamicParameters(new { RegistrationId = registrationId });
 			base.Sql = $@"
 SELECT 
-	Id, RegistrationId, Detail, Amount, Notes, ReferenceId, CreateDate, CreatedBy
+	d.Id, RegistrationId, Detail, Amount, d.Notes, ReferenceId, CreateDate, CreatedBy 
+,	Sukkot.udfFormatName(1, FamilyName, FirstName, NULL, NULL) AS Name
+FROM Sukkot.Donation d
+INNER JOIN Sukkot.Registration r ON r.Id = d.RegistrationId
 WHERE RegistrationId = @RegistrationId
-FROM Sukkot.Donation
 ORDER BY RegistrationId, Detail
 ";
-			base.log.LogDebug($"Inside {nameof(GetDonationDetails)}, Sql: {Sql}");
+			base.log.LogDebug($"Inside {nameof(DonationRepository)}!{nameof(GetDonationDetails)}, Sql: {Sql}, registrationId: {registrationId}");
 
 			return await WithConnectionAsync(async connection =>
 			{
@@ -138,11 +141,13 @@ ORDER BY RegistrationId, Detail
 		{
 			base.Sql = $@"
 SELECT 
-	Id, RegistrationId, Detail, Amount, Notes, ReferenceId, CreateDate, CreatedBy 
-FROM Sukkot.Donation
+	d.Id, RegistrationId, Detail, Amount, d.Notes, ReferenceId, CreateDate, CreatedBy 
+,	Sukkot.udfFormatName(1, FamilyName, FirstName, NULL, NULL) AS Name
+FROM Sukkot.Donation d
+INNER JOIN Sukkot.Registration r ON r.Id = d.RegistrationId
 ORDER BY RegistrationId, Detail";
 
-			base.log.LogDebug($"Inside {nameof(GetDonationDetailsAll)}, Sql: {Sql}");
+			base.log.LogDebug($"Inside {nameof(DonationRepository)}!{nameof(GetDonationDetailsAll)}, Sql: {Sql}");
 
 			return await WithConnectionAsync(async connection =>
 			{
@@ -156,10 +161,13 @@ ORDER BY RegistrationId, Detail";
 			base.Parms = new DynamicParameters(new { Id = id });
 			base.Sql = $@"
 SELECT 
-	Id, RegistrationId, Detail, Amount, Notes, ReferenceId, CreateDate, CreatedBy
-WHERE Id = @Id	
+	d.Id, RegistrationId, Detail, Amount, d.Notes, ReferenceId, CreateDate, CreatedBy 
+,	Sukkot.udfFormatName(1, FamilyName, FirstName, NULL, NULL) AS Name
+FROM Sukkot.Donation d
+INNER JOIN Sukkot.Registration r ON r.Id = d.RegistrationId
+WHERE d.Id = @Id	
 ";
-			base.log.LogDebug($"Inside {nameof(GetDonationDetail)}, Sql: {Sql}");
+			base.log.LogDebug($"Inside {nameof(DonationRepository)}!{nameof(GetDonationDetail)}, Sql: {Sql}, id: {id}");
 
 			return await WithConnectionAsync(async connection =>
 			{
@@ -173,7 +181,7 @@ WHERE Id = @Id
 			base.Parms = new DynamicParameters(new { Id = id });
 			base.Sql = "DELETE FROM Sukkot.Donation WHERE Id=@Id";
 			
-			base.log.LogDebug($"Inside {nameof(DeleteDonationDetail)}, Sql: {Sql}");
+			base.log.LogDebug($"Inside {nameof(DonationRepository)}!{nameof(DeleteDonationDetail)}, Sql: {Sql}, id: {id}");
 
 			return await WithConnectionAsync(async connection =>
 			{

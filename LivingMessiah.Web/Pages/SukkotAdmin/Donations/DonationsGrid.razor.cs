@@ -54,10 +54,12 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Donations
 
 		public BaseDonationStatusFilterSmartEnum CurrentFilter { get; set; } = BaseDonationStatusFilterSmartEnum.FullList;
 
+		/**/
 		protected override async Task OnInitializedAsync()
 		{
 			await GetDataWithParms(CurrentFilter);
 		}
+		
 
 		private SfGrid<DonationReport> DefaultGrid;
 
@@ -100,11 +102,11 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Donations
 					DatabaseWarning = true;
 					DatabaseWarningMsg = "DonationReportList NOT FOUND";
 				}
-				else
-				{
-					//ToDo make this a be one call to the db
-					DonationDetails = await db.GetDonationDetailsAll();
-				}
+				//else
+				//{
+				//	//ToDo make this a be one call to the db
+				//	DonationDetails = await db.GetDonationDetailsAll();
+				//}
 			}
 			catch (Exception ex)
 			{
@@ -114,6 +116,7 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Donations
 			}
 			StateHasChanged();  // https://stackoverflow.com/questions/56436577/blazor-form-submit-needs-two-clicks-to-refresh-view
 		}
+
 
 		protected async void OnClickFilter(BaseDonationStatusFilterSmartEnum newFilter)
 		{

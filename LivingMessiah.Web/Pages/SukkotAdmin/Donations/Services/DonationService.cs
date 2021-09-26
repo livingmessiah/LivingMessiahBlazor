@@ -38,7 +38,8 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Donations.Services
 			string email = await svcClaims.GetEmail();
 			try
 			{
-				count = await db.InsertRegistrationDonation(DTO(donationInsertModel, email));
+				//count = await db.InsertRegistrationDonation(DTO(donationInsertModel, email));
+				count = await db.InsertRegistrationDonation(DTO(donationInsertModel, email), email);
 			}
 			catch (Exception ex)
 			{

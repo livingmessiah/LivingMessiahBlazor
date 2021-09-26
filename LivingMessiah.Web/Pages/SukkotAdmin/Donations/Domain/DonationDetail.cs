@@ -13,7 +13,7 @@
 		public string ReferenceId { get; set; } // Note 2
 		public System.DateTime CreateDate { get; set; }
 		public string CreatedBy { get; set; }
-		public string FamilyName { get; set; }
+		public string Name { get; set; }
 	}
 }
 
