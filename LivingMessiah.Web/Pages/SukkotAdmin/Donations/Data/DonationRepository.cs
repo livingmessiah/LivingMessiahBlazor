@@ -13,6 +13,7 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Donations.Data
 {
 	public interface IDonationRepository
 	{
+		string BaseSqlDump { get; }
 		Task<int> InsertRegistrationDonation(Donation donation, string email);
 		Task<List<DonationReport>> GetDonationReport(BaseDonationStatusFilterSmartEnum filter, string sortAndOrder);
 		Task<List<DonationDetail>> GetDonationDetails(int registrationId);
@@ -23,6 +24,12 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Donations.Data
 	}
 	public class DonationRepository : BaseRepositoryAsync, IDonationRepository
 	{
+
+		public string BaseSqlDump
+		{
+			get { return base.SqlDump; }
+		}
+
 		//ISecurityClaimsService svcClaims
 		public DonationRepository(IConfiguration config, ILogger<DonationRepository> logger) : base(config, logger)
 		{

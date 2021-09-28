@@ -1,0 +1,88 @@
+﻿@page "/SukkotAdmin/DonationsAdd/"
+
+@using Grid = Syncfusion.Blazor.Grids
+@using Syncfusion.Blazor.Data
+@using LivingMessiah.Web.Pages.SukkotAdmin.Donations.Domain
+@using LivingMessiah.Web.Pages.SukkotAdmin.Donations.Data
+
+<h3>Add Grid</h3>
+
+<div class="col-lg-12 control-section">
+	<div class="content-wrapper">
+		<div class="row">
+			<SfGrid @ref="Grid" DataSource="@DonationDetails" Toolbar="@(new List<string>() { "Add", "Update", "Cancel" })">
+
+				<GridEditSettings AllowAdding="true" AllowEditing="false" AllowDeleting="false"></GridEditSettings>
+
+				@*
+		<GridEvents OnBatchSave="InsertAsync" TValue="DonationDetail" />
+		<GridEvents CommandClicked="OnCommandClicked" OnActionBegin="Begin" TValue="DonationDetail"></GridEvents>
+				*@
+				<GridEvents CommandClicked="OnCommandClicked" TValue="DonationDetail"></GridEvents>
+
+				<GridColumns>
+
+					<GridColumn Field="@nameof(DonationDetail.RegistrationId)"
+											DefaultValue="@RegistrationIdDefault"
+											HeaderText="RegId" Width="45" Visible="true" AllowAdding="false">
+					</GridColumn>
+
+					<GridColumn Field=@nameof(DonationDetail.Amount) HeaderText="Amount"
+											DefaultValue="@AmountDefault"
+											ValidationRules="@(new Grid.ValidationRules{ Required=true, Range = new double[]{1, 1000}})"
+											Width="70" Format="c0" TextAlign="TextAlign.Right">
+					</GridColumn>
+
+					<GridColumn Field=@nameof(DonationDetail.Notes) HeaderText="Notes" Width="110"
+											DefaultValue="@NotesDefault">
+					</GridColumn>
+
+					<GridColumn Field=@nameof(DonationDetail.ReferenceId) HeaderText="Reference"
+											ValidationRules="@(new Grid.ValidationRules{ Required=true})" Width="120"
+											DefaultValue="@ReferenceIdDefault">
+					</GridColumn>
+
+					<GridColumn Field=@nameof(DonationDetail.CreateDate) HeaderText="Date"
+											ValidationRules="@(new Grid.ValidationRules{ Required=true})"
+											DefaultValue="@(DateTime.Now)"
+											EditType="EditType.DatePickerEdit" Format="d" Type="ColumnType.Date" TextAlign="TextAlign.Right" Width="70">
+					</GridColumn>
+
+					<GridColumn Width="75">
+						<GridCommandColumns>
+							<GridCommandColumn Type="CommandButtonType.Save"
+																 ButtonOption="@(new CommandButtonOptions() {IconCss="e-icons e-save", CssClass="e-flat" })">
+							</GridCommandColumn>
+						</GridCommandColumns>
+					</GridColumn>
+
+					@* agrid is dialog edit mode) 	Can I make it ? How ?	Thanks HB *@
+
+				</GridColumns>
+				@*<GridEvents TValue="DonationDetail" OnActionFailure="Failure"></GridEvents>*@
+			</SfGrid>
+
+		</div>
+	</div>
+</div>
+
+
+@if (DatabaseError)
+{
+	<p class="text-danger"><em>@DatabaseErrorMsg</em></p>
+}
+else
+{
+	if (DatabaseWarning)
+	{
+		<p class="text-warning">@DatabaseWarningMsg</p>
+	}
+}
+
+@*
+	<SfButton @ref="AddBtn" @onclick="@((args) => AddBtnHandler(args, dtl))">Add</SfButton>
+
+							<SfButton @onclick="Add"> Add Detail Record</SfButton>
+
+	Toolbar="@(new List<string>() { "Add", "Update", "Cancel" })"
+*@

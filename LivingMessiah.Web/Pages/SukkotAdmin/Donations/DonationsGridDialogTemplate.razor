@@ -3,15 +3,10 @@
 @using LivingMessiah.Web.Pages.SukkotAdmin.Donations.Domain
 @using LivingMessiah.Web.Pages.SukkotAdmin.Donations.Data
 
+@* @using Syncfusion.Blazor.Grids *@
 @using Grid = Syncfusion.Blazor.Grids
 @using Syncfusion.Blazor.Data
-@using Syncfusion.Blazor.Grids
 @using Syncfusion.Blazor.Inputs
-@using Syncfusion.Blazor.Popups
-
-@using Microsoft.Extensions.Logging;
-
-@inject ILogger<DonationsGridDialogTemplate> Logger;
 
 <h3>Donations Grid Dialog Template</h3>
 
@@ -19,10 +14,12 @@
 	<div class="content-wrapper">
 		<div class="row">
 			<SfGrid DataSource="@DonationDetails" AllowPaging="true" Toolbar="@(new string[] {"Add", "Edit" ,"Delete","Update","Cancel" })">
-				<GridEvents  OnActionComplete="ActionCompleteHandler" TValue="DonationDetail">
-					@*	OnRecordDoubleClick="RecordDoubleClickHandler" *@
+				<GridEvents OnActionBegin="ActionBeginHandler" OnActionComplete="ActionCompleteHandler" TValue="DonationDetail">
+					@* 	OnRecordDoubleClick="RecordDoubleClickHandler" *@
 				</GridEvents>
-				<SfDataManager AdaptorInstance="typeof(SyncFusionAdaptor)" Adaptor="Adaptors.CustomAdaptor"></SfDataManager>
+				<SfDataManager AdaptorInstance="typeof(SyncFusionAdaptor)"
+											 Adaptor="Adaptors.CustomAdaptor">
+				</SfDataManager>
 				<GridEditSettings AllowAdding="true" AllowEditing="true" AllowDeleting="true" Mode="@EditMode.Dialog" Dialog="DialogParams">
 
 					<Template>
@@ -75,7 +72,7 @@
 
 					<GridColumn Field="@nameof(DonationDetail.Id)" IsPrimaryKey="true" Width="35">
 					</GridColumn>
-					
+
 					<GridColumn Field="@nameof(DonationDetail.RegistrationId)" HeaderText="Reg." Width="35">
 					</GridColumn>
 
@@ -119,34 +116,4 @@ else
 	{
 		<p class="text-warning">@DatabaseWarningMsg</p>
 	}
-}
-
-@code {
-	public IEnumerable<DonationDetail> DonationDetails { get; set; }
-
-	private Boolean Check = false;
-	private DialogSettings DialogParams = new DialogSettings { MinHeight = "400px", Width = "450px" };
-
-	public void ActionCompleteHandler(Grid.ActionEventArgs<DonationDetail> args)
-	{
-		Logger.LogDebug($"args.RowData.RegistrationId: {args.RowData.RegistrationId}");
-		Check = args.RequestType.ToString() == "Add" ? true : false;
-	}
-
-	//public void RecordDoubleClickHandler(RecordDoubleClickEventArgs<DonationDetail> args)
-	//{
-	//	Logger.LogDebug($"args.RowData: {args.RowData.ToString()}");
-	//}
-
-	void Failure(Grid.FailureEventArgs e)
-	{
-		DatabaseErrorMsg = $"Error inside {nameof(DonationsGridDialogEditing)}; e.Error: {e.Error}";
-		Logger.LogDebug(DatabaseErrorMsg); // ToDo; don't show if in production
-		DatabaseError = true;
-	}
-
-	protected bool DatabaseError { get; set; } = false;
-	protected string DatabaseErrorMsg { get; set; }
-	protected bool DatabaseWarning = false;
-	protected string DatabaseWarningMsg { get; set; }
 }

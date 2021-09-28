@@ -39,14 +39,15 @@
 
 					<GridColumn Field=@nameof(DonationDetail.ReferenceId) HeaderText="Reference"
 											ValidationRules="@(new Grid.ValidationRules{ Required=true})" Width="120">
+					</GridColumn>
 
-						<GridColumn Field=@nameof(DonationDetail.CreateDate) HeaderText="Date"
-												ValidationRules="@(new Grid.ValidationRules{ Required=true})"
-												EditType="EditType.DatePickerEdit" Format="d" Type="ColumnType.Date" TextAlign="TextAlign.Right" Width="70">
-
-						</GridColumn>
+					<GridColumn Field=@nameof(DonationDetail.CreateDate) HeaderText="Date"
+											ValidationRules="@(new Grid.ValidationRules{ Required=true})"
+											EditType="EditType.DatePickerEdit" Format="d" Type="ColumnType.Date" TextAlign="TextAlign.Right" Width="70">
 
 					</GridColumn>
+
+
 
 					@* ToDo: make sure I'm adding this automatically *@
 					@*<GridColumn Field=@nameof(DonationDetail.CreatedBy) HeaderText="Created by" Width="70" AllowEditing="false"></GridColumn>*@

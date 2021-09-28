@@ -36,6 +36,7 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Donations.Services
 		{
 			int count = 0;
 			string email = await svcClaims.GetEmail();
+			if (String.IsNullOrEmpty(email)) email = "test@abc.com";
 			try
 			{
 				//count = await db.InsertRegistrationDonation(DTO(donationInsertModel, email));
