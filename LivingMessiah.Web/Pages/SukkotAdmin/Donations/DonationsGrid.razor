@@ -35,14 +35,16 @@
 	<div class="content-wrapper">
 		<div class="row">
 
-			<SfGrid ID="Grid" @ref="DefaultGrid" SelectedRowIndex=2
+			<SfGrid ID="Grid" @ref="GridReport" SelectedRowIndex=2
 							DataSource="@DonationReportList"
 							Toolbar="@(new List<string>() { "Print", "ExcelExport" })"
 							AllowSorting="true"
 							AllowExcelExport="true">
 				<GridSortSettings>
 					<GridSortColumns>
-						<GridSortColumn Field="@nameof(DonationReport.FirstName)" Direction="SortDirection.Ascending"></GridSortColumn>
+						<GridSortColumn Field="@nameof(DonationReport.FirstName)" 
+														Direction="SortDirection.Ascending">
+						</GridSortColumn>
 					</GridSortColumns>
 				</GridSortSettings>
 				<GridEvents OnToolbarClick="ToolbarClickHandler"
@@ -74,8 +76,6 @@
 
 			<SfGrid DataSource="@DonationDetails" Query="@(new Query().Where("Id", "equal", RowIndex))"
 							Toolbar="@(new List<string>() { "Add", "Update", "Cancel" })">
-
-				@* Toolbar="@(new List<string>() { "Add", "Edit", "Update", "Delete", "Cancel" })"> *@
 
 				<GridEditSettings AllowEditing="false" AllowAdding="true" AllowDeleting="false" ShowConfirmDialog="false" />
 				<SfDataManager AdaptorInstance="typeof(SyncFusionAdaptor)" Adaptor="Adaptors.CustomAdaptor"></SfDataManager>

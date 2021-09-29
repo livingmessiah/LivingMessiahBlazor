@@ -61,13 +61,13 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Donations
 		}
 		
 
-		private SfGrid<DonationReport> DefaultGrid;
+		private SfGrid<DonationReport> GridReport;
 
 		public async Task ToolbarClickHandler(Syncfusion.Blazor.Navigations.ClickEventArgs args)
 		{
 			if (args.Item.Id == "Grid_excelexport") //Id is combination of Grid's ID and itemname
 			{
-				await this.DefaultGrid.ExcelExport();
+				await this.GridReport.ExcelExport();
 			}
 		}
 

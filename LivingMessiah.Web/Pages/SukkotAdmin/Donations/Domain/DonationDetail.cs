@@ -12,7 +12,7 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Donations.Domain
 		public string ReferenceId { get; set; } // Note 2
 		public DateTime CreateDate { get; set; }
 		public string CreatedBy { get; set; }
-		public string Name { get; set; }
+		public string Name { get; set; }  // ToDo: this should be deleted
 	}
 }
 

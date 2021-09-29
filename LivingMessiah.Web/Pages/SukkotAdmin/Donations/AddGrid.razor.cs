@@ -12,7 +12,7 @@ using LivingMessiah.Web.Pages.SukkotAdmin.Donations.Services;
 
 using LivingMessiah.Web.Services;
 using Syncfusion.Blazor.Grids;
-using Syncfusion.Blazor.Buttons;
+using Syncfusion.Blazor.DropDowns;
 
 namespace LivingMessiah.Web.Pages.SukkotAdmin.Donations
 {
@@ -24,33 +24,96 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Donations
 		[Inject]
 		public IDonationRepository db { get; set; }
 
+		[Inject] 
+		public ISecurityClaimsService SvcClaims { get; set; }
+
 		public IEnumerable<DonationDetail> DonationDetails { get; set; }
 
-		private SfGrid<DonationDetail> Grid;
+		public List<RegistrationLookup> RegistrationLookupList { get; set; }
 
-		/*
-		ErrorLogID	ErrorTime	UserName	ErrorNumber	ErrorSeverity	ErrorState	ErrorProcedure	ErrorLine	ErrorMessage	BatchLogJobId
-22	2021-09-27 23:18:24.700	dbo	547	16	0	Sukkot.stpDonationInsert 	39	The INSERT statement conflicted with the FOREIGN KEY constraint "FK_Donation_Registration". 
-		The conflict occurred in database "Sukkot", table "Sukkot.Registration", column 'Id'.	0
+		private SfGrid<DonationDetail> GridAdd;
 
-		*/
-		public async Task OnCommandClicked(CommandClickEventArgs<DonationDetail> args)
+		protected override async Task OnInitializedAsync()
 		{
-			Logger.LogDebug($"Inside {nameof(AddGrid)}!{nameof(OnCommandClicked)}");
+			RegistrationLookupList = await db.PopulateRegistrationLookup();
+		}
+
+
+		//https://www.syncfusion.com/forums/165055/custom-text-and-value-with-odata-endpoint
+		//https://www.syncfusion.com/forums/155340/autocomplete-autoformat-display-text-vs-search-text-binding
+		
+		private int SelectedRegistrantId = 0;
+		private string SelectedRegistrantName = "";
+
+		public async Task OnSelect(SelectEventArgs<RegistrationLookup> args)
+		{
+			//Logger.LogDebug($"Inside {nameof(Donations.AddGrid)}!{nameof(OnSelect)}");
+			//SelectedRegistrantName = args.ItemData.Text;
+
+			SelectedRegistrantId = int.TryParse(args.ItemData.ID, out SelectedRegistrantId) ? SelectedRegistrantId : 0;
+			await PopulateDonationDetails(SelectedRegistrantId);
+		}
+
+		private async Task PopulateDonationDetails(int registrationId)
+		{
+			Logger.LogDebug($"Inside {nameof(AddGrid)}!{nameof(PopulateDonationDetails)}; registrationId:{registrationId}");
+			try
+			{
+				DatabaseWarning = false;
+				DatabaseWarningMsg = "";
+				DonationDetails = await db.GetDonationDetails(registrationId);
+				if (DonationDetails == null)
+				{
+					DatabaseWarning = true;
+					DatabaseWarningMsg = $"DonationDetails NOT FOUND; registrationId:{registrationId}";
+				}
+			}
+			catch (Exception ex)
+			{
+				DatabaseError = true;
+				DatabaseErrorMsg = $"Error reading database";
+				Logger.LogError(ex, $"...{DatabaseErrorMsg}");
+			}
+			StateHasChanged();  // https://stackoverflow.com/questions/56436577/blazor-form-submit-needs-two-clicks-to-refresh-view
+		}
+
+		public async Task OnSaveClicked(CommandClickEventArgs<DonationDetail> args)
+		{
+			Logger.LogDebug($"Inside {nameof(Donations.AddGrid)}!{nameof(OnSaveClicked)}");
+
+			string email = await SvcClaims.GetEmail();
+			if (String.IsNullOrEmpty(email)) email = "test@test.com";
+
 			Donation addDetail = new Donation()
 			{
-				RegistrationId = args.RowData.RegistrationId,
+				RegistrationId = SelectedRegistrantId,
 				Amount = args.RowData.Amount,
 				Notes = args.RowData.Notes,
 				ReferenceId = args.RowData.ReferenceId,
 				CreateDate = DateTime.Now,
-				CreatedBy = "test@test.com"
+				CreatedBy = email
 			};
 
-			int rows = 0;
+			int newId = 0;
 			try
 			{
-				rows = await db.InsertRegistrationDonation(addDetail, "test@test.com");
+				newId = await db.InsertRegistrationDonation(addDetail);
+
+				DatabaseWarning = false;
+				DatabaseWarningMsg = "";
+				if (newId==0)
+				{
+					DatabaseWarning = true;
+					DatabaseWarningMsg = $"DonationDetails NOT INSERTED; SelectedRegistrantId:{SelectedRegistrantId}";
+					Logger.LogWarning($"...{DatabaseWarningMsg}");
+				}
+				else
+				{
+					Logger.LogInformation($"...Donation created for RegistrationId: {addDetail.RegistrationId}; newId={newId}; Calling {nameof(PopulateDonationDetails)}");
+					await PopulateDonationDetails(SelectedRegistrantId);
+				}
+
+				
 			}
 			catch (Exception ex)
 			{
@@ -58,55 +121,6 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Donations
 				DatabaseErrorMsg = $"Error inserting record in database";
 				Logger.LogError(ex, $"...{DatabaseErrorMsg}");
 			}
-			Logger.LogDebug($"...rows={nameof(rows)}");
-		}
-
-
-		private readonly decimal RegistrationIdDefault = 3;
-		private readonly decimal AmountDefault = 1;
-		private readonly string NotesDefault = "Test Note";
-		private readonly string ReferenceIdDefault = "Test ReferenceId";
-
-		public async Task InsertAsync(BeforeBatchSaveArgs<DonationDetail> args)  //Task<int>(Donation donation)
-		{
-			Logger.LogDebug($"Inside {nameof(AddGrid)}!{nameof(InsertAsync)}; calling {nameof(db.InsertRegistrationDonation)}");
-			int rows = 0;
-
-			var BatchChanges = args.BatchChanges;
-
-			if (BatchChanges.ChangedRecords.Count > 0)
-			{
-				Logger.LogDebug($"...Changed Records: {BatchChanges.ChangedRecords.Count}");
-				try
-				{
-					foreach (var item in BatchChanges.ChangedRecords)
-					{
-						//DonationDetail addDetail = new DonationDetail()
-						Donation addDetail = new Donation()
-						{
-							RegistrationId = item.RegistrationId,
-							Amount = item.Amount,
-							Notes = item.Notes,
-							ReferenceId = item.ReferenceId,
-							CreateDate = DateTime.Now,
-							CreatedBy = "test@test.com"
-						};
-
-						rows += await db.InsertRegistrationDonation(addDetail, "test@test.com");
-					}
-
-					//Logger.LogDebug($"...calling {nameof(db.InsertRegistrationDonation)}");
-					
-				}
-				catch (Exception ex)
-				{
-					DatabaseError = true;
-					DatabaseErrorMsg = $"Error inserting record in database";
-					Logger.LogError(ex, $"...{DatabaseErrorMsg}");
-				}
-			}
-			Logger.LogDebug($"...rows={nameof(rows)}");
-			//return i;
 		}
 
 
@@ -115,19 +129,63 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Donations
 			DatabaseErrorMsg = $"Error inside {nameof(DonationsGridDialogEditing)}; e.Error: {e.Error}";
 			Logger.LogDebug(DatabaseErrorMsg); // ToDo; don't show if in production
 			DatabaseError = true;
-
 		}
 
 		protected bool DatabaseError { get; set; } = false;
 		protected string DatabaseErrorMsg { get; set; }
 		protected bool DatabaseWarning = false;
 		protected string DatabaseWarningMsg { get; set; }
-
 	}
 }
 
 
 /*
+		private string Message = string.Empty;
+		async void OnValidSubmit()
+		{
+			//Logger.LogDebug($"Inside {nameof(Donations.AddGrid)}!{nameof(OnValidSubmit)}; (lookup.id)={(lookup.ID == null ? "":"") }");
+			Logger.LogDebug($"Inside {nameof(Donations.AddGrid)}!{nameof(OnValidSubmit)}; (lookup.id)={lookup.ID?? "is null"}");
+			Message = "Form Submitted Successfully!";
+			await Task.Delay(2000);
+			Message = string.Empty;
+			lookup.Text = null;
+			StateHasChanged();
+		}
+		private void OnInvalidSubmit()
+		{
+			Message = string.Empty;
+			SelectedRegistrantId = string.Empty;
+			SelectedRegistrantName = string.Empty;
+		}
+
+
+<AutoCompleteEvents TItem="RegistrationLookup" TValue="string" ValueChange="OnChange"></AutoCompleteEvents>		
+//https://www.syncfusion.com/forums/164196/how-to-get-the-selected-object-in-blazor-autocomplete
+		private void OnChange(ChangeEventArgs<string, RegistrationLookup> args)
+		{
+			//var DropVal = args.Value;
+			//SelectedRegistrantId = args.Value;
+			SelectedRegistrantId = args.Item.ID;
+			SelectedRegistrantName = args.Value;
+			//var value = AutoVal;
+			//SelectedRegistrantName = lookup.Text;
+		}
+
+		////https://www.syncfusion.com/forums/164196/how-to-get-the-selected-object-in-blazor-autocomplete
+		//private void OnChange(ChangeEventArgs<string, RegistrationLookup> args)
+		//{
+		//	//var DropVal = args.Value;
+		//	//SelectedRegistrantId = args.Value;
+		//	SelectedRegistrantId = args.Item.ID;
+		//	SelectedRegistrantName = args.Value;
+		//	//var value = AutoVal;
+		//	//SelectedRegistrantName = lookup.Text;
+		//}
+
+ 		<GridEvents OnBatchSave="InsertAsync" TValue="DonationDetail" />
+		<GridEvents CommandClicked="OnCommandClicked" OnActionBegin="Begin" TValue="DonationDetail"></GridEvents>
+
+
 		private void AddBtnHandler(Microsoft.AspNetCore.Components.Web.MouseEventArgs args, DonationDetail dtl)
 		{
 			Donation addDetail = new Donation()
@@ -169,7 +227,7 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Donations
 		}
 
 		[Inject] 		public IDonationService Svc { get; set; }
-		[Inject] public ISecurityClaimsService SvcClaims { get; set; }
+		
  
 		Logger.LogDebug($"Inside {nameof(ZZZ)}!{nameof(OnInitializedAsync)}");
 		try

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
@@ -14,13 +15,14 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Donations.Data
 	public interface IDonationRepository
 	{
 		string BaseSqlDump { get; }
-		Task<int> InsertRegistrationDonation(Donation donation, string email);
+		Task<int> InsertRegistrationDonation(Donation donation, string email="test @test.com"); //ToDo: Delete this parm
 		Task<List<DonationReport>> GetDonationReport(BaseDonationStatusFilterSmartEnum filter, string sortAndOrder);
 		Task<List<DonationDetail>> GetDonationDetails(int registrationId);
 		Task<List<DonationDetail>> GetDonationDetailsAll();
 		Task<DonationDetail> GetDonationDetail(int id);
 		Task<DonationDetail> UpdateDonationDetail(DonationDetail donationDetail);
 		Task<int> DeleteDonationDetail(int id);
+		Task<List<RegistrationLookup>> PopulateRegistrationLookup();
 	}
 	public class DonationRepository : BaseRepositoryAsync, IDonationRepository
 	{
@@ -35,6 +37,21 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Donations.Data
 		{
 		}
 
+		public async Task<List<RegistrationLookup>> PopulateRegistrationLookup()
+		{
+			base.Sql = $@"
+SELECT Id AS ID, Sukkot.udfFormatName(1, FamilyName, FirstName, NULL, NULL) AS Text
+FROM Sukkot.Registration
+ORDER BY FirstName
+";
+			return await WithConnectionAsync(async connection =>
+			{
+				var rows = await connection.QueryAsync<RegistrationLookup>(base.Sql);
+				return rows.ToList();
+			});
+		}
+
+		// ToDo: Delete parm string email
 		public async Task<int> InsertRegistrationDonation(Donation donation, string email)
 		{
 			base.Sql = "Sukkot.stpDonationInsert ";
@@ -44,16 +61,29 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Donations.Data
 				Amount = donation.Amount,
 				Notes = donation.Notes,
 				ReferenceId = donation.ReferenceId,
-				CreatedBy = email,
+				CreatedBy = donation.CreatedBy,   // email,
 				CreateDate = donation.CreateDate
 			});
+
+			base.Parms.Add("@NewId", dbType: DbType.Int32, direction: ParameterDirection.Output);
 
 			base.log.LogDebug($"Inside {nameof(DonationRepository)}!{nameof(DonationRepository)}!{nameof(InsertRegistrationDonation)}, Sql: {Sql}");
 
 			return await WithConnectionAsync(async connection =>
 			{
-				var count = await connection.ExecuteAsync(sql: base.Sql, param: base.Parms, commandType: System.Data.CommandType.StoredProcedure);
-				return count;
+				var affectedrows = await connection.ExecuteAsync(sql: base.Sql, param: base.Parms, commandType: CommandType.StoredProcedure);
+				int? x = base.Parms.Get<int?>("NewId");
+				if (x == null)
+				{
+					base.log.LogWarning($"NewId is null; returning as 0; Check dbo.ErrorLog for FK_Donation_Registration conflict Error; donation.RegistrationId: {donation.RegistrationId}");
+					return 0;
+				}
+				else
+				{
+					int NewId = int.TryParse(x.ToString(), out NewId) ? NewId : 0;
+					base.log.LogDebug($"Return NewId:{NewId}");
+					return NewId;
+				}
 			});
 		}
 
@@ -128,12 +158,10 @@ ORDER BY {sortAndOrder}
 			base.Parms = new DynamicParameters(new { RegistrationId = registrationId });
 			base.Sql = $@"
 SELECT 
-	d.Id, RegistrationId, Detail, Amount, d.Notes, ReferenceId, CreateDate, CreatedBy 
-,	Sukkot.udfFormatName(1, FamilyName, FirstName, NULL, NULL) AS Name
-FROM Sukkot.Donation d
-INNER JOIN Sukkot.Registration r ON r.Id = d.RegistrationId
+	Id, RegistrationId, Detail, Amount, Notes, ReferenceId, CreateDate, CreatedBy 
+FROM Sukkot.Donation
 WHERE RegistrationId = @RegistrationId
-ORDER BY RegistrationId, Detail
+ORDER BY Detail
 ";
 			base.log.LogDebug($"Inside {nameof(DonationRepository)}!{nameof(GetDonationDetails)}, Sql: {Sql}, registrationId: {registrationId}");
 
