@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Components;
@@ -8,14 +7,14 @@ using Microsoft.Extensions.Logging;
 
 using LivingMessiah.Web.Pages.SukkotAdmin.Donations.Data; // using SukkotApi.Data;
 using LivingMessiah.Web.Pages.SukkotAdmin.Donations.Domain;
-using LivingMessiah.Web.Pages.SukkotAdmin.Donations.Services;
 
-using LivingMessiah.Web.Services;
+using static LivingMessiah.Web.Services.Auth0;
+using Microsoft.AspNetCore.Authorization;
 using Syncfusion.Blazor.Grids;
-using Syncfusion.Blazor.Buttons;
 
 namespace LivingMessiah.Web.Pages.SukkotAdmin.Donations
 {
+	[Authorize(Roles = Roles.AdminOrSukkot)]
 	public partial class DonationsGridCmdColPopup
 	{
 		[Inject]

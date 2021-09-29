@@ -18,8 +18,12 @@
 </AuthorizeView>
 
 <div class="pb-2 mt-4 mb-4 border-bottom">
-	<h3><i class="fas fa-dollar-sign"></i> Donation Data Grid</h3>
+	<h3><i class="fas fa-dollar-sign"></i> Donations</h3>
 </div>
+
+<AddGrid></AddGrid>
+
+<hr class="warning my-4" />
 
 @foreach (var item in BaseDonationStatusFilterSmartEnum.List.OrderBy(o => o.Value))
 {
@@ -29,26 +33,26 @@
 	</a>
 }
 
-<TableHeaderExplanation></TableHeaderExplanation>
-
 <div class="col-lg-12 control-section">
 	<div class="content-wrapper">
-		<div class="row">
+		<div class="row mt-2">
 
-			<SfGrid ID="Grid" @ref="GridReport" SelectedRowIndex=2
+			@* Get rid of @ref="GridReport" SelectedRowIndex=2 *@
+
+			<SfGrid ID="Grid"
 							DataSource="@DonationReportList"
 							Toolbar="@(new List<string>() { "Print", "ExcelExport" })"
 							AllowSorting="true"
 							AllowExcelExport="true">
 				<GridSortSettings>
 					<GridSortColumns>
-						<GridSortColumn Field="@nameof(DonationReport.FirstName)" 
+						<GridSortColumn Field="@nameof(DonationReport.FirstName)"
 														Direction="SortDirection.Ascending">
 						</GridSortColumn>
 					</GridSortColumns>
 				</GridSortSettings>
 				<GridEvents OnToolbarClick="ToolbarClickHandler"
-										RowSelected="RowSelecthandler" QueryCellInfo="CustomizeCell"
+										QueryCellInfo="CustomizeCell"
 										TValue="DonationReport">
 				</GridEvents>
 				<GridColumns>
@@ -60,9 +64,9 @@
 					<GridColumn Field=@nameof(DonationReport.LocationName) HeaderText="Location" Width="60" AllowSorting="true"></GridColumn>
 					<GridColumn Field=@nameof(DonationReport.RegistrationFee) HeaderText="Reg. Fee" Width="60" Format="c0" TextAlign="TextAlign.Right" AllowSorting="false"></GridColumn>
 					<GridColumn Field=@nameof(DonationReport.CampCost) HeaderText="Lodging" Width="60" Format="c0" TextAlign="TextAlign.Right" AllowSorting="false"></GridColumn>
-					<GridColumn Field=@nameof(DonationReport.TotalDonation) HeaderText="Total" Width="60" Format="c0" TextAlign="TextAlign.Right" AllowSorting="false"></GridColumn>
-					<GridColumn Field=@nameof(DonationReport.AmountDue) HeaderText="Amount Due" Width="60" Format="c0" TextAlign="TextAlign.Right" AllowSorting="false"></GridColumn>
-					<GridColumn Field=@nameof(DonationReport.FullyPaidIcon) HeaderText="FP" Width="60" Format="c0" TextAlign="TextAlign.Center" AllowSorting="false">
+					<GridColumn Field=@nameof(DonationReport.TotalDonation) HeaderText="Ttl Don" Width="60" Format="c0" TextAlign="TextAlign.Right" AllowSorting="false"></GridColumn>
+					<GridColumn Field=@nameof(DonationReport.AmountDue) HeaderText="Amt Due" Width="70" Format="c0" TextAlign="TextAlign.Right" AllowSorting="false"></GridColumn>
+					<GridColumn Field=@nameof(DonationReport.FullyPaidIcon) HeaderText="FP" Width="30" TextAlign="TextAlign.Center" AllowSorting="false">
 						<HeaderTemplate>
 							<div>
 								<i class="fas fa-check"></i>
@@ -72,48 +76,13 @@
 				</GridColumns>
 			</SfGrid>
 
-			<div class="e-statustext badge badge-info mt-3">Detail Donations Records for <b>@SelectedRegistrant</b></div>
-
-			<SfGrid DataSource="@DonationDetails" Query="@(new Query().Where("Id", "equal", RowIndex))"
-							Toolbar="@(new List<string>() { "Add", "Update", "Cancel" })">
-
-				<GridEditSettings AllowEditing="false" AllowAdding="true" AllowDeleting="false" ShowConfirmDialog="false" />
-				<SfDataManager AdaptorInstance="typeof(SyncFusionAdaptor)" Adaptor="Adaptors.CustomAdaptor"></SfDataManager>
-				<GridColumns>
-
-					<GridColumn Field="@nameof(DonationDetail.Id)" IsPrimaryKey="true" Visible="false"></GridColumn>
-
-					<GridColumn Field="@nameof(DonationDetail.RegistrationId)" Visible="false"></GridColumn>
-					<GridColumn Field=@nameof(DonationDetail.Detail) HeaderText="#" Width="25" AllowAdding="false" AllowEditing="false"> </GridColumn>
-
-					<GridColumn Field=@nameof(DonationDetail.Amount) HeaderText="Amount"
-											ValidationRules="@(new Grid.ValidationRules{ Required=true, Range = new double[]{1, 1000}})"
-											Width="110" Format="c0" TextAlign="TextAlign.Right">
-					</GridColumn>
-
-					<GridColumn Field=@nameof(DonationDetail.Notes) HeaderText="Notes" Width="110"></GridColumn>
-
-					<GridColumn Field=@nameof(DonationDetail.ReferenceId) HeaderText="Reference" Width="70"
-											ValidationRules="@(new Grid.ValidationRules{ Required=true})">
-					</GridColumn>
-
-					<GridColumn Field=@nameof(DonationDetail.CreateDate) HeaderText="Date"
-											ValidationRules="@(new Grid.ValidationRules{ Required=true})"
-											EditType="EditType.DatePickerEdit" Format="d" Type="ColumnType.Date" TextAlign="TextAlign.Right" Width="70">
-					</GridColumn>
-
-				</GridColumns>
-			</SfGrid>
-
 		</div>
 	</div>
 </div>
 
-<style>
-	.e-statustext {
-		font-size: 20px;
-	}
-</style>
+
+<TableHeaderExplanation></TableHeaderExplanation>
+
 
 @if (DatabaseError)
 {

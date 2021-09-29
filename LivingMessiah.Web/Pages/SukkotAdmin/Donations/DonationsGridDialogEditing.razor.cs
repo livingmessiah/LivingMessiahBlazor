@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Components;
 
 using LivingMessiah.Web.Pages.SukkotAdmin.Donations.Data;
 using LivingMessiah.Web.Pages.SukkotAdmin.Donations.Domain;
-using SukkotApi.Domain.Donations.Enums;
-using SukkotApi.Domain.Registrations.Enums;
 
 using static LivingMessiah.Web.Services.Auth0;
 using Microsoft.AspNetCore.Authorization;
@@ -16,10 +11,9 @@ using Microsoft.AspNetCore.Authorization;
 using LivingMessiah.Web.Services;
 using Syncfusion.Blazor.Grids;
 
-
 namespace LivingMessiah.Web.Pages.SukkotAdmin.Donations
 {
-	//[Authorize(Roles = Roles.AdminOrSukkot)]
+	[Authorize(Roles = Roles.AdminOrSukkot)]
 	public partial class DonationsGridDialogEditing
 	{
 		[Inject]

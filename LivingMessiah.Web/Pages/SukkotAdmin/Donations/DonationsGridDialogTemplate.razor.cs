@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace LivingMessiah.Web.Pages.SukkotAdmin.Donations
 {
-	//[Authorize(Roles = Roles.AdminOrSukkot)]
+	[Authorize(Roles = Roles.AdminOrSukkot)]
 	public partial class DonationsGridDialogTemplate
 	{
 		[Inject]

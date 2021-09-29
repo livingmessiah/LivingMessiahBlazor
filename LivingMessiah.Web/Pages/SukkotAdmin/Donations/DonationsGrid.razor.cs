@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Components;
@@ -19,7 +18,7 @@ using Syncfusion.Blazor.Grids;
 
 namespace LivingMessiah.Web.Pages.SukkotAdmin.Donations
 {
-	//[Authorize(Roles = Roles.AdminOrSukkot)]
+	[Authorize(Roles = Roles.AdminOrSukkot)]
 	public partial class DonationsGrid
 	{
 		[Inject]
@@ -34,33 +33,21 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Donations
 		public IEnumerable<DonationReport> DonationReportList { get; set; }
 		public IEnumerable<DonationDetail> DonationDetails { get; set; }
 
-
-		public string SelectedRegistrant { get; set; }
-		public int? RowIndex { get; set; } = 1; // 1003
-		public void RowSelecthandler(RowSelectEventArgs<DonationReport> Args)
-		{
-			//SelectedRegistrant = Args.Data.FirstName + "  (" + Args.Data.Id + ")";
-			SelectedRegistrant = Args.Data.FirstName + "  #" + Args.Data.Id;
-			RowIndex = Args.Data.Id;
-		}
-
 		protected bool DatabaseError { get; set; } = false;
 		protected string DatabaseErrorMsg { get; set; }
 		protected bool DatabaseWarning = false;
 		protected string DatabaseWarningMsg { get; set; }
 
-		public bool IsMealsAvailable { get; set; } = Sukkot.Constants.Other.IsMealsAvailable;  // ToDo: Not being used
+		// public bool IsMealsAvailable { get; set; } = Sukkot.Constants.Other.IsMealsAvailable;  // ToDo: Not being used
 
 
 		public BaseDonationStatusFilterSmartEnum CurrentFilter { get; set; } = BaseDonationStatusFilterSmartEnum.FullList;
 
-		/**/
 		protected override async Task OnInitializedAsync()
 		{
 			await GetDataWithParms(CurrentFilter);
 		}
 		
-
 		private SfGrid<DonationReport> GridReport;
 
 		public async Task ToolbarClickHandler(Syncfusion.Blazor.Navigations.ClickEventArgs args)
@@ -81,13 +68,6 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Donations
 			}
 		}
 
-
-		//public async Task<int> InsertRegistrationDonation(DonationInsertModel donationInsertModel)
-		//{
-
-
-		//}
-
 		private async Task GetDataWithParms(BaseDonationStatusFilterSmartEnum filter)
 		{
 			BaseRegistrationSortSmartEnum sortAndDirection = BaseRegistrationSortSmartEnum.ByFirstName;
@@ -102,11 +82,6 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Donations
 					DatabaseWarning = true;
 					DatabaseWarningMsg = "DonationReportList NOT FOUND";
 				}
-				//else
-				//{
-				//	//ToDo make this a be one call to the db
-				//	DonationDetails = await db.GetDonationDetailsAll();
-				//}
 			}
 			catch (Exception ex)
 			{
