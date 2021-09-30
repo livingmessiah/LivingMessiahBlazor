@@ -20,7 +20,6 @@ namespace LivingMessiah.Web.Services
 		Task<List<vwRegistration>> GetAll(RegistrationSortEnum sort);
 		Task<List<Notes>> GetNotes(RegistrationSortEnum sort);
 
-		Task<int> InsertRegistrationDonation(DonationInsertModel donation);
 		Task<List<PreviousDonation>> GetRegistrationDonations(int id);
 
 		Task<int> LogErrorTest();
@@ -89,38 +88,6 @@ namespace LivingMessiah.Web.Services
 			return vm;
 		}
 
-		public async Task<int> InsertRegistrationDonation(DonationInsertModel donationInsertModel)
-		{
-			int count = 0;
-			string email = await svcClaims.GetEmail();
-			try
-			{
-				count = await db.InsertRegistrationDonation(DTO(donationInsertModel, email));
-			}
-			catch (Exception ex)
-			{
-				ExceptionMessage = $"Inside {nameof(InsertRegistrationDonation)}, {nameof(db.InsertRegistrationDonation)}";
-				log.LogError(ex, ExceptionMessage); // , donation.ToString()
-				ExceptionMessage += ex.Message ?? "-- ex.Message was null --";
-				throw new InvalidOperationException(ExceptionMessage);
-			}
-			return count;
-		}
-
-		private Donation DTO(DonationInsertModel donationInsertModel, string email)
-		{
-			Donation poco = new Donation
-			{
-				RegistrationId = donationInsertModel.RegistrationId,
-				Amount = donationInsertModel.Amount,
-				Notes = donationInsertModel.Notes,
-				ReferenceId = donationInsertModel.ReferenceId,
-				CreateDate = donationInsertModel.CreateDate,
-				CreatedBy = email
-			};
-			return poco;
-		}
-			
 		public async Task<List<PreviousDonation>> GetRegistrationDonations(int id)
 		{
 			var vm = new List<PreviousDonation>();

@@ -15,7 +15,7 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Donations.Data
 	public interface IDonationRepository
 	{
 		string BaseSqlDump { get; }
-		Task<int> InsertRegistrationDonation(Donation donation, string email="test @test.com"); //ToDo: Delete this parm
+		Task<int> InsertRegistrationDonation(Donation donation); 
 		Task<List<DonationReport>> GetDonationReport(BaseDonationStatusFilterSmartEnum filter, string sortAndOrder);
 		Task<List<DonationDetail>> GetDonationDetails(int registrationId);
 		Task<List<DonationDetail>> GetDonationDetailsAll();
@@ -32,7 +32,6 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Donations.Data
 			get { return base.SqlDump; }
 		}
 
-		//ISecurityClaimsService svcClaims
 		public DonationRepository(IConfiguration config, ILogger<DonationRepository> logger) : base(config, logger)
 		{
 		}
@@ -51,8 +50,7 @@ ORDER BY FirstName
 			});
 		}
 
-		// ToDo: Delete parm string email
-		public async Task<int> InsertRegistrationDonation(Donation donation, string email)
+		public async Task<int> InsertRegistrationDonation(Donation donation)
 		{
 			base.Sql = "Sukkot.stpDonationInsert ";
 			base.Parms = new DynamicParameters(new

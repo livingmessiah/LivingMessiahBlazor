@@ -12,7 +12,6 @@ using SukkotApi.Domain.Registrations.Enums;
 using static LivingMessiah.Web.Services.Auth0;
 using Microsoft.AspNetCore.Authorization;
 
-using LivingMessiah.Web.Services;
 using Syncfusion.Blazor.Grids;
 
 
@@ -26,9 +25,6 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Donations
 
 		[Inject]
 		public IDonationRepository db { get; set; }  
-
-		[Inject]
-		public ISukkotAdminService svc { get; set; }
 
 		public IEnumerable<DonationReport> DonationReportList { get; set; }
 		public IEnumerable<DonationDetail> DonationDetails { get; set; }

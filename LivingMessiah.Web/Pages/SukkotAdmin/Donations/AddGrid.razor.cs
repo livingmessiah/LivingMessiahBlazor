@@ -52,7 +52,7 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Donations
 		{
 			//https://www.syncfusion.com/forums/165055/custom-text-and-value-with-odata-endpoint
 			//https://www.syncfusion.com/forums/155340/autocomplete-autoformat-display-text-vs-search-text-binding
-			//Logger.LogDebug($"Inside {nameof(Donations.AddGrid)}!{nameof(OnSelect)}");
+			//Logger.LogDebug($"Inside {nameof(AddGrid)}!{nameof(OnSelect)}");
 			//SelectedRegistrantName = args.ItemData.Text;
 
 			SelectedRegistrantId = int.TryParse(args.ItemData.ID, out SelectedRegistrantId) ? SelectedRegistrantId : 0;
@@ -85,7 +85,7 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Donations
 
 		public async Task OnSaveClicked(CommandClickEventArgs<DonationDetail> args)
 		{
-			Logger.LogDebug($"Inside {nameof(Donations.AddGrid)}!{nameof(OnSaveClicked)}");
+			Logger.LogDebug($"Inside {nameof(AddGrid)}!{nameof(OnSaveClicked)}");
 
 			string email = await SvcClaims.GetEmail();
 			if (String.IsNullOrEmpty(email)) email = "test@test.com";
@@ -129,8 +129,8 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Donations
 
 		void Failure(FailureEventArgs e)
 		{
-			DatabaseErrorMsg = $"Error inside {nameof(DonationsGridDialogEditing)}; e.Error: {e.Error}";
-			Logger.LogDebug(DatabaseErrorMsg); // ToDo; don't show if in production
+			DatabaseErrorMsg = $"Error inside {nameof(AddGrid)}; e.Error: {e.Error}";
+			Logger.LogDebug(DatabaseErrorMsg); 
 			DatabaseError = true;
 		}
 

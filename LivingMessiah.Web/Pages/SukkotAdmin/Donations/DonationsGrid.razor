@@ -2,16 +2,9 @@
 
 @using static LivingMessiah.Web.Services.Auth0
 @using LivingMessiah.Web.Shared.Sukkot
-
 @using LivingMessiah.Web.Pages.SukkotAdmin.Donations.Domain
-@using LivingMessiah.Web.Pages.SukkotAdmin.Donations.Data
-
 @using SukkotApi.Domain.Donations.Enums
-@using SukkotApi.Domain.Enums
-@using SukkotApi.Domain.Registrations.Enums
-
 @using Grid = Syncfusion.Blazor.Grids
-@using Syncfusion.Blazor.Data
 
 <AuthorizeView Roles="@Roles.SukkotMenuBar">
 	<SukkotAdminMenubar></SukkotAdminMenubar>
@@ -36,8 +29,6 @@
 <div class="col-lg-12 control-section">
 	<div class="content-wrapper">
 		<div class="row mt-2">
-
-			@* Get rid of @ref="GridReport" SelectedRowIndex=2 *@
 
 			<SfGrid ID="Grid"
 							DataSource="@DonationReportList"

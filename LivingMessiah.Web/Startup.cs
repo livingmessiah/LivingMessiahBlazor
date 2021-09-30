@@ -38,7 +38,7 @@ namespace LivingMessiah.Web
 			services.AddCustomAuthentication(Configuration);
 			services
 				.Configure<AppSettings>(options => Configuration.GetSection("AppSettings").Bind(options));
-			services.AddScoped<SyncFusionAdaptor>();
+
 			services.AddSyncfusionBlazor();
 		}
 
