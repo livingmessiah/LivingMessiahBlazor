@@ -23,67 +23,6 @@ namespace SukkotApi.Data
 		{
 		}
 
-		public async Task<List<PreviousDonation>> GetRegistrationDonations(int id)
-		{
-			//SELECT d.Id, RegistrationId, Detail, Amount, d.Notes, ReferenceId, CreatedBy, CreateDate, r.FamilyName
-			base.Parms = new DynamicParameters(new { Id = id });
-			base.Sql = $@"
-SELECT Detail, Amount, d.Notes, ReferenceId, CreatedBy, CreateDate
-FROM Sukkot.Donation d
-INNER JOIN Sukkot.Registration r on d.RegistrationId = r.Id
-WHERE RegistrationId = @Id
-ORDER BY Detail
-";
-			return await WithConnectionAsync(async connection =>
-			{
-				var rows = await connection.QueryAsync<PreviousDonation>(base.Sql, base.Parms);
-				return rows.ToList();
-			});
-		}
-
-		public async Task<List<DonationReport>> GetDonationReport(BaseDonationStatusFilterSmartEnum filter, string sortAndOrder)
-		{
-			base.Parms = new DynamicParameters(new { DonationStatus = filter.Value });
-			//base.Parms = new DynamicParameters(new { SortAndOrder = sortAndOrder });
-
-			base.Sql = $@"
-SELECT Id, EMail, FamilyName, FirstName, StatusId, StatusDescr, MealTotalCost, RegistrationFee
-, CampCost, TotalDonation, AmountDue
-, LocationEnum AS LocationInt
-FROM Sukkot.tvfDonationReport(@DonationStatus)
-ORDER BY {sortAndOrder}
-";
-			base.log.LogDebug($"Inside {nameof(GetDonationReport)}, filter.Name/filter.Value: {filter.Name}/{filter.Value}");
-			base.log.LogDebug($"Inside {nameof(GetDonationReport)}, Sql: {Sql}");
-
-			return await WithConnectionAsync(async connection =>
-			{
-				var rows = await connection.QueryAsync<DonationReport>(base.Sql, base.Parms);
-				return rows.ToList();
-			});
-		}
-
-		public async Task<int> InsertRegistrationDonation(Donation donation)
-		{
-			base.Sql = "Sukkot.stpDonationInsert ";
-			base.Parms = new DynamicParameters(new
-			{
-				RegistrationId = donation.RegistrationId,
-				Amount = donation.Amount,
-				Notes = donation.Notes,
-				ReferenceId = donation.ReferenceId,
-				CreatedBy = donation.CreatedBy,
-				CreateDate = donation.CreateDate
-			});
-
-			return await WithConnectionAsync(async connection =>
-			{
-				var count = await connection.ExecuteAsync(sql: base.Sql, param: base.Parms, commandType: System.Data.CommandType.StoredProcedure);
-				return count;
-			});
-		}
-
-
 		public async Task<List<vwRegistration>> GetAll(RegistrationSortEnum sort)
 		{
 			/*

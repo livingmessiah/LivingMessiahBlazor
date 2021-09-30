@@ -8,7 +8,7 @@ using LivingMessiah.Web.Pages.SukkotAdmin.Donations.Domain;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using SukkotApi.Data;
-using SukkotApi.Domain.Donations.Enums;
+using LivingMessiah.Web.Pages.SukkotAdmin.Donations.Enums;
 
 namespace LivingMessiah.Web.Pages.SukkotAdmin.Donations.Data
 {

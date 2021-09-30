@@ -6,8 +6,7 @@ using Microsoft.AspNetCore.Components;
 
 using LivingMessiah.Web.Pages.SukkotAdmin.Donations.Data; // using SukkotApi.Data;
 using LivingMessiah.Web.Pages.SukkotAdmin.Donations.Domain; //using SukkotApi.Domain.Donations.Queries;
-using SukkotApi.Domain.Donations.Enums;
-using SukkotApi.Domain.Registrations.Enums;
+using LivingMessiah.Web.Pages.SukkotAdmin.Donations.Enums;
 
 using static LivingMessiah.Web.Services.Auth0;
 using Microsoft.AspNetCore.Authorization;

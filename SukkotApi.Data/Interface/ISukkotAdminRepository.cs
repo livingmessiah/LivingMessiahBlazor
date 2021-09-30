@@ -15,10 +15,6 @@ namespace SukkotApi.Data
 		Task<List<vwRegistration>> GetAll(RegistrationSortEnum sort);
 		Task<List<Notes>> GetNotes(RegistrationSortEnum sort);
 
-		Task<int> InsertRegistrationDonation(Donation donation);
-		Task<List<PreviousDonation>> GetRegistrationDonations(int id);
-		Task<List<DonationReport>> GetDonationReport(BaseDonationStatusFilterSmartEnum filter, string sortAndOrder);
-
 		//ToDo: 
 		Task<int> LogErrorTest();
 		Task<List<zvwErrorLog>> GetzvwErrorLog();

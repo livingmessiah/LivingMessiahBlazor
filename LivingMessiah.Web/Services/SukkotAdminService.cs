@@ -4,12 +4,7 @@ using System.Threading.Tasks;
 using SukkotApi.Data;
 using Microsoft.Extensions.Logging;
 using SukkotApi.Domain;
-using SukkotApi.Domain.Enums;
-using LivingMessiah.Web.Pages.SukkotAdmin.Donations;
-using SukkotApi.Domain.Donations.Queries;
-using SukkotApi.Domain.Donations.Commands;
 using SukkotApi.Domain.Registrations.Enums;
-using LivingMessiah.Web.Pages.SukkotAdmin.Donations.Data;
 
 namespace LivingMessiah.Web.Services
 {
@@ -19,8 +14,6 @@ namespace LivingMessiah.Web.Services
 
 		Task<List<vwRegistration>> GetAll(RegistrationSortEnum sort);
 		Task<List<Notes>> GetNotes(RegistrationSortEnum sort);
-
-		Task<List<PreviousDonation>> GetRegistrationDonations(int id);
 
 		Task<int> LogErrorTest();
 		Task<List<zvwErrorLog>> GetzvwErrorLog();
@@ -82,23 +75,6 @@ namespace LivingMessiah.Web.Services
 			{
 				ExceptionMessage = $"Inside {nameof(GetNotes)}, {nameof(db.GetNotes)}";
 				log.LogError(ex, ExceptionMessage, sort);
-				ExceptionMessage += ex.Message ?? "-- ex.Message was null --";
-				throw new InvalidOperationException(ExceptionMessage);
-			}
-			return vm;
-		}
-
-		public async Task<List<PreviousDonation>> GetRegistrationDonations(int id)
-		{
-			var vm = new List<PreviousDonation>();
-			try
-			{
-				vm = await db.GetRegistrationDonations(id);
-			}
-			catch (Exception ex)
-			{
-				ExceptionMessage = $"Inside {nameof(GetRegistrationDonations)}, {nameof(db.GetRegistrationDonations)}";
-				log.LogError(ex, ExceptionMessage, id);
 				ExceptionMessage += ex.Message ?? "-- ex.Message was null --";
 				throw new InvalidOperationException(ExceptionMessage);
 			}

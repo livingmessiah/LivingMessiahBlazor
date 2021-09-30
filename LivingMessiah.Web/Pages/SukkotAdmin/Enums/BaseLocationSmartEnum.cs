@@ -1,6 +1,6 @@
 ﻿using Ardalis.SmartEnum;
 
-namespace SukkotApi.Domain.Registrations.Enums
+namespace LivingMessiah.Web.Pages.SukkotAdmin.Enums
 {
 	public abstract class BaseLocationSmartEnum: SmartEnum<BaseLocationSmartEnum>
 	{

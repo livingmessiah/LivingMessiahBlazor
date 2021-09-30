@@ -1,6 +1,6 @@
 ﻿using Ardalis.SmartEnum;
 
-namespace SukkotApi.Domain.Enums
+namespace LivingMessiah.Web.Pages.SukkotAdmin.Enums
 {
 	public abstract class BaseCampTypeSmartEnum: SmartEnum<BaseCampTypeSmartEnum>
 	{

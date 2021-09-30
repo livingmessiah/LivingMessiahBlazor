@@ -1,6 +1,6 @@
 ﻿using Ardalis.SmartEnum;
 
-namespace SukkotApi.Domain.Donations.Enums
+namespace LivingMessiah.Web.Pages.SukkotAdmin.Donations.Enums
 {
 	public abstract class BaseDonationStatusFilterSmartEnum: SmartEnum<BaseDonationStatusFilterSmartEnum>
 	{

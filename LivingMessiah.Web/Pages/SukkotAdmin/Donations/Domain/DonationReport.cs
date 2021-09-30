@@ -1,5 +1,4 @@
-﻿using SukkotApi.Domain.Enums;
-using SukkotApi.Domain.Registrations.Enums;
+﻿using LivingMessiah.Web.Pages.SukkotAdmin.Enums;
 using System.ComponentModel.DataAnnotations;
 
 namespace LivingMessiah.Web.Pages.SukkotAdmin.Donations.Domain
@@ -43,7 +42,7 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Donations.Domain
 		{
 			get
 			{
-				return SukkotApi.Domain.Enums.BaseStatusSmartEnum.FromValue(StatusId) == BaseStatusSmartEnum.FullyPaid ? "X" : "";
+				return BaseStatusSmartEnum.FromValue(StatusId) == BaseStatusSmartEnum.FullyPaid ? "X" : "";
 			}
 		}
 
