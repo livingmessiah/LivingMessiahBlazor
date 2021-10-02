@@ -19,8 +19,8 @@
 		public const string Id = "AboveAllImages";
 		public const string Title = "Above All Images";
 		public const string Image = "AboveAllImages.jpg";
-		public const string Url = "https://www.aboveallimages.org";
-		public const string UrlSimple = "www.AboveAllImages.org";
+		public const string Url = "https://www.aboveallimages.net";  // .org
+		public const string UrlSimple = "www.AboveAllImages.net";   // .org
 	}
 
 	public static class Account

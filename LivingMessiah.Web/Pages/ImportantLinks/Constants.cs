@@ -1,5 +1,16 @@
 ﻿namespace LivingMessiah.Web.Pages.ImportantLinks.Constants
 {
+
+	public static class PhysicianHealThyself
+	{
+		public const string Id = "physicianhealthyself";
+		public const string Title = "Early Treatment Report";
+		public const string Image = "earlytreatmentreport.jpg";
+		public const string Url = "https://earlytreatmentreport.com/";
+		public const string UrlSimple = "EarlyTreatmentReport.com";
+		public const string UrlPacketDownload = "https://livingmessiahstorage.blob.core.windows.net/pdfs/EarlyTreatmentReport-2021-10-01.pdf";
+	}
+
 	public static class MyHebrewBible
 	{
 		public const string Id = "myhebrewbible";
@@ -32,7 +43,7 @@
 		public const string Id = "EtzBneyYosef";
 		public const string Title = "Etz Bney Yosef";
 		public const string Image = "EBYHomePage.jpg";
-		public const string Url = "https://www.etzbneyyosef.com";
+		public const string Url = "http://www.etzbneyyosef.com/";  //https://www.etzbneyyosef.com
 		public const string UrlSimple = "www.EtzBneyYosef.com";
 	}
 
@@ -68,7 +79,7 @@
 		public const string Id = "IsraeliteReturn";
 		public const string Title = "Israelite Return";
 		public const string Image = "IsrRtnHomePage.jpg";
-		public const string Url = "https://www.israelitereturn.com";
+		public const string Url = "http://israelitereturn.com/";  //https://www.israelitereturn.com  
 		public const string UrlSimple = "www.IsraeliteReturn.com";
 	}
 

@@ -16,12 +16,12 @@ namespace LivingMessiah.Web.Pages.Sukkot
 
 		public static DateRangeLocal AttendanceDays { get; } = new DateRangeLocal(
 				DateRangeEnum.AttendanceDays
-			, new DateRange(DateTime.Parse("10/19/2021"), DateTime.Parse("10/28/2021"))
+			, new DateRange(DateTime.Parse("10/20/2021"), DateTime.Parse("10/28/2021"))
 			, "Select attendance days");
 
 		public static DateRangeLocal LodgingDays { get; } = new DateRangeLocal(
 				DateRangeEnum.LodgingDays
-			, new DateRange(DateTime.Parse("10/18/2021"), DateTime.Parse("10/29/2021"))
+			, new DateRange(DateTime.Parse("10/20/2021"), DateTime.Parse("10/28/2021"))
 			, "Select lodging days");
 
 		public DateRangeEnum DateRangeEnum { get; private set; }

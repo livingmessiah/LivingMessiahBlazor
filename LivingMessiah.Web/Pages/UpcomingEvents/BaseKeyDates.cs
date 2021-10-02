@@ -15,6 +15,9 @@ namespace LivingMessiah.Web.Pages.UpcomingEvents
 
 		[Parameter]
 		public bool IsXsOrSm { get; set; }
+
+		[Parameter]
+		public string ImgUrl { get; set; }
 	}
 
 }

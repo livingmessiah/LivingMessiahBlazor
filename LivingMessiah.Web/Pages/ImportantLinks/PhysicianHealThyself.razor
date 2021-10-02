@@ -1,0 +1,35 @@
+﻿@using static LivingMessiah.Web.Pages.ImportantLinks.Constants.PhysicianHealThyself
+
+<h2 id="@Id"><span class="badge badge-warning">@Title</span></h2>
+<div class="card">
+	<img src="@Blobs.UrlImportantLinks(Image)" class="card-img-top" alt="@Title" />
+
+	<div class="card-body bg-light">
+		<i class="fa fa-quote-left fa-2x fa-pull-left fa-border" aria-hidden="true"></i>
+		<blockquote class="blockquote">
+			And he said unto them, <br />
+			Ye will surely say unto me this proverb, <b>Physician, heal thyself</b>: <br />
+			whatsoever we have heard done in Capernaum, do also here in thy country.
+			<footer class="blockquote-footer"><cite title="Luke 4:23">Luke 4:23</cite></footer>
+		</blockquote>
+	</div>
+
+	<div class="card-body">
+		<p class="card-text">
+			It is debatable what Yeshua meant by stating <b>Physician, heal thyself</b>,
+			but in these trying times that we live in it has become very evident that we need to <b>take responsibility of our own health</b>.
+			Therefore it is incumbent upon us to take prudent steps to ward off contagious diseases.
+			This website <a href="@Url" target="_blank">@UrlSimple &nbsp;<i class="fas fa-external-link-square-alt"></i></a>
+			has a packet called <a href="@UrlPacketDownload" target="_blank" class="btn btn-outline-primary btn-sm"><b>Early Treatment</b> &nbsp;<i class="fas fa-file-pdf"></i></a>
+			that can be of great assistance.
+			Check it out and <b>be prepared</b>.
+		</p>
+		<a href="@Url" target="_blank" class="btn btn-primary">@UrlSimple &nbsp;<i class="fas fa-external-link-square-alt"></i></a>
+	</div>
+</div>
+
+@code {
+
+	// An ounce of prevention is worth a pound of cure
+
+}

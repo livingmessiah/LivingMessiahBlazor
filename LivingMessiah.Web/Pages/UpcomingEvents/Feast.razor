@@ -35,6 +35,14 @@
 				</div>
 			</div>
 
+			@if (!String.IsNullOrEmpty(ImgUrl))
+			{
+				<div class="row col-12">
+					<img src='@Blobs.UrlEvents(ImgUrl)' alt="@FeastDayLocal.Name"
+							 class="img-fluid float-right rounded mt-4" />
+				</div>
+			}
+
 		}
 		else
 		{
@@ -61,6 +69,15 @@
 							 class="float-right img-fluid rounded mt-4" />
 				</div>
 			</div>
+
+
+			@if (!String.IsNullOrEmpty(ImgUrl))
+			{
+				<div class="row col-12">
+					<img src='@Blobs.UrlEvents(ImgUrl)' alt="@FeastDayLocal.Name"
+							 class="float-right img-fluid rounded mt-4" />
+				</div>
+			}
 
 		}
 

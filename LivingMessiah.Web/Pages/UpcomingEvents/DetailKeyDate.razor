@@ -11,7 +11,8 @@
 
 	case DateTypeEnum.Feast:
 		<Feast EventDate="@UpcomingEvent.EventDate" DaysAhead="@UpcomingEvent.DaysAhead" IsXsOrSm="@IsXsOrSm"
-					 FeastDayLocal="@FeastDayLocal.FromInt(UpcomingEvent.EnumId)">
+					 FeastDayLocal="@FeastDayLocal.FromInt(UpcomingEvent.EnumId)"
+					 ImgUrl ="@UpcomingEvent.ImageUrl">
 		</Feast>
 		break;
 
@@ -25,7 +26,6 @@
 		<p>DateTypeEnum Unknown</p>
 		break;
 }
-
 
 
 
