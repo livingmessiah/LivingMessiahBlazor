@@ -1,0 +1,91 @@
+﻿@page "/BlazorSyncFusion/TreeView/"
+
+<div class="pb-2 mt-4 mb-4 border-bottom">
+	<h3><i class="fas fa-tree"></i> Tree View</h3>
+</div>
+
+<a href="https://blazor.syncfusion.com/documentation/treeview/data-binding">link</a>
+
+@using Syncfusion.Blazor.Navigations
+<SfTreeView TValue="MailItem">
+	<TreeViewFieldsSettings 
+													TValue="MailItem" Id="Id" Text="FolderName" Child="SubFolders" 
+													DataSource="@MyFolder" Expanded="Expanded">
+	</TreeViewFieldsSettings>
+</SfTreeView>
+
+@code{
+	public class MailItem
+	{
+		public string Id { get; set; }
+		public string FolderName { get; set; }
+		public bool Expanded { get; set; }
+		public List<MailItem> SubFolders { get; set; }
+	}
+	List<MailItem> MyFolder = new List<MailItem>();
+	protected override void OnInitialized()
+	{
+		base.OnInitialized();
+		List<MailItem> Folder1 = new List<MailItem>();
+		MyFolder.Add(new MailItem
+		{
+			Id = "01",
+			FolderName = "Inbox",
+			SubFolders = Folder1
+		});
+
+		List<MailItem> Folder2 = new List<MailItem>();
+
+		Folder1.Add(new MailItem
+		{
+			Id = "01-01",
+			FolderName = "Categories",
+			SubFolders = Folder2
+		});
+		Folder2.Add(new MailItem
+		{
+			Id = "01-02",
+			FolderName = "Primary"
+		});
+		Folder2.Add(new MailItem
+		{
+			Id = "01-03",
+			FolderName = "Social"
+		});
+		Folder2.Add(new MailItem
+		{
+			Id = "01-04",
+			FolderName = "Promotions"
+		});
+
+		List<MailItem> Folder3 = new List<MailItem>();
+
+		MyFolder.Add(new MailItem
+		{
+			Id = "02",
+			FolderName = "Others",
+			Expanded = true,
+			SubFolders = Folder3
+		});
+		Folder3.Add(new MailItem
+		{
+			Id = "02-01",
+			FolderName = "Sent Items"
+		});
+		Folder3.Add(new MailItem
+		{
+			Id = "02-02",
+			FolderName = "Delete Items"
+		});
+		Folder3.Add(new MailItem
+		{
+			Id = "02-03",
+			FolderName = "Drafts"
+		});
+		Folder3.Add(new MailItem
+		{
+			Id = "02-04",
+			FolderName = "Archive"
+		});
+	}
+}

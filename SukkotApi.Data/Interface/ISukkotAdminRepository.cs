@@ -1,11 +1,6 @@
 ﻿using SukkotApi.Domain;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-
-using SukkotApi.Domain.Donations.Commands;
-using SukkotApi.Domain.Donations.Queries;
-using SukkotApi.Domain.Donations.Enums;
-
 using SukkotApi.Domain.Registrations.Enums;
 
 namespace SukkotApi.Data

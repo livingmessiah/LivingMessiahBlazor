@@ -15,7 +15,7 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Donations.Data
 	public interface IDonationRepository
 	{
 		string BaseSqlDump { get; }
-		Task<int> InsertRegistrationDonation(Donation donation); 
+		Task<int> InsertRegistrationDonation(Donation donation);
 		Task<List<DonationReport>> GetDonationReport(BaseDonationStatusFilterSmartEnum filter, string sortAndOrder);
 		Task<List<DonationDetail>> GetDonationDetails(int registrationId);
 		Task<List<DonationDetail>> GetDonationDetailsAll();

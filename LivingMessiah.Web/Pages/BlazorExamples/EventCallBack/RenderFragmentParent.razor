@@ -1,0 +1,38 @@
+﻿@page "/BlazorExamples/RenderFragmentParent"
+
+@*@using MSASPC = Microsoft.AspNetCore.Components;*@
+@using Microsoft.AspNetCore.Components;
+
+<h3>Event Callback</h3>
+<h1>Parent-child example</h1>
+
+<RenderFragmentChild Title="Panel Title from Parent"
+										 OnClickCallback="@ShowMessage">
+	Content of the child component is supplied by the parent component.
+</RenderFragmentChild>
+
+<p>@message</p>
+
+@*<AlertBox> test</AlertBox>*@
+
+<LivingMessiah.Web.Pages.BlazorExamples.Components.AlertBox>
+	@*<HeaderContent>HeaderContent Goes HERE!</HeaderContent>*@
+	<span> Child Content 1</span>
+</LivingMessiah.Web.Pages.BlazorExamples.Components.AlertBox>
+
+
+<LivingMessiah.Web.Pages.BlazorExamples.Components.AlertBox>
+	<span> Child Content 1 NOT using Attribute Splatting</span>
+</LivingMessiah.Web.Pages.BlazorExamples.Components.AlertBox>
+
+<LivingMessiah.Web.Pages.BlazorExamples.Components.AlertBox class="alert-dark">
+	<span> Child Content 2 using Attribute Splatting</span>
+</LivingMessiah.Web.Pages.BlazorExamples.Components.AlertBox>
+
+@code {
+	private string message;
+	private void ShowMessage(MouseEventArgs e)
+	{
+		message = $"Blaze a new trail with Blazor! ({e.ScreenX}:{e.ScreenY})";
+	}
+}

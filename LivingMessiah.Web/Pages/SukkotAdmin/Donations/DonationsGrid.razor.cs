@@ -4,10 +4,10 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Components;
 
-using LivingMessiah.Web.Pages.SukkotAdmin.Donations.Data; // using SukkotApi.Data;
-using LivingMessiah.Web.Pages.SukkotAdmin.Donations.Domain; //using SukkotApi.Domain.Donations.Queries;
+using LivingMessiah.Web.Pages.SukkotAdmin.Enums;
+using LivingMessiah.Web.Pages.SukkotAdmin.Donations.Data; 
+using LivingMessiah.Web.Pages.SukkotAdmin.Donations.Domain;
 using LivingMessiah.Web.Pages.SukkotAdmin.Donations.Enums;
-
 using static LivingMessiah.Web.Services.Auth0;
 using Microsoft.AspNetCore.Authorization;
 
@@ -26,7 +26,6 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Donations
 		public IDonationRepository db { get; set; }  
 
 		public IEnumerable<DonationReport> DonationReportList { get; set; }
-		public IEnumerable<DonationDetail> DonationDetails { get; set; }
 
 		protected bool DatabaseError { get; set; } = false;
 		protected string DatabaseErrorMsg { get; set; }
@@ -44,7 +43,6 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Donations
 		}
 		
 		private SfGrid<DonationReport> GridReport;
-
 		public async Task ToolbarClickHandler(Syncfusion.Blazor.Navigations.ClickEventArgs args)
 		{
 			if (args.Item.Id == "Grid_excelexport") //Id is combination of Grid's ID and itemname

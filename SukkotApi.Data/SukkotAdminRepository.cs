@@ -6,12 +6,7 @@ using System.Linq;
 using System.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using SukkotApi.Domain.Enums;
 using SukkotApi.Domain;
-
-using SukkotApi.Domain.Donations.Commands;
-using SukkotApi.Domain.Donations.Enums;
-using SukkotApi.Domain.Donations.Queries;
 using SukkotApi.Domain.Registrations.Enums;
 
 namespace SukkotApi.Data
