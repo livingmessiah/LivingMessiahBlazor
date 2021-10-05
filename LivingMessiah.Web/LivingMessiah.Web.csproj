@@ -70,6 +70,7 @@
 
   <ItemGroup>
     <Folder Include="Pages\SukkotAdmin\Donations\Services\" />
+    <Folder Include="Pages\SukkotAdmin\Registration\Enums\" />
   </ItemGroup>
 
   <ItemGroup>

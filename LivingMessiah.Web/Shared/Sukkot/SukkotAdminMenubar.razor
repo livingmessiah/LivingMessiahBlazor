@@ -7,40 +7,54 @@
 }
 
 <div class="d-print-none mt-3">
-		<ol class="breadcrumb mx-n3 mt-n3">
-			<li>
-				<a class="badge badge-secondary" href="@LivingMessiah.Web.Links.Sukkot.AdminIndex">
-				<i class="fas fa-campground"></i>&nbsp;<sup>Home</sup></a>&nbsp;&nbsp;
-			</li>
+	<ol class="breadcrumb mx-n3 mt-n3">
+		<li>
+			<a class="badge badge-secondary" href="@LivingMessiah.Web.Links.Sukkot.AdminIndex">
+				<i class="fas fa-campground"></i>&nbsp;<sup>Home</sup>
+			</a>&nbsp;&nbsp;
+		</li>
 
-			<li class="@classActive">
-				<a class="badge badge-light" href="@RegistrationList"><i class="fas fa-table">
-						 </i>&nbsp;<sup>Registration</sup></a>&nbsp;&nbsp;
-			</li>
+		<li class="@classActive">
+			<a class="badge badge-light" href="@RegistrationGrid">
+				<i class="fas fa-table">
+				</i>&nbsp;<sup>Registration Grid</sup>
+			</a>&nbsp;&nbsp;
+		</li>
+
+		<li class="@classActive">
+			<a class="badge badge-light" href="@RegistrationList">
+				<i class="fas fa-table">
+				</i>&nbsp;<sup>Registration</sup>
+			</a>&nbsp;&nbsp;
+		</li>
 
 
-			<li class="@classActive">
-				<a class="badge badge-warning" href="@AttendanceAllFeastDays">
-				<i class="fas fa-chart-line"></i>&nbsp;<sup>Attend</sup></a>&nbsp;&nbsp;
-			</li>
+		<li class="@classActive">
+			<a class="badge badge-warning" href="@AttendanceAllFeastDays">
+				<i class="fas fa-chart-line"></i>&nbsp;<sup>Attend</sup>
+			</a>&nbsp;&nbsp;
+		</li>
 
-			<li class="@classActive">
-				<a class="badge badge-info" href="@LodgingDays.PivotOnCampCode">
-				<i class="fa fa-truck"></i>&nbsp;<sup>Lodge</sup></a>&nbsp;&nbsp;
-			</li>
+		<li class="@classActive">
+			<a class="badge badge-info" href="@LodgingDays.PivotOnCampCode">
+				<i class="fa fa-truck"></i>&nbsp;<sup>Lodge</sup>
+			</a>&nbsp;&nbsp;
+		</li>
 
 
-			<li class="@classActive">
-				<a class="badge badge-success" href="@Donations.Grid">
-				<i class="fas fa-dollar-sign"></i>&nbsp;<sup>Donate</sup></a>&nbsp;&nbsp;
-			</li>
+		<li class="@classActive">
+			<a class="badge badge-success" href="@Donations.Grid">
+				<i class="fas fa-dollar-sign"></i>&nbsp;<sup>Donate</sup>
+			</a>&nbsp;&nbsp;
+		</li>
 
-			<li class="@classActive">
-				<a class="badge badge-danger" href="@Errors.ErrorLog">
-				<i class="fas fa-bug"></i>&nbsp;<sup>Errors</sup></a>
-			</li>
+		<li class="@classActive">
+			<a class="badge badge-danger" href="@Errors.ErrorLog">
+				<i class="fas fa-bug"></i>&nbsp;<sup>Errors</sup>
+			</a>
+		</li>
 
-		</ol>
+	</ol>
 
 		@if (LivingMessiah.Web.Pages.Sukkot.Constants.Other.IsMealsAvailable)
 		{

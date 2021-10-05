@@ -1,9 +1,9 @@
 ﻿using Ardalis.SmartEnum;
 
-namespace LivingMessiah.Web.Pages.SukkotAdmin.Donations.Enums
+namespace LivingMessiah.Web.Pages.SukkotAdmin.Enums
 {
 	public abstract class BaseRegistrationSortSmartEnum : SmartEnum<BaseRegistrationSortSmartEnum>
-	{		
+	{
 		#region Id's
 		private static class Id
 		{
@@ -17,7 +17,7 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Donations.Enums
 		#endregion
 
 		#region Explicit ie Named Instances
-		public static readonly BaseRegistrationSortSmartEnum ById = new ByIdSE();  
+		public static readonly BaseRegistrationSortSmartEnum ById = new ByIdSE();
 		public static readonly BaseRegistrationSortSmartEnum ByLastName = new ByLastNameSE();
 		public static readonly BaseRegistrationSortSmartEnum ByFirstName = new ByFirstNameSE();
 		public static readonly BaseRegistrationSortSmartEnum ByIdDesc = new ByIdDescSE();

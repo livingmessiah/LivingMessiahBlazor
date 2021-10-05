@@ -369,6 +369,7 @@
 
 		public const string AdminIndex = "/SukkotAdmin";
 		public const string RegistrationList = "/SukkotAdmin/RegistrationList";
+		public const string RegistrationGrid = "/SukkotAdmin/RegistrationGrid";
 		public const string Notes = "/SukkotAdmin/Notes";
 		public const string AttendanceAllFeastDays = "/SukkotAdmin/AttendanceAllFeastDays";
 		public const string AttendanceChart = "/SukkotAdmin/AttendanceChart";

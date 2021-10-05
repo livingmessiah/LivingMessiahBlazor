@@ -1,0 +1,157 @@
+﻿@page "/SukkotAdmin/RegistrationGrid/"
+
+@using static LivingMessiah.Web.Services.Auth0
+@using LivingMessiah.Web.Shared.Sukkot
+@using LivingMessiah.Web.Pages.SukkotAdmin.Registration.Domain
+@using LivingMessiah.Web.Pages.SukkotAdmin.Enums
+@using Grid = Syncfusion.Blazor.Grids
+
+<AuthorizeView Roles="@Roles.SukkotMenuBar">
+	<SukkotAdminMenubar></SukkotAdminMenubar>
+</AuthorizeView>
+
+<div class="pb-2 mt-4 mb-4 border-bottom">
+	<h3><i class="fas fa-table"></i> Registration</h3>
+</div>
+
+<div class="col-lg-12 control-section">
+	<div class="form-row">
+
+		<div class="form-group col-md-6">
+			<SfNumericTextBox ID="Id"
+												@bind-Value="@(SelectedData.Id)"
+												Enabled="@Check" FloatLabelType="FloatLabelType.Always" Placeholder="Registration Id">
+			</SfNumericTextBox>
+		</div>
+
+		<div class="form-group col-md-6">
+			<SfTextBox ID="FirstName"
+								 @bind-Value="@SelectedData.FirstName"
+								 Enabled="@Enabled" Placeholder="First Name" FloatLabelType="FloatLabelType.Always">
+			</SfTextBox>
+		</div>
+
+		<div class="form-group col-md-6">
+			<SfTextBox ID="FamilyName"
+								 @bind-Value="@SelectedData.FamilyName"
+								 Enabled="@Enabled" Placeholder="Last Name" FloatLabelType="FloatLabelType.Always">
+			</SfTextBox>
+		</div>
+
+		<div class="form-group col-md-6">
+			<SfTextBox ID="Adults" TValue="int"
+												@bind-Value="@SelectedData.EMail" DefaultValue="1"
+												Enabled="@Enabled" Placeholder="Email" FloatLabelType="FloatLabelType.Always">
+			</SfTextBox>
+		</div>
+
+		<div class="form-group col-md-6">
+			<SfNumericTextBox ID="Adults" TValue="int"
+												@bind-Value="@SelectedData.Adults" DefaultValue="1"
+												Enabled="@Enabled" Placeholder="# Adults" FloatLabelType="FloatLabelType.Always">
+			</SfNumericTextBox>
+		</div>
+
+		<div class="form-group col-md-6">
+			<SfNumericTextBox ID="ChildBig" TValue="int"
+												@bind-Value="@SelectedData.ChildBig" DefaultValue="0"
+												Enabled="@Enabled" Placeholder="# Children (big)" FloatLabelType="FloatLabelType.Always">
+			</SfNumericTextBox>
+		</div>
+
+		<div class="form-group col-md-6">
+			<SfNumericTextBox ID="ChildSmall" TValue="int"
+												@bind-Value="@SelectedData.ChildSmall" DefaultValue="0"
+												Enabled="@Enabled" Placeholder="# Children (small)" FloatLabelType="FloatLabelType.Always">
+			</SfNumericTextBox>
+		</div>
+
+		@*<div class="form-group col-md-6">
+			<SfDropDownList ID="ShipCountry"
+											@bind-Value="@SelectedData.ShipCountry" Enabled="@Enabled"
+											TItem="Country" Placeholder="Ship Country" FloatLabelType="FloatLabelType.Always"
+											TValue="string" DataSource="@Name">
+				<DropDownListFieldSettings Value="ShipCountry" Text="ShipCountry"></DropDownListFieldSettings>
+			</SfDropDownList>
+		</div>
+
+		<div class="form-group col-md-6">
+			<SfTextBox ID="Ship Name"
+								 @bind-Value="@SelectedData.ShipName" Enabled="@Enabled"
+								 Placeholder="Ship Name" FloatLabelType="FloatLabelType.Always">
+			</SfTextBox>
+		</div>*@
+
+		<div class="temp">
+			<SfButton @onclick="Cancel" Disabled="@Disabled">Cancel</SfButton>
+		</div>
+
+		<div class="temp">
+			<SfButton @onclick="Save" Disabled="@Disabled">Save</SfButton>
+		</div>
+
+	</div>
+</div>
+
+<div class="col-lg-12 control-section">
+	<div class="content-wrapper">
+		<div class="row mt-2">
+
+			<SfGrid ID="Grid"
+							DataSource="@Registrations" @ref="Grid"
+							Toolbar="@(new List<string>() { "Edit", "Delete", "Update", "Cancel" })"
+							AllowSelection="true" AllowFiltering="true" AllowSorting="true">
+				<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+
+				<GridEditSettings AllowAdding="true" AllowEditing="false" AllowDeleting="false"></GridEditSettings>
+				@*  CommandClicked="OnSaveClicked" *@
+
+				<GridSortSettings>
+					<GridSortColumns>
+						<GridSortColumn Field="@nameof(Registration.FirstName)" Direction="SortDirection.Ascending" />
+					</GridSortColumns>
+				</GridSortSettings>
+
+				<GridEvents  RowSelected="RowSelectHandler" RowDeselected="RowDeSelectHandler"
+										QueryCellInfo="CustomizeCell" TValue="Registration" />
+
+				<GridColumns>
+					<GridColumn Field=@nameof(Registration.Id) HeaderText="Id" IsPrimaryKey="true" Width="35" AllowSorting="true" AllowFiltering="false">
+					</GridColumn>
+
+					<GridColumn Field=@nameof(Registration.FirstName) HeaderText="First" Width="50" AllowSorting="true">
+					</GridColumn>
+
+					<GridColumn Field=@nameof(Registration.FamilyName) HeaderText="Last" Width="50" AllowSorting="true">
+					</GridColumn>
+
+					<GridColumn Field=@nameof(Registration.SpouseName) HeaderText="Spouse" Width="50" AllowSorting="false" AllowFiltering="false">
+					</GridColumn>
+
+					@*<GridColumn Field=@nameof(Registration.OtherNames) HeaderText="Other" Width="50" AllowSorting="false"> </GridColumn>*@
+
+					<GridColumn Field=@nameof(Registration.EMail) HeaderText="Email" Width="40" AllowSorting="false" AllowFiltering="false">
+					</GridColumn>
+
+					<GridColumn Field=@nameof(Registration.Phone) HeaderText="Phone" Width="40" AllowSorting="false" AllowFiltering="false">
+					</GridColumn>
+
+					<GridColumn Field=@nameof(Registration.LocationName) HeaderText="Location" Width="100"
+											FilterSettings="@(new FilterSettings { Type = Syncfusion.Blazor.Grids.FilterType.CheckBox })">
+
+					</GridColumn>
+
+					@*<GridColumn Field=@nameof(Registration.Adults) HeaderText="Adults" Width="25" AllowSorting="false AllowFiltering="false"">
+			</GridColumn>
+
+			<GridColumn Field=@nameof(Registration.ChildBig) HeaderText="Child Big" Width="25" AllowSorting="false" AllowFiltering="false">
+			</GridColumn>
+
+			<GridColumn Field=@nameof(Registration.ChildSmall) HeaderText="Child Small" Width="25" AllowSorting="false" AllowFiltering="false"> </GridColumn>*@
+
+				</GridColumns>
+
+			</SfGrid>
+		</div>
+	</div>
+</div>
