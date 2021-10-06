@@ -5,6 +5,9 @@
 @using LivingMessiah.Web.Pages.SukkotAdmin.Registration.Domain
 @using LivingMessiah.Web.Pages.SukkotAdmin.Enums
 @using Grid = Syncfusion.Blazor.Grids
+@using Syncfusion.Blazor.Inputs
+@using Syncfusion.Blazor.Buttons
+
 
 <AuthorizeView Roles="@Roles.SukkotMenuBar">
 	<SukkotAdminMenubar></SukkotAdminMenubar>
@@ -17,80 +20,114 @@
 <div class="col-lg-12 control-section">
 	<div class="form-row">
 
-		<div class="form-group col-md-6">
+		<div class="form-group col-md-12">
 			<SfNumericTextBox ID="Id"
 												@bind-Value="@(SelectedData.Id)"
 												Enabled="@Check" FloatLabelType="FloatLabelType.Always" Placeholder="Registration Id">
 			</SfNumericTextBox>
 		</div>
 
-		<div class="form-group col-md-6">
+		<div class="form-group col-md-3">
 			<SfTextBox ID="FirstName"
 								 @bind-Value="@SelectedData.FirstName"
 								 Enabled="@Enabled" Placeholder="First Name" FloatLabelType="FloatLabelType.Always">
 			</SfTextBox>
 		</div>
 
-		<div class="form-group col-md-6">
+		<div class="form-group col-md-3">
 			<SfTextBox ID="FamilyName"
 								 @bind-Value="@SelectedData.FamilyName"
 								 Enabled="@Enabled" Placeholder="Last Name" FloatLabelType="FloatLabelType.Always">
 			</SfTextBox>
 		</div>
 
+		<div class="form-group col-md-3">
+			<SfTextBox ID="SpouseName"
+								 @bind-Value="@SelectedData.SpouseName"
+								 Enabled="@Enabled" Placeholder="Spouse" FloatLabelType="FloatLabelType.Always">
+			</SfTextBox>
+		</div>
+
+		<div class="form-group col-md-3">
+			<SfTextBox ID="OtherNames"
+								 @bind-Value="@SelectedData.OtherNames"
+								 Enabled="@Enabled" Placeholder="Other Names" FloatLabelType="FloatLabelType.Always">
+			</SfTextBox>
+		</div>
+
+
 		<div class="form-group col-md-6">
-			<SfTextBox ID="Adults" TValue="int"
-												@bind-Value="@SelectedData.EMail" DefaultValue="1"
-												Enabled="@Enabled" Placeholder="Email" FloatLabelType="FloatLabelType.Always">
+			@* ValidationRules="@(new Grid.ValidationRules{ Required=true, Range = new double[]{1, 1000}})   DefaultValue="1"" *@
+			<SfTextBox ID="Email"
+								 @bind-Value="@SelectedData.EMail"
+								 Enabled="@Enabled" Placeholder="Email" FloatLabelType="FloatLabelType.Always">
 			</SfTextBox>
 		</div>
 
 		<div class="form-group col-md-6">
+			<SfMaskedTextBox ID="Phone"
+											 @bind-Value="@SelectedData.Phone" Mask="+1-000-000-0000"
+											 Enabled="@Enabled" Placeholder="Phone" FloatLabelType="FloatLabelType.Always">
+			</SfMaskedTextBox>
+		</div>
+
+
+		<div class="form-group col-md-4">
 			<SfNumericTextBox ID="Adults" TValue="int"
 												@bind-Value="@SelectedData.Adults" DefaultValue="1"
 												Enabled="@Enabled" Placeholder="# Adults" FloatLabelType="FloatLabelType.Always">
 			</SfNumericTextBox>
 		</div>
 
-		<div class="form-group col-md-6">
+		<div class="form-group col-md-4">
 			<SfNumericTextBox ID="ChildBig" TValue="int"
 												@bind-Value="@SelectedData.ChildBig" DefaultValue="0"
 												Enabled="@Enabled" Placeholder="# Children (big)" FloatLabelType="FloatLabelType.Always">
 			</SfNumericTextBox>
 		</div>
 
-		<div class="form-group col-md-6">
+		<div class="form-group col-md-4">
 			<SfNumericTextBox ID="ChildSmall" TValue="int"
 												@bind-Value="@SelectedData.ChildSmall" DefaultValue="0"
 												Enabled="@Enabled" Placeholder="# Children (small)" FloatLabelType="FloatLabelType.Always">
 			</SfNumericTextBox>
 		</div>
 
-		@*<div class="form-group col-md-6">
-			<SfDropDownList ID="ShipCountry"
-											@bind-Value="@SelectedData.ShipCountry" Enabled="@Enabled"
-											TItem="Country" Placeholder="Ship Country" FloatLabelType="FloatLabelType.Always"
-											TValue="string" DataSource="@Name">
-				<DropDownListFieldSettings Value="ShipCountry" Text="ShipCountry"></DropDownListFieldSettings>
+
+		<div class="form-group col-md-6">
+			<SfDropDownList ID="CampId"
+											@bind-Value="@SelectedCampTypeName" Enabled="@Enabled"
+											TItem="CampType" Placeholder="Camp Type" FloatLabelType="FloatLabelType.Always"
+											TValue="string" DataSource="@CampTypeLookupList">
+				<DropDownListFieldSettings Value="ID" Text="Text"></DropDownListFieldSettings>
 			</SfDropDownList>
 		</div>
 
-		<div class="form-group col-md-6">
-			<SfTextBox ID="Ship Name"
-								 @bind-Value="@SelectedData.ShipName" Enabled="@Enabled"
-								 Placeholder="Ship Name" FloatLabelType="FloatLabelType.Always">
-			</SfTextBox>
-		</div>*@
-
-		<div class="temp">
-			<SfButton @onclick="Cancel" Disabled="@Disabled">Cancel</SfButton>
-		</div>
-
-		<div class="temp">
-			<SfButton @onclick="Save" Disabled="@Disabled">Save</SfButton>
-		</div>
-
 	</div>
+
+
+	<div class="row col-12 m-2">
+		<SfButton CssClass="e-warning" IconCss="e-icons e-cancel" @onclick="Cancel" Disabled="@Disabled">Cancel</SfButton>
+		<SfButton CssClass="e-primary" IconCss="e-icons e-save" @onclick="Save" Disabled="@Disabled">Save</SfButton>
+	</div>
+
+
+
+	@*<div class="form-row">
+		<div class="form-group col-md-12">
+			<div class="temp">
+				<SfButton CssClass="e-warning" IconCss="e-icons e-cancel" @onclick="Cancel" Disabled="@Disabled">Cancel</SfButton>
+			</div>
+			<div class="temp ml-3">
+				<SfButton CssClass="e-primary" IconCss="e-icons e-save" @onclick="Save" Disabled="@Disabled">Save</SfButton>
+			</div>
+
+		</div>
+	</div>*@
+
+
+
+
 </div>
 
 <div class="col-lg-12 control-section">
@@ -112,7 +149,7 @@
 					</GridSortColumns>
 				</GridSortSettings>
 
-				<GridEvents  RowSelected="RowSelectHandler" RowDeselected="RowDeSelectHandler"
+				<GridEvents RowSelected="RowSelectHandler" RowDeselected="RowDeSelectHandler"
 										QueryCellInfo="CustomizeCell" TValue="Registration" />
 
 				<GridColumns>
@@ -142,12 +179,12 @@
 					</GridColumn>
 
 					@*<GridColumn Field=@nameof(Registration.Adults) HeaderText="Adults" Width="25" AllowSorting="false AllowFiltering="false"">
-			</GridColumn>
+						</GridColumn>
 
-			<GridColumn Field=@nameof(Registration.ChildBig) HeaderText="Child Big" Width="25" AllowSorting="false" AllowFiltering="false">
-			</GridColumn>
+						<GridColumn Field=@nameof(Registration.ChildBig) HeaderText="Child Big" Width="25" AllowSorting="false" AllowFiltering="false">
+						</GridColumn>
 
-			<GridColumn Field=@nameof(Registration.ChildSmall) HeaderText="Child Small" Width="25" AllowSorting="false" AllowFiltering="false"> </GridColumn>*@
+						<GridColumn Field=@nameof(Registration.ChildSmall) HeaderText="Child Small" Width="25" AllowSorting="false" AllowFiltering="false"> </GridColumn>*@
 
 				</GridColumns>
 
