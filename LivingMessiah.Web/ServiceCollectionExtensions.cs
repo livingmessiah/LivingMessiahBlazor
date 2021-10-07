@@ -13,6 +13,7 @@ using SukkotApi.Data;
 using LivingMessiah.Data.Commands;
 using LivingMessiah.Web.Pages.SukkotAdmin.Donations.Data;
 using LivingMessiah.Web.Pages.SukkotAdmin.Registration.Data;
+using LivingMessiah.Web.Pages.SukkotAdmin.Registration.Services;
 
 //using Markdig;
 //using Markdig.Extensions.AutoIdentifiers;
@@ -36,6 +37,7 @@ namespace LivingMessiah.Web
 
 				.AddTransient<ISecurityClaimsService, SecurityClaimsService>()
 				.AddTransient<ISukkotService, SukkotService>()
+				.AddTransient<IRegistrationService, RegistrationService>()
 
 				.AddTransient<IRegistrationRepository, RegistrationRepository>()
 				.AddTransient<IDonationRepository, DonationRepository>()

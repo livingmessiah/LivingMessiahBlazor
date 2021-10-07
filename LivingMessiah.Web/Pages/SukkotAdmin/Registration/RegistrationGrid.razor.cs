@@ -5,17 +5,21 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 
+using LivingMessiah.Web.Pages.SukkotAdmin.Registration.Services;
 using LivingMessiah.Web.Pages.SukkotAdmin.Registration.Data;
 using Domain = LivingMessiah.Web.Pages.SukkotAdmin.Registration.Domain;
 using LivingMessiah.Web.Pages.SukkotAdmin.Enums;
 
-using LivingMessiah.Web.Services;
 using Syncfusion.Blazor.Grids;
-using Syncfusion.Blazor.DropDowns;
 using System.Linq;
+
+using static LivingMessiah.Web.Services.Auth0;
+using Microsoft.AspNetCore.Authorization;
+using LivingMessiah.Web.Pages.Sukkot;
 
 namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration
 {
+	//[Authorize(Roles = Roles.AdminOrSukkot)]
 	public partial class RegistrationGrid
 	{
 		[Inject]
@@ -24,13 +28,20 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration
 		[Inject]
 		public IRegistrationRepository db { get; set; }
 
+		[Inject]
+		public IRegistrationService Svc { get; set; }
+
 		//[Inject]
 		//public ISecurityClaimsService SvcClaims { get; set; }
 
 		public IEnumerable<Domain.Registration> Registrations { get; set; }
-		private Boolean Check = false;
-		private Boolean Disabled = true;
-		private Boolean Enabled = false;
+		private bool Check = false;
+		private bool Disabled = true;
+		private bool Enabled = false;
+
+		//ToDo this shoud come from the Sukkot.Constants and saved in cache		
+		public DateRangeLocal DateRangeAttendance { get; set; } = DateRangeLocal.FromEnum(DateRangeEnum.AttendanceDays);
+		public DateRangeLocal DateRangeLodging { get; set; } = DateRangeLocal.FromEnum(DateRangeEnum.LodgingDays);
 
 		public Domain.Registration SelectedData = new Domain.Registration();
 
@@ -39,13 +50,6 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration
 			/*
 			AttendanceBitwise int NOT NULL,
 			LodgingDaysBitwise int NOT NULL,
-			
-			AttendanceDateList = "",
-			LodgingDateList = "",
-
-					BaseCampTypeSmartEnum = args.Data.BaseCampTypeSmartEnum,
-					BaseStatusSmartEnum = args.Data.BaseStatusSmartEnum  //,
-
 			*/
 			SelectedData =
 				new Domain.Registration()
@@ -61,6 +65,8 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration
 					ChildBig = args.Data.ChildBig,
 					ChildSmall = args.Data.ChildSmall,
 					WillHelpWithMeals = false,
+					AttendanceDateList = args.Data.AttendanceDateList,
+					LodgingDateList = args.Data.LodgingDateList,
 					CampId = args.Data.CampId,
 					StatusId = args.Data.StatusId,
 					LocationInt = args.Data.LocationInt
@@ -71,18 +77,43 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration
 				SelectedCampTypeName = BaseCampTypeSmartEnum.FromValue(args.Data.CampId).ToString();
 				Logger.LogDebug($"Inside {nameof(RegistrationGrid)}!{nameof(RowSelectHandler)}; SelectedCampTypeName{nameof(SelectedCampTypeName)}");
 			}
-
+			else
+			{
+			}
+			msg = $"args.Data.CampId: {args.Data.CampId}; {nameof(SelectedCampTypeName)}: ==>{SelectedCampTypeName}<==";
 			this.Disabled = false;
 			this.Enabled = true;
 		}
-
-		int i = 0;
 
 		public void RowDeSelectHandler(RowDeselectEventArgs<Domain.Registration> args)
 		{
 			SelectedData = new Domain.Registration();
 			this.Disabled = true;
 			this.Enabled = false;
+			msg = "";
+		}
+
+		public async Task Add()
+		{
+			Domain.Registration addData = new Domain.Registration
+			{
+				//Id = args.Data.Id,
+				FirstName = "First",
+				FamilyName = "Last",
+				SpouseName = "",
+				OtherNames = "",
+				EMail = "test@test.fake",
+				Phone = "555=1212",
+				Adults = 1,
+				ChildBig = 0,
+				ChildSmall = 0,
+				WillHelpWithMeals = false,
+				CampId = BaseCampTypeSmartEnum.RvDryCampOnly,
+				StatusId = BaseStatusSmartEnum.AcceptedHouseRules,
+				LocationInt = BaseLocationSmartEnum.WindmillRanch
+			};
+
+			await this.Grid.AddRecord(addData);
 		}
 
 		public async Task Save()
@@ -90,14 +121,51 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration
 			Logger.LogDebug($"Inside {nameof(RegistrationGrid)}!{nameof(Save)}");
 			if (SelectedData.Id != null)
 			{
-				Logger.LogDebug($"...SelectedData.Id.Value: {nameof(SelectedData.Id.Value)}");
+				Logger.LogDebug($"...SelectedData.Id.Value: {SelectedData.Id.Value}");
+
+
+				try
+				{
+					//await db.
+				}
+				catch (Exception)
+				{
+
+					throw;
+				}
+
+
 				await this.Grid.SetRowData(SelectedData.Id, SelectedData);
 				await Cancel();
 			}
+			else
+			{
+				Logger.LogDebug($"...{nameof(SelectedData.Id)} IS NULL");
+			}
+		}
+
+		private string msg = "";
+
+		public async Task Delete()
+		{
+			Logger.LogDebug($"Inside {nameof(RegistrationGrid)}!{nameof(Delete)}");
+			if (SelectedData.Id != null)
+			{
+				Logger.LogDebug("ToDo: Add delete confirmation logic and actual deletion");
+			}
+			else
+			{
+				Logger.LogDebug($"...{nameof(SelectedData.Id)} IS NULL");
+			}
+
+			msg = $"{nameof(SelectedData.Id.Value)}: {SelectedData.Id.Value}; ";
+
+			await this.Grid.DeleteRecord();
 		}
 
 		public async Task Cancel()
 		{
+			msg = "";
 			SelectedData = new Domain.Registration() { };
 			await this.Grid.ClearSelection();
 		}

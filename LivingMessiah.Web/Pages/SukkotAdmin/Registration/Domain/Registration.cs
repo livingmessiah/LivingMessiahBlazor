@@ -22,8 +22,13 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration.Domain
 		public int CampId { get; set; }
 		public BaseCampTypeSmartEnum BaseCampTypeSmartEnum { get; set; }
 
+		public int AttendanceBitwise { get; set; }
 		public DateTime[] AttendanceDateList { get; set; }  // NOT NULL
-		public DateTime[] LodgingDateList { get; set; }			// NOT NULL
+		public string AttendanceDatesCSV { get; set; }
+
+		public int LodgingDaysBitwise { get; set; }
+		public DateTime[] LodgingDateList { get; set; }     // NOT NULL
+		public string LodgingDatesCSV { get; set; }
 
 		public string Notes { get; set; }
 

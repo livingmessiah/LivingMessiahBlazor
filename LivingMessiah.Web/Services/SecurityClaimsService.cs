@@ -8,6 +8,7 @@ namespace LivingMessiah.Web.Services
 	public interface ISecurityClaimsService
 	{
 		Task<string> GetEmail();
+		Task<string> GetRole();
 	}
 
 	public class SecurityClaimsService : ISecurityClaimsService
@@ -28,6 +29,56 @@ namespace LivingMessiah.Web.Services
 			User = authState.User;
 			return User.GetUserEmail();
 		}
+
+		public async Task<string> GetRoles()
+		{
+			var authState = await ASP.GetAuthenticationStateAsync();
+			ClaimsPrincipal User;
+			User = authState.User;
+			
+			string roles = "";
+			foreach (var claim in user.Claims)
+			{
+				if (claim.Type == SchemaNameSpace)
+				{
+					roles += claim.Value;
+				}
+			}
+
+			if (roles.Length > 0 && roles.IndexOf(',') > 0)
+			{
+				roles.Remove(roles.IndexOf(','));
+			}
+
+			return roles;
+
+		}
+
+		public static bool RoleHasAdminOrSukkot()
+		{
+			var authState = await ASP.GetAuthenticationStateAsync();
+			ClaimsPrincipal User;
+			User = authState.User;
+
+			foreach (var claim in user.Claims)
+			{
+
+				if (claim.Type == SchemaNameSpace && claim.Value == Roles.Admin)
+				{
+					return true;
+				}
+				else
+				{
+					if (claim.Type == SchemaNameSpace && claim.Value == Roles.Sukkot)
+					{
+						return true;
+					}
+				}
+			}
+			return false;
+		}
+
+
 	}
 }
 

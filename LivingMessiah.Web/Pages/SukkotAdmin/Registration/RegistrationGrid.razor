@@ -14,7 +14,7 @@
 </AuthorizeView>
 
 <div class="pb-2 mt-4 mb-4 border-bottom">
-	<h3><i class="fas fa-table"></i> Registration</h3>
+	<h3><i class="fas fa-table"></i> Registration Grid</h3>
 </div>
 
 <div class="col-lg-12 control-section">
@@ -103,44 +103,58 @@
 			</SfDropDownList>
 		</div>
 
-	</div>
+		<div class="row col-12">
 
-
-	<div class="row col-12 m-2">
-		<SfButton CssClass="e-warning" IconCss="e-icons e-cancel" @onclick="Cancel" Disabled="@Disabled">Cancel</SfButton>
-		<SfButton CssClass="e-primary" IconCss="e-icons e-save" @onclick="Save" Disabled="@Disabled">Save</SfButton>
-	</div>
-
-
-
-	@*<div class="form-row">
-		<div class="form-group col-md-12">
-			<div class="temp">
-				<SfButton CssClass="e-warning" IconCss="e-icons e-cancel" @onclick="Cancel" Disabled="@Disabled">Cancel</SfButton>
-			</div>
-			<div class="temp ml-3">
-				<SfButton CssClass="e-primary" IconCss="e-icons e-save" @onclick="Save" Disabled="@Disabled">Save</SfButton>
+			<div class="form-group col-md-6">
+				<SfCalendar TValue="DateTime?"
+										IsMultiSelection="true" ShowTodayButton="false"
+										@bind-Values="@SelectedData.AttendanceDateList"
+										Min="@DateRangeAttendance.DateRange.MinDate"
+										Max="@DateRangeAttendance.DateRange.MaxDate">
+				</SfCalendar>
 			</div>
 
+			<div class="form-group col-md-6">
+				<SfCalendar TValue="DateTime?" ShowTodayButton="false"
+										IsMultiSelection="true"
+										@bind-Values="@SelectedData.LodgingDateList"
+										Min="@DateRangeLodging.DateRange.MinDate"
+										Max="@DateRangeLodging.DateRange.MaxDate">
+				</SfCalendar>
+			</div>
+		
 		</div>
-	</div>*@
 
+	</div>
 
+	<div class="row col-12">
+		<SfButton CssClass="e-warning" IconCss="e-icons e-cancel" @onclick="Cancel" Disabled="@Disabled">Cancel</SfButton> &nbsp;
+		<SfButton CssClass="e-primary" IconCss="e-icons e-save" @onclick="Save" Disabled="@Disabled">Save</SfButton> &nbsp;
+		<SfButton CssClass="e-danger" IconCss="e-icons e-delete" @onclick="Delete" Disabled="@Disabled">Delete</SfButton>
+		<p class="ml-3 text-black-50"><small>@msg</small></p>
+	</div>
 
+	@*
+			<div class="row col-12">
+			<SfButton  CssClass="e-success" IconCss="e-icons e-add" @onclick="Add"> Add </SfButton>
+		</div>*@
 
 </div>
 
+@*
+	https://blazor.syncfusion.com/documentation/datagrid/editing#performing-crud-operations-programmatically
+	
+*@
+
 <div class="col-lg-12 control-section">
 	<div class="content-wrapper">
-		<div class="row mt-2">
+		<div class="row mt-4">
 
 			<SfGrid ID="Grid"
 							DataSource="@Registrations" @ref="Grid"
-							Toolbar="@(new List<string>() { "Edit", "Delete", "Update", "Cancel" })"
 							AllowSelection="true" AllowFiltering="true" AllowSorting="true">
 				<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
 
-				<GridEditSettings AllowAdding="true" AllowEditing="false" AllowDeleting="false"></GridEditSettings>
 				@*  CommandClicked="OnSaveClicked" *@
 
 				<GridSortSettings>
@@ -173,18 +187,23 @@
 					<GridColumn Field=@nameof(Registration.Phone) HeaderText="Phone" Width="40" AllowSorting="false" AllowFiltering="false">
 					</GridColumn>
 
+					<GridColumn Field=@nameof(Registration.CampId) HeaderText="Camp Id" Width="40" AllowSorting="false" AllowFiltering="false"></GridColumn>
+
 					<GridColumn Field=@nameof(Registration.LocationName) HeaderText="Location" Width="100"
 											FilterSettings="@(new FilterSettings { Type = Syncfusion.Blazor.Grids.FilterType.CheckBox })">
+
+						<GridColumn Field=@nameof(Registration.AttendanceDateList) HeaderText="Addendance" Width="40" AllowSorting="false" AllowFiltering="false"></GridColumn>
+						<GridColumn Field=@nameof(Registration.LodgingDateList) HeaderText="Lodging" Width="40" AllowSorting="false" AllowFiltering="false"></GridColumn>
 
 					</GridColumn>
 
 					@*<GridColumn Field=@nameof(Registration.Adults) HeaderText="Adults" Width="25" AllowSorting="false AllowFiltering="false"">
-						</GridColumn>
+		</GridColumn>
 
-						<GridColumn Field=@nameof(Registration.ChildBig) HeaderText="Child Big" Width="25" AllowSorting="false" AllowFiltering="false">
-						</GridColumn>
+		<GridColumn Field=@nameof(Registration.ChildBig) HeaderText="Child Big" Width="25" AllowSorting="false" AllowFiltering="false">
+		</GridColumn>
 
-						<GridColumn Field=@nameof(Registration.ChildSmall) HeaderText="Child Small" Width="25" AllowSorting="false" AllowFiltering="false"> </GridColumn>*@
+		<GridColumn Field=@nameof(Registration.ChildSmall) HeaderText="Child Small" Width="25" AllowSorting="false" AllowFiltering="false"> </GridColumn>*@
 
 				</GridColumns>
 

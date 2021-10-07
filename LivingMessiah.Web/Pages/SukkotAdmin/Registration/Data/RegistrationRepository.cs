@@ -10,6 +10,7 @@ using SukkotApi.Data;
 using Domain = LivingMessiah.Web.Pages.SukkotAdmin.Registration.Domain;
 using LivingMessiah.Web.Pages.SukkotAdmin.Registration;
 using LivingMessiah.Web.Pages.SukkotAdmin.Enums;
+using LivingMessiah.Web.Pages.SukkotAdmin.Registration.Domain;
 
 namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration.Data
 {
@@ -18,11 +19,14 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration.Data
 		string BaseSqlDump { get; }
 		Task<List<Domain.Registration>> GetAll();  //BaseRegistrationSortSmartEnum sort
 		Task<Domain.Registration> ById(int id);
+		Task<int> Create(RegistrationPOCO registration);
+	
+		Task<RegistrationPOCO> GetById(int id);	
+		
 		/*
-		Task<RegistrationPOCO> ById2(int id);
 		Task<vwRegistrationShell> ByEmail(string email);
 		
-		Task<int> Create(RegistrationPOCO registration);
+
 		Task<int> Update(RegistrationPOCO registration);
 		Task<int> Delete(int id);
 		Task<List<Domain.Notes>> GetNotes(BaseRegistrationSortSmartEnum sort);
@@ -63,6 +67,8 @@ SELECT Id, FamilyName, FirstName, SpouseName, OtherNames, EMail, Phone
 , StatusId
 , AttendanceBitwise, LodgingDaysBitwise
 , Notes
+, Sukkot.udfLodgingDatesConcat(Id) AS LodgingDatesCSV
+, Sukkot.udfAttendanceDatesConcat(Id) AS AttendanceDatesCSV
 --, AssignedLodging, LmmDonation, WillHelpWithMeals, Avitar
 FROM Sukkot.Registration
 ORDER BY FirstName
@@ -97,7 +103,24 @@ WHERE Id = @id
 			});
 		}
 
-		/*
+
+		public async Task<RegistrationPOCO> GetById(int id)
+		{
+			base.Sql = $@"
+SELECT TOP 1 
+Id, FamilyName, FirstName, SpouseName, OtherNames, EMail, Phone, Adults, ChildBig, ChildSmall
+, LocationEnum, CampId AS CampTypeEnum, StatusId AS StatusEnum
+, AttendanceBitwise, LodgingDaysBitwise, AssignedLodging, LmmDonation, WillHelpWithMeals, Notes, Avitar
+, Sukkot.udfLodgingDatesConcat(Id) AS LodgingDatesCSV
+, Sukkot.udfAttendanceDatesConcat(Id) AS AttendanceDatesCSV
+FROM Sukkot.Registration WHERE Id = {id}";
+			return await WithConnectionAsync(async connection =>
+			{
+				var rows = await connection.QueryAsync<RegistrationPOCO>(sql: base.Sql);
+				return rows.SingleOrDefault();
+			});
+		}
+
 
 		public async Task<int> Create(RegistrationPOCO registration)
 		{
@@ -150,6 +173,7 @@ WHERE Id = @id
 		}
 
 
+		/*
 
 		public async Task<int> Update(RegistrationPOCO registration)
 		{
