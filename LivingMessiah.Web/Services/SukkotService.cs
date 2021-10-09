@@ -62,6 +62,7 @@ namespace Sukkot.Web.Service
 				throw new InvalidOperationException(ExceptionMessage);
 			}
 
+			//ToDo: id is not used
 			if (!IsUserAuthoirized(vm.EMail, id, user))
 			{
 				ExceptionMessage = $"Inside {nameof(Summary)}, logged in user:{vm.EMail} lacks authority for id={id}";

@@ -29,13 +29,12 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration.Services
 	public interface IRegistrationService
 	{
 		string ExceptionMessage { get; set; }
-		Task<int> Create(RegistrationVM registration, ClaimsPrincipal user);
-		Task<RegistrationVM> GetById(int id, ClaimsPrincipal user);
+		Task<RegistrationVM> GetById(int id);
+		Task<int> Create(RegistrationVM registration);
 
 		/*
 				Task<vwRegistration> Details(int id, ClaimsPrincipal user, bool showPrintInstructionMessage = false);
 				Task<vwRegistration> DeleteConfirmation(int id, ClaimsPrincipal user);
-				Task<RegistrationVM> Update(int id, ClaimsPrincipal user);
 				Task<int> Edit(RegistrationVM registration, ClaimsPrincipal user);
 				Task<int> DeleteConfirmed(int id);
 				Task<RegistrationSummary> Summary(int id, ClaimsPrincipal user);
@@ -60,27 +59,16 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration.Services
 
 		public string ExceptionMessage { get; set; } = "";
 
-		public async Task<int> Create(RegistrationVM registration, ClaimsPrincipal user)
+		public async Task<int> Create(RegistrationVM registration)
 		{
 			int newId = 0;
 
 			try
 			{
 				Logger.LogInformation($"Calling {nameof(db.Create)}");
+				//string email = await SvcClaims.GetEmail();	if (await SvcClaims.IsUserAuthoirized(email))	{	}
 
-				////[Authorize(Roles = Roles.AdminOrSukkot)]
-				////if (user.GetRoles() == Auth0.Roles.Admin | user.GetRoles() == Auth0.Roles.Sukkot)
-				//if (SvcClaims.GetRoles() == Auth0.Roles.Admin | user.GetRoles() == Auth0.Roles.Sukkot)
-				//{
-				//	// This is nonsensical and superfalous 
-				//	// I think it's here because making the if a Not makes it hard to understand
-				//	registration.StatusEnum = registration.StatusEnum;
-				//}
-				//else
-				//{
 				registration.StatusEnum = BaseStatusSmartEnum.RegistrationFormCompleted;
-				//}
-
 				registration.AttendanceBitwise = GetDaysBitwise(registration.AttendanceDateList, DateRangeEnum.AttendanceDays);
 				registration.LodgingDaysBitwise = GetDaysBitwise(registration.LodgingDateList, DateRangeEnum.LodgingDays);
 
@@ -159,25 +147,28 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration.Services
 			return poco;
 		}
 
-		public async Task<RegistrationVM> GetById(int id, ClaimsPrincipal user)
+		public async Task<RegistrationVM> GetById(int id)  
 		{
 			Logger.LogInformation($"Inside {nameof(RegistrationService)}!{nameof(GetById)}, id={id}");
 			RegistrationPOCO registrationPOCO = new RegistrationPOCO();
 			try
 			{
-				registrationPOCO = await db.GetById(id);
-				//if (!IsUserAuthoirized(registrationPOCO.EMail, id, user))
-				if (!SvcClaims.GetRole  IsUserAuthoirized(registrationPOCO.EMail, id, user))
+				registrationPOCO = await db.GetPocoById(id);
+				string email = await SvcClaims.GetEmail();
+
+				if (await SvcClaims.IsUserAuthoirized(email))
 				{
 					ExceptionMessage = $"Inside {nameof(GetById)}, logged in user:{registrationPOCO.EMail} lacks authority for id={id}";
 					Logger.LogWarning(ExceptionMessage);
 					throw new UserNotAuthoirizedException(ExceptionMessage);
 				}
-				//if (registrationPOCO.StatusId == (int)Status.FullyPaid & !AdminOrSukkotOverride(user))
-				if (registrationPOCO.StatusEnum == StatusEnum.FullyPaid & !AdminOrSukkotOverride(user))
+
+				bool canOverride = await SvcClaims.AdminOrSukkotOverride();
+				if (registrationPOCO.StatusEnum == BaseStatusSmartEnum.FullyPaid & !canOverride)
 				{
 					throw new RegistratationException("Can not edit registration that has been fully paid.");
 				}
+
 			}
 			catch (Exception ex)
 			{
@@ -229,34 +220,6 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration.Services
 			//Logger.LogDebug($"...LocationEnum: {registration.LocationEnum}");
 			return registration;
 		}
-
-		private bool AdminOrSukkotOverride(ClaimsPrincipal user)
-		{
-			if (user.GetRoles() == Auth0.Roles.Admin | user.GetRoles() == Auth0.Roles.Sukkot)
-			{
-				return true;
-			}
-			else
-			{
-				return false;
-			}
-		}
-
-		private bool IsUserAuthoirized(string registrationEmail, int id, ClaimsPrincipal user)
-		{
-			string userEmail = SvcClaims.GetEmail() // if (SvcClaims.GetEmail() == registrationEmail) { return true; }
-			if (userEmail == registrationEmail) { return true; }
-
-			if (user.RoleHasAdminOrSukkot())
-			{
-				return true;
-			}
-			else
-			{
-				return false;
-			}
-		}
-
 
 		private static string DumpDateRange(DateTime[] dateList)
 		{

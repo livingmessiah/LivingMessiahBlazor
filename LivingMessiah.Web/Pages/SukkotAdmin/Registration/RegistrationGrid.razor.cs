@@ -19,7 +19,7 @@ using LivingMessiah.Web.Pages.Sukkot;
 
 namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration
 {
-	//[Authorize(Roles = Roles.AdminOrSukkot)]
+	[Authorize(Roles = Roles.AdminOrSukkot)]
 	public partial class RegistrationGrid
 	{
 		[Inject]
@@ -29,7 +29,7 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration
 		public IRegistrationRepository db { get; set; }
 
 		[Inject]
-		public IRegistrationService Svc { get; set; }
+		public IRegistrationService svc { get; set; }
 
 		//[Inject]
 		//public ISecurityClaimsService SvcClaims { get; set; }
@@ -124,17 +124,27 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration
 				Logger.LogDebug($"...SelectedData.Id.Value: {SelectedData.Id.Value}");
 
 
+				int newId = 0;
 				try
 				{
-					//await db.
+					Domain.RegistrationVM vm = new Domain.RegistrationVM();
+					// ToDo: the code above an below needs to be fixed once I figure out how to deal with the 3 classes in the Domain sub folder
+					newId = await svc.Create(vm);
 				}
 				catch (Exception)
 				{
+					/*
+									{
+										ExceptionMessage = svc.ExceptionMessage; // Log is handled in the service
+										NavManager.NavigateTo(LivingMessiah.Web.Links.Home.Error);
+									}
+									AlertMsg = $"Registration created! Id={newId}";
+									Logger.LogInformation(AlertMsg);
+									NavManager.NavigateTo(LivingMessiah.Web.Links.Sukkot.RegistrationShell);
+					 */
 
 					throw;
 				}
-
-
 				await this.Grid.SetRowData(SelectedData.Id, SelectedData);
 				await Cancel();
 			}

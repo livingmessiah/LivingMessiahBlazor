@@ -18,12 +18,13 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration.Data
 	{
 		string BaseSqlDump { get; }
 		Task<List<Domain.Registration>> GetAll();  //BaseRegistrationSortSmartEnum sort
-		Task<Domain.Registration> ById(int id);
+		Task<RegistrationPOCO> GetPocoById(int id);
 		Task<int> Create(RegistrationPOCO registration);
 	
-		Task<RegistrationPOCO> GetById(int id);	
-		
+
 		/*
+		Task<Domain.Registration> ById(int id);
+
 		Task<vwRegistrationShell> ByEmail(string email);
 		
 
@@ -80,7 +81,8 @@ ORDER BY FirstName
 			});
 		}
 
-
+		// ById NOT USED
+		/*
 		public async Task<Domain.Registration> ById(int id)
 		{
 			base.Parms = new DynamicParameters(new { Id = id });
@@ -102,9 +104,12 @@ WHERE Id = @id
 				return rows.SingleOrDefault();
 			});
 		}
+		*/
 
 
-		public async Task<RegistrationPOCO> GetById(int id)
+
+
+		public async Task<RegistrationPOCO> GetPocoById(int id)
 		{
 			base.Sql = $@"
 SELECT TOP 1 

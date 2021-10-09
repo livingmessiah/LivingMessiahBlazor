@@ -2,7 +2,7 @@
 		<TabItems>
 			<TabItem>
 				<ChildContent>
-					<TabHeader Text="Green House Trolley Hobby Farm"></TabHeader>
+					<TabHeader Text="Greenhouse Trolley Hobby Farm"></TabHeader>
 				</ChildContent>
 				<ContentTemplate>
 					<div>

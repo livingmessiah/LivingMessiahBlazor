@@ -2,6 +2,7 @@
 using System.Security.Claims;
 using static LivingMessiah.Web.Services.Auth0;
 
+//ToDo: remove this and use SecurityClaimsService (LivingMessiah.Web.Services)
 namespace LivingMessiah.Web.Infrastructure
 {
 	public static class ClaimsPrincipalExtensions
