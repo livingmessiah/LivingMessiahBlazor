@@ -9,11 +9,11 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Enums
 		#region Id's
 		private static class Id
 		{
-			internal const int OffSite = 1;
-			internal const int Tent = 2;
-			internal const int RvOrCampTrailer = 3;
-			internal const int CabinOrBunkhouse = 4;
-			internal const int RvDryCampOnly = 5;
+			internal const int OffSite = 0; // 1
+			internal const int Tent = 1; // 2
+			internal const int RvOrCampTrailer = 2; // 3
+			internal const int CabinOrBunkhouse = 3; // 4
+			internal const int RvDryCampOnly = 4; // 5
 		}
 		#endregion
 

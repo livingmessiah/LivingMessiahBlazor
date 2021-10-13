@@ -20,11 +20,12 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration.Data
 		Task<List<Domain.Registration>> GetAll();  //BaseRegistrationSortSmartEnum sort
 		Task<RegistrationPOCO> GetPocoById(int id);
 		Task<Tuple<int, int, string>> Create(RegistrationPOCO registration);
-
+		Task<int> Update(RegistrationPOCO registration);
+		
 		/*
 		Task<Domain.Registration> ById(int id);
 		Task<vwRegistrationShell> ByEmail(string email);
-		Task<int> Update(RegistrationPOCO registration);
+
 		Task<int> Delete(int id);
 		Task<List<Domain.Notes>> GetNotes(BaseRegistrationSortSmartEnum sort);
 		*/
@@ -147,7 +148,6 @@ FROM Sukkot.Registration WHERE Id = {id}";
 				CampId = registration.CampId, 
 				StatusId = registration.StatusId, 
 
-
 				AttendanceBitwise = registration.AttendanceBitwise,
 				LodgingDaysBitwise = registration.LodgingDaysBitwise,
 
@@ -196,15 +196,14 @@ FROM Sukkot.Registration WHERE Id = {id}";
 			});
 		}
 
-
-
-
-		/*
-
 		public async Task<int> Update(RegistrationPOCO registration)
 		{
-			//{registration.StatusId},
-			//CampId = {registration.CampId},
+			/*
+			LocationEnum = registration.LocationSmartEnum,
+			CampId = registration.CampTypeSmartEnum, 
+			StatusId = registration.StatusSmartEnum, 
+			*/
+
 			base.Sql = $@"
 UPDATE Sukkot.Registration SET 
 	FamilyName = N'{registration.FamilyName}',
@@ -219,9 +218,11 @@ UPDATE Sukkot.Registration SET
 
 	AttendanceBitwise = {registration.AttendanceBitwise},
 	LodgingDaysBitwise = {registration.LodgingDaysBitwise},
-	LocationEnum = {(int)registration.LocationEnum},
-	CampId = {(int)registration.CampTypeEnum},
-	StatusId = {(int)registration.StatusEnum},  
+
+	LocationEnum = registration.LocationEnum,
+	CampId = registration.CampId, 
+	StatusId = registration.StatusId, 
+
 	WillHelpWithMeals = {registration.WillHelpWithMealsToInt}, 
 	LmmDonation = {registration.LmmDonation},
 	AssignedLodging = N'{registration.AssignedLodging}',
@@ -242,6 +243,7 @@ WHERE Id = {registration.Id};
 			//});		 
 		
 
+		/*
 		public async Task<int> Delete(int id)
 		{
 			base.Sql = "Sukkot.stpRegistrationDelete";

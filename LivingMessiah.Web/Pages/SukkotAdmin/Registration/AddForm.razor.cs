@@ -29,29 +29,57 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration
 
 		protected bool LoadFailed;
 		protected bool CanEditCampType => RegistrationVM.LocationEnum == SukkotApi.Domain.Enums.LocationEnum.WildernessRanch;
-		/*
-		protected override void OnInitialized()
+
+		[Parameter]
+		public int? RegistrationId { get; set; }
+
+
+		private string Title = "";
+
+
+		protected override async Task OnInitializedAsync()
 		{
-			Logger.LogDebug($"Inside {nameof(AddForm)}!{nameof(OnInitialized)}");
+			Logger.LogDebug($"Inside {nameof(AddForm)}!{nameof(OnInitializedAsync)}; RegistrationId: {RegistrationId?? 0}");
 			InitializeErrorHandling();
-			Registration = new RegistrationVM
+
+			if (RegistrationId is null)
 			{
-				Id = 0,
-				StatusEnum = BaseStatusSmartEnum.EmailConfirmation,
-				//HouseRulesAgreement = DateTime.UtcNow, // Task 687: Persist the moment House Rules were agreed to database
-				//EMail = User.GetUserEmail()  // This is an admin form, so this can be entered by the UI
-			};
+				Title = "Registration " + "Add";
+				RegistrationVM = new RegistrationVM();
+			}
+			else
+			{
+				int Id = RegistrationId.HasValue ? RegistrationId.Value : 0;
+				Title = "Registration Edit " + Id;
+
+				try
+				{
+					RegistrationVM = await svc.GetById(Id);
+				}
+				catch (Exception)
+				{
+					DatabaseError = true;
+					DatabaseErrorMsg = $"Error reading from database; Id: {Id}";
+				}
+				
+			}
 		}
-		*/
 
 		protected async Task HandleValidSubmit()
 		{
 			InitializeErrorHandling();
-			Logger.LogDebug($"Inside {nameof(HandleValidSubmit)}, calling {nameof(svc.Create)})");
+			Logger.LogDebug($"Inside {nameof(HandleValidSubmit)}, calling {nameof(svc.Create)}); RegistrationId: {RegistrationId ?? 0}");
 
 			const int ViolationInUniqueIndex = 2601;
 
-			int newId = 0;
+			int Id = RegistrationId.HasValue ? RegistrationId.Value : 0;
+
+			if (Id !=0 )
+			{
+				await Update();
+			}
+			else
+			{
 			try
 			{
 				RegistrationVM.Id = 0;
@@ -82,9 +110,57 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration
 			catch (Exception)
 			{
 				DatabaseError = true;
-				DatabaseErrorMsg = $"Error saving to database";
-				Logger.LogError($"...Logging svc returned {nameof(svc.ExceptionMessage)} message {svc.ExceptionMessage}");
+				DatabaseErrorMsg = $"Error adding to database";
+				// This seems like overkill as it's being logged in the service
+				//Logger.LogError($"...Logging svc returned {nameof(svc.ExceptionMessage)} message {svc.ExceptionMessage}");
 			}
+
+			}
+
+
+		}
+
+
+		private async Task Update()
+		{
+			InitializeErrorHandling();
+			Logger.LogDebug($"Inside {nameof(Update)}, calling {nameof(svc.Update)}); RegistrationId: {RegistrationId ?? 0}");
+
+			const int ViolationInUniqueIndex = 2601;
+
+			int count = 0;
+			try
+			{
+				count = await svc.Update(RegistrationVM);
+				/*
+				var sprocTuple = await svc.Update(RegistrationVM);
+				if (sprocTuple.Item1 != 0)
+				{
+					DatabaseInformation = true;
+					DatabaseInformationMsg = $"{sprocTuple.Item3}";
+					RegistrationVM = new RegistrationVM();
+				}
+				else
+				{
+					if (sprocTuple.Item2 == ViolationInUniqueIndex)
+					{
+						DatabaseWarning = true;
+						DatabaseWarningMsg = sprocTuple.Item3;
+					}
+					else
+					{
+						DatabaseError = true;
+						DatabaseErrorMsg = sprocTuple.Item3;
+					}
+				}
+				*/
+			}
+			catch (Exception)
+			{
+				DatabaseError = true;
+				DatabaseErrorMsg = $"Error updating to database";
+			}
+
 
 		}
 

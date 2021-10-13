@@ -29,12 +29,13 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration.Services
 	public interface IRegistrationService
 	{
 		string ExceptionMessage { get; set; }
-		string InformationMessage { get; set; }
-		//Task<RegistrationVM> GetById(int id);  // Not being used right now
-		//Task<int> Create(RegistrationVM registration);
+		//string InformationMessage { get; set; }
+		Task<RegistrationVM> GetById(int id);
 		Task<Tuple<int, int, string>> Create(RegistrationVM registration);
-
+		Task<int> Update(RegistrationVM registration);
 		/*
+		 Task<Tuple<int, int, string>> Update(RegistrationVM registration);
+
 				Task<vwRegistration> Details(int id, ClaimsPrincipal user, bool showPrintInstructionMessage = false);
 				Task<vwRegistration> DeleteConfirmation(int id, ClaimsPrincipal user);
 				Task<int> Edit(RegistrationVM registration, ClaimsPrincipal user);
@@ -60,23 +61,20 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration.Services
 		#endregion
 
 		public string ExceptionMessage { get; set; } = "";
-		public string InformationMessage { get; set; } = "";
+		//public string InformationMessage { get; set; } = "";
 
 		public async Task<Tuple<int, int, string>> Create(RegistrationVM registrationVM)
 		{
-			int newId = 0;
-
+			Logger.LogInformation($"Inside {nameof(RegistrationService)}!{nameof(Create)}");
+			Logger.LogInformation($"...Calling {nameof(db.Create)}");
 			try
 			{
-				Logger.LogInformation($"Inside {nameof(RegistrationService)}!{nameof(Create)}");
-				Logger.LogInformation($"...Calling {nameof(db.Create)}");
 				//string email = await SvcClaims.GetEmail();	if (await SvcClaims.IsUserAuthoirized(email))	{	}
-
 				registrationVM.StatusSmartEnum = BaseStatusSmartEnum.RegistrationFormCompleted;
 				registrationVM.AttendanceBitwise = GetDaysBitwise(registrationVM.AttendanceDateList, DateRangeEnum.AttendanceDays);
 				registrationVM.LodgingDaysBitwise = GetDaysBitwise(registrationVM.LodgingDateList, DateRangeEnum.LodgingDays);
 
-				var sprocTuple = await db.Create(DTO(registrationVM));
+				var sprocTuple = await db.Create(DTO_From_VM_To_DB(registrationVM));
 				return sprocTuple;
 
 			}
@@ -84,11 +82,11 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration.Services
 			{
 				ExceptionMessage = $"...Error calling {nameof(db.Create)} (presumably)";
 				Logger.LogError(ex, ExceptionMessage);
+
+				// Note, the UI should NOT display this detailed Exception Message, unless maybe if Env.IsDevelopment
 				ExceptionMessage += ex.Message ?? "-- ex.Message was null --";
 				throw new InvalidOperationException(ExceptionMessage);
 			}
-			//return newId;
-			//return new Tuple<int, int, string>(newId, SprocReturnValue, ReturnMsg);
 		}
 
 		//LivingMessiah.Web.Pages.Sukkot DateRangeEnum
@@ -125,7 +123,7 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration.Services
 			return bitwise;
 		}
 
-		private RegistrationPOCO DTO(RegistrationVM registration)
+		private RegistrationPOCO DTO_From_VM_To_DB(RegistrationVM registration)
 		{
 			RegistrationPOCO poco = new RegistrationPOCO
 			{
@@ -141,7 +139,7 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration.Services
 				ChildSmall = registration.ChildSmall,
 				LocationEnum = SukkotApi.Domain.Enums.Location.FromEnum(registration.LocationEnum).Id,
 				CampId = (int)registration.CampTypeEnum,  // This doesn't have a FromEnum method like Location does
-				StatusId = registration.StatusSmartEnum.Value, 
+				StatusId = registration.StatusSmartEnum.Value,
 				AttendanceBitwise = registration.AttendanceBitwise,
 				LodgingDaysBitwise = registration.LodgingDaysBitwise,
 				AssignedLodging = registration.AssignedLodging,
@@ -153,8 +151,8 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration.Services
 			return poco;
 		}
 
-		/*
-		public async Task<RegistrationVM> GetById(int id)  
+
+		public async Task<RegistrationVM> GetById(int id)
 		{
 			Logger.LogInformation($"Inside {nameof(RegistrationService)}!{nameof(GetById)}, id={id}");
 			RegistrationPOCO registrationPOCO = new RegistrationPOCO();
@@ -163,18 +161,25 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration.Services
 				registrationPOCO = await db.GetPocoById(id);
 				string email = await SvcClaims.GetEmail();
 
-				if (await SvcClaims.IsUserAuthoirized(email))
+				if (await SvcClaims.IsUserAuthoirized(email) == false)
 				{
-					ExceptionMessage = $"Inside {nameof(GetById)}, logged in user:{registrationPOCO.EMail} lacks authority for id={id}";
+					ExceptionMessage = $"...logged in user:{email} lacks authority for to see content of id={id} / EMail:{registrationPOCO.EMail}";
 					Logger.LogWarning(ExceptionMessage);
 					throw new UserNotAuthoirizedException(ExceptionMessage);
 				}
+				else
+				{
+					return DTO_From_DB_To_VM(registrationPOCO);
+				}
 
+				/*
+				ToDo: How do I want to handle this
 				bool canOverride = await SvcClaims.AdminOrSukkotOverride();
 				if (registrationPOCO.StatusSmartEnum == BaseStatusSmartEnum.FullyPaid & !canOverride)
 				{
 					throw new RegistratationException("Can not edit registration that has been fully paid.");
 				}
+				*/
 
 			}
 			catch (Exception ex)
@@ -189,11 +194,11 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration.Services
 			//Logger.LogDebug($".....AttendanceDateList: {DumpDateRange(registrationPOCO.AttendanceDateList)}");
 			//Logger.LogDebug($".....LodgingDateList: {DumpDateRange(registrationPOCO.LodgingDateList)}");
 
-			return GetByIdDTO(registrationPOCO);
 		}
 
-		private RegistrationVM GetByIdDTO(RegistrationPOCO poco)
+		private RegistrationVM DTO_From_DB_To_VM(RegistrationPOCO poco)
 		{
+			Logger.LogDebug($"Inside {nameof(RegistrationService)}!{nameof(DTO_From_DB_To_VM)}");
 			RegistrationVM registration = new RegistrationVM
 			{
 				Id = poco.Id,
@@ -206,9 +211,9 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration.Services
 				Adults = poco.Adults,
 				ChildBig = poco.ChildBig,
 				ChildSmall = poco.ChildSmall,
-				CampTypeSmartEnum = poco.CampTypeSmartEnum,
-				LocationSmartEnum = poco.LocationSmartEnum,
-				StatusSmartEnum = poco.StatusSmartEnum, // poco.StatusId,
+				CampTypeSmartEnum = BaseCampTypeSmartEnum.FromValue(poco.CampId),
+				LocationSmartEnum = BaseLocationSmartEnum.FromValue(poco.LocationEnum),
+				StatusSmartEnum = BaseStatusSmartEnum.FromValue(poco.StatusId),
 				AttendanceBitwise = poco.AttendanceBitwise,
 				AttendanceDateList = poco.AttendanceDateList,
 				LodgingDaysBitwise = poco.LodgingDaysBitwise,
@@ -220,14 +225,51 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration.Services
 				Notes = poco.Notes
 			};
 
-			Logger.LogDebug($"Inside {nameof(RegistrationService)}!{nameof(GetByIdDTO)}");
 			//Logger.LogDebug($"...registration.StatusEnum: {registration.StatusEnum}, registration.CampTypeEnum: {registration.CampTypeEnum}");
 			//Logger.LogDebug($"...AttendanceDateList: {registration.AttendanceDateList}; LodgingDateList: {registration.LodgingDateList}");
 			//Logger.LogDebug($"...AttendanceBitwise: {registration.AttendanceBitwise}; LodgingDaysBitwise: {registration.LodgingDaysBitwise}");
 			//Logger.LogDebug($"...LocationEnum: {registration.LocationEnum}");
 			return registration;
 		}
-		*/
+		/**/
+
+		//public async Task<Tuple<int, int, string>> Update(RegistrationVM registrationVM)
+		public async Task<int> Update(RegistrationVM registrationVM)
+		{
+			Logger.LogInformation($"Inside {nameof(RegistrationService)}!{nameof(Update)}");
+			int count = 0;
+
+			try
+			{
+				/*
+				if (user.GetRoles() == Auth0.Roles.Admin | user.GetRoles() == Auth0.Roles.Sukkot)
+				{
+					registration.StatusEnum = registration.StatusEnum;
+				}
+				else
+				{
+					//registration.StatusEnum = (int)Status.RegistrationFormCompleted;
+					registration.StatusEnum = StatusEnum.RegistrationFormCompleted;
+				}				
+				??? registrationVM.StatusSmartEnum = BaseStatusSmartEnum.RegistrationFormCompleted;
+				*/
+
+				registrationVM.AttendanceBitwise = GetDaysBitwise(registrationVM.AttendanceDateList, DateRangeEnum.AttendanceDays);
+				registrationVM.LodgingDaysBitwise = GetDaysBitwise(registrationVM.LodgingDateList, DateRangeEnum.LodgingDays);
+
+				Logger.LogInformation($"...Calling {nameof(db.Update)}");
+				count = await db.Update(DTO_From_VM_To_DB(registrationVM));
+				Logger.LogInformation($"Registration updated for {registrationVM.FamilyName}/{registrationVM.EMail}; count={count}");
+			}
+			catch (Exception ex)
+			{
+				ExceptionMessage = $"...Error calling {nameof(db.Update)} (presumably)";
+				Logger.LogError(ex, ExceptionMessage);
+				ExceptionMessage += ex.Message ?? "-- ex.Message was null --";
+				throw new InvalidOperationException(ExceptionMessage);
+			}
+			return count;
+		}
 
 		private static string DumpDateRange(DateTime[] dateList)
 		{

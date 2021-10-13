@@ -19,7 +19,7 @@ using LivingMessiah.Web.Pages.Sukkot;
 
 namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration
 {
-	[Authorize(Roles = Roles.AdminOrSukkot)]
+	//[Authorize(Roles = Roles.AdminOrSukkot)]
 	public partial class RegistrationGrid
 	{
 		[Inject]
@@ -188,8 +188,8 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration
 		protected override async Task OnInitializedAsync()
 		{
 			//RegistrationLookupList = await db.PopulateRegistrationLookup();
-			await GetDataWithParms();
-			PopulateCampDDL();
+			//await GetDataWithParms();
+			//PopulateCampDDL();
 		}
 
 		//BaseDonationStatusFilterSmartEnum filter

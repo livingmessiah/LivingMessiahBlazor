@@ -5,11 +5,6 @@
 
 <LoadingComponent IsLoading="RegistrationVM==null">
 
-	@*<h5></h5>
-	<hr class="warning" />*@
-
-	@*<h3 class="mt-4 mb-1"><i class="fas fa-plus"></i> Registration Add</h3>*@
-
 	<EditForm Model="RegistrationVM"
 						OnValidSubmit="HandleValidSubmit"
 						class="card card-body bg-light mt-5">
@@ -17,9 +12,8 @@
 		<ValidationSummary />
 
 		<fieldset class="py-1 my-0">
-			<legend class="text-success text-center"> Registration Add</legend>
+			<legend class="text-success text-center"> @Title</legend>
 		</fieldset>
-
 
 		<fieldset class="mt-3">
 			<legend class="text-primary">Contact Information</legend>
@@ -51,7 +45,6 @@
 				</div>
 
 			</div>
-
 
 			<div class="row">
 
@@ -300,5 +293,3 @@ else
 
 	}
 }
-
-<hr class="warning" />
