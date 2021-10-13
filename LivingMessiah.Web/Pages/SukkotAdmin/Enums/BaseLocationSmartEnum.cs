@@ -1,4 +1,5 @@
 ﻿using Ardalis.SmartEnum;
+using SukkotApi.Domain.Enums;
 
 namespace LivingMessiah.Web.Pages.SukkotAdmin.Enums
 {
@@ -29,25 +30,35 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Enums
 		public abstract string ShortDescr { get; }
 		public abstract string LongDescr { get; }
 		public abstract string TextColor { get; }
+		//public abstract LocationEnum LocationEnum { get; }
 		#endregion
 
 		#region Private Instantiation
 		private sealed class GreenhouseTrolleyHobbyFarmSE : BaseLocationSmartEnum
 		{
 			public GreenhouseTrolleyHobbyFarmSE() : base($"{nameof(Id.GTHF)}", Id.GTHF) { }
-			public override string ShortDescr => "Greenhouse Trolley Hobby Farm"; public override string TextColor => "text-success"; public override string LongDescr => "Greenhouse Trolley Hobby Farm (Near Sierra Vista)";
+			public override string ShortDescr => "Greenhouse Trolley Hobby Farm"; 
+			public override string TextColor => "text-success"; 
+			public override string LongDescr => "Greenhouse Trolley Hobby Farm (Near Sierra Vista)";
+			//public override LocationEnum LocationEnum => LocationEnum.GreenhouseTrolleyHobbyFarm;
 		}
 
 		private sealed class WildernessRanchSE : BaseLocationSmartEnum
 		{
 			public WildernessRanchSE() : base($"{nameof(Id.Wilderness)}", Id.Wilderness) { }
-			public override string ShortDescr => "Wilderness Ranch"; public override string TextColor => "text-danger"; public override string LongDescr => "Wilderness Ranch (Near Show Low)";
+			public override string ShortDescr => "Wilderness Ranch"; 
+			public override string TextColor => "text-danger"; 
+			public override string LongDescr => "Wilderness Ranch (Near Show Low)";
+			//public override LocationEnum LocationEnum => LocationEnum.WildernessRanch;
 		}
 
 		private sealed class WindmillRanchSE : BaseLocationSmartEnum
 		{
 			public WindmillRanchSE() : base($"{nameof(Id.Windmill)}", Id.Windmill) { }
-			public override string ShortDescr => "Windmill Ranch"; public override string TextColor => "text-warning"; public override string LongDescr => "Windmill Ranch (Near Bisbee)";
+			public override string ShortDescr => "Windmill Ranch"; 
+			public override string TextColor => "text-warning"; 
+			public override string LongDescr => "Windmill Ranch (Near Bisbee)";
+			//public override LocationEnum LocationEnum => LocationEnum.WindmillRanch;
 		}
 		#endregion
 

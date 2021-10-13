@@ -29,8 +29,10 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration.Services
 	public interface IRegistrationService
 	{
 		string ExceptionMessage { get; set; }
-		Task<RegistrationVM> GetById(int id);
-		Task<int> Create(RegistrationVM registration);
+		string InformationMessage { get; set; }
+		//Task<RegistrationVM> GetById(int id);  // Not being used right now
+		//Task<int> Create(RegistrationVM registration);
+		Task<Tuple<int, int, string>> Create(RegistrationVM registration);
 
 		/*
 				Task<vwRegistration> Details(int id, ClaimsPrincipal user, bool showPrintInstructionMessage = false);
@@ -58,31 +60,35 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration.Services
 		#endregion
 
 		public string ExceptionMessage { get; set; } = "";
+		public string InformationMessage { get; set; } = "";
 
-		public async Task<int> Create(RegistrationVM registration)
+		public async Task<Tuple<int, int, string>> Create(RegistrationVM registrationVM)
 		{
 			int newId = 0;
 
 			try
 			{
-				Logger.LogInformation($"Calling {nameof(db.Create)}");
+				Logger.LogInformation($"Inside {nameof(RegistrationService)}!{nameof(Create)}");
+				Logger.LogInformation($"...Calling {nameof(db.Create)}");
 				//string email = await SvcClaims.GetEmail();	if (await SvcClaims.IsUserAuthoirized(email))	{	}
 
-				registration.StatusEnum = BaseStatusSmartEnum.RegistrationFormCompleted;
-				registration.AttendanceBitwise = GetDaysBitwise(registration.AttendanceDateList, DateRangeEnum.AttendanceDays);
-				registration.LodgingDaysBitwise = GetDaysBitwise(registration.LodgingDateList, DateRangeEnum.LodgingDays);
+				registrationVM.StatusSmartEnum = BaseStatusSmartEnum.RegistrationFormCompleted;
+				registrationVM.AttendanceBitwise = GetDaysBitwise(registrationVM.AttendanceDateList, DateRangeEnum.AttendanceDays);
+				registrationVM.LodgingDaysBitwise = GetDaysBitwise(registrationVM.LodgingDateList, DateRangeEnum.LodgingDays);
 
-				newId = await db.Create(DTO(registration));
-				Logger.LogInformation($"Registration created for {registration.FamilyName}/{registration.EMail}; newId={newId}, registration.StatusId={registration.StatusEnum}");
+				var sprocTuple = await db.Create(DTO(registrationVM));
+				return sprocTuple;
+
 			}
 			catch (Exception ex)
 			{
-				ExceptionMessage = $"Inside {nameof(Create)}, {nameof(db.Create)}";
+				ExceptionMessage = $"...Error calling {nameof(db.Create)} (presumably)";
 				Logger.LogError(ex, ExceptionMessage);
 				ExceptionMessage += ex.Message ?? "-- ex.Message was null --";
 				throw new InvalidOperationException(ExceptionMessage);
 			}
-			return newId;
+			//return newId;
+			//return new Tuple<int, int, string>(newId, SprocReturnValue, ReturnMsg);
 		}
 
 		//LivingMessiah.Web.Pages.Sukkot DateRangeEnum
@@ -90,7 +96,7 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration.Services
 		{
 			if (dateList == null) { return 0; }
 
-			//Logger.LogDebug($"Inside: {nameof(RegistrationService)}!{nameof(GetDaysBitwise)}, dateRangeEnum: {dateRangeEnum}");
+			Logger.LogDebug($"Inside: {nameof(RegistrationService)}!{nameof(GetDaysBitwise)}, dateRangeEnum: {dateRangeEnum}");
 			DateRangeLocal DateRangeLocal = DateRangeLocal.FromEnum(dateRangeEnum);
 
 			int bitwise = 0;
@@ -101,7 +107,7 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration.Services
 				foreach (DateTime day in dateList)
 				{
 					a = DateFactory.GetAttendanceBitwise(day);
-					//Logger.LogDebug($"......a:{a} for day:{day}");
+					Logger.LogDebug($"......a:{a} for day:{day}");
 					bitwise = bitwise + a;
 				}
 			}
@@ -111,11 +117,11 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration.Services
 				{
 					int l = 0;
 					l = DateFactory.GetLodgingBitwise(day);
-					//Logger.LogDebug($"......l:{l} for day:{day}");
+					Logger.LogDebug($"......l:{l} for day:{day}");
 					bitwise = bitwise + l;
 				}
 			}
-			//Logger.LogDebug($"...bitwise: {bitwise}");
+			Logger.LogDebug($"...bitwise: {bitwise}");
 			return bitwise;
 		}
 
@@ -133,9 +139,9 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration.Services
 				Adults = registration.Adults,
 				ChildBig = registration.ChildBig,
 				ChildSmall = registration.ChildSmall,
-				LocationEnum = registration.LocationEnum,
-				CampTypeEnum = registration.CampTypeEnum,  //CampId = registration.CampTypeEnum,
-				StatusEnum = registration.StatusEnum,  //StatusId = registration.StatusEnum,
+				LocationEnum = SukkotApi.Domain.Enums.Location.FromEnum(registration.LocationEnum).Id,
+				CampId = (int)registration.CampTypeEnum,  // This doesn't have a FromEnum method like Location does
+				StatusId = registration.StatusSmartEnum.Value, 
 				AttendanceBitwise = registration.AttendanceBitwise,
 				LodgingDaysBitwise = registration.LodgingDaysBitwise,
 				AssignedLodging = registration.AssignedLodging,
@@ -147,6 +153,7 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration.Services
 			return poco;
 		}
 
+		/*
 		public async Task<RegistrationVM> GetById(int id)  
 		{
 			Logger.LogInformation($"Inside {nameof(RegistrationService)}!{nameof(GetById)}, id={id}");
@@ -164,7 +171,7 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration.Services
 				}
 
 				bool canOverride = await SvcClaims.AdminOrSukkotOverride();
-				if (registrationPOCO.StatusEnum == BaseStatusSmartEnum.FullyPaid & !canOverride)
+				if (registrationPOCO.StatusSmartEnum == BaseStatusSmartEnum.FullyPaid & !canOverride)
 				{
 					throw new RegistratationException("Can not edit registration that has been fully paid.");
 				}
@@ -199,9 +206,9 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration.Services
 				Adults = poco.Adults,
 				ChildBig = poco.ChildBig,
 				ChildSmall = poco.ChildSmall,
-				CampTypeEnum = poco.CampTypeEnum,
-				LocationEnum = poco.LocationEnum,
-				StatusEnum = poco.StatusEnum, // poco.StatusId,
+				CampTypeSmartEnum = poco.CampTypeSmartEnum,
+				LocationSmartEnum = poco.LocationSmartEnum,
+				StatusSmartEnum = poco.StatusSmartEnum, // poco.StatusId,
 				AttendanceBitwise = poco.AttendanceBitwise,
 				AttendanceDateList = poco.AttendanceDateList,
 				LodgingDaysBitwise = poco.LodgingDaysBitwise,
@@ -220,6 +227,7 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration.Services
 			//Logger.LogDebug($"...LocationEnum: {registration.LocationEnum}");
 			return registration;
 		}
+		*/
 
 		private static string DumpDateRange(DateTime[] dateList)
 		{

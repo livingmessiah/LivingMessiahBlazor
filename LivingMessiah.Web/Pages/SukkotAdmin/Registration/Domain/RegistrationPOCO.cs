@@ -17,10 +17,22 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration.Domain
 		public int ChildBig { get; set; }
 		public int ChildSmall { get; set; }
 
-		public BaseLocationSmartEnum LocationEnum { get; set; }
+		/*
+		public BaseLocationSmartEnum LocationSmartEnum { get; set; }
+		public BaseCampTypeSmartEnum  CampTypeSmartEnum { get; set; }
+		public BaseStatusSmartEnum StatusSmartEnum { get; set; }
+		*/
 
-		public BaseCampTypeSmartEnum  CampTypeEnum { get; set; }
-		public BaseStatusSmartEnum StatusEnum { get; set; }
+
+		/*
+		Why are these enums? why not just ints
+		public SukkotApi.Domain.Enums.LocationEnum LocationEnum { get; set; }
+		public SukkotApi.Domain.Enums.CampType CampTypeEnum { get; set; }
+		public SukkotApi.Domain.Enums.StatusEnum StatusEnum { get; set; }
+		*/
+		public int LocationEnum { get; set; }
+		public int CampId { get; set; }
+		public int StatusId { get; set; }
 
 		public int AttendanceBitwise { get; set; }
 		public string AttendanceDatesCSV { get; set; }

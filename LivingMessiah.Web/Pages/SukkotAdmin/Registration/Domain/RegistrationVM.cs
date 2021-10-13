@@ -55,7 +55,7 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration.Domain
 		[Range(0, 12, ErrorMessage = "{0} must be between {1} and {2}")]
 		public int ChildSmall { get; set; }
 
-		public BaseStatusSmartEnum StatusEnum { get; set; }
+		public BaseStatusSmartEnum StatusSmartEnum { get; set; }
 
 		/*
 		ToDo: 
@@ -64,12 +64,14 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration.Domain
 		 */
 		[Required(ErrorMessage = "A location is required")]
 		[DisplayName("Location")]
-		public BaseLocationSmartEnum LocationEnum { get; set; } = BaseLocationSmartEnum.GreenhouseTrolleyHobbyFarm;
+		public SukkotApi.Domain.Enums.LocationEnum LocationEnum  { get; set; } = SukkotApi.Domain.Enums.LocationEnum.GreenhouseTrolleyHobbyFarm;
+		public BaseLocationSmartEnum LocationSmartEnum { get; set; } 
+
 
 		[Required]
 		[DisplayName("Camp")]
-		public BaseCampTypeSmartEnum CampTypeEnum { get; set; }
-
+		public SukkotApi.Domain.Enums.CampType CampTypeEnum { get; set; }
+		public BaseCampTypeSmartEnum CampTypeSmartEnum { get; set; }
 
 		[DisplayName("Attendance Bitwise")]
 		public int AttendanceBitwise { get; set; }

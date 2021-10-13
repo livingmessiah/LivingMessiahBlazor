@@ -129,7 +129,10 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration
 				{
 					Domain.RegistrationVM vm = new Domain.RegistrationVM();
 					// ToDo: the code above an below needs to be fixed once I figure out how to deal with the 3 classes in the Domain sub folder
-					newId = await svc.Create(vm);
+
+					await Task.Delay(0);
+					//newId = await svc.Create(vm);
+
 				}
 				catch (Exception)
 				{

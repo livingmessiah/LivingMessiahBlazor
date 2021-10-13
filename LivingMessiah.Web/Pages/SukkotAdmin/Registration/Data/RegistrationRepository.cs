@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Dapper;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using SukkotApi.Data;
+using SukkotApi.Data;  // ToDo: Move this to LivingMessiah.Web.Data
 using Domain = LivingMessiah.Web.Pages.SukkotAdmin.Registration.Domain;
 using LivingMessiah.Web.Pages.SukkotAdmin.Registration;
 using LivingMessiah.Web.Pages.SukkotAdmin.Enums;
@@ -19,15 +19,11 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration.Data
 		string BaseSqlDump { get; }
 		Task<List<Domain.Registration>> GetAll();  //BaseRegistrationSortSmartEnum sort
 		Task<RegistrationPOCO> GetPocoById(int id);
-		Task<int> Create(RegistrationPOCO registration);
-	
+		Task<Tuple<int, int, string>> Create(RegistrationPOCO registration);
 
 		/*
 		Task<Domain.Registration> ById(int id);
-
 		Task<vwRegistrationShell> ByEmail(string email);
-		
-
 		Task<int> Update(RegistrationPOCO registration);
 		Task<int> Delete(int id);
 		Task<List<Domain.Notes>> GetNotes(BaseRegistrationSortSmartEnum sort);
@@ -36,6 +32,7 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration.Data
 
 	public class RegistrationRepository : BaseRepositoryAsync, IRegistrationRepository
 	{
+		const int ViolationInUniqueIndex = 2601;
 
 		public RegistrationRepository(IConfiguration config, ILogger<RegistrationRepository> logger) : base(config, logger)
 		{
@@ -126,8 +123,7 @@ FROM Sukkot.Registration WHERE Id = {id}";
 			});
 		}
 
-
-		public async Task<int> Create(RegistrationPOCO registration)
+		public async Task<Tuple<int, int, string>> Create(RegistrationPOCO registration)
 		{
 			base.Sql = "Sukkot.stpRegistrationInsert";
 			base.Parms = new DynamicParameters(new
@@ -141,9 +137,16 @@ FROM Sukkot.Registration WHERE Id = {id}";
 				Adults = registration.Adults,
 				ChildBig = registration.ChildBig,
 				ChildSmall = registration.ChildSmall,
+
+				/*
+				LocationEnum = registration.LocationSmartEnum,
+				CampId = registration.CampTypeSmartEnum, 
+				StatusId = registration.StatusSmartEnum, 
+				*/
 				LocationEnum = registration.LocationEnum,
-				CampId = registration.CampTypeEnum, // registration.CampId,
-				StatusId = registration.StatusEnum, // registration.StatusId,
+				CampId = registration.CampId, 
+				StatusId = registration.StatusId, 
+
 
 				AttendanceBitwise = registration.AttendanceBitwise,
 				LodgingDaysBitwise = registration.LodgingDaysBitwise,
@@ -156,26 +159,44 @@ FROM Sukkot.Registration WHERE Id = {id}";
 			});;
 
 			base.Parms.Add("@NewId", dbType: DbType.Int32, direction: ParameterDirection.Output);
+			base.Parms.Add("@ReturnValue", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue);
+
+			int NewId = 0;
+			int SprocReturnValue = 0;
+			string ReturnMsg = "";
 
 			return await WithConnectionAsync(async connection =>
 			{
-				base.log.LogDebug($"Inside {nameof(SukkotRepository)}!{nameof(Create)}; About to execute sql:{base.Sql}");
+				base.log.LogDebug($"Inside {nameof(RegistrationRepository)}!{nameof(Create)}; About to execute sql:{base.Sql}");
 				var affectedrows = await connection.ExecuteAsync(sql: base.Sql, param: base.Parms, commandType: System.Data.CommandType.StoredProcedure);
+				SprocReturnValue = base.Parms.Get<int>("ReturnValue");
 				int? x = base.Parms.Get<int?>("NewId");
 				if (x==null)
 				{
-					base.log.LogWarning($"NewId is null; returning as 0; Check dbo.ErrorLog for IX_Registration_EMail_Unique duplication Error; registration.EMail: {@registration.EMail}");
-					return 0;
+					if (SprocReturnValue == ViolationInUniqueIndex)
+					{
+						ReturnMsg = $"Database call did not insert a new record because it caused a Unique Index Violation; registration.EMail: {@registration.EMail}; ";
+						base.log.LogWarning($"...ReturnMsg: {ReturnMsg}; {Environment.NewLine} {base.Sql}");
+					}
+					else
+					{
+						ReturnMsg = $"Database call falied; registration.EMail: {@registration.EMail}; SprocReturnValue: {SprocReturnValue}";
+						base.log.LogWarning($"...ReturnMsg: {ReturnMsg}; {Environment.NewLine} {base.Sql}");
+					}
 				}
 				else
 				{
-					int NewId = int.TryParse(x.ToString(), out NewId) ? NewId : 0;
-					base.log.LogDebug($"Return NewId:{NewId}");
-					return NewId;
+					NewId = int.TryParse(x.ToString(), out NewId) ? NewId : 0;
+					ReturnMsg = $"Registration created for {registration.FamilyName}/{registration.EMail}; NewId={NewId}";
+					base.log.LogDebug($"...Return NewId:{NewId}");
 				}
+
+				return new Tuple<int, int, string>(NewId, SprocReturnValue, ReturnMsg);
 
 			});
 		}
+
+
 
 
 		/*
@@ -234,7 +255,7 @@ WHERE Id = {registration.Id};
 		}
 
 		*/
-		
+
 
 		/*
 
