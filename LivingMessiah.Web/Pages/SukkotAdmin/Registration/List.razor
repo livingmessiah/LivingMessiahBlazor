@@ -1,5 +1,56 @@
-﻿<h3>List</h3>
+﻿@*@using LivingMessiah.Web.Pages.SukkotAdmin.Registration.Domain*@
 
-@code {
+<div class="col-lg-12 control-section">
+	<div class="content-wrapper">
+		<div class="row mt-4">
 
-}
+			<SfGrid ID="Grid"
+							DataSource="@Registrations" @ref="Grid"
+							AllowSelection="true" AllowFiltering="true" AllowSorting="true">
+				<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+
+				@*  CommandClicked="OnSaveClicked" *@
+
+				<GridSortSettings>
+					<GridSortColumns>
+						<GridSortColumn Field="@nameof(Domain.Registration.FirstName)" Direction="SortDirection.Ascending" />
+					</GridSortColumns>
+				</GridSortSettings>
+
+				<GridEvents TValue="Domain.Registration" QueryCellInfo="CustomizeCell"></GridEvents>
+				@* ... RowSelected="RowSelectHandler" RowDeselected="RowDeSelectHandler" />*@
+
+			<GridColumns>
+
+				<GridColumn Field=@nameof(Domain.Registration.Id) HeaderText="Id" IsPrimaryKey="true" Width="30" AllowSorting="true" AllowFiltering="false">
+				</GridColumn>
+
+				<GridColumn Field=@nameof(Domain.Registration.FirstName) HeaderText="First" Width="50" AllowSorting="true">
+				</GridColumn>
+
+				<GridColumn Field=@nameof(Domain.Registration.FamilyName) HeaderText="Last" Width="50" AllowSorting="true">
+				</GridColumn>
+
+				<GridColumn Field=@nameof(Domain.Registration.SpouseName) HeaderText="Spouse" Width="50" AllowSorting="false" AllowFiltering="false">
+				</GridColumn>
+
+				<GridColumn Field=@nameof(Domain.Registration.EMail) HeaderText="Email" Width="80" AllowSorting="false" AllowFiltering="true">
+				</GridColumn>
+
+				<GridColumn Field=@nameof(Domain.Registration.Phone) HeaderText="Phone" Width="50" AllowSorting="false" AllowFiltering="false">
+				</GridColumn>
+
+				<GridColumn Field=@nameof(Domain.Registration.LocationName) HeaderText="Location" Width="70"
+										FilterSettings="@(new FilterSettings { Type = Syncfusion.Blazor.Grids.FilterType.CheckBox })">
+				</GridColumn>
+
+				<GridColumn Field=@nameof(Domain.Registration.StatusName) HeaderText="Status" Width="100"
+										FilterSettings="@(new FilterSettings { Type = Syncfusion.Blazor.Grids.FilterType.CheckBox })">
+				</GridColumn>
+
+			</GridColumns>
+
+			</SfGrid>
+		</div>
+	</div>
+</div>

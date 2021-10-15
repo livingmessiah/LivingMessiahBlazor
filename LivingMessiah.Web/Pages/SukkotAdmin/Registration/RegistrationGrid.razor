@@ -20,8 +20,7 @@
 			</ChildContent>
 			<ContentTemplate>
 
-				@* RegistrationId="null" *@
-				<AddForm></AddForm>
+				<AddForm IsEdit="false"></AddForm>
 
 			</ContentTemplate>
 		</TabItem>
@@ -32,17 +31,19 @@
 			</ChildContent>
 			<ContentTemplate>
 
-				<AddForm RegistrationId="61"></AddForm>
+				<AddForm IsEdit="true"></AddForm>
 
 			</ContentTemplate>
 		</TabItem>
 
 		<TabItem>
 			<ChildContent>
-				<TabHeader Text="List Registration"></TabHeader>
+				<TabHeader Text="List"></TabHeader>
 			</ChildContent>
 			<ContentTemplate>
+
 				<List></List>
+
 			</ContentTemplate>
 		</TabItem>
 

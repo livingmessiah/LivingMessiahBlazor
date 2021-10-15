@@ -32,10 +32,9 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration.Services
 		//string InformationMessage { get; set; }
 		Task<RegistrationVM> GetById(int id);
 		Task<Tuple<int, int, string>> Create(RegistrationVM registration);
-		Task<int> Update(RegistrationVM registration);
-		/*
-		 Task<Tuple<int, int, string>> Update(RegistrationVM registration);
+		Task<Tuple<int, int, string>> Update(RegistrationVM registration);
 
+		/*
 				Task<vwRegistration> Details(int id, ClaimsPrincipal user, bool showPrintInstructionMessage = false);
 				Task<vwRegistration> DeleteConfirmation(int id, ClaimsPrincipal user);
 				Task<int> Edit(RegistrationVM registration, ClaimsPrincipal user);
@@ -65,8 +64,7 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration.Services
 
 		public async Task<Tuple<int, int, string>> Create(RegistrationVM registrationVM)
 		{
-			Logger.LogInformation($"Inside {nameof(RegistrationService)}!{nameof(Create)}");
-			Logger.LogInformation($"...Calling {nameof(db.Create)}");
+			Logger.LogInformation($"Inside {nameof(RegistrationService)}!{nameof(Create)}; calling {nameof(db.Create)}");
 			try
 			{
 				//string email = await SvcClaims.GetEmail();	if (await SvcClaims.IsUserAuthoirized(email))	{	}
@@ -94,7 +92,7 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration.Services
 		{
 			if (dateList == null) { return 0; }
 
-			Logger.LogDebug($"Inside: {nameof(RegistrationService)}!{nameof(GetDaysBitwise)}, dateRangeEnum: {dateRangeEnum}");
+			//Logger.LogDebug($"Inside: {nameof(RegistrationService)}!{nameof(GetDaysBitwise)}, dateRangeEnum: {dateRangeEnum}");
 			DateRangeLocal DateRangeLocal = DateRangeLocal.FromEnum(dateRangeEnum);
 
 			int bitwise = 0;
@@ -105,7 +103,7 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration.Services
 				foreach (DateTime day in dateList)
 				{
 					a = DateFactory.GetAttendanceBitwise(day);
-					Logger.LogDebug($"......a:{a} for day:{day}");
+					//Logger.LogDebug($"......a:{a} for day:{day}");
 					bitwise = bitwise + a;
 				}
 			}
@@ -115,11 +113,11 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration.Services
 				{
 					int l = 0;
 					l = DateFactory.GetLodgingBitwise(day);
-					Logger.LogDebug($"......l:{l} for day:{day}");
+					//Logger.LogDebug($"......l:{l} for day:{day}");
 					bitwise = bitwise + l;
 				}
 			}
-			Logger.LogDebug($"...bitwise: {bitwise}");
+			//Logger.LogDebug($"...bitwise: {bitwise}");
 			return bitwise;
 		}
 
@@ -231,13 +229,10 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration.Services
 			//Logger.LogDebug($"...LocationEnum: {registration.LocationEnum}");
 			return registration;
 		}
-		/**/
 
-		//public async Task<Tuple<int, int, string>> Update(RegistrationVM registrationVM)
-		public async Task<int> Update(RegistrationVM registrationVM)
+		public async Task<Tuple<int, int, string>> Update(RegistrationVM registrationVM)
 		{
-			Logger.LogInformation($"Inside {nameof(RegistrationService)}!{nameof(Update)}");
-			int count = 0;
+			Logger.LogInformation($"Inside {nameof(RegistrationService)}!{nameof(Update)}; calling {nameof(db.Update)}");
 
 			try
 			{
@@ -257,9 +252,9 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration.Services
 				registrationVM.AttendanceBitwise = GetDaysBitwise(registrationVM.AttendanceDateList, DateRangeEnum.AttendanceDays);
 				registrationVM.LodgingDaysBitwise = GetDaysBitwise(registrationVM.LodgingDateList, DateRangeEnum.LodgingDays);
 
-				Logger.LogInformation($"...Calling {nameof(db.Update)}");
-				count = await db.Update(DTO_From_VM_To_DB(registrationVM));
-				Logger.LogInformation($"Registration updated for {registrationVM.FamilyName}/{registrationVM.EMail}; count={count}");
+				var sprocTuple = await db.Update(DTO_From_VM_To_DB(registrationVM));
+				Logger.LogInformation($"Registration updated for {registrationVM.FamilyName}/{registrationVM.EMail}");
+				return sprocTuple;
 			}
 			catch (Exception ex)
 			{
@@ -268,7 +263,7 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration.Services
 				ExceptionMessage += ex.Message ?? "-- ex.Message was null --";
 				throw new InvalidOperationException(ExceptionMessage);
 			}
-			return count;
+
 		}
 
 		private static string DumpDateRange(DateTime[] dateList)

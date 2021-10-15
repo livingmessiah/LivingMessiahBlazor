@@ -29,8 +29,8 @@
 		public const string RegistrationWalkThrough = "sukkot-registration-walkthrough-users-manual.pdf";
 		public const string PayPalWalkThrough = "sukkot-making-a-payment-with-paypal.pdf";
 
-		
-		
+
+
 		//welcome-vision-mission-resolve.pdf
 		//public const string HouseRules = "sukkot-2020-house-rules.pdf";
 
@@ -99,4 +99,12 @@ Make the check payable to <b>Living Messiah</b> and attach it to the printed out
 ";
 	}
 
+	// ToDo: maybe this does not belong here?
+	public static class SqlServer
+	{
+		public const int ReturnValueOk = 0;
+		public const int ReturnValueViolationInUniqueIndex = 2601;
+		public const string ReturnValueName = "ReturnValue";
+		public const string ReturnValueParm = "@ReturnValue";
+	}
 }

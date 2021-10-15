@@ -5,10 +5,15 @@ using Microsoft.Extensions.Logging;
 
 using LivingMessiah.Web.Pages.SukkotAdmin.Registration.Services; // using service, don't need .Data;
 using LivingMessiah.Web.Pages.SukkotAdmin.Registration.Domain;
+using LivingMessiah.Web.Pages.SukkotAdmin.Registration.Data;
 using LivingMessiah.Web.Pages.SukkotAdmin.Enums;
 
 using static LivingMessiah.Web.Services.Auth0;
 using Microsoft.AspNetCore.Authorization;
+using static LivingMessiah.Web.Pages.Sukkot.Constants.SqlServer;
+
+using Syncfusion.Blazor.DropDowns;
+using System.Collections.Generic;
 
 namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration
 {
@@ -17,6 +22,9 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration
 	{
 		[Inject]
 		public IRegistrationService svc { get; set; }
+
+		[Inject]
+		public IRegistrationRepository db { get; set; }
 
 		[Inject]
 		public ILogger<AddForm> Logger { get; set; }
@@ -31,70 +39,128 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration
 		protected bool CanEditCampType => RegistrationVM.LocationEnum == SukkotApi.Domain.Enums.LocationEnum.WildernessRanch;
 
 		[Parameter]
-		public int? RegistrationId { get; set; }
+		public bool IsEdit { get; set; } = false;
 
+		private bool ShowEditForm = false;
+
+		public List<RegistrationLookup> RegistrationLookupList { get; set; }
 
 		private string Title = "";
 
-
 		protected override async Task OnInitializedAsync()
 		{
-			Logger.LogDebug($"Inside {nameof(AddForm)}!{nameof(OnInitializedAsync)}; RegistrationId: {RegistrationId?? 0}");
+			Logger.LogDebug($"Inside {nameof(AddForm)}!{nameof(OnInitializedAsync)}; {nameof(IsEdit)}: {IsEdit}");
 			InitializeErrorHandling();
 
-			if (RegistrationId is null)
+			if (!IsEdit)
 			{
-				Title = "Registration " + "Add";
+				Title = "Registration Add";
 				RegistrationVM = new RegistrationVM();
 			}
 			else
 			{
-				int Id = RegistrationId.HasValue ? RegistrationId.Value : 0;
-				Title = "Registration Edit " + Id;
-
+				Title = "Registration Edit ";
 				try
 				{
-					RegistrationVM = await svc.GetById(Id);
+					RegistrationLookupList = await db.PopulateRegistrationLookup();
 				}
 				catch (Exception)
 				{
 					DatabaseError = true;
-					DatabaseErrorMsg = $"Error reading from database; Id: {Id}";
+					DatabaseErrorMsg = $"Error getting registration lookup from database";
 				}
-				
 			}
 		}
+
+		#region AutoComplete
+
+		private int SelectedRegistrantId = 0;
+		private string SelectedRegistrantName = "";
+
+		private void OnValueChanged(ChangeEventArgs<string, RegistrationLookup> args)
+		{
+			if (String.IsNullOrEmpty(args.Value))
+			{
+				SelectedRegistrantId = 0;
+				ShowEditForm = false;
+			}
+		}
+
+		public async Task OnSelect(SelectEventArgs<RegistrationLookup> args)
+		{
+			SelectedRegistrantId = int.TryParse(args.ItemData.ID, out SelectedRegistrantId) ? SelectedRegistrantId : 0;
+			await GetRegistration(SelectedRegistrantId);
+		}
+
+		private async Task GetRegistration(int registrationId)
+		{
+			Logger.LogDebug($"Inside {nameof(AddForm)}!{nameof(GetRegistration)}; registrationId:{registrationId}");
+			try
+			{
+				DatabaseWarning = false;
+				DatabaseWarningMsg = "";
+				RegistrationVM = await svc.GetById(registrationId);
+				if (RegistrationVM == null)
+				{
+					DatabaseWarning = true;
+					DatabaseWarningMsg = $"Registration NOT FOUND; registrationId:{registrationId}";
+				}
+				else
+				{
+					Title = "Registration Edit " + registrationId;
+					ShowEditForm = true;
+				}
+			}
+			catch (Exception ex)
+			{
+				DatabaseError = true;
+				DatabaseErrorMsg = $"Error reading database";
+				Logger.LogError(ex, $"...{DatabaseErrorMsg}");
+			}
+			StateHasChanged();  // https://stackoverflow.com/questions/56436577/blazor-form-submit-needs-two-clicks-to-refresh-view
+		}
+
+#endregion
+
+		#region Submit
+		private const string CreateErrMsg = "Error updating to database";
+		private const string UpdateErrMsg = "Error adding to database";
 
 		protected async Task HandleValidSubmit()
 		{
 			InitializeErrorHandling();
-			Logger.LogDebug($"Inside {nameof(HandleValidSubmit)}, calling {nameof(svc.Create)}); RegistrationId: {RegistrationId ?? 0}");
+			Logger.LogDebug($"Inside {nameof(HandleValidSubmit)}, {nameof(IsEdit)}: {IsEdit}");
 
-			const int ViolationInUniqueIndex = 2601;
-
-			int Id = RegistrationId.HasValue ? RegistrationId.Value : 0;
-
-			if (Id !=0 )
+			if (IsEdit)
 			{
 				await Update();
 			}
 			else
 			{
+				await Create();
+			}
+
+		}
+
+		private async Task Create()
+		{
+			//RegistrationVM.StatusSmartEnum = BaseStatusSmartEnum.EmailConfirmation;
+
 			try
 			{
 				RegistrationVM.Id = 0;
 				RegistrationVM.StatusSmartEnum = BaseStatusSmartEnum.EmailConfirmation;
-				
+
 				var sprocTuple = await svc.Create(RegistrationVM);
 				if (sprocTuple.Item1 != 0)
 				{
 					DatabaseInformation = true;
 					DatabaseInformationMsg = $"{sprocTuple.Item3}";
 					RegistrationVM = new RegistrationVM();
-	}
+				}
 				else
 				{
-					if (sprocTuple.Item2 == ViolationInUniqueIndex)
+					if (sprocTuple.Item2 == ReturnValueViolationInUniqueIndex)
 					{
 						DatabaseWarning = true;
 						DatabaseWarningMsg = sprocTuple.Item3;
@@ -110,39 +176,31 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration
 			catch (Exception)
 			{
 				DatabaseError = true;
-				DatabaseErrorMsg = $"Error adding to database";
-				// This seems like overkill as it's being logged in the service
-				//Logger.LogError($"...Logging svc returned {nameof(svc.ExceptionMessage)} message {svc.ExceptionMessage}");
+				DatabaseErrorMsg = CreateErrMsg;
 			}
-
-			}
-
 
 		}
 
-
 		private async Task Update()
 		{
-			InitializeErrorHandling();
-			Logger.LogDebug($"Inside {nameof(Update)}, calling {nameof(svc.Update)}); RegistrationId: {RegistrationId ?? 0}");
+			//RegistrationVM.StatusSmartEnum = BaseStatusSmartEnum.EmailConfirmation;
 
-			const int ViolationInUniqueIndex = 2601;
-
-			int count = 0;
 			try
 			{
-				count = await svc.Update(RegistrationVM);
-				/*
+				//var UpdateSprocTuple = new Tuple<int, int, string>(RowsAffected, ReturnValue, ReturnMsg);
+
+
+				/*	*/
 				var sprocTuple = await svc.Update(RegistrationVM);
 				if (sprocTuple.Item1 != 0)
 				{
 					DatabaseInformation = true;
 					DatabaseInformationMsg = $"{sprocTuple.Item3}";
-					RegistrationVM = new RegistrationVM();
+					RegistrationVM = await svc.GetById(RegistrationVM.Id); //ToDo: do I need to refresh the data?
 				}
 				else
 				{
-					if (sprocTuple.Item2 == ViolationInUniqueIndex)
+					if (sprocTuple.Item2 == ReturnValueViolationInUniqueIndex)
 					{
 						DatabaseWarning = true;
 						DatabaseWarningMsg = sprocTuple.Item3;
@@ -153,20 +211,20 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration
 						DatabaseErrorMsg = sprocTuple.Item3;
 					}
 				}
-				*/
+			
+
 			}
 			catch (Exception)
 			{
 				DatabaseError = true;
-				DatabaseErrorMsg = $"Error updating to database";
+				DatabaseErrorMsg = UpdateErrMsg;
 			}
-
-
 		}
+		#endregion
 
 		#region ErrorHandling
 
-		private void InitializeErrorHandling() 
+		private void InitializeErrorHandling()
 		{
 			DatabaseInformationMsg = "";
 			DatabaseInformation = false;

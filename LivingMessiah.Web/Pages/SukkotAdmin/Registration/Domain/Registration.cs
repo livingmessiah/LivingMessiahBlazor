@@ -18,6 +18,13 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration.Domain
 
 		public int StatusId { get; set; }
 		public BaseStatusSmartEnum BaseStatusSmartEnum { get; set; }
+		public string StatusName
+		{
+			get
+			{
+				return BaseStatusSmartEnum.FromValue(StatusId).Name;
+			}
+		}
 
 		public int CampId { get; set; }
 		public BaseCampTypeSmartEnum BaseCampTypeSmartEnum { get; set; }

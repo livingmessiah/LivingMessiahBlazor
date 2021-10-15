@@ -22,9 +22,9 @@ namespace LivingMessiah.Web.Pages.Sukkot
 		public const string Dates = "Sundown Wednesday, October 20, through sundown Thursday, October 28th";
 
 		//ToDo: fix this
-		public const string ArrivalDate = "Wednesday September 30th";
-		public const string CleanupDate = "Saturday, October 10th";
-		public const string ShabbatServiceDate = "October 3rd";
+		//public const string ArrivalDate = "Wednesday September 30th";
+		//public const string CleanupDate = "Saturday, October 10th";
+		//public const string ShabbatServiceDate = "October 3rd";
 
 
 		//public RenderFragment DynamicContent = builder =>

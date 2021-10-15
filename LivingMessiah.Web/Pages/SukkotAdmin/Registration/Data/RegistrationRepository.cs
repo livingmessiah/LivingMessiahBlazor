@@ -7,10 +7,10 @@ using Dapper;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using SukkotApi.Data;  // ToDo: Move this to LivingMessiah.Web.Data
-using Domain = LivingMessiah.Web.Pages.SukkotAdmin.Registration.Domain;
 using LivingMessiah.Web.Pages.SukkotAdmin.Registration;
 using LivingMessiah.Web.Pages.SukkotAdmin.Enums;
 using LivingMessiah.Web.Pages.SukkotAdmin.Registration.Domain;
+using static LivingMessiah.Web.Pages.Sukkot.Constants.SqlServer;
 
 namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration.Data
 {
@@ -20,8 +20,9 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration.Data
 		Task<List<Domain.Registration>> GetAll();  //BaseRegistrationSortSmartEnum sort
 		Task<RegistrationPOCO> GetPocoById(int id);
 		Task<Tuple<int, int, string>> Create(RegistrationPOCO registration);
-		Task<int> Update(RegistrationPOCO registration);
-		
+		Task<Tuple<int, int, string>> Update(RegistrationPOCO registration);
+
+		Task<List<RegistrationLookup>> PopulateRegistrationLookup();  // copied from DonationRepository
 		/*
 		Task<Domain.Registration> ById(int id);
 		Task<vwRegistrationShell> ByEmail(string email);
@@ -33,8 +34,6 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration.Data
 
 	public class RegistrationRepository : BaseRepositoryAsync, IRegistrationRepository
 	{
-		const int ViolationInUniqueIndex = 2601;
-
 		public RegistrationRepository(IConfiguration config, ILogger<RegistrationRepository> logger) : base(config, logger)
 		{
 		}
@@ -42,6 +41,20 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration.Data
 		public string BaseSqlDump
 		{
 			get { return base.SqlDump; }
+		}
+
+		public async Task<List<RegistrationLookup>> PopulateRegistrationLookup()
+		{
+			base.Sql = $@"
+SELECT Id AS ID, Sukkot.udfFormatName(1, FamilyName, FirstName, NULL, NULL) AS Text
+FROM Sukkot.Registration
+ORDER BY FirstName
+";
+			return await WithConnectionAsync(async connection =>
+			{
+				var rows = await connection.QueryAsync<RegistrationLookup>(base.Sql);
+				return rows.ToList();
+			});
 		}
 
 		//BaseDonationStatusFilterSmartEnum filter, string sortAndOrder
@@ -105,8 +118,6 @@ WHERE Id = @id
 		*/
 
 
-
-
 		public async Task<RegistrationPOCO> GetPocoById(int id)
 		{
 			base.Sql = $@"
@@ -145,8 +156,8 @@ FROM Sukkot.Registration WHERE Id = {id}";
 				StatusId = registration.StatusSmartEnum, 
 				*/
 				LocationEnum = registration.LocationEnum,
-				CampId = registration.CampId, 
-				StatusId = registration.StatusId, 
+				CampId = registration.CampId,
+				StatusId = registration.StatusId,
 
 				AttendanceBitwise = registration.AttendanceBitwise,
 				LodgingDaysBitwise = registration.LodgingDaysBitwise,
@@ -156,10 +167,10 @@ FROM Sukkot.Registration WHERE Id = {id}";
 				WillHelpWithMeals = 0,
 				Avitar = registration.Avitar,
 				Notes = registration.Notes,
-			});;
+			});
 
 			base.Parms.Add("@NewId", dbType: DbType.Int32, direction: ParameterDirection.Output);
-			base.Parms.Add("@ReturnValue", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue);
+			base.Parms.Add(ReturnValueParm, dbType: DbType.Int32, direction: ParameterDirection.ReturnValue);
 
 			int NewId = 0;
 			int SprocReturnValue = 0;
@@ -167,13 +178,13 @@ FROM Sukkot.Registration WHERE Id = {id}";
 
 			return await WithConnectionAsync(async connection =>
 			{
-				base.log.LogDebug($"Inside {nameof(RegistrationRepository)}!{nameof(Create)}; About to execute sql:{base.Sql}");
+				base.log.LogDebug($"Inside {nameof(RegistrationRepository)}!{nameof(Create)}, {nameof(registration.EMail)}:{registration.EMail}; a about to execute SPROC: {base.Sql}");
 				var affectedrows = await connection.ExecuteAsync(sql: base.Sql, param: base.Parms, commandType: System.Data.CommandType.StoredProcedure);
-				SprocReturnValue = base.Parms.Get<int>("ReturnValue");
+				SprocReturnValue = base.Parms.Get<int>(ReturnValueName);
 				int? x = base.Parms.Get<int?>("NewId");
-				if (x==null)
+				if (x == null)
 				{
-					if (SprocReturnValue == ViolationInUniqueIndex)
+					if (SprocReturnValue == ReturnValueViolationInUniqueIndex)
 					{
 						ReturnMsg = $"Database call did not insert a new record because it caused a Unique Index Violation; registration.EMail: {@registration.EMail}; ";
 						base.log.LogWarning($"...ReturnMsg: {ReturnMsg}; {Environment.NewLine} {base.Sql}");
@@ -196,52 +207,70 @@ FROM Sukkot.Registration WHERE Id = {id}";
 			});
 		}
 
-		public async Task<int> Update(RegistrationPOCO registration)
+		public async Task<Tuple<int, int, string>> Update(RegistrationPOCO registration)
 		{
-			/*
-			LocationEnum = registration.LocationSmartEnum,
-			CampId = registration.CampTypeSmartEnum, 
-			StatusId = registration.StatusSmartEnum, 
-			*/
+			base.Sql = "Sukkot.stpRegistrationUpdate";
+			base.Parms = new DynamicParameters(new
+			{
+				Id = registration.Id,
+				FamilyName = registration.FamilyName,
+				FirstName = registration.FirstName,
+				SpouseName = registration.SpouseName,
+				OtherNames = registration.OtherNames,
+				EMail = registration.EMail,
+				Phone = registration.Phone,
+				Adults = registration.Adults,
+				ChildBig = registration.ChildBig,
+				ChildSmall = registration.ChildSmall,
+				AttendanceBitwise = registration.AttendanceBitwise,
+				LodgingDaysBitwise = registration.LodgingDaysBitwise,
+				LocationEnum = registration.LocationEnum,
+				CampId = registration.CampId,
+				StatusId = registration.StatusId,
+				WillHelpWithMeals = registration.WillHelpWithMealsToInt,
+				LmmDonation = registration.LmmDonation,
+				AssignedLodging = registration.AssignedLodging,
+				Notes = registration.NotesScrubbed,
+				Avitar = registration.Avitar
+			});
 
-			base.Sql = $@"
-UPDATE Sukkot.Registration SET 
-	FamilyName = N'{registration.FamilyName}',
-	FirstName = N'{registration.FirstName}',
-	SpouseName = N'{registration.SpouseName}',
-	OtherNames = N'{registration.OtherNames}',
-	EMail = N'{registration.EMail}',
-	Phone = N'{registration.Phone}',
-	Adults = {registration.Adults},
-	ChildBig = {registration.ChildBig},
-	ChildSmall = {registration.ChildSmall},
+			base.Parms.Add(ReturnValueParm, dbType: DbType.Int32, direction: ParameterDirection.ReturnValue);
 
-	AttendanceBitwise = {registration.AttendanceBitwise},
-	LodgingDaysBitwise = {registration.LodgingDaysBitwise},
+			int RowsAffected = 0;
+			int SprocReturnValue = 0;
+			string ReturnMsg = "";
 
-	LocationEnum = registration.LocationEnum,
-	CampId = registration.CampId, 
-	StatusId = registration.StatusId, 
-
-	WillHelpWithMeals = {registration.WillHelpWithMealsToInt}, 
-	LmmDonation = {registration.LmmDonation},
-	AssignedLodging = N'{registration.AssignedLodging}',
-	Notes = N'{registration.NotesScrubbed}',
-	Avitar = N'{registration.Avitar}'
-WHERE Id = {registration.Id};
-";
 			return await WithConnectionAsync(async connection =>
 			{
-				var count = await connection.ExecuteAsync(sql: base.Sql);
-				return count;
+				base.log.LogDebug($"Inside {nameof(RegistrationRepository)}!{nameof(Update)}, {nameof(registration.Id)}:{registration.Id}; about to execute SPROC: { base.Sql}");
+				RowsAffected = await connection.ExecuteAsync(sql: base.Sql, param: base.Parms, commandType: System.Data.CommandType.StoredProcedure);
+				SprocReturnValue = base.Parms.Get<int>(ReturnValueName);
+
+				if (SprocReturnValue != ReturnValueOk)
+				{
+					if (SprocReturnValue == ReturnValueViolationInUniqueIndex)
+					{
+						ReturnMsg = $"Database call did not update the record because it caused a Unique Index Violation; registration.EMail: {@registration.EMail}; ";
+						base.log.LogWarning($"...ReturnMsg: {ReturnMsg}; {Environment.NewLine} {base.Sql}");
+					}
+					else
+					{
+						ReturnMsg = $"Database call falied; {nameof(registration.Id)}:{registration.Id}, {nameof(registration.EMail)}:{registration.EMail}; SprocReturnValue: {SprocReturnValue}";
+						base.log.LogWarning($"...ReturnMsg: {ReturnMsg}; {Environment.NewLine} {base.Sql}");
+					}
+				}
+				else
+				{
+					ReturnMsg = $"Registration updated for {registration.FamilyName}/{registration.EMail}";
+				}
+
+				return new Tuple<int, int, string>(RowsAffected, SprocReturnValue, ReturnMsg);
+
+
+
 			});
 		}
 
-			//base.Parms = new DynamicParameters(new {
-			//	RegistrationId = donation.RegistrationId,
-			//	CreateDate = donation.CreateDate
-			//});		 
-		
 
 		/*
 		public async Task<int> Delete(int id)

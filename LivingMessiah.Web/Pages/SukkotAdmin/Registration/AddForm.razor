@@ -1,276 +1,307 @@
 ﻿@using static LivingMessiah.Web.Services.Auth0
 @using LivingMessiah.Web.Shared.Sukkot
 @using static SukkotApi.Domain.Constants @* Lodging Rate*@
+@using LivingMessiah.Web.Pages.SukkotAdmin.Registration.Domain
 
+@using LivingMessiah.Web.Pages.SukkotAdmin.Donations.Domain
 
 <LoadingComponent IsLoading="RegistrationVM==null">
 
-	<EditForm Model="RegistrationVM"
-						OnValidSubmit="HandleValidSubmit"
-						class="card card-body bg-light mt-5">
-		<DataAnnotationsValidator />
-		<ValidationSummary />
-
-		<fieldset class="py-1 my-0">
-			<legend class="text-success text-center"> @Title</legend>
-		</fieldset>
-
-		<fieldset class="mt-3">
-			<legend class="text-primary">Contact Information</legend>
-
-			<div class="row mt-n2">
-
-				<div class="col-sm-4">
-					<div class="form-group">
-						<label for="familyName" class="control-label">Family Name</label>
-						<InputText id="familyName" class="form-control" @bind-Value="RegistrationVM.FamilyName" />
-						<ValidationMessage For="@(() => RegistrationVM.FamilyName)" />
-					</div>
-				</div>
-
-				<div class="col-sm-4">
-					<div class="form-group">
-						<label for="firstName" class="control-label">First Name</label>
-						<InputText id="firstName" class="form-control" @bind-Value="RegistrationVM.FirstName" />
-						<ValidationMessage For="@(() => RegistrationVM.FirstName)" />
-					</div>
-				</div>
-
-				<div class="col-sm-4">
-					<div class="form-group">
-						<label for="spouseName" class="control-label">Spouses Name</label>
-						<InputText id="spouseName" class="form-control" @bind-Value="RegistrationVM.SpouseName" />
-						<ValidationMessage For="@(() => RegistrationVM.SpouseName)" />
-					</div>
-				</div>
-
+	@if (IsEdit)
+	{
+	<div class="row mt-2">
+		
+		<div class="col-8">
+			<div class="card border-info">
+				<SfAutoComplete Placeholder="Select a Registrant to edit" @bind-Value="@SelectedRegistrantName"
+												DataSource="@RegistrationLookupList">
+					<AutoCompleteFieldSettings Value="Text"></AutoCompleteFieldSettings>
+					<AutoCompleteEvents TItem="RegistrationLookup"
+															ValueChange="OnValueChanged"
+															TValue="string"
+															OnValueSelect="OnSelect"></AutoCompleteEvents>
+				</SfAutoComplete>
 			</div>
+		</div>
 
-			<div class="row">
+		<div class="col-4">
+			<p>Filter by name</p>
+		</div>
+	</div>
 
-				<div class="col-sm-4">
-					<div class="form-group">
-						<label for="otherNames" class="control-label">Other Names</label>
-						<InputText id="otherNames" class="form-control" @bind-Value="RegistrationVM.OtherNames" />
-						<ValidationMessage For="@(() => RegistrationVM.OtherNames)" />
-					</div>
-				</div>
+	}
 
-				<div class="col-sm-4">
-					<div class="form-group">
-						<label for="email" class="control-label">Email</label>
-						<InputText id="email" class="form-control" @bind-Value="RegistrationVM.EMail" placeholder="email" />
-						<ValidationMessage For="@(() => RegistrationVM.EMail)" />
-					</div>
-				</div>
+	@if (!IsEdit | (IsEdit & ShowEditForm))
+	{
 
-				<div class="col-sm-4">
-					<div class="form-group">
-						<label for="phone" class="control-label">Phone</label>
-						<InputText id="phone" class="form-control" @bind-Value="RegistrationVM.Phone" placeholder="phone (optional)" />
-						<ValidationMessage For="@(() => RegistrationVM.Phone)" />
-					</div>
-				</div>
+		<EditForm Model="RegistrationVM"
+							OnValidSubmit="HandleValidSubmit"
+							class="card card-body bg-light mt-5">
+			<DataAnnotationsValidator />
+			<ValidationSummary />
 
-			</div>
-
-		</fieldset>
-
-
-		<fieldset class="mt-3">
-			<legend class="text-primary">Location</legend>
-			<div class="row mt-n2">
-
-				<div class="col-sm-4">
-					<div class="card bg-light mb-3">
-						@*<div class="card-header"></div>*@
-						<div class="card-body">
-							@*<h4 class="card-title">Attendance</h4>*@
-							<p class="card-text">Sukkot 2021 is a unique year in that we have <b>three</b> locations which to select from.</p>
-						</div>
-					</div>
-				</div>
-
-				@* Required ValidationMessage doesn't work*@
-				<div class="col-sm-8">
-					<label for="locationEnum" class="control-label">Location</label>
-					<InputSelectEnum @bind-Value="RegistrationVM.LocationEnum"
-													 class="form-control" id="locationEnum" />
-					<ValidationMessage For="@(() => RegistrationVM.LocationEnum)" />
-				</div>
-
-			</div>
-		</fieldset>
-
-
-		<fieldset class="mt-3">
-			<legend class="text-primary">Attendance</legend>
-			<div class="row mt-n2">
-
-				<div class="col-sm-4">
-					<div class="card bg-light mb-3">
-						@*<div class="card-header"></div>*@
-						<div class="card-body">
-							@*<h4 class="card-title">Attendance</h4>*@
-							<p class="card-text">What days will you be attending?  This helps us with planning.</p>
-						</div>
-					</div>
-				</div>
-
-				<div class="col-sm-8">
-					<div class="form-group">
-						@*<label for="attendanceDays" class="control-label">Select Dates</label>*@
-
-						<SfCalendar TValue="DateTime?"
-												IsMultiSelection="true" ShowTodayButton="false"
-												@bind-Values="@RegistrationVM.AttendanceDateList"
-												Min="@DateRangeAttendance.DateRange.MinDate"
-												Max="@DateRangeAttendance.DateRange.MaxDate">
-						</SfCalendar>
-
-					</div>
-				</div>
-
-			</div>
-		</fieldset>
-
-
-		@if (CanEditCampType)
-		{
+			<fieldset class="py-1 my-0">
+				<legend class="text-success text-center"> @Title</legend>
+			</fieldset>
 
 			<fieldset class="mt-3">
-				<legend class="text-primary">Lodging</legend>
+				<legend class="text-primary">Contact Information</legend>
+
 				<div class="row mt-n2">
 
 					<div class="col-sm-4">
 						<div class="form-group">
-							<label for="campType" class="control-label">Camp Type</label>
-							<InputSelectEnum @bind-Value="RegistrationVM.CampTypeEnum" class="form-control" />
-							<ValidationMessage For="@(() => RegistrationVM.CampTypeEnum)" />
+							<label for="familyName" class="control-label">Family Name</label>
+							<InputText id="familyName" class="form-control" @bind-Value="RegistrationVM.FamilyName" />
+							<ValidationMessage For="@(() => RegistrationVM.FamilyName)" />
 						</div>
 					</div>
-					<div class="col-sm-8">
-						<b>Cost Details <sup class="text-black-50">1</sup></b>
-						<ul class=" fa-ul">
-							<li><i class="fa-li fas fa-caret-right"></i>Tent (@LodgingRate.ToString("C0") per day for entire family)</li>
-							<li><i class="fa-li fas fa-caret-right"></i>RV or Camp Trailer (@LodgingRate.ToString("C0") per day for entire family)</li>
-							<li>
-								<i class="fa-li fas fa-caret-right"></i>Indoor Facility (@LodgingRate.ToString("C0") per day per person)<br />
-								<b>You need to bring your own bedding, towels and toiletries</b>
-							</li>
-						</ul>
+
+					<div class="col-sm-4">
+						<div class="form-group">
+							<label for="firstName" class="control-label">First Name</label>
+							<InputText id="firstName" class="form-control" @bind-Value="RegistrationVM.FirstName" />
+							<ValidationMessage For="@(() => RegistrationVM.FirstName)" />
+						</div>
 					</div>
+
+					<div class="col-sm-4">
+						<div class="form-group">
+							<label for="spouseName" class="control-label">Spouses Name</label>
+							<InputText id="spouseName" class="form-control" @bind-Value="RegistrationVM.SpouseName" />
+							<ValidationMessage For="@(() => RegistrationVM.SpouseName)" />
+						</div>
+					</div>
+
 				</div>
 
 				<div class="row">
 
 					<div class="col-sm-4">
+						<div class="form-group">
+							<label for="otherNames" class="control-label">Other Names</label>
+							<InputText id="otherNames" class="form-control" @bind-Value="RegistrationVM.OtherNames" />
+							<ValidationMessage For="@(() => RegistrationVM.OtherNames)" />
+						</div>
+					</div>
+
+					<div class="col-sm-4">
+						<div class="form-group">
+							<label for="email" class="control-label">Email</label>
+							<InputText id="email" class="form-control" @bind-Value="RegistrationVM.EMail" placeholder="email" />
+							<ValidationMessage For="@(() => RegistrationVM.EMail)" />
+						</div>
+					</div>
+
+					<div class="col-sm-4">
+						<div class="form-group">
+							<label for="phone" class="control-label">Phone</label>
+							<InputText id="phone" class="form-control" @bind-Value="RegistrationVM.Phone" placeholder="phone (optional)" />
+							<ValidationMessage For="@(() => RegistrationVM.Phone)" />
+						</div>
+					</div>
+
+				</div>
+
+			</fieldset>
+
+
+			<fieldset class="mt-3">
+				<legend class="text-primary">Location</legend>
+				<div class="row mt-n2">
+
+					<div class="col-sm-4">
 						<div class="card bg-light mb-3">
+							@*<div class="card-header"></div>*@
 							<div class="card-body">
-								@*<h4 class="card-title">Lodge Dates</h4>*@
-								<p class="card-text">What days will you be lodging?</p>
+								@*<h4 class="card-title">Attendance</h4>*@
+								<p class="card-text">Sukkot 2021 is a unique year in that we have <b>three</b> locations which to select from.</p>
+							</div>
+						</div>
+					</div>
+
+					@* Required ValidationMessage doesn't work*@
+					<div class="col-sm-8">
+						<label for="locationEnum" class="control-label">Location</label>
+						<InputSelectEnum @bind-Value="RegistrationVM.LocationEnum"
+														 class="form-control" id="locationEnum" />
+						<ValidationMessage For="@(() => RegistrationVM.LocationEnum)" />
+					</div>
+
+				</div>
+			</fieldset>
+
+
+			<fieldset class="mt-3">
+				<legend class="text-primary">Attendance</legend>
+				<div class="row mt-n2">
+
+					<div class="col-sm-4">
+						<div class="card bg-light mb-3">
+							@*<div class="card-header"></div>*@
+							<div class="card-body">
+								@*<h4 class="card-title">Attendance</h4>*@
+								<p class="card-text">What days will you be attending?  This helps us with planning.</p>
 							</div>
 						</div>
 					</div>
 
 					<div class="col-sm-8">
 						<div class="form-group">
-							@*<label for="lodgeDate" class="control-label">Select Dates</label>*@
-							<SfCalendar TValue="DateTime?" ShowTodayButton="false"
-													IsMultiSelection="true"
-													@bind-Values="@RegistrationVM.LodgingDateList"
-													Min="@DateRangeLodging.DateRange.MinDate"
-													Max="@DateRangeLodging.DateRange.MaxDate">
+							@*<label for="attendanceDays" class="control-label">Select Dates</label>*@
+
+							<SfCalendar TValue="DateTime?"
+													IsMultiSelection="true" ShowTodayButton="false"
+													@bind-Values="@RegistrationVM.AttendanceDateList"
+													Min="@DateRangeAttendance.DateRange.MinDate"
+													Max="@DateRangeAttendance.DateRange.MaxDate">
 							</SfCalendar>
+
 						</div>
 					</div>
 
 				</div>
 			</fieldset>
 
-		}
-
-
-		<fieldset class="mt-3">
-			<legend class="text-primary">People Count</legend>
-
-			<div class="row mt-n2">
-				<div class="col-sm-3">
-
-					<div class="form-group">
-
-						<label for="adults" class="control-label">Adults</label>
-						<InputNumber id="adults" class="form-control" @bind-Value="RegistrationVM.Adults" />
-						<ValidationMessage For="@(() => RegistrationVM.Adults)" />
-
-					</div>
-				</div>
-
-				<div class="col-sm-3">
-					<div class="form-group">
-						<label for="childBig" class="control-label">Child <sup>big</sup></label>
-						<InputNumber id="childBig" class="form-control" @bind-Value="RegistrationVM.ChildBig" />
-						<ValidationMessage For="@(() => RegistrationVM.ChildBig)" />
-					</div>
-				</div>
-
-				<div class="col-sm-3">
-					<div class="form-group">
-						<label for="childSmall" class="control-label">Child <sup>small</sup></label>
-						<InputNumber id="childSmall" class="form-control" @bind-Value="RegistrationVM.ChildSmall" />
-						<ValidationMessage For="@(() => RegistrationVM.ChildSmall)" />
-					</div>
-				</div>
-
-				<div class="col-sm-3">
-
-				</div>
-
-			</div>
-		</fieldset>
-
-		<fieldset class="mt-3">
-			<legend class="text-primary">Other</legend>
-			<div class="row mt-n2">
-				<div class="col-sm-12">
-					<div class="form-group">
-						<label for="notes" class="control-label"><small>Notes / Emergency Contact / Fellowship Attending</small></label>
-						<p class="">
-							Please include emergency contact and name of fellowship or congregation currently attending, if none list a personal reference
-						</p>
-						<InputTextArea id="notes" class="form-control" @bind-Value="RegistrationVM.Notes" />
-						<ValidationMessage For="@(() => RegistrationVM.Notes)" />
-
-					</div>
-				</div>
-			</div>
-
 
 			@if (CanEditCampType)
 			{
-				<div class="row mt-n1 mb-4">
-					<div class="col-12">
-						<p class="float-right">
-							If you are interested in volunteering to help with <b>music</b> or <b>praise and worship</b>, please note that here.
-						</p>
+
+				<fieldset class="mt-3">
+					<legend class="text-primary">Lodging</legend>
+					<div class="row mt-n2">
+
+						<div class="col-sm-4">
+							<div class="form-group">
+								<label for="campType" class="control-label">Camp Type</label>
+								<InputSelectEnum @bind-Value="RegistrationVM.CampTypeEnum" class="form-control" />
+								<ValidationMessage For="@(() => RegistrationVM.CampTypeEnum)" />
+							</div>
+						</div>
+						<div class="col-sm-8">
+							<b>Cost Details <sup class="text-black-50">1</sup></b>
+							<ul class=" fa-ul">
+								<li><i class="fa-li fas fa-caret-right"></i>Tent (@LodgingRate.ToString("C0") per day for entire family)</li>
+								<li><i class="fa-li fas fa-caret-right"></i>RV or Camp Trailer (@LodgingRate.ToString("C0") per day for entire family)</li>
+								<li>
+									<i class="fa-li fas fa-caret-right"></i>Indoor Facility (@LodgingRate.ToString("C0") per day per person)<br />
+									<b>You need to bring your own bedding, towels and toiletries</b>
+								</li>
+							</ul>
+						</div>
 					</div>
-				</div>
+
+					<div class="row">
+
+						<div class="col-sm-4">
+							<div class="card bg-light mb-3">
+								<div class="card-body">
+									@*<h4 class="card-title">Lodge Dates</h4>*@
+									<p class="card-text">What days will you be lodging?</p>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-sm-8">
+							<div class="form-group">
+								@*<label for="lodgeDate" class="control-label">Select Dates</label>*@
+								<SfCalendar TValue="DateTime?" ShowTodayButton="false"
+														IsMultiSelection="true"
+														@bind-Values="@RegistrationVM.LodgingDateList"
+														Min="@DateRangeLodging.DateRange.MinDate"
+														Max="@DateRangeLodging.DateRange.MaxDate">
+								</SfCalendar>
+							</div>
+						</div>
+
+					</div>
+				</fieldset>
+
 			}
 
-		</fieldset>
 
-		<div class="row">
-			<div class="col-sm-6">
-				<div class="form-group">
-					<button class="btn btn-success btn-lg">
-						<i class="fas fa-save"></i> Save
-					</button>
+			<fieldset class="mt-3">
+				<legend class="text-primary">People Count</legend>
+
+				<div class="row mt-n2">
+					<div class="col-sm-3">
+
+						<div class="form-group">
+
+							<label for="adults" class="control-label">Adults</label>
+							<InputNumber id="adults" class="form-control" @bind-Value="RegistrationVM.Adults" />
+							<ValidationMessage For="@(() => RegistrationVM.Adults)" />
+
+						</div>
+					</div>
+
+					<div class="col-sm-3">
+						<div class="form-group">
+							<label for="childBig" class="control-label">Child <sup>big</sup></label>
+							<InputNumber id="childBig" class="form-control" @bind-Value="RegistrationVM.ChildBig" />
+							<ValidationMessage For="@(() => RegistrationVM.ChildBig)" />
+						</div>
+					</div>
+
+					<div class="col-sm-3">
+						<div class="form-group">
+							<label for="childSmall" class="control-label">Child <sup>small</sup></label>
+							<InputNumber id="childSmall" class="form-control" @bind-Value="RegistrationVM.ChildSmall" />
+							<ValidationMessage For="@(() => RegistrationVM.ChildSmall)" />
+						</div>
+					</div>
+
+					<div class="col-sm-3">
+
+					</div>
+
+				</div>
+			</fieldset>
+
+			<fieldset class="mt-3">
+				<legend class="text-primary">Other</legend>
+				<div class="row mt-n2">
+					<div class="col-sm-12">
+						<div class="form-group">
+							<label for="notes" class="control-label"><small>Notes / Emergency Contact / Fellowship Attending</small></label>
+							<p class="">
+								Please include emergency contact and name of fellowship or congregation currently attending, if none list a personal reference
+							</p>
+							<InputTextArea id="notes" class="form-control" @bind-Value="RegistrationVM.Notes" />
+							<ValidationMessage For="@(() => RegistrationVM.Notes)" />
+
+						</div>
+					</div>
 				</div>
 
-			</div>
-		</div>
 
-	</EditForm>
+				@if (CanEditCampType)
+				{
+					<div class="row mt-n1 mb-4">
+						<div class="col-12">
+							<p class="float-right">
+								If you are interested in volunteering to help with <b>music</b> or <b>praise and worship</b>, please note that here.
+							</p>
+						</div>
+					</div>
+				}
+
+			</fieldset>
+
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="form-group">
+						<button class="btn btn-success btn-lg">
+							<i class="fas fa-save"></i> Save
+						</button>
+					</div>
+
+				</div>
+			</div>
+
+		</EditForm>
+
+	}
 
 </LoadingComponent>
 

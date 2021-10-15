@@ -50,6 +50,7 @@
     <PackageReference Include="Syncfusion.Blazor.Navigations" Version="19.2.0.62" />
     <PackageReference Include="Syncfusion.Blazor.Schedule" Version="19.2.0.62" />
     <PackageReference Include="Syncfusion.Blazor.TreeGrid" Version="19.2.0.62" />
+    <PackageReference Include="System.ValueTuple" Version="4.5.0" />
   </ItemGroup>
 
   <ItemGroup>
