@@ -62,6 +62,11 @@ namespace SukkotApi.Domain.Enums
 		{
 			return All.SingleOrDefault(r => String.Equals(r.Name, formatString, StringComparison.OrdinalIgnoreCase));
 		}
+
+		public static Location FromInt(int intValue)
+		{
+			return All.SingleOrDefault(r => r.Id == intValue);
+		}
 	}
 
 

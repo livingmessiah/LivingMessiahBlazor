@@ -64,7 +64,7 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration.Domain
 		 */
 		[Required(ErrorMessage = "A location is required")]
 		[DisplayName("Location")]
-		public SukkotApi.Domain.Enums.LocationEnum LocationEnum  { get; set; } = SukkotApi.Domain.Enums.LocationEnum.GreenhouseTrolleyHobbyFarm;
+		public SukkotApi.Domain.Enums.LocationEnum LocationEnum  { get; set; } // = SukkotApi.Domain.Enums.LocationEnum.GreenhouseTrolleyHobbyFarm;
 		public BaseLocationSmartEnum LocationSmartEnum { get; set; } 
 
 

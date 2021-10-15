@@ -210,7 +210,12 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration.Services
 				ChildBig = poco.ChildBig,
 				ChildSmall = poco.ChildSmall,
 				CampTypeSmartEnum = BaseCampTypeSmartEnum.FromValue(poco.CampId),
+
+				//ToDo: Fix Bug 032-AddForm-Loc-ddl-error
 				LocationSmartEnum = BaseLocationSmartEnum.FromValue(poco.LocationEnum),
+				//LocationEnum = SukkotApi.Domain.Enums.Location.FromInt(poco.LocationEnum),
+				//LocationEnum = poco.LocationEnum,
+
 				StatusSmartEnum = BaseStatusSmartEnum.FromValue(poco.StatusId),
 				AttendanceBitwise = poco.AttendanceBitwise,
 				AttendanceDateList = poco.AttendanceDateList,
