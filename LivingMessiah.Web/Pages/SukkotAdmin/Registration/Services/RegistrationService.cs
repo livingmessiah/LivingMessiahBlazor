@@ -197,6 +197,7 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration.Services
 		private RegistrationVM DTO_From_DB_To_VM(RegistrationPOCO poco)
 		{
 			Logger.LogDebug($"Inside {nameof(RegistrationService)}!{nameof(DTO_From_DB_To_VM)}");
+
 			RegistrationVM registration = new RegistrationVM
 			{
 				Id = poco.Id,
@@ -210,11 +211,9 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration.Services
 				ChildBig = poco.ChildBig,
 				ChildSmall = poco.ChildSmall,
 				CampTypeSmartEnum = BaseCampTypeSmartEnum.FromValue(poco.CampId),
-
-				//ToDo: Fix Bug 032-AddForm-Loc-ddl-error
 				LocationSmartEnum = BaseLocationSmartEnum.FromValue(poco.LocationEnum),
-				//LocationEnum = SukkotApi.Domain.Enums.Location.FromInt(poco.LocationEnum),
-				//LocationEnum = poco.LocationEnum,
+
+				LocationEnum = SukkotApi.Domain.Enums.Location.FromInt(poco.LocationEnum).LocationEnum,
 
 				StatusSmartEnum = BaseStatusSmartEnum.FromValue(poco.StatusId),
 				AttendanceBitwise = poco.AttendanceBitwise,
