@@ -43,7 +43,6 @@ namespace LivingMessiah.Data
 
 
 		// ToDo does this go with LivingMessiahAdmin as well
-		Task<List<Contact>> GetContacts(bool selectAll);
 		Task<int> UpdateContactSukkotInviteDate(int id);
 		Task<List<Download>> GetDownloads(bool selectAll, bool testEmails);
 		#endregion

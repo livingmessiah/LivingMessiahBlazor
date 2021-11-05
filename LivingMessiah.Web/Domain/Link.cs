@@ -10,6 +10,9 @@
 		public bool HomeSidebarUsage { get; set; }
 		public string HomeFloatRightHebrew { get; set; }
 		public string HomeTitleSuffix { get; set; } // shaMayim H8064"
+
+		public LivingMessiah.Domain.KeyDates.Enums.FeastDayEnum FeastDay { get; set; }
+
 		/*
 		public string Descr { get; set; }
 		public string FragmentId { get; set; }

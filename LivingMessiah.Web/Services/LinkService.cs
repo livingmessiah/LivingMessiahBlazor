@@ -2,6 +2,8 @@
 using LivingMessiah.Web.Domain;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Extensions.Options;
+using LivingMessiah.Web.Settings;
 
 namespace LivingMessiah.Web.Services
 {
@@ -11,19 +13,32 @@ namespace LivingMessiah.Web.Services
 		List<Link> GetHomeSidebarLinks();
 		List<LinkBasic> GetAdminLinks();
 		List<LinkBasic> GetDashboardLinks();
-
-		/*
 		List<Link> GetFeastLinks();
-		List<LinkBasic> GetMarkdownLinks();
-		*/
+		//List<LinkBasic> GetMarkdownLinks();
 	}
 
 	public class LinkService : ILinkService
 	{
+		public IOptions<AppSettings> AppSettings { get; set; }
+		public LinkService(IOptions<AppSettings> appSettings)
+		{
+			AppSettings = appSettings;
+		}
+
 		public List<Link> GetHomeSidebarLinks()
 		{
 			LinksFactory links = new LinksFactory();
-			return links.GetLinks().Where(x => x.HomeSidebarUsage == true).ToList();
+			if (AppSettings.Value.SukkotIsOpen)
+			{
+				return links.GetLinks()
+					.Where(x => x.HomeSidebarUsage == true)
+					.Union(links.GetFeastLinks().Where(z => z.FeastDay == LivingMessiah.Domain.KeyDates.Enums.FeastDayEnum.Tabernacles)).ToList();
+			}
+			else
+			{
+				return links.GetLinks().Where(x => x.HomeSidebarUsage == true).ToList();
+			}
+			
 		}
 
 		public List<Link> GetSitemapLinks()
@@ -35,7 +50,21 @@ namespace LivingMessiah.Web.Services
 		public List<LinkBasic> GetAdminLinks()
 		{
 			LinksFactory links = new LinksFactory();
-			return links.GetVideoProductionLinks().Union(links.GetEldersLinks()).ToList();
+			List<LinkBasic> feasts = new List<LinkBasic>();
+
+			foreach (Link link in GetFeastLinks())
+			{
+				feasts.Add(new LinkBasic() { Icon=link.Icon, Index=link.Index, Title=link.Title  });
+			}
+
+			if (feasts is not null)
+			{
+				return links.GetVideoProductionLinks().Union(links.GetEldersLinks()).Union(feasts).ToList();
+			}
+			else
+			{
+				return links.GetVideoProductionLinks().Union(links.GetEldersLinks()).ToList();
+			}
 		}
 
 		public List<LinkBasic> GetDashboardLinks()
@@ -43,18 +72,18 @@ namespace LivingMessiah.Web.Services
 			LinksFactory links = new LinksFactory();
 			return links.GetDashboardLinks().ToList();
 		}
-		/*
-
-		public List<LinkBasic> GetMarkdownLinks()
-		{
-			LinksFactory links = new LinksFactory();
-			return links.GetMarkdownLinks().ToList();
-		}
 
 		public List<Link> GetFeastLinks()
 		{
 			LinksFactory links = new LinksFactory();
 			return links.GetFeastLinks().ToList();
+		}
+
+		/*
+		public List<LinkBasic> GetMarkdownLinks()
+		{
+			LinksFactory links = new LinksFactory();
+			return links.GetMarkdownLinks().ToList();
 		}
 		*/
 	}
@@ -72,8 +101,6 @@ return _links.GetLinks().Where(x => x.HomeSidebarUsage == true).ToList();
 ...
 return _links.GetLinks().Where(x => x.SitemapUsage == true).ToList();
 */
-
-
 
 /*
 

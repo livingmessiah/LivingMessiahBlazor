@@ -14,6 +14,7 @@ using LivingMessiah.Data.Commands;
 using LivingMessiah.Web.Pages.SukkotAdmin.Donations.Data;
 using LivingMessiah.Web.Pages.SukkotAdmin.Registration.Data;
 using LivingMessiah.Web.Pages.SukkotAdmin.Registration.Services;
+using LivingMessiah.Web.Pages.Contacts.Data;
 
 //using Markdig;
 //using Markdig.Extensions.AutoIdentifiers;
@@ -42,6 +43,7 @@ namespace LivingMessiah.Web
 				.AddTransient<IRegistrationRepository, RegistrationRepository>()
 				.AddTransient<IDonationRepository, DonationRepository>()
 				.AddTransient<ISukkotAdminService, SukkotAdminService>()
+				.AddTransient<IContactRepository, ContactRepository>()
 
 				//ToDo Remove before publishing 
 				.AddTransient<Pages.BlazorExamples.ToDoSort.IFileService, Pages.BlazorExamples.ToDoSort.FileService>()

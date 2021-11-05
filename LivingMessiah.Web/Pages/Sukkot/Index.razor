@@ -25,217 +25,82 @@
 	</NotAuthorized>
 </AuthorizeView>
 
-
-<div class="d-print-none">
-	<div class="row">
-		<div class="col-12">
-			<img src="@LivingMessiah.Web.Pages.Sukkot.Constants.Blobs.UrlEvents(Other.Banner)"
-					 alt="@LivingMessiah.Web.Pages.Sukkot.Constants.Blobs.Url(Other.BannerAlt)"
-					 class="img-fluid rounded" />
+@if (SukkotIsOpen)
+{
+	<div class="d-print-none">
+		<div class="row">
+			<div class="col-12">
+				<img src="@LivingMessiah.Web.Pages.Sukkot.Constants.Blobs.UrlEvents(Other.Banner)"
+						 alt="@LivingMessiah.Web.Pages.Sukkot.Constants.Blobs.Url(Other.BannerAlt)"
+						 class="img-fluid rounded" />
+			</div>
 		</div>
 	</div>
-</div>
 
-@if (Other.IsRegistrationClosed)
-{
-	<div class="jumbotron">
-		<h1>
-			<span class="text-danger">Registration is CLOSED</span>
-		</h1>
-		<h3>
-			<span class="text-warning">
-				If you would like to join us for Sukkot, please	contact @ContactName at
-				<a href="mailto:@ContactEmail?Subject=@Title1" target="_top">@ContactEmail</a> &nbsp;<i class="far fa-envelope"></i>.
-			</span>
-		</h3>
-	</div>
-}
-
-
-<br />
-<p class="lead">
-	We will be celebrating Sukkot this year from <b>sundown </b>
-	<span class="far fa-calendar"></span>&nbsp; @((MarkupString)Dates),
-	at three different places (you choose).
-	<ol>
-		<li><span class="text-success"><b>Greenhouse Trolley Hobby Farm</b></span> near <b>Sierra Vista, AZ</b>.</li>
-		<li><span class="text-danger"><b>Wilderness Ranch</b></span> near <b>Show Low, AZ</b>.</li>
-		<li><span class="text-warning"><b>Windmill Ranch</b></span> near <b>Bisbee, AZ</b>.</li>
-	</ol>
-</p>
-
-<div class="card text-white bg-success">
-	<div class="card-header">
-		<h3><b>Green House Trolley</b></h3>
-	</div>
-	<div class="card-body">
-		<p class="lead">
-			Go to this Hip Camp <a href="https://www.hipcamp.com/en-US/discover/arizona/the-greenhouse-trolley-hobby-fa">link</a> to have a look.
-			Here is a <a href="https://goo.gl/maps/jx2z6vD4n58STAqq9">Google Map</a>&nbsp;<i class="fa fa-map-pin"></i>.
-		</p>
-	</div>
-</div>
-
-<div class="card text-white bg-danger my-3">
-	<div class="card-header">
-		<h3><b>Wilderness Ranch</b></h3>
-	</div>
-	<div class="card-body">
-		<p class="lead">
-			Go to <a href="http://www.wildernessranch.org/"><u>www.wildernessranch.org</u></a> to have a look.
-			Also, here is an informative <i class="fab fa-youtube"></i> <a href="https://youtu.be/FrLjByPhJGg"><u>video</u></a> showing the Wilderness Ranch facilities.
-			Here are directions to <a href="http://www.wildernessranch.org/maps.html" target="_blank"><u>Wilderness Ranch</u></a>
-			or <a href="https://goo.gl/maps/ky76HExS7HN2"><u>Google Map</u></a>&nbsp;<i class="fa fa-map-pin"></i>.
-		</p>
-	</div>
-	<div class="card-body">
-		<div class="card-title">
-			<h5>Camping</h5>
+	@if (Other.IsRegistrationClosed)
+	{
+		<div class="jumbotron">
+			<h1>
+				<span class="text-danger">Registration is CLOSED</span>
+			</h1>
+			<h3>
+				<span class="text-warning">
+					If you would like to join us for Sukkot, please	contact @ContactName at
+					<a href="mailto:@ContactEmail?Subject=@Title1" target="_top">@ContactEmail</a> &nbsp;<i class="far fa-envelope"></i>.
+				</span>
+			</h3>
 		</div>
+	}
+
+	<Introduction Dates="Sundown Wednesday, October 20, through sundown Thursday, October 28th"
+								LodgingRate="@LodgingRate.ToString("C0")">
+	</Introduction>
+
+	<Meals IsMealsAvailable="false"></Meals>
+
+	@if (!Other.IsRegistrationClosed)
+	{
+		<RegistrationInfo EarlyRegistrationLastDay="@RegistrationMeta.EarlyRegistrationLastDay.ToString("MMMM dd")"
+											EarlyRegistrationFee="@RegistrationMeta.EarlyRegistrationFee.ToString("C0")"
+											RegistrationLastDay="@RegistrationMeta.RegistrationLastDay.ToString("MMMM dd")"
+											RegistrationFee="@RegistrationMeta.RegistrationFee.ToString("C0")">
+		</RegistrationInfo>
+
+		<PaymentInfo></PaymentInfo>
+	}
+
+	<Documents></Documents>
+
+	@if (!Other.IsRegistrationClosed)
+	{
+		<br />
 		<p class="lead">
-			The facility has many different camping arrangements.
-			There are several fully equipped RV sites as well as numerous tent camping sites.
-			There are various cabins and "bunk houses" available to suit both families and singles. The cost to camp is minimal.
-			The rates are @LodgingRate.ToString("C0") per night for the RV or tent camp sites, regardless of how many people are in the group.
-			The individual cabins and bunkhouses are @LodgingRate.ToString("C0") per night per person.
+			Click the big green button to begin registration.
 		</p>
-	</div>
-</div>
 
-<div class="card ext-white bg-warning">
-	<div class="card-header">
-		<h3><b>Windmill Ranch</b> <i class="@LivingMessiah.Web.Links.WindmillRanch.Icon"></i> </h3>
-	</div>
-	<div class="card-body">
-		<p class="lead">
-			Have a look <a href="https://livingmessiah.com/windmillranch/"><u>here</u></a> on our website for more information.
-			Also, check out the <a href="https://goo.gl/maps/uYyVHisDgExpQLXL7"><u>Google Map</u></a>&nbsp;<i class="fa fa-map-pin"></i>.
-		</p>
-	</div>
-</div>
+		<div class="row">
+			<div class="col-12">
 
-@*<ul class="lead">
-		<li>We are planning to arrive at the camp on @ArrivalDate to begin setting up and will clean up camp on @((MarkupString)CleanupDate)</li>
-		<li>We will be holding Shabbat Service on @ShabbatServiceDate at the Wilderness Ranch in Show Low Arizona</li>
-	</ul>*@
+				<a class="btn btn-success btn-lg"
+					 href="@LivingMessiah.Web.Links.Sukkot.RegistrationShell">
+					Begin Registration
+					<i class="fas fa-caret-right"></i>
+				</a>
+			</div>
+		</div>
 
-@if (Other.IsMealsAvailable)
-{
-	<h3><span class="badge badge-warning">Meals</span></h3>
-	<p class="lead">
-		Because the facility has a good-sized commercial-grade kitchen, we are able to offer meals for those in our group who wish to partake.
-		Our own Chris Lengyel will be managing the kitchen and meal preparation and will need a good supply of helpers for preparation and clean-up - you will be asked to participate.
-		We plan to offer <b>2</b> (Brunch and Dinner) prepared meals each day (see below the <b>Document Packet</b> for more details).
-		<br />The cost is...
-	</p>
+	}
 
-	<blockquote class="text-warning">CHANGES FROM LAST YEAR IN <b>BOLD</b></blockquote>
+	<hr />
 
-	<p class="lead">
-		<ul>
-			<li><b>Only two meals Brunch and Dinner</b> both the same price</li>
-			<li>Adults $5.00 per person age <b>10</b> & above</li>
-			<li>Ages 6-<b>9 $2.50</b></li>
-			<li>Ages Under 5 free</li>
-			<li>We have added a <b>vegetarian</b> option</li>
-		</ul>
-	</p>
-
-	<p class="lead">
-		Of course, if you would like to supply all of your own food, that's fine.
-		We will try to accommodate those who have dietary restrictions if we know before Sukkot - see Chris to arrange this.
-	</p>
+	<SukkotTShirt></SukkotTShirt>
 
 }
 else
 {
-	@*<p class="lead">
-			Sorry, no meals will be offered this year.
-		</p>*@
-}
-
-@if (!Other.IsRegistrationClosed)
-{
-	<div class="card bg-light my-3">
-		<div class="card-header">
-			<h3><b>Registration</b></h3>
-		</div>
-		<div class="card-body">
-			<p class="lead">
-				Filling out the <a class="btn btn-success btn-sm" href="@LivingMessiah.Web.Links.Sukkot.RegistrationShell">registration form</a> is only available on line.
-				If you can not do that then contact one of the elders and we will fill it out for you.
-			</p>
-		</div>
-		<div class="card-body">
-			<h5 class="card-title mb-1">Registration Fee</h5>
-
-			<dl class="row ml-1">
-				<dt class="col-8">Early Registration Fee:</dt>
-				<dd class="col-4"><span class="float-right">@EarlyRegistrationFee.ToString("C0")</span></dd>
-				<dt class="col-8">Early Registration Last Day:</dt>
-				<dd class="col-4"><span class="float-right">@EarlyRegistrationLastDay.ToString("MMMM dd")</span></dd>
-			</dl>
-			<dl class="row ml-1">
-				<dt class="col-8">Regular Registration Fee:</dt>
-				<dd class="col-4"><span class="float-right">@RegistrationFee.ToString("C0")</span></dd>
-				<dt class="col-8">Registration Last Day:</dt>
-				<dd class="col-4"><span class="float-right">@RegistrationLastDay.ToString("MMMM dd")</span></dd>
-			</dl>
-
-			<p>Note, there is no lodging cost for <b>Greenhouse Trolley Hobby Farm</b> or the <b>Windmill Ranch</b></p>
-
-		</div>
+	<div class="jumbotron">
+		<h1>
+			<span class="text-danger">Registration is Over</span>
+		</h1>
 	</div>
-
-	<h3><span class="badge badge-warning">Payment</span></h3>
-	<p class="lead">
-		We offer two methods of payment.<br />
-	</p>
-	<p class="lead">
-		<span class="badge badge-info">1</span> The first and<u> preferred method</u> is <b>on-line</b>.
-		Go to the<a class="btn btn-success btn-sm" href="@LivingMessiah.Web.Links.Sukkot.RegistrationShell">	Registration</a> page and fill it out
-		(step 5 is the step to pay with PayPal).
-	</p>
-
-	<p class="lead">
-		<span class="badge badge-info">2</span> The second method is to pay with snail-mail<i class="far fa-envelope"></i>.
-		Mail a print out of your registration form with your deposit attached.
-		<address>
-			<strong>Living Messiah Ministries</strong><br>
-			19 North Robson #106<br>
-			Mesa, AZ 85201<br>
-			USA
-		</address>
-	</p>
-
-
-	<p class="lead">
-		Please see any of the leadership team if you have any questions about the facility, the food, or registration.
-	</p>
 }
-
-<Documents></Documents>
-
-@if (!Other.IsRegistrationClosed)
-{
-	<br />
-	<p class="lead">
-		Click the big green button to begin registration.
-	</p>
-
-	<div class="row">
-		<div class="col-12">
-
-			<a class="btn btn-success btn-lg"
-				 href="@LivingMessiah.Web.Links.Sukkot.RegistrationShell">
-				Begin Registration
-				<i class="fas fa-caret-right"></i>
-			</a>
-		</div>
-	</div>
-
-}
-
-<hr />
-
-<SukkotTShirt></SukkotTShirt>

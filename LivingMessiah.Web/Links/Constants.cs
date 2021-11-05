@@ -102,6 +102,14 @@
 		public const string Icon = "far fa-moon";
 	}
 
+	public static class Contact
+	{
+		public const string Index = "/Contact";
+		public const string Title = "Contact";
+		public const string Descr = "Contacts";
+		public const string Icon = "fas fa-user-friends";
+	}
+
 	public static class Community
 	{
 		public const string Title = "Community";
@@ -274,7 +282,8 @@
 
 	public static class Pesach
 	{
-		public const string Index = "/Pesach";
+		public const string Index = "/Articles/Pesach";
+		//public const string Index = "/Pesach";
 		public const string Title = "Pesach";
 		public const string TitleEnglish = "Passover";
 		public const string Icon = "fas fa-door-open";
@@ -317,8 +326,11 @@
 		}
 	}
 
+
+
 	public static class Shavuot
 	{
+		public const LivingMessiah.Domain.KeyDates.Enums.FeastDayEnum FeastDay = LivingMessiah.Domain.KeyDates.Enums.FeastDayEnum.Weeks;
 		public const string Index = "/Shavuot";
 		public const string Title = "Shavuot";
 		public const string Icon = "fab fa-creative-commons-zero";
@@ -358,6 +370,7 @@
 
 	public static class Sukkot
 	{
+		public const LivingMessiah.Domain.KeyDates.Enums.FeastDayEnum FeastDay = LivingMessiah.Domain.KeyDates.Enums.FeastDayEnum.Tabernacles;
 		public const string Index = "/Sukkot";
 		public const string Title = "Sukkot";
 		public const string Title2 = "Sukkot 2021";

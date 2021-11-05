@@ -452,24 +452,6 @@ WHERE dbo.udfGetNextShabbatDate() = ShabbatDate
 
 		#region ToDo: Move somewhere else
 
-		public async Task<List<Contact>> GetContacts(bool selectAll)
-		{
-			/*
-			string Where = "";
-			string Where = "WHERE LastName LIKE 'Marsing%'";
-			string Where = "WHERE LastName LIKE 'Marsing%' OR (FirstName = 'Mark' AND LastName = 'Webb')"; 
-			*/
-			const string TOP = "TOP 500 ";
-			string Selected = selectAll ? " 1 AS Selected" : " 0 AS Selected";
-			string Where = "WHERE LastName LIKE 'Marsing%'";
-			base.Sql = $@"SELECT {TOP} {Selected}, ROW_NUMBER() OVER(ORDER BY Id ASC)-1 AS ZeroBasedRowCnt, * FROM dbo.Contact {Where} ";
-
-			return await WithConnectionAsync(async connection =>
-			{
-				var rows = await connection.QueryAsync<Contact>(sql: base.Sql);
-				return rows.ToList();
-			});
-		}
 
 		public async Task<int> UpdateContactSukkotInviteDate(int id)
 		{

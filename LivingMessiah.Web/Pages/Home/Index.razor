@@ -21,6 +21,14 @@
 		<DashboardButton></DashboardButton>
 	</AuthorizeView>
 
+	<AuthorizeView Roles=@Roles.AdminOrElder>
+		<DashboardButton></DashboardButton>
+	</AuthorizeView>
+
+	<AuthorizeView Roles=@Roles.AdminOrSukkot>
+		<SukkotButton></SukkotButton>
+	</AuthorizeView>
+
 	<div class="row">
 		<div class="col-12">
 			<IntroductionAndWelcome MediaQueryEnum="MediaQueryEnum.Sm" />

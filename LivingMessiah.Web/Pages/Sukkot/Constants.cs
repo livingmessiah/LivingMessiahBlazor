@@ -46,7 +46,6 @@
 		public const string Passport = "passport-v1.pdf";
 	}
 
-
 	public static class Blobs
 	{
 		private const string root = "https://livingmessiahstorage.blob.core.windows.net/images/";
@@ -74,6 +73,14 @@
 		}
 	}
 
+	public static class RegistrationMeta
+	{
+		public static System.DateTime EarlyRegistrationLastDay = new System.DateTime(2021, 9, 20); 
+		public const decimal EarlyRegistrationFee = 30.0m;
+		public static System.DateTime RegistrationLastDay = new System.DateTime(2021, 10, 14);
+		public const decimal RegistrationFee = 50.0m;
+	}
+
 	public static class Other
 	{
 		public const bool IsMealsAvailable = false;
@@ -84,7 +91,7 @@
 		//public const string ReturnUrlSukkotRegistration = "/Sukkot/Registration";
 		public const bool IsRvHookupsAvailable = true;
 		public const bool IsRegistrationClosed = false;
-		public const bool IsSukkotOver = false;  //Task 409
+		//public const bool IsSukkotOver = false;  //Task 409
 		public const string ModalIdHouseRulesXs = "houserulesxs";
 		public const string ModalIdHouseRules = "houserules";
 

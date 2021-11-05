@@ -7,7 +7,7 @@ namespace LivingMessiah.Web.Data
 	public interface ILinksFactory
 	{
 		List<Link> GetLinks();
-		//List<Link> GetFeastLinks();
+		List<Link> GetFeastLinks();
 		List<LinkBasic> GetDashboardLinks();
 		List<LinkBasic> GetVideoProductionLinks();
 		List<LinkBasic> GetEldersLinks();
@@ -30,6 +30,7 @@ namespace LivingMessiah.Web.Data
 			return new List<LinkBasic>
 			{
 				new LinkBasic {Index = PsalmsAndProverbs.Index, Title = PsalmsAndProverbs.Title, Icon = PsalmsAndProverbs.Icon, },
+				new LinkBasic {Index = Contact.Index, Title = Contact.Title, Icon = Contact.Icon, },
  			};
 		}
 
@@ -50,16 +51,6 @@ namespace LivingMessiah.Web.Data
 		{
 			return new List<Link>
 			{
-				new Link
-				{
-					Index = Links.Sukkot.Index,
-					Title = Links.Sukkot.Title,
-					Icon = Links.Sukkot.Icon,
-					HomeSidebarUsage=true,
-					HomeFloatRightHebrew="סֻכּוֹת",
-					HomeTitleSuffix=" Sukkot H5523",
-					SitemapUsage=false
-				},
 				new Link
 				{
 					Index = HeavensDeclare.Index,
@@ -308,6 +299,46 @@ namespace LivingMessiah.Web.Data
 			};
 		}
 
+		/**/
+		public List<Link> GetFeastLinks()
+		{
+			return new List<Link>
+			{
+				new Link
+				{
+					FeastDay = LivingMessiah.Domain.KeyDates.Enums.FeastDayEnum.Passover,
+					Index = Pesach.Index,
+					Title = Pesach.Title,
+					Icon = Pesach.Icon,
+					HomeSidebarUsage=false,
+					HomeFloatRightHebrew="פֶסַח",
+					HomeTitleSuffix=" shavuot H7620",
+					SitemapUsage=false
+				},
+				new Link
+				{
+					FeastDay = LivingMessiah.Domain.KeyDates.Enums.FeastDayEnum.Weeks,
+					Index = Shavuot.Index,
+					Title = Shavuot.Title,
+					Icon = Shavuot.Icon,
+					HomeSidebarUsage=false,
+					HomeFloatRightHebrew="שָׁבוּעוֹת",
+					HomeTitleSuffix=" shavuot H7620",
+					SitemapUsage=false
+				},
+				new Link
+				{
+					FeastDay = LivingMessiah.Domain.KeyDates.Enums.FeastDayEnum.Tabernacles,
+					Index = Links.Sukkot.Index,
+					Title = Links.Sukkot.Title, 
+					Icon = Links.Sukkot.Icon,
+					HomeSidebarUsage=false,
+					HomeFloatRightHebrew="סֻכּוֹת",
+					HomeTitleSuffix=" Sukkot H5523",
+					SitemapUsage=false
+				},
+			};
+		}
 
 
 		/*
@@ -325,46 +356,6 @@ namespace LivingMessiah.Web.Data
 		}
 		*/
 
-		/*
-		public List<Link> GetFeastLinks()
-		{
-			return new List<Link>
-			{
-				new Link
-				{
-					Index = Pesach.Index,
-					Title = Pesach.Title,
-					Icon = Pesach.Icon,
-					HomeSidebarUsage=false,
-					HomeFloatRightHebrew="פֶסַח",
-					HomeTitleSuffix=" shavuot H7620",
-					SitemapUsage=false
-				},
-				new Link
-				{
-					Index = Shavuot.Index,
-					Title = Shavuot.Title,
-					Icon = Shavuot.Icon,
-					HomeSidebarUsage=false,
-					HomeFloatRightHebrew="שָׁבוּעוֹת",
-					HomeTitleSuffix=" shavuot H7620",
-					SitemapUsage=false
-				},
-				new Link
-				{
-
-					//Index=  Sukkot.Index, // This gives me an error
-					Index = Links.Sukkot.Index,
-					Title = Links.Sukkot.Title, 
-					Icon = Links.Sukkot.Icon,
-					HomeSidebarUsage=false,
-					HomeFloatRightHebrew="סֻכּוֹת",
-					HomeTitleSuffix=" Sukkot H5523",
-					SitemapUsage=false
-				},
-			};
-		}
-		*/
 
 	}
 }

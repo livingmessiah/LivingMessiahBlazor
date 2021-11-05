@@ -1,0 +1,85 @@
+﻿@page "/Contact/"
+@using static LivingMessiah.Web.Links.Contact
+@using LivingMessiah.Web.Pages.Contacts.Domain
+
+<div class="pb-2 mt-4 mb-4">
+	<h3><i class="@Icon"></i> @Title</h3>
+</div>
+
+<div class="col-lg-12 control-section">
+	<div class="content-wrapper">
+		<div class="row mt-4">
+
+			<SfGrid ID="Grid"
+							DataSource="@Contacts"
+							AllowSelection="true" AllowFiltering="true" AllowSorting="true">
+				<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+
+				@*  CommandClicked="OnSaveClicked"
+					@ref="Grid"
+				*@
+
+				<GridSortSettings>
+					<GridSortColumns>
+						<GridSortColumn Field="@nameof(Domain.ContactVM.FirstName)" Direction="SortDirection.Ascending" />
+					</GridSortColumns>
+				</GridSortSettings>
+
+				@*<GridEvents TValue="Domain.Contact" QueryCellInfo="CustomizeCell"></GridEvents>*@
+				@* ... RowSelected="RowSelectHandler" RowDeselected="RowDeSelectHandler" />*@
+
+				<GridColumns>
+
+					@* <GridColumn Field=@nameof(ContactVM.Id) HeaderText="Id" Visible="false" IsPrimaryKey="true" Width="30" AllowSorting="false" AllowFiltering="false"> </GridColumn>*@
+
+					<GridColumn Field=@nameof(ContactVM.Id) Visible="false" IsPrimaryKey="true"></GridColumn>
+
+					<GridColumn Field=@nameof(ContactVM.Name) HeaderText="Name" Width="70" AllowSorting="true" AllowFiltering="true"></GridColumn>
+
+					<GridColumn Field=@nameof(ContactVM.OtherNames) HeaderText="Other Names" Width="90" AllowSorting="false" AllowFiltering="true"></GridColumn>
+
+					@*<GridColumn Field=@nameof(ContactVM.FamilyName) HeaderText="Last" Width="50" AllowSorting="true">
+						</GridColumn>
+
+						<GridColumn Field=@nameof(ContactVM.SpouseName) HeaderText="Spouse" Width="50" AllowSorting="false" AllowFiltering="false">
+						</GridColumn>*@
+
+					<GridColumn Field=@nameof(ContactVM.EMail) HeaderText="Email" Width="80" AllowSorting="false" AllowFiltering="true"></GridColumn>
+
+					<GridColumn Field=@nameof(ContactVM.Phone) HeaderText="Phone" Width="50" AllowSorting="false" AllowFiltering="false"></GridColumn>
+
+					<GridColumn Field=@nameof(ContactVM.SukkotAttendanceCSV) HeaderText="Sukkots" Width="50" AllowSorting="false" AllowFiltering="false"></GridColumn>
+
+					<GridColumn Field=@nameof(ContactVM.Notes) HeaderText="Notes" Width="70" AllowSorting="false" AllowFiltering="true"></GridColumn>
+
+					@*<GridColumn Field=@nameof(ContactVM.SukkotAttendanceCSV) HeaderText="Sukkots" Width="70"
+												FilterSettings="@(new FilterSettings { Type = Syncfusion.Blazor.Grids.FilterType.CheckBox })">
+						</GridColumn>*@
+
+				</GridColumns>
+
+			</SfGrid>
+		</div>
+	</div>
+</div>
+
+
+@if (DatabaseError)
+{
+	<p class="text-danger"><em>@DatabaseErrorMsg</em></p>
+}
+else
+{
+	if (DatabaseWarning)
+	{
+		<p class="text-warning">@DatabaseWarningMsg</p>
+	}
+	else
+	{
+		if (DatabaseInformation)
+		{
+			<p class="text-success">@DatabaseInformationMsg</p>
+		}
+
+	}
+}
