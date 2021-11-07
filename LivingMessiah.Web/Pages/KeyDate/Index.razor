@@ -1,6 +1,7 @@
 ﻿@page "/KeyDates"
 @using static LivingMessiah.Web.Links.KeyDates
 @using LivingMessiah.Domain.KeyDates.Enums
+@using static LivingMessiah.Web.Services.Auth0
 
 @*
 	<Title Value="@remaining"></Title>
@@ -19,20 +20,22 @@
 	<i class="@Icon"></i> @LivingMessiah.Web.Links.KeyDates.Title
 </h2>
 
-<div class="jumbotron">
+<div class="jumbotron text-center">
 	<h1>
-		<span class="text-warning text-center">WARNING | DATES NOT YET CONFIRMED</span>
+		<span class="text-warning">WARNING | DATES NOT YET CONFIRMED</span>
 	</h1>
 </div>
 
-<div class="d-none d-md-block">
-	<HebrewYear RelativeYear="RelativeYearEnum.Current" IsXsOrSm="false" WithMonths="true"></HebrewYear>
-</div>
 
-<div class="d-md-none">
-	<HebrewYear RelativeYear="RelativeYearEnum.Current" IsXsOrSm="true" WithMonths="true"></HebrewYear>
-</div>
+<AuthorizeView Roles="@Roles.AdminOrElder">
+	<div class="d-none d-md-block">
+		<HebrewYear RelativeYear="RelativeYearEnum.Current" IsXsOrSm="false" WithMonths="true"></HebrewYear>
+	</div>
 
+	<div class="d-md-none">
+		<HebrewYear RelativeYear="RelativeYearEnum.Current" IsXsOrSm="true" WithMonths="true"></HebrewYear>
+	</div>
+</AuthorizeView>
 
 @*<hr class="warning" />
 	<LmmCalendarAdvertisement CalenderReadyForSale="@CalenderReadyForSale">
