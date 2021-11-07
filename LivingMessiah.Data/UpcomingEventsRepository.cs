@@ -90,7 +90,7 @@ WHERE YearId = {yearId};
 -- #4  KeyDates\Queries!LunarMonth
 SELECT lm.Id, lm.YearId, DateId, d.Date, EnumId, Month, Hebrew, Length, Gregorian, BiblicalName, BiblicalHebrew 
 FROM KeyDate.LunarMonth lm
-INNER JOIN KeyDate.Date d ON lm.DateId=d.Id
+INNER JOIN KeyDate.Date d ON lm.DateId=d.Id AND lm.YearId=d.YearId
 CROSS JOIN KeyDate.Constants c
 WHERE lm.YearId = {yearId};
 
