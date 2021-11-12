@@ -2,6 +2,8 @@
 
 namespace LivingMessiah.Domain.KeyDates.Enums
 {
+	// Currently, Only used by Pages\SmartEnums\FeastDays.razor
+	//   which is an example of how to use SmartEnums and not really part of the app
 	public abstract class BaseFeastDaySmartEnum : SmartEnum<BaseFeastDaySmartEnum>
 	{
 		#region Id's

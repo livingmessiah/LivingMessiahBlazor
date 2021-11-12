@@ -15,6 +15,7 @@ using LivingMessiah.Web.Pages.SukkotAdmin.Donations.Data;
 using LivingMessiah.Web.Pages.SukkotAdmin.Registration.Data;
 using LivingMessiah.Web.Pages.SukkotAdmin.Registration.Services;
 using LivingMessiah.Web.Pages.Contacts.Data;
+using LivingMessiah.Web.Pages.KeyDate.Data;
 
 //using Markdig;
 //using Markdig.Extensions.AutoIdentifiers;
@@ -35,6 +36,7 @@ namespace LivingMessiah.Web
 				.AddSingleton<IShabbatWeekRepository, ShabbatWeekRepository>()
 				.AddSingleton<IUpcomingEventsRepository, UpcomingEventsRepository>()
 				.AddSingleton<IUpcomingEvents, UpcomingEvents>()
+				.AddSingleton<IKeyDateRepository, KeyDateRepository>()
 
 				.AddTransient<ISecurityClaimsService, SecurityClaimsService>()
 				.AddTransient<ISukkotService, SukkotService>()

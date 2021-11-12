@@ -184,6 +184,13 @@
 		public const string Icon = "far fa-calendar-check";
 	}
 
+	public static class KeyDatesGrid
+	{
+		public const string Index = "/KeyDatesGrid";
+		public const string Title = "Key Dates Grid";
+		public const string Icon = "far fa-calendar-check";
+	}
+
 
 	public static class KeyDatesEdit
 	{
@@ -512,5 +519,14 @@
 		public const string IndexCodeOfConduct = "/CodeOfConduct/";
 		public const string TitleCodeOfConduct = "Code Of Conduct";
 		public const string IconCodeOfConduct = "fas fa-handshake";
+	}
+
+	public static class WindmillRanchSwales
+	{
+		public const string Index = "/windmillranch/swales/";
+		public const string Title = "Swales / Food Forest";
+		//public const string Icon = "fas fa-tractor";
+		public const string Icon = "fas fa-drafting-compass";
+		public const string Descr = "Swales and Food Forest";
 	}
 }

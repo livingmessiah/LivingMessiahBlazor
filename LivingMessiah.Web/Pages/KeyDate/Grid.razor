@@ -1,0 +1,84 @@
+﻿@page "/KeyDatesGrid"
+@using static LivingMessiah.Web.Links.KeyDatesGrid
+@using LivingMessiah.Domain.KeyDates.Enums
+
+<h2 class="mt-2">
+	<i class="@Icon"></i> @LivingMessiah.Web.Links.KeyDatesGrid.Title
+</h2>
+
+<div class="col-lg-12 control-section">
+	<div class="content-wrapper">
+		<div class="row mt-4">
+
+			<SfGrid ID="Grid"
+							DataSource="@CalendarEntries" @ref="sfGrid"
+							AllowSelection="true" AllowFiltering="true" AllowSorting="true">
+				<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+
+				@*  CommandClicked="OnSaveClicked" *@
+
+				<GridSortSettings>
+					<GridSortColumns>
+						<GridSortColumn Field="@nameof(Domain.CalendarEntry.Date)" Direction="SortDirection.Ascending" />
+					</GridSortColumns>
+				</GridSortSettings>
+
+				<GridEvents TValue="Domain.CalendarEntry" QueryCellInfo="CustomizeCell"></GridEvents>
+				@* ... RowSelected="RowSelectHandler" RowDeselected="RowDeSelectHandler" />*@
+
+			<GridColumns>
+
+				<GridColumn Field=@nameof(Domain.CalendarEntry.Date) Format="yyyy-MM-dd" HeaderText="Date" Width="30" AllowSorting="true" AllowFiltering="false">
+				</GridColumn>
+
+				<GridColumn Field=@nameof(Domain.CalendarEntry.DateTypeId) HeaderText="Type" Width="30" AllowSorting="true" AllowFiltering="false">
+				</GridColumn>
+
+				<GridColumn Field=@nameof(Domain.CalendarEntry.DateIdBeg) HeaderText="Date Beg" Width="60" AllowSorting="false" AllowFiltering="false">
+				</GridColumn>
+
+				<GridColumn Field=@nameof(Domain.CalendarEntry.DateIdEnd) HeaderText="Date End" Width="60" AllowSorting="false" AllowFiltering="false">
+				</GridColumn>
+
+				<GridColumn Field=@nameof(Domain.CalendarEntry.RowCntByGregorianYear) HeaderText="RCBGU" Width="30">
+				</GridColumn>
+
+				<GridColumn Field=@nameof(Domain.CalendarEntry.NewYear) HeaderText="Year" Width="30" AllowSorting="false" AllowFiltering="false">
+				</GridColumn>
+
+				@*
+		Year.razor
+		if (item.DateTypeId == 1 && WithMonths==true)
+		{
+				<LunarMonthComponent IsXsOrSm="@IsXsOrSm"
+														 DateIdBeg="item.DateIdBeg"
+														 DateIdEnd="item.DateIdEnd"
+														 LunarMonths="LunarMonths.Where(w => w.DateId >= item.DateIdBeg && w.DateId <= item.DateIdEnd).ToList()">
+				</LunarMonthComponent>
+
+				*@
+
+				@*<GridColumn Field=@nameof(Domain.CalendarEntry.DateTypeId) HeaderText="Date Type" Width="100"
+								FilterSettings="@(new FilterSettings { Type = Syncfusion.Blazor.Grids.FilterType.CheckBox })">
+		</GridColumn>*@
+
+			</GridColumns>
+
+			</SfGrid>
+		</div>
+	</div>
+</div>
+
+@*
+	<div class="d-none d-md-block">
+		<HebrewYear RelativeYear="RelativeYearEnum.Current" IsXsOrSm="false" WithMonths="true"></HebrewYear>
+	</div>
+
+	<div class="d-md-none">
+		<HebrewYear RelativeYear="RelativeYearEnum.Current" IsXsOrSm="true" WithMonths="true"></HebrewYear>
+	</div>
+*@
+
+@*<hr class="warning" />
+	<LmmCalendarAdvertisement CalenderReadyForSale="@CalenderReadyForSale" />
+*@

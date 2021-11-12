@@ -20,7 +20,10 @@ namespace LivingMessiah.Domain.KeyDates.Queries
 		//SELECT COUNT(*) FROM KeyDate.FeastDayDetail fdd	WHERE fd.Id = fdd.FeastDayId
 		public int DetailCount { get; set; }
 
+		// ToDo: get rid of FeastDayDetail
 		public List<FeastDayDetail> FeastDayDetails { get; set; } = new List<FeastDayDetail>();
+		public List<Enums.FeastDayDetailEnum> FeastDayDetailEnums { get; set; }  
+
 
 		// public const string ddd_mm_dd = "ddd, MM/dd";  //ddd, MM/dd/yyyy
 		//<span class='float-right'>@((MarkupString)item.DateHtml)</span>

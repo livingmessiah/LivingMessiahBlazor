@@ -42,7 +42,7 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration
 
 		protected override async Task OnInitializedAsync()
 		{
-			Logger.LogDebug($"Inside {nameof(AddForm)}!{nameof(OnInitializedAsync)}");
+			Logger.LogDebug($"Inside {nameof(List)}!{nameof(OnInitializedAsync)}");
 			try
 			{
 				Registrations = await db.GetAll();  

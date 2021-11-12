@@ -2,6 +2,7 @@
 
 namespace LivingMessiah.Domain.KeyDates.Queries
 {
+	//ToDo: Depricated: use the Enum instead
 	public class FeastDayDetail
 	{ 
 		public int Id { get; set; }  // See Note 1

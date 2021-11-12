@@ -63,6 +63,7 @@ ORDER BY EventDate
 
 		public async Task<CalendarYear> GetHebrewYearAndChildren(RelativeYearEnum relativeYear)
 		{
+			log.LogDebug(String.Format("Inside {0}, relativeYear={1}", "UpcomingEventsRepository!GetHebrewYearAndChildren", relativeYear));
 			string yearId = GetYearId(relativeYear);
 
 			base.Sql = $@"
@@ -82,7 +83,7 @@ CROSS JOIN KeyDate.Constants c
 WHERE YearId = {yearId}
 
 -- #3  KeyDates\Queries!FeastDay
-SELECT Id, YearId, DateId, Date, Name, Transliteration, Hebrew, Details, AddDaysDescr, AddDays, DetailCount
+SELECT Id, YearId, DateId, EnumId, Date, Name, Transliteration, Hebrew, Details, AddDaysDescr, AddDays, DetailCount
 FROM KeyDate.vwFeastDay
 CROSS JOIN KeyDate.Constants c
 WHERE YearId = {yearId};
@@ -123,11 +124,14 @@ FROM KeyDate.FeastDayDetail
 				//System.Text.StringBuilder debug = new System.Text.StringBuilder();
 				if (calendarYear.FeastDays != null)
 				{
+					//ToDo Replace if BaseFeastDaySmartEnum can be used instead
 					var fddList = (await multi.ReadAsync<FeastDayDetail>()).ToList();  // #6
+
+					log.LogDebug(String.Format("...fddList.Count={0}", fddList.Count()));
 
 					foreach (var item in calendarYear.FeastDays)
 					{
-						if (item.DetailCount > 0)
+						if (item.DetailCount > 0)  // ToDo: Bug, this is always zero and shoudn't 
 						{
 							var query = from fdd in fddList where fdd.FeastDayId == item.Id select fdd;
 							query.ToList();
@@ -145,10 +149,18 @@ FROM KeyDate.FeastDayDetail
 									Note = fdd.Note
 								}
 								);
+								log.LogDebug(String.Format("...fdd={0}", fdd.ToString()));
 							}
-							// debug.AppendLine($"fddList item {item}");
+						}
+						else
+						{
+							log.LogDebug(String.Format("...FeastDays.DetailCount=0 for {0}", item.ToString()));
 						}
 					}
+				}
+				else
+				{
+					log.LogWarning("...calendarYear.FeastDays is null");
 				}
 
 				/*
