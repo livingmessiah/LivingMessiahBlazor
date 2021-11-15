@@ -10,7 +10,7 @@ namespace LivingMessiah.Web.Pages.KeyDate.Domain
 		public string ShortDescr { get; set; }
 		public string ShortDescrHebrew { get; set; }
 		public bool IsPregnant { get; set; }
-		public List<CalendarEntry> CalendarEntrys { get; set; } = new List<CalendarEntry>();
+		public List<CalendarEntryDateRange> CalendarEntryDateRanges { get; set; } = new List<CalendarEntryDateRange>();
 		/*
 		public List<FeastDay> FeastDays { get; set; } = new List<FeastDay>();
 		public List<LunarMonth> LunarMonths { get; set; } = new List<LunarMonth>();

@@ -11,7 +11,7 @@
 		<div class="row mt-4">
 
 			<SfGrid ID="Grid"
-							DataSource="@CalendarEntries" @ref="sfGrid"
+							DataSource="@CalendarEntryDateRanges" @ref="sfGrid"
 							AllowSelection="true" AllowFiltering="true" AllowSorting="true">
 				<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
 
@@ -19,31 +19,31 @@
 
 				<GridSortSettings>
 					<GridSortColumns>
-						<GridSortColumn Field="@nameof(Domain.CalendarEntry.Date)" Direction="SortDirection.Ascending" />
+						<GridSortColumn Field="@nameof(Domain.CalendarEntryDateRange.Date)" Direction="SortDirection.Ascending" />
 					</GridSortColumns>
 				</GridSortSettings>
 
-				<GridEvents TValue="Domain.CalendarEntry" QueryCellInfo="CustomizeCell"></GridEvents>
+				<GridEvents TValue="Domain.CalendarEntryDateRange" QueryCellInfo="CustomizeCell"></GridEvents>
 				@* ... RowSelected="RowSelectHandler" RowDeselected="RowDeSelectHandler" />*@
 
 			<GridColumns>
 
-				<GridColumn Field=@nameof(Domain.CalendarEntry.Date) Format="yyyy-MM-dd" HeaderText="Date" Width="30" AllowSorting="true" AllowFiltering="false">
+				<GridColumn Field=@nameof(Domain.CalendarEntryDateRange.Date) Format="yyyy-MM-dd" HeaderText="Date" Width="30" AllowSorting="true" AllowFiltering="false">
 				</GridColumn>
 
-				<GridColumn Field=@nameof(Domain.CalendarEntry.DateTypeId) HeaderText="Type" Width="30" AllowSorting="true" AllowFiltering="false">
+				<GridColumn Field=@nameof(Domain.CalendarEntryDateRange.DateTypeId) HeaderText="Type" Width="30" AllowSorting="true" AllowFiltering="false">
 				</GridColumn>
 
-				<GridColumn Field=@nameof(Domain.CalendarEntry.DateIdBeg) HeaderText="Date Beg" Width="60" AllowSorting="false" AllowFiltering="false">
+				<GridColumn Field=@nameof(Domain.CalendarEntryDateRange.DateIdBeg) HeaderText="Date Beg" Width="60" AllowSorting="false" AllowFiltering="false">
 				</GridColumn>
 
-				<GridColumn Field=@nameof(Domain.CalendarEntry.DateIdEnd) HeaderText="Date End" Width="60" AllowSorting="false" AllowFiltering="false">
+				<GridColumn Field=@nameof(Domain.CalendarEntryDateRange.DateIdEnd) HeaderText="Date End" Width="60" AllowSorting="false" AllowFiltering="false">
 				</GridColumn>
 
-				<GridColumn Field=@nameof(Domain.CalendarEntry.RowCntByGregorianYear) HeaderText="RCBGU" Width="30">
+				<GridColumn Field=@nameof(Domain.CalendarEntryDateRange.RowCntByGregorianYear) HeaderText="RCBGU" Width="30">
 				</GridColumn>
 
-				<GridColumn Field=@nameof(Domain.CalendarEntry.NewYear) HeaderText="Year" Width="30" AllowSorting="false" AllowFiltering="false">
+				<GridColumn Field=@nameof(Domain.CalendarEntryDateRange.NewYear) HeaderText="Year" Width="30" AllowSorting="false" AllowFiltering="false">
 				</GridColumn>
 
 				@*

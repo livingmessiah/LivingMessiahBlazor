@@ -6,7 +6,7 @@ using Dapper;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
-using LivingMessiah.Data;										// ToDo: Move this to LivingMessiah.Web.Data
+using LivingMessiah.Data;                   // ToDo: Move this to LivingMessiah.Web.Data
 using LivingMessiah.Domain.KeyDates.Enums;  // ToDo: Move this to LivingMessiah.Web.Enums
 
 using LivingMessiah.Web.Pages.KeyDate.Domain;
@@ -16,6 +16,8 @@ namespace LivingMessiah.Web.Pages.KeyDate.Data
 	public interface IKeyDateRepository
 	{
 		string BaseSqlDump { get; }
+		Task<Domain.Constants> GetConstants();
+		Task<List<CalendarEntry>> GetCalendarEntries(int yearId); 
 		Task<CalendarYear> GetHebrewYearAndChildren(RelativeYearEnum relativeYear);
 
 		/*
@@ -35,10 +37,47 @@ namespace LivingMessiah.Web.Pages.KeyDate.Data
 			get { return base.SqlDump; }
 		}
 
+		public async Task<Domain.Constants> GetConstants()
+		{
+			log.LogDebug(String.Format("Inside {0}", "KeyDateRepository!GetConstants"));
+			base.Sql = $"SELECT PreviousYear, CurrentYear, NextYear FROM KeyDate.vwConstants";
+			return await WithConnectionAsync(async connection =>
+			{
+				var rows = await connection.QueryAsync<Domain.Constants>(sql: base.Sql);
+				return rows.SingleOrDefault();
+			});
+		}
+
+
+		public async Task<List<CalendarEntry>> GetCalendarEntries(int yearId)
+		{
+			log.LogDebug(String.Format("Inside {0}, yearId={1}", "KeyDateRepository!GetCalendar", yearId));
+			//int yearId = GetYearId(relativeYear);
+			//string yearId = (int)GetYearIdWhereArg(relativeYear);
+
+			base.Parms = new DynamicParameters(new { YearId = yearId });
+
+			base.Sql = $@"
+SELECT
+YearId, CalendarTemplateId, Date, Detail, EventDescr, TypeDescr
+, DateTypeId AS DateTypeEnum --, DateTypeId
+--, DateYMD
+FROM KeyDate.vwCalendar
+WHERE YearId=@yearId
+ORDER BY Date
+";
+			return await WithConnectionAsync(async connection =>
+			{
+				var rows = await connection.QueryAsync<CalendarEntry>(sql: base.Sql, param: base.Parms);
+				return rows.ToList();
+			});
+		}
+
+
 		public async Task<CalendarYear> GetHebrewYearAndChildren(RelativeYearEnum relativeYear)
 		{
 			log.LogDebug(String.Format("Inside {0}, relativeYear={1}", "KeyDateRepository!GetHebrewYearAndChildren", relativeYear));
-			string yearId = GetYearId(relativeYear);
+			string yearId = GetYearIdWhereArg(relativeYear);
 
 			base.Sql = $@"
 -- #1 KeyDates\Queries!CalendarYear
@@ -64,7 +103,8 @@ WHERE YearId = {yearId}";
 				var calendarYear = await multi.ReadSingleOrDefaultAsync<CalendarYear>();    // #1
 				if (calendarYear != null)
 				{
-					calendarYear.CalendarEntrys = (await multi.ReadAsync<CalendarEntry>()).ToList();   // #2
+					calendarYear.CalendarEntryDateRanges = (await multi.ReadAsync<CalendarEntryDateRange>()).ToList();   // #2
+
 					//calendarYear.FeastDays = (await multi.ReadAsync<FeastDay>()).ToList();    // #3
 					//calendarYear.LunarMonths = (await multi.ReadAsync<LunarMonth>()).ToList();   // #4
 					//calendarYear.Seasons = (await multi.ReadAsync<Season>()).ToList();    // #5
@@ -73,7 +113,7 @@ WHERE YearId = {yearId}";
 			});
 		}
 
-		private string GetYearId(RelativeYearEnum relativeYear)
+		private string GetYearIdWhereArg(RelativeYearEnum relativeYear)
 		{
 			return relativeYear switch
 			{

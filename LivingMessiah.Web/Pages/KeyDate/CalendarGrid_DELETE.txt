@@ -1,0 +1,130 @@
+﻿
+# .razor
+		<SfDropDownList TValue="string" TItem="YearLookup"
+										Placeholder="Select Year"
+										@bind-Value="@DropDownValue"
+										DataSource="@YearLookupList">
+			<DropDownListFieldSettings Text="Text" Value="ID"></DropDownListFieldSettings>
+			<DropDownListEvents TItem="YearLookup" TValue="string"
+													OnValueSelect="OnValueSelect">
+			</DropDownListEvents>
+		</SfDropDownList>
+
+
+
+@*
+	# Details
+	- Why cant I just have a couple of simple compontents using a table template for feast day detail
+	https://blazor.syncfusion.com/demos/datagrid/detail-template?theme=bootstrap5
+	https://blazor.syncfusion.com/demos/datagrid/row-template
+	https://blazor.syncfusion.com/demos/datagrid/master-details/
+*@
+
+
+
+# .razor.cs
+
+		//[Parameter]
+		public BaseRelativeYearSmartEnum RelativeYear { get; set; } = RelativeYearEnum.Current;
+
+		protected override async Task OnInitializedAsync()
+		{
+			Logger.LogDebug($"Inside {nameof(CalendarGrid)}!{nameof(OnInitializedAsync)}");
+			Constants = await db.GetConstants();
+			PopulateYearLookupList();
+			await PopulateCalendarEntries(GetYearId(RelativeYear));
+		}
+
+
+		private int GetYearId(RelativeYearEnum relativeYear)
+		{
+			return relativeYear switch
+			{
+				RelativeYearEnum.Previous => Constants.PreviousYear,
+				RelativeYearEnum.Current => Constants.CurrentYear,
+				RelativeYearEnum.Next => Constants.NextYear,
+				RelativeYearEnum.None => 0,
+				_ => Constants.CurrentYear,
+			};
+		}
+
+
+		public async Task OnValueSelect(SelectEventArgs<YearLookup> args)
+		{
+			int selectedYearId = 0;
+			selectedYearId = int.TryParse(args.ItemData.ID, out selectedYearId) ? selectedYearId : 0;
+			Logger.LogDebug(String.Format("...inside {0}, relateiveYear: {1}", nameof(CalendarGrid) + "!" + nameof(OnValueSelect), selectedYearId));
+
+			if (selectedYearId != 0)
+			{
+				RelativeYear = RelativeYearEnum.Previous ; // RelativeYearEnum.Current;
+				await PopulateCalendarEntries(GetYearId(RelativeYear));
+			}
+		}
+
+
+		public string DropDownValue = "Current";
+
+
+
+		//protected List<FeastDay> FeastDays;
+		//protected List<LunarMonth> LunarMonths;
+		//protected List<Season> Seasons;
+
+
+		protected override async Task OnInitializedAsync()
+		{
+			Logger.LogDebug($"Inside {nameof(CalendarGrid)}!{nameof(OnInitializedAsync)}");
+			try
+			{
+				Constants = await db.GetConstants();
+				PopulateYearLookupList();
+				await PopulateCalendarEntries(GetYearId(RelativeYear));
+			}
+			catch (Exception)
+			{
+			}
+		}
+
+		//private int SelectedYearId = 0;
+
+
+
+		public async Task OnValueSelect(SelectEventArgs<YearLookup> args)
+		{
+			int selectedYearId = 0;
+			selectedYearId = int.TryParse(args.ItemData.ID, out selectedYearId) ? selectedYearId : 0;
+			Logger.LogDebug(String.Format("...inside {0}, relateiveYear: {1}", nameof(CalendarGrid) + "!" + nameof(OnValueSelect), selectedYearId));
+
+			if (selectedYearId != 0)
+			{
+				RelativeYear = RelativeYearEnum.Previous ; // RelativeYearEnum.Current;
+				try
+				{
+					await PopulateCalendarEntries(GetYearId(RelativeYear));
+				}
+				catch (Exception)
+				{
+				}
+			}
+			
+		}
+
+
+
+
+/*
+
+Seasons.razor 
+	<td class="h3"><span class="badge @context.BadgeColor"><i class="@context.Icon"></i> @context.Name</span></td>
+
+		public void CustomizeCell(QueryCellInfoEventArgs<CalendarEntry> args)
+		{
+			if (args.Column.Field == nameof(CalendarEntryDateRange.DateTypeId))
+			{
+				//BaseDateTypeSmartEnum e = BaseDateTypeSmartEnum.FromName(args.Data.LocationName, false);
+				BaseDateTypeSmartEnum e = BaseDateTypeSmartEnum.FromValue(args.Data.DateTypeId);
+				args.Cell.AddClass(new string[] { e.TextColor });
+			}
+		}
+

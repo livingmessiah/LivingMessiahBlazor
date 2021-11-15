@@ -1,37 +1,40 @@
-﻿using LivingMessiah.Web.Pages.KeyDate.Enums;
-using System;
+﻿using System;
+using System.Collections.Generic;
+using LivingMessiah.Web.Pages.KeyDate.Enums;
 
 namespace LivingMessiah.Web.Pages.KeyDate.Domain
 {
 	public class CalendarEntry
 	{
-		public DateTime Date { get; set; }
-		public int GregorianYear { get; set; }
 		public int YearId { get; set; }
-		public int DateTypeId { get; set; }  // Enums/DateType.cs
-		public int DateIdBeg { get; set; }
-		public int DateIdEnd { get; set; }
-		public int RowCntByGregorianYear { get; set; }
+		public int CalendarTemplateId { get; set; } //Id
+		public DateTime Date { get; set; }
+		public int Detail { get; set; }
+		public string EventDescr { get; set; }
+		//public int DateTypeId { get; set; }
+		public LivingMessiah.Domain.KeyDates.Enums.DateTypeEnum DateTypeEnum { get; set; }
+		public BaseFeastDaySmartEnum FeastDaySmartEnum { get; set; }
+		//public List<BaseFeastDaySmartEnum> FeastDaySmartEnums { get; set; }
 
-		public string NewYear
-		{
-			get
-			{
-				return RowCntByGregorianYear == 1 ? YearId.ToString() : "";
-			}
-		}
-
-		public string DateTypeDescr
-		{
-			get
-			{
-				return BaseDateTypeSmartEnum.FromValue(DateTypeId).Name;
-			}
-		}
+		public string TypeDescr { get; set; }  // KeyDate.DateType dt dt.Descr AS TypeDescr
+		//public string DateTypeDescr
+		//{
+		//	get
+		//	{
+		//		return BaseDateTypeSmartEnum.FromValue(DateTypeId).Name; // Month, Feast or Season
+		//	}
+		//}
 
 		public override string ToString()
 		{
-			return $@"Id Range: {DateIdEnd}-{DateIdEnd}, YearId: {YearId}, Date: {Date}, GregorianYear: {GregorianYear}, DateTypeId: {DateTypeId}";
+			return $@" @CalendarTemplateId:{@CalendarTemplateId}; YearId:{YearId}, Date: {Date.ToString("yyyy-MM-dd")}";
 		}
+
 	}
 }
+
+
+
+//public string ShortDescr { get; set; }
+//public string ShortDescrHebrew { get; set; }
+//public bool IsPregnant { get; set; }

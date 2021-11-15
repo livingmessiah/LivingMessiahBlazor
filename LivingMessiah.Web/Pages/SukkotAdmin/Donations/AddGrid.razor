@@ -3,10 +3,15 @@
 
 <div class="row">
 	<div class="col-6">
-		<SfAutoComplete Placeholder="Select a Registrant" @bind-Value="@SelectedRegistrantName"
+		<SfAutoComplete Placeholder="Select a Registrant" 
+										@bind-Value="@SelectedRegistrantName"
 										DataSource="@RegistrationLookupList">
 			<AutoCompleteFieldSettings Value="Text"></AutoCompleteFieldSettings>
-			<AutoCompleteEvents TItem="RegistrationLookup" ValueChange="OnValueChanged" TValue="string"  OnValueSelect="OnSelect"></AutoCompleteEvents>
+			<AutoCompleteEvents TItem="RegistrationLookup" 
+													ValueChange="OnValueChanged" 
+													TValue="string"  
+													OnValueSelect="OnSelect">
+			</AutoCompleteEvents>
 		</SfAutoComplete>
 	</div>
 	<div class="col-6">

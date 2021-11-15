@@ -20,23 +20,24 @@
 	<i class="@Icon"></i> @LivingMessiah.Web.Links.KeyDates.Title
 </h2>
 
-@*<div class="jumbotron text-center">
+
+<div class="jumbotron text-center">
 	<h1>
 		<span class="text-warning">WARNING | DATES NOT YET CONFIRMED</span>
 	</h1>
-</div>*@
-
-
-@*<AuthorizeView Roles="@Roles.AdminOrElder"></AuthorizeView>*@
-
-<div class="d-none d-md-block">
-	<HebrewYear RelativeYear="RelativeYearEnum.Current" IsXsOrSm="false" WithMonths="true"></HebrewYear>
 </div>
 
-<div class="d-md-none">
-	<HebrewYear RelativeYear="RelativeYearEnum.Current" IsXsOrSm="true" WithMonths="true"></HebrewYear>
-</div>
 
+<AuthorizeView Roles="@Roles.AdminOrElder">
+
+	<div class="d-none d-md-block">
+		<HebrewYear RelativeYear="RelativeYearEnum.Current" IsXsOrSm="false" WithMonths="true"></HebrewYear>
+	</div>
+
+	<div class="d-md-none">
+		<HebrewYear RelativeYear="RelativeYearEnum.Current" IsXsOrSm="true" WithMonths="true"></HebrewYear>
+	</div>
+</AuthorizeView>
 
 @*<hr class="warning" />
 	<LmmCalendarAdvertisement CalenderReadyForSale="@CalenderReadyForSale">

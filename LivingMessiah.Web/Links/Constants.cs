@@ -191,6 +191,13 @@
 		public const string Icon = "far fa-calendar-check";
 	}
 
+	public static class KeyDatesCalendarGrid
+	{
+		public const string Index = "/KeyDatesCalendarGrid";
+		public const string Title = "Key Dates Calendar Grid";
+		public const string Icon = "far fa-calendar-check";
+	}
+
 
 	public static class KeyDatesEdit
 	{

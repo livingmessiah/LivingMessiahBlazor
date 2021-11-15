@@ -31,9 +31,9 @@ namespace LivingMessiah.Web.Pages.KeyDate
 		public RelativeYearEnum RelativeYear { get; set; } = RelativeYearEnum.Current;
 
 		protected CalendarYear CalendarYear;
-		protected List<CalendarEntry> CalendarEntries;
+		protected List<CalendarEntryDateRange> CalendarEntryDateRanges;
 
-		private SfGrid<CalendarEntry> sfGrid;
+		private SfGrid<CalendarEntryDateRange> sfGrid;
 
 		//protected List<FeastDay> FeastDays;
 		//protected List<LunarMonth> LunarMonths;
@@ -53,7 +53,7 @@ namespace LivingMessiah.Web.Pages.KeyDate
 				}
 				else
 				{
-					CalendarEntries = CalendarYear.CalendarEntrys.ToList();
+					CalendarEntryDateRanges = CalendarYear.CalendarEntryDateRanges.ToList();
 					/*
 					LunarMonths = CalendarYear.LunarMonths.Where(w => w.YearId == CalendarYear.Year).ToList();
 					Seasons = CalendarYear.Seasons.Where(w => w.YearId == CalendarYear.Year).ToList();
@@ -75,9 +75,9 @@ namespace LivingMessiah.Web.Pages.KeyDate
 		  <td class="h3"><span class="badge @context.BadgeColor"><i class="@context.Icon"></i> @context.Name</span></td>
 		*/
 
-		public void CustomizeCell(QueryCellInfoEventArgs<CalendarEntry> args)
+		public void CustomizeCell(QueryCellInfoEventArgs<CalendarEntryDateRange> args)
 		{
-			if (args.Column.Field == nameof(CalendarEntry.DateTypeId))
+			if (args.Column.Field == nameof(CalendarEntryDateRange.DateTypeId))
 			{
 				//BaseDateTypeSmartEnum e = BaseDateTypeSmartEnum.FromName(args.Data.LocationName, false);
 				BaseDateTypeSmartEnum e = BaseDateTypeSmartEnum.FromValue(args.Data.DateTypeId);

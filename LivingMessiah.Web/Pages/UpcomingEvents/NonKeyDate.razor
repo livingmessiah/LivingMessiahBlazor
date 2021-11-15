@@ -34,9 +34,25 @@
 			</CascadingValue>
 		}
 
-		<div class="card-body  text-white bg-secondary">
+		@if (@Title == "Rabbi Chaim Eisen, Zion Bible Studies")
+	{
+	<div class="card-body  text-white bg-secondary">
+		<p>
+			Shalom All,
+			Mark your calendar’s and plan to join us for an afternoon / evening with <b>Rabbi Chaim Eisen</b>, Zion Bible Studies.
+			Sunday November 21st
+		</p>
+		<ul>
+			<li><b>11:30 am - 12:00 noon</b> - Lite Lunch Buffet. Bring a dish to share</li>
+			<li><b>12:00 - 5:30 pm</b> - Presentations by Rabbi Chaim, Q&A</li>
+			<li><b>6:00 - 8:00</b> - Dinner together, informal dialog.  We will be preparing a taco salad, bring a desert to share.</li>
+		</ul>
+	</div>
+	}
+
+		@*<div class="card-body  text-white bg-secondary">
 			<p>ToDo Description Mark Down</p>
-		</div>
+		</div>*@
 
 		@if (!String.IsNullOrEmpty(@YouTubeId))
 		{
