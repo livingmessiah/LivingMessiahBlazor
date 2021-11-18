@@ -24,25 +24,26 @@ namespace LivingMessiah.Web.Pages.KeyDate.Enums
 		private BaseRelativeYearSmartEnum(string name, int value) : base(name, value) { } // Constructor
 
 		#region Extra Fields
-		//public abstract string Abrv { get; }
-		//public abstract string LongDescr { get; }
-		//public override string Abrv => "My 1st SE"; public override string LongDescr => "My Very First Smart Enum"; 
+		public abstract string Relative { get; }
 		#endregion
 
 		#region Private Instantiation
 		private sealed class PreviousSE : BaseRelativeYearSmartEnum
 		{
 			public PreviousSE() : base($"{nameof(Id.Previous)}", Id.Previous) { }
+			public override string Relative => "First";
 		}
 
 		private sealed class CurrentSE : BaseRelativeYearSmartEnum
 		{
 			public CurrentSE() : base($"{nameof(Id.Current)}", Id.Current) { }
+			public override string Relative => "Second";
 		}
 
 		private sealed class NextSE : BaseRelativeYearSmartEnum
 		{
 			public NextSE() : base($"{nameof(Id.Next)}", Id.Next) { }
+			public override string Relative => "Third";
 		}
 		#endregion
 

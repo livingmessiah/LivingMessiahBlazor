@@ -16,6 +16,7 @@ using LivingMessiah.Web.Pages.SukkotAdmin.Registration.Data;
 using LivingMessiah.Web.Pages.SukkotAdmin.Registration.Services;
 using LivingMessiah.Web.Pages.Contacts.Data;
 using LivingMessiah.Web.Pages.KeyDate.Data;
+using LivingMessiah.Web.Pages.KeyDate.Services;
 
 //using Markdig;
 //using Markdig.Extensions.AutoIdentifiers;
@@ -41,6 +42,7 @@ namespace LivingMessiah.Web
 				.AddTransient<ISecurityClaimsService, SecurityClaimsService>()
 				.AddTransient<ISukkotService, SukkotService>()
 				.AddTransient<IRegistrationService, RegistrationService>()
+				.AddTransient<IKeyDateService, KeyDateService>()
 
 				.AddTransient<IRegistrationRepository, RegistrationRepository>()
 				.AddTransient<IDonationRepository, DonationRepository>()

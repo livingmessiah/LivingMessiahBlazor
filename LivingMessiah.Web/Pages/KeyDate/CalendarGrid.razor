@@ -1,37 +1,42 @@
 ﻿@page "/KeyDatesCalendarGrid"
 @using static LivingMessiah.Web.Links.KeyDatesCalendarGrid
-@*@using LivingMessiah.Domain.KeyDates.Enums*@
-@using Syncfusion.Blazor.Buttons
 
 <h2 class="mt-2">
 	<i class="@Icon"></i> @LivingMessiah.Web.Links.KeyDatesCalendarGrid.Title
 </h2>
 
-<div class="col-lg-12 control-section">
-	<div class="control_wrapper">
-		<SfDropDownList TValue="string" TItem="YearLookup"
-										Placeholder="Select Year"
-										@bind-Value="@ChangedID"
-										DataSource="@YearLookupList">
-			<DropDownListFieldSettings Text="Text" Value="ID"></DropDownListFieldSettings>
-			<DropDownListEvents TItem="YearLookup" TValue="string"
-													ValueChange="OnChange">
-			</DropDownListEvents>
-		</SfDropDownList>
+<div class="row">
+	<div class="col-6">
+
+		<div class="control_wrapper">
+			<SfDropDownList TValue="string" TItem="Domain.YearLookup"
+											Placeholder="Select Year"
+											@bind-Value="@ChangedID"
+											DataSource="@YearLookupList">
+				<DropDownListFieldSettings Text="Text" Value="ID"></DropDownListFieldSettings>
+				<DropDownListEvents TItem="Domain.YearLookup" TValue="string"
+														ValueChange="OnChange">
+				</DropDownListEvents>
+			</SfDropDownList>
+		</div>
+
 	</div>
+
+	<div class="col-6">
+		<p class="float-right">Selected Year: @ChangedID (@ChangedText)</p>
+	</div>
+
 </div>
-
-<!--
-
-	-->
 
 <div class="col-lg-12 control-section">
 	<div class="content-wrapper">
 		<div class="row mt-4">
 
-			<SfGrid ID="Grid"
-							DataSource="@CalendarEntries" @ref="sfGrid"
-							AllowSelection="true" AllowFiltering="true" AllowSorting="true">
+			<SfGrid ID="Grid" @ref="sfGrid"
+							DataSource="@CalendarEntries"
+							Toolbar="@(new List<string>() { "Print", "ExcelExport" })"
+							AllowFiltering="true" AllowExcelExport="true">
+				<GridEvents OnToolbarClick="ToolbarClickHandler" TValue="@Domain.CalendarEntry"></GridEvents>
 				<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
 
 				@*  CommandClicked="OnSaveClicked" *@
@@ -41,21 +46,20 @@
 						<GridSortColumn Field="@nameof(Domain.CalendarEntry.Date)" Direction="SortDirection.Ascending" />
 					</GridSortColumns>
 				</GridSortSettings>
-
 				@*<GridEvents TValue="Domain.CalendarEntry" QueryCellInfo="CustomizeCell"></GridEvents>*@
 				@* ... RowSelected="RowSelectHandler" RowDeselected="RowDeSelectHandler" />*@
 
 				<GridColumns>
 
-					<GridColumn Field=@nameof(Domain.CalendarEntry.Date) Format="yyyy-MM-dd" HeaderText="Date" Width="30" AllowSorting="false" AllowFiltering="true">
+					<GridColumn Field=@nameof(Domain.CalendarEntry.Date) Format="yyyy/MM/dd" HeaderText="Date" Width="30" AllowSorting="false" AllowFiltering="true">
 					</GridColumn>
 
 					<GridColumn HeaderText="Part 1">
 						<GridColumns>
 
 							@*<GridColumn Field=@nameof(Domain.CalendarEntry.DateTypeId) HeaderText="Type" Width="40"
-														FilterSettings="@(new FilterSettings { Type = Syncfusion.Blazor.Grids.FilterType.CheckBox })">
-								</GridColumn>*@
+											FilterSettings="@(new FilterSettings { Type = Syncfusion.Blazor.Grids.FilterType.CheckBox })">
+					</GridColumn>*@
 
 							<GridColumn Field=@nameof(Domain.CalendarEntry.DateTypeEnum) HeaderText="Type" Width="40" AllowSorting="false"
 													FilterSettings="@(new FilterSettings { Type = Syncfusion.Blazor.Grids.FilterType.CheckBox })">
@@ -71,8 +75,8 @@
 						<GridColumns>
 
 							@*<GridColumn Field=@nameof(Domain.CalendarEntry.TypeDescr) HeaderText="Type Descr." Width="40"  AllowSorting="false"
-														FilterSettings="@(new FilterSettings { Type = Syncfusion.Blazor.Grids.FilterType.CheckBox })">
-								</GridColumn>*@
+											FilterSettings="@(new FilterSettings { Type = Syncfusion.Blazor.Grids.FilterType.CheckBox })">
+					</GridColumn>*@
 
 							<GridColumn Field=@nameof(Domain.CalendarEntry.EventDescr) HeaderText="Event Description" Width="60" AllowSorting="false" AllowFiltering="false">
 							</GridColumn>
@@ -81,14 +85,14 @@
 					</GridColumn>
 
 					@*
-						Year.razor
-						if (item.DateTypeId == 1 && WithMonths==true)
-						{
-								<LunarMonthComponent IsXsOrSm="@IsXsOrSm"
-																		 DateIdBeg="item.DateIdBeg"
-																		 DateIdEnd="item.DateIdEnd"
-																		 LunarMonths="LunarMonths.Where(w => w.DateId >= item.DateIdBeg && w.DateId <= item.DateIdEnd).ToList()">
-								</LunarMonthComponent>
+			Year.razor
+			if (item.DateTypeId == 1 && WithMonths==true)
+			{
+					<LunarMonthComponent IsXsOrSm="@IsXsOrSm"
+															 DateIdBeg="item.DateIdBeg"
+															 DateIdEnd="item.DateIdEnd"
+															 LunarMonths="LunarMonths.Where(w => w.DateId >= item.DateIdBeg && w.DateId <= item.DateIdEnd).ToList()">
+					</LunarMonthComponent>
 
 					*@
 
@@ -99,3 +103,16 @@
 		</div>
 	</div>
 </div>
+
+
+@if (DatabaseError)
+{
+	<p class="text-danger"><em>@DatabaseErrorMsg</em></p>
+}
+else
+{
+	if (DatabaseWarning)
+	{
+		<p class="text-warning">@DatabaseWarningMsg</p>
+	}
+}

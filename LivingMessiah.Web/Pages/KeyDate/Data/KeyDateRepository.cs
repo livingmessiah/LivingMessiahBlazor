@@ -16,7 +16,7 @@ namespace LivingMessiah.Web.Pages.KeyDate.Data
 	public interface IKeyDateRepository
 	{
 		string BaseSqlDump { get; }
-		Task<Domain.Constants> GetConstants();
+		Task<List<YearLookup>> GetYearLookupList();
 		Task<List<CalendarEntry>> GetCalendarEntries(int yearId); 
 		Task<CalendarYear> GetHebrewYearAndChildren(RelativeYearEnum relativeYear);
 
@@ -37,26 +37,25 @@ namespace LivingMessiah.Web.Pages.KeyDate.Data
 			get { return base.SqlDump; }
 		}
 
-		public async Task<Domain.Constants> GetConstants()
+		public async Task<List<YearLookup>> GetYearLookupList()
 		{
-			log.LogDebug(String.Format("Inside {0}", "KeyDateRepository!GetConstants"));
-			base.Sql = $"SELECT PreviousYear, CurrentYear, NextYear FROM KeyDate.vwConstants";
+			log.LogDebug(String.Format("Inside {0}", nameof(KeyDateRepository) + "!" + nameof(GetYearLookupList)));
+			base.Sql = $@"
+SELECT CAST(PreviousYear AS char(4)) AS ID, 'Previous' AS Text FROM KeyDate.vwConstants UNION ALL
+SELECT CAST(CurrentYear AS char(4))  AS ID, 'Current'	 AS Text FROM KeyDate.vwConstants UNION ALL
+SELECT CAST(NextYear AS char(4))     AS ID, 'Next'     AS Text FROM KeyDate.vwConstants
+";
 			return await WithConnectionAsync(async connection =>
 			{
-				var rows = await connection.QueryAsync<Domain.Constants>(sql: base.Sql);
-				return rows.SingleOrDefault();
+				var rows = await connection.QueryAsync<YearLookup>(sql: base.Sql);
+				return rows.ToList();
 			});
 		}
 
-
 		public async Task<List<CalendarEntry>> GetCalendarEntries(int yearId)
 		{
-			log.LogDebug(String.Format("Inside {0}, yearId={1}", "KeyDateRepository!GetCalendar", yearId));
-			//int yearId = GetYearId(relativeYear);
-			//string yearId = (int)GetYearIdWhereArg(relativeYear);
-
+			log.LogDebug(String.Format("Inside {0}, yearId={1}", nameof(KeyDateRepository) + "!" + nameof(GetCalendarEntries), yearId));
 			base.Parms = new DynamicParameters(new { YearId = yearId });
-
 			base.Sql = $@"
 SELECT
 YearId, CalendarTemplateId, Date, Detail, EventDescr, TypeDescr
@@ -76,7 +75,7 @@ ORDER BY Date
 
 		public async Task<CalendarYear> GetHebrewYearAndChildren(RelativeYearEnum relativeYear)
 		{
-			log.LogDebug(String.Format("Inside {0}, relativeYear={1}", "KeyDateRepository!GetHebrewYearAndChildren", relativeYear));
+			log.LogDebug(String.Format("Inside {0}, relativeYear={1}", nameof(KeyDateRepository) + "!" + nameof(GetHebrewYearAndChildren), relativeYear));
 			string yearId = GetYearIdWhereArg(relativeYear);
 
 			base.Sql = $@"
@@ -138,3 +137,12 @@ var inside = "KeyDateRepository!GetHebrewYearAndChildren";
 var dump = debug.ToString();
 base.log.LogDebug("Inside {@Inside}, FddList: {@FddList}", inside, dump);
 */
+
+
+
+
+
+
+
+
+

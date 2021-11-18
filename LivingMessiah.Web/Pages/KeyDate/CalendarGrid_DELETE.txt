@@ -1,4 +1,117 @@
 ﻿
+# Service
+		//Task<List<string>> GetYearList();  //Task<List<int>> GetYearLookupList();
+		//Task<int> GetYearLookup(BaseRelativeYearSmartEnum relative);
+
+		//private List<int> YearLookupList { get; set; }
+
+
+		////public async Task<List<int>> GetYearList() 
+		//public async Task<List<string>> GetYearList() 
+		//{ 
+		//	return await Populate();
+		//}
+
+		//BaseRelativeYearSmartEnum GetYearSmartEnum(string relative);
+		//public BaseRelativeYearSmartEnum GetYearSmartEnum(string relative)
+		//{
+		//	if (relative == "First")
+		//	{
+		//		return BaseRelativeYearSmartEnum.Previous;
+		//	}
+		//	else
+		//	{
+		//		if (relative == "Second")
+		//		{
+		//			return BaseRelativeYearSmartEnum.Current;
+		//		}
+		//		else
+		//		{
+		//			return BaseRelativeYearSmartEnum.Next;
+		//		}
+		//	}
+		//}
+
+
+
+
+		private List<string> YearList { get; set; }
+
+			/*
+			//for (int i = 1; i < 4; i++)
+			int i = 0;
+			string s = "";
+			foreach (string year in YearList)
+			{
+				i += 1;
+				s = BaseRelativeYearSmartEnum.FromValue(i).Name;
+				YearLookupList.Add(new YearLookup() { ID=year, Text=  s });
+			}
+
+			Logger.LogDebug(string.Format("Inside {0} i:{1}, s:{2}", nameof(KeyDateService) + "!" + nameof(Populate), i, s));
+
+			return YearLookupList;
+			*/
+
+
+
+		/*
+		public async Task<int> GetYearLookup(BaseRelativeYearSmartEnum relative)
+		{
+			Logger.LogDebug(String.Format("Inside {0}, int: {1}", nameof(KeyDateService) + "!" + nameof(GetYearLookup), year));
+			if (YearList == null)
+			{
+				await Populate(); //	YearLookupList = await db.GetYears();
+			}
+
+			int j = 0;
+
+			for (int i = 0; i < 2; i++)
+			{
+				if (i==0 && relative == BaseRelativeYearSmartEnum.Previous)
+				{
+					j=i;
+				}
+				else
+				{
+					if (i == 1 && relative == BaseRelativeYearSmartEnum.Current)
+					{
+						j = i;
+					}
+					else
+					{
+						j = i;
+					}
+				}
+			}
+
+			return j;
+		}
+		*/
+
+
+		/*
+		private async Task<List<string>> Populate()  //Task<List<int>> Populate()
+		{
+			if (YearList != null)
+			{
+				return YearList;
+			}
+			try
+			{
+				YearList = await db.GetYears();
+				return YearList;
+			}
+			catch (System.Exception ex)
+			{
+				ExceptionMessage = $"Inside {nameof(Populate)}";
+				Logger.LogError(ex, ExceptionMessage);
+				throw new InvalidOperationException(ExceptionMessage);
+			}
+		}
+		*/
+
+
 # .razor
 		<SfDropDownList TValue="string" TItem="YearLookup"
 										Placeholder="Select Year"
@@ -23,6 +136,26 @@
 
 
 # .razor.cs
+
+
+		//private YearLookup CurrentYearLookup { get; set; }
+		//private BaseRelativeYearSmartEnum YearSmartEnum;
+
+				//YearSmartEnum = BaseRelativeYearSmartEnum.Current;
+				//CurrentYearLookup = YearLookupList.Where(w => w.Text == YearSmartEnum.Name.ToString()).SingleOrDefault();
+
+
+				//if (i!=0)
+				//{
+				//	ChangedText = BaseRelativeYearSmartEnum.Current.Name;
+				//}
+				//else
+				//{
+				//	ChangedText = "?";
+				//}
+
+
+
 
 		//[Parameter]
 		public BaseRelativeYearSmartEnum RelativeYear { get; set; } = RelativeYearEnum.Current;
@@ -127,4 +260,83 @@ Seasons.razor
 				args.Cell.AddClass(new string[] { e.TextColor });
 			}
 		}
+
+
+
+
+
+
+			/*
+			return relativeYear switch
+			{
+				RelativeYearEnum.Previous => Constants.PreviousYear,
+				RelativeYearEnum.Current => Constants.CurrentYear,
+				RelativeYearEnum.Next => Constants.NextYear,
+				RelativeYearEnum.None => 0,
+				_ => Constants.CurrentYear,
+			};
+			*/
+
+
+
+
+
+
+
+
+
+<div class="col-lg-12 control-section">
+	<div class="control_wrapper">
+		<SfDropDownList TValue="string" TItem="YearLookup"
+										Placeholder="Select Year"
+										@bind-Value="@ChangedID"
+										DataSource="@YearLookupList">
+			<DropDownListFieldSettings Text="Text" Value="ID"></DropDownListFieldSettings>
+			<DropDownListEvents TItem="YearLookup" TValue="string"
+													ValueChange="OnChange">
+			</DropDownListEvents>
+		</SfDropDownList>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-12">
+		<ul>
+			<li>ChangedID: @ChangedID</li>
+			<li>ChangedText: @ChangedText</li>
+		</ul>
+	</div>
+</div>
+
+
+# Repository
+
+		/*
+		//public async Task<List<int>> GetYears()
+		public async Task<List<string>> GetYears()
+		{
+			log.LogDebug(String.Format("Inside {0}", nameof(KeyDateRepository) + "!" + nameof(GetYears) ));
+			//base.Sql = $"SELECT PreviousYear, CurrentYear, NextYear FROM KeyDate.vwConstants";
+			base.Sql = $@"
+SELECT 
+	CAST(PreviousYear AS char(4)) PreviousYear
+,	CAST(CurrentYear AS char(4)) CurrentYear
+,	CAST(NextYear AS char(4)) NextYear
+FROM KeyDate.vwConstants
+";
+			return await WithConnectionAsync(async connection =>
+			{
+				var rows = await connection.QueryAsync<string>(sql: base.Sql);
+				return rows.ToList();
+			});
+		}
+		*/
+
+			//base.Sql = $"SELECT PreviousYear, CurrentYear, NextYear FROM KeyDate.vwConstants";
+
+		//Task<List<int>> GetYears();
+		//Task<List<string>> GetYears();
+
+			//int yearId = GetYearId(relativeYear);
+			//string yearId = (int)GetYearIdWhereArg(relativeYear);
 
