@@ -1,18 +1,18 @@
-﻿using Microsoft.AspNetCore.Components;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using LivingMessiah.Web.Services;
-using LivingMessiah.Web.Pages.KeyDates.Queries;
-using LivingMessiah.Web.Pages.KeyDates.Enums;
 using System;
+using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
+
+using LivingMessiah.Web.Pages.KeyDates.Queries;
+using LivingMessiah.Web.Pages.UpcomingEvents.Data;
 
 namespace LivingMessiah.Web.Pages.UpcomingEvents
 {
 	public partial class Index
 	{
 		[Inject]
-		public IUpcomingEventService Svc { get; set; }
+		public IUpcomingEventsRepository db { get; set; }
 
 		[Inject]
 		public ILogger<Index> Logger { get; set; }
@@ -37,7 +37,9 @@ namespace LivingMessiah.Web.Pages.UpcomingEvents
 			try
 			{
 				Logger.LogDebug($"Inside {nameof(Index)}!{nameof(OnInitializedAsync)}");
-				UpcomingEventList = await Svc.GetEvents(daysAhead: 100, daysPast: -3);
+
+				//ToDo: Instead of using a service, use LazyCache (https://github.com/alastairtree/LazyCache) to cache this content
+				UpcomingEventList = await db.GetEvents(daysAhead: 100, daysPast: -3);
 				if (UpcomingEventList is not null)
 				{
 					Logger.LogDebug($"...UpcomingEventList.Count:{UpcomingEventList.Count}");

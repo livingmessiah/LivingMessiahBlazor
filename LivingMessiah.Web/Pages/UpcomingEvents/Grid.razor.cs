@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Collections.Generic;
-using System.Linq;
 
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 
 //using LivingMessiah.Web.Pages.UpcomingEvents.Enums;
-//using LivingMessiah.Web.Pages.UpcomingEvents.Services;
 
 using LivingMessiah.Web.Pages.UpcomingEvents.Data;
 using LivingMessiah.Web.Pages.KeyDates.Queries;
@@ -19,7 +17,6 @@ namespace LivingMessiah.Web.Pages.UpcomingEvents
 {
 	public partial class Grid
 	{
-		//[Inject]	public IUpcomingEventsService svc { get; set; }
 		[Inject]	public IUpcomingEventsRepository db { get; set; }
 
 		[Inject]	

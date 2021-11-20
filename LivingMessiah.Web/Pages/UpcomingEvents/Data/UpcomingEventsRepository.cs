@@ -1,5 +1,4 @@
 ﻿using Dapper;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
@@ -10,7 +9,6 @@ using Microsoft.Extensions.Configuration;
 
 using LivingMessiah.Web.Pages.KeyDates.Enums;
 using LivingMessiah.Web.Pages.KeyDates.Queries;
-using LivingMessiah.Web.Pages.KeyDates.Commands;
 
 namespace LivingMessiah.Web.Pages.UpcomingEvents.Data
 {
@@ -18,7 +16,8 @@ namespace LivingMessiah.Web.Pages.UpcomingEvents.Data
 	{
 		string BaseSqlDump { get; }
 		Task<List<UpcomingEvent>> GetEvents(int daysAhead, int daysPast);
-		Task<List<DateUnion>> GetDateUnionList(RelativeYearEnum relativeYear);
+
+		//Note, used only by Pages\SmartEnums\Index.razor.cs
 		Task<List<DateExplode>> GetDateExplode(RelativeYearEnum relativeYear);
 	}
 
@@ -94,28 +93,6 @@ ORDER BY Date
 			};
 
 		}
-
-
-		#region Command
-
-		public async Task<List<DateUnion>> GetDateUnionList(RelativeYearEnum relativeYear)
-		{
-			base.Sql = $@"
-SELECT Id, Date, DateTypeId AS DateTypeEnum, Descr
-FROM KeyDate.vwDateUnion
-CROSS JOIN KeyDate.Constants c
-WHERE YearId = {GetYearId(relativeYear)}
-ORDER BY Date
-";
-			return await WithConnectionAsync(async connection =>
-			{
-				var rows = await connection.QueryAsync<DateUnion>(sql: base.Sql, param: base.Parms);
-				return rows.ToList();
-			});
-		}
-
-
-		#endregion
 
 	}
 }

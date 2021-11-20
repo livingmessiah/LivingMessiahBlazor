@@ -1,19 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 
 using Microsoft.AspNetCore.Authorization;
 using static LivingMessiah.Web.Services.Auth0;
 
-using LivingMessiah.Web.Pages.UpcomingEvents.Data;
-using LivingMessiah.Web.Pages.KeyDates.Commands;
 using LivingMessiah.Web.Pages.KeyDates.Enums;
-
-using LivingMessiah.Web.Pages.UpcomingEvents.Data.Commands;
-
+using LivingMessiah.Web.Pages.KeyDates.Data;
+using LivingMessiah.Web.Pages.KeyDates.Queries;
 
 using Syncfusion.Blazor.Grids;
 
@@ -23,10 +20,7 @@ namespace LivingMessiah.Web.Pages.KeyDates
 	public partial class KeyDatesEdit
 	{
 		[Inject]
-		public IUpcomingEventsRepository db { get; set; }
-
-		[Inject]
-		public IUpcomingEvents dbCommands { get; set; }
+		public IKeyDateRepository db { get; set; }
 
 		[Inject]
 		public ILogger<KeyDatesEdit> Logger { get; set; }
@@ -76,8 +70,6 @@ namespace LivingMessiah.Web.Pages.KeyDates
 				DatabaseErrorMsg = $"Error reading database";
 				Logger.LogError(ex, $"...{DatabaseErrorMsg}");
 			}
-
-
 		}
 
 		private void LoadAppointmentDataLista()
@@ -113,7 +105,7 @@ namespace LivingMessiah.Web.Pages.KeyDates
 				{
 					foreach (var item in BatchChanges.ChangedRecords)
 					{
-						rows += await dbCommands.UpdateKeyDate(item.Id, item.Date);
+						rows += await db.UpdateKeyDate(item.Id, item.Date);
 					}
 
 				}

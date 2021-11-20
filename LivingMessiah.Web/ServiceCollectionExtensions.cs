@@ -10,7 +10,7 @@ using Sukkot.Web.Service;
 using SukkotApi.Data;
 using LivingMessiah.Web.Services;
 using LivingMessiah.Data;
-using LivingMessiah.Web.Pages.UpcomingEvents.Data.Commands;
+
 using LivingMessiah.Web.Pages.SukkotAdmin.Donations.Data;
 using LivingMessiah.Web.Pages.SukkotAdmin.Registration.Data;
 using LivingMessiah.Web.Pages.SukkotAdmin.Registration.Services;
@@ -37,7 +37,6 @@ namespace LivingMessiah.Web
 				.AddSingleton<IShabbatWeekCacheService, ShabbatWeekCacheService>()
 				.AddSingleton<IShabbatWeekRepository, ShabbatWeekRepository>()
 				.AddSingleton<IUpcomingEventsRepository, UpcomingEventsRepository>()
-				.AddSingleton<IUpcomingEvents, UpcomingEvents>()
 				.AddSingleton<IKeyDateRepository, KeyDateRepository>()
 
 				.AddTransient<ISecurityClaimsService, SecurityClaimsService>()
@@ -56,7 +55,6 @@ namespace LivingMessiah.Web
 
 				.AddTransient<ISukkotRepository, SukkotRepository>()
 				.AddTransient<ISukkotAdminRepository, SukkotAdminRepository>()
-				.AddSingleton<IUpcomingEventService, UpcomingEventService>()
 				.AddSingleton<ILiturgyService, LiturgyService>();
 
 			return services;

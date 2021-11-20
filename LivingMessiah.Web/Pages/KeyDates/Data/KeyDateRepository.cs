@@ -19,6 +19,10 @@ namespace LivingMessiah.Web.Pages.KeyDates.Data
 		Task<List<YearLookup>> GetYearLookupList();
 		Task<List<LivingMessiah.Web.Pages.KeyDates.Domain.CalendarEntry>> GetCalendarEntries(int yearId);
 		Task<CalendarYear> GetHebrewYearAndChildren(RelativeYearEnum relativeYear);
+		Task<List<DateUnion>> GetDateUnionList(RelativeYearEnum relativeYear);
+
+		// Command
+		Task<int> UpdateKeyDate(int Id, DateTime Date);
 	}
 	public class KeyDateRepository : BaseRepositoryAsync, IKeyDateRepository
 	{
@@ -195,6 +199,38 @@ FROM KeyDate.FeastDayDetail
 
 		}
 
+		public async Task<List<DateUnion>> GetDateUnionList(RelativeYearEnum relativeYear)
+		{
+			base.Sql = $@"
+SELECT Id, Date, DateTypeId AS DateTypeEnum, Descr
+FROM KeyDate.vwDateUnion
+CROSS JOIN KeyDate.Constants c
+WHERE YearId = {GetYearId(relativeYear)}
+ORDER BY Date
+";
+			return await WithConnectionAsync(async connection =>
+			{
+				var rows = await connection.QueryAsync<DateUnion>(sql: base.Sql, param: base.Parms);
+				return rows.ToList();
+			});
+		}
+
+
+		#region Command
+
+		public async Task<int> UpdateKeyDate(int id, DateTime date)
+		{
+			base.Parms = new DynamicParameters(new { Id = id, Date = date });
+			base.Sql = $"UPDATE KeyDate.Date SET Date = @Date WHERE Id=@Id; ";
+			return await WithConnectionAsync(async connection =>
+			{
+				log.LogDebug($"base.Sql: {base.Sql}, base.Parms:{base.Parms}");
+				var count = await connection.ExecuteAsync(sql: base.Sql, param: base.Parms);
+				return count;
+			});
+		}
+		
+		#endregion
 	}
 }
 
