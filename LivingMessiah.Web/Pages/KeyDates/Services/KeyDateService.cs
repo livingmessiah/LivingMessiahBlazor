@@ -8,7 +8,6 @@ using Microsoft.Extensions.Caching.Memory;
 using LivingMessiah.Web.Pages.KeyDates.Data;
 using LivingMessiah.Web.Pages.KeyDates.Enums;
 using LivingMessiah.Web.Pages.KeyDates.Queries;
-using LivingMessiah.Web.Pages.KeyDates.Domain;
 
 namespace LivingMessiah.Web.Pages.KeyDates.Services
 {
@@ -17,7 +16,7 @@ namespace LivingMessiah.Web.Pages.KeyDates.Services
 		string ExceptionMessage { get; set; }
 		Task<List<YearLookup>> GetYearLookupList();
 		YearLookup GetYearLookup(string relative);
-		Task<List<LivingMessiah.Web.Pages.KeyDates.Domain.CalendarEntry>> GetCalendarEntries(int year);
+		Task<List<CalendarEntry>> GetCalendarEntries(int year);
 		Task<CalendarYear> GetHebrewYearAndChildren(RelativeYearEnum relativeYear); // Called by Pages\KeyDates\HebrewYear.razor
 	}
 
@@ -90,10 +89,10 @@ namespace LivingMessiah.Web.Pages.KeyDates.Services
 			}
 		}
 
-		public async Task<List<LivingMessiah.Web.Pages.KeyDates.Domain.CalendarEntry>> GetCalendarEntries(int year)
+		public async Task<List<CalendarEntry>> GetCalendarEntries(int year)
 		{
 			Logger.LogDebug(String.Format("Inside {0}, year:{1}", nameof(KeyDateService) + "!" + nameof(GetCalendarEntries), year));
-			List< LivingMessiah.Web.Pages.KeyDates.Domain.CalendarEntry > calendarEntries;
+			List< CalendarEntry > calendarEntries;
 			try
 			{
 				calendarEntries = await db.GetCalendarEntries(year);

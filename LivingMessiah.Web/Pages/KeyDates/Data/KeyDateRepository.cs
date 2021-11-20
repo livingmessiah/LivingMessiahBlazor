@@ -9,7 +9,6 @@ using Microsoft.Extensions.Logging;
 using LivingMessiah.Data;                   // ToDo: Move this to LivingMessiah.Web.Data
 using LivingMessiah.Web.Pages.KeyDates.Enums;  
 using LivingMessiah.Web.Pages.KeyDates.Queries;
-using LivingMessiah.Web.Pages.KeyDates.Domain;  // ToDo: Not plural
 
 namespace LivingMessiah.Web.Pages.KeyDates.Data
 {
@@ -17,7 +16,7 @@ namespace LivingMessiah.Web.Pages.KeyDates.Data
 	{
 		string BaseSqlDump { get; }
 		Task<List<YearLookup>> GetYearLookupList();
-		Task<List<LivingMessiah.Web.Pages.KeyDates.Domain.CalendarEntry>> GetCalendarEntries(int yearId);
+		Task<List<CalendarEntry>> GetCalendarEntries(int yearId);
 		Task<CalendarYear> GetHebrewYearAndChildren(RelativeYearEnum relativeYear);
 		Task<List<DateUnion>> GetDateUnionList(RelativeYearEnum relativeYear);
 
@@ -50,7 +49,7 @@ SELECT CAST(NextYear AS char(4))     AS ID, 'Next'     AS Text FROM KeyDate.vwCo
 			});
 		}
 
-		public async Task<List<LivingMessiah.Web.Pages.KeyDates.Domain.CalendarEntry>> GetCalendarEntries(int yearId)
+		public async Task<List<CalendarEntry>> GetCalendarEntries(int yearId)
 		{
 			log.LogDebug(String.Format("Inside {0}, yearId={1}", nameof(KeyDateRepository) + "!" + nameof(GetCalendarEntries), yearId));
 			base.Parms = new DynamicParameters(new { YearId = yearId });
@@ -65,7 +64,7 @@ ORDER BY Date
 ";
 			return await WithConnectionAsync(async connection =>
 			{
-				var rows = await connection.QueryAsync<LivingMessiah.Web.Pages.KeyDates.Domain.CalendarEntry>(sql: base.Sql, param: base.Parms);
+				var rows = await connection.QueryAsync<CalendarEntry>(sql: base.Sql, param: base.Parms);
 				return rows.ToList();
 			});
 		}
@@ -125,7 +124,7 @@ FROM KeyDate.FeastDayDetail
 				var calendarYear = await multi.ReadSingleOrDefaultAsync<CalendarYear>();    // #1
 				if (calendarYear != null)
 				{
-					calendarYear.CalendarEntrys = (await multi.ReadAsync<LivingMessiah.Web.Pages.KeyDates.Queries.CalendarEntry>()).ToList();   // #2
+					calendarYear.CalendarEntrys = (await multi.ReadAsync<LivingMessiah.Web.Pages.KeyDates.Queries.CalendarEntryDateRange>()).ToList();   // #2
 					calendarYear.FeastDays = (await multi.ReadAsync<FeastDay>()).ToList();    // #3
 					calendarYear.LunarMonths = (await multi.ReadAsync<LunarMonth>()).ToList();   // #4
 					calendarYear.Seasons = (await multi.ReadAsync<Season>()).ToList();    // #5

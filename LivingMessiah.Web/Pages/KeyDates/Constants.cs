@@ -5,7 +5,6 @@
   Used by: LivingMessiah.Web\Components\Pages\Shavuot\... 
   - Header.razor
   - OmerCount.razor
-  - Use LivingMessiah.Web.Pages.KeyDates.Domain.Constants
   */
   public static class Years
 	{

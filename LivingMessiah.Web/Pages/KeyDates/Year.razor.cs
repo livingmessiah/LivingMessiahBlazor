@@ -13,7 +13,7 @@ namespace LivingMessiah.Web.Pages.KeyDates
 		public bool WithMonths { get; set; }
 
 		[Parameter]
-		public List<CalendarEntry> CalendarEntries { get; set; }
+		public List<CalendarEntryDateRange> CalendarEntryDateRanges { get; set; }
 
 		[Parameter]
 		public List<FeastDay> FeastDays { get; set; }

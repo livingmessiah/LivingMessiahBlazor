@@ -1,18 +1,15 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Collections.Generic;
-using System.Linq;
 
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 
-//using LivingMessiah.Web.Services;
 using LivingMessiah.Web.Pages.KeyDates.Enums;
-using Domain = LivingMessiah.Web.Pages.KeyDates.Domain;
 
 using LivingMessiah.Web.Pages.KeyDates.Services;
 //using LivingMessiah.Web.Pages.KeyDates.Data;
-using LivingMessiah.Web.Pages.KeyDates.Domain;
+using LivingMessiah.Web.Pages.KeyDates.Queries;
 
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.DropDowns;

@@ -1,5 +1,6 @@
 ﻿@page "/KeyDatesCalendarGrid"
 @using static LivingMessiah.Web.Links.KeyDatesCalendarGrid
+@using LivingMessiah.Web.Pages.KeyDates.Queries
 
 <h2 class="mt-2">
 	<i class="@Icon"></i> @LivingMessiah.Web.Links.KeyDatesCalendarGrid.Title
@@ -9,12 +10,12 @@
 	<div class="col-6">
 
 		<div class="control_wrapper">
-			<SfDropDownList TValue="string" TItem="Domain.YearLookup"
+			<SfDropDownList TValue="string" TItem="YearLookup"
 											Placeholder="Select Year"
 											@bind-Value="@ChangedID"
 											DataSource="@YearLookupList">
 				<DropDownListFieldSettings Text="Text" Value="ID"></DropDownListFieldSettings>
-				<DropDownListEvents TItem="Domain.YearLookup" TValue="string"
+				<DropDownListEvents TItem="YearLookup" TValue="string"
 														ValueChange="OnChange">
 				</DropDownListEvents>
 			</SfDropDownList>
@@ -36,63 +37,63 @@
 							DataSource="@CalendarEntries"
 							Toolbar="@(new List<string>() { "Print", "ExcelExport" })"
 							AllowFiltering="true" AllowExcelExport="true">
-				<GridEvents OnToolbarClick="ToolbarClickHandler" TValue="@Domain.CalendarEntry"></GridEvents>
+				<GridEvents OnToolbarClick="ToolbarClickHandler" TValue="@CalendarEntry"></GridEvents>
 				<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
 
 				@*  CommandClicked="OnSaveClicked" *@
 
 				<GridSortSettings>
 					<GridSortColumns>
-						<GridSortColumn Field="@nameof(Domain.CalendarEntry.Date)" Direction="SortDirection.Ascending" />
+						<GridSortColumn Field="@nameof(CalendarEntry.Date)" Direction="SortDirection.Ascending" />
 					</GridSortColumns>
 				</GridSortSettings>
-				@*<GridEvents TValue="Domain.CalendarEntry" QueryCellInfo="CustomizeCell"></GridEvents>*@
+				@*<GridEvents TValue="CalendarEntry" QueryCellInfo="CustomizeCell"></GridEvents>*@
 				@* ... RowSelected="RowSelectHandler" RowDeselected="RowDeSelectHandler" />*@
 
 				<GridColumns>
 
-					<GridColumn Field=@nameof(Domain.CalendarEntry.Date) Format="yyyy/MM/dd" HeaderText="Date" Width="30" AllowSorting="false" AllowFiltering="true">
+					<GridColumn Field=@nameof(CalendarEntry.Date) Format="yyyy/MM/dd" HeaderText="Date" Width="30" AllowSorting="false" AllowFiltering="true">
 					</GridColumn>
 
 					<GridColumn HeaderText="Part 1">
 						<GridColumns>
 
-							@*<GridColumn Field=@nameof(Domain.CalendarEntry.DateTypeId) HeaderText="Type" Width="40"
-											FilterSettings="@(new FilterSettings { Type = Syncfusion.Blazor.Grids.FilterType.CheckBox })">
-					</GridColumn>*@
+							@*<GridColumn Field=@nameof(CalendarEntry.DateTypeId) HeaderText="Type" Width="40"
+														FilterSettings="@(new FilterSettings { Type = Syncfusion.Blazor.Grids.FilterType.CheckBox })">
+								</GridColumn>*@
 
-							<GridColumn Field=@nameof(Domain.CalendarEntry.DateTypeEnum) HeaderText="Type" Width="40" AllowSorting="false"
+							<GridColumn Field=@nameof(CalendarEntry.DateTypeEnum) HeaderText="Type" Width="40" AllowSorting="false"
 													FilterSettings="@(new FilterSettings { Type = Syncfusion.Blazor.Grids.FilterType.CheckBox })">
 							</GridColumn>
 
-							@*<GridColumn Field=@nameof(Domain.CalendarEntry.DateTypeId) HeaderText="Type" Width="30" AllowSorting="true" AllowFiltering="false"></GridColumn>*@
+							@*<GridColumn Field=@nameof(CalendarEntry.DateTypeId) HeaderText="Type" Width="30" AllowSorting="true" AllowFiltering="false"></GridColumn>*@
 
-							<GridColumn Field=@nameof(Domain.CalendarEntry.Detail) HeaderText="Dtl" Width="25" AllowSorting="false" AllowFiltering="false"></GridColumn>
+							<GridColumn Field=@nameof(CalendarEntry.Detail) HeaderText="Dtl" Width="25" AllowSorting="false" AllowFiltering="false"></GridColumn>
 						</GridColumns>
 					</GridColumn>
 
 					<GridColumn HeaderText="Part 2">
 						<GridColumns>
 
-							@*<GridColumn Field=@nameof(Domain.CalendarEntry.TypeDescr) HeaderText="Type Descr." Width="40"  AllowSorting="false"
-											FilterSettings="@(new FilterSettings { Type = Syncfusion.Blazor.Grids.FilterType.CheckBox })">
-					</GridColumn>*@
+							@*<GridColumn Field=@nameof(CalendarEntry.TypeDescr) HeaderText="Type Descr." Width="40"  AllowSorting="false"
+														FilterSettings="@(new FilterSettings { Type = Syncfusion.Blazor.Grids.FilterType.CheckBox })">
+								</GridColumn>*@
 
-							<GridColumn Field=@nameof(Domain.CalendarEntry.EventDescr) HeaderText="Event Description" Width="60" AllowSorting="false" AllowFiltering="false">
+							<GridColumn Field=@nameof(CalendarEntry.EventDescr) HeaderText="Event Description" Width="60" AllowSorting="false" AllowFiltering="false">
 							</GridColumn>
 
 						</GridColumns>
 					</GridColumn>
 
 					@*
-			Year.razor
-			if (item.DateTypeId == 1 && WithMonths==true)
-			{
-					<LunarMonthComponent IsXsOrSm="@IsXsOrSm"
-															 DateIdBeg="item.DateIdBeg"
-															 DateIdEnd="item.DateIdEnd"
-															 LunarMonths="LunarMonths.Where(w => w.DateId >= item.DateIdBeg && w.DateId <= item.DateIdEnd).ToList()">
-					</LunarMonthComponent>
+						Year.razor
+						if (item.DateTypeId == 1 && WithMonths==true)
+						{
+								<LunarMonthComponent IsXsOrSm="@IsXsOrSm"
+																		 DateIdBeg="item.DateIdBeg"
+																		 DateIdEnd="item.DateIdEnd"
+																		 LunarMonths="LunarMonths.Where(w => w.DateId >= item.DateIdBeg && w.DateId <= item.DateIdEnd).ToList()">
+								</LunarMonthComponent>
 
 					*@
 

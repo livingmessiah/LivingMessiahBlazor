@@ -8,7 +8,7 @@ namespace LivingMessiah.Web.Pages.KeyDates.Queries
 		public string ShortDescr { get; set; }
 		public string ShortDescrHebrew { get; set; }
 		public bool IsPregnant { get; set; }
-		public List<CalendarEntry> CalendarEntrys { get; set; } = new List<CalendarEntry>();
+		public List<CalendarEntryDateRange> CalendarEntrys { get; set; } = new List<CalendarEntryDateRange>();
 		public List<FeastDay> FeastDays { get; set; } = new List<FeastDay>();
 		public List<LunarMonth> LunarMonths { get; set; } = new List<LunarMonth>();
 		public List<Season> Seasons { get; set; } = new List<Season>();

@@ -29,7 +29,7 @@ namespace LivingMessiah.Web.Pages.KeyDates
 		public bool WithMonths { get; set; }
 
 		protected CalendarYear CalendarYear;
-		protected List<CalendarEntry> CalendarEntries;
+		protected List<CalendarEntryDateRange> CalendarEntryDateRanges;
 		
 		protected List<FeastDay> FeastDays;
 		protected List<LunarMonth> LunarMonths;
@@ -54,7 +54,7 @@ namespace LivingMessiah.Web.Pages.KeyDates
 				}
 				else
 				{
-					CalendarEntries = CalendarYear.CalendarEntrys.ToList();
+					CalendarEntryDateRanges = CalendarYear.CalendarEntrys.ToList();
 					LunarMonths = CalendarYear.LunarMonths.Where(w => w.YearId == CalendarYear.Year).ToList();
 					Seasons = CalendarYear.Seasons.Where(w => w.YearId == CalendarYear.Year).ToList();
 					FeastDays = CalendarYear.FeastDays.Where(w => w.YearId == CalendarYear.Year).ToList();
