@@ -1,4 +1,4 @@
-﻿namespace LivingMessiah.Domain.KeyDates.Enums
+﻿namespace LivingMessiah.Web.Pages.KeyDates.Enums
 {
 	// KeyDate.vwDateWithSiblingEnums d d.DateTypeId AS DateTypeEnum
 	public enum DateTypeEnum

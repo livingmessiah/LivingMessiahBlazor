@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Components;
 using System.Threading.Tasks;
-using LivingMessiah.Domain.KeyDates.Queries;
-using LivingMessiah.Data;
 using Microsoft.Extensions.Logging;
-using LivingMessiah.Domain.KeyDates.Enums;
+using LivingMessiah.Web.Pages.KeyDates.Enums;
+using LivingMessiah.Web.Pages.KeyDates.Queries;
+using LivingMessiah.Web.Pages.UpcomingEvents.Data;
 
 namespace LivingMessiah.Web.Pages.SmartEnums
 {

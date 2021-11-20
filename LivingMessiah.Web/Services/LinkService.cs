@@ -32,7 +32,7 @@ namespace LivingMessiah.Web.Services
 			{
 				return links.GetLinks()
 					.Where(x => x.HomeSidebarUsage == true)
-					.Union(links.GetFeastLinks().Where(z => z.FeastDay == LivingMessiah.Domain.KeyDates.Enums.FeastDayEnum.Tabernacles)).ToList();
+					.Union(links.GetFeastLinks().Where(z => z.FeastDay == LivingMessiah.Web.Pages.KeyDates.Enums.FeastDayEnum.Tabernacles)).ToList();
 			}
 			else
 			{

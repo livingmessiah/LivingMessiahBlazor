@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using LivingMessiah.Web.Services;
-using LivingMessiah.Domain.KeyDates.Queries;
+using LivingMessiah.Web.Pages.KeyDates.Queries;
+using LivingMessiah.Web.Pages.KeyDates.Enums;
 using System;
 using Microsoft.Extensions.Logging;
 

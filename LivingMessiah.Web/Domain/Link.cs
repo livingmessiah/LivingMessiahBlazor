@@ -11,7 +11,7 @@
 		public string HomeFloatRightHebrew { get; set; }
 		public string HomeTitleSuffix { get; set; } // shaMayim H8064"
 
-		public LivingMessiah.Domain.KeyDates.Enums.FeastDayEnum FeastDay { get; set; }
+		public LivingMessiah.Web.Pages.KeyDates.Enums.FeastDayEnum FeastDay { get; set; }
 
 		/*
 		public string Descr { get; set; }

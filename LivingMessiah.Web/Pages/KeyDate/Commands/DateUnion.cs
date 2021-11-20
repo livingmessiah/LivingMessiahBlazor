@@ -1,7 +1,7 @@
 ﻿using System;
-using LivingMessiah.Domain.KeyDates.Enums;
+using LivingMessiah.Web.Pages.KeyDates.Enums;
 
-namespace LivingMessiah.Domain.KeyDates.Commands
+namespace LivingMessiah.Web.Pages.KeyDates.Commands
 {
 	public class DateUnion
 	{

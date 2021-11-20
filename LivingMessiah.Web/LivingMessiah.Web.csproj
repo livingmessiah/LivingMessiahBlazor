@@ -74,6 +74,8 @@
   <ItemGroup>
     <Folder Include="Pages\SukkotAdmin\Donations\Services\" />
     <Folder Include="Pages\SukkotAdmin\Registration\Enums\" />
+    <Folder Include="Pages\UpcomingEvents\Enums\" />
+    <Folder Include="Pages\UpcomingEvents\Queries\" />
   </ItemGroup>
 
   <ItemGroup>

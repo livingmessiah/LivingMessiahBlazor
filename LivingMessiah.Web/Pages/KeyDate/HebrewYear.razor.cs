@@ -1,18 +1,20 @@
-﻿using Microsoft.AspNetCore.Components;
-using System.Threading.Tasks;
-using LivingMessiah.Web.Services;
-using LivingMessiah.Domain.KeyDates.Enums;
-using LivingMessiah.Domain.KeyDates.Queries;
-using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+
+using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Logging;
+
+using LivingMessiah.Web.Pages.KeyDates.Enums;
+using LivingMessiah.Web.Pages.KeyDates.Queries;
+using LivingMessiah.Web.Pages.KeyDate.Services;
 
 namespace LivingMessiah.Web.Pages.KeyDate
 {
 	public partial class HebrewYear
 	{
 		[Inject]
-		public IUpcomingEventService Svc { get; set; }
+		public IKeyDateService Svc { get; set; }
 
 		[Inject]
 		public ILogger<HebrewYear> Logger { get; set; }

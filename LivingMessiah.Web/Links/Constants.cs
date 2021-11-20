@@ -184,13 +184,6 @@
 		public const string Icon = "far fa-calendar-check";
 	}
 
-	public static class KeyDatesGrid
-	{
-		public const string Index = "/KeyDatesGrid";
-		public const string Title = "Key Dates Grid";
-		public const string Icon = "far fa-calendar-check";
-	}
-
 	public static class KeyDatesCalendarGrid
 	{
 		public const string Index = "/KeyDatesCalendarGrid";
@@ -344,7 +337,7 @@
 
 	public static class Shavuot
 	{
-		public const LivingMessiah.Domain.KeyDates.Enums.FeastDayEnum FeastDay = LivingMessiah.Domain.KeyDates.Enums.FeastDayEnum.Weeks;
+		public const LivingMessiah.Web.Pages.KeyDates.Enums.FeastDayEnum FeastDay = LivingMessiah.Web.Pages.KeyDates.Enums.FeastDayEnum.Weeks;
 		public const string Index = "/Shavuot";
 		public const string Title = "Shavuot";
 		public const string Icon = "fab fa-creative-commons-zero";
@@ -384,7 +377,7 @@
 
 	public static class Sukkot
 	{
-		public const LivingMessiah.Domain.KeyDates.Enums.FeastDayEnum FeastDay = LivingMessiah.Domain.KeyDates.Enums.FeastDayEnum.Tabernacles;
+		public const LivingMessiah.Web.Pages.KeyDates.Enums.FeastDayEnum FeastDay = LivingMessiah.Web.Pages.KeyDates.Enums.FeastDayEnum.Tabernacles;
 		public const string Index = "/Sukkot";
 		public const string Title = "Sukkot";
 		public const string Title2 = "Sukkot 2021";
@@ -477,6 +470,7 @@
 		public const string Index = "/UpcomingEvents/";
 		public const string Title = "Upcoming Events";
 		public const string Icon = "far fa-clock";
+		public const string Grid = "/UpcomingEventsGrid";
 	}
 
 

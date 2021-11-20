@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 
-namespace LivingMessiah.Domain.KeyDates.Queries
+namespace LivingMessiah.Web.Pages.KeyDates.Queries
 {
 	public class CalendarYear
 	{

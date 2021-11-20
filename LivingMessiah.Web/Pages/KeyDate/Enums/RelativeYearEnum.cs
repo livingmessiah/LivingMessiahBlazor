@@ -1,4 +1,4 @@
-﻿namespace LivingMessiah.Domain.KeyDates.Enums
+﻿namespace LivingMessiah.Web.Pages.KeyDates.Enums
 {
 	public enum RelativeYearEnum
 	{

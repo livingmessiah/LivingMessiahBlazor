@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace LivingMessiah.Domain.KeyDates.Queries
+namespace LivingMessiah.Web.Pages.KeyDates.Queries
 {
 	public class AppointmentData
 	{

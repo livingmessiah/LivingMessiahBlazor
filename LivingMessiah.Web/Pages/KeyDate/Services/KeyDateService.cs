@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using LivingMessiah.Web.Pages.KeyDate.Domain;
-using LivingMessiah.Web.Pages.KeyDate.Data;
 using System.Linq;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Caching.Memory;
+
+using LivingMessiah.Web.Pages.KeyDate.Data;
+using LivingMessiah.Web.Pages.KeyDates.Enums;
+using LivingMessiah.Web.Pages.KeyDates.Queries;
+using LivingMessiah.Web.Pages.KeyDate.Domain;
 
 namespace LivingMessiah.Web.Pages.KeyDate.Services
 {
@@ -13,19 +17,22 @@ namespace LivingMessiah.Web.Pages.KeyDate.Services
 		string ExceptionMessage { get; set; }
 		Task<List<YearLookup>> GetYearLookupList();
 		YearLookup GetYearLookup(string relative);
-		Task<List<CalendarEntry>> GetCalendarEntries(int year);
+		Task<List<LivingMessiah.Web.Pages.KeyDate.Domain.CalendarEntry>> GetCalendarEntries(int year);
+		Task<CalendarYear> GetHebrewYearAndChildren(RelativeYearEnum relativeYear); // Called by Pages\KeyDate\HebrewYear.razor
 	}
 
 	public class KeyDateService : IKeyDateService
 	{
 		#region Constructor and DI
 		private readonly IKeyDateRepository db;
+		private IMemoryCache memoryCache;
 		private readonly ILogger Logger;
 
 		public KeyDateService(
-			IKeyDateRepository keyDateRepository, ILogger<KeyDateService> logger)
+			IKeyDateRepository keyDateRepository, IMemoryCache cache, ILogger<KeyDateService> logger)
 		{
 			db = keyDateRepository;
+			memoryCache = cache;
 			Logger = logger;
 		}
 		#endregion
@@ -83,10 +90,10 @@ namespace LivingMessiah.Web.Pages.KeyDate.Services
 			}
 		}
 
-		public async Task<List<CalendarEntry>> GetCalendarEntries(int year)
+		public async Task<List<LivingMessiah.Web.Pages.KeyDate.Domain.CalendarEntry>> GetCalendarEntries(int year)
 		{
 			Logger.LogDebug(String.Format("Inside {0}, year:{1}", nameof(KeyDateService) + "!" + nameof(GetCalendarEntries), year));
-			List<CalendarEntry> calendarEntries;
+			List< LivingMessiah.Web.Pages.KeyDate.Domain.CalendarEntry > calendarEntries;
 			try
 			{
 				calendarEntries = await db.GetCalendarEntries(year);
@@ -108,6 +115,41 @@ namespace LivingMessiah.Web.Pages.KeyDate.Services
 				//throw new KeyDateException(ExceptionMessage);
 				throw new InvalidOperationException(ExceptionMessage);
 			}
+		}
+
+		public async Task<CalendarYear> GetHebrewYearAndChildren(RelativeYearEnum relativeYear)
+		{
+			var cacheKey = Settings.Constants.HebrewYearAndChildrenCache.Key;
+
+			Logger.LogDebug($"Inside {nameof(KeyDateService)}!{nameof(GetHebrewYearAndChildren)}; cacheKey:{cacheKey}; relativeYear: {(int)relativeYear}");
+			if (!memoryCache.TryGetValue(cacheKey, out CalendarYear hebrewYearAndChildren))
+			{
+				Logger.LogDebug($"...Key NOT found in cache, calling {nameof(db.GetHebrewYearAndChildren)}");
+				hebrewYearAndChildren = await db.GetHebrewYearAndChildren(relativeYear);
+				Logger.LogDebug($"...After calling {nameof(db.GetHebrewYearAndChildren)}");  //; keyDates.Count: {keyDates.Count}
+
+				if (hebrewYearAndChildren != null && hebrewYearAndChildren.Year != 0)
+				{
+					var cacheExpiryOptions = new MemoryCacheEntryOptions
+					{
+						AbsoluteExpiration = DateTime.Now.AddMinutes(Settings.Constants.HebrewYearAndChildrenCache.AbsoluteExpirationInMinutes),
+						Priority = CacheItemPriority.High,
+						SlidingExpiration = TimeSpan.FromMinutes(Settings.Constants.HebrewYearAndChildrenCache.SlidingExpirationInMinutes)
+					};
+					memoryCache.Set(cacheKey, hebrewYearAndChildren, cacheExpiryOptions);
+				}
+				else
+				{
+					Logger.LogInformation($"...hebrewYearAndChildren.Year == 0 WHICH IS WRONG!!!, so NOT saving to memoryCache. See 779-Bug-...");
+				}
+			}
+			else
+			{
+				Logger.LogDebug($"...Key found in cache");
+			}
+
+			Logger.LogDebug($"...Just before returning {nameof(hebrewYearAndChildren)}; hebrewYearAndChildren.ToString(){hebrewYearAndChildren}");
+			return hebrewYearAndChildren;
 		}
 
 

@@ -1,15 +1,11 @@
 ﻿using Dapper;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Linq;
-using System.Data;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
-using LivingMessiah.Domain.KeyDates.Enums;
-using LivingMessiah.Domain.KeyDates.Commands;
+using LivingMessiah.Data;
 
-namespace LivingMessiah.Data.Commands
+namespace LivingMessiah.Web.Pages.UpcomingEvents.Data.Commands
 {
 	public interface IUpcomingEvents
 	{

@@ -2,7 +2,7 @@
 @using Syncfusion.Blazor.DropDowns
 @using Syncfusion.Blazor.Inputs
 
-@using LivingMessiah.Domain.KeyDates.Commands
+@using LivingMessiah.Web.Pages.KeyDates.Commands
 
 <h3 class="badge-warning">Key Dates Calendar Update</h3>
 <div class="row">
@@ -43,7 +43,7 @@
 
 	<div class="col-md-7">
 
-		<SfSchedule TValue="LivingMessiah.Domain.KeyDates.Queries.AppointmentData"
+		<SfSchedule TValue="LivingMessiah.Web.Pages.KeyDates.Queries.AppointmentData"
 								CssClass="year-view" MonthsCount="@NumberOfMonths" FirstMonthOfYear="@FirstMonthOfYear">
 			<ScheduleEventSettings DataSource="@AppointmentDataList"></ScheduleEventSettings>
 			<ScheduleViews>

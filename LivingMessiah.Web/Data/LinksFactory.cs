@@ -306,7 +306,7 @@ namespace LivingMessiah.Web.Data
 			{
 				new Link
 				{
-					FeastDay = LivingMessiah.Domain.KeyDates.Enums.FeastDayEnum.Passover,
+					FeastDay = LivingMessiah.Web.Pages.KeyDates.Enums.FeastDayEnum.Passover,
 					Index = Pesach.Index,
 					Title = Pesach.Title,
 					Icon = Pesach.Icon,
@@ -317,7 +317,7 @@ namespace LivingMessiah.Web.Data
 				},
 				new Link
 				{
-					FeastDay = LivingMessiah.Domain.KeyDates.Enums.FeastDayEnum.Weeks,
+					FeastDay = LivingMessiah.Web.Pages.KeyDates.Enums.FeastDayEnum.Weeks,
 					Index = Shavuot.Index,
 					Title = Shavuot.Title,
 					Icon = Shavuot.Icon,
@@ -328,7 +328,7 @@ namespace LivingMessiah.Web.Data
 				},
 				new Link
 				{
-					FeastDay = LivingMessiah.Domain.KeyDates.Enums.FeastDayEnum.Tabernacles,
+					FeastDay = LivingMessiah.Web.Pages.KeyDates.Enums.FeastDayEnum.Tabernacles,
 					Index = Links.Sukkot.Index,
 					Title = Links.Sukkot.Title, 
 					Icon = Links.Sukkot.Icon,

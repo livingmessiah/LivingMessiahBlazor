@@ -1,6 +1,6 @@
 ﻿using System;
 using Microsoft.AspNetCore.Components;
-using LivingMessiah.Domain.KeyDates.Queries;
+using LivingMessiah.Web.Pages.KeyDates.Queries;
 
 namespace LivingMessiah.Web.Pages.KeyDate
 {

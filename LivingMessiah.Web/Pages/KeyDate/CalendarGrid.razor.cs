@@ -7,9 +7,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 
 //using LivingMessiah.Web.Services;
-using LivingMessiah.Domain.KeyDates.Enums;
-using LivingMessiah.Web.Pages.KeyDate.Enums;
-//using LivingMessiah.Domain.KeyDates.Queries;
+using LivingMessiah.Web.Pages.KeyDates.Enums;
 using Domain = LivingMessiah.Web.Pages.KeyDate.Domain;
 
 using LivingMessiah.Web.Pages.KeyDate.Services;

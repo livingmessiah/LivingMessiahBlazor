@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
-using LivingMessiah.Domain.KeyDates.Enums;
+using LivingMessiah.Web.Pages.KeyDates.Enums;
 using System;
 
 namespace LivingMessiah.Web.Pages.UpcomingEvents

@@ -12,3 +12,11 @@ namespace LivingMessiah.Web.Pages.KeyDate.Domain
 		}
 	}
 }
+
+
+/*
+Used by 
+  LivingMessiah.Web\Pages\KeyDate\CalendarGrid.razor(39)
+  LivingMessiah.Web\Pages\KeyDate\Data\KeyDateRepository.
+  LivingMessiah.Web\Pages\KeyDate\Services\KeyDateService.
+*/

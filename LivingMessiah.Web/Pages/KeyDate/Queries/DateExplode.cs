@@ -1,7 +1,7 @@
-﻿using LivingMessiah.Domain.KeyDates.Enums;
+﻿using LivingMessiah.Web.Pages.KeyDates.Enums;
 using System;
 
-namespace LivingMessiah.Domain.KeyDates.Queries
+namespace LivingMessiah.Web.Pages.KeyDates.Queries
 {
 	public class DateExplode
 	{

@@ -2,15 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using LivingMessiah.Data;
-using LivingMessiah.Domain.KeyDates.Enums;
-using LivingMessiah.Domain.KeyDates.Commands;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
-using Syncfusion.Blazor.Grids;
-using LivingMessiah.Data.Commands;
+
 using Microsoft.AspNetCore.Authorization;
 using static LivingMessiah.Web.Services.Auth0;
+
+using LivingMessiah.Web.Pages.UpcomingEvents.Data;
+using LivingMessiah.Web.Pages.KeyDates.Commands;
+using LivingMessiah.Web.Pages.KeyDates.Enums;
+
+using LivingMessiah.Web.Pages.UpcomingEvents.Data.Commands;
+
+
+using Syncfusion.Blazor.Grids;
 
 namespace LivingMessiah.Web.Pages.KeyDate
 {
@@ -29,14 +34,13 @@ namespace LivingMessiah.Web.Pages.KeyDate
 		[Parameter]
 		public RelativeYearEnum RelativeYear { get; set; } = RelativeYearEnum.Next;
 
-		public List<LivingMessiah.Domain.KeyDates.Queries.AppointmentData> AppointmentDataList;
+		public List<LivingMessiah.Web.Pages.KeyDates.Queries.AppointmentData> AppointmentDataList;
 
 		protected List<DateUnion> DateUnionList;
 
 		protected int NumberOfMonths { get; set; } = 16;
 		protected int FirstMonthOfYear { get; set; } = 9;
 
-		//C:\Source\LivingMessiahBlazor\src\LivingMessiah.Domain\KeyDates\Enums\DateTypeEnum.cs
 		public List<ResourceData> TaskData { get; set; } = new List<ResourceData> {
 				new ResourceData{ Text = "Month", Id= 1, Color = "#df5286" },
 				new ResourceData{ Text = "Feast", Id= 2, Color = "#7fa900" },
@@ -78,11 +82,11 @@ namespace LivingMessiah.Web.Pages.KeyDate
 
 		private void LoadAppointmentDataLista()
 		{
-			AppointmentDataList = new List<LivingMessiah.Domain.KeyDates.Queries.AppointmentData>();
+			AppointmentDataList = new List<LivingMessiah.Web.Pages.KeyDates.Queries.AppointmentData>();
 
 			foreach (var item in DateUnionList)
 			{
-				AppointmentDataList.Add(new LivingMessiah.Domain.KeyDates.Queries.AppointmentData
+				AppointmentDataList.Add(new LivingMessiah.Web.Pages.KeyDates.Queries.AppointmentData
 				{
 					Id = item.Id,
 					Subject = item.Descr,

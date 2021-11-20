@@ -1,6 +1,6 @@
-﻿using LivingMessiah.Domain.KeyDates.Enums;
+﻿using LivingMessiah.Web.Pages.KeyDates.Enums;
 
-namespace LivingMessiah.Domain.KeyDates.Queries
+namespace LivingMessiah.Web.Pages.KeyDates.Queries
 {
 	//ToDo: Depricated: use the Enum instead
 	public class FeastDayDetail

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace LivingMessiah.Domain.KeyDates.Queries
+namespace LivingMessiah.Web.Pages.KeyDates.Queries
 {
 	public class CalendarEntry
 	{
@@ -22,4 +22,10 @@ namespace LivingMessiah.Domain.KeyDates.Queries
 	}
 }
 
-
+/*
+Used by 
+ LivingMessiah.Web\Pages\KeyDate\HebrewYear.razor.cs(30):protected List<CalendarEntry> CalendarEntries;
+ LivingMessiah.Web\Pages\KeyDate\Queries\CalendarYear.cs(12):public List<CalendarEntry> CalendarEntrys { get; set; } = new List<CalendarEntry>(); {twice}
+ LivingMessiah.Web\Pages\KeyDate\Year.razor.cs(16):public List<CalendarEntry> CalendarEntries { get; set; }
+ LivingMessiah.Web\Pages\UpcomingEvents\Data\UpcomingEventsRepository.cs(122):calendarYear.CalendarEntrys = (await multi.ReadAsync<CalendarEntry>()).ToList();   // #2
+*/

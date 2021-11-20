@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
-using System.Linq;
-using LivingMessiah.Web.Pages.KeyDate;
 using System.Threading.Tasks;
-using LivingMessiah.Domain.KeyDates.Queries;
+using LivingMessiah.Web.Pages.KeyDates.Queries;
 
 namespace LivingMessiah.Web.Shared
 {

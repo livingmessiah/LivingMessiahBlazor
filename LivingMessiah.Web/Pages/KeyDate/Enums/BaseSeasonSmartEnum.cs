@@ -1,6 +1,6 @@
 ﻿using Ardalis.SmartEnum;
 
-namespace LivingMessiah.Domain.KeyDates.Enums
+namespace LivingMessiah.Web.Pages.KeyDates.Enums
 {
 	public abstract class BaseSeasonSmartEnum : SmartEnum<BaseSeasonSmartEnum>
 	{

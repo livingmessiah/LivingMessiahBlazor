@@ -12,7 +12,7 @@ namespace LivingMessiah.Web.Pages.KeyDate.Domain
 		public int Detail { get; set; }
 		public string EventDescr { get; set; }
 		//public int DateTypeId { get; set; }
-		public LivingMessiah.Domain.KeyDates.Enums.DateTypeEnum DateTypeEnum { get; set; }
+		public LivingMessiah.Web.Pages.KeyDates.Enums.DateTypeEnum DateTypeEnum { get; set; }
 		public BaseFeastDaySmartEnum FeastDaySmartEnum { get; set; }
 		//public List<BaseFeastDaySmartEnum> FeastDaySmartEnums { get; set; }
 
@@ -33,6 +33,12 @@ namespace LivingMessiah.Web.Pages.KeyDate.Domain
 	}
 }
 
+/*
+Used by 
+  LivingMessiah.Web\Pages\KeyDate\CalendarGrid.razor(39)
+  LivingMessiah.Web\Pages\KeyDate\Data\KeyDateRepository.
+  LivingMessiah.Web\Pages\KeyDate\Services\KeyDateService.
+*/
 
 
 //public string ShortDescr { get; set; }
