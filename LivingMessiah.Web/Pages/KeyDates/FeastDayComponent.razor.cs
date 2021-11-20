@@ -2,7 +2,7 @@
 using LivingMessiah.Web.Pages.KeyDates.Queries;
 using System.Collections.Generic;
 
-namespace LivingMessiah.Web.Pages.KeyDate
+namespace LivingMessiah.Web.Pages.KeyDates
 {
 	public partial class FeastDayComponent
 	{

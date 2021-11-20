@@ -524,7 +524,7 @@
 
 	public static class WindmillRanchSwales
 	{
-		public const string Index = "/windmillranch/swales/";
+		public const string Index = "/swales/";
 		public const string Title = "Swales / Food Forest";
 		//public const string Icon = "fas fa-tractor";
 		public const string Icon = "fas fa-drafting-compass";

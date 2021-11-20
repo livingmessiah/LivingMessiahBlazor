@@ -17,7 +17,7 @@ using LivingMessiah.Web.Pages.UpcomingEvents.Data.Commands;
 
 using Syncfusion.Blazor.Grids;
 
-namespace LivingMessiah.Web.Pages.KeyDate
+namespace LivingMessiah.Web.Pages.KeyDates
 {
 	[Authorize(Roles = Roles.AdminOrKeyDates)]
 	public partial class KeyDatesEdit

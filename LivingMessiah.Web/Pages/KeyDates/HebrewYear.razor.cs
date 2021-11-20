@@ -7,9 +7,9 @@ using Microsoft.Extensions.Logging;
 
 using LivingMessiah.Web.Pages.KeyDates.Enums;
 using LivingMessiah.Web.Pages.KeyDates.Queries;
-using LivingMessiah.Web.Pages.KeyDate.Services;
+using LivingMessiah.Web.Pages.KeyDates.Services;
 
-namespace LivingMessiah.Web.Pages.KeyDate
+namespace LivingMessiah.Web.Pages.KeyDates
 {
 	public partial class HebrewYear
 	{

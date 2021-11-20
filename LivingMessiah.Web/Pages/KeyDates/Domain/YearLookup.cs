@@ -1,5 +1,5 @@
 ﻿
-namespace LivingMessiah.Web.Pages.KeyDate.Domain
+namespace LivingMessiah.Web.Pages.KeyDates.Domain
 {
 	public class YearLookup
 	{

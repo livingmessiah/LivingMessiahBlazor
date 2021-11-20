@@ -1,6 +1,6 @@
 ﻿using Ardalis.SmartEnum;
 
-namespace LivingMessiah.Web.Pages.KeyDate.Enums
+namespace LivingMessiah.Web.Pages.KeyDates.Enums
 {
 	public abstract class BaseFeastDaySmartEnum : SmartEnum<BaseFeastDaySmartEnum>
 	{

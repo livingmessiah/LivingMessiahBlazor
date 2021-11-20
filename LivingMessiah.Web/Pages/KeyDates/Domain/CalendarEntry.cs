@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using LivingMessiah.Web.Pages.KeyDate.Enums;
+using LivingMessiah.Web.Pages.KeyDates.Enums;
 
-namespace LivingMessiah.Web.Pages.KeyDate.Domain
+namespace LivingMessiah.Web.Pages.KeyDates.Domain
 {
 	public class CalendarEntry
 	{
@@ -32,14 +31,6 @@ namespace LivingMessiah.Web.Pages.KeyDate.Domain
 
 	}
 }
-
-/*
-Used by 
-  LivingMessiah.Web\Pages\KeyDate\CalendarGrid.razor(39)
-  LivingMessiah.Web\Pages\KeyDate\Data\KeyDateRepository.
-  LivingMessiah.Web\Pages\KeyDate\Services\KeyDateService.
-*/
-
 
 //public string ShortDescr { get; set; }
 //public string ShortDescrHebrew { get; set; }

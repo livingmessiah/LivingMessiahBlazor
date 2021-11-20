@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
-using LivingMessiah.Web.Pages.KeyDate.Constants;
+using LivingMessiah.Web.Pages.KeyDates.Constants;
 
 namespace LivingMessiah.Web.Pages.Shavuot
 {

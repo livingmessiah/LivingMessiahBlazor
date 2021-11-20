@@ -15,8 +15,8 @@ using LivingMessiah.Web.Pages.SukkotAdmin.Donations.Data;
 using LivingMessiah.Web.Pages.SukkotAdmin.Registration.Data;
 using LivingMessiah.Web.Pages.SukkotAdmin.Registration.Services;
 using LivingMessiah.Web.Pages.Contacts.Data;
-using LivingMessiah.Web.Pages.KeyDate.Data;
-using LivingMessiah.Web.Pages.KeyDate.Services;
+using LivingMessiah.Web.Pages.KeyDates.Data;
+using LivingMessiah.Web.Pages.KeyDates.Services;
 using LivingMessiah.Web.Pages.UpcomingEvents.Data;
 
 //using Markdig;

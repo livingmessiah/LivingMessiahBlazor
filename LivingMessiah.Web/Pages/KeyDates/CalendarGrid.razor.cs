@@ -8,16 +8,16 @@ using Microsoft.Extensions.Logging;
 
 //using LivingMessiah.Web.Services;
 using LivingMessiah.Web.Pages.KeyDates.Enums;
-using Domain = LivingMessiah.Web.Pages.KeyDate.Domain;
+using Domain = LivingMessiah.Web.Pages.KeyDates.Domain;
 
-using LivingMessiah.Web.Pages.KeyDate.Services;
-//using LivingMessiah.Web.Pages.KeyDate.Data;
-using LivingMessiah.Web.Pages.KeyDate.Domain;
+using LivingMessiah.Web.Pages.KeyDates.Services;
+//using LivingMessiah.Web.Pages.KeyDates.Data;
+using LivingMessiah.Web.Pages.KeyDates.Domain;
 
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.DropDowns;
 
-namespace LivingMessiah.Web.Pages.KeyDate
+namespace LivingMessiah.Web.Pages.KeyDates
 {
 	public partial class CalendarGrid
 	{

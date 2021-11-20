@@ -9,15 +9,15 @@ using Microsoft.Extensions.Logging;
 using LivingMessiah.Data;                   // ToDo: Move this to LivingMessiah.Web.Data
 using LivingMessiah.Web.Pages.KeyDates.Enums;  
 using LivingMessiah.Web.Pages.KeyDates.Queries;
-using LivingMessiah.Web.Pages.KeyDate.Domain;  // ToDo: Not plural
+using LivingMessiah.Web.Pages.KeyDates.Domain;  // ToDo: Not plural
 
-namespace LivingMessiah.Web.Pages.KeyDate.Data
+namespace LivingMessiah.Web.Pages.KeyDates.Data
 {
 	public interface IKeyDateRepository
 	{
 		string BaseSqlDump { get; }
 		Task<List<YearLookup>> GetYearLookupList();
-		Task<List<LivingMessiah.Web.Pages.KeyDate.Domain.CalendarEntry>> GetCalendarEntries(int yearId);
+		Task<List<LivingMessiah.Web.Pages.KeyDates.Domain.CalendarEntry>> GetCalendarEntries(int yearId);
 		Task<CalendarYear> GetHebrewYearAndChildren(RelativeYearEnum relativeYear);
 	}
 	public class KeyDateRepository : BaseRepositoryAsync, IKeyDateRepository
@@ -46,7 +46,7 @@ SELECT CAST(NextYear AS char(4))     AS ID, 'Next'     AS Text FROM KeyDate.vwCo
 			});
 		}
 
-		public async Task<List<LivingMessiah.Web.Pages.KeyDate.Domain.CalendarEntry>> GetCalendarEntries(int yearId)
+		public async Task<List<LivingMessiah.Web.Pages.KeyDates.Domain.CalendarEntry>> GetCalendarEntries(int yearId)
 		{
 			log.LogDebug(String.Format("Inside {0}, yearId={1}", nameof(KeyDateRepository) + "!" + nameof(GetCalendarEntries), yearId));
 			base.Parms = new DynamicParameters(new { YearId = yearId });
@@ -61,7 +61,7 @@ ORDER BY Date
 ";
 			return await WithConnectionAsync(async connection =>
 			{
-				var rows = await connection.QueryAsync<LivingMessiah.Web.Pages.KeyDate.Domain.CalendarEntry>(sql: base.Sql, param: base.Parms);
+				var rows = await connection.QueryAsync<LivingMessiah.Web.Pages.KeyDates.Domain.CalendarEntry>(sql: base.Sql, param: base.Parms);
 				return rows.ToList();
 			});
 		}
