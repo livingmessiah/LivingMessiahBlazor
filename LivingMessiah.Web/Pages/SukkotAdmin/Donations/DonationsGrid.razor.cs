@@ -41,14 +41,23 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Donations
 		{
 			await GetDataWithParms(CurrentFilter);
 		}
-		
-		private SfGrid<DonationReport> GridReport;
+
+		private SfGrid<DonationReport> Grid;
 		public async Task ToolbarClickHandler(Syncfusion.Blazor.Navigations.ClickEventArgs args)
 		{
-			if (args.Item.Id == "Grid_excelexport") //Id is combination of Grid's ID and itemname
+			if (args.Item.Id == SyncFusionToolbar.Pdf.ArgId)
 			{
-				await this.GridReport.ExcelExport();
+				await this.Grid.ExportToPdfAsync();
 			}
+			if (args.Item.Id == SyncFusionToolbar.Excel.ArgId)
+			{
+				await this.Grid.ExportToExcelAsync();
+			}
+			if (args.Item.Id == SyncFusionToolbar.Csv.ArgId)
+			{
+				await this.Grid.ExportToCsvAsync();
+			}
+
 		}
 
 		public void CustomizeCell(QueryCellInfoEventArgs<DonationReport> args)

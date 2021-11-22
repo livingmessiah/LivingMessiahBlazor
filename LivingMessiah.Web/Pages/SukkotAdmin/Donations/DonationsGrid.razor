@@ -30,11 +30,11 @@
 	<div class="content-wrapper">
 		<div class="row mt-2">
 
-			<SfGrid ID="Grid"
+			<SfGrid ID="Grid" @ref="Grid"
 							DataSource="@DonationReportList"
-							Toolbar="@(new List<string>() { "Print", "ExcelExport" })"
-							AllowSorting="true"
-							AllowExcelExport="true">
+							Toolbar="@(new List<string>() { SyncFusionToolbar.Excel.Arg, SyncFusionToolbar.Csv.Arg, SyncFusionToolbar.Pdf.Arg, SyncFusionToolbar.Print.Arg })"
+							AllowExcelExport="true" AllowPdfExport="true"
+							AllowSorting="true">
 				<GridSortSettings>
 					<GridSortColumns>
 						<GridSortColumn Field="@nameof(DonationReport.FirstName)"

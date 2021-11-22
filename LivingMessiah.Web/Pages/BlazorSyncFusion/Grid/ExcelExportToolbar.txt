@@ -1,0 +1,27 @@
+﻿using Syncfusion.Blazor.Grids;
+
+		private SfGrid<CalendarEntry> Grid;  // SyncFusionGrid.ID;
+		public async Task ToolbarClickHandler(Syncfusion.Blazor.Navigations.ClickEventArgs args)
+		{
+			if (args.Item.Id == SyncFusionToolbar.Pdf.ArgId)
+			{
+				await this.Grid.ExportToPdfAsync();
+			}
+			if (args.Item.Id == SyncFusionToolbar.Excel.ArgId)
+			{
+				await this.Grid.ExportToExcelAsync();
+			}
+			if (args.Item.Id == SyncFusionToolbar.Csv.ArgId)
+			{
+				await this.Grid.ExportToCsvAsync();
+			}
+		}
+
+<SfGrid ID="Grid" @ref="Grid"
+				Toolbar="@(new List<string>() { SyncFusionToolbar.Excel.Arg, SyncFusionToolbar.Csv.Arg, SyncFusionToolbar.Pdf.Arg, SyncFusionToolbar.Print.Arg })"	
+				AllowExcelExport="true" AllowPdfExport="true"
+				@* ToDo: Add e.g. DataSource=, AllowFiltering= etc. *@  >
+		<GridEvents OnToolbarClick="ToolbarClick" TValue="OrdersDetails"></GridEvents>
+</SfGrid>
+ 
+SfGridToolbarExcel

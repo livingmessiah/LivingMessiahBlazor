@@ -32,15 +32,12 @@
 <div class="col-lg-12 control-section">
 	<div class="content-wrapper">
 		<div class="row mt-4">
-
-			<SfGrid ID="Grid" @ref="sfGrid"
+			<SfGrid ID="Grid" @ref="Grid"
 							DataSource="@CalendarEntries"
-							Toolbar="@(new List<string>() { "Print", "ExcelExport" })"
-							AllowFiltering="true" AllowExcelExport="true">
-				<GridEvents OnToolbarClick="ToolbarClickHandler" TValue="@CalendarEntry"></GridEvents>
+							Toolbar="@(new List<string>() { SyncFusionToolbar.Excel.Arg, SyncFusionToolbar.Csv.Arg, SyncFusionToolbar.Pdf.Arg, SyncFusionToolbar.Print.Arg })"
+							AllowFiltering="true" AllowExcelExport="true" AllowPdfExport="true">
+				<GridEvents OnToolbarClick="@ToolbarClickHandler" TValue="@CalendarEntry"></GridEvents>
 				<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
-
-				@*  CommandClicked="OnSaveClicked" *@
 
 				<GridSortSettings>
 					<GridSortColumns>
@@ -59,8 +56,8 @@
 						<GridColumns>
 
 							@*<GridColumn Field=@nameof(CalendarEntry.DateTypeId) HeaderText="Type" Width="40"
-														FilterSettings="@(new FilterSettings { Type = Syncfusion.Blazor.Grids.FilterType.CheckBox })">
-								</GridColumn>*@
+												FilterSettings="@(new FilterSettings { Type = Syncfusion.Blazor.Grids.FilterType.CheckBox })">
+						</GridColumn>*@
 
 							<GridColumn Field=@nameof(CalendarEntry.DateTypeEnum) HeaderText="Type" Width="40" AllowSorting="false"
 													FilterSettings="@(new FilterSettings { Type = Syncfusion.Blazor.Grids.FilterType.CheckBox })">
@@ -76,8 +73,8 @@
 						<GridColumns>
 
 							@*<GridColumn Field=@nameof(CalendarEntry.TypeDescr) HeaderText="Type Descr." Width="40"  AllowSorting="false"
-														FilterSettings="@(new FilterSettings { Type = Syncfusion.Blazor.Grids.FilterType.CheckBox })">
-								</GridColumn>*@
+												FilterSettings="@(new FilterSettings { Type = Syncfusion.Blazor.Grids.FilterType.CheckBox })">
+						</GridColumn>*@
 
 							<GridColumn Field=@nameof(CalendarEntry.EventDescr) HeaderText="Event Description" Width="60" AllowSorting="false" AllowFiltering="false">
 							</GridColumn>
@@ -86,14 +83,14 @@
 					</GridColumn>
 
 					@*
-						Year.razor
-						if (item.DateTypeId == 1 && WithMonths==true)
-						{
-								<LunarMonthComponent IsXsOrSm="@IsXsOrSm"
-																		 DateIdBeg="item.DateIdBeg"
-																		 DateIdEnd="item.DateIdEnd"
-																		 LunarMonths="LunarMonths.Where(w => w.DateId >= item.DateIdBeg && w.DateId <= item.DateIdEnd).ToList()">
-								</LunarMonthComponent>
+				Year.razor
+				if (item.DateTypeId == 1 && WithMonths==true)
+				{
+						<LunarMonthComponent IsXsOrSm="@IsXsOrSm"
+																 DateIdBeg="item.DateIdBeg"
+																 DateIdEnd="item.DateIdEnd"
+																 LunarMonths="LunarMonths.Where(w => w.DateId >= item.DateIdBeg && w.DateId <= item.DateIdEnd).ToList()">
+						</LunarMonthComponent>
 
 					*@
 

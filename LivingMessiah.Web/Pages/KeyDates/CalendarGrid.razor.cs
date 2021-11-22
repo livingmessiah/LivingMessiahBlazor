@@ -32,7 +32,6 @@ namespace LivingMessiah.Web.Pages.KeyDates
 		public string ChangedID { get; set; }
 		public string ChangedText { get; set; }
 
-		private SfGrid<CalendarEntry> sfGrid;
 
 		private int InitLookupFieldsAndGetCurrentYear(string relative) 
 		{
@@ -99,16 +98,20 @@ namespace LivingMessiah.Web.Pages.KeyDates
 			await PopulateCalendarEntries(currentYear);
 		}
 
-		// ToDo: This doesn't work
-		private SfGrid<CalendarEntry> GridReport;
+		private SfGrid<CalendarEntry> Grid;  // SyncFusionGrid.ID;
 		public async Task ToolbarClickHandler(Syncfusion.Blazor.Navigations.ClickEventArgs args)
 		{
-			//Logger.LogDebug(String.Format("Inside {0}", nameof(CalendarGrid) + "!" + nameof(ToolbarClickHandler)));
-
-			if (args.Item.Id == "Grid_excelexport") //Id is combination of Grid's ID and itemname
+			if (args.Item.Id == SyncFusionToolbar.Pdf.ArgId)
 			{
-				//Logger.LogDebug("...Calling GridReport.ExcelExport");
-				await this.GridReport.ExcelExport();
+				await this.Grid.ExportToPdfAsync();
+			}
+			if (args.Item.Id == SyncFusionToolbar.Excel.ArgId)
+			{
+				await this.Grid.ExportToExcelAsync();
+			}
+			if (args.Item.Id == SyncFusionToolbar.Csv.ArgId)
+			{
+				await this.Grid.ExportToCsvAsync();
 			}
 		}
 
