@@ -4,7 +4,7 @@ using System;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 
-using LivingMessiah.Web.Pages.KeyDates.Queries;
+using LivingMessiah.Web.Pages.UpcomingEvents.Queries;
 using LivingMessiah.Web.Pages.UpcomingEvents.Data;
 
 namespace LivingMessiah.Web.Pages.UpcomingEvents

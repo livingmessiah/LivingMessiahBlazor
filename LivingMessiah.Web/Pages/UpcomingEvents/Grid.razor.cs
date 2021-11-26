@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 //using LivingMessiah.Web.Pages.UpcomingEvents.Enums;
 
 using LivingMessiah.Web.Pages.UpcomingEvents.Data;
-using LivingMessiah.Web.Pages.KeyDates.Queries;
+using LivingMessiah.Web.Pages.UpcomingEvents.Queries;
 
 using Syncfusion.Blazor.Grids;
 //using Syncfusion.Blazor.DropDowns;

@@ -1,0 +1,282 @@
+﻿@page "/UpcomingEventsCRUD"
+@using Syncfusion.Blazor.RichTextEditor
+
+
+<h3>Non-KeyDate CRUD</h3>
+
+@* *@
+
+<LoadingComponent IsLoading="NonKeyDateCrudVM==null">
+
+	<EditForm Model="NonKeyDateCrudVM"
+						OnValidSubmit="HandleValidSubmit"
+						OnInvalidSubmit="@OnInvalidSubmit"
+						class="card card-body bg-light mt-5">
+		<DataAnnotationsValidator />
+		<ValidationSummary />
+
+		<fieldset class="py-1 my-0">
+			<legend class="text-success text-center"> @Title</legend>
+		</fieldset>
+
+		<fieldset class="mt-3">
+			<legend class="text-primary">Dates</legend>
+
+			<div class="row mt-n2">
+
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label for="yearId" class="control-label">Year Id</label>
+						<InputNumber id="yearId" class="form-control" @bind-Value="NonKeyDateCrudVM.YearId" />
+						<ValidationMessage For="@(() => NonKeyDateCrudVM.YearId)" />
+					</div>
+				</div>
+
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label for="eventDate" class="control-label">Event Date</label>
+						<InputDate id="eventDate" class="form-control" @bind-Value="NonKeyDateCrudVM.EventDate" />
+						<ValidationMessage For="@(() => NonKeyDateCrudVM.EventDate)" />
+					</div>
+				</div>
+
+			</div>
+
+			<div class="row mt-n2">
+
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label for="showBeginDate" class="control-label">Show Start Date</label>
+						<SfDatePicker TValue="DateTime?" id="showBeginDate"
+													@bind-Value="@NonKeyDateCrudVM.ShowBeginDate"
+													Placeholder="Choose a Show Date">
+						</SfDatePicker>
+						<ValidationMessage For="@(() => NonKeyDateCrudVM.ShowBeginDate)" />
+					</div>
+				</div>
+
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label for="showEndDate" class="control-label">Show End Date</label>
+						<SfDatePicker TValue="DateTime?" id="showEndDate"
+													@bind-Value="@NonKeyDateCrudVM.ShowEndDate"
+													Placeholder="Choose a Show Date">
+						</SfDatePicker>
+						<ValidationMessage For="@(() => NonKeyDateCrudVM.ShowEndDate)" />
+					</div>
+				</div>
+
+			</div>
+
+		</fieldset>
+
+		<fieldset class="mt-3">
+			<legend class="text-primary">Event Type / Image Url</legend>
+			<div class="row mt-n2">
+
+				<div class="col-sm-4">
+					<label for="eventTypeEnum" class="control-label">Event Type</label>
+					<InputSelectEnum @bind-Value="NonKeyDateCrudVM.EventTypeEnum"
+													 class="form-control" id="eventTypeEnum" />
+					<ValidationMessage For="@(() => NonKeyDateCrudVM.EventTypeEnum)" />
+				</div>
+
+				<div class="col-sm-8">
+					<div class="form-group">
+						<label for="imageUrl" class="control-label">Image Url</label>
+						<InputText id="imageUrl" class="form-control" @bind-Value="NonKeyDateCrudVM.ImageUrl" />
+						<ValidationMessage For="@(() => NonKeyDateCrudVM.ImageUrl)" />
+					</div>
+				</div>
+
+
+			</div>
+		</fieldset>
+
+		<fieldset class="mt-3">
+			<legend class="text-primary">Title/SubTitle</legend>
+
+			<div class="row mt-n2">
+
+				<div class="col-sm-4">
+					<div class="form-group">
+						<label for="title" class="control-label">Title</label>
+						<InputText id="title" class="form-control" @bind-Value="NonKeyDateCrudVM.Title" />
+						<ValidationMessage For="@(() => NonKeyDateCrudVM.Title)" />
+					</div>
+				</div>
+
+				<div class="col-sm-8">
+					<div class="form-group">
+						<label for="subTitle" class="control-label">Sub-Title</label>
+						<InputText id="subTitle" class="form-control" @bind-Value="NonKeyDateCrudVM.SubTitle" />
+						<ValidationMessage For="@(() => NonKeyDateCrudVM.SubTitle)" />
+					</div>
+				</div>
+
+			</div>
+		</fieldset>
+
+
+		<fieldset class="mt-3">
+			<legend class="text-primary">Website</legend>
+
+			<div class="row mt-n2">
+
+				<div class="col-sm-4">
+					<div class="form-group">
+						<label for="websiteUrl" class="control-label">[Website Url]</label>
+						<InputText id="websiteUrl" class="form-control" @bind-Value="NonKeyDateCrudVM.WebsiteUrl" />
+						<ValidationMessage For="@(() => NonKeyDateCrudVM.WebsiteUrl)" />
+					</div>
+				</div>
+
+				<div class="col-sm-4">
+					<div class="form-group">
+						<label for="websiteDescr" class="control-label">[Website Description]</label>
+						<InputText id="websiteDescr" class="form-control" @bind-Value="NonKeyDateCrudVM.WebsiteDescr" />
+						<ValidationMessage For="@(() => NonKeyDateCrudVM.WebsiteDescr)" />
+					</div>
+				</div>
+
+				<div class="col-sm-4">
+					<div class="form-group">
+						<label for="youTubeId" class="control-label">[YouTubeId]</label>
+						<InputText id="youTubeId" class="form-control" @bind-Value="NonKeyDateCrudVM.YouTubeId" />
+						<ValidationMessage For="@(() => NonKeyDateCrudVM.YouTubeId)" />
+					</div>
+				</div>
+
+			</div>
+		</fieldset>
+
+		<fieldset class="mt-3">
+			<legend class="text-primary">Description</legend>
+			<div class="row mt-n2">
+				<div class="col-sm-12">
+					<div class="form-group">
+
+						@if (!IsPreview)
+						{
+							<SfRichTextEditor Height="250px" EditorMode="EditorMode.Markdown" SaveInterval="1"
+																@bind-Value="@NonKeyDateCrudVM.Description">
+								<RichTextEditorToolbarSettings Items="@Tools">
+									<RichTextEditorCustomToolbarItems>
+										<RichTextEditorCustomToolbarItem Name="Preview">
+											<Template>
+												<button id="preview-code" class="e-tbar-btn e-control e-btn e-icon-btn" @onclick="PreviewClick">
+													<span class="e-btn-icon e-md-preview e-icons"></span>
+												</button>
+											</Template>
+										</RichTextEditorCustomToolbarItem>
+									</RichTextEditorCustomToolbarItems>
+								</RichTextEditorToolbarSettings>
+								<RichTextEditorMarkdownOptions ListSyntax="@ListSyntax" />
+								<RichTextEditorEvents ValueChange="@OnValueChange" />
+							</SfRichTextEditor>
+						}
+						else
+						{
+							<SfRichTextEditor Readonly="true" @bind-Value="@HtmlValue">
+								<RichTextEditorToolbarSettings Items="@Items">
+									<RichTextEditorCustomToolbarItems>
+										<RichTextEditorCustomToolbarItem Name="code">
+											<Template>
+												<button id="MD_Preview" class="e-tbar-btn e-control e-btn e-icon-btn"
+																@onclick="CodeClick">
+													<span class="e-btn-icon e-preview e-icons"></span>
+												</button>
+											</Template>
+										</RichTextEditorCustomToolbarItem>
+									</RichTextEditorCustomToolbarItems>
+								</RichTextEditorToolbarSettings>
+							</SfRichTextEditor>
+						}
+
+					</div>
+				</div>
+			</div>
+
+
+
+		</fieldset>
+
+		<div class="row">
+			<div class="col-sm-6">
+				<div class="form-group">
+					<button class="btn btn-success btn-lg">
+						<i class="fas fa-save"></i> Save
+					</button>
+				</div>
+
+			</div>
+		</div>
+
+	</EditForm>
+
+</LoadingComponent>
+
+
+
+@if (DatabaseError)
+{
+	<p class="text-danger"><em>@DatabaseErrorMsg</em></p>
+}
+else
+{
+	if (DatabaseWarning)
+	{
+		<p class="text-warning">@DatabaseWarningMsg</p>
+	}
+	else
+	{
+		if (DatabaseInformation)
+		{
+			<p class="text-success">@DatabaseInformationMsg</p>
+		}
+
+	}
+}
+
+
+<style>
+	.e-icon-btn .e-preview::before {
+		content: '\e790';
+	}
+
+	.bootstrap4 .e-icon-btn .e-md-preview::before {
+		content: '\e787';
+	}
+
+	.e-icon-btn.e-active .e-md-preview::before {
+		content: '\e350';
+	}
+
+	.e-icon-btn .e-md-preview::before {
+		content: '\e345';
+	}
+
+	.bootstrap4 .e-icon-btn.e-active .e-view-side::before {
+		content: '\e350';
+	}
+
+	.bootstrap4 .e-icon-btn .e-view-side::before {
+		content: '\e350';
+	}
+
+	.tailwind .e-icon-btn .e-md-preview::before {
+		content: '\e7d0';
+	}
+
+	.tailwind .e-icon-btn .e-preview::before {
+		content: '\e748';
+	}
+
+	.e-icon-btn .e-active .e-view-side::before {
+		content: '\e350';
+	}
+
+	.e-icon-btn .e-view-side::before {
+		content: '\e350';
+	}
+</style>

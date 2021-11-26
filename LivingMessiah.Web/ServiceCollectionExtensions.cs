@@ -18,9 +18,7 @@ using LivingMessiah.Web.Pages.Contacts.Data;
 using LivingMessiah.Web.Pages.KeyDates.Data;
 using LivingMessiah.Web.Pages.KeyDates.Services;
 using LivingMessiah.Web.Pages.UpcomingEvents.Data;
-
-//using Markdig;
-//using Markdig.Extensions.AutoIdentifiers;
+using LivingMessiah.Web.Pages.SmartEnums;
 
 namespace LivingMessiah.Web
 {
@@ -36,8 +34,11 @@ namespace LivingMessiah.Web
 				.AddSingleton<IShabbatWeekService, ShabbatWeekService>()
 				.AddSingleton<IShabbatWeekCacheService, ShabbatWeekCacheService>()
 				.AddSingleton<IShabbatWeekRepository, ShabbatWeekRepository>()
-				.AddSingleton<IUpcomingEventsRepository, UpcomingEventsRepository>()
+				.AddTransient<LivingMessiah.Web.Data.IGridDataRepository, LivingMessiah.Web.Data.GridDataRepository>()
+				.AddTransient<IUpcomingEventsRepository, UpcomingEventsRepository>()
+				.AddTransient<LivingMessiah.Web.Data.GridDataAdaptor>()
 				.AddSingleton<IKeyDateRepository, KeyDateRepository>()
+				.AddSingleton<ISmartEnumRepository, SmartEnumRepository>()
 
 				.AddTransient<ISecurityClaimsService, SecurityClaimsService>()
 				.AddTransient<ISukkotService, SukkotService>()

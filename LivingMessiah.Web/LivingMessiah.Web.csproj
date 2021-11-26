@@ -32,6 +32,7 @@
   <ItemGroup>
     <PackageReference Include="HtmlAgilityPack" Version="1.11.36" />
     <PackageReference Include="Humanizer.Core" Version="2.11.10" />
+    <PackageReference Include="Markdig" Version="0.26.0" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.18.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="5.0.9" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="5.0.0" />
@@ -44,12 +45,13 @@
     <PackageReference Include="Serilog.Sinks.Console" Version="4.0.0" />
     <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
     <PackageReference Include="Serilog.Sinks.Seq" Version="5.0.1" />
-    <PackageReference Include="Syncfusion.Blazor.Calendars" Version="19.2.0.62" />
-    <PackageReference Include="Syncfusion.Blazor.DropDowns" Version="19.2.0.62" />
-    <PackageReference Include="Syncfusion.Blazor.Grid" Version="19.2.0.62" />
-    <PackageReference Include="Syncfusion.Blazor.Navigations" Version="19.2.0.62" />
-    <PackageReference Include="Syncfusion.Blazor.Schedule" Version="19.2.0.62" />
-    <PackageReference Include="Syncfusion.Blazor.TreeGrid" Version="19.2.0.62" />
+    <PackageReference Include="Syncfusion.Blazor.Calendars" Version="19.3.0.55" />
+    <PackageReference Include="Syncfusion.Blazor.DropDowns" Version="19.3.0.55" />
+    <PackageReference Include="Syncfusion.Blazor.Grid" Version="19.3.0.55" />
+    <PackageReference Include="Syncfusion.Blazor.Navigations" Version="19.3.0.55" />
+    <PackageReference Include="Syncfusion.Blazor.RichTextEditor" Version="19.3.0.55" />
+    <PackageReference Include="Syncfusion.Blazor.Schedule" Version="19.3.0.55" />
+    <PackageReference Include="Syncfusion.Blazor.TreeGrid" Version="19.3.0.55" />
     <PackageReference Include="System.ValueTuple" Version="4.5.0" />
   </ItemGroup>
 
@@ -75,7 +77,6 @@
     <Folder Include="Pages\SukkotAdmin\Donations\Services\" />
     <Folder Include="Pages\SukkotAdmin\Registration\Enums\" />
     <Folder Include="Pages\UpcomingEvents\Enums\" />
-    <Folder Include="Pages\UpcomingEvents\Queries\" />
   </ItemGroup>
 
   <ItemGroup>

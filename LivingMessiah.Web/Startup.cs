@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 using Syncfusion.Blazor;
+//using LivingMessiah.Web.Data;
 
 namespace LivingMessiah.Web
 {
@@ -40,6 +41,7 @@ namespace LivingMessiah.Web
 				.Configure<AppSettings>(options => Configuration.GetSection("AppSettings").Bind(options));
 
 			services.AddSyncfusionBlazor();
+			//services.AddTransient<GridDataAdaptor>();
 		}
 
 

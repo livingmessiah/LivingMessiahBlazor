@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
-using LivingMessiah.Web.Pages.KeyDates.Queries;
+using LivingMessiah.Web.Pages.UpcomingEvents.Queries;
 
 namespace LivingMessiah.Web.Pages.UpcomingEvents
 {

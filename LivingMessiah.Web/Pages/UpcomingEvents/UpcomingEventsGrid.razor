@@ -1,0 +1,42 @@
+﻿@page "/UpcomingEventsGrid2"
+@using LivingMessiah.Web.Pages.UpcomingEvents.Data
+@using LivingMessiah.Web.Pages.UpcomingEvents.Queries
+@inject IUpcomingEventsRepository db
+
+<h3>Upcoming Events Grid</h3>
+
+<LoadingComponent IsLoading="UpcomingEventList == null">
+	<TableTemplate Items="UpcomingEventList">
+		<TableHeader>
+			<th class="text-info">Title</th>
+		</TableHeader>
+
+		<RowTemplate>
+			<td>@context.Title</td>
+		</RowTemplate>
+
+	</TableTemplate>
+</LoadingComponent>
+
+@*@if (UpcomingEventList != null)
+	{
+		<h3 class="text-warning mt-5 mb-0">Upcoming Psalms And Proverbs</h3>
+
+
+	else if (LoadFailed)
+	{
+		<p class="text-danger"><em>Could not load because of an Error</em></p>
+	}
+	else
+	{
+		<p><em>Loading...</em></p>
+	}*@
+
+@code {
+	List<UpcomingEvent> UpcomingEventList;
+	bool LoadFailed;
+	protected override async Task OnInitializedAsync()
+	{
+		UpcomingEventList = await db.GetEvents(daysAhead: 100, daysPast: -3);
+	}
+}

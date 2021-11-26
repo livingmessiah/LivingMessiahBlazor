@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Components;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using LivingMessiah.Web.Pages.KeyDates.Enums;
-using LivingMessiah.Web.Pages.KeyDates.Queries;
+using LivingMessiah.Web.Pages.UpcomingEvents.Queries;
 using LivingMessiah.Web.Pages.UpcomingEvents.Data;
 
 namespace LivingMessiah.Web.Pages.SmartEnums
@@ -12,7 +12,7 @@ namespace LivingMessiah.Web.Pages.SmartEnums
 	public partial class Index
 	{
 		[Inject]
-		public IUpcomingEventsRepository db { get; set; }
+		public ISmartEnumRepository db { get; set; }
 
 		[Inject]
 		public ILogger<Index> Logger { get; set; }

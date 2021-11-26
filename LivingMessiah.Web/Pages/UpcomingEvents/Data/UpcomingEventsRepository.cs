@@ -1,4 +1,6 @@
 ﻿using Dapper;
+using System;
+using System.Data;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
@@ -8,7 +10,11 @@ using LivingMessiah.Data;                   // ToDo: Move this to LivingMessiah.
 using Microsoft.Extensions.Configuration;
 
 using LivingMessiah.Web.Pages.KeyDates.Enums;
-using LivingMessiah.Web.Pages.KeyDates.Queries;
+using LivingMessiah.Web.Pages.UpcomingEvents.Queries;
+using static LivingMessiah.Web.Pages.SqlServer;
+
+using Syncfusion.Blazor;
+using Syncfusion.Blazor.Data;
 
 namespace LivingMessiah.Web.Pages.UpcomingEvents.Data
 {
@@ -16,9 +22,7 @@ namespace LivingMessiah.Web.Pages.UpcomingEvents.Data
 	{
 		string BaseSqlDump { get; }
 		Task<List<UpcomingEvent>> GetEvents(int daysAhead, int daysPast);
-
-		//Note, used only by Pages\SmartEnums\Index.razor.cs
-		Task<List<DateExplode>> GetDateExplode(RelativeYearEnum relativeYear);
+		Task<Tuple<int, int, string>> Create(NonKeyDateCrudVM nonKeyDateCrudVM);
 	}
 
 	public class UpcomingEventsRepository : BaseRepositoryAsync, IUpcomingEventsRepository
@@ -31,6 +35,66 @@ namespace LivingMessiah.Web.Pages.UpcomingEvents.Data
 		{
 			get { return base.SqlDump; }
 		}
+
+
+		public async Task<Tuple<int, int, string>> Create(NonKeyDateCrudVM nonKeyDateCrudVM)
+		{
+			base.Sql = "KeyDate.stpUpcomingEventInsert";
+			base.Parms = new DynamicParameters(new
+			{
+				YearId = nonKeyDateCrudVM.YearId,
+				DateId = nonKeyDateCrudVM.DateId,
+				DateTime = nonKeyDateCrudVM.EventDate,
+				ShowBeginDate = nonKeyDateCrudVM.ShowBeginDate,
+				ShowEndDate = nonKeyDateCrudVM.ShowEndDate,
+				EventTypeId = nonKeyDateCrudVM.EventTypeEnum,
+				Title = nonKeyDateCrudVM.Title,
+				SubTitle = nonKeyDateCrudVM.SubTitle,
+				Description = nonKeyDateCrudVM.Description,
+				ImageUrl = nonKeyDateCrudVM.ImageUrl,
+				WebsiteUrl = nonKeyDateCrudVM.WebsiteUrl,
+				WebsiteDescr = nonKeyDateCrudVM.WebsiteDescr,
+				YouTubeId = nonKeyDateCrudVM.YouTubeId
+			});
+
+			base.Parms.Add("@NewId", dbType: DbType.Int32, direction: ParameterDirection.Output);
+			base.Parms.Add(ReturnValueParm, dbType: DbType.Int32, direction: ParameterDirection.ReturnValue);
+
+			int NewId = 0;
+			int SprocReturnValue = 0;
+			string ReturnMsg = "";
+
+			return await WithConnectionAsync(async connection =>
+			{
+				base.log.LogDebug($"Inside {nameof(UpcomingEventsRepository)}!{nameof(Create)}, {nameof(nonKeyDateCrudVM.Title)}; about to execute SPROC: {base.Sql}");
+				var affectedrows = await connection.ExecuteAsync(sql: base.Sql, param: base.Parms, commandType: System.Data.CommandType.StoredProcedure);
+				SprocReturnValue = base.Parms.Get<int>(ReturnValueName);
+				int? x = base.Parms.Get<int?>("NewId");
+				if (x == null)
+				{
+					if (SprocReturnValue == ReturnValueViolationInUniqueIndex)
+					{
+						ReturnMsg = $"Database call did not insert a new record because it caused a Unique Index Violation; registration.EMail: {nonKeyDateCrudVM.Title}; ";
+						base.log.LogWarning($"...ReturnMsg: {ReturnMsg}; {Environment.NewLine} {base.Sql}");
+					}
+					else
+					{
+						ReturnMsg = $"Database call falied; registration.EMail: {nonKeyDateCrudVM.Title}; SprocReturnValue: {SprocReturnValue}";
+						base.log.LogWarning($"...ReturnMsg: {ReturnMsg}; {Environment.NewLine} {base.Sql}");
+					}
+				}
+				else
+				{
+					NewId = int.TryParse(x.ToString(), out NewId) ? NewId : 0;
+					ReturnMsg = $"Upcoming Event created for {nonKeyDateCrudVM.Title}; NewId={NewId}";
+					base.log.LogDebug($"...Return NewId:{NewId}");
+				}
+
+				return new Tuple<int, int, string>(NewId, SprocReturnValue, ReturnMsg);
+
+			});
+		}
+
 
 		public async Task<List<UpcomingEvent>> GetEvents(int daysAhead, int daysPast)
 		{
@@ -58,25 +122,6 @@ ORDER BY EventDate
 			return await WithConnectionAsync(async connection =>
 			{
 				var rows = await connection.QueryAsync<UpcomingEvent>(sql: base.Sql, param: base.Parms);
-				return rows.ToList();
-			});
-		}
-
-		public async Task<List<DateExplode>> GetDateExplode(RelativeYearEnum relativeYear)
-		{
-			base.Sql = $@"
-SELECT 
-	YearId, Date, GregorianYear, DateTypeId AS DateTypeEnum, DateTypeEnumId
---Id, DateYMD, RowCntByGregorianYear, IsDateTypeContiguous, DateType, DateTypeValue
-FROM KeyDate.vwDateExplode
-CROSS JOIN KeyDate.Constants c
-WHERE YearId = {GetYearId(relativeYear)}
-ORDER BY Date
-";
-			//base.log.LogDebug($"Inside {nameof(GetDateExplode)}, Sql: {Sql}");
-			return await WithConnectionAsync(async connection =>
-			{
-				var rows = await connection.QueryAsync<DateExplode>(sql: base.Sql);
 				return rows.ToList();
 			});
 		}
