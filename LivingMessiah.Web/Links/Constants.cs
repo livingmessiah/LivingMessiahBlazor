@@ -473,6 +473,26 @@
 		public const string Grid = "/UpcomingEventsGrid";
 	}
 
+	public static class UpcomingEventsEdit
+	{
+		public const string Grid = "/UpcomingEventsEdit";
+		public const string Title = "Upcoming Events Edit";
+		public const string Icon = "fas fa-pencil-alt";
+	}
+
+	public static class UpcomingEventsGrid
+	{
+		public const string Grid = "/UpcomingEventsGrid";
+		public const string Title = "Upcoming Events Grid";
+		public const string Icon = "far fa-clock";
+	}
+
+	public static class UpcomingEventsTable
+	{
+		public const string Table = "/UpcomingEventsTable";
+		public const string Title = "Upcoming Events Table";
+		public const string Icon = "fas fa-table"; 
+	}
 
 	public static class WeeklyVideos
 	{

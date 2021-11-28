@@ -15,12 +15,12 @@ using Syncfusion.Blazor.Grids;
 
 namespace LivingMessiah.Web.Pages.UpcomingEvents
 {
-	public partial class Grid
+	public partial class UpcomingEventsGrid
 	{
-		[Inject]	public IUpcomingEventsRepository db { get; set; }
+		[Inject] public IUpcomingEventsRepository db { get; set; }
 
-		[Inject]	
-		public ILogger<Grid> Logger { get; set; }
+		[Inject]
+		public ILogger<UpcomingEventsGrid> Logger { get; set; }
 
 		protected List<UpcomingEvent> UpcomingEventList;
 
@@ -28,7 +28,7 @@ namespace LivingMessiah.Web.Pages.UpcomingEvents
 		{
 			try
 			{
-				Logger.LogDebug(string.Format("Inside {0}", nameof(Grid) + "!" + nameof(OnInitializedAsync)));
+				Logger.LogDebug(string.Format("Inside {0}", nameof(UpcomingEventsGrid) + "!" + nameof(OnInitializedAsync)));
 				UpcomingEventList = await db.GetEvents(daysAhead: 100, daysPast: -3);
 				if (UpcomingEventList is not null)
 				{
@@ -71,3 +71,5 @@ namespace LivingMessiah.Web.Pages.UpcomingEvents
 
 	}
 }
+
+

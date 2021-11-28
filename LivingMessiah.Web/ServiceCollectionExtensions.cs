@@ -9,6 +9,7 @@ using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Sukkot.Web.Service;
 using SukkotApi.Data;
 using LivingMessiah.Web.Services;
+using LivingMessiah.Web.Data;
 using LivingMessiah.Data;
 
 using LivingMessiah.Web.Pages.SukkotAdmin.Donations.Data;
@@ -34,9 +35,9 @@ namespace LivingMessiah.Web
 				.AddSingleton<IShabbatWeekService, ShabbatWeekService>()
 				.AddSingleton<IShabbatWeekCacheService, ShabbatWeekCacheService>()
 				.AddSingleton<IShabbatWeekRepository, ShabbatWeekRepository>()
-				.AddTransient<LivingMessiah.Web.Data.IGridDataRepository, LivingMessiah.Web.Data.GridDataRepository>()
+				.AddTransient<IGridDataRepository, GridDataRepository>()
 				.AddTransient<IUpcomingEventsRepository, UpcomingEventsRepository>()
-				.AddTransient<LivingMessiah.Web.Data.GridDataAdaptor>()
+				.AddTransient<IGridDataAdaptor, GridDataAdaptor>()
 				.AddSingleton<IKeyDateRepository, KeyDateRepository>()
 				.AddSingleton<ISmartEnumRepository, SmartEnumRepository>()
 

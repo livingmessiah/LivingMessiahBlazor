@@ -1,0 +1,73 @@
+﻿@page "/UpcomingEventsTable"
+@using LivingMessiah.Web.Pages.UpcomingEvents.Data
+@using LivingMessiah.Web.Pages.UpcomingEvents.Queries
+@using static LivingMessiah.Web.Links.UpcomingEventsTable
+@inject IUpcomingEventsRepository db
+
+<h2 class="mt-2">
+	<i class="@Icon"></i> @Title
+</h2>
+
+
+<LoadingComponent IsLoading="UpcomingEventList == null">
+	<TableTemplate Items="UpcomingEventList">
+		<TableHeader>
+			<th class="text-info">Event Date</th>
+			<th class="text-info">DT</th>
+			<th class="text-info">ET</th>
+			<th class="text-info">DA</th>
+			<th class="text-info">Title</th>
+			<th class="text-info">Sub Title</th>
+			<th class="text-info">Image URL</th>
+			<th class="text-info">YouTubeId</th>
+			<th class="text-info">Website URL</th>
+			<th class="text-info">Decription</th>
+		</TableHeader>
+
+		<RowTemplate>
+			<td>@context.EventDate.ToShortDateString()</td>
+			<td>@context.DateTypeEnum</td>
+			<td>@context.EventTypeEnum</td>
+			<td>@context.DaysAhead</td>
+			<td>@context.Title</td>
+			<td>@context.SubTitle</td>
+			
+			<td>
+				@if (!String.IsNullOrEmpty(context.ImageUrl))
+				{
+				<a href="@context.ImageUrl" target="_blank" title="@context.ImageUrl"><i class="fas fa-external-link-square-alt"></i></a>
+				}
+			</td>
+
+			<td>
+				@if (!String.IsNullOrEmpty(context.YouTubeId))
+				{
+				<a href="https://www.youtube.com/watch?v=@context.YouTubeId" target="_blank"
+					 title="@context.YouTubeId">
+					<u>@context.YouTubeId</u>
+					<i class="fas fa-external-link-square-alt"></i>
+				</a>
+				}
+
+			</td>
+			<td>
+				@if (!String.IsNullOrEmpty(context.WebsiteUrl))
+				{
+				<a href="@context.WebsiteUrl" title="@context.WebsiteUrl" target="_blank">@context.WebsiteDescr</a>
+				}
+
+			</td>
+			<td>@context.Description</td>
+		</RowTemplate>
+
+	</TableTemplate>
+</LoadingComponent>
+
+@code {
+	List<UpcomingEvent> UpcomingEventList;
+	bool LoadFailed;
+	protected override async Task OnInitializedAsync()
+	{
+		UpcomingEventList = await db.GetEvents(daysAhead: 100, daysPast: -3);
+	}
+}

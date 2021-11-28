@@ -6,49 +6,76 @@ using Syncfusion.Blazor;
 using Syncfusion.Blazor.Data;
 using LivingMessiah.Web.Pages.UpcomingEvents.Data;
 using LivingMessiah.Web.Pages.UpcomingEvents;
+using Microsoft.Extensions.Logging;
 //using Microsoft.AspNetCore.Components;
 
 
 namespace LivingMessiah.Web.Data
 {
-	public class GridDataAdaptor : DataAdaptor
+	public interface IGridDataAdaptor
+	{
+		Task<object> InsertAsync(DataManager dataManager, object data, string key);
+		Task<object> ReadAsync(DataManagerRequest dataManagerRequest, string key = null);
+		Task<object> RemoveAsync(DataManager dataManager, object primaryKeyValue, string keyField, string key);
+		Task<object> UpdateAsync(DataManager dataManager, object data, string keyField, string key);
+	}
+
+	public class GridDataAdaptor : DataAdaptor, IGridDataAdaptor  //GridDataAdaptor : DataAdaptor
 	{
 		//https://blazor.syncfusion.com/documentation/datagrid/custom-binding
 		//https://www.syncfusion.com/forums/160311/is-there-any-other-way-of-injecting-a-service-into-a-blazor-component-other-than-the-inject
 
 		/*
 		[Inject]
-		protected IGridDataRepository dbUpcomingEvents { get; set; }
+		protected IGridDataRepository db { get; set; }
+
 		public GridDataAdaptor()
 		{
 		}
 		*/
-		public GridDataRepository db;
-		public GridDataAdaptor(GridDataRepository gridDataRepository)
+
+		//[Microsoft.AspNetCore.Components.Inject]
+		//public ILogger<GridDataAdaptor> Logger { get; set; }
+
+		#region Constructor and DI
+		//protected readonly ILogger Logger;  // Unable to resolve service for type 'Microsoft.Extensions.Logging.ILogger' while attempting to activate 'LivingMessiah.Web.Data.GridDataAdaptor'.)
+		public IGridDataRepository db;
+		public GridDataAdaptor(IGridDataRepository gridDataRepository)  //, ILogger logger
 		{
 			db = gridDataRepository;
+			//Logger = logger;
 		}
-
-		private int RowsAffected = 0;
-
+		#endregion
 
 		public override async Task<object> ReadAsync(DataManagerRequest dataManagerRequest, string key = null)
 		{
-			List<NonKeyDateCrudVM> recs = await db.GetNonKeyDataCrudList();
-			int count = await db.GetNonKeyDataCrudCount();
+			//System.ArgumentNullException: Value cannot be null. (Parameter 'logger') at Microsoft.Extensions.Logging.LoggerExtensions.Log(ILogger logger,
+			//Logger.LogDebug(string.Format("Inside {0}", nameof(GridDataAdaptor) + "!" + nameof(ReadAsync)));
+
+			List<UpcomingEventsEditVM> recs = await db.GetUpcomingEventsEditList();
+			int count = await db.GetUpcomingEventsEditCount();
 			//int count = recs.Count;
+
+			//Logger.LogDebug(string.Format("...count:{0}", count));
 			return dataManagerRequest.RequiresCounts ? new DataResult() { Result = recs, Count = count } : count;
 		}
-		
+
+		/*
+				public override async Task<object> InsertAsync(DataManager dataManager, object data, string key)
+				{
+					await _dataLayer.AddBugAsync(data as Bug);
+					return data;
+				}
+		*/
 		public override async Task<object> InsertAsync(DataManager dataManager, object data, string key)
 		{
-			await db.Create(data as NonKeyDateCrudVM);
+			await db.Create(data as UpcomingEventsEditVM);
 			return data;
 		}
 
 		public override async Task<object> UpdateAsync(DataManager dataManager, object data, string keyField, string key)
 		{
-			await db.UpdateNonKeyDate(data as NonKeyDateCrudVM);
+			await db.UpdateNonKeyDate(data as UpcomingEventsEditVM);
 			return data;
 		}
 
@@ -57,6 +84,5 @@ namespace LivingMessiah.Web.Data
 			await db.RemoveNonKeyDate(Convert.ToInt32(primaryKeyValue));
 			return primaryKeyValue;
 		}
-	
 	}
 }

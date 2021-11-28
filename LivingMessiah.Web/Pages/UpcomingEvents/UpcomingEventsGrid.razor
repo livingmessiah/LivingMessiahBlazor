@@ -1,42 +1,83 @@
-﻿@page "/UpcomingEventsGrid2"
-@using LivingMessiah.Web.Pages.UpcomingEvents.Data
+﻿@page "/UpcomingEventsGrid"
+@using static LivingMessiah.Web.Links.UpcomingEventsGrid
 @using LivingMessiah.Web.Pages.UpcomingEvents.Queries
-@inject IUpcomingEventsRepository db
 
-<h3>Upcoming Events Grid</h3>
+<h2 class="mt-2">
+	<i class="@Icon"></i> @Title
+</h2>
 
-<LoadingComponent IsLoading="UpcomingEventList == null">
-	<TableTemplate Items="UpcomingEventList">
-		<TableHeader>
-			<th class="text-info">Title</th>
-		</TableHeader>
 
-		<RowTemplate>
-			<td>@context.Title</td>
-		</RowTemplate>
+<div class="col-lg-12 control-section">
+	<div class="content-wrapper">
+		<div class="row mt-4">
 
-	</TableTemplate>
-</LoadingComponent>
+			@* @ref="sfGrid" *@
 
-@*@if (UpcomingEventList != null)
+			<SfGrid ID="Grid"
+							DataSource="@UpcomingEventList"
+							AllowSelection="true" AllowFiltering="true" AllowSorting="true">
+				<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+
+				@*  CommandClicked="OnSaveClicked" *@
+
+				<GridSortSettings>
+					<GridSortColumns>
+						<GridSortColumn Field="@nameof(UpcomingEvent.EventDate)" Direction="SortDirection.Descending" />
+					</GridSortColumns>
+				</GridSortSettings>
+
+				@*<GridEvents TValue="UpcomingEvent" QueryCellInfo="CustomizeCell"></GridEvents>*@
+				@* ... RowSelected="RowSelectHandler" RowDeselected="RowDeSelectHandler" />*@
+
+				<GridColumns>
+
+					<GridColumn Field=@nameof(UpcomingEvent.EventDate) Format="yyyy/MM/dd" HeaderText="Date" Width="40" AllowSorting="true" AllowFiltering="false">
+					</GridColumn>
+
+					<GridColumn Field=@nameof(UpcomingEvent.EventTypeEnum) HeaderText="Event Type" Width="40" AllowSorting="false" AllowFiltering="true">
+					</GridColumn>
+
+					<GridColumn Field=@nameof(UpcomingEvent.DateTypeEnum) HeaderText="Date Type" Width="30" AllowSorting="false" AllowFiltering="true">
+					</GridColumn>
+
+					<GridColumn Field=@nameof(UpcomingEvent.Title) HeaderText="Title" Width="90" AllowSorting="false" AllowFiltering="false">
+					</GridColumn>
+
+					<GridColumn Field=@nameof(UpcomingEvent.SubTitle) HeaderText="Sub Title" Width="90" AllowSorting="false" AllowFiltering="false">
+					</GridColumn>
+
+					<GridColumn Field=@nameof(UpcomingEvent.DaysAhead) HeaderText="Days Ahead" Width="60" AllowSorting="false" AllowFiltering="false">
+					</GridColumn>
+
+					@*
+						ImageUrl, YouTubeId, WebsiteUrl, WebsiteDescr, Description
+					*@
+
+
+				</GridColumns>
+
+			</SfGrid>
+		</div>
+	</div>
+</div>
+
+
+@if (DatabaseError)
+{
+	<p class="text-danger"><em>@DatabaseErrorMsg</em></p>
+}
+else
+{
+	if (DatabaseWarning)
 	{
-		<h3 class="text-warning mt-5 mb-0">Upcoming Psalms And Proverbs</h3>
-
-
-	else if (LoadFailed)
-	{
-		<p class="text-danger"><em>Could not load because of an Error</em></p>
+		<p class="text-warning">@DatabaseWarningMsg</p>
 	}
 	else
 	{
-		<p><em>Loading...</em></p>
-	}*@
+		if (DatabaseInformation)
+		{
+			<p class="text-success">@DatabaseInformationMsg</p>
+		}
 
-@code {
-	List<UpcomingEvent> UpcomingEventList;
-	bool LoadFailed;
-	protected override async Task OnInitializedAsync()
-	{
-		UpcomingEventList = await db.GetEvents(daysAhead: 100, daysPast: -3);
 	}
 }

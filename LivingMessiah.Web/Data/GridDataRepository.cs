@@ -13,9 +13,6 @@ using LivingMessiah.Web.Pages.UpcomingEvents.Queries;
 using LivingMessiah.Web.Pages.UpcomingEvents;
 using static LivingMessiah.Web.Pages.SqlServer;
 
-using Syncfusion.Blazor;
-using Syncfusion.Blazor.Data;
-
 // From Base Class
 using System.Text;
 using System.Data.SqlClient;
@@ -24,10 +21,10 @@ namespace LivingMessiah.Web.Data
 {
 	public interface IGridDataRepository
 	{
-		Task<List<NonKeyDateCrudVM>> GetNonKeyDataCrudList();
-		Task<int> GetNonKeyDataCrudCount();
-		Task Create(NonKeyDateCrudVM nonKeyDateCrudVM);
-		Task UpdateNonKeyDate(NonKeyDateCrudVM vm);
+		Task<List<UpcomingEventsEditVM>> GetUpcomingEventsEditList();
+		Task<int> GetUpcomingEventsEditCount();
+		Task Create(UpcomingEventsEditVM upcomingEventsEditVM);
+		Task UpdateNonKeyDate(UpcomingEventsEditVM vm);
 		Task RemoveNonKeyDate(int id);
 	}
 
@@ -83,7 +80,7 @@ namespace LivingMessiah.Web.Data
 		}
 		#endregion
 
-		public async Task<List<NonKeyDateCrudVM>> GetNonKeyDataCrudList()
+		public async Task<List<UpcomingEventsEditVM>> GetUpcomingEventsEditList()
 		{
 			Sql = $@"
 SELECT 
@@ -99,12 +96,12 @@ ORDER BY Id DESC
 			using (var connect = new SqlConnection(connectionString))
 			{
 				await connect.OpenAsync();
-				var rows = await connect.QueryAsync<NonKeyDateCrudVM>(Sql);
+				var rows = await connect.QueryAsync<UpcomingEventsEditVM>(Sql);
 				return rows.ToList();
 			}
 		}
 
-		public async Task<int> GetNonKeyDataCrudCount()
+		public async Task<int> GetUpcomingEventsEditCount()
 		{
 			Sql = $@"
 SELECT COUNT(*)
@@ -118,23 +115,24 @@ WHERE EventTypeId <> 1 -- 1=KeyDate
 			}
 		}
 
-		public async Task UpdateNonKeyDate(NonKeyDateCrudVM nonKeyDateCrudVM)
+		public async Task UpdateNonKeyDate(UpcomingEventsEditVM UpcomingEventsEditVM)
 		{
 			Parms = new DynamicParameters(new
 			{
-				YearId = nonKeyDateCrudVM.YearId,
-				DateId = nonKeyDateCrudVM.DateId,
-				DateTime = nonKeyDateCrudVM.EventDate,
-				ShowBeginDate = nonKeyDateCrudVM.ShowBeginDate,
-				ShowEndDate = nonKeyDateCrudVM.ShowEndDate,
-				EventTypeId = nonKeyDateCrudVM.EventTypeEnum,
-				Title = nonKeyDateCrudVM.Title,
-				SubTitle = nonKeyDateCrudVM.SubTitle,
-				Description = nonKeyDateCrudVM.Description,
-				ImageUrl = nonKeyDateCrudVM.ImageUrl,
-				WebsiteUrl = nonKeyDateCrudVM.WebsiteUrl,
-				WebsiteDescr = nonKeyDateCrudVM.WebsiteDescr,
-				YouTubeId = nonKeyDateCrudVM.YouTubeId
+				Id = UpcomingEventsEditVM.Id,
+				YearId = UpcomingEventsEditVM.YearId,
+				DateId = UpcomingEventsEditVM.DateId,
+				EventDate = UpcomingEventsEditVM.EventDate,
+				ShowBeginDate = UpcomingEventsEditVM.ShowBeginDate,
+				ShowEndDate = UpcomingEventsEditVM.ShowEndDate,
+				EventTypeEnum = UpcomingEventsEditVM.EventTypeEnum,
+				Title = UpcomingEventsEditVM.Title,
+				SubTitle = UpcomingEventsEditVM.SubTitle,
+				Description = UpcomingEventsEditVM.Description,
+				ImageUrl = UpcomingEventsEditVM.ImageUrl,
+				WebsiteUrl = UpcomingEventsEditVM.WebsiteUrl,
+				WebsiteDescr = UpcomingEventsEditVM.WebsiteDescr,
+				YouTubeId = UpcomingEventsEditVM.YouTubeId
 			});
 
 			Sql = $@"
@@ -150,7 +148,8 @@ UPDATE KeyDate.UpcomingEvent SET
 	Description = @Description,
 	ImageUrl = @ImageUrl,
 	WebsiteUrl = @WebsiteUrl,
-	WebsiteDescr = @WebsiteDescr
+	WebsiteDescr = @WebsiteDescr,
+	YouTubeId = @YouTubeId
 WHERE Id = @Id
 ";
 			using (IDbConnection connect = new SqlConnection(connectionString))
@@ -169,24 +168,30 @@ WHERE Id = @Id
 			}
 		}
 
-		public async Task Create(NonKeyDateCrudVM nonKeyDateCrudVM)
+		public async Task Create(UpcomingEventsEditVM upcomingEventsEditVM)
 		{
+			Logger.LogDebug(string.Format("Inside {0}", nameof(GridDataRepository) + "!" + nameof(UpcomingEventsEditVM)));
+			/*
+       await db.ExecuteAsync("
+			  insert into bugs (Summary, BugPriority, Assignee, BugStatus) 
+			   values 		     (@Summary, @BugPriority, @Assignee, @BugStatus)", bug);
+			*/
 			Sql = "KeyDate.stpUpcomingEventInsert";
 			Parms = new DynamicParameters(new
 			{
-				YearId = nonKeyDateCrudVM.YearId,
-				DateId = nonKeyDateCrudVM.DateId,
-				DateTime = nonKeyDateCrudVM.EventDate,
-				ShowBeginDate = nonKeyDateCrudVM.ShowBeginDate,
-				ShowEndDate = nonKeyDateCrudVM.ShowEndDate,
-				EventTypeId = nonKeyDateCrudVM.EventTypeEnum,
-				Title = nonKeyDateCrudVM.Title,
-				SubTitle = nonKeyDateCrudVM.SubTitle,
-				Description = nonKeyDateCrudVM.Description,
-				ImageUrl = nonKeyDateCrudVM.ImageUrl,
-				WebsiteUrl = nonKeyDateCrudVM.WebsiteUrl,
-				WebsiteDescr = nonKeyDateCrudVM.WebsiteDescr,
-				YouTubeId = nonKeyDateCrudVM.YouTubeId
+				YearId = upcomingEventsEditVM.YearId,
+				DateId = upcomingEventsEditVM.DateId,
+				DateTime = upcomingEventsEditVM.EventDate,
+				ShowBeginDate = upcomingEventsEditVM.ShowBeginDate,
+				ShowEndDate = upcomingEventsEditVM.ShowEndDate,
+				EventTypeId = 7, // upcomingEventsEditVM.EventTypeEnum,
+				Title = upcomingEventsEditVM.Title,
+				SubTitle = upcomingEventsEditVM.SubTitle,
+				Description = upcomingEventsEditVM.Description,
+				ImageUrl = upcomingEventsEditVM.ImageUrl,
+				WebsiteUrl = upcomingEventsEditVM.WebsiteUrl,
+				WebsiteDescr = upcomingEventsEditVM.WebsiteDescr,
+				YouTubeId = upcomingEventsEditVM.YouTubeId
 			});
 
 			Parms.Add("@NewId", dbType: DbType.Int32, direction: ParameterDirection.Output);
@@ -207,39 +212,24 @@ WHERE Id = @Id
 				{
 					if (SprocReturnValue == ReturnValueViolationInUniqueIndex)
 					{
-						ReturnMsg = $"Database call did not insert a new record because it caused a Unique Index Violation; registration.EMail: {nonKeyDateCrudVM.Title}; ";
+						ReturnMsg = $"Database call did not insert a new record because it caused a Unique Index Violation; registration.EMail: {upcomingEventsEditVM.Title}; ";
 						Logger.LogWarning($"...ReturnMsg: {ReturnMsg}; {Environment.NewLine} {Sql}");
 					}
 					else
 					{
-						ReturnMsg = $"Database call falied; registration.EMail: {nonKeyDateCrudVM.Title}; SprocReturnValue: {SprocReturnValue}";
+						ReturnMsg = $"Database call falied; registration.EMail: {upcomingEventsEditVM.Title}; SprocReturnValue: {SprocReturnValue}";
 						Logger.LogWarning($"...ReturnMsg: {ReturnMsg}; {Environment.NewLine} {Sql}");
 					}
 				}
 				else
 				{
 					NewId = int.TryParse(x.ToString(), out NewId) ? NewId : 0;
-					ReturnMsg = $"Upcoming Event created for {nonKeyDateCrudVM.Title}; NewId={NewId}";
+					ReturnMsg = $"Upcoming Event created for {upcomingEventsEditVM.Title}; NewId={NewId}";
 					Logger.LogDebug($"...Return NewId:{NewId}");
 				}
 			}
 
 		}
-
-
-		private string GetYearId(RelativeYearEnum relativeYear)
-		{
-			return relativeYear switch
-			{
-				RelativeYearEnum.Previous => "c.PreviousYear",
-				RelativeYearEnum.Current => "c.CurrentYear",
-				RelativeYearEnum.Next => "c.NextYear",
-				RelativeYearEnum.None => "0",
-				_ => "c.CurrentYear",
-			};
-
-		}
-
 
 
 	}
