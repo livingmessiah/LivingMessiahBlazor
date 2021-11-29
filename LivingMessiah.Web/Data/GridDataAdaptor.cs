@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Syncfusion.Blazor;
 using Syncfusion.Blazor.Data;
 using LivingMessiah.Web.Pages.UpcomingEvents.Data;
-using LivingMessiah.Web.Pages.UpcomingEvents;
+using LivingMessiah.Web.Pages.UpcomingEvents.Edit;
 using Microsoft.Extensions.Logging;
 //using Microsoft.AspNetCore.Components;
 
@@ -52,7 +52,7 @@ namespace LivingMessiah.Web.Data
 			//System.ArgumentNullException: Value cannot be null. (Parameter 'logger') at Microsoft.Extensions.Logging.LoggerExtensions.Log(ILogger logger,
 			//Logger.LogDebug(string.Format("Inside {0}", nameof(GridDataAdaptor) + "!" + nameof(ReadAsync)));
 
-			List<UpcomingEventsEditVM> recs = await db.GetUpcomingEventsEditList();
+			List<EditVM> recs = await db.GetUpcomingEventsEditList();
 			int count = await db.GetUpcomingEventsEditCount();
 			//int count = recs.Count;
 
@@ -69,13 +69,13 @@ namespace LivingMessiah.Web.Data
 		*/
 		public override async Task<object> InsertAsync(DataManager dataManager, object data, string key)
 		{
-			await db.Create(data as UpcomingEventsEditVM);
+			await db.Create(data as EditVM);
 			return data;
 		}
 
 		public override async Task<object> UpdateAsync(DataManager dataManager, object data, string keyField, string key)
 		{
-			await db.UpdateNonKeyDate(data as UpcomingEventsEditVM);
+			await db.UpdateNonKeyDate(data as EditVM);
 			return data;
 		}
 

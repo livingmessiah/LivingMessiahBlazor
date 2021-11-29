@@ -3,10 +3,10 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using LivingMessiah.Web.Pages.KeyDates.Enums;
 
-namespace LivingMessiah.Web.Pages.UpcomingEvents
+namespace LivingMessiah.Web.Pages.UpcomingEvents.Edit
 {
 	// This is for non-KeyDate events
-	public class UpcomingEventsEditVM
+	public class EditVM
 	{
 		[Required]
 		[Key]

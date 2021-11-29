@@ -1,0 +1,47 @@
+﻿@page "/UpcomingEventsEdit"
+@using LinkEdit = LivingMessiah.Web.Links.UpcomingEventsEdit
+@using LinkLogin = LivingMessiah.Web.Links.Account
+@using static LivingMessiah.Web.Services.Auth0;
+
+<h2 class="mt-2">
+	<i class="@LinkEdit.Icon"></i> @LinkEdit.Title
+</h2>
+
+<AuthorizeView Roles="@Roles.AdminOrAnnouncements">
+
+	<Authorized>
+		<GridComponent></GridComponent>
+	</Authorized>
+
+	<NotAuthorized>
+
+		<div class="card border-warning my-5">
+			<div class="card-header">Not Authorized</div>
+
+			<div class="card-body">
+				<h5 class="">To view <b>@LinkEdit.Title</b> you need to be logged in.</h5>
+				<button @onclick="@(() => RedirectToLoginClick(LinkEdit.Edit))"
+								type="button" class="btn-primary btn-sm">
+					Login <i class='fas fa-sign-in-alt'></i>
+				</button>
+
+			</div>
+
+		</div>
+
+	</NotAuthorized>
+
+</AuthorizeView>
+
+
+@code
+{
+	[Inject]
+	NavigationManager NavigationManager { get; set; }
+
+	void RedirectToLoginClick(string returnUrl)
+	{
+		NavigationManager.NavigateTo($"{LinkLogin.Login}?returnUrl={returnUrl}", true);
+	}
+
+}

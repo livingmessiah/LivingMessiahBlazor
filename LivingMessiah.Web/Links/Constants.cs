@@ -475,7 +475,7 @@
 
 	public static class UpcomingEventsEdit
 	{
-		public const string Grid = "/UpcomingEventsEdit";
+		public const string Edit = "/UpcomingEventsEdit";
 		public const string Title = "Upcoming Events Edit";
 		public const string Icon = "fas fa-pencil-alt";
 	}

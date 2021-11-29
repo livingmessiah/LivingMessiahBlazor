@@ -68,6 +68,6 @@
 	bool LoadFailed;
 	protected override async Task OnInitializedAsync()
 	{
-		UpcomingEventList = await db.GetEvents(daysAhead: 100, daysPast: -3);
+		UpcomingEventList = await db.GetEvents(daysAhead: 100, daysPast: -100);
 	}
 }

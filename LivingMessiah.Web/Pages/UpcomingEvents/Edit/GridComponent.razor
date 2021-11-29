@@ -1,0 +1,68 @@
+﻿@using LivingMessiah.Web.Data
+@using Syncfusion.Blazor.Data
+
+<div class="col-lg-12 control-section">
+	<div class="content-wrapper">
+		<div class="row mt-4">
+
+			<SfGrid TValue="EditVM"
+							Toolbar="@(new List<string>() { "Add", "Edit", "Delete", "Update", "Cancel" })">
+				<SfDataManager AdaptorInstance="typeof(IGridDataAdaptor)" Adaptor="Adaptors.CustomAdaptor"></SfDataManager>
+
+				<GridEditSettings AllowAdding="true" AllowEditing="true" AllowDeleting="true" ShowDeleteConfirmDialog="true">
+				</GridEditSettings>
+
+
+				<GridColumns>
+
+					<GridColumn Field="@nameof(EditVM.Id)" IsPrimaryKey="true" Visible="false" Width="40"></GridColumn>
+					<GridColumn Field=@nameof(EditVM.YearId) HeaderText="Year" Width="30" />
+					<GridColumn Field=@nameof(EditVM.EventDate) Format="yyyy/MM/dd" HeaderText="Date" Width="40" />
+
+					<GridColumn HeaderText="Show Dates" TextAlign="TextAlign.Center">
+						<GridColumns>
+							<GridColumn Field=@nameof(EditVM.ShowBeginDate) Format="yyyy/MM/dd" HeaderText="Begin" Width="40" />
+							<GridColumn Field=@nameof(EditVM.ShowEndDate) Format="yyyy/MM/dd" HeaderText="End" Width="40" />
+						</GridColumns>
+					</GridColumn>
+
+
+					<GridColumn Field=@nameof(EditVM.EventTypeEnum) HeaderText="Event Type" Width="40" />
+
+					<GridColumn Field=@nameof(EditVM.YouTubeId) HeaderText="YouTube Id" Width="50" />
+
+					<GridColumn HeaderText="Titles" TextAlign="TextAlign.Center">
+						<GridColumns>
+							<GridColumn Field=@nameof(EditVM.Title) HeaderText="Title" Width="90" />
+							<GridColumn Field=@nameof(EditVM.SubTitle) HeaderText="Sub Title" Width="90" />
+						</GridColumns>
+					</GridColumn>
+
+					<GridColumn HeaderText="Website" TextAlign="TextAlign.Center">
+						<GridColumns>
+							<GridColumn Field=@nameof(EditVM.WebsiteUrl) HeaderText="Url" Width="90" />
+							<GridColumn Field=@nameof(EditVM.WebsiteDescr) HeaderText="Description" Width="90" />
+						</GridColumns>
+					</GridColumn>
+
+					<GridColumn Field=@nameof(EditVM.ImageUrl) HeaderText="Image Url" Width="90" />
+					<GridColumn Field=@nameof(EditVM.Description) HeaderText="Detail Description MD" Width="90" />
+
+				</GridColumns>
+
+				<GridEvents TValue="EditVM" OnActionFailure="Failure" OnActionBegin="OnActionBegin" />
+			</SfGrid>
+
+		</div>
+	</div>
+</div>
+
+<style>
+	.e-grid .e-headercelldiv {
+		font-size: 10px;
+	}
+
+	.e-grid .e-rowcell {
+		font-size: 10px;
+	}
+</style>
