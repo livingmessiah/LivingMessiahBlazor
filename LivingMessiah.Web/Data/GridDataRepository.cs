@@ -1,4 +1,4 @@
-﻿using Dapper;
+﻿using Dapper;  // Required for e.g. DynamicParameters, QueryAsync, ExecuteAsync; Installed in ref proj. e.g. LivingMessiah.Data for
 using System;
 using System.Data;
 using System.Collections.Generic;
