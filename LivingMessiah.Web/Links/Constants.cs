@@ -480,6 +480,14 @@
 		public const string Icon = "fas fa-pencil-alt";
 	}
 
+	public static class UpcomingEventsEditMarkdown
+	{
+		public const string Edit = "/UpcomingEventsEditMarkdown";
+		public const string Title = "Edit Upcoming Events Markdown ";
+		public const string Icon = "fab fa-markdown";
+		public const string Icon2 = "fas fa-pencil-alt";
+	}
+
 	public static class UpcomingEventsGrid
 	{
 		public const string Grid = "/UpcomingEventsGrid";

@@ -1,4 +1,5 @@
-﻿
+﻿@using LinkEditMarkdown = LivingMessiah.Web.Links.UpcomingEventsEditMarkdown
+
 <div class="card  border-primary my-5">
 	<div class="card-header">
 		<div class="row">
@@ -34,26 +35,6 @@
 			</CascadingValue>
 		}
 
-		@if (@Title == "Rabbi Chaim Eisen, Zion Bible Studies")
-	{
-	<div class="card-body  text-white bg-secondary">
-		<p>
-			Shalom All,
-			Mark your calendar’s and plan to join us for an afternoon / evening with <b>Rabbi Chaim Eisen</b>, Zion Bible Studies.
-			Sunday November 21st
-		</p>
-		<ul>
-			<li><b>11:30 am - 12:00 noon</b> - Lite Lunch Buffet. Bring a dish to share</li>
-			<li><b>12:00 - 5:30 pm</b> - Presentations by Rabbi Chaim, Q&A</li>
-			<li><b>6:00 - 8:00</b> - Dinner together, informal dialog.  We will be preparing a taco salad, bring a desert to share.</li>
-		</ul>
-	</div>
-	}
-
-		@*<div class="card-body  text-white bg-secondary">
-			<p>ToDo Description Mark Down</p>
-		</div>*@
-
 		@if (!String.IsNullOrEmpty(@YouTubeId))
 		{
 			@if (ShowVideo)
@@ -71,7 +52,6 @@
 					</div>
 				</div>
 			}
-
 		}
 
 		@if (!String.IsNullOrEmpty(@SubTitle))
@@ -84,33 +64,18 @@
 			<Anchor Href="@WebsiteUrl" TargetIsBlank="true" Descr="@WebsiteDescr">
 			</Anchor>
 		}
-
-
 	</div>
 
-	@*<div class="body">
-
-		<ul class="lead">
-
-			<li>Come join us</li>
-
-			@if (!string.IsNullOrEmpty(item.EventTime))
-			{
-				<li><i class="far fa-clock"></i> @item.EventTime</li>
-			}
-
-			@if (!string.IsNullOrEmpty(item.WebsiteUrl))
-			{
-				<li>
-					<Anchor Href="@item.WebsiteUrl" TargetIsBlank="true" Descr="@item.WebsiteDescr">
-					</Anchor>
-				</li>
-			}
-
-			<li><LocationAnchor></LocationAnchor></li>
-		</ul>
-	</div>*@
+	
+	<div class="card-body">
+		<p class="pb-2 border-success">
+			@((MarkupString)Description)
+		</p>
+		<button @onclick="@(e => Edit_ButtonClick(@Id))"
+						class="btn-default btn-sm" title="@LinkEditMarkdown.Title Id: @Id">
+			<i class="@LinkEditMarkdown.Icon2"></i>&nbsp;<i class="@LinkEditMarkdown.Icon"></i>
+		</button>
+	</div>
 
 </div>
-
 

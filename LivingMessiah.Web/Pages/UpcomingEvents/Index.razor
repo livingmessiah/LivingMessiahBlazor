@@ -1,6 +1,7 @@
 ﻿@page "/upcomingevents"
 @using LivingMessiah.Web.Pages.KeyDates.Enums
 @using static LivingMessiah.Web.Links.UpcomingEvents
+@using Markdig
 
 <div class="d-print-none">
 	<h2><i class="@Icon"></i> @Title</h2>
@@ -18,32 +19,33 @@
 
 <LoadingComponent IsLoading="UpcomingEventList==null && DatabaseWarning==false">
 	@foreach (var item in UpcomingEventList)
+	{
+		if (item.EventTypeEnum == EventTypeEnum.KeyDate)
 		{
-			if (item.EventTypeEnum == EventTypeEnum.KeyDate)
-			{
-				<div class="d-md-none">
-					<DetailKeyDate UpcomingEvent="@item" IsXsOrSm="true">
-					</DetailKeyDate>
-				</div>
-				<div class="d-none d-md-block">
-					<DetailKeyDate UpcomingEvent="@item" IsXsOrSm="false">
-					</DetailKeyDate>
-				</div>
-			}
-			else
-			{
-				<NonKeyDate EventDate="@item.EventDate"
-										EventType="@EventType.FromEnum(item.EventTypeEnum)"
-										Title="@item.Title"
-										SubTitle="@item.SubTitle"
-										ImageUrl="@item.ImageUrl"
-										WebsiteUrl="@item.WebsiteUrl"
-										WebsiteDescr="@item.WebsiteDescr"
-										YouTubeId="@item.YouTubeId"
-										Description="@item.Description">
-				</NonKeyDate>
-			}
+			<div class="d-md-none">
+				<DetailKeyDate UpcomingEvent="@item" IsXsOrSm="true">
+				</DetailKeyDate>
+			</div>
+			<div class="d-none d-md-block">
+				<DetailKeyDate UpcomingEvent="@item" IsXsOrSm="false">
+				</DetailKeyDate>
+			</div>
 		}
+		else
+		{
+			<NonKeyDate Id ="@item.Id"
+									EventDate="@item.EventDate"
+									EventType="@EventType.FromEnum(item.EventTypeEnum)"
+									Title="@item.Title"
+									SubTitle="@item.SubTitle"
+									ImageUrl="@item.ImageUrl"
+									WebsiteUrl="@item.WebsiteUrl"
+									WebsiteDescr="@item.WebsiteDescr"
+									YouTubeId="@item.YouTubeId"
+									Description="@Markdig.Markdown.ToHtml(item.Description, pipeline)">
+			</NonKeyDate>
+		}
+	}
 </LoadingComponent>
 
 @if (DatabaseError)

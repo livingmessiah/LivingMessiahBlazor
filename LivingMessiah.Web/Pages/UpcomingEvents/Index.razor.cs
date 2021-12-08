@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 
 using LivingMessiah.Web.Pages.UpcomingEvents.Queries;
 using LivingMessiah.Web.Pages.UpcomingEvents.Data;
+using Markdig;
 
 namespace LivingMessiah.Web.Pages.UpcomingEvents
 {
@@ -19,36 +20,29 @@ namespace LivingMessiah.Web.Pages.UpcomingEvents
 
 		protected List<UpcomingEvent> UpcomingEventList;
 
-		/*
-		ToDo: Can I delete these
-		Need this because<Header UpcomingEvent="@item" ></Header> Doesn't work
-		protected string CurrentYear;
-		protected string CurrentMonth;
-		protected string MonthMarginTop;
-		*/
-
 		protected bool DatabaseError { get; set; } = false;
 		protected string DatabaseErrorMsg { get; set; }
 		protected bool DatabaseWarning = false;
 		protected string DatabaseWarningMsg { get; set; }
+		protected MarkdownPipeline pipeline { get; set; }
 
 		protected override async Task OnInitializedAsync()
 		{
 			try
 			{
-				Logger.LogDebug($"Inside {nameof(Index)}!{nameof(OnInitializedAsync)}");
+				Logger.LogDebug(string.Format("Inside {0} i:{1}", nameof(Index) + "!" + nameof(OnInitializedAsync), 0));
 
 				//ToDo: Instead of using a service, use LazyCache (https://github.com/alastairtree/LazyCache) to cache this content
 				UpcomingEventList = await db.GetEvents(daysAhead: 100, daysPast: -3);
 				if (UpcomingEventList is not null)
 				{
 					Logger.LogDebug($"...UpcomingEventList.Count:{UpcomingEventList.Count}");
+					pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().Build();
 				}
 				else
 				{
 					DatabaseWarning = true;
 					DatabaseWarningMsg = $"{nameof(UpcomingEventList)} NOT FOUND";
-					//Logger.LogDebug($"{nameof(UpcomingEventList)} is null, Sql:{db.BaseSqlDump}");
 				}
 			}
 			catch (Exception ex)

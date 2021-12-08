@@ -6,6 +6,12 @@ namespace LivingMessiah.Web.Pages.UpcomingEvents
 {
 	public partial class NonKeyDate
 	{
+		[Inject]
+		NavigationManager NavManager { get; set; }
+
+		[Parameter]
+		public int Id { get; set; }
+
 		[Parameter]
 		public DateTime EventDate { get; set; }
 
@@ -63,5 +69,9 @@ namespace LivingMessiah.Web.Pages.UpcomingEvents
 			}
 		}
 
+		private void Edit_ButtonClick(int id)
+		{
+			NavManager.NavigateTo(Links.UpcomingEventsEditMarkdown.Edit + "/" + id);
+		}
 	}
 }

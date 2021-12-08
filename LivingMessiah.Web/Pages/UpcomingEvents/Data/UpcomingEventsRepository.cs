@@ -12,17 +12,21 @@ using Microsoft.Extensions.Configuration;
 using LivingMessiah.Web.Pages.KeyDates.Enums;
 using LivingMessiah.Web.Pages.UpcomingEvents.Queries;
 using static LivingMessiah.Web.Pages.SqlServer;
-
-using Syncfusion.Blazor;
-using Syncfusion.Blazor.Data;
+using LivingMessiah.Web.Pages.UpcomingEvents.EditMarkdown;
 
 namespace LivingMessiah.Web.Pages.UpcomingEvents.Data
 {
 	public interface IUpcomingEventsRepository
 	{
 		string BaseSqlDump { get; }
+
+		// Queries
 		Task<List<UpcomingEvent>> GetEvents(int daysAhead, int daysPast);
 		Task<Tuple<int, int, string>> Create(NonKeyDateCrudVM nonKeyDateCrudVM);
+		Task<EditMarkdownVM> GetDescription(int id);
+
+		// Commands
+		Task<int> UpdateDescription(int id, string description);
 	}
 
 	public class UpcomingEventsRepository : BaseRepositoryAsync, IUpcomingEventsRepository
@@ -34,6 +38,37 @@ namespace LivingMessiah.Web.Pages.UpcomingEvents.Data
 		public string BaseSqlDump
 		{
 			get { return base.SqlDump; }
+		}
+
+
+		public async Task<EditMarkdownVM> GetDescription(int id)
+		{
+			base.Parms = new DynamicParameters(new {Id = id});
+
+			base.Sql = $@"
+--DECLARE @Id int=
+SELECT Id, Title
+, ISNULL(Description, '') AS Description -- MarkDig doesnt like nulls
+FROM KeyDate.UpcomingEvent
+WHERE Id = @Id
+";
+			return await WithConnectionAsync(async connection =>
+			{
+				var rows = await connection.QueryAsync<EditMarkdownVM>(sql: base.Sql, param: base.Parms);
+				return rows.SingleOrDefault();
+			});
+		}
+
+		public async Task<int> UpdateDescription(int id, string description)
+		{
+			base.Parms = new DynamicParameters(new { Id = id, Description = description });
+			base.Sql = $"UPDATE KeyDate.UpcomingEvent SET Description = @Description WHERE Id=@Id; ";
+			return await WithConnectionAsync(async connection =>
+			{
+				log.LogDebug($"base.Sql: {base.Sql}, base.Parms:{base.Parms}");
+				var count = await connection.ExecuteAsync(sql: base.Sql, param: base.Parms);
+				return count;
+			});
 		}
 
 
@@ -105,10 +140,12 @@ namespace LivingMessiah.Web.Pages.UpcomingEvents.Data
 			});
 
 			base.Sql = $@"
+--DECLARE @DaysAhead int =100, @DaysPast int =-3
 SELECT
-  EventDate, EventTypeEnum, DateTypeEnum, EnumId
+  Id, EventDate, EventTypeEnum, DateTypeEnum, EnumId
 , DaysDiff, DaysDiffDescr
-, Title, SubTitle, ImageUrl, WebsiteUrl, WebsiteDescr, YouTubeId, Description
+, Title, SubTitle, ImageUrl, WebsiteUrl, WebsiteDescr, YouTubeId
+, ISNULL(Description, '') AS Description -- MarkDig doesnt like nulls
 FROM KeyDate.vwUpcomingEvent
 WHERE DATEADD(d, @DaysAhead, GETUTCDATE()) >= EventDate
   AND DATEADD(d, @DaysPast, GETUTCDATE()) <= EventDate

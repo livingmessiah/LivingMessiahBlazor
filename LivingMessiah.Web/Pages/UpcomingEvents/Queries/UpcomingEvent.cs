@@ -5,7 +5,8 @@ namespace LivingMessiah.Web.Pages.UpcomingEvents.Queries
 {
 	public class UpcomingEvent
 	{
-		public DateTime EventDate { get; set; }  //[DateTime]
+		public int Id { get; set; }
+		public DateTime EventDate { get; set; } 
 		public EventTypeEnum EventTypeEnum { get; set; }
 		public DateTypeEnum DateTypeEnum { get; set; }    
 		public int EnumId { get; set; }     
