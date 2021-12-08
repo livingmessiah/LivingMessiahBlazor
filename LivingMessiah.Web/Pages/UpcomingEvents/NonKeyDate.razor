@@ -1,28 +1,29 @@
 ﻿@using LinkEditMarkdown = LivingMessiah.Web.Links.UpcomingEventsEditMarkdown
 
 <div class="card  border-primary my-5">
+
 	<div class="card-header">
+
 		<div class="row">
-
-			<div class="col-4 mt-3">
-				<span class="fa-stack fa-3x mt-2">
+			<div class="col-6">
+				<h4>
 					<i class="far fa-calendar"></i>
-					<strong class="calendar-text">@EventDate.Day</strong>
-				</span>
-				<h3><span class='badge badge-primary'>@EventDate.Date.ToString(DateFormat.ddd_mm_dd)</span></h3>
+					<span class='badge badge-primary'>@EventDate.Date.ToString(DateFormat.ddd_mm_dd)</span>
+				</h4>
 			</div>
-
-			<div class="col-4">
-				<h3 class="">Special Event</h3>
-				<h1 class="mt-4"><i class="@EventType.Icon"></i> <i>@EventType.Name</i></h1>
+			<div class="col-6">
+				<h4>
+					<span class="float-right"><i>@EventType.Name</i></span>
+				</h4>
 			</div>
-
-			<div class="col-4">
-				<img src='@EventType.ImageHeaderUrl' alt="@EventType.Name" class="float-right img-fluid rounded mt-4" />
-			</div>
-
 		</div>
 
+	</div>
+
+	<div class="card-body">
+		<h3 class="card-text text-center">
+			@Title
+		</h3>
 	</div>
 
 	<div class="card-body">
@@ -34,6 +35,10 @@
 				</ImageDisplayOption>
 			</CascadingValue>
 		}
+	</div>
+
+	<div class="card-body">
+
 
 		@if (!String.IsNullOrEmpty(@YouTubeId))
 		{
@@ -66,7 +71,7 @@
 		}
 	</div>
 
-	
+
 	<div class="card-body">
 		<p class="pb-2 border-success">
 			@((MarkupString)Description)

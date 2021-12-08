@@ -1,5 +1,7 @@
 ﻿@using LivingMessiah.Web.Data
 @using Syncfusion.Blazor.Data
+@using LinkEditMarkdown = LivingMessiah.Web.Links.UpcomingEventsEditMarkdown
+@using LinkUploadImage = LivingMessiah.Web.Links.UpcomingEventsUploadImage
 
 <div class="col-lg-12 control-section">
 	<div class="content-wrapper">
@@ -26,7 +28,6 @@
 						</GridColumns>
 					</GridColumn>
 
-
 					<GridColumn Field=@nameof(EditVM.EventTypeEnum) HeaderText="Event Type" Width="40" />
 
 					<GridColumn Field=@nameof(EditVM.YouTubeId) HeaderText="YouTube Id" Width="50" />
@@ -45,8 +46,29 @@
 						</GridColumns>
 					</GridColumn>
 
-					<GridColumn Field=@nameof(EditVM.ImageUrl) HeaderText="Image Url" Width="90" />
-					<GridColumn Field=@nameof(EditVM.Description) HeaderText="Detail Description MD" Width="90" />
+					<GridColumn HeaderText="Img" Width="40">
+						<Template>
+							@{
+								var vm = (context as EditVM);
+								<button @onclick="@(e => Image_ButtonClick(vm.Id))"
+												class="btn-default btn-xs" title="@LinkUploadImage.Title Id: @vm.Id">
+									<i class="@LinkUploadImage.Icon"></i>
+								</button>
+							}
+						</Template>
+					</GridColumn>
+
+					<GridColumn HeaderText="Descr" Width="40">
+						<Template>
+							@{
+								var vm = (context as EditVM);
+								<button @onclick="@(e => Edit_ButtonClick(vm.Id))"
+												class="btn-default btn-xs" title="@LinkEditMarkdown.Title Id: @vm.Id">
+									<i class="@LinkEditMarkdown.Icon"></i>
+								</button>
+							}
+						</Template>
+					</GridColumn>
 
 				</GridColumns>
 

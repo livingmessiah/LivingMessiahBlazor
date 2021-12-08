@@ -13,6 +13,9 @@ namespace LivingMessiah.Web.Pages.UpcomingEvents.Edit
 	{
 		[Inject]
 		public ILogger<GridComponent> Logger { get; set; }
+		
+		[Inject]
+		NavigationManager NavManager { get; set; }
 
 		protected void OnActionBegin(ActionEventArgs<EditVM> args)
 		{
@@ -25,6 +28,16 @@ namespace LivingMessiah.Web.Pages.UpcomingEvents.Edit
 				args.Data.ShowBeginDate = current;
 				args.Data.ShowEndDate = current;
 			}
+		}
+
+		private void Image_ButtonClick(int id)
+		{
+			NavManager.NavigateTo(Links.UpcomingEventsUploadImage.Upload + "/" + id);
+		}
+
+		private void Edit_ButtonClick(int id)
+		{
+			NavManager.NavigateTo(Links.UpcomingEventsEditMarkdown.Edit + "/" + id);
 		}
 
 		#region ErrorHandling

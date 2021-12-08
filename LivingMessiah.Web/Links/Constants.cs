@@ -480,6 +480,14 @@
 		public const string Icon = "fas fa-pencil-alt";
 	}
 
+	public static class UpcomingEventsUploadImage
+	{
+		public const string Upload = "/UpcomingEventsUploadImage";
+		public const string Title = "Upload Upcoming Events Image ";
+		public const string Icon = "fas fa-cloud-upload-alt"; 
+		public const string Icon2 = "fas fa-image"; 
+	}
+
 	public static class UpcomingEventsEditMarkdown
 	{
 		public const string Edit = "/UpcomingEventsEditMarkdown";

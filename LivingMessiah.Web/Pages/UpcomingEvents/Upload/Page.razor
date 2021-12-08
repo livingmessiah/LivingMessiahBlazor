@@ -1,0 +1,50 @@
+﻿@page "/UpcomingEventsUploadImage/{Id:int}"
+@using LinkUpload = LivingMessiah.Web.Links.UpcomingEventsUploadImage
+@using LinkLogin = LivingMessiah.Web.Links.Account
+@using static LivingMessiah.Web.Services.Auth0;
+
+<h2 class="mt-2">
+	<i class="@LinkUpload.Icon"></i> @LinkUpload.Title
+</h2>
+
+<AuthorizeView Roles="@Roles.AdminOrAnnouncements">
+
+	<Authorized>
+		<UploadComponent Id="@Id"></UploadComponent>
+	</Authorized>
+
+	<NotAuthorized>
+
+		<div class="card border-warning my-5">
+			<div class="card-header">Not Authorized</div>
+
+			<div class="card-body">
+
+				<h5 class="">To upload image for <b>@LinkUpload.Title (Id:@Id)</b> you need to be logged in.</h5>
+				<button @onclick="@(() => RedirectToLoginClick(LinkUpload.Upload, Id))"
+								type="button" class="btn-primary btn-sm">
+					Login <i class='fas fa-sign-in-alt'></i>
+				</button>
+			</div>
+
+		</div>
+
+	</NotAuthorized>
+
+</AuthorizeView>
+
+
+@code
+{
+	[Inject]
+	NavigationManager NavigationManager { get; set; }
+
+	[Parameter]
+	public int Id { get; set; } = 0;
+
+	void RedirectToLoginClick(string returnUrl, int id)
+	{
+		NavigationManager.NavigateTo($"{LinkLogin.Login}?returnUrl={returnUrl}/{id}", true);
+	}
+
+}
