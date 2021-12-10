@@ -1,5 +1,10 @@
 ﻿@using Syncfusion.Blazor.Inputs
 
+@*<SfUploader AutoUpload="true" Multiple="false" ID="UploadFiles" MaxFileSize="5000000">
+	<UploaderAsyncSettings SaveUrl="api/UploadAzure/Upload"></UploaderAsyncSettings>
+</SfUploader>*@
+
+
 <div class="col-lg-12 control-section">
 	<div class="control_wrapper">
 		<SfUploader ID="UploadFiles" DropArea=".control-fluid">
@@ -19,12 +24,4 @@
 	}
 </style>
 
-@code {
-	[Parameter]
-	public int Id { get; set; }
 
-	public void OnFileRemove(RemovingEventArgs args)
-	{
-		args.PostRawFile = false;
-	}
-}
