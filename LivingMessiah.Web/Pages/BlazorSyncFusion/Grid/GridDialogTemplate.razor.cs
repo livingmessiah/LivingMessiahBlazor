@@ -39,34 +39,49 @@ namespace LivingMessiah.Web.Pages.BlazorSyncFusion.Grid
 		}
 
 		private SfGrid<OrdersDetails> Grid;
-
 		public async Task ToolbarClickHandler(Syncfusion.Blazor.Navigations.ClickEventArgs args)
 		{
-			Logger.LogDebug(string.Format("Inside {0} args.Item.Id: {1}", nameof(ToolbarClickHandler), args.Item.Id));
-
-			if (args.Item.Id == SyncFusionToolbarCRUD.Add.ArgId)
-			{
-				//await this.Grid.AddRecordAsync();
-				Logger.LogDebug(string.Format("...args.Item.Text: {0}", args.Item.Text));
-			}
-			if (args.Item.Id == SyncFusionToolbarCRUD.Edit.ArgId)
-			{
-				//await this.Grid.StartEditAsync();
-				Logger.LogDebug(string.Format("...args.Item.Text: {0}", args.Item.Text));
-			}
-			if (args.Item.Id == SyncFusionToolbarCRUD.Delete.ArgId)
-			{
-				//await this.Grid.DeleteRecordAsync();
-				Logger.LogDebug(string.Format("...args.Item.Text: {0}", args.Item.Text));
-			}
+			if (args.Item.Id == SyncFusionToolbarCRUD.Add.ArgId)		{ await this.Grid.AddRecordAsync(); }
+			if (args.Item.Id == SyncFusionToolbarCRUD.Edit.ArgId)		{	await this.Grid.StartEditAsync(); }
+			if (args.Item.Id == SyncFusionToolbarCRUD.Delete.ArgId)	{	await this.Grid.DeleteRecordAsync();	}
 			if (args.Item.Id == SyncFusionToolbarCRUD.Update.ArgId)
 			{
-				/*
-				 update the specified row by given values without changing into edited state.
-				(double index, TValue data)
-				await this.Grid.UpdateRowAsync(); 
-				*/
-				Logger.LogDebug(string.Format("...args.Item.Text: {0}", args.Item.Text));
+				// update the specified row by given values without changing into edited state.
+				//(double index, TValue data)
+				//await this.Grid.UpdateRowAsync(); 
+			}
+			if (args.Item.Id == SyncFusionToolbarCRUD.Cancel.ArgId)	{ await this.Grid.CloseEditAsync();	}
+		}
+
+
+		/*
+				public async Task ToolbarClickHandler(Syncfusion.Blazor.Navigations.ClickEventArgs args)
+				{
+					Logger.LogDebug(string.Format("Inside {0} args.Item.Id: {1}", nameof(ToolbarClickHandler), args.Item.Id));
+
+					if (args.Item.Id == SyncFusionToolbarCRUD.Add.ArgId)
+					{
+						//await this.Grid.AddRecordAsync();
+						Logger.LogDebug(string.Format("...args.Item.Text: {0}", args.Item.Text));
+					}
+					if (args.Item.Id == SyncFusionToolbarCRUD.Edit.ArgId)
+					{
+						//await this.Grid.StartEditAsync();
+						Logger.LogDebug(string.Format("...args.Item.Text: {0}", args.Item.Text));
+					}
+					if (args.Item.Id == SyncFusionToolbarCRUD.Delete.ArgId)
+					{
+						//await this.Grid.DeleteRecordAsync();
+						Logger.LogDebug(string.Format("...args.Item.Text: {0}", args.Item.Text));
+					}
+					if (args.Item.Id == SyncFusionToolbarCRUD.Update.ArgId)
+					{
+						
+					//	 update the specified row by given values without changing into edited state.
+					//	(double index, TValue data)
+					//	await this.Grid.UpdateRowAsync(); 
+					
+		Logger.LogDebug(string.Format("...args.Item.Text: {0}", args.Item.Text));
 
 			}
 			if (args.Item.Id == SyncFusionToolbarCRUD.Cancel.ArgId)
@@ -77,7 +92,7 @@ namespace LivingMessiah.Web.Pages.BlazorSyncFusion.Grid
 
 			await Task.Delay(0);
 		}
-
+*/
 
 		public async Task ActionBeginHandler(ActionEventArgs<OrdersDetails> arg)
 		{

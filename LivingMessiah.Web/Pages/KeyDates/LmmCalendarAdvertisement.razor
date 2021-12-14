@@ -1,9 +1,10 @@
 ﻿@using static LivingMessiah.Web.Links.Store
+
 @if (CalenderReadyForSale)
 {
 	<div class="d-print-none">
 		<div class="card border-warning mt-5 mb-3">
-			<img src="@Blobs.UrlRoot("lmm-calendar-final-800-600.jpeg")"
+			<img src="@Blobs.UrlRoot("lmm-calendar-2022-1020-850.jpg")"
 					 class="card-img-top p-2"
 					 alt="@Items.TitleCalendar">
 			<div class="card-body">
@@ -25,13 +26,21 @@
 }
 else
 {
-<div class="card border-warning mt-5 mb-3">
-	<div class="card-body">
-		<h3 class="card-text text-center">
-			Living Messiah Calendar! Coming Soon
-		</h3>
+
+	<div class="d-print-none">
+		<div class="card border-warning mt-5 mb-3">
+			<img src="@Blobs.UrlRoot("lmm-calendar-2022-1020-850.jpg")"
+					 class="card-img-top p-2"
+					 alt="@Items.TitleCalendar">
+			<div class="card-body">
+				<h3 class="card-text text-center">
+					Living Messiah Calendar! Coming Soon
+				</h3>
+			</div>
+		</div>
 	</div>
-</div>
+
+
 }
 
 @code {

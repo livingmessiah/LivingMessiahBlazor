@@ -1,0 +1,56 @@
+﻿@using Microsoft.AspNetCore.Components;
+@using System
+
+@if (ShowMessage)
+{
+	<div class="card bg-dark text-white my-2">
+		<div class="card-body">
+			<h2 class="card-text">
+				Torah Tueday will be postponed until January 2022
+			</h2>
+		</div>
+	</div>
+}
+
+@*<div class="embed-responsive embed-responsive-16by9">
+		<iframe class="embed-responsive-item" src="https://www.youtube.com/embed/@YouTubeIdDay1?rel=0"
+						allowfullscreen></iframe>
+	</div>*@
+
+<div class="card bg-info text-white my-2">
+	<div class="card-body">
+		<p class="card-text">
+			Nathan Harmon Event Day 1 YouTube link
+			<a href="https://youtu.be/watch?v=@YouTubeIdDay1" target="_blank"
+				 title="@YouTubeIdDay1">
+				<u>@YouTubeIdDay1</u>
+				<i class="fas fa-external-link-square-alt"></i>
+			</a>
+		</p>
+	</div>
+</div>
+
+@code {
+
+	//https://youtu.be/afk0vgDb44o
+	//https://youtu.be/watch?v=
+	//https://www.youtube.com/watch?v=@UrlId" target="_blank
+
+	protected string YouTubeIdDay1 = "afk0vgDb44o";
+
+
+	[Parameter]
+	public DateTime MessageExpiration { get; set; }
+
+	protected bool ShowMessage = false;
+
+	protected override void OnInitialized()
+	{
+		System.DateTime cur = System.DateTime.Now;
+
+		if (cur < MessageExpiration)
+		{
+			ShowMessage = true;
+		}
+	}
+}

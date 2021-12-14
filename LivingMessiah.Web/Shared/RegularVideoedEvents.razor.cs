@@ -6,6 +6,7 @@ using LivingMessiah.Web.Services;
 using LivingMessiah.Domain;
 using LivingMessiah.Web.Settings;
 using Microsoft.Extensions.Options;
+using System;
 
 namespace LivingMessiah.Web.Shared
 {
@@ -26,11 +27,14 @@ namespace LivingMessiah.Web.Shared
 		protected string DatabaseWarningMsg { get; set; }
 		protected bool ShowCurrentWeeklyVideos { get; set; }
 
+		public DateTime MessageExpiration { get; set; } = new System.DateTime(2022, 01, 01);
+
 		protected IReadOnlyList<vwCurrentWeeklyVideo> CurrentWeeklyVideos;
 
 		protected override async Task OnInitializedAsync()
 		{
 			ShowCurrentWeeklyVideos = AppSettings.Value.ShowCurrentWeeklyVideos;
+
 			Logger.LogDebug($"Inside {nameof(RegularVideoedEvents)}!{nameof(OnInitializedAsync)}; ShowCurrentWeeklyVideos:{ShowCurrentWeeklyVideos}");
 			if (ShowCurrentWeeklyVideos)
 			{

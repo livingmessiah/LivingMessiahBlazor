@@ -3,6 +3,8 @@
 	<hr class="warning" />
 	<h3>Latest Videos</h3>
 
+	<ReagularVideoMessage MessageExpiration="@MessageExpiration"></ReagularVideoMessage>
+
 	<LoadingComponent IsLoading="CurrentWeeklyVideos is null && DatabaseWarning==false">
 		@foreach (var item in CurrentWeeklyVideos)
 		{
@@ -25,7 +27,6 @@
 	}
 
 }
-
 
 
 

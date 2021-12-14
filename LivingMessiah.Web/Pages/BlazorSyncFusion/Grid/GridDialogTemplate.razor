@@ -23,14 +23,21 @@
 </ul>.
 
 <p>
-	The DataGrid supports CRUD operations. These CRUD operations can be configured in DataGrid using the <code><a target='_blank' class='code' href='https://help.syncfusion.com/cr/aspnetcore-blazor/Syncfusion.Blazor.Grids.GridEditSettings.html'>GridEditSettings</a></code> component.
+	The DataGrid supports CRUD operations. 
+	These CRUD operations can be configured in DataGrid using the 
+		<code><a target='_blank' class='code' href='https://help.syncfusion.com/cr/aspnetcore-blazor/Syncfusion.Blazor.Grids.GridEditSettings.html'>
+	GridEditSettings</a></code> component.
 </p>
 <p>
 	In this demo, Dialog template is enabled for editing by defining
 	<code>
 		<a target='_blank' class='code'
-			 href='https://help.syncfusion.com/cr/blazor/Syncfusion.Blazor.Grids.GridEditSettings.html#Syncfusion_Blazor_Grids_GridEditSettings_Mode'>Mode</a>
-	</code> as <strong>Dialog</strong> in the <code><a target='_blank' class='code' href='https://help.syncfusion.com/cr/aspnetcore-blazor/Syncfusion.Blazor.Grids.GridEditSettings.html'>GridEditSettings</a></code> component. You can use the <code>
+			 href='https://help.syncfusion.com/cr/blazor/Syncfusion.Blazor.Grids.GridEditSettings.html#Syncfusion_Blazor_Grids_GridEditSettings_Mode'>
+		Mode</a>
+	</code> 
+	as <strong>Dialog</strong> in the <code><a target='_blank' class='code' href='https://help.syncfusion.com/cr/aspnetcore-blazor/Syncfusion.Blazor.Grids.GridEditSettings.html'>
+	GridEditSettings</a></code> component. 
+	You can use the <code>
 		<a target='_blank' class='code' href='https://help.syncfusion.com/cr/blazor/Syncfusion.Blazor.Grids.GridEditSettings.html#Syncfusion_Blazor_Grids_GridEditSettings_Template'>
 			Template
 		</a>
@@ -88,7 +95,8 @@
 							</div>
 							<div class="form-row">
 								<div class="form-group col-md-6">
-									<SfNumericTextBox ID="Freight" @bind-Value="@(Order.Freight)" TValue="double?" FloatLabelType="FloatLabelType.Always" Placeholder="Freight"></SfNumericTextBox>
+									<SfNumericTextBox ID="Freight" @bind-Value="@(Order.Freight)" TValue="double?" 
+																		FloatLabelType="FloatLabelType.Always" Placeholder="Freight"></SfNumericTextBox>
 								</div>
 								<div class="form-group col-md-6">
 									<SfDatePicker ID="OrderDate" @bind-Value="@(Order.OrderDate)" FloatLabelType="FloatLabelType.Always" Placeholder="Order Date">
@@ -97,29 +105,38 @@
 							</div>
 							<div class="form-row">
 								<div class="form-group col-md-6">
-									<SfDropDownList ID="ShipCountry" TItem="OrdersDetails" @bind-Value="@(Order.ShipCountry)" TValue="string" DataSource="@GridData" FloatLabelType="FloatLabelType.Always" Placeholder="Ship Country">
+									<SfDropDownList ID="ShipCountry" TItem="OrdersDetails" @bind-Value="@(Order.ShipCountry)" 
+																	TValue="string" DataSource="@GridData" FloatLabelType="FloatLabelType.Always" Placeholder="Ship Country">
 										<DropDownListFieldSettings Value="ShipCountry" Text="ShipCountry"></DropDownListFieldSettings>
 									</SfDropDownList>
 								</div>
 								<div class="form-group col-md-6">
-									<SfDropDownList ID="ShipCity" TItem="OrdersDetails" @bind-Value="@(Order.ShipCity)" TValue="string" DataSource="@GridData" FloatLabelType="FloatLabelType.Always" Placeholder="Ship City">
+									<SfDropDownList ID="ShipCity" TItem="OrdersDetails" @bind-Value="@(Order.ShipCity)" 
+																	TValue="string" DataSource="@GridData" FloatLabelType="FloatLabelType.Always" Placeholder="Ship City">
 										<DropDownListFieldSettings Value="ShipCity" Text="ShipCity"></DropDownListFieldSettings>
 									</SfDropDownList>
 								</div>
 							</div>
 							<div class="form-row">
 								<div class="form-group col-md-12">
-									<SfTextBox ID="ShipAddress" @bind-Value="@(Order.ShipAddress)" FloatLabelType="FloatLabelType.Always" Placeholder="Ship Address"></SfTextBox>
+									<SfTextBox ID="ShipAddress" @bind-Value="@(Order.ShipAddress)" FloatLabelType="FloatLabelType.Always" 
+														 Placeholder="Ship Address"></SfTextBox>
 								</div>
 							</div>
 						</div>
 					</Template>
 				</GridEditSettings>
 				<GridColumns>
-					<GridColumn Field=@nameof(OrdersDetails.OrderID) HeaderText="Order ID" IsPrimaryKey="true" ValidationRules="@(new Syncfusion.Blazor.Grids.ValidationRules{ Required=true, Number=true})" TextAlign="@TextAlign.Center" HeaderTextAlign="@TextAlign.Center" Width="140"></GridColumn>
-					<GridColumn Field=@nameof(OrdersDetails.CustomerID) HeaderText="Customer Name" ValidationRules="@(new Syncfusion.Blazor.Grids.ValidationRules{ Required=true})" Width="150"></GridColumn>
-					<GridColumn Field=@nameof(OrdersDetails.Freight) HeaderText="Freight" Format="C2" Width="140" TextAlign="@TextAlign.Right" ValidationRules="@(new Syncfusion.Blazor.Grids.ValidationRules{ Required=true, Range = new double[]{1, 1000}})" HeaderTextAlign="@TextAlign.Right"></GridColumn>
-					<GridColumn Field=@nameof(OrdersDetails.OrderDate) HeaderText="Order Date" Format="d" TextAlign="TextAlign.Right" Type="ColumnType.Date" Width="160"></GridColumn>
+					<GridColumn Field=@nameof(OrdersDetails.OrderID) HeaderText="Order ID" IsPrimaryKey="true" 
+											ValidationRules="@(new Syncfusion.Blazor.Grids.ValidationRules{ Required=true, Number=true})" 
+											TextAlign="@TextAlign.Center" HeaderTextAlign="@TextAlign.Center" Width="140"></GridColumn>
+					<GridColumn Field=@nameof(OrdersDetails.CustomerID) HeaderText="Customer Name" 
+											ValidationRules="@(new Syncfusion.Blazor.Grids.ValidationRules{ Required=true})" Width="150"></GridColumn>
+					<GridColumn Field=@nameof(OrdersDetails.Freight) HeaderText="Freight" Format="C2" Width="140" 
+											ValidationRules="@(new Syncfusion.Blazor.Grids.ValidationRules{ Required=true, Range = new double[]{1, 1000}})" 
+											TextAlign="@TextAlign.Right" HeaderTextAlign="@TextAlign.Right"></GridColumn>
+					<GridColumn Field=@nameof(OrdersDetails.OrderDate) HeaderText="Order Date" Format="d" 
+											TextAlign="TextAlign.Right" Type="ColumnType.Date" Width="160"></GridColumn>
 					<GridColumn Field=@nameof(OrdersDetails.ShipCountry) HeaderText="Ship Country" Width="150"></GridColumn>
 				</GridColumns>
 			</SfGrid>
