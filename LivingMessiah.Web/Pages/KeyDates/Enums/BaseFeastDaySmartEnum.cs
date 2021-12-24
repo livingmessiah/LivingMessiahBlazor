@@ -1,4 +1,5 @@
 ﻿using Ardalis.SmartEnum;
+using Microsoft.AspNetCore.Components;
 
 namespace LivingMessiah.Web.Pages.KeyDates.Enums
 {
@@ -38,6 +39,7 @@ namespace LivingMessiah.Web.Pages.KeyDates.Enums
 		public abstract string Details { get; }
 		public abstract string AddDaysDescr { get; }
 		public abstract int? AddDays { get; }
+//		public abstract MarkupString HtmlTR { get; }
 		#endregion
 
 		#region Private Instantiation
@@ -50,6 +52,7 @@ namespace LivingMessiah.Web.Pages.KeyDates.Enums
 			public override string Details => "";
 			public override string AddDaysDescr => "Last day";
 			public override int? AddDays => 8;
+//			public override MarkupString HtmlTR => new MarkupString($"<a href='{Address.EmailHref()}{EmailSubject}'>{Address.Email()}</a>");
 		}
 		private sealed class PurimSE : BaseFeastDaySmartEnum
 		{

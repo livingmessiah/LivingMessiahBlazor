@@ -9,18 +9,23 @@ using Microsoft.Extensions.Logging;
 using LivingMessiah.Data;                   // ToDo: Move this to LivingMessiah.Web.Data
 using LivingMessiah.Web.Pages.KeyDates.Enums;  
 using LivingMessiah.Web.Pages.KeyDates.Queries;
+using LivingMessiah.Web.Pages.KeyDates.Components;
 
 namespace LivingMessiah.Web.Pages.KeyDates.Data
 {
 	public interface IKeyDateRepository
 	{
 		string BaseSqlDump { get; }
-		Task<List<YearLookup>> GetYearLookupList();
+		Task<List<Queries.YearLookup>> GetYearLookupList();
+		Task<List<YearLookupVM>> GetYearLookupVMList();
 		Task<List<CalendarEntry>> GetCalendarEntries(int yearId);
 		Task<CalendarYear> GetHebrewYearAndChildren(RelativeYearEnum relativeYear);
-		Task<List<DateUnion>> GetDateUnionList(RelativeYearEnum relativeYear);
 
 		// Command
+		Task<int> UpdateKeyDateCalendar(int yearId, int calendarTemplateId, DateTime date);
+
+		//Depricated
+		Task<List<DateUnion>> GetDateUnionList(RelativeYearEnum relativeYear);
 		Task<int> UpdateKeyDate(int Id, DateTime Date);
 	}
 	public class KeyDateRepository : BaseRepositoryAsync, IKeyDateRepository
@@ -34,7 +39,7 @@ namespace LivingMessiah.Web.Pages.KeyDates.Data
 			get { return base.SqlDump; }
 		}
 
-		public async Task<List<YearLookup>> GetYearLookupList()
+		public async Task<List<Queries.YearLookup>> GetYearLookupList()
 		{
 			log.LogDebug(String.Format("Inside {0}", nameof(KeyDateRepository) + "!" + nameof(GetYearLookupList)));
 			base.Sql = $@"
@@ -44,7 +49,22 @@ SELECT CAST(NextYear AS char(4))     AS ID, 'Next'     AS Text FROM KeyDate.vwCo
 ";
 			return await WithConnectionAsync(async connection =>
 			{
-				var rows = await connection.QueryAsync<YearLookup>(sql: base.Sql);
+				var rows = await connection.QueryAsync<Queries.YearLookup>(sql: base.Sql);
+				return rows.ToList();
+			});
+		}
+
+		public async Task<List<YearLookupVM>> GetYearLookupVMList()
+		{
+			log.LogDebug(String.Format("Inside {0}", nameof(KeyDateRepository) + "!" + nameof(GetYearLookupVMList)));
+			base.Sql = $@"
+SELECT CAST(PreviousYear AS char(4)) AS ID, 'Previous' AS Text FROM KeyDate.vwConstants UNION ALL
+SELECT CAST(CurrentYear AS char(4))  AS ID, 'Current'	 AS Text FROM KeyDate.vwConstants UNION ALL
+SELECT CAST(NextYear AS char(4))     AS ID, 'Next'     AS Text FROM KeyDate.vwConstants
+";
+			return await WithConnectionAsync(async connection =>
+			{
+				var rows = await connection.QueryAsync<YearLookupVM>(sql: base.Sql);
 				return rows.ToList();
 			});
 		}
@@ -54,11 +74,14 @@ SELECT CAST(NextYear AS char(4))     AS ID, 'Next'     AS Text FROM KeyDate.vwCo
 			log.LogDebug(String.Format("Inside {0}, yearId={1}", nameof(KeyDateRepository) + "!" + nameof(GetCalendarEntries), yearId));
 			base.Parms = new DynamicParameters(new { YearId = yearId });
 			base.Sql = $@"
-SELECT
-YearId, CalendarTemplateId, Date, Detail, EventDescr, TypeDescr
-, DateTypeId AS DateTypeEnum --, DateTypeId
---, DateYMD
-FROM KeyDate.vwCalendar
+-- DECLARE @yearId int=9999
+SELECT        
+c.YearId, c.CalendarTemplateId, 
+c.Date
+, ct.Detail, ct.Descr, ct.DateTypeId AS DateTypeEnum
+FROM KeyDate.Calendar c
+	INNER JOIN KeyDate.CalendarTemplate ct
+		ON c.CalendarTemplateId = ct.Id 
 WHERE YearId=@yearId
 ORDER BY Date
 ";
@@ -198,6 +221,43 @@ FROM KeyDate.FeastDayDetail
 
 		}
 
+
+
+		#region Command
+
+		public async Task<int> UpdateKeyDateCalendar(int yearId, int calendarTemplateId, DateTime date)
+		{
+			base.Parms = new DynamicParameters(new { YearId = yearId, CalendarTemplateId = calendarTemplateId, Date = date });
+			base.Sql = $@"
+-- DECLARE int @YearId={yearId}, int @CalendarTemplateId={calendarTemplateId}
+UPDATE KeyDate.Calendar SET Date = @Date 
+WHERE YearId = @YearId AND CalendarTemplateId=@CalendarTemplateId;
+";
+			return await WithConnectionAsync(async connection =>
+			{
+				log.LogDebug($"base.Sql: {base.Sql}, base.Parms:{base.Parms}");
+				var count = await connection.ExecuteAsync(sql: base.Sql, param: base.Parms);
+				return count;
+			});
+		}
+
+
+		// Depricated
+		public async Task<int> UpdateKeyDate(int id, DateTime date)
+		{
+			base.Parms = new DynamicParameters(new { Id = id, Date = date });
+			base.Sql = $"UPDATE KeyDate.Date SET Date = @Date WHERE Id=@Id; ";
+			return await WithConnectionAsync(async connection =>
+			{
+				log.LogDebug($"base.Sql: {base.Sql}, base.Parms:{base.Parms}");
+				var count = await connection.ExecuteAsync(sql: base.Sql, param: base.Parms);
+				return count;
+			});
+		}
+
+		#endregion
+
+		// Depricated
 		public async Task<List<DateUnion>> GetDateUnionList(RelativeYearEnum relativeYear)
 		{
 			base.Sql = $@"
@@ -213,23 +273,6 @@ ORDER BY Date
 				return rows.ToList();
 			});
 		}
-
-
-		#region Command
-
-		public async Task<int> UpdateKeyDate(int id, DateTime date)
-		{
-			base.Parms = new DynamicParameters(new { Id = id, Date = date });
-			base.Sql = $"UPDATE KeyDate.Date SET Date = @Date WHERE Id=@Id; ";
-			return await WithConnectionAsync(async connection =>
-			{
-				log.LogDebug($"base.Sql: {base.Sql}, base.Parms:{base.Parms}");
-				var count = await connection.ExecuteAsync(sql: base.Sql, param: base.Parms);
-				return count;
-			});
-		}
-		
-		#endregion
 	}
 }
 

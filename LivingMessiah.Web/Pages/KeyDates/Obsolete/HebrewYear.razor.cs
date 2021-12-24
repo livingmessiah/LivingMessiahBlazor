@@ -9,7 +9,7 @@ using LivingMessiah.Web.Pages.KeyDates.Enums;
 using LivingMessiah.Web.Pages.KeyDates.Queries;
 using LivingMessiah.Web.Pages.KeyDates.Services;
 
-namespace LivingMessiah.Web.Pages.KeyDates
+namespace LivingMessiah.Web.Pages.KeyDates.Obsolete
 {
 	public partial class HebrewYear
 	{

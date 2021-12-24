@@ -12,6 +12,7 @@ namespace LivingMessiah.Web.Pages.KeyDates.Enums
 			internal const int Winter = 2;
 			internal const int Spring = 3;
 			internal const int Summer = 4;
+			internal const int FallEOY = 5;
 		}
 		#endregion
 
@@ -21,6 +22,7 @@ namespace LivingMessiah.Web.Pages.KeyDates.Enums
 		public static readonly BaseSeasonSmartEnum Winter = new WinterSE();
 		public static readonly BaseSeasonSmartEnum Spring = new SpringSE();
 		public static readonly BaseSeasonSmartEnum Summer = new SummerSE();
+		public static readonly BaseSeasonSmartEnum FallEOY = new FallEOYSE();
 		#endregion
 
 		private BaseSeasonSmartEnum(string name, int value) : base(name, value) { } // Constructor
@@ -61,6 +63,13 @@ namespace LivingMessiah.Web.Pages.KeyDates.Enums
 			public override string Type => "Solstice";
 			public override string BadgeColor => "badge-danger";
 			public override string Icon => "far fa-sun";
+		}
+		private sealed class FallEOYSE : BaseSeasonSmartEnum
+		{
+			public FallEOYSE() : base("Fall (EOY)", Id.FallEOY) { }
+			public override string Type => "Equinox";
+			public override string BadgeColor => "badge-warning";
+			public override string Icon => "fab fa-canadian-maple-leaf";
 		}
 		#endregion
 

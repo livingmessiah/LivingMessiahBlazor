@@ -1,0 +1,75 @@
+﻿@page "/BlazorSyncFusion/DropDowns/DropDownList/DefaultFunctionalities"
+
+<div class="pb-1 mt-4 mb-4 border-bottom">
+	<h3><code>SfDropDownList</code></h3>
+</div>
+
+<div class="row">
+
+	<div class="col-6">
+		<div class="card border-danger">
+			<div class="card-header py-1">
+				<code>SfDropDownList</code>
+			</div>
+			<div class="card-body py-1">
+				<SfDropDownList TItem="VM" TValue="string" PopupHeight="230px"
+												Placeholder="Select a game"
+												@bind-Value="@SelectedValue" DataSource="@Games">
+					<DropDownListEvents TItem="VM" TValue="string" ValueChange="OnChange"></DropDownListEvents>
+					<DropDownListFieldSettings Text="Text" Value="Value"></DropDownListFieldSettings>
+				</SfDropDownList>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-6">
+		<div class="table-responsive">
+			<table class="table table-bordered table-sm table-success">
+				<tr>
+					<th>Selected Value</th>
+					<th>Selected Text</th>
+				</tr>
+				<tr>
+					<td>@SelectedValue</td>
+					<td>@SelectedText</td>
+				</tr>
+			</table>
+
+		</div>
+
+	</div>
+
+</div>
+
+
+@code {
+
+	public class VM
+	{
+		public string Value { get; set; }
+		public string Text { get; set; }
+	}
+
+	private List<VM>
+	Games = new List<VM>
+		() {
+				new VM(){ Value= "Game1", Text= "American Football" },
+				new VM(){ Value= "Game2", Text= "Badminton" },
+				new VM(){ Value= "Game3", Text= "Basketball" },
+				new VM(){ Value= "Game4", Text= "Cricket" },
+				new VM(){ Value= "Game5", Text= "Football" },
+				new VM(){ Value= "Game6", Text= "Golf" },
+				new VM(){ Value= "Game7", Text= "Hockey" },
+				new VM(){ Value= "Game8", Text= "Rugby"},
+				new VM(){ Value= "Game9", Text= "Snooker" },
+				new VM(){ Value= "Game10", Text= "Tennis"},
+																							};
+
+	public string SelectedValue = "Game3";
+	public string SelectedText { get; set; } = "Basketball";
+
+	public void OnChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<string, VM> args)
+	{
+		this.SelectedText = args.ItemData.Text;
+	}
+}

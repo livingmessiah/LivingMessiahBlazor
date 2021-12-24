@@ -26,7 +26,7 @@
 				</div>
 
 				<div class="col-6">
-					<img src='@Blobs.UrlOther("new-moon-175-174.jpg")' alt="@LunarMonthSmartEnum.Name" class="float-right img-fluid rounded mt-4" />
+					<img src='@Blobs.UrlOther("new-moon-175-174.jpg")' alt="@BaseLunarMonthSmartEnum.Name" class="float-right img-fluid rounded mt-4" />
 				</div>
 
 			</div>
@@ -34,11 +34,11 @@
 			<div class="row">
 
 				<div class="col-12">
-					<h1 class="text-center mt-4"><i>@LunarMonthSmartEnum.Name</i> <span class="hebrew44">@LunarMonthSmartEnum.Hebrew</span></h1>
+					<h1 class="text-center mt-4"><i>@BaseLunarMonthSmartEnum.FullName</i> <span class="hebrew44">@BaseLunarMonthSmartEnum.Hebrew</span></h1>
 
-					@if (!String.IsNullOrEmpty(@LunarMonthSmartEnum.BiblicalHebrew))
+					@if (!String.IsNullOrEmpty(@BaseLunarMonthSmartEnum.BiblicalHebrew))
 					{
-						<h3 class="text-center mb-0"><i>@LunarMonthSmartEnum.BiblicalName</i> <span class="hebrew36">@LunarMonthSmartEnum.BiblicalHebrew</span> </h3>
+						<h3 class="text-center mb-0"><i>@BaseLunarMonthSmartEnum.BiblicalName</i> <span class="hebrew36">@BaseLunarMonthSmartEnum.BiblicalHebrew</span> </h3>
 						<p class="text-center text-black-50 mt-0"><small>Biblical Name</small></p>
 					}
 
@@ -62,18 +62,18 @@
 
 				<div class="col-6">
 					<h3 class="text-center"><span class="badge badge-info"><i class="@Icon"></i> New Moon</span></h3>
-					<h1 class="text-center mt-4"><i>@LunarMonthSmartEnum.Name</i> <span class="hebrew44">@LunarMonthSmartEnum.Hebrew</span></h1>
+					<h1 class="text-center mt-4"><i>@BaseLunarMonthSmartEnum.FullName</i> <span class="hebrew44">@BaseLunarMonthSmartEnum.Hebrew</span></h1>
 
-					@if (!String.IsNullOrEmpty(@LunarMonthSmartEnum.BiblicalHebrew))
+					@if (!String.IsNullOrEmpty(@BaseLunarMonthSmartEnum.BiblicalHebrew))
 					{
-						<h4 class="text-center mt-2"><i>@LunarMonthSmartEnum.BiblicalName</i> <span class="hebrew36">@LunarMonthSmartEnum.BiblicalHebrew</span> </h4>
+						<h4 class="text-center mt-2"><i>@BaseLunarMonthSmartEnum.BiblicalName</i> <span class="hebrew36">@BaseLunarMonthSmartEnum.BiblicalHebrew</span> </h4>
 						<p class="text-center text-black-50 mt-0"><small>Biblical Name</small></p>
 					}
 
 				</div>
 
 				<div class="col-3">
-					<img src='@Blobs.UrlOther("new-moon-175-174.jpg")' alt="@LunarMonthSmartEnum.Name" class="float-right img-fluid rounded mt-4" />
+					<img src='@Blobs.UrlOther("new-moon-175-174.jpg")' alt="@BaseLunarMonthSmartEnum.Name" class="float-right img-fluid rounded mt-4" />
 				</div>
 
 			</div>

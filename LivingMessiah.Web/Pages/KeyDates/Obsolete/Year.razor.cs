@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Components;
 using LivingMessiah.Web.Pages.KeyDates.Queries;
 
-namespace LivingMessiah.Web.Pages.KeyDates
+namespace LivingMessiah.Web.Pages.KeyDates.Obsolete
 {
 	public partial class Year
 	{

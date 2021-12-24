@@ -1,33 +1,77 @@
 ﻿@page "/KeyDatesCalendarGrid"
 @using static LivingMessiah.Web.Links.KeyDatesCalendarGrid
 @using LivingMessiah.Web.Pages.KeyDates.Queries
+@using LivingMessiah.Web.Pages.KeyDates.Enums
+@using Syncfusion.Blazor.Data
+@using LivingMessiah.Web.Pages.KeyDates.Components 
+
+@*
+	Syncfusion.Blazor.Data
+	- Provides methods to generate query which can be executed against data source using Syncfusion.Blazor.Data.SfDataManager.
+	- Methods in this class are chainable.
+*@
 
 <h2 class="mt-2">
 	<i class="@Icon"></i> @LivingMessiah.Web.Links.KeyDatesCalendarGrid.Title
 </h2>
 
-<div class="row">
-	<div class="col-6">
 
-		<div class="control_wrapper">
-			<SfDropDownList TValue="string" TItem="YearLookup"
-											Placeholder="Select Year"
-											@bind-Value="@ChangedID"
-											DataSource="@YearLookupList">
-				<DropDownListFieldSettings Text="Text" Value="ID"></DropDownListFieldSettings>
-				<DropDownListEvents TItem="YearLookup" TValue="string"
-														ValueChange="OnChange">
-				</DropDownListEvents>
-			</SfDropDownList>
-		</div>
+<div class="jumbotron text-center">
+	<h1>
+		<span class="text-warning">WARNING | DATES NOT YET CONFIRMED</span>
+	</h1>
+</div>
 
+<div class="card border-info my-3">
+	<div class="card-header py-1 text-center">
+		Select Year
+		<i class="fas fa-chevron-down"></i>
 	</div>
 
-	<div class="col-6">
-		<p class="float-right">Selected Year: @ChangedID (@ChangedText)</p>
+	<div class="card-body py-1">
+		<LivingMessiah.Web.Pages.KeyDates.Components.YearLookup @bind-Email="yearId" />
+	</div>
+
+	<div class="card-footer py-1 text-center">
+		Outside the child component...<br />
+		yearId: <b>@yearId</b>
 	</div>
 
 </div>
+
+
+@*<LivingMessiah.Web.Pages.KeyDates.Edit.GridComponent YearDescr="@ChangedText"
+																											 YearId="@ChangedID">
+	</LivingMessiah.Web.Pages.KeyDates.Edit.GridComponent>
+	<LivingMessiah.Web.Pages.KeyDates.Edit.GridComponent YearDescr="Current"
+																											 YearId="2022">
+	</LivingMessiah.Web.Pages.KeyDates.Edit.GridComponent>
+
+	<hr />
+*@
+
+@*<div class="row">
+		<div class="col-6">
+
+			<div class="control_wrapper">
+				<SfDropDownList TValue="string" TItem="YearLookup"
+												Placeholder="Select Year"
+												@bind-Value="@ChangedID"
+												DataSource="@YearLookupList">
+					<DropDownListFieldSettings Text="Text" Value="ID"></DropDownListFieldSettings>
+					<DropDownListEvents TItem="YearLookup" TValue="string"
+															ValueChange="OnChange">
+					</DropDownListEvents>
+				</SfDropDownList>
+			</div>
+
+		</div>
+
+		<div class="col-6">
+			<p class="float-right">Selected Year: @ChangedID (@ChangedText)</p>
+		</div>
+
+	</div>*@
 
 <div class="col-lg-12 control-section">
 	<div class="content-wrapper">
@@ -36,64 +80,80 @@
 							DataSource="@CalendarEntries"
 							Toolbar="@(new List<string>() { SyncFusionToolbar.Excel.Arg, SyncFusionToolbar.Csv.Arg, SyncFusionToolbar.Pdf.Arg, SyncFusionToolbar.Print.Arg })"
 							AllowFiltering="true" AllowExcelExport="true" AllowPdfExport="true">
-				<GridEvents OnToolbarClick="@ToolbarClickHandler" TValue="@CalendarEntry"></GridEvents>
+				<GridEvents OnToolbarClick="@ToolbarClickHandler" TValue="@CalendarEntry" OnActionFailure="Failure"></GridEvents>
 				<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+
+				<GridTemplates>
+					<DetailTemplate>
+						@{
+							var calendarEntry = (context as CalendarEntry);
+						}
+						<GridDetailComponent DateTypeEnum="calendarEntry.DateTypeEnum"
+																 Detail="calendarEntry.Detail"
+																 Date="calendarEntry.Date">
+						</GridDetailComponent>
+
+					</DetailTemplate>
+				</GridTemplates>
 
 				<GridSortSettings>
 					<GridSortColumns>
 						<GridSortColumn Field="@nameof(CalendarEntry.Date)" Direction="SortDirection.Ascending" />
 					</GridSortColumns>
 				</GridSortSettings>
-				@*<GridEvents TValue="CalendarEntry" QueryCellInfo="CustomizeCell"></GridEvents>*@
-				@* ... RowSelected="RowSelectHandler" RowDeselected="RowDeSelectHandler" />*@
 
 				<GridColumns>
+					<GridColumn Field=@nameof(CalendarEntry.Descr) HeaderText="Description" Width="70"
+											AllowSorting="false" AllowFiltering="false">
+						<Template>
+							@{
+								var row = (context as CalendarEntry);
+								switch (row.DateTypeEnum)
+								{
+									case DateTypeEnum.Month:
+										{
+											<h3>
+												<span class="badge badge-dark"><i class="far fa-moon"></i> <b>@row.Descr</b></span>
+											</h3>
+										}
 
-					<GridColumn Field=@nameof(CalendarEntry.Date) Format="yyyy/MM/dd" HeaderText="Date" Width="30" AllowSorting="false" AllowFiltering="true">
+										break;
+
+									case DateTypeEnum.Feast:
+										{
+											<h3>
+												<span class="badge badge-info"><i class="fas fa-glass-cheers"></i> <b>@row.Descr</b></span>
+											</h3>
+										}
+										break;
+
+									case DateTypeEnum.Season:
+										{
+											<h3>
+												<span class="badge @BaseSeasonSmartEnum.FromValue(row.Detail).BadgeColor">
+													<i class="@BaseSeasonSmartEnum.FromValue(row.Detail).Icon"></i>
+													@BaseSeasonSmartEnum.FromValue(row.Detail).Name
+													@BaseSeasonSmartEnum.FromValue(row.Detail).Type
+												</span>
+											</h3>
+										}
+
+										break;
+
+									default:
+										break;
+								}
+							}
+						</Template>
 					</GridColumn>
 
-					<GridColumn HeaderText="Part 1">
-						<GridColumns>
-
-							@*<GridColumn Field=@nameof(CalendarEntry.DateTypeId) HeaderText="Type" Width="40"
-												FilterSettings="@(new FilterSettings { Type = Syncfusion.Blazor.Grids.FilterType.CheckBox })">
-						</GridColumn>*@
-
-							<GridColumn Field=@nameof(CalendarEntry.DateTypeEnum) HeaderText="Type" Width="40" AllowSorting="false"
-													FilterSettings="@(new FilterSettings { Type = Syncfusion.Blazor.Grids.FilterType.CheckBox })">
-							</GridColumn>
-
-							@*<GridColumn Field=@nameof(CalendarEntry.DateTypeId) HeaderText="Type" Width="30" AllowSorting="true" AllowFiltering="false"></GridColumn>*@
-
-							<GridColumn Field=@nameof(CalendarEntry.Detail) HeaderText="Dtl" Width="25" AllowSorting="false" AllowFiltering="false"></GridColumn>
-						</GridColumns>
+					<GridColumn Field=@nameof(CalendarEntry.DateTypeEnum) HeaderText="Type" Width="40" AllowSorting="false"
+											FilterSettings="@(new FilterSettings { Type = Syncfusion.Blazor.Grids.FilterType.CheckBox })">
 					</GridColumn>
 
-					<GridColumn HeaderText="Part 2">
-						<GridColumns>
-
-							@*<GridColumn Field=@nameof(CalendarEntry.TypeDescr) HeaderText="Type Descr." Width="40"  AllowSorting="false"
-												FilterSettings="@(new FilterSettings { Type = Syncfusion.Blazor.Grids.FilterType.CheckBox })">
-						</GridColumn>*@
-
-							<GridColumn Field=@nameof(CalendarEntry.EventDescr) HeaderText="Event Description" Width="60" AllowSorting="false" AllowFiltering="false">
-							</GridColumn>
-
-						</GridColumns>
+					<GridColumn Field=@nameof(CalendarEntry.Date) Format="ddd, MMMM dd, yyyy" HeaderText="Date" Width="70"
+											AllowSorting="false" AllowFiltering="true">
 					</GridColumn>
-
-					@*
-				Year.razor
-				if (item.DateTypeId == 1 && WithMonths==true)
-				{
-						<LunarMonthComponent IsXsOrSm="@IsXsOrSm"
-																 DateIdBeg="item.DateIdBeg"
-																 DateIdEnd="item.DateIdEnd"
-																 LunarMonths="LunarMonths.Where(w => w.DateId >= item.DateIdBeg && w.DateId <= item.DateIdEnd).ToList()">
-						</LunarMonthComponent>
-
-					*@
-
 
 				</GridColumns>
 
@@ -114,3 +174,31 @@ else
 		<p class="text-warning">@DatabaseWarningMsg</p>
 	}
 }
+
+@*Hidden:Lines*@
+
+@* .photo, .e-tab .e-context and .e-tab-header not included *@
+
+<style type="text/css" class="cssStyles">
+	.position {
+		background: #E0E0E0;
+		border-radius: 13px;
+		text-align: center;
+		font-size: 13px;
+		padding-top: 10px;
+		width: 165px;
+		height: 28px;
+		padding: 8px 16px;
+	}
+
+	.table {
+		display: table;
+		border-collapse: separate;
+		border-spacing: 10px;
+		font-size: medium;
+		text-align: left;
+	}
+</style>
+
+
+@*End:Hidden*@

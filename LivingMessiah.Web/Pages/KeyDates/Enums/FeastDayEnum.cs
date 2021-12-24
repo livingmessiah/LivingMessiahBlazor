@@ -13,6 +13,7 @@ namespace LivingMessiah.Web.Pages.KeyDates.Enums
 		Trumpets = 5,
 		YomKippur = 6,
 		Tabernacles = 7,
+		HanukkahEOY = 8
 	}
 
 	public class FeastDayLocal
@@ -30,6 +31,7 @@ namespace LivingMessiah.Web.Pages.KeyDates.Enums
 		public static FeastDayLocal Trumpets { get; } = new FeastDayLocal(FeastDayEnum.Trumpets, 5, "Trumpets", "Yom Teruah", "יוֹם תְּרוּעָה", "", "Trumpets Day", 1, "fas fa-bullhorn");
 		public static FeastDayLocal YomKippur { get; } = new FeastDayLocal(FeastDayEnum.YomKippur, 6, "Yom Kippur", "", "יוֹם כִּיפּוּר", "Day of Atonement", "Begins sundown", -1, "fas fa-praying-hands");  // "far fa-handshake"
 		public static FeastDayLocal Tabernacles { get; } = new FeastDayLocal(FeastDayEnum.Tabernacles, 7, "Tabernacles", "Sukkot", "סֻּכּוֹת", "", null, null, "fas fa-campground");
+		public static FeastDayLocal HanukkahEOY { get; } = new FeastDayLocal(FeastDayEnum.HanukkahEOY, 8, "Hanukkah EOY", "", "חֲנֻכָּה", "", "Last day", 8, "fas fa-hanukiah");
 
 		public FeastDayEnum FeastDayEnum { get; private set; }
 		public int Id { get; private set; }

@@ -7,7 +7,7 @@ namespace LivingMessiah.Web.Pages.UpcomingEvents
 	{
 		public const string Icon = "far fa-moon";
 
-		[Parameter] public LunarMonthSmartEnum LunarMonthSmartEnum { get; set; }
+		[Parameter] public BaseLunarMonthSmartEnum BaseLunarMonthSmartEnum { get; set; }
 
 	}
 }

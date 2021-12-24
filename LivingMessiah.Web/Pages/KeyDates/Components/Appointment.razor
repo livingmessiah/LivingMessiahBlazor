@@ -1,0 +1,30 @@
+﻿@using Syncfusion.Blazor.Schedule
+
+<h3 class="badge-warning">Key Dates Calendar</h3>
+<div class="row">
+	<div class="col-12">
+
+		<SfSchedule TValue="LivingMessiah.Web.Pages.KeyDates.Queries.AppointmentData"
+								CssClass="year-view" MonthsCount="@NumberOfMonths" FirstMonthOfYear="@FirstMonthOfYear">
+			<ScheduleEventSettings DataSource="@AppointmentDataList"></ScheduleEventSettings>
+			<ScheduleViews>
+				<ScheduleView Option="View.Year" IsSelected="true"></ScheduleView>
+				<ScheduleView Option="View.TimelineYear" Orientation="Syncfusion.Blazor.Schedule.Orientation.Horizontal"
+											DisplayName="Horizontal Timeline Year"></ScheduleView>
+				<ScheduleView MaxEventsPerRow="3" Option="View.TimelineYear"
+											Orientation="Syncfusion.Blazor.Schedule.Orientation.Vertical"
+											DisplayName="Vertical Timeline Year">
+					<ScheduleViewGroup Resources="@ResourceName"></ScheduleViewGroup>
+				</ScheduleView>
+			</ScheduleViews>
+
+			<ScheduleResources>
+				<ScheduleResource TItem="ResourceData" TValue="int" DataSource="@TaskData"
+													Field="TaskId" Title="Category" Name="Categories" TextField="Text"
+													IdField="Id" ColorField="Color"></ScheduleResource>
+			</ScheduleResources>
+
+
+		</SfSchedule>
+	</div>
+</div>

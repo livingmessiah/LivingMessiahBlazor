@@ -12,12 +12,14 @@
   <ItemGroup>
     <Content Remove="Pages\BlazorExamples\Wizard.razor" />
     <Content Remove="Pages\BlazorSyncFusion\Dialogs\SfDialogNestedDialogs.razor" />
+    <!--<Content Remove="Pages\KeyDates\Obsolete\Index.razor" />-->
     <Content Remove="Shared\EnvComponent.razor" />
   </ItemGroup>
 
   <ItemGroup>
     <None Include="..\.editorconfig" Link=".editorconfig" />
     <None Include="Pages\BlazorSyncFusion\Dialogs\SfDialogNestedDialogs.razor" />
+    <!--<None Include="Pages\KeyDates\Obsolete\Index.razor" />-->
     <None Include="Shared\EnvComponent.razor" />
   </ItemGroup>
 
@@ -62,6 +64,7 @@
 
   <ItemGroup>
     <_ContentIncludedByDefault Remove="Pages\BlazorSyncFusion\Dialogs\SfDialogNestedDialogs.razor" />
+    <_ContentIncludedByDefault Remove="Pages\KeyDates\Obsolete\Index.razor" />
     <_ContentIncludedByDefault Remove="Shared\EnvComponent.razor" />
   </ItemGroup>
 
@@ -89,6 +92,10 @@
 
   <ItemGroup>
     <UpToDateCheckInput Remove="Pages\BlazorSyncFusion\Dialogs\SfDialogNestedDialogs.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Pages\KeyDates\Obsolete\Index.razor" />
   </ItemGroup>
 
 

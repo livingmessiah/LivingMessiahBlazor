@@ -6,7 +6,7 @@
 		<h4 class="card-title text-center">Lunar Months</h4>
 	</div>
 	<div class="card-body">
-		<TableTemplate Items="LunarMonthSmartEnum.List.OrderBy(o => o.Value).ToList()">
+		<TableTemplate Items="BaseLunarMonthSmartEnum.List.OrderBy(o => o.Value).ToList()">
 			<TableHeader>
 				<th>Id</th>
 				<th>Name</th>
@@ -16,7 +16,7 @@
 			</TableHeader>
 			<RowTemplate>
 				<td>@context.Value</td>
-				<td>@context.Name</td>
+				<td>@context.FullName</td>
 				<td><span class="hebrew16">@context.Hebrew</span></td>
 				<td>@context.BiblicalName </td>
 				<td><span class="hebrew16">@context.BiblicalHebrew</span></td>
@@ -24,8 +24,8 @@
 		</TableTemplate>
 	</div>
 	<p class="card-footer text-center">
-		Count: @LunarMonthSmartEnum.List.Count
-		<br /><span class="text-black-50"><small>Source: LunarMonthSmartEnum</small></span>
+		Count: @BaseLunarMonthSmartEnum.List.Count
+		<br /><span class="text-black-50"><small>Source: BaseLunarMonthSmartEnum</small></span>
 	</p>
 
 </div>

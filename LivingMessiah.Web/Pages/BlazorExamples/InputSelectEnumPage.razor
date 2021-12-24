@@ -1,0 +1,98 @@
+﻿@page "/BlazorExamples/DropDownList"
+@using LivingMessiah.Web.Pages.KeyDates.Enums
+
+<div class="pb-1 mt-4 mb-4 border-bottom">
+	<h3><code>InputSelectEnum</code></h3>
+</div>
+
+<div class="row">
+
+	<div class="col-6">
+
+		<EditForm Model="vm"
+							OnValidSubmit="HandleValidSubmit"
+							OnInvalidSubmit="@OnInvalidSubmit"
+							class="card card-body bg-light mt-2">
+			<DataAnnotationsValidator />
+			<ValidationSummary />
+
+			<div class="row mt-n2">
+
+				<div class="col-12">
+					<label for="eventTypeEnum" class="control-label">Event Type</label>
+					<InputSelectEnum @bind-Value="eventTypeEnum" class="form-control" id="eventTypeEnum" />
+					<ValidationMessage For="@(() => eventTypeEnum)" />
+				</div>
+
+			</div>
+
+			<div class="row mt-2">
+				<div class="col-12">
+					<div class="form-group my-2 pt-2">
+						<button class="btn btn-success btn-sm">
+							<i class="fas fa-save"></i> Save
+						</button>
+					</div>
+
+				</div>
+			</div>
+		</EditForm>
+
+	</div>
+
+	<div class="col-6">
+		<p class="bg-success p-3">Message: @Message</p>
+	</div>
+
+</div>
+
+@code {
+
+	public class VM
+	{
+		public EventType EventType { get; set; }
+	}
+
+	public VM vm { get; set; } = new VM();
+
+	private string Message = string.Empty;
+
+	private EventTypeEnum eventTypeEnum = EventTypeEnum.ErevShabbat;
+
+	protected void HandleValidSubmit()
+	{
+
+		vm.EventType = EventType.FromEnum(eventTypeEnum);
+
+
+		vm.EventType = EventType.FromEnum(eventTypeEnum);
+		if (vm.EventType != null)
+		{
+			Message = vm.EventType.Name + " (" + vm.EventType.Id + ")";
+		}
+		else
+		{
+			Message = "VM.EventType == null";
+		}
+	}
+
+	private void OnInvalidSubmit()
+	{
+		Message = string.Empty;
+	}
+
+
+	//@onchange="(() => OnChangeEnum(eventTypeEnum))"
+	//private void OnChangeEnum(EventTypeEnum eventTypeEnum)
+	//{
+	//	VM.EventType = EventType.FromEnum(eventTypeEnum);
+	//	if (VM.EventType != null)
+	//	{
+	//		Message = VM.EventType.Name + " (" + VM.EventType.Id + ")";
+	//	}
+	//	else
+	//	{
+	//		Message = "VM.EventType == null";
+	//	}
+	//}
+}

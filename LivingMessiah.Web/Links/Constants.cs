@@ -177,6 +177,13 @@
 		//public const string ImgUrl = Blobs.UrlOther("in-depth-book-of-john-1024-385.jpeg");
 	}
 
+	public static class KeyDatesObsolete
+	{
+		public const string Index = "/KeyDatessObsolete";
+		public const string Title = "Key Dates (Obsolete)";
+		public const string Icon = "far fa-calendar-check";
+	}
+
 	public static class KeyDates
 	{
 		public const string Index = "/KeyDates";
@@ -184,6 +191,14 @@
 		public const string Icon = "far fa-calendar-check";
 	}
 
+	public static class KeyDatesGrid
+	{
+		public const string Index = "/KeyDatesGrid";
+		public const string Title = "Key Dates Calendar Grid";
+		public const string Icon = "far fa-calendar-check";
+	}
+
+	//ToDo: Depricate
 	public static class KeyDatesCalendarGrid
 	{
 		public const string Index = "/KeyDatesCalendarGrid";
@@ -191,8 +206,14 @@
 		public const string Icon = "far fa-calendar-check";
 	}
 
-
 	public static class KeyDatesEdit
+	{
+		public const string Edit = "/KeyDatesEdit/";
+		public const string Title = "Key Dates Edit";
+		public const string Icon = "far fa-calendar-check";
+	}
+
+	public static class KeyDatesEditObsolete
 	{
 		public const string Index = "/Admin/KeyDatesEdit/";
 		public const string Title = "Key Dates Edit";

@@ -3,41 +3,12 @@
 @using LivingMessiah.Web.Pages.KeyDates.Enums
 @using static LivingMessiah.Web.Services.Auth0
 
-@*
-	<Title Value="@remaining"></Title>
-	<Title Value="Key Dates"></Title>
-*@
-@code {
-	//private string remaining { get; set; }
-}
-
-<div class="d-print-none float-right">
-	<a class="btn btn-sm btn-default" href="javascript:window.print()">
-		<span class="fas fa-print"></span> Print
-	</a>
-</div>
-<h2 class="mt-2">
-	<i class="@Icon"></i> @LivingMessiah.Web.Links.KeyDates.Title
-</h2>
-
-
-<div class="jumbotron text-center">
+@*<div class="jumbotron text-center">
 	<h1>
 		<span class="text-warning">WARNING | DATES NOT YET CONFIRMED</span>
 	</h1>
-</div>
+</div>*@
 
-
-<AuthorizeView Roles="@Roles.AdminOrElder">
-
-	<div class="d-none d-md-block">
-		<HebrewYear RelativeYear="RelativeYearEnum.Current" IsXsOrSm="false" WithMonths="true"></HebrewYear>
-	</div>
-
-	<div class="d-md-none">
-		<HebrewYear RelativeYear="RelativeYearEnum.Current" IsXsOrSm="true" WithMonths="true"></HebrewYear>
-	</div>
-</AuthorizeView>
 
 <hr class="warning" />
 <LmmCalendarAdvertisement CalenderReadyForSale="@CalenderReadyForSale">

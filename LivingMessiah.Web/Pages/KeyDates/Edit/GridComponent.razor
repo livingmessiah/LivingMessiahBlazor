@@ -1,0 +1,41 @@
+﻿@using LivingMessiah.Web.Pages.KeyDates.Queries
+@using Syncfusion.Blazor.DropDowns
+
+<h3 class="badge-warning">Key Dates Calendar Update</h3>
+<div class="row">
+	<div class="col-12">
+		<SfGrid DataSource="@CalendarEntries" Toolbar="@(new List<string>() { "Update", "Cancel" })" AllowFiltering="false" AllowPaging="false">
+			<GridColumns>
+				<GridEditSettings AllowEditing="true" AllowAdding="false" AllowDeleting="false"
+													Mode="EditMode.Batch" ShowConfirmDialog="false" />
+
+				<GridEvents OnBatchSave="OnSave" TValue="CalendarEntry" />
+
+				<GridColumn Field=@nameof(CalendarEntry.CalendarTemplateId) HeaderText="Id" IsPrimaryKey="true" Visible="false"
+										AllowEditing="false" Type="ColumnType.Number" Width="70" />
+				<GridColumn Field=@nameof(CalendarEntry.DateTypeEnum) HeaderText="Type" AllowEditing="false"
+										Type="ColumnType.Number" Width="80" />
+				<GridColumn Field=@nameof(CalendarEntry.Date) HeaderText=" Date" EditType="EditType.DefaultEdit" Format="d"
+										ValidationRules="@(new Syncfusion.Blazor.Grids.ValidationRules{ Required= true })"
+										Type="ColumnType.Date" TextAlign="TextAlign.Center" Width="150">
+				</GridColumn>
+				<GridColumn Field=@nameof(CalendarEntry.Descr) HeaderText="Description" AllowEditing="false" Type="ColumnType.String" />
+
+			</GridColumns>
+		</SfGrid>
+
+		@if (DatabaseError)
+		{
+			<p class="text-danger"><em>@DatabaseErrorMsg</em></p>
+		}
+		else
+		{
+			if (DatabaseWarning)
+			{
+				<p class="text-warning">@DatabaseWarningMsg</p>
+			}
+		}
+
+	</div>
+
+</div>

@@ -92,7 +92,7 @@ namespace LivingMessiah.Web.Pages.KeyDates.Services
 		public async Task<List<CalendarEntry>> GetCalendarEntries(int year)
 		{
 			Logger.LogDebug(String.Format("Inside {0}, year:{1}", nameof(KeyDateService) + "!" + nameof(GetCalendarEntries), year));
-			List< CalendarEntry > calendarEntries;
+			List<CalendarEntry> calendarEntries;
 			try
 			{
 				calendarEntries = await db.GetCalendarEntries(year);

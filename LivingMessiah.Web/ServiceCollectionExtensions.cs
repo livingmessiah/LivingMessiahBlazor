@@ -57,7 +57,8 @@ namespace LivingMessiah.Web
 
 				.AddTransient<ISukkotRepository, SukkotRepository>()
 				.AddTransient<ISukkotAdminRepository, SukkotAdminRepository>()
-				.AddSingleton<ILiturgyService, LiturgyService>();
+				.AddSingleton<ILiturgyService, LiturgyService>()
+				.AddSingleton<IBibleService, BibleService>();
 
 			return services;
 		}

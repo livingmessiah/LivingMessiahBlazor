@@ -1,0 +1,27 @@
+﻿@page "/KeyDatesObsolete"
+@using static LivingMessiah.Web.Links.KeyDatesObsolete
+@using LivingMessiah.Web.Pages.KeyDates.Enums
+@using static LivingMessiah.Web.Services.Auth0
+
+<div class="d-print-none float-right">
+	<a class="btn btn-sm btn-default" href="javascript:window.print()">
+		<span class="fas fa-print"></span> Print
+	</a>
+</div>
+<h2 class="mt-2">
+	<i class="@Icon"></i> @Title
+</h2>
+
+@*<AuthorizeView Roles="@Roles.AdminOrElder">
+</AuthorizeView>*@
+	<div class="d-none d-md-block">
+		<HebrewYear RelativeYear="RelativeYearEnum.Current" IsXsOrSm="false" WithMonths="true"></HebrewYear>
+	</div>
+
+	<div class="d-md-none">
+		<HebrewYear RelativeYear="RelativeYearEnum.Current" IsXsOrSm="true" WithMonths="true"></HebrewYear>
+	</div>
+
+<hr class="warning" />
+<LmmCalendarAdvertisement CalenderReadyForSale="@CalenderReadyForSale">
+</LmmCalendarAdvertisement>
