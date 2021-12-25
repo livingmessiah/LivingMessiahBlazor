@@ -17,7 +17,6 @@ namespace LivingMessiah.Web.Pages.KeyDates.Data
 	{
 		string BaseSqlDump { get; }
 		Task<List<Queries.YearLookup>> GetYearLookupList();
-		Task<List<YearLookupVM>> GetYearLookupVMList();
 		Task<List<CalendarEntry>> GetCalendarEntries(int yearId);
 		Task<CalendarYear> GetHebrewYearAndChildren(RelativeYearEnum relativeYear);
 
@@ -54,20 +53,6 @@ SELECT CAST(NextYear AS char(4))     AS ID, 'Next'     AS Text FROM KeyDate.vwCo
 			});
 		}
 
-		public async Task<List<YearLookupVM>> GetYearLookupVMList()
-		{
-			log.LogDebug(String.Format("Inside {0}", nameof(KeyDateRepository) + "!" + nameof(GetYearLookupVMList)));
-			base.Sql = $@"
-SELECT CAST(PreviousYear AS char(4)) AS ID, 'Previous' AS Text FROM KeyDate.vwConstants UNION ALL
-SELECT CAST(CurrentYear AS char(4))  AS ID, 'Current'	 AS Text FROM KeyDate.vwConstants UNION ALL
-SELECT CAST(NextYear AS char(4))     AS ID, 'Next'     AS Text FROM KeyDate.vwConstants
-";
-			return await WithConnectionAsync(async connection =>
-			{
-				var rows = await connection.QueryAsync<YearLookupVM>(sql: base.Sql);
-				return rows.ToList();
-			});
-		}
 
 		public async Task<List<CalendarEntry>> GetCalendarEntries(int yearId)
 		{

@@ -1,10 +1,10 @@
 ﻿@page "/BlazorSyncFusion/DropDowns/DropDownList/SfDropDownListTemplate"
 @using LivingMessiah.Web.Services
-@inject IBibleService svc
+@inject ISmartEnumServiceForSfDropDownList svc
 
 <SfDropDownList TItem="DropDownListVM" TValue="string" PopupHeight="230px"
-								Placeholder="SELECT ** OBJECT **"
-								@bind-Value="@SelectedValue" DataSource="@Books">
+								Placeholder="Select bible book..."
+								@bind-Value="@SelectedValue" DataSource="@DataSource">
 	<DropDownListEvents TItem="DropDownListVM" TValue="string" ValueChange="OnChange"></DropDownListEvents>
 	<DropDownListFieldSettings Text="Text" Value="Value"></DropDownListFieldSettings>
 </SfDropDownList>
@@ -13,7 +13,7 @@
 	public string SelectedValue;
 	public int SelectedId;
 
-	protected List<DropDownListVM> Books => svc.GetBibleBooksVM().ToList();
+	protected List<DropDownListVM> DataSource => svc.GetBibleBooksVM().ToList(); 
 
 	public void OnChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<string, DropDownListVM> args)
 	{

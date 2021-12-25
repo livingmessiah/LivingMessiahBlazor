@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+//using Ardalis.SmartEnum;
 using LivingMessiah.Web.Enums;
 
 namespace LivingMessiah.Web.Services
@@ -9,6 +10,9 @@ namespace LivingMessiah.Web.Services
 	{
 		List<Tuple<string, string>> GetBibleBooks();  // NO WORKY
 		List<DropDownListVM> GetBibleBooksVM();
+		//List<IReadOnlyList<T>> List();
+		//abstract List<DropDownListVM> GetSmartEnums<TEnum>();
+		// List<DropDownListVM> GetSmartEnums<TEnum>();
 	}
 
 	public class DropDownListVM
@@ -33,6 +37,7 @@ namespace LivingMessiah.Web.Services
 			return books;
 		}
 
+		//ToDo: how to make this use a generic SmartEnum
 		public List<DropDownListVM> GetBibleBooksVM()
 		{
 			List<DropDownListVM> books = new List<DropDownListVM>();
@@ -45,6 +50,14 @@ namespace LivingMessiah.Web.Services
 			}
 			return books;
 		}
-
+	/*
+		public  List<DropDownListVM> GetSmartEnums<TEnum>()
+			public abstract List<DropDownListVM> GetSmartEnums<TEnum>()
+			{
+				List<DropDownListVM> books = new List<DropDownListVM>();
+				var query = (from b in SmartEnum<TEnum>.List.ToList()
+											select new { b.Value, b.Name }).ToList();
+			}
+	*/
 	}
 }

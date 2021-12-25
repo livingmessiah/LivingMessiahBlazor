@@ -1,0 +1,64 @@
+﻿@page "/BlazorSyncFusion/DropDowns/DropDownList/SfDropDownListTuple"
+@using LivingMessiah.Web.Enums
+@using LivingMessiah.Web.Services
+@inject ISmartEnumServiceForSfDropDownList svc
+
+<h1> Doesn't WORK</h1>
+
+<SfDropDownList TItem="Tuple<string, string>" TValue="string" PopupHeight="230px"
+								Placeholder="Select a something"
+								@bind-Value="@SelectedValue" DataSource="@DataSource">
+	<DropDownListEvents TItem="Tuple<string, string>" TValue="string" ValueChange="OnChange"></DropDownListEvents>
+	<DropDownListFieldSettings Text="Text" Value="Value"></DropDownListFieldSettings>
+</SfDropDownList>
+
+<p>Value: @SelectedValue</p>
+<p>Id: @SelectedId</p>
+
+@code {
+
+	public string SelectedValue;
+	public int SelectedId;
+
+	protected List<Tuple<string, string>> DataSource => svc.GetBibleBooks().ToList();
+
+	public void OnChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<string, Tuple<string, string>> args)
+	{
+		int i = int.TryParse(args.ItemData.Item1, out i) ? i : 0;
+		SelectedId = i;
+	}
+
+}
+
+@*
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using LivingMessiah.Web.Enums;
+
+namespace LivingMessiah.Web.Services
+{
+	public interface IBibleService
+	{
+		List<Tuple<string, string>> GetBibleBooks();  // NO WORKY
+	}
+	public class BibleService : IBibleService
+	{
+
+		public List<Tuple<string, string>> GetBibleBooks()
+		{
+			List<Tuple<string, string>> books = new List<Tuple<string, string>>();
+			var query = (from b in BaseBibleBookSmartEnum.List.ToList()
+									 select new { b.Value, b.Name }).ToList();
+
+			foreach (var item in query)
+			{
+				books.Add(new Tuple<string, string>(item.Value.ToString(), item.Name)); 
+			}
+			return books;
+		}
+
+	}
+}
+
+*@

@@ -2,8 +2,9 @@
 @using static LivingMessiah.Web.Links.KeyDatesCalendarGrid
 @using LivingMessiah.Web.Pages.KeyDates.Queries
 @using LivingMessiah.Web.Pages.KeyDates.Enums
+@using LivingMessiah.Web.Services
 @using Syncfusion.Blazor.Data
-@using LivingMessiah.Web.Pages.KeyDates.Components 
+@using LivingMessiah.Web.Pages.KeyDates.Components
 
 @*
 	Syncfusion.Blazor.Data
@@ -22,56 +23,34 @@
 	</h1>
 </div>
 
-<div class="card border-info my-3">
-	<div class="card-header py-1 text-center">
-		Select Year
-		<i class="fas fa-chevron-down"></i>
+<div class="row">
+	<div class="col-9">
+		<SfDropDownList TItem="DropDownListVM" TValue="string" PopupHeight="230px"
+										Placeholder="Select year..."
+										@bind-Value="@SelectedValue" DataSource="@DataSource">
+			<DropDownListEvents TItem="DropDownListVM" TValue="string" ValueChange="OnChange"></DropDownListEvents>
+			<DropDownListFieldSettings Text="Text" Value="Value"></DropDownListFieldSettings>
+		</SfDropDownList>
 	</div>
+	<div class="col-3">
 
-	<div class="card-body py-1">
-		<LivingMessiah.Web.Pages.KeyDates.Components.YearLookup @bind-Email="yearId" />
-	</div>
-
-	<div class="card-footer py-1 text-center">
-		Outside the child component...<br />
-		yearId: <b>@yearId</b>
-	</div>
-
-</div>
-
-
-@*<LivingMessiah.Web.Pages.KeyDates.Edit.GridComponent YearDescr="@ChangedText"
-																											 YearId="@ChangedID">
-	</LivingMessiah.Web.Pages.KeyDates.Edit.GridComponent>
-	<LivingMessiah.Web.Pages.KeyDates.Edit.GridComponent YearDescr="Current"
-																											 YearId="2022">
-	</LivingMessiah.Web.Pages.KeyDates.Edit.GridComponent>
-
-	<hr />
-*@
-
-@*<div class="row">
-		<div class="col-6">
-
-			<div class="control_wrapper">
-				<SfDropDownList TValue="string" TItem="YearLookup"
-												Placeholder="Select Year"
-												@bind-Value="@ChangedID"
-												DataSource="@YearLookupList">
-					<DropDownListFieldSettings Text="Text" Value="ID"></DropDownListFieldSettings>
-					<DropDownListEvents TItem="YearLookup" TValue="string"
-															ValueChange="OnChange">
-					</DropDownListEvents>
-				</SfDropDownList>
+		@if (SelectedYear != 0)
+		{
+			<div class="card border-primary">
+				@*<div class="card-header py-1">
+					<code>Year</code>
+				</div>*@
+				<h3 class="p-2 text-center">
+					@SelectedYear
+				</h3>
 			</div>
+		}
 
-		</div>
-
-		<div class="col-6">
-			<p class="float-right">Selected Year: @ChangedID (@ChangedText)</p>
-		</div>
-
-	</div>*@
+		@*
+			<p class="mt-0 text-black-50"><small>Id: @SelectedId; Year: @SelectedYear</small></p>
+		*@
+	</div>
+</div>
 
 <div class="col-lg-12 control-section">
 	<div class="content-wrapper">
