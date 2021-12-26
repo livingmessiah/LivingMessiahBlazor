@@ -1,146 +1,99 @@
-﻿@page "/KeyDatesCalendarGrid"
-@using static LivingMessiah.Web.Links.KeyDatesCalendarGrid
-@using LivingMessiah.Web.Pages.KeyDates.Queries
+﻿@using LivingMessiah.Web.Pages.KeyDates.Queries
 @using LivingMessiah.Web.Pages.KeyDates.Enums
-@using LivingMessiah.Web.Services
 @using Syncfusion.Blazor.Data
-@using LivingMessiah.Web.Pages.KeyDates.Components
 
 @*
-	Syncfusion.Blazor.Data
-	- Provides methods to generate query which can be executed against data source using Syncfusion.Blazor.Data.SfDataManager.
-	- Methods in this class are chainable.
+			Syncfusion.Blazor.Data
+			- Provides methods to generate query which can be executed against data source using Syncfusion.Blazor.Data.SfDataManager.
+			- Methods in this class are chainable.
+
 *@
 
-<h2 class="mt-2">
-	<i class="@Icon"></i> @LivingMessiah.Web.Links.KeyDatesCalendarGrid.Title
-</h2>
 
+<div class="row mt-4">
+	<SfGrid ID="Grid" @ref="Grid"
+					DataSource="@CalendarEntries"
+					Toolbar="@(new List<string>() { SyncFusionToolbar.Excel.Arg, SyncFusionToolbar.Csv.Arg, SyncFusionToolbar.Pdf.Arg, SyncFusionToolbar.Print.Arg })"
+					AllowFiltering="true" AllowExcelExport="true" AllowPdfExport="true">
+		<GridEvents OnToolbarClick="@ToolbarClickHandler" TValue="@CalendarEntry" OnActionFailure="Failure"></GridEvents>
+		<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
 
-<div class="jumbotron text-center">
-	<h1>
-		<span class="text-warning">WARNING | DATES NOT YET CONFIRMED</span>
-	</h1>
-</div>
+		<GridTemplates>
+			<DetailTemplate>
+				@{
+					var calendarEntry = (context as CalendarEntry);
+				}
+				<GridDetailComponent DateTypeEnum="calendarEntry.DateTypeEnum"
+														 Detail="calendarEntry.Detail"
+														 Date="calendarEntry.Date">
+				</GridDetailComponent>
 
-<div class="row">
-	<div class="col-9">
-		<SfDropDownList TItem="DropDownListVM" TValue="string" PopupHeight="230px"
-										Placeholder="Select year..."
-										@bind-Value="@SelectedValue" DataSource="@DataSource">
-			<DropDownListEvents TItem="DropDownListVM" TValue="string" ValueChange="OnChange"></DropDownListEvents>
-			<DropDownListFieldSettings Text="Text" Value="Value"></DropDownListFieldSettings>
-		</SfDropDownList>
-	</div>
-	<div class="col-3">
+			</DetailTemplate>
+		</GridTemplates>
 
-		@if (SelectedYear != 0)
-		{
-			<div class="card border-primary">
-				@*<div class="card-header py-1">
-					<code>Year</code>
-				</div>*@
-				<h3 class="p-2 text-center">
-					@SelectedYear
-				</h3>
-			</div>
-		}
+		<GridSortSettings>
+			<GridSortColumns>
+				<GridSortColumn Field="@nameof(CalendarEntry.Date)" Direction="SortDirection.Ascending" />
+			</GridSortColumns>
+		</GridSortSettings>
 
-		@*
-			<p class="mt-0 text-black-50"><small>Id: @SelectedId; Year: @SelectedYear</small></p>
-		*@
-	</div>
-</div>
-
-<div class="col-lg-12 control-section">
-	<div class="content-wrapper">
-		<div class="row mt-4">
-			<SfGrid ID="Grid" @ref="Grid"
-							DataSource="@CalendarEntries"
-							Toolbar="@(new List<string>() { SyncFusionToolbar.Excel.Arg, SyncFusionToolbar.Csv.Arg, SyncFusionToolbar.Pdf.Arg, SyncFusionToolbar.Print.Arg })"
-							AllowFiltering="true" AllowExcelExport="true" AllowPdfExport="true">
-				<GridEvents OnToolbarClick="@ToolbarClickHandler" TValue="@CalendarEntry" OnActionFailure="Failure"></GridEvents>
-				<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
-
-				<GridTemplates>
-					<DetailTemplate>
-						@{
-							var calendarEntry = (context as CalendarEntry);
-						}
-						<GridDetailComponent DateTypeEnum="calendarEntry.DateTypeEnum"
-																 Detail="calendarEntry.Detail"
-																 Date="calendarEntry.Date">
-						</GridDetailComponent>
-
-					</DetailTemplate>
-				</GridTemplates>
-
-				<GridSortSettings>
-					<GridSortColumns>
-						<GridSortColumn Field="@nameof(CalendarEntry.Date)" Direction="SortDirection.Ascending" />
-					</GridSortColumns>
-				</GridSortSettings>
-
-				<GridColumns>
-					<GridColumn Field=@nameof(CalendarEntry.Descr) HeaderText="Description" Width="70"
-											AllowSorting="false" AllowFiltering="false">
-						<Template>
-							@{
-								var row = (context as CalendarEntry);
-								switch (row.DateTypeEnum)
+		<GridColumns>
+			<GridColumn Field=@nameof(CalendarEntry.Descr) HeaderText="Description" Width="70"
+									AllowSorting="false" AllowFiltering="false">
+				<Template>
+					@{
+						var row = (context as CalendarEntry);
+						switch (row.DateTypeEnum)
+						{
+							case DateTypeEnum.Month:
 								{
-									case DateTypeEnum.Month:
-										{
-											<h3>
-												<span class="badge badge-dark"><i class="far fa-moon"></i> <b>@row.Descr</b></span>
-											</h3>
-										}
-
-										break;
-
-									case DateTypeEnum.Feast:
-										{
-											<h3>
-												<span class="badge badge-info"><i class="fas fa-glass-cheers"></i> <b>@row.Descr</b></span>
-											</h3>
-										}
-										break;
-
-									case DateTypeEnum.Season:
-										{
-											<h3>
-												<span class="badge @BaseSeasonSmartEnum.FromValue(row.Detail).BadgeColor">
-													<i class="@BaseSeasonSmartEnum.FromValue(row.Detail).Icon"></i>
-													@BaseSeasonSmartEnum.FromValue(row.Detail).Name
-													@BaseSeasonSmartEnum.FromValue(row.Detail).Type
-												</span>
-											</h3>
-										}
-
-										break;
-
-									default:
-										break;
+									<h3>
+										<span class="badge badge-dark"><i class="far fa-moon"></i> <b>@row.Descr</b></span>
+									</h3>
 								}
-							}
-						</Template>
-					</GridColumn>
 
-					<GridColumn Field=@nameof(CalendarEntry.DateTypeEnum) HeaderText="Type" Width="40" AllowSorting="false"
-											FilterSettings="@(new FilterSettings { Type = Syncfusion.Blazor.Grids.FilterType.CheckBox })">
-					</GridColumn>
+								break;
 
-					<GridColumn Field=@nameof(CalendarEntry.Date) Format="ddd, MMMM dd, yyyy" HeaderText="Date" Width="70"
-											AllowSorting="false" AllowFiltering="true">
-					</GridColumn>
+							case DateTypeEnum.Feast:
+								{
+									<h3>
+										<span class="badge badge-info"><i class="fas fa-glass-cheers"></i> <b>@row.Descr</b></span>
+									</h3>
+								}
+								break;
 
-				</GridColumns>
+							case DateTypeEnum.Season:
+								{
+									<h3>
+										<span class="badge @BaseSeasonSmartEnum.FromValue(row.Detail).BadgeColor">
+											<i class="@BaseSeasonSmartEnum.FromValue(row.Detail).Icon"></i>
+											@BaseSeasonSmartEnum.FromValue(row.Detail).Name
+											@BaseSeasonSmartEnum.FromValue(row.Detail).Type
+										</span>
+									</h3>
+								}
 
-			</SfGrid>
-		</div>
-	</div>
+								break;
+
+							default:
+								break;
+						}
+					}
+				</Template>
+			</GridColumn>
+
+			<GridColumn Field=@nameof(CalendarEntry.DateTypeEnum) HeaderText="Type" Width="40" AllowSorting="false"
+									FilterSettings="@(new FilterSettings { Type = Syncfusion.Blazor.Grids.FilterType.CheckBox })">
+			</GridColumn>
+
+			<GridColumn Field=@nameof(CalendarEntry.Date) Format="ddd, MMMM dd, yyyy" HeaderText="Date" Width="70"
+									AllowSorting="false" AllowFiltering="true">
+			</GridColumn>
+
+		</GridColumns>
+
+	</SfGrid>
 </div>
-
 
 @if (DatabaseError)
 {

@@ -2,7 +2,7 @@
 using LivingMessiah.Web.Pages.KeyDates.Queries;
 using System.Collections.Generic;
 
-namespace LivingMessiah.Web.Pages.KeyDates
+namespace LivingMessiah.Web.Pages.KeyDates.Obsolete
 {
 	public partial class LunarMonthComponent
 	{
@@ -15,7 +15,7 @@ namespace LivingMessiah.Web.Pages.KeyDates
 		[Parameter]
 		public bool IsXsOrSm { get; set; }
 
-		[Parameter] 
+		[Parameter]
 		public List<LunarMonth> LunarMonths { get; set; }
 
 		protected string ml4 = "";
@@ -23,5 +23,4 @@ namespace LivingMessiah.Web.Pages.KeyDates
 
 	}
 }
-
 

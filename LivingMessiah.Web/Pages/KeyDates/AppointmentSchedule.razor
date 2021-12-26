@@ -1,0 +1,90 @@
+﻿@using LivingMessiah.Web.Pages.KeyDates.Queries
+@using Syncfusion.Blazor.Schedule
+
+<div class="row">
+	<div class="col-12">
+
+		<SfSchedule TValue="AppointmentData"
+								CssClass="year-view" MonthsCount="@NumberOfMonths" FirstMonthOfYear="@FirstMonthOfYear">
+
+			<ScheduleEventSettings DataSource="@AppointmentDataList"></ScheduleEventSettings>
+			<ScheduleViews>
+				<ScheduleView Option="View.Year" IsSelected="true"></ScheduleView>
+				<ScheduleView Option="View.Month"></ScheduleView>
+				<ScheduleView MaxEventsPerRow="5" Option="View.TimelineYear"
+											Orientation="Syncfusion.Blazor.Schedule.Orientation.Vertical"
+											DisplayName="Vertical Timeline Year">
+					<ScheduleViewGroup Resources="@ResourceName"></ScheduleViewGroup>
+				</ScheduleView>
+			</ScheduleViews>
+
+			<ScheduleResources>
+				<ScheduleResource TItem="ResourceData" TValue="int" DataSource="@TaskData"
+													Field="TaskId" Title="Category" Name="Categories" TextField="Text"
+													IdField="Id" ColorField="Color"></ScheduleResource>
+			</ScheduleResources>
+
+
+		</SfSchedule>
+	</div>
+</div>
+
+@if (DumpData)
+{
+	<div class="row mt-2">
+		<div class="col-12">
+			<LoadingComponent IsLoading="AppointmentDataList==null">
+				<div class="card mb-3 border-warning">
+					<div class="card-header">
+						<h4 class="card-title text-center"><code>AppointmentDataList</code></h4>
+					</div>
+					<div class="card-body">
+						<TableTemplate Items="AppointmentDataList">
+							<TableHeader>
+								<th>Id</th>
+								<th>Subject</th>
+								<th>Description</th>
+								<th>Start Time</th>
+								<th>End Time</th>
+								@*<th>IsAllDay</th>*@
+							</TableHeader>
+							<RowTemplate>
+								<td>@context.Id</td>
+								<td>@context.Subject</td>
+								<td>@context.Description</td>
+								<td>@context.StartTime</td>
+								<td>@context.EndTime</td>
+								@*<td>@context.IsAllDay</td>*@
+							</RowTemplate>
+						</TableTemplate>
+					</div>
+					@*<p class="card-footer text-center">	Count: @AppointmentDataList.Count	</p>*@
+				</div>
+			</LoadingComponent>
+		</div>
+	</div>
+}
+
+
+
+@if (DatabaseError)
+{
+	<p class="text-danger"><em>@DatabaseErrorMsg</em></p>
+}
+else
+{
+	if (DatabaseWarning)
+	{
+		<p class="text-warning">@DatabaseWarningMsg</p>
+	}
+}
+
+@*
+
+				<ScheduleView Option="View.TimelineYear" Orientation="Syncfusion.Blazor.Schedule.Orientation.Horizontal"
+											DisplayName="Horizontal Timeline Year"></ScheduleView>
+
+	https://blazor.syncfusion.com/documentation/scheduler/events
+	<ScheduleEvents TValue="AppointmentData" ActionCompleted="OnActionCompleted"></ScheduleEvents>
+
+*@

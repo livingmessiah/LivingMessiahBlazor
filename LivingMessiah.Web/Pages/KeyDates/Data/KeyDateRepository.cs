@@ -9,7 +9,6 @@ using Microsoft.Extensions.Logging;
 using LivingMessiah.Data;                   // ToDo: Move this to LivingMessiah.Web.Data
 using LivingMessiah.Web.Pages.KeyDates.Enums;  
 using LivingMessiah.Web.Pages.KeyDates.Queries;
-using LivingMessiah.Web.Pages.KeyDates.Components;
 
 namespace LivingMessiah.Web.Pages.KeyDates.Data
 {
@@ -22,10 +21,6 @@ namespace LivingMessiah.Web.Pages.KeyDates.Data
 
 		// Command
 		Task<int> UpdateKeyDateCalendar(int yearId, int calendarTemplateId, DateTime date);
-
-		//Depricated
-		Task<List<DateUnion>> GetDateUnionList(RelativeYearEnum relativeYear);
-		Task<int> UpdateKeyDate(int Id, DateTime Date);
 	}
 	public class KeyDateRepository : BaseRepositoryAsync, IKeyDateRepository
 	{
@@ -60,8 +55,8 @@ SELECT CAST(NextYear AS char(4))     AS ID, 'Next'     AS Text FROM KeyDate.vwCo
 			base.Parms = new DynamicParameters(new { YearId = yearId });
 			base.Sql = $@"
 -- DECLARE @yearId int=9999
-SELECT        
-c.YearId, c.CalendarTemplateId, 
+SELECT
+ct.Id, c.YearId, c.CalendarTemplateId, 
 c.Date
 , ct.Detail, ct.Descr, ct.DateTypeId AS DateTypeEnum
 FROM KeyDate.Calendar c
@@ -225,39 +220,8 @@ WHERE YearId = @YearId AND CalendarTemplateId=@CalendarTemplateId;
 				return count;
 			});
 		}
-
-
-		// Depricated
-		public async Task<int> UpdateKeyDate(int id, DateTime date)
-		{
-			base.Parms = new DynamicParameters(new { Id = id, Date = date });
-			base.Sql = $"UPDATE KeyDate.Date SET Date = @Date WHERE Id=@Id; ";
-			return await WithConnectionAsync(async connection =>
-			{
-				log.LogDebug($"base.Sql: {base.Sql}, base.Parms:{base.Parms}");
-				var count = await connection.ExecuteAsync(sql: base.Sql, param: base.Parms);
-				return count;
-			});
-		}
-
 		#endregion
 
-		// Depricated
-		public async Task<List<DateUnion>> GetDateUnionList(RelativeYearEnum relativeYear)
-		{
-			base.Sql = $@"
-SELECT Id, Date, DateTypeId AS DateTypeEnum, Descr
-FROM KeyDate.vwDateUnion
-CROSS JOIN KeyDate.Constants c
-WHERE YearId = {GetYearId(relativeYear)}
-ORDER BY Date
-";
-			return await WithConnectionAsync(async connection =>
-			{
-				var rows = await connection.QueryAsync<DateUnion>(sql: base.Sql, param: base.Parms);
-				return rows.ToList();
-			});
-		}
 	}
 }
 

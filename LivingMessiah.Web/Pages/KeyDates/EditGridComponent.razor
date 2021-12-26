@@ -1,0 +1,57 @@
+﻿@using LivingMessiah.Web.Pages.KeyDates.Queries
+
+@*<h3 class="badge-warning">Edit</h3>
+	OnToolbarClick="@ToolbarClickHandler"
+*@
+
+<div class="row">
+	<div class="col-12">
+		<SfGrid ID="Grid" @ref="Grid"
+						DataSource="@CalendarEntries" 
+						Toolbar="@(new List<string>() { "Update", "Cancel" })"
+						AllowFiltering="true" AllowPaging="false">
+			<GridEvents TValue="@CalendarEntry" OnActionFailure="Failure"></GridEvents>
+			<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+
+			<GridColumns>
+				<GridEditSettings AllowEditing="true" AllowAdding="false" AllowDeleting="false"
+													Mode="EditMode.Batch" ShowConfirmDialog="false" />
+
+				<GridEvents OnBatchSave="OnSave" TValue="CalendarEntry" />
+
+				<GridColumn Field=@nameof(CalendarEntry.CalendarTemplateId) HeaderText="Id"
+										IsPrimaryKey="true" Visible="false"
+										AllowEditing="false" AllowFiltering="false"
+										Type="ColumnType.Number" Width="70" />
+
+				<GridColumn Field=@nameof(CalendarEntry.DateTypeEnum) HeaderText="Type" Width="45" AllowEditing="false" 
+										FilterSettings="@(new FilterSettings { Type = Syncfusion.Blazor.Grids.FilterType.CheckBox })">
+				</GridColumn>
+
+				<GridColumn Field=@nameof(CalendarEntry.Date) HeaderText="Date" EditType="EditType.DefaultEdit" Format="d"
+										ValidationRules="@(new Syncfusion.Blazor.Grids.ValidationRules{ Required= true })"
+										AllowFiltering="false"
+										Type="ColumnType.Date" TextAlign="TextAlign.Center" Width="80">
+				</GridColumn>
+
+				<GridColumn Field=@nameof(CalendarEntry.Descr) HeaderText="Description" Width="150"  
+										AllowEditing="false" AllowFiltering="false" Type="ColumnType.String" />
+
+			</GridColumns>
+		</SfGrid>
+
+		@if (DatabaseError)
+		{
+			<p class="text-danger"><em>@DatabaseErrorMsg</em></p>
+		}
+		else
+		{
+			if (DatabaseWarning)
+			{
+				<p class="text-warning">@DatabaseWarningMsg</p>
+			}
+		}
+
+	</div>
+
+</div>

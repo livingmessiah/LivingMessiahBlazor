@@ -8,48 +8,35 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Authorization;
 using static LivingMessiah.Web.Services.Auth0;
 
-using LivingMessiah.Web.Pages.KeyDates.Enums;
 using LivingMessiah.Web.Pages.KeyDates.Data;
 using LivingMessiah.Web.Pages.KeyDates.Queries;
 
 using Syncfusion.Blazor.Grids;
 
-
-namespace LivingMessiah.Web.Pages.KeyDates.Edit
+namespace LivingMessiah.Web.Pages.KeyDates
 {
 	[Authorize(Roles = Roles.AdminOrKeyDates)]
-	public partial class GridComponent
+	public partial class EditGridComponent
 	{
 		[Inject]
 		public IKeyDateRepository db { get; set; }
 
 		[Inject]
-		public ILogger<GridComponent> Logger { get; set; }
+		public ILogger<EditGridComponent> Logger { get; set; }
 
 		protected List<CalendarEntry> CalendarEntries;
-		
-		[Parameter]
-		public string YearId { get; set; }
-		//public int YearId { get; set; }
 
 		[Parameter]
-		public string YearDescr { get; set; }
-
-		//[Parameter]
-		//public YearLookup YearLookup { get; set; }
-
-		protected int yearId;
+		public int YearId { get; set; }
 
 		protected override async Task OnInitializedAsync()
 		{
 			Logger.LogDebug(String.Format("Inside {0}, YearId: {1}"
-				, nameof(GridComponent) + "!" + nameof(OnInitializedAsync), YearId));
-			
-			yearId = int.TryParse(YearId, out yearId) ? yearId : 0;
+				, nameof(EditGridComponent) + "!" + nameof(OnInitializedAsync), YearId));
+
 			try
 			{
-				//CalendarEntries = await svc.GetCalendarEntries(relativeYear);
-				CalendarEntries = await db.GetCalendarEntries(yearId);
+				CalendarEntries = await db.GetCalendarEntries(YearId);
 				if (CalendarEntries == null)
 				{
 					DatabaseWarning = true;
@@ -80,7 +67,7 @@ namespace LivingMessiah.Web.Pages.KeyDates.Edit
 				{
 					foreach (var item in BatchChanges.ChangedRecords)
 					{
-						rows += await db.UpdateKeyDateCalendar(yearId, item.CalendarTemplateId, item.Date);
+						rows += await db.UpdateKeyDateCalendar(YearId, item.CalendarTemplateId, item.Date);
 					}
 
 				}
@@ -95,10 +82,49 @@ namespace LivingMessiah.Web.Pages.KeyDates.Edit
 
 		}
 
-		protected bool DatabaseError { get; set; } = false;
-		protected string DatabaseErrorMsg { get; set; }
+		private SfGrid<CalendarEntry> Grid;
+		public async Task ToolbarClickHandler(Syncfusion.Blazor.Navigations.ClickEventArgs args)
+		{
+			if (args.Item.Id == SyncFusionToolbar.Pdf.ArgId)
+			{
+				await this.Grid.ExportToPdfAsync();
+			}
+			if (args.Item.Id == SyncFusionToolbar.Excel.ArgId)
+			{
+				await this.Grid.ExportToExcelAsync();
+			}
+			if (args.Item.Id == SyncFusionToolbar.Csv.ArgId)
+			{
+				await this.Grid.ExportToCsvAsync();
+			}
+		}
+
+
+		#region ErrorHandling
+		private void InitializeErrorHandling()
+		{
+			DatabaseInformationMsg = "";
+			DatabaseInformation = false;
+			DatabaseWarningMsg = "";
+			DatabaseWarning = false;
+			DatabaseErrorMsg = "";
+			DatabaseError = false;
+		}
+
+		protected bool DatabaseInformation = false;
+		protected string DatabaseInformationMsg { get; set; }
 		protected bool DatabaseWarning = false;
 		protected string DatabaseWarningMsg { get; set; }
+		protected bool DatabaseError { get; set; } // = false; handled by InitializeErrorHandling
+		protected string DatabaseErrorMsg { get; set; }
+
+		void Failure(FailureEventArgs e)
+		{
+			DatabaseErrorMsg = $"Error inside {nameof(Failure)}";  //; e.Error: {e.Error}
+			Logger.LogError(string.Format("Inside {0}; e.Error: {1}", nameof(EditGridComponent) + "!" + nameof(Failure), e.Error));
+			DatabaseError = true;
+		}
+		#endregion
 
 	}
 }

@@ -1,16 +1,110 @@
 ﻿@page "/KeyDates"
-@using static LivingMessiah.Web.Links.KeyDates
-@using LivingMessiah.Web.Pages.KeyDates.Enums
+@using Page = LivingMessiah.Web.Links.KeyDates
 @using static LivingMessiah.Web.Services.Auth0
 
-@*<div class="jumbotron text-center">
-	<h1>
-		<span class="text-warning">WARNING | DATES NOT YET CONFIRMED</span>
-	</h1>
-</div>*@
+<p class="my-1 float-right text-black-50"><small>Year: @SelectedYear (@SelectedValue)</small></p>
+
+<div class="pb-1 mt-4 mb-5 border-bottom border-info bor">
+	<h2><i class="@Page.Icon"></i> @Page.Title</h2>
+</div>
+
+<SfTab>
+	<TabItems>
+
+		@if (CalenderReadyForSale)
+		{
+			<TabItem>
+				<ChildContent>
+					<TabHeader Text="Living Messiah 2022 Calendar"></TabHeader>
+				</ChildContent>
+				<ContentTemplate>
+					<LmmCalendarAdvertisement CalenderReadyForSale="@CalenderReadyForSale"></LmmCalendarAdvertisement>
+				</ContentTemplate>
+			</TabItem>
+		}
+
+		<TabItem>
+			<ChildContent>
+				<TabHeader Text="List"></TabHeader>
+			</ChildContent>
+			<ContentTemplate>
+				<CalendarGrid YearId="@SelectedYear"></CalendarGrid>
+			</ContentTemplate>
+		</TabItem>
+
+		<TabItem>
+			<ChildContent>
+				<TabHeader Text="Dynamic Calendar"></TabHeader>
+			</ChildContent>
+			<ContentTemplate>
+				<AppointmentSchedule YearId="@SelectedYear"></AppointmentSchedule>
+			</ContentTemplate>
+		</TabItem>
+
+		<TabItem>
+			<ChildContent>
+				<TabHeader Text="Edit"></TabHeader>
+			</ChildContent>
+			<ContentTemplate>
+				<AuthorizeView Roles="@Roles.AdminOrAnnouncements">
+
+					<Authorized>
+						<EditGridComponent YearId="@SelectedYear"></EditGridComponent>
+					</Authorized>
+
+					<NotAuthorized>
+
+						<div class="card border-warning my-5">
+							<div class="card-header">Not Authorized</div>
+
+							<div class="card-body">
+								<h5 class="">To view <b>@Page.TitleEdit</b> you need to be logged in.</h5>
+								<button @onclick="@(() => RedirectToLoginClick(Page.Index))"
+												type="button" class="btn-primary btn-sm">
+									Login <i class='fas fa-sign-in-alt'></i>
+								</button>
+							</div>
+						</div>
+
+					</NotAuthorized>
+
+				</AuthorizeView>
+
+			</ContentTemplate>
+		</TabItem>
+	</TabItems>
+</SfTab>
 
 
-<hr class="warning" />
-<LmmCalendarAdvertisement CalenderReadyForSale="@CalenderReadyForSale">
-</LmmCalendarAdvertisement>
+
+
+
+@*
+
+	ToDo: Make this a modal
+	
+	<hr />
+	
+	<div class="row">
+		<div class="col-9">
+			<SfDropDownList TItem="DropDownListVM" TValue="string" PopupHeight="230px"
+											Placeholder="Select year..."
+											@bind-Value="@SelectedValue" DataSource="@DataSource">
+				<DropDownListEvents TItem="DropDownListVM" TValue="string" ValueChange="OnChange"></DropDownListEvents>
+				<DropDownListFieldSettings Text="Text" Value="Value"></DropDownListFieldSettings>
+			</SfDropDownList>
+		</div>
+		<div class="col-3">
+
+			@if (SelectedYear != 0)
+			{
+				<div class="card border-primary">
+					<h3 class="p-2 text-center">
+						@SelectedYear
+					</h3>
+				</div>
+			}
+
+		</div>
+	</div>*@
 

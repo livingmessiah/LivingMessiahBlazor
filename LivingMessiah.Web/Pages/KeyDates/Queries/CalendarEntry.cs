@@ -5,6 +5,7 @@ namespace LivingMessiah.Web.Pages.KeyDates.Queries
 {
 	public class CalendarEntry
 	{
+		public int Id { get; set; }
 		//public int YearId { get; set; }
 		public int CalendarTemplateId { get; set; } //Id
 		public DateTime Date { get; set; }
