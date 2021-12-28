@@ -18,6 +18,12 @@
 
   <ItemGroup>
     <None Include="..\.editorconfig" Link=".editorconfig" />
+    <None Include="Pages\BlazorSyncFusion\Calendars\Calendar\DateRange.razor" />
+    <None Include="Pages\BlazorSyncFusion\Calendars\Calendar\DefaultFunctionalities.razor" />
+    <None Include="Pages\BlazorSyncFusion\Calendars\Calendar\DisabledDates.razor" />
+    <None Include="Pages\BlazorSyncFusion\Calendars\Calendar\MonthPicker.razor" />
+    <None Include="Pages\BlazorSyncFusion\Calendars\Calendar\MultiSelection.razor" />
+    <None Include="Pages\BlazorSyncFusion\Calendars\Calendar\WeekNumber.razor" />
     <None Include="Pages\BlazorSyncFusion\Dialogs\SfDialogNestedDialogs.razor" />
     <!--<None Include="Pages\KeyDates\Obsolete\Index.razor" />-->
     <None Include="Shared\EnvComponent.razor" />
