@@ -7,6 +7,16 @@
 @*@inherits SampleBaseComponent;*@
 ```
 
+## In `Schedule\Views.razor`, where is ...
+	- ScheduleData
+	- ShowSearchLayout
+
+## for `Sample.cs` where is...
+	- public Sample SampleInfo { get; set; } (LivingMessiah.Web.Pages.BlazorSyncFusion.Shared!SampleService )
+### SampleInfo
+### SampleList
+### SampleBrowser
+
 ## `@using blazor_griddata`
 - `namespace blazor_griddata`
 - C:\Users\JohnM\source\repos\syncfusion\blazor-samples\Pages\Grid\GridData.cs
