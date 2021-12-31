@@ -20,7 +20,7 @@ namespace LivingMessiah.Web.Pages.BlazorSyncFusion.Schedule
 			public DateTime StartTime { get; set; }
 			public DateTime EndTime { get; set; }
 			public Nullable<bool> IsAllDay { get; set; }
-			public string CategoryColor { get; set; }
+			public string CategoryColor { get; set; }  //  #1aaa55=Forest; #357cd2=Blue; #7fa900=Olive; #ea7a57=Clay; #00bdae=Turqoise; #f57f17=pumpkin
 			public string RecurrenceRule { get; set; }
 			public Nullable<int> RecurrenceID { get; set; }
 			public Nullable<int> FollowingID { get; set; }

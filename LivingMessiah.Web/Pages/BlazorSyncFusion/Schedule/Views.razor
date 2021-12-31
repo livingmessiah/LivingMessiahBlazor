@@ -23,7 +23,8 @@
 
 <div class="col-lg-9 control-section">
 	<div class="schedule-wrapper">
-		<SfSchedule TValue="ScheduleData.AppointmentData" Width="100%" Height="650px" 
+		<SfSchedule TValue="ScheduleData.AppointmentData" 
+								Width="100%" Height="650px" 
 								@bind-SelectedDate="@CurrentDate" @bind-CurrentView="@ViewNow">
 			<ScheduleViews>
 				<ScheduleView Option="View.Day"></ScheduleView>
@@ -35,6 +36,7 @@
 		</SfSchedule>
 	</div>
 </div>
+
 <div class="col-lg-3 property-section">
 	&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<br>
 	<div class="property-panel-section">

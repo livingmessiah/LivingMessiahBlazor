@@ -1,33 +1,65 @@
 ﻿@using LivingMessiah.Web.Pages.KeyDates.Queries
 @using Syncfusion.Blazor.Schedule
 
+@*
+	CssClass="year-view" MonthsCount="@NumberOfMonths" FirstMonthOfYear="@FirstMonthOfYear"
+	<ScheduleView Option="View.Year" IsSelected="true"></ScheduleView>
+
+*@
+
 <div class="row">
 	<div class="col-12">
 
 		<SfSchedule TValue="AppointmentData"
-								CssClass="year-view" MonthsCount="@NumberOfMonths" FirstMonthOfYear="@FirstMonthOfYear">
+								MonthsCount="@NumberOfMonths"
+								MinDate="@CalendarRange.MinDate" MaxDate="@CalendarRange.MaxDate"
+								Width="100%" Height="650px"
+								@bind-SelectedDate="@CurrentDate" @bind-CurrentView="@ViewNow">
 
 			<ScheduleEventSettings DataSource="@AppointmentDataList"></ScheduleEventSettings>
+
 			<ScheduleViews>
-				<ScheduleView Option="View.Year" IsSelected="true"></ScheduleView>
+				<ScheduleView Option="View.Day"></ScheduleView>
+				<ScheduleView Option="View.Week"></ScheduleView>
 				<ScheduleView Option="View.Month"></ScheduleView>
-				<ScheduleView MaxEventsPerRow="5" Option="View.TimelineYear"
+				<ScheduleView Option="View.Year" IsSelected="true"></ScheduleView>
+
+				@*<ScheduleView MaxEventsPerRow="5" Option="View.TimelineYear"
 											Orientation="Syncfusion.Blazor.Schedule.Orientation.Vertical"
 											DisplayName="Vertical Timeline Year">
 					<ScheduleViewGroup Resources="@ResourceName"></ScheduleViewGroup>
-				</ScheduleView>
+				</ScheduleView>*@
+
 			</ScheduleViews>
 
-			<ScheduleResources>
+			@*<ScheduleResources>
 				<ScheduleResource TItem="ResourceData" TValue="int" DataSource="@TaskData"
 													Field="TaskId" Title="Category" Name="Categories" TextField="Text"
 													IdField="Id" ColorField="Color"></ScheduleResource>
-			</ScheduleResources>
+			</ScheduleResources>*@
 
 
 		</SfSchedule>
 	</div>
 </div>
+
+@*<div class="row mt-2">
+
+	<div class="col-6">
+		Current View
+	</div>
+
+	<div class="col-6">
+		<div>
+			<SfDropDownList TValue="View" TItem="DropDownData"
+											@bind-Value="@ViewNow" DataSource="@ViewData">
+				<DropDownListFieldSettings Text="Name" Value="Value"></DropDownListFieldSettings>
+			</SfDropDownList>
+		</div>
+	</div>
+
+</div>*@
+
 
 @if (DumpData)
 {
@@ -36,7 +68,12 @@
 			<LoadingComponent IsLoading="AppointmentDataList==null">
 				<div class="card mb-3 border-warning">
 					<div class="card-header">
-						<h4 class="card-title text-center"><code>AppointmentDataList</code></h4>
+						<h2 class="card-title text-center">
+							<code>AppointmentDataList</code>
+						</h2>
+						<h4 class="card-title text-center">
+							between @CalendarRange.MinDate.ToShortDateString() and @CalendarRange.MaxDate.ToShortDateString()
+						</h4>
 					</div>
 					<div class="card-body">
 						<TableTemplate Items="AppointmentDataList">
