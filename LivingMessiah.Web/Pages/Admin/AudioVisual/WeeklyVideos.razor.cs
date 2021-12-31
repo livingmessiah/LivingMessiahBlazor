@@ -14,7 +14,6 @@ namespace LivingMessiah.Web.Pages.Admin.AudioVisual
 	[Authorize(Roles = Roles.AdminOrAudiovisual)]
 	public partial class WeeklyVideos
 	{
-		const bool IsDebug = false;
 		const bool IsWorkInProgress = false;
 
 		[Inject]
@@ -43,7 +42,7 @@ namespace LivingMessiah.Web.Pages.Admin.AudioVisual
 
 		protected async Task HandleValidSubmit()
 		{
-			Debug(nameof(HandleValidSubmit) + "-Beg");
+			//Debug(nameof(HandleValidSubmit) + "-Beg");
 
 			if (IsWorkInProgress != true)
 			{
@@ -66,7 +65,7 @@ namespace LivingMessiah.Web.Pages.Admin.AudioVisual
 						}
 						else
 						{
-							Debug(nameof(HandleValidSubmit) + "** Unexpected CrudOperation **");
+							//Debug(nameof(HandleValidSubmit) + "** Unexpected CrudOperation **");
 						}
 					}
 				}
@@ -75,7 +74,7 @@ namespace LivingMessiah.Web.Pages.Admin.AudioVisual
 
 			await Read();
 			MakeModalVisible = false;
-			Debug(nameof(HandleValidSubmit) + "-End");
+			//Debug(nameof(HandleValidSubmit) + "-End");
 		}
 
 		// This crap method exists because I can't controll the invalid form scenarios
@@ -138,7 +137,7 @@ namespace LivingMessiah.Web.Pages.Admin.AudioVisual
 			}
 			else
 			{
-				Debug(nameof(Add) + "IsFormValid is NOT Valid");
+				//Debug(nameof(Add) + "IsFormValid is NOT Valid");
 			}
 
 
@@ -163,7 +162,7 @@ namespace LivingMessiah.Web.Pages.Admin.AudioVisual
 			}
 			else
 			{
-				Debug(nameof(Update) + "IsFormValid is NOT Valid");
+				//Debug(nameof(Update) + "IsFormValid is NOT Valid");
 			}
 
 		}
@@ -227,6 +226,8 @@ namespace LivingMessiah.Web.Pages.Admin.AudioVisual
 		}
 		#endregion
 
+		/*
+		const bool IsDebug = false;
 		private void Debug(string inside, bool showWeeklyVideoModel = false)
 		{
 			if (IsDebug)
@@ -237,10 +238,8 @@ namespace LivingMessiah.Web.Pages.Admin.AudioVisual
 					Console.WriteLine($@"       ... {nameof(WeeklyVideoModel)}: {WeeklyVideoModel}");
 				}
 			}
-
-
 		}
-
+		*/
 	}
 }
 

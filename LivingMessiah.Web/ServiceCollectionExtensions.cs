@@ -20,6 +20,7 @@ using LivingMessiah.Web.Pages.KeyDates.Data;
 using LivingMessiah.Web.Pages.KeyDates.Services;
 using LivingMessiah.Web.Pages.UpcomingEvents.Data;
 using LivingMessiah.Web.Pages.SmartEnums;
+using LivingMessiah.Web.Pages.BlazorSyncFusion.Shared;
 
 namespace LivingMessiah.Web
 {
@@ -28,6 +29,10 @@ namespace LivingMessiah.Web
 		public static IServiceCollection AddDataStores(this IServiceCollection services)
 		{
 			services
+				
+				.AddSingleton<SampleBaseComponent>()
+				.AddSingleton<SampleService>()
+
 				.AddSingleton<ILeadershipService, LeadershipService>()
 				.AddSingleton<IAddressService, AddressService>()
 				.AddSingleton<ILinkService, LinkService>()
@@ -42,8 +47,11 @@ namespace LivingMessiah.Web
 				.AddSingleton<ISmartEnumRepository, SmartEnumRepository>()
 
 				.AddTransient<ISecurityClaimsService, SecurityClaimsService>()
+
+				//.AddSingleton<ISukkotSettings, SukkotSettings>()
 				.AddTransient<ISukkotService, SukkotService>()
 				.AddTransient<IRegistrationService, RegistrationService>()
+
 				.AddTransient<IKeyDateService, KeyDateService>()
 
 				.AddTransient<IRegistrationRepository, RegistrationRepository>()

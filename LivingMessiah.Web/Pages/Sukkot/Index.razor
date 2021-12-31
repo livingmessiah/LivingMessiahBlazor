@@ -5,7 +5,12 @@
 @using static LivingMessiah.Web.Services.Auth0
 @using LivingMessiah.Web.Shared.Sukkot
 
+@using LivingMessiah.Web.Settings
+@using Microsoft.Extensions.Options
+@inject IOptions<SukkotSettings> SukkotSettings
+
 <AuthorizeView Roles="@Roles.SukkotMenuBar">
+	<SukkotSettingsList />
 	<SukkotAdminMenubar></SukkotAdminMenubar>
 </AuthorizeView>
 
@@ -25,7 +30,7 @@
 	</NotAuthorized>
 </AuthorizeView>
 
-@if (SukkotIsOpen)
+@if (SukkotSettings.Value.SukkotIsOpen)
 {
 	<div class="d-print-none">
 		<div class="row">
@@ -37,7 +42,7 @@
 		</div>
 	</div>
 
-	@if (Other.IsRegistrationClosed)
+	@if (SukkotSettings.Value.IsRegistrationClosed)
 	{
 		<div class="jumbotron">
 			<h1>
@@ -56,9 +61,9 @@
 								LodgingRate="@LodgingRate.ToString("C0")">
 	</Introduction>
 
-	<Meals IsMealsAvailable="false"></Meals>
+	<Meals IsMealsAvailable="SukkotSettings.Value.IsMealsAvailable"></Meals>
 
-	@if (!Other.IsRegistrationClosed)
+	@if (!SukkotSettings.Value.IsRegistrationClosed)
 	{
 		<RegistrationInfo EarlyRegistrationLastDay="@RegistrationMeta.EarlyRegistrationLastDay.ToString("MMMM dd")"
 											EarlyRegistrationFee="@RegistrationMeta.EarlyRegistrationFee.ToString("C0")"
@@ -71,7 +76,7 @@
 
 	<Documents></Documents>
 
-	@if (!Other.IsRegistrationClosed)
+	@if (!SukkotSettings.Value.IsRegistrationClosed)
 	{
 		<br />
 		<p class="lead">

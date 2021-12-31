@@ -7,8 +7,6 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin
 		[Parameter]
 		public bool IsXs { get; set; }
 
-		public bool IsMealsAvailable { get; set; } = Sukkot.Constants.Other.IsMealsAvailable;
-
 		[Parameter]
 		public string BtnGroupCss { get; set; }
 

@@ -36,7 +36,6 @@ namespace LivingMessiah.Web.Pages.Sukkot.RegistrationShell
 
 		public string Title { get; set; }
 
-		public bool IsMealsAvailable { get; set; } = false;
 		protected bool LoadFailed = false;
 
 		private vwRegistrationShell GetDefaultModel() 

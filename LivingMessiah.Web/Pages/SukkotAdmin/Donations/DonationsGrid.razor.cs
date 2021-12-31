@@ -32,9 +32,6 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Donations
 		protected bool DatabaseWarning = false;
 		protected string DatabaseWarningMsg { get; set; }
 
-		// public bool IsMealsAvailable { get; set; } = Sukkot.Constants.Other.IsMealsAvailable;  // ToDo: Not being used
-
-
 		public BaseDonationStatusFilterSmartEnum CurrentFilter { get; set; } = BaseDonationStatusFilterSmartEnum.FullList;
 
 		protected override async Task OnInitializedAsync()

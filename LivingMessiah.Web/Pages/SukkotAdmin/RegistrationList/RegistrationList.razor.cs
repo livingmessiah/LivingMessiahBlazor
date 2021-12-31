@@ -34,8 +34,6 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.RegistrationList
 		public List<vwRegistration> RegistrationsWildernessRanch { get; set; }
 		public List<vwRegistration> RegistrationsWindmillRanch { get; set; }
 
-		public bool IsMealsAvailable { get; set; } = Sukkot.Constants.Other.IsMealsAvailable;
-
 		public RegistrationSortEnum RegistrationSort { get; set; } = RegistrationSortEnum.LastName;
 
 		public int RecordCount { get; set; } = 0;

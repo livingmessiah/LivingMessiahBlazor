@@ -6,6 +6,9 @@
 @using static LivingMessiah.Web.Services.Auth0
 @using LivingMessiah.Web.Shared.Sukkot
 @using LivingMessiah.Web.Infrastructure
+@using LivingMessiah.Web.Settings
+@using Microsoft.Extensions.Options
+@inject IOptions<SukkotSettings> SukkotSettings
 
 @{
 	string sortField = (RegistrationSort == RegistrationSortEnum.LastName) ? "Name" : "Id";
@@ -85,7 +88,7 @@
 						<th>Lodging<br />Donation Status</th>
 						<th>Registration</th>
 
-						@if (IsMealsAvailable)
+						@if (SukkotSettings.Value.IsMealsAvailable)
 						{
 							<th>Meals</th>
 						}
@@ -96,100 +99,100 @@
 					@foreach (var item in RegistrationsGHTHF)
 					{
 						rowCount += 1;
-					<tr>
-						<td>@item.Id</td>
-						<td>@StringExtensions.Truncate(item.FullName(false), 30)<br />@item.EMail<br />@item.Phone</td>
+						<tr>
+							<td>@item.Id</td>
+							<td>@StringExtensions.Truncate(item.FullName(false), 30)<br />@item.EMail<br />@item.Phone</td>
 
-						@* @Html.Truncate(item.Status, 15) *@
-						<td>@item.CampCD <br /> @item.Status</td>
+							@* @Html.Truncate(item.Status, 15) *@
+							<td>@item.CampCD <br /> @item.Status</td>
 
-						<AuthorizeView Roles="@Roles.AdminOrSukkot">
-							<Authorized>
-								<td>
-									<div class="btn-group">
-										<button @onclick="@(e => Details_ButtonClick(item.Id))"
-														class="btn-default btn-sm" title="Registration View">
-											<i class="fas fa-info text-info"></i> View
-										</button>
-										<button @onclick="@(e => Edit_ButtonClick(item.Id))"
-														class="btn-default btn-sm" title="Registration Edit">
-											<i class="fas fa-pencil-alt text-success"></i> Edit
-										</button>
-
-									</div>
-								</td>
-
-								@if (IsMealsAvailable)
-								{
+							<AuthorizeView Roles="@Roles.AdminOrSukkot">
+								<Authorized>
 									<td>
 										<div class="btn-group">
-											<button @onclick="@(e => DetailsMealTicket_ButtonClick(item.Id))"
-															class="btn-default btn-sm" title="Meal View">
+											<button @onclick="@(e => Details_ButtonClick(item.Id))"
+															class="btn-default btn-sm" title="Registration View">
 												<i class="fas fa-info text-info"></i> View
 											</button>
-											<button @onclick="@(e => EditMeals_ButtonClick(item.Id))"
-															class="btn-default btn-sm" title="Meal Edit">
-												<i class="fas fa-pencil-alt text-warning"></i> Edit
+											<button @onclick="@(e => Edit_ButtonClick(item.Id))"
+															class="btn-default btn-sm" title="Registration Edit">
+												<i class="fas fa-pencil-alt text-success"></i> Edit
 											</button>
 
 										</div>
 									</td>
-								}
 
-								<td>
+									@if (SukkotSettings.Value.IsMealsAvailable)
+									{
+										<td>
+											<div class="btn-group">
+												<button @onclick="@(e => DetailsMealTicket_ButtonClick(item.Id))"
+																class="btn-default btn-sm" title="Meal View">
+													<i class="fas fa-info text-info"></i> View
+												</button>
+												<button @onclick="@(e => EditMeals_ButtonClick(item.Id))"
+																class="btn-default btn-sm" title="Meal Edit">
+													<i class="fas fa-pencil-alt text-warning"></i> Edit
+												</button>
 
-									<div class="btn-group">
-										<button @onclick="@(e => Payment_ButtonClick(item.Id))"
-														class="btn-default btn-sm" title="Payment">
-											<i class="fas fa-dollar-sign text-success"></i> Pay
-										</button>
+											</div>
+										</td>
+									}
 
-										<button @onclick="@(e => DeleteConfirmation_ButtonClick(item.Id))"
-														class="btn-default btn-sm" title="Delete">
-											<i class="fas fa-times text-danger"></i> Del
-										</button>
+									<td>
 
-										@*<AuthorizeView Roles="@Roles.Admin">
-							<Authorized>
-							ToDo: It look like you can not have nested authirze views, to put
-							SEE BUTTON ABOVE
-							</Authorized>
+										<div class="btn-group">
+											<button @onclick="@(e => Payment_ButtonClick(item.Id))"
+															class="btn-default btn-sm" title="Payment">
+												<i class="fas fa-dollar-sign text-success"></i> Pay
+											</button>
 
-							<NotAuthorized>
-								<i class="fa fa-times text-danger"></i>
-							</NotAuthorized>
-						</AuthorizeView>*@
+											<button @onclick="@(e => DeleteConfirmation_ButtonClick(item.Id))"
+															class="btn-default btn-sm" title="Delete">
+												<i class="fas fa-times text-danger"></i> Del
+											</button>
+
+											@*<AuthorizeView Roles="@Roles.Admin">
+													<Authorized>
+													ToDo: It look like you can not have nested authirze views, to put
+													SEE BUTTON ABOVE
+													</Authorized>
+
+													<NotAuthorized>
+														<i class="fa fa-times text-danger"></i>
+													</NotAuthorized>
+												</AuthorizeView>*@
 
 
-									</div>
-								</td>
+										</div>
+									</td>
 
-							</Authorized>
+								</Authorized>
 
-							<NotAuthorized>
-								<td>
-									<div class="btn-group">
-										<button @onclick="@(e => Details_ButtonClick(item.Id))"
-														class="btn-default btn-sm" title="Registration">
-											<i class="fas fa-info text-info"></i>
-										</button>
-									</div>
-								</td>
-								<td>
-									<div class="btn-group">
+								<NotAuthorized>
+									<td>
+										<div class="btn-group">
+											<button @onclick="@(e => Details_ButtonClick(item.Id))"
+															class="btn-default btn-sm" title="Registration">
+												<i class="fas fa-info text-info"></i>
+											</button>
+										</div>
+									</td>
+									<td>
+										<div class="btn-group">
 
-										<button @onclick="@(e => DetailsMealTicket_ButtonClick(item.Id))"
-														class="btn-default btn-sm" title="Meal View">
-											<i class="fas fa-info text-info"></i> Meals
-										</button>
+											<button @onclick="@(e => DetailsMealTicket_ButtonClick(item.Id))"
+															class="btn-default btn-sm" title="Meal View">
+												<i class="fas fa-info text-info"></i> Meals
+											</button>
 
-									</div>
-								</td>
-								<td></td>
-							</NotAuthorized>
-						</AuthorizeView>
+										</div>
+									</td>
+									<td></td>
+								</NotAuthorized>
+							</AuthorizeView>
 
-					</tr>
+						</tr>
 					}
 
 					<tr>
@@ -252,7 +255,7 @@
 						<th>Lodging<br />Donation Status</th>
 						<th>Registration</th>
 
-						@if (IsMealsAvailable)
+						@if (SukkotSettings.Value.IsMealsAvailable)
 						{
 							<th>Meals</th>
 						}
@@ -288,7 +291,7 @@
 										</div>
 									</td>
 
-									@if (IsMealsAvailable)
+									@if (SukkotSettings.Value.IsMealsAvailable)
 									{
 										<td>
 											<div class="btn-group">
@@ -422,7 +425,7 @@
 						<th>Lodging<br />Donation Status</th>
 						<th>Registration</th>
 
-						@if (IsMealsAvailable)
+						@if (SukkotSettings.Value.IsMealsAvailable)
 						{
 							<th>Meals</th>
 						}
@@ -458,7 +461,7 @@
 										</div>
 									</td>
 
-									@if (IsMealsAvailable)
+									@if (SukkotSettings.Value.IsMealsAvailable)
 									{
 										<td>
 											<div class="btn-group">

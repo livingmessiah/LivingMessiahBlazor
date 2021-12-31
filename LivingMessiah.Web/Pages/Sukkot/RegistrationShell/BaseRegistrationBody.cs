@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Components;
 using LivingMessiah.Web.Pages.Sukkot.RegistrationEnums;
 using SukkotApi.Domain;
+using Microsoft.Extensions.Options;
+using LivingMessiah.Web.Settings;
 
 namespace LivingMessiah.Web.Pages.Sukkot.RegistrationShell
 {
@@ -15,6 +17,16 @@ namespace LivingMessiah.Web.Pages.Sukkot.RegistrationShell
 
 		[Parameter]
 		public vwRegistrationShell vwRegistrationShell { get; set; }
+
+		[Inject]
+		public IOptions<SukkotSettings> SukkotSettings { get; set; }
+
+		protected bool IsMealsAvailable;
+
+		protected override void OnInitialized()
+		{
+			IsMealsAvailable = SukkotSettings.Value.IsMealsAvailable;
+		}
 
 	}
 }

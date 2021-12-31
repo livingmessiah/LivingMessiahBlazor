@@ -1,4 +1,8 @@
 ﻿@using static LivingMessiah.Web.Links.Sukkot;
+@using LivingMessiah.Web.Settings
+@using Microsoft.Extensions.Options
+@inject IOptions<SukkotSettings> SukkotSettings
+
 
 <div class="row">
 	<div class="col-12">
@@ -12,7 +16,7 @@
 	</div>
 </div>
 
-@if (IsMealsAvailable)
+@if (SukkotSettings.Value.IsMealsAvailable)
 {
 	<div class="row">
 		<div class="col-12">

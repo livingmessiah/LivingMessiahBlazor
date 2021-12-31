@@ -16,6 +16,7 @@ namespace Sukkot.Web.Service
 {
 	public interface ISukkotService
 	{
+		
 		string ExceptionMessage { get; set; }
 		Task<vwRegistration> Details(int id, ClaimsPrincipal user, bool showPrintInstructionMessage = false);
 		Task<vwRegistration> DeleteConfirmation(int id, ClaimsPrincipal user);
@@ -36,6 +37,7 @@ namespace Sukkot.Web.Service
 		#region Constructor and DI
 		private readonly ISukkotRepository db;
 		private readonly ILogger Logger;
+		//private readonly SukkotSettings SukkotSettings;
 
 		public SukkotService(
 			ISukkotRepository sukkotRepository, ILogger<SukkotService> logger)
@@ -44,6 +46,8 @@ namespace Sukkot.Web.Service
 			Logger = logger;
 		}
 		#endregion
+
+
 
 		public string ExceptionMessage { get; set; } = "";
 
@@ -333,7 +337,6 @@ namespace Sukkot.Web.Service
 				Logger.LogInformation($"Registration updated for {registration.FamilyName}/{registration.EMail}; count={count}");
 
 				/*
-				// Task 683 Add IsMealsAvailable to appsettings.json and code for it 
 				if (registration.ChildBig == 0 | registration.ChildSmall == 0)
 				{
 					count = await db.UpdateMealTicketReset(registration.Id, registration.ChildBig, registration.ChildSmall);

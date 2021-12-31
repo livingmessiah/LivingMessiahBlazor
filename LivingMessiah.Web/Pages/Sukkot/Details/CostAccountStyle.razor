@@ -1,6 +1,10 @@
 ﻿@using static LivingMessiah.Web.Pages.Sukkot.Constants.Other
 @using SukkotApi.Domain
 
+@using LivingMessiah.Web.Settings
+@using Microsoft.Extensions.Options
+@inject IOptions<SukkotSettings> SukkotSettings
+
 <div class="row">
 
 	<div class="col-4">
@@ -18,18 +22,18 @@
 				<dd class="col-4"><span class="float-right">@vwRegistration.CampCost.ToString("C0")</span></dd>
 			}
 
-			@if (IsMealsAvailable)
-			{
-				<dt class="col-6">Adult Meals:</dt>
-				<dd class="col-4"><span class="float-right">@vwRegistration.TotalAdultMeals</span></dd>
-				<dt class="col-6">Adult Meal Cost:</dt>
-				<dd class="col-4"><span class="float-right">@vwRegistration.AdultMealCost.ToString("C0")</span></dd>
+			@if (SukkotSettings.Value.IsMealsAvailable)
+				{
+					<dt class="col-6">Adult Meals:</dt>
+					<dd class="col-4"><span class="float-right">@vwRegistration.TotalAdultMeals</span></dd>
+					<dt class="col-6">Adult Meal Cost:</dt>
+					<dd class="col-4"><span class="float-right">@vwRegistration.AdultMealCost.ToString("C0")</span></dd>
 
-				<dt class="col-6">Big Child Meals:</dt>
-				<dd class="col-4"><span class="float-right">@vwRegistration.TotalChildBigMeals.ToString("C0")</span></dd>
-				<dt class="col-6">Big Child Meal Cost:</dt>
-				<dd class="col-4"><span class="float-right">@vwRegistration.ChildBigMealCost.ToString("C0")</span></dd>
-			}
+					<dt class="col-6">Big Child Meals:</dt>
+					<dd class="col-4"><span class="float-right">@vwRegistration.TotalChildBigMeals.ToString("C0")</span></dd>
+					<dt class="col-6">Big Child Meal Cost:</dt>
+					<dd class="col-4"><span class="float-right">@vwRegistration.ChildBigMealCost.ToString("C0")</span></dd>
+				}
 
 			<dt class="col-6">Total:</dt>
 			<dd class="col-6"><span class="float-right"><b>@vwRegistration.TotalCost.ToString("C0")</b></span></dd>

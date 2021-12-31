@@ -83,15 +83,12 @@
 
 	public static class Other
 	{
-		public const bool IsMealsAvailable = false;
 		public const string Banner = "2021-sukkot-banner-1024-385-3d.jpg"; // 2021-sukkot-banner-1039-x-530.jpg
 		public const string BannerAlt = "2021 Sukkot Registration Banner";
 		public const string DetailsTitle = "Living Messiah Sukkot Registration 2021";
 		public const string MealTicketTitle = "LMM Sukkot 2020 Meal Ticket";
 		//public const string ReturnUrlSukkotRegistration = "/Sukkot/Registration";
 		public const bool IsRvHookupsAvailable = true;
-		public const bool IsRegistrationClosed = false;
-		//public const bool IsSukkotOver = false;  //Task 409
 		public const string ModalIdHouseRulesXs = "houserulesxs";
 		public const string ModalIdHouseRules = "houserules";
 

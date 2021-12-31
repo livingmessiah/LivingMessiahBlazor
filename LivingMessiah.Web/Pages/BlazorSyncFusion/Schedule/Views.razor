@@ -6,8 +6,9 @@
 
 @inherits SampleBaseComponent;
 
-<p>This demo showcases the usage of basic views available in Scheduler such as Day, Week, Work Week, Month and Agenda. Here, the wildlife events being held in zoos are displayed against its respective timings.  </p>
-
+@*<p>This demo showcases the usage of basic views available in Scheduler such as Day, Week, Work Week, Month and Agenda. 
+	Here, the wildlife events being held in zoos are displayed against its respective timings.  
+</p>
 <p> In this demo, Scheduler is showcased with 4 basic views namely  </p>
 <ul>
 	<li>Day</li>
@@ -15,28 +16,20 @@
 	<li>Work Week</li>
 	<li>Month</li>
 </ul>
-<p>The user can navigate between different view options available on the header section just by clicking on it. From any of the views, the user can switch back to the day view by clicking dates in the date header section.</p>
-
-@*
-	# Where is...
-	- ScheduleData
-	- ShowSearchLayout
-
-	# for `Sample.cs` where is...
-	- public Sample SampleInfo { get; set; } (LivingMessiah.Web.Pages.BlazorSyncFusion.Shared!SampleService )
-	### SampleInfo
-	### SampleList
-	### SampleBrowser
-*@
+<p>
+	The user can navigate between different view options available on the header section just by clicking on it. 
+	From any of the views, the user can switch back to the day view by clicking dates in the date header section.
+</p>*@
 
 <div class="col-lg-9 control-section">
 	<div class="schedule-wrapper">
-		<SfSchedule TValue="ScheduleData.AppointmentData" Width="100%" Height="650px" @bind-SelectedDate="@CurrentDate" @bind-CurrentView="@ViewNow">
+		<SfSchedule TValue="ScheduleData.AppointmentData" Width="100%" Height="650px" 
+								@bind-SelectedDate="@CurrentDate" @bind-CurrentView="@ViewNow">
 			<ScheduleViews>
 				<ScheduleView Option="View.Day"></ScheduleView>
 				<ScheduleView Option="View.Week"></ScheduleView>
-				<ScheduleView Option="View.WorkWeek"></ScheduleView>
-				<ScheduleView MaxEventsPerRow="2" Option="View.Month"></ScheduleView>
+				<ScheduleView Option="View.Month" MaxEventsPerRow="2"></ScheduleView>
+				<ScheduleView Option="View.Year"></ScheduleView>
 			</ScheduleViews>
 			<ScheduleEventSettings DataSource="@DataSource"></ScheduleEventSettings>
 		</SfSchedule>
@@ -79,8 +72,8 @@
 	List<DropDownData> ViewData = new List<DropDownData>() {
 				new DropDownData { Name = "Day", Value = View.Day },
 				new DropDownData { Name = "Week", Value = View.Week },
-				new DropDownData { Name = "Work Week", Value = View.WorkWeek },
-				new DropDownData { Name = "Month", Value = View.Month }
+				new DropDownData { Name = "Month", Value = View.Month },
+				new DropDownData { Name = "Year", Value = View.Year }
 		};
 
 	public class DropDownData

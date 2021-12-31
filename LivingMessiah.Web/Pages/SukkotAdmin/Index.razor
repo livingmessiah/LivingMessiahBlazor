@@ -4,10 +4,13 @@
 @using LivingMessiah.Web.Shared.Sukkot
 
 <AuthorizeView Roles="@Roles.SukkotMenuBar">
+	<SukkotSettingsList />
 	<SukkotAdminMenubar></SukkotAdminMenubar>
 </AuthorizeView>
 
 @*<PageHeader Icon="@Icon" Title="@Title"></PageHeader>*@
+
+
 <div class="pb-2 mt-4 mb-2 border-bottom">
 	<h3>
 		<i class="fas fa-fighter-jet"></i>
@@ -22,3 +25,5 @@
 <div class="d-none d-sm-block">
 	<IndexButtonList IsXs="false" BtnGroupCss="btn-group btn-group-lg " />
 </div>
+
+

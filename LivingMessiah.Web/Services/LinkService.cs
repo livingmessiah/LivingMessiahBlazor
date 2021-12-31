@@ -19,16 +19,16 @@ namespace LivingMessiah.Web.Services
 
 	public class LinkService : ILinkService
 	{
-		public IOptions<AppSettings> AppSettings { get; set; }
-		public LinkService(IOptions<AppSettings> appSettings)
+		public IOptions<SukkotSettings> SukkotSettings { get; set; }
+		public LinkService(IOptions<SukkotSettings> sukkotSettings)
 		{
-			AppSettings = appSettings;
+			SukkotSettings = sukkotSettings;
 		}
 
 		public List<Link> GetHomeSidebarLinks()
 		{
 			LinksFactory links = new LinksFactory();
-			if (AppSettings.Value.SukkotIsOpen)
+			if (SukkotSettings.Value.SukkotIsOpen)
 			{
 				return links.GetLinks()
 					.Where(x => x.HomeSidebarUsage == true)

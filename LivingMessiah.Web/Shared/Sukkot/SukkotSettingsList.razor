@@ -1,0 +1,28 @@
+﻿@using LivingMessiah.Web.Settings
+@using Microsoft.Extensions.Options
+
+@inject IOptions<SukkotSettings> SukkotSettings
+
+	<div class="card border-white">
+		<div class="card-body my-1 pl-1 py-0">
+			<ul class="list-inline float-right">
+				<li class="list-inline-item"><small>SukkotIsOpen: @((MarkupString)GetCheck(SukkotSettings.Value.SukkotIsOpen))</small></li>
+				<li class="list-inline-item"><small>IsRegistrationClosed: @((MarkupString)GetCheck(@SukkotSettings.Value.IsRegistrationClosed))</small></li>
+				<li class="list-inline-item"><small>IsMealsAvailable: @((MarkupString)GetCheck(SukkotSettings.Value.IsMealsAvailable))</small></li>
+			</ul>
+		</div>
+	</div>
+
+	@code {
+		string GetCheck(bool isTrue)
+		{
+			if (isTrue)
+			{
+				return "<span class='text-success'><i class='far fa-check-square'></i></span>";  //<i class='fas fa-check'></i>
+			}
+			else
+			{
+				return "<span class='text-danger'><i class='far fa-square'></i></span>";
+			}
+		}
+	}

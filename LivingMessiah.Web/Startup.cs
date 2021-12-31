@@ -37,8 +37,8 @@ namespace LivingMessiah.Web
 			services.AddDataStores();
 			services.AddSession();
 			services.AddCustomAuthentication(Configuration);
-			services
-				.Configure<AppSettings>(options => Configuration.GetSection("AppSettings").Bind(options));
+			services.Configure<AppSettings>(options => Configuration.GetSection("AppSettings").Bind(options));
+			services.Configure<SukkotSettings>(options => Configuration.GetSection("SukkotSettings").Bind(options));
 
 			services.AddSyncfusionBlazor();
 			//services.AddTransient<GridDataAdaptor>();

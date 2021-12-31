@@ -25,7 +25,7 @@ else
 	/// </summary>
 	public void Hide()
 	{
-		classNames = SampleUtils.AddClass(classNames, SampleUtils.HIDDEN);
+		classNames = SampleUtilsVer2.AddClass(classNames, SampleUtilsVer2.HIDDEN);
 		StateHasChanged();
 	}
 
@@ -34,7 +34,7 @@ else
 	/// </summary>
 	public void Show()
 	{
-		classNames = SampleUtils.RemoveClass(classNames, SampleUtils.HIDDEN);
+		classNames = SampleUtilsVer2.RemoveClass(classNames, SampleUtilsVer2.HIDDEN);
 		StateHasChanged();
 	}
 
@@ -47,13 +47,13 @@ else
 		isModalType = isModelSpinner;
 		if (isModelSpinner)
 		{
-			classNames = SampleUtils.AddClass(classNames, SampleUtils.MODAL_CLASS);
-			classNames = SampleUtils.RemoveClass(classNames, SampleUtils.HIDDEN);
+			classNames = SampleUtilsVer2.AddClass(classNames, SampleUtilsVer2.MODAL_CLASS);
+			classNames = SampleUtilsVer2.RemoveClass(classNames, SampleUtilsVer2.HIDDEN);
 		}
 		else
 		{
-			classNames = SampleUtils.RemoveClass(classNames, SampleUtils.MODAL_CLASS);
-			classNames = SampleUtils.AddClass(classNames, SampleUtils.HIDDEN);
+			classNames = SampleUtilsVer2.RemoveClass(classNames, SampleUtilsVer2.MODAL_CLASS);
+			classNames = SampleUtilsVer2.AddClass(classNames, SampleUtilsVer2.HIDDEN);
 		}
 		StateHasChanged();
 	}

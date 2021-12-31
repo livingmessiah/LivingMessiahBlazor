@@ -52,7 +52,6 @@ namespace LivingMessiah.Web.Data
 		public DynamicParameters Parms { get; set; }  // using Dapper; Note, only place dependent on Dapper
 
 
-		string errMsg = "";
 		string connectionString;
 
 		public string SqlDump

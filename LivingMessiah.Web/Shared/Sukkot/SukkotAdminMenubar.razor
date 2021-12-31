@@ -1,4 +1,9 @@
-﻿@using static LivingMessiah.Web.Links.Sukkot 
+﻿@using static LivingMessiah.Web.Links.Sukkot
+
+@using LivingMessiah.Web.Settings
+@using Microsoft.Extensions.Options
+@inject IOptions<SukkotSettings> SukkotSettings
+
 
 @{
 	string classActive = ""; // "active"
@@ -56,37 +61,40 @@
 
 	</ol>
 
-		@if (LivingMessiah.Web.Pages.Sukkot.Constants.Other.IsMealsAvailable)
-		{
-			<ol class="breadcrumb">
+	@if (SukkotSettings.Value.IsMealsAvailable)
+	{
+		<ol class="breadcrumb">
 
-				<li class="@classActive">
-					<a class="badge badge-primary" href="@Meals.PlannerReport">
-					<i class="fa fa-list-ol"></i>&nbsp;<sup>Meal Planner</sup></a>&nbsp;&nbsp;
-				</li>
+			<li class="@classActive">
+				<a class="badge badge-primary" href="@Meals.PlannerReport">
+					<i class="fa fa-list-ol"></i>&nbsp;<sup>Meal Planner</sup>
+				</a>&nbsp;&nbsp;
+			</li>
 
-				<li class="@classActive">
-					<a class="badge badge-primary" href="@Meals.Index">
-					<i class="fas fa-ticket-alt"></i>&nbsp;<sup>Meal Tickets</sup></a>&nbsp;&nbsp;
-				</li>
+			<li class="@classActive">
+				<a class="badge badge-primary" href="@Meals.Index">
+					<i class="fas fa-ticket-alt"></i>&nbsp;<sup>Meal Tickets</sup>
+				</a>&nbsp;&nbsp;
+			</li>
 
-				<li class="@classActive">
-					<a class="badge badge-primary" href="@Meals.TicketsPunched">
-						<i class="fas fa-money-bill-wave-alt"></i>&nbsp;<sup>Punched</sup>
-					</a>&nbsp;&nbsp;
-				</li>
+			<li class="@classActive">
+				<a class="badge badge-primary" href="@Meals.TicketsPunched">
+					<i class="fas fa-money-bill-wave-alt"></i>&nbsp;<sup>Punched</sup>
+				</a>&nbsp;&nbsp;
+			</li>
 
-				<li class="@classActive">
-					<a class="badge badge-primary" href="@Meals.ListMealPlanMenu">
-						<i class="far fa-map"></i>&nbsp;<sup>Menu List</sup>
-					</a>&nbsp;&nbsp;
-				</li>
+			<li class="@classActive">
+				<a class="badge badge-primary" href="@Meals.ListMealPlanMenu">
+					<i class="far fa-map"></i>&nbsp;<sup>Menu List</sup>
+				</a>&nbsp;&nbsp;
+			</li>
 
-				<li class="@classActive">
-					<a class="badge badge-primary" href="@KitchenWork.Index">
-					<i class="fas fa-utensils"></i>&nbsp;<sup>Kitchen Work</sup></a>&nbsp;&nbsp;
-				</li>
-				@* asp-route-mealTicketEnum="@SukkotApi.Domain.MealTicketEnum.Day01Brunch" ToDo, cant see this??? *@
-			</ol>
-		}
+			<li class="@classActive">
+				<a class="badge badge-primary" href="@KitchenWork.Index">
+					<i class="fas fa-utensils"></i>&nbsp;<sup>Kitchen Work</sup>
+				</a>&nbsp;&nbsp;
+			</li>
+			@* asp-route-mealTicketEnum="@SukkotApi.Domain.MealTicketEnum.Day01Brunch" ToDo, cant see this??? *@
+		</ol>
+	}
 </div>

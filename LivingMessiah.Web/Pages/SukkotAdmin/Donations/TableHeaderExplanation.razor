@@ -1,9 +1,13 @@
-﻿
+﻿@using LivingMessiah.Web.Settings
+@using Microsoft.Extensions.Options
+
+@inject IOptions<SukkotSettings> SukkotSettings
+
 <ul class="list-inline">
 	<li class="list-inline-item"><small><b>SId</b> (Status ID):</small></li>
 	<li class="list-inline-item"><small>2: Registration Form Completed</small></li>
 
-	@if (IsMealsAvailable)
+	@if (SukkotSettings.Value.IsMealsAvailable)
 	{
 		<li class="list-inline-item"><small>3: Meal ticket Completed</small></li>
 	}
@@ -12,7 +16,3 @@
 	<li class="list-inline-item"><small>5: Fully Paid</small></li>
 	<li class="list-inline-item"><small>6: Canceled</small></li>
 </ul>
-
-@code {
-	public bool IsMealsAvailable { get; set; } = Sukkot.Constants.Other.IsMealsAvailable;
-}
