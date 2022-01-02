@@ -53,12 +53,12 @@ namespace LivingMessiah.Web.Data
 			{
 				new Link
 				{
-					Index = HeavensDeclare.Index,
-					Title = HeavensDeclare.Title,
-					Icon = HeavensDeclare.Icon,
+					Index = Calendar.Index,
+					Title = Calendar.Title,
+					Icon = Calendar.Icon,
 					HomeSidebarUsage=true,
-					HomeFloatRightHebrew="שָּׁמַיִם",
-					HomeTitleSuffix=" shaMayim H8064",
+					HomeFloatRightHebrew="חֳדָשִׁים",
+					HomeTitleSuffix=" chôdeshim H2320",
 					SitemapUsage=true
 				},
 				new Link
@@ -69,7 +69,6 @@ namespace LivingMessiah.Web.Data
 					HomeSidebarUsage=true,
 					SitemapUsage=true
 				},
-
 				new Link
 				{
 					Index = ShabbatService.Index,
@@ -80,6 +79,7 @@ namespace LivingMessiah.Web.Data
 					HomeTitleSuffix=" Shabbat H7676",
 					SitemapUsage=true
 				},
+
 				new Link
 				{
 					Index = UpcomingEvents.Index,
@@ -91,6 +91,18 @@ namespace LivingMessiah.Web.Data
 					//HomeTitleSuffix=" Shofar H7782",
 					SitemapUsage=true
 				},
+
+				new Link
+				{
+					Index = HeavensDeclare.Index,
+					Title = HeavensDeclare.Title,
+					Icon = HeavensDeclare.Icon,
+					HomeSidebarUsage=true,
+					HomeFloatRightHebrew="שָּׁמַיִם",
+					HomeTitleSuffix=" shaMayim H8064",
+					SitemapUsage=true
+				},
+
 				new Link
 				{
 					Index = Podcast.Index,

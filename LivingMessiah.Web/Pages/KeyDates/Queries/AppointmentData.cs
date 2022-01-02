@@ -1,7 +1,9 @@
 ﻿using System;
 
+//ToDo Delete, duplicate with Page/Calendar
 namespace LivingMessiah.Web.Pages.KeyDates.Queries
 {
+
 	public class AppointmentData
 	{
     public int Id { get; set; }
@@ -18,4 +20,5 @@ namespace LivingMessiah.Web.Pages.KeyDates.Queries
     public string StartTimezone { get; set; }
     public string EndTimezone { get; set; }
   }
+
 }

@@ -25,14 +25,17 @@
 	<div class="schedule-wrapper">
 		<SfSchedule TValue="ScheduleData.AppointmentData" 
 								Width="100%" Height="650px" 
-								@bind-SelectedDate="@CurrentDate" @bind-CurrentView="@ViewNow">
+								@bind-SelectedDate="@CurrentDate" 
+								@bind-CurrentView="@ViewNow">
+			<ScheduleEvents TValue="ScheduleData.AppointmentData" 
+											EventRendered="OnEventRendered"/>
 			<ScheduleViews>
 				<ScheduleView Option="View.Day"></ScheduleView>
 				<ScheduleView Option="View.Week"></ScheduleView>
 				<ScheduleView Option="View.Month" MaxEventsPerRow="2"></ScheduleView>
 				<ScheduleView Option="View.Year"></ScheduleView>
 			</ScheduleViews>
-			<ScheduleEventSettings DataSource="@DataSource"></ScheduleEventSettings>
+			<ScheduleEventSettings DataSource="@DataSource"/>
 		</SfSchedule>
 	</div>
 </div>
@@ -65,7 +68,8 @@
 </div>
 
 @code{
-	public List<ScheduleData.AppointmentData> DataSource = new ScheduleData().GetZooEventData();
+	public List<ScheduleData.AppointmentData> DataSource 
+		= new ScheduleData().GetZooEventData();
 
 	public View ViewNow = View.Week;
 
@@ -83,5 +87,10 @@
 		public string Name { get; set; }
 		public View Value { get; set; }
 	}
+
+	   public void OnEventRendered(EventRenderedArgs<ScheduleData.AppointmentData> args)
+    {
+        args.Attributes = ScheduleData.ApplyCategoryColor(args.Data.CategoryColor, args.Attributes, ViewNow);
+    }
 
 }

@@ -13,6 +13,28 @@ namespace LivingMessiah.Web.Pages.KeyDates.Queries
 		public string Descr { get; set; }   //CalendarTemplateId.Descr
 		public DateTypeEnum DateTypeEnum { get; set; }  // 1:Month; 2:Feast; 3:Season; CalendarTemplate.DateTypeId AS DateTypeEnum
 
+		//public BaseDateTypeSmartEnum DateTypeSmartEnum
+		//{
+		//	get
+		//	{
+		//		return BaseDateTypeSmartEnum.FromValue((int)DateTypeEnum);
+		//	}
+		//}
+
+		//public string CalendarColor
+		//{
+		//	get
+		//	{
+		//		//BaseDateTypeSmartEnum baseDateTypeSmartEnum = BaseDateTypeSmartEnum.FromValue((int)DateTypeEnum);
+		//		//if (baseDateTypeSmartEnum.Value == )
+		//		//{
+
+		//		//}
+		//		return "";
+		//	}
+		//}
+
+
 		//public string TypeDescr { get; set; }  // KeyDate.DateType dt dt.Descr AS TypeDescr
 
 		public override string ToString()

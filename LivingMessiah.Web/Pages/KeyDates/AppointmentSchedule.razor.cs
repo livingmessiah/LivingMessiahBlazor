@@ -20,7 +20,31 @@ namespace LivingMessiah.Web.Pages.KeyDates
 		[Parameter]
 		public int YearId { get; set; }
 
-		protected const bool DumpData = true;
+		private bool IsHidden { get; set; } = false;
+		private void Show()
+		{
+			IsHidden = !IsHidden;
+		}
+
+		//const string TOGGLE_MSG = "";
+		//protected bool IsHidden { get; set; } = false;
+		//protected string OppositeIcon { get; set; } = "<i class='far fa-arrow-alt-circle-down'></i>";
+		//protected string OppositeToggleMsg { get; set; } = "Show " + TOGGLE_MSG;
+
+		//private void Show()
+		//{
+		//	IsHidden = !IsHidden;
+		//	if (IsHidden)
+		//	{
+		//		OppositeIcon = "<i class='far fa-arrow-alt-circle-up'></i>";
+		//		OppositeToggleMsg = "Hide " + TOGGLE_MSG;
+		//	}
+		//	else
+		//	{
+		//		OppositeIcon = "<i class='far fa-arrow-alt-circle-down'></i>";
+		//		OppositeToggleMsg = "Show " + TOGGLE_MSG;
+		//	}
+		//}
 
 		public DateTime CurrentDate = new DateTime(2022, 1, 1); // ToDo: fix this
 

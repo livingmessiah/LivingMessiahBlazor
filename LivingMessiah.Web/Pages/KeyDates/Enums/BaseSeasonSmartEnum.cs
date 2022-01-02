@@ -1,4 +1,5 @@
 ﻿using Ardalis.SmartEnum;
+using LivingMessiah.Web.Pages.Calendar;
 
 namespace LivingMessiah.Web.Pages.KeyDates.Enums
 {
@@ -31,6 +32,7 @@ namespace LivingMessiah.Web.Pages.KeyDates.Enums
 		public abstract string Type { get; }
 		public abstract string BadgeColor { get; }
 		public abstract string Icon { get; }
+		public abstract string CalendarColor { get; }
 
 		#endregion
 
@@ -42,6 +44,7 @@ namespace LivingMessiah.Web.Pages.KeyDates.Enums
 			public override string Type => "Equinox";
 			public override string BadgeColor => "badge-warning";
 			public override string Icon => "fab fa-canadian-maple-leaf";
+			public override string CalendarColor => CalendarColors.Warning;
 		}
 		private sealed class WinterSE : BaseSeasonSmartEnum
 		{
@@ -49,6 +52,7 @@ namespace LivingMessiah.Web.Pages.KeyDates.Enums
 			public override string Type => "Solstice";
 			public override string BadgeColor => "badge-primary";
 			public override string Icon => "fas fa-snowflake";
+			public override string CalendarColor => CalendarColors.Primary;
 		}
 		private sealed class SpringSE : BaseSeasonSmartEnum
 		{
@@ -56,6 +60,7 @@ namespace LivingMessiah.Web.Pages.KeyDates.Enums
 			public override string Type => "Equinox";
 			public override string BadgeColor => "badge-success";
 			public override string Icon => "fas fa-cloud-sun-rain";
+			public override string CalendarColor => CalendarColors.Success;
 		}
 		private sealed class SummerSE : BaseSeasonSmartEnum
 		{
@@ -63,6 +68,7 @@ namespace LivingMessiah.Web.Pages.KeyDates.Enums
 			public override string Type => "Solstice";
 			public override string BadgeColor => "badge-danger";
 			public override string Icon => "far fa-sun";
+			public override string CalendarColor => CalendarColors.Danger;
 		}
 		private sealed class FallEOYSE : BaseSeasonSmartEnum
 		{
@@ -70,6 +76,7 @@ namespace LivingMessiah.Web.Pages.KeyDates.Enums
 			public override string Type => "Equinox";
 			public override string BadgeColor => "badge-warning";
 			public override string Icon => "fab fa-canadian-maple-leaf";
+			public override string CalendarColor => CalendarColors.Warning;
 		}
 		#endregion
 

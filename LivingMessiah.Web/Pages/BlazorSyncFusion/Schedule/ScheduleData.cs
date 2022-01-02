@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+//https://raw.githubusercontent.com/syncfusion/blazor-samples/master/Pages/Schedule/Scheduler/ScheduleData.cs
 //namespace BlazorDemos.Pages.Schedule.Scheduler
 namespace LivingMessiah.Web.Pages.BlazorSyncFusion.Schedule
 {
@@ -10,6 +11,20 @@ namespace LivingMessiah.Web.Pages.BlazorSyncFusion.Schedule
 	{
 		/*
 		*/
+
+		public static Dictionary<string, object> ApplyCategoryColor(string CategoryColor, Dictionary<string, object> Attributes, Syncfusion.Blazor.Schedule.View CurrentView)
+		{
+			Dictionary<string, object> attributes = new Dictionary<string, object>();
+			if (CurrentView == Syncfusion.Blazor.Schedule.View.Agenda)
+			{
+				attributes.Add("style", "border-left-color: " + CategoryColor);
+			}
+			else
+			{
+				attributes.Add("style", "background: " + CategoryColor);
+			}
+			return attributes;
+		}
 
 		public class AppointmentData
 		{
@@ -28,6 +43,7 @@ namespace LivingMessiah.Web.Pages.BlazorSyncFusion.Schedule
 			public string StartTimezone { get; set; }
 			public string EndTimezone { get; set; }
 		}
+	
 		public List<AppointmentData> GetZooEventData()
 		{
 			List<AppointmentData> zooEventData = new List<AppointmentData>();
@@ -178,229 +194,325 @@ namespace LivingMessiah.Web.Pages.BlazorSyncFusion.Schedule
 			return zooEventData;
 		}
 
-		/*
-						public List<AppointmentData> GetScheduleData()
-						{
-							List<AppointmentData> appData = new List<AppointmentData>();
-							appData.Add(new AppointmentData
-							{
-								Id = 1,
-								Subject = "Explosion of Betelgeuse Star",
-								Location = "Space Centre USA",
-								StartTime = new DateTime(2020, 1, 5, 9, 30, 0),
-								EndTime = new DateTime(2020, 1, 5, 11, 0, 0),
-								CategoryColor = "#1aaa55"
-							});
-							appData.Add(new AppointmentData
-							{
-								Id = 2,
-								Subject = "Thule Air Crash Report",
-								Location = "Newyork City",
-								StartTime = new DateTime(2020, 1, 6, 12, 0, 0),
-								EndTime = new DateTime(2020, 1, 6, 14, 0, 0),
-								CategoryColor = "#357cd2"
-							});
-							appData.Add(new AppointmentData
-							{
-								Id = 3,
-								Subject = "Blue Moon Eclipse",
-								Location = "Space Centre USA",
-								StartTime = new DateTime(2020, 1, 7, 9, 30, 0),
-								EndTime = new DateTime(2020, 1, 7, 11, 0, 0),
-								CategoryColor = "#7fa900"
-							});
-							appData.Add(new AppointmentData
-							{
-								Id = 4,
-								Subject = "Meteor Showers in 2018",
-								Location = "Space Centre USA",
-								StartTime = new DateTime(2020, 1, 8, 13, 0, 0),
-								EndTime = new DateTime(2020, 1, 8, 14, 30, 0),
-								CategoryColor = "#ea7a57"
-							});
-							appData.Add(new AppointmentData
-							{
-								Id = 5,
-								Subject = "Milky Way as Melting pot",
-								Location = "Space Centre USA",
-								StartTime = new DateTime(2020, 1, 9, 12, 0, 0),
-								EndTime = new DateTime(2020, 1, 9, 14, 0, 0),
-								CategoryColor = "#00bdae"
-							});
-							appData.Add(new AppointmentData
-							{
-								Id = 6,
-								Subject = "Mysteries of Bermuda Triangle",
-								Location = "Bermuda",
-								StartTime = new DateTime(2020, 1, 9, 9, 30, 0),
-								EndTime = new DateTime(2020, 1, 9, 11, 0, 0),
-								CategoryColor = "#f57f17"
-							});
-							appData.Add(new AppointmentData
-							{
-								Id = 7,
-								Subject = "Glaciers and Snowflakes",
-								Location = "Himalayas",
-								StartTime = new DateTime(2020, 1, 10, 11, 0, 0),
-								EndTime = new DateTime(2020, 1, 10, 12, 30, 0),
-								CategoryColor = "#1aaa55"
-							});
-							appData.Add(new AppointmentData
-							{
-								Id = 8,
-								Subject = "Life on Mars",
-								Location = "Space Centre USA",
-								StartTime = new DateTime(2020, 1, 11, 9, 0, 0),
-								EndTime = new DateTime(2020, 1, 11, 10, 0, 0),
-								CategoryColor = "#357cd2"
-							});
-							appData.Add(new AppointmentData
-							{
-								Id = 9,
-								Subject = "Alien Civilization",
-								Location = "Space Centre USA",
-								StartTime = new DateTime(2020, 1, 13, 11, 0, 0),
-								EndTime = new DateTime(2020, 1, 13, 13, 0, 0),
-								CategoryColor = "#7fa900"
-							});
-							appData.Add(new AppointmentData
-							{
-								Id = 10,
-								Subject = "Wildlife Galleries",
-								Location = "Africa",
-								StartTime = new DateTime(2020, 1, 15, 11, 0, 0),
-								EndTime = new DateTime(2020, 1, 15, 13, 0, 0),
-								CategoryColor = "#ea7a57"
-							});
-							appData.Add(new AppointmentData
-							{
-								Id = 11,
-								Subject = "Best Photography 2018",
-								Location = "London",
-								StartTime = new DateTime(2020, 1, 16, 9, 30, 0),
-								EndTime = new DateTime(2020, 1, 16, 11, 0, 0),
-								CategoryColor = "#00bdae"
-							});
-							appData.Add(new AppointmentData
-							{
-								Id = 12,
-								Subject = "Smarter Puppies",
-								Location = "Sweden",
-								StartTime = new DateTime(2020, 1, 3, 10, 0, 0),
-								EndTime = new DateTime(2020, 1, 3, 11, 30, 0),
-								CategoryColor = "#f57f17"
-							});
-							appData.Add(new AppointmentData
-							{
-								Id = 13,
-								Subject = "Myths of Andromeda Galaxy",
-								Location = "Space Centre USA",
-								StartTime = new DateTime(2020, 1, 1, 10, 30, 0),
-								EndTime = new DateTime(2020, 1, 1, 12, 30, 0),
-								CategoryColor = "#1aaa55"
-							});
-							appData.Add(new AppointmentData
-							{
-								Id = 14,
-								Subject = "Aliens vs Humans",
-								Location = "Research Centre of USA",
-								StartTime = new DateTime(2019, 12, 31, 10, 0, 0),
-								EndTime = new DateTime(2019, 12, 31, 11, 30, 0),
-								CategoryColor = "#357cd2"
-							});
-							appData.Add(new AppointmentData
-							{
-								Id = 15,
-								Subject = "Facts of Humming Birds",
-								Location = "California",
-								StartTime = new DateTime(2020, 1, 14, 9, 30, 0),
-								EndTime = new DateTime(2020, 1, 14, 11, 0, 0),
-								CategoryColor = "#7fa900"
-							});
-							appData.Add(new AppointmentData
-							{
-								Id = 16,
-								Subject = "Sky Gazers",
-								Location = "Alaska",
-								StartTime = new DateTime(2020, 1, 17, 11, 0, 0),
-								EndTime = new DateTime(2020, 1, 17, 13, 0, 0),
-								CategoryColor = "#ea7a57"
-							});
-							appData.Add(new AppointmentData
-							{
-								Id = 17,
-								Subject = "The Cycle of Seasons",
-								Location = "Research Centre of USA",
-								StartTime = new DateTime(2020, 1, 6, 5, 30, 0),
-								EndTime = new DateTime(2020, 1, 6, 7, 30, 0),
-								CategoryColor = "#00bdae"
-							});
-							appData.Add(new AppointmentData
-							{
-								Id = 18,
-								Subject = "Space Galaxies and Planets",
-								Location = "Space Centre USA",
-								StartTime = new DateTime(2020, 1, 6, 17, 0, 0),
-								EndTime = new DateTime(2020, 1, 6, 18, 30, 0),
-								CategoryColor = "#f57f17"
-							});
-							appData.Add(new AppointmentData
-							{
-								Id = 19,
-								Subject = "Lifecycle of Bumblebee",
-								Location = "San Fransisco",
-								StartTime = new DateTime(2020, 1, 9, 6, 0, 0),
-								EndTime = new DateTime(2020, 1, 9, 7, 30, 0),
-								CategoryColor = "#7fa900"
-							});
-							appData.Add(new AppointmentData
-							{
-								Id = 20,
-								Subject = "Alien Civilization",
-								Location = "Space Centre USA",
-								StartTime = new DateTime(2020, 1, 9, 16, 0, 0),
-								EndTime = new DateTime(2020, 1, 9, 18, 0, 0),
-								CategoryColor = "#ea7a57"
-							});
-							appData.Add(new AppointmentData
-							{
-								Id = 21,
-								Subject = "Alien Civilization",
-								Location = "Space Centre USA",
-								StartTime = new DateTime(2020, 1, 5, 14, 0, 0),
-								EndTime = new DateTime(2020, 1, 5, 16, 0, 0),
-								CategoryColor = "#ea7a57"
-							});
-							appData.Add(new AppointmentData
-							{
-								Id = 22,
-								Subject = "The Cycle of Seasons",
-								Location = "Research Centre of USA",
-								StartTime = new DateTime(2020, 1, 7, 14, 30, 0),
-								EndTime = new DateTime(2020, 1, 7, 16, 0, 0),
-								CategoryColor = "#00bdae"
-							});
-							appData.Add(new AppointmentData
-							{
-								Id = 23,
-								Subject = "Sky Gazers",
-								Location = "Greenland",
-								StartTime = new DateTime(2020, 1, 10, 14, 30, 0),
-								EndTime = new DateTime(2020, 1, 10, 16, 0, 0),
-								CategoryColor = "#ea7a57"
-							});
-							appData.Add(new AppointmentData
-							{
-								Id = 24,
-								Subject = "Facts of Humming Birds",
-								Location = "California",
-								StartTime = new DateTime(2020, 1, 11, 12, 30, 0),
-								EndTime = new DateTime(2020, 1, 11, 14, 30, 0),
-								CategoryColor = "#7fa900"
-							});
-							return appData;
-						}
+		public List<AppointmentData> GetScheduleData()
+		{
+			List<AppointmentData> appData = new List<AppointmentData>();
+			appData.Add(new AppointmentData
+			{
+				Id = 1,
+				Subject = "Explosion of Betelgeuse Star",
+				Location = "Space Centre USA",
+				StartTime = new DateTime(2020, 1, 5, 9, 30, 0),
+				EndTime = new DateTime(2020, 1, 5, 11, 0, 0),
+				CategoryColor = "#1aaa55"
+			});
+			appData.Add(new AppointmentData
+			{
+				Id = 2,
+				Subject = "Thule Air Crash Report",
+				Location = "Newyork City",
+				StartTime = new DateTime(2020, 1, 6, 12, 0, 0),
+				EndTime = new DateTime(2020, 1, 6, 14, 0, 0),
+				CategoryColor = "#357cd2"
+			});
+			appData.Add(new AppointmentData
+			{
+				Id = 3,
+				Subject = "Blue Moon Eclipse",
+				Location = "Space Centre USA",
+				StartTime = new DateTime(2020, 1, 7, 9, 30, 0),
+				EndTime = new DateTime(2020, 1, 7, 11, 0, 0),
+				CategoryColor = "#7fa900"
+			});
+			appData.Add(new AppointmentData
+			{
+				Id = 4,
+				Subject = "Meteor Showers in 2018",
+				Location = "Space Centre USA",
+				StartTime = new DateTime(2020, 1, 8, 13, 0, 0),
+				EndTime = new DateTime(2020, 1, 8, 14, 30, 0),
+				CategoryColor = "#ea7a57"
+			});
+			appData.Add(new AppointmentData
+			{
+				Id = 5,
+				Subject = "Milky Way as Melting pot",
+				Location = "Space Centre USA",
+				StartTime = new DateTime(2020, 1, 9, 12, 0, 0),
+				EndTime = new DateTime(2020, 1, 9, 14, 0, 0),
+				CategoryColor = "#00bdae"
+			});
+			appData.Add(new AppointmentData
+			{
+				Id = 6,
+				Subject = "Mysteries of Bermuda Triangle",
+				Location = "Bermuda",
+				StartTime = new DateTime(2020, 1, 9, 9, 30, 0),
+				EndTime = new DateTime(2020, 1, 9, 11, 0, 0),
+				CategoryColor = "#f57f17"
+			});
+			appData.Add(new AppointmentData
+			{
+				Id = 7,
+				Subject = "Glaciers and Snowflakes",
+				Location = "Himalayas",
+				StartTime = new DateTime(2020, 1, 10, 11, 0, 0),
+				EndTime = new DateTime(2020, 1, 10, 12, 30, 0),
+				CategoryColor = "#1aaa55"
+			});
+			appData.Add(new AppointmentData
+			{
+				Id = 8,
+				Subject = "Life on Mars",
+				Location = "Space Centre USA",
+				StartTime = new DateTime(2020, 1, 11, 9, 0, 0),
+				EndTime = new DateTime(2020, 1, 11, 10, 0, 0),
+				CategoryColor = "#357cd2"
+			});
+			appData.Add(new AppointmentData
+			{
+				Id = 9,
+				Subject = "Alien Civilization",
+				Location = "Space Centre USA",
+				StartTime = new DateTime(2020, 1, 13, 11, 0, 0),
+				EndTime = new DateTime(2020, 1, 13, 13, 0, 0),
+				CategoryColor = "#7fa900"
+			});
+			appData.Add(new AppointmentData
+			{
+				Id = 10,
+				Subject = "Wildlife Galleries",
+				Location = "Africa",
+				StartTime = new DateTime(2020, 1, 15, 11, 0, 0),
+				EndTime = new DateTime(2020, 1, 15, 13, 0, 0),
+				CategoryColor = "#ea7a57"
+			});
+			appData.Add(new AppointmentData
+			{
+				Id = 11,
+				Subject = "Best Photography 2018",
+				Location = "London",
+				StartTime = new DateTime(2020, 1, 16, 9, 30, 0),
+				EndTime = new DateTime(2020, 1, 16, 11, 0, 0),
+				CategoryColor = "#00bdae"
+			});
+			appData.Add(new AppointmentData
+			{
+				Id = 12,
+				Subject = "Smarter Puppies",
+				Location = "Sweden",
+				StartTime = new DateTime(2020, 1, 3, 10, 0, 0),
+				EndTime = new DateTime(2020, 1, 3, 11, 30, 0),
+				CategoryColor = "#f57f17"
+			});
+			appData.Add(new AppointmentData
+			{
+				Id = 13,
+				Subject = "Myths of Andromeda Galaxy",
+				Location = "Space Centre USA",
+				StartTime = new DateTime(2020, 1, 1, 10, 30, 0),
+				EndTime = new DateTime(2020, 1, 1, 12, 30, 0),
+				CategoryColor = "#1aaa55"
+			});
+			appData.Add(new AppointmentData
+			{
+				Id = 14,
+				Subject = "Aliens vs Humans",
+				Location = "Research Centre of USA",
+				StartTime = new DateTime(2019, 12, 31, 10, 0, 0),
+				EndTime = new DateTime(2019, 12, 31, 11, 30, 0),
+				CategoryColor = "#357cd2"
+			});
+			appData.Add(new AppointmentData
+			{
+				Id = 15,
+				Subject = "Facts of Humming Birds",
+				Location = "California",
+				StartTime = new DateTime(2020, 1, 14, 9, 30, 0),
+				EndTime = new DateTime(2020, 1, 14, 11, 0, 0),
+				CategoryColor = "#7fa900"
+			});
+			appData.Add(new AppointmentData
+			{
+				Id = 16,
+				Subject = "Sky Gazers",
+				Location = "Alaska",
+				StartTime = new DateTime(2020, 1, 17, 11, 0, 0),
+				EndTime = new DateTime(2020, 1, 17, 13, 0, 0),
+				CategoryColor = "#ea7a57"
+			});
+			appData.Add(new AppointmentData
+			{
+				Id = 17,
+				Subject = "The Cycle of Seasons",
+				Location = "Research Centre of USA",
+				StartTime = new DateTime(2020, 1, 6, 5, 30, 0),
+				EndTime = new DateTime(2020, 1, 6, 7, 30, 0),
+				CategoryColor = "#00bdae"
+			});
+			appData.Add(new AppointmentData
+			{
+				Id = 18,
+				Subject = "Space Galaxies and Planets",
+				Location = "Space Centre USA",
+				StartTime = new DateTime(2020, 1, 6, 17, 0, 0),
+				EndTime = new DateTime(2020, 1, 6, 18, 30, 0),
+				CategoryColor = "#f57f17"
+			});
+			appData.Add(new AppointmentData
+			{
+				Id = 19,
+				Subject = "Lifecycle of Bumblebee",
+				Location = "San Fransisco",
+				StartTime = new DateTime(2020, 1, 9, 6, 0, 0),
+				EndTime = new DateTime(2020, 1, 9, 7, 30, 0),
+				CategoryColor = "#7fa900"
+			});
+			appData.Add(new AppointmentData
+			{
+				Id = 20,
+				Subject = "Alien Civilization",
+				Location = "Space Centre USA",
+				StartTime = new DateTime(2020, 1, 9, 16, 0, 0),
+				EndTime = new DateTime(2020, 1, 9, 18, 0, 0),
+				CategoryColor = "#ea7a57"
+			});
+			appData.Add(new AppointmentData
+			{
+				Id = 21,
+				Subject = "Alien Civilization",
+				Location = "Space Centre USA",
+				StartTime = new DateTime(2020, 1, 5, 14, 0, 0),
+				EndTime = new DateTime(2020, 1, 5, 16, 0, 0),
+				CategoryColor = "#ea7a57"
+			});
+			appData.Add(new AppointmentData
+			{
+				Id = 22,
+				Subject = "The Cycle of Seasons",
+				Location = "Research Centre of USA",
+				StartTime = new DateTime(2020, 1, 7, 14, 30, 0),
+				EndTime = new DateTime(2020, 1, 7, 16, 0, 0),
+				CategoryColor = "#00bdae"
+			});
+			appData.Add(new AppointmentData
+			{
+				Id = 23,
+				Subject = "Sky Gazers",
+				Location = "Greenland",
+				StartTime = new DateTime(2020, 1, 10, 14, 30, 0),
+				EndTime = new DateTime(2020, 1, 10, 16, 0, 0),
+				CategoryColor = "#ea7a57"
+			});
+			appData.Add(new AppointmentData
+			{
+				Id = 24,
+				Subject = "Facts of Humming Birds",
+				Location = "California",
+				StartTime = new DateTime(2020, 1, 11, 12, 30, 0),
+				EndTime = new DateTime(2020, 1, 11, 14, 30, 0),
+				CategoryColor = "#7fa900"
+			});
+			return appData;
+		}
 
+		public class ReadonlyEventsData : AppointmentData
+		{
+			public bool IsReadonly { get; set; }
+		}
+
+		public List<ReadonlyEventsData> GetReadonlyEventsData()
+		{
+			DateTime dateNow = DateTime.Now;
+			DateTime dateNow1 = DateTime.Now.AddDays(-2);
+			DateTime dateNow2 = DateTime.Now.AddDays(-1);
+			DateTime dateNow3 = DateTime.Now.AddDays(1);
+			DateTime dateNow4 = DateTime.Now.AddDays(2);
+			List<ReadonlyEventsData> readonlyEventsData = new List<ReadonlyEventsData>();
+			readonlyEventsData.Add(new ReadonlyEventsData
+			{
+				Id = 1,
+				Subject = "Project Workflow Analysis",
+				StartTime = new DateTime(dateNow1.Year, dateNow1.Month, dateNow1.Day, dateNow1.AddHours(2).Hour, 0, 0),
+				EndTime = new DateTime(dateNow1.Year, dateNow1.Month, dateNow1.Day, dateNow1.AddHours(4).Hour, 0, 0),
+				IsReadonly = true
+			});
+			readonlyEventsData.Add(new ReadonlyEventsData
+			{
+				Id = 2,
+				Subject = "Project Requirement Planning",
+				StartTime = new DateTime(dateNow2.Year, dateNow2.Month, dateNow2.Day, dateNow2.AddHours(2).Hour, 0, 0),
+				EndTime = new DateTime(dateNow2.Year, dateNow2.Month, dateNow2.Day, dateNow2.AddHours(4).Hour, 0, 0),
+				IsReadonly = true
+			});
+			readonlyEventsData.Add(new ReadonlyEventsData
+			{
+				Id = 3,
+				Subject = "Meeting with Developers",
+				StartTime = new DateTime(dateNow2.Year, dateNow2.Month, dateNow2.Day, dateNow2.AddHours(-3).Hour, 0, 0),
+				EndTime = new DateTime(dateNow2.Year, dateNow2.Month, dateNow2.Day, dateNow2.AddHours(-1).Hour, 0, 0),
+				IsReadonly = true
+			});
+			readonlyEventsData.Add(new ReadonlyEventsData
+			{
+				Id = 4,
+				Subject = "Team Fun Activities",
+				StartTime = new DateTime(dateNow.Year, dateNow.Month, dateNow.Day, dateNow.AddHours(-4).Hour, 0, 0),
+				EndTime = new DateTime(dateNow.Year, dateNow.Month, dateNow.Day, dateNow.AddHours(-2).Hour, 0, 0),
+				IsReadonly = true
+			});
+			readonlyEventsData.Add(new ReadonlyEventsData
+			{
+				Id = 5,
+				Subject = "Quality Analysis",
+				StartTime = new DateTime(dateNow.Year, dateNow.Month, dateNow.Day, dateNow.AddHours(1).Hour, 0, 0),
+				EndTime = new DateTime(dateNow.Year, dateNow.Month, dateNow.Day, dateNow.AddHours(3).Hour, 0, 0),
+				IsReadonly = false
+			});
+			readonlyEventsData.Add(new ReadonlyEventsData
+			{
+				Id = 6,
+				Subject = "Customer meeting – John Mackenzie",
+				StartTime = new DateTime(dateNow.Year, dateNow.Month, dateNow.Day, dateNow.AddHours(5).Hour, 0, 0),
+				EndTime = new DateTime(dateNow.Year, dateNow.Month, dateNow.Day, dateNow.AddHours(6).Hour, 0, 0),
+				IsReadonly = false
+			});
+			readonlyEventsData.Add(new ReadonlyEventsData
+			{
+				Id = 7,
+				Subject = "Meeting with Core team",
+				StartTime = new DateTime(dateNow.Year, dateNow.Month, dateNow.Day, dateNow.AddHours(9).Hour, 0, 0),
+				EndTime = new DateTime(dateNow.Year, dateNow.Month, dateNow.Day, dateNow.AddHours(10).Hour, 0, 0),
+				IsReadonly = false
+			});
+			readonlyEventsData.Add(new ReadonlyEventsData
+			{
+				Id = 8,
+				Subject = "Project Review",
+				StartTime = new DateTime(dateNow3.Year, dateNow3.Month, dateNow3.Day, dateNow3.AddHours(3).Hour, 0, 0),
+				EndTime = new DateTime(dateNow3.Year, dateNow3.Month, dateNow3.Day, dateNow3.AddHours(5).Hour, 0, 0),
+				IsReadonly = false
+			});
+			readonlyEventsData.Add(new ReadonlyEventsData
+			{
+				Id = 9,
+				Subject = "Project demo meeting with Andrew",
+				StartTime = new DateTime(dateNow3.Year, dateNow3.Month, dateNow3.Day, dateNow3.AddHours(-4).Hour, 0, 0),
+				EndTime = new DateTime(dateNow3.Year, dateNow3.Month, dateNow3.Day, dateNow3.AddHours(-3).Hour, 0, 0),
+				IsReadonly = false
+			});
+			readonlyEventsData.Add(new ReadonlyEventsData
+			{
+				Id = 10,
+				Subject = "Online Hosting of Project",
+				StartTime = new DateTime(dateNow4.Year, dateNow4.Month, dateNow4.Day, dateNow4.AddHours(4).Hour, 0, 0),
+				EndTime = new DateTime(dateNow4.Year, dateNow4.Month, dateNow4.Day, dateNow4.AddHours(6).Hour, 0, 0),
+				IsReadonly = false
+			});
+			return readonlyEventsData;
+		}
+
+		/*
 						public List<ContextEventsData> GetContextEventData()
 						{
 							List<ContextEventsData> appData = new List<ContextEventsData>();
@@ -623,96 +735,6 @@ namespace LivingMessiah.Web.Pages.BlazorSyncFusion.Schedule
 							return appData;
 						}
 
-						public List<ReadonlyEventsData> GetReadonlyEventsData()
-						{
-							DateTime dateNow = DateTime.Now;
-							DateTime dateNow1 = DateTime.Now.AddDays(-2);
-							DateTime dateNow2 = DateTime.Now.AddDays(-1);
-							DateTime dateNow3 = DateTime.Now.AddDays(1);
-							DateTime dateNow4 = DateTime.Now.AddDays(2);
-							List<ReadonlyEventsData> readonlyEventsData = new List<ReadonlyEventsData>();
-							readonlyEventsData.Add(new ReadonlyEventsData
-							{
-								Id = 1,
-								Subject = "Project Workflow Analysis",
-								StartTime = new DateTime(dateNow1.Year, dateNow1.Month, dateNow1.Day, dateNow1.AddHours(2).Hour, 0, 0),
-								EndTime = new DateTime(dateNow1.Year, dateNow1.Month, dateNow1.Day, dateNow1.AddHours(4).Hour, 0, 0),
-								IsReadonly = true
-							});
-							readonlyEventsData.Add(new ReadonlyEventsData
-							{
-								Id = 2,
-								Subject = "Project Requirement Planning",
-								StartTime = new DateTime(dateNow2.Year, dateNow2.Month, dateNow2.Day, dateNow2.AddHours(2).Hour, 0, 0),
-								EndTime = new DateTime(dateNow2.Year, dateNow2.Month, dateNow2.Day, dateNow2.AddHours(4).Hour, 0, 0),
-								IsReadonly = true
-							});
-							readonlyEventsData.Add(new ReadonlyEventsData
-							{
-								Id = 3,
-								Subject = "Meeting with Developers",
-								StartTime = new DateTime(dateNow2.Year, dateNow2.Month, dateNow2.Day, dateNow2.AddHours(-3).Hour, 0, 0),
-								EndTime = new DateTime(dateNow2.Year, dateNow2.Month, dateNow2.Day, dateNow2.AddHours(-1).Hour, 0, 0),
-								IsReadonly = true
-							});
-							readonlyEventsData.Add(new ReadonlyEventsData
-							{
-								Id = 4,
-								Subject = "Team Fun Activities",
-								StartTime = new DateTime(dateNow.Year, dateNow.Month, dateNow.Day, dateNow.AddHours(-4).Hour, 0, 0),
-								EndTime = new DateTime(dateNow.Year, dateNow.Month, dateNow.Day, dateNow.AddHours(-2).Hour, 0, 0),
-								IsReadonly = true
-							});
-							readonlyEventsData.Add(new ReadonlyEventsData
-							{
-								Id = 5,
-								Subject = "Quality Analysis",
-								StartTime = new DateTime(dateNow.Year, dateNow.Month, dateNow.Day, dateNow.AddHours(1).Hour, 0, 0),
-								EndTime = new DateTime(dateNow.Year, dateNow.Month, dateNow.Day, dateNow.AddHours(3).Hour, 0, 0),
-								IsReadonly = false
-							});
-							readonlyEventsData.Add(new ReadonlyEventsData
-							{
-								Id = 6,
-								Subject = "Customer meeting – John Mackenzie",
-								StartTime = new DateTime(dateNow.Year, dateNow.Month, dateNow.Day, dateNow.AddHours(5).Hour, 0, 0),
-								EndTime = new DateTime(dateNow.Year, dateNow.Month, dateNow.Day, dateNow.AddHours(6).Hour, 0, 0),
-								IsReadonly = false
-							});
-							readonlyEventsData.Add(new ReadonlyEventsData
-							{
-								Id = 7,
-								Subject = "Meeting with Core team",
-								StartTime = new DateTime(dateNow.Year, dateNow.Month, dateNow.Day, dateNow.AddHours(9).Hour, 0, 0),
-								EndTime = new DateTime(dateNow.Year, dateNow.Month, dateNow.Day, dateNow.AddHours(10).Hour, 0, 0),
-								IsReadonly = false
-							});
-							readonlyEventsData.Add(new ReadonlyEventsData
-							{
-								Id = 8,
-								Subject = "Project Review",
-								StartTime = new DateTime(dateNow3.Year, dateNow3.Month, dateNow3.Day, dateNow3.AddHours(3).Hour, 0, 0),
-								EndTime = new DateTime(dateNow3.Year, dateNow3.Month, dateNow3.Day, dateNow3.AddHours(5).Hour, 0, 0),
-								IsReadonly = false
-							});
-							readonlyEventsData.Add(new ReadonlyEventsData
-							{
-								Id = 9,
-								Subject = "Project demo meeting with Andrew",
-								StartTime = new DateTime(dateNow3.Year, dateNow3.Month, dateNow3.Day, dateNow3.AddHours(-4).Hour, 0, 0),
-								EndTime = new DateTime(dateNow3.Year, dateNow3.Month, dateNow3.Day, dateNow3.AddHours(-3).Hour, 0, 0),
-								IsReadonly = false
-							});
-							readonlyEventsData.Add(new ReadonlyEventsData
-							{
-								Id = 10,
-								Subject = "Online Hosting of Project",
-								StartTime = new DateTime(dateNow4.Year, dateNow4.Month, dateNow4.Day, dateNow4.AddHours(4).Hour, 0, 0),
-								EndTime = new DateTime(dateNow4.Year, dateNow4.Month, dateNow4.Day, dateNow4.AddHours(6).Hour, 0, 0),
-								IsReadonly = false
-							});
-							return readonlyEventsData;
-						}
 						public List<ResourceData> GetResourceData()
 						{
 							List<ResourceData> resourceData = new List<ResourceData>();
@@ -7302,10 +7324,7 @@ namespace LivingMessiah.Web.Pages.BlazorSyncFusion.Schedule
 				{
 					public virtual Guid Guid { get; set; }
 				}
-				public class ReadonlyEventsData : AppointmentData
-				{
-					public bool IsReadonly { get; set; }
-				}
+
 				public class ResourceData : AppointmentData
 				{
 					public int ProjectId { get; set; }

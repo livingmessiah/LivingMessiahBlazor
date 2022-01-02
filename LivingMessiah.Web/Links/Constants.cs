@@ -102,6 +102,13 @@
 		public const string Icon = "far fa-moon";
 	}
 
+	public static class Calendar
+	{
+		public const string Index = "/Calendar";
+		public const string Title = "Calendar";
+		public const string Icon = "far fa-calendar-alt";  
+	}
+
 	public static class Contact
 	{
 		public const string Index = "/Contact";

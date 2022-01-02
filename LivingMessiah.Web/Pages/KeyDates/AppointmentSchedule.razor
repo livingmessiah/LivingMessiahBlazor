@@ -25,18 +25,18 @@
 				<ScheduleView Option="View.Year" IsSelected="true"></ScheduleView>
 
 				@*<ScheduleView MaxEventsPerRow="5" Option="View.TimelineYear"
-											Orientation="Syncfusion.Blazor.Schedule.Orientation.Vertical"
-											DisplayName="Vertical Timeline Year">
-					<ScheduleViewGroup Resources="@ResourceName"></ScheduleViewGroup>
-				</ScheduleView>*@
+												Orientation="Syncfusion.Blazor.Schedule.Orientation.Vertical"
+												DisplayName="Vertical Timeline Year">
+						<ScheduleViewGroup Resources="@ResourceName"></ScheduleViewGroup>
+					</ScheduleView>*@
 
 			</ScheduleViews>
 
 			@*<ScheduleResources>
-				<ScheduleResource TItem="ResourceData" TValue="int" DataSource="@TaskData"
-													Field="TaskId" Title="Category" Name="Categories" TextField="Text"
-													IdField="Id" ColorField="Color"></ScheduleResource>
-			</ScheduleResources>*@
+					<ScheduleResource TItem="ResourceData" TValue="int" DataSource="@TaskData"
+														Field="TaskId" Title="Category" Name="Categories" TextField="Text"
+														IdField="Id" ColorField="Color"></ScheduleResource>
+				</ScheduleResources>*@
 
 
 		</SfSchedule>
@@ -45,25 +45,74 @@
 
 @*<div class="row mt-2">
 
-	<div class="col-6">
-		Current View
-	</div>
-
-	<div class="col-6">
-		<div>
-			<SfDropDownList TValue="View" TItem="DropDownData"
-											@bind-Value="@ViewNow" DataSource="@ViewData">
-				<DropDownListFieldSettings Text="Name" Value="Value"></DropDownListFieldSettings>
-			</SfDropDownList>
+		<div class="col-6">
+			Current View
 		</div>
+
+		<div class="col-6">
+			<div>
+				<SfDropDownList TValue="View" TItem="DropDownData"
+												@bind-Value="@ViewNow" DataSource="@ViewData">
+					<DropDownListFieldSettings Text="Name" Value="Value"></DropDownListFieldSettings>
+				</SfDropDownList>
+			</div>
+		</div>
+
 	</div>
 
-</div>*@
+*@
+
+@*<div class="row col-12 my-2">
+		<h5>Toggle Button with Icon</h5>
+		<SfButton CssClass="e-flat"
+							IsPrimary="true"
+							IconCss="@IconCss"
+							Content="@Content"
+							IsToggle="true"
+							@onclick="OnToggleClick"
+							@ref="ToggleBtnObj">
+		</SfButton>
+
+	</div>*@
+
+<button @onclick="@Show">Show/Hide</button>
+
+<div hidden="@IsHidden" class="row">
+	<div class="col-12">
+		<TableTemplate Items="AppointmentDataList">
+			<TableHeader>
+				<th>Id</th>
+				<th>Subject</th>
+				<th>Description</th>
+				<th>Start Time</th>
+				<th>End Time</th>
+			</TableHeader>
+			<RowTemplate>
+				<td>@context.Id</td>
+				<td>@context.Subject</td>
+				<td>@context.Description</td>
+				<td>@context.StartTime.ToShortDateString()</td>
+				<td>@context.EndTime.ToShortDateString()</td>
+			</RowTemplate>
+		</TableTemplate>
+	</div>
+</div>
 
 
-@if (DumpData)
-{
-	<div class="row mt-2">
+
+@*<div class="row">
+		<div class="col-12">
+			<button class="my-3 btn btn-xlarge btn-primary"
+							@onclick="@Show">
+				@((MarkupString)OppositeIcon) @OppositeToggleMsg
+			</button>
+		</div>
+	</div>*@
+
+
+@*<div hidden="@IsHidden"></div>*@
+
+	@*<div class="row mt-2">
 		<div class="col-12">
 			<LoadingComponent IsLoading="AppointmentDataList==null">
 				<div class="card mb-3 border-warning">
@@ -83,24 +132,25 @@
 								<th>Description</th>
 								<th>Start Time</th>
 								<th>End Time</th>
-								@*<th>IsAllDay</th>*@
 							</TableHeader>
 							<RowTemplate>
 								<td>@context.Id</td>
 								<td>@context.Subject</td>
 								<td>@context.Description</td>
-								<td>@context.StartTime</td>
-								<td>@context.EndTime</td>
-								@*<td>@context.IsAllDay</td>*@
+								<td>@context.StartTime.ToShortDateString()</td>
+								<td>@context.EndTime.ToShortDateString()</td>
 							</RowTemplate>
 						</TableTemplate>
 					</div>
-					@*<p class="card-footer text-center">	Count: @AppointmentDataList.Count	</p>*@
 				</div>
 			</LoadingComponent>
 		</div>
-	</div>
-}
+	</div>*@
+
+
+
+
+
 
 
 

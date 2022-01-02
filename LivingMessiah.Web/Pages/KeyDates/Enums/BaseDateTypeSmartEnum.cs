@@ -1,4 +1,5 @@
 ﻿using Ardalis.SmartEnum;
+using LivingMessiah.Web.Pages.Calendar;
 
 namespace LivingMessiah.Web.Pages.KeyDates.Enums
 {
@@ -7,6 +8,7 @@ namespace LivingMessiah.Web.Pages.KeyDates.Enums
 		#region Id's
 		private static class Id
 		{
+			//LivingMessiah.Web.Pages.KeyDates.Enums.DateTypeEnum
 			internal const int Month = 1;
 			internal const int Feast = 2;
 			internal const int Season = 3;
@@ -26,6 +28,8 @@ namespace LivingMessiah.Web.Pages.KeyDates.Enums
 		public abstract string BadgeColor { get; }
 		public abstract string Icon { get; }
 		public abstract string TextColor { get; }
+		public abstract string CalendarColor { get; }
+		//public abstract DateTypeEnum DateTypeEnum {get; }
 		#endregion
 
 		#region Private Instantiation
@@ -35,6 +39,8 @@ namespace LivingMessiah.Web.Pages.KeyDates.Enums
 			public override string BadgeColor => "badge-info"; 
 			public override string Icon => "far fa-moon";
 			public override string TextColor => "text-info";
+			public override string CalendarColor => CalendarColors.Dark;
+			//public override DateTypeEnum DateTypeEnum => DateTypeEnum.Month;
 		}
 
 		private sealed class FeastSE : BaseDateTypeSmartEnum
@@ -43,6 +49,8 @@ namespace LivingMessiah.Web.Pages.KeyDates.Enums
 			public override string BadgeColor => "badge-primary"; 
 			public override string Icon => "fas fa-glass-cheers";
 			public override string TextColor => "text-primary";
+			public override string CalendarColor => CalendarColors.Blue;
+			//public override DateTypeEnum DateTypeEnum => DateTypeEnum.Feast;
 		}
 
 		private sealed class SeasonSE : BaseDateTypeSmartEnum
@@ -51,6 +59,8 @@ namespace LivingMessiah.Web.Pages.KeyDates.Enums
 			public override string BadgeColor => "badge-success"; 
 			public override string Icon => "fas fa-calendar-alt";  // See BaseSeasonSmartEnum
 			public override string TextColor => "text-success";
+			public override string CalendarColor => CalendarColors.Olive;
+			//public override DateTypeEnum DateTypeEnum => DateTypeEnum.Season;
 		}
 		#endregion
 
