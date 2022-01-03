@@ -70,7 +70,6 @@
 
   <ItemGroup>
     <_ContentIncludedByDefault Remove="Pages\BlazorSyncFusion\Dialogs\SfDialogNestedDialogs.razor" />
-    <_ContentIncludedByDefault Remove="Pages\KeyDates\Obsolete\Index.razor" />
     <_ContentIncludedByDefault Remove="Shared\EnvComponent.razor" />
   </ItemGroup>
 
@@ -98,10 +97,6 @@
 
   <ItemGroup>
     <UpToDateCheckInput Remove="Pages\BlazorSyncFusion\Dialogs\SfDialogNestedDialogs.razor" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <UpToDateCheckInput Remove="Pages\KeyDates\Obsolete\Index.razor" />
   </ItemGroup>
 
 

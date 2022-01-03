@@ -17,7 +17,6 @@ using LivingMessiah.Web.Pages.SukkotAdmin.Registration.Data;
 using LivingMessiah.Web.Pages.SukkotAdmin.Registration.Services;
 using LivingMessiah.Web.Pages.Contacts.Data;
 using LivingMessiah.Web.Pages.KeyDates.Data;
-using LivingMessiah.Web.Pages.KeyDates.Services;
 using LivingMessiah.Web.Pages.UpcomingEvents.Data;
 using LivingMessiah.Web.Pages.SmartEnums;
 using LivingMessiah.Web.Pages.BlazorSyncFusion.Shared;
@@ -51,8 +50,6 @@ namespace LivingMessiah.Web
 				//.AddSingleton<ISukkotSettings, SukkotSettings>()
 				.AddTransient<ISukkotService, SukkotService>()
 				.AddTransient<IRegistrationService, RegistrationService>()
-
-				.AddTransient<IKeyDateService, KeyDateService>()
 
 				.AddTransient<IRegistrationRepository, RegistrationRepository>()
 				.AddTransient<IDonationRepository, DonationRepository>()

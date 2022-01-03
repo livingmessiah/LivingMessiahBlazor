@@ -22,12 +22,15 @@ namespace LivingMessiah.Web.Pages.KeyDates
 		protected bool CalenderReadyForSale = true;
 
 		#region DropDownList
+		
+		// ToDo: not referenced, wanted to convert the UI (Index.razor) to a modal
 		protected List<DropDownListVM> DataSource => svcDDL.GetKeyDateYearVM().ToList();
 
 		public string SelectedValue = BaseKeyDateYearSmartEnum.Current.Name;
 		public int SelectedId = BaseKeyDateYearSmartEnum.Current.Value;
 		public int SelectedYear = BaseKeyDateYearSmartEnum.Current.Year;
 
+		// ToDo: not referenced, wanted to convert the UI (Index.razor) to a modal
 		public void OnChange(ChangeEventArgs<string, DropDownListVM> args)
 		{
 			int i = int.TryParse(args.ItemData.Value, out i) ? i : 0;
