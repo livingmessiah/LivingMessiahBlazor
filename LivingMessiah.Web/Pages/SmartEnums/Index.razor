@@ -7,49 +7,6 @@
 		<li><a href="/SmartEnums/BibleBooks">Bible Books</a></li>
 </ul>
 
-<LoadingComponent IsLoading="DateExplodeList==null">
-
-	<div class="card mb-3 border-warning">
-		<div class="card-header">
-			<h4 class="card-title text-center">vwDateExplode</h4>
-		</div>
-		<div class="card-body">
-			<TableTemplate Items="DateExplodeList">
-				<TableHeader>
-					<th>Year</th>
-					<th>Gregorian Year</th>
-					<th>Date</th>
-					<th>DateTypeEnum</th>
-					<th>DateTypeEnumId</th>
-				</TableHeader>
-				<RowTemplate>
-					<td>@context.Year</td>
-					<td>@context.GregorianYear</td>
-					<td>@context.Date.ToShortDateString()</td>
-					<td>@context.DateTypeEnum</td>
-					<td>@context.DateTypeEnumId</td>
-				</RowTemplate>
-			</TableTemplate>
-		</div>
-		<p class="card-footer text-center">
-			Count: @DateExplodeList.Count
-			<br /><span class="text-black-50"><small>Source: DateExplodeList</small></span>
-		</p>
-
-		<p class="card-footer">
-			<code>
-				SELECT <br />
-				YearId, Date, GregorianYear, DateTypeId AS DateTypeEnum, DateTypeEnumId <br />
-				FROM KeyDate.vwDateExplode <br />
-				CROSS JOIN KeyDate.Constants c <br />
-				WHERE YearId = {GetYearId(relativeYear)} <br />
-				ORDER BY Date
-			</code>
-		</p>
-
-	</div>
-
-</LoadingComponent>
 <LunarMonths></LunarMonths>
 <FeastDays></FeastDays>
 <Seasons></Seasons>

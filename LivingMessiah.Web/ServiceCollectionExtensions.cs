@@ -18,7 +18,6 @@ using LivingMessiah.Web.Pages.SukkotAdmin.Registration.Services;
 using LivingMessiah.Web.Pages.Contacts.Data;
 using LivingMessiah.Web.Pages.KeyDates.Data;
 using LivingMessiah.Web.Pages.UpcomingEvents.Data;
-using LivingMessiah.Web.Pages.SmartEnums;
 using LivingMessiah.Web.Pages.BlazorSyncFusion.Shared;
 
 namespace LivingMessiah.Web
@@ -43,7 +42,6 @@ namespace LivingMessiah.Web
 				.AddTransient<IUpcomingEventsRepository, UpcomingEventsRepository>()
 				.AddTransient<IGridDataAdaptor, GridDataAdaptor>()
 				.AddSingleton<IKeyDateRepository, KeyDateRepository>()
-				.AddSingleton<ISmartEnumRepository, SmartEnumRepository>()
 
 				.AddTransient<ISecurityClaimsService, SecurityClaimsService>()
 

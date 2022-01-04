@@ -1,23 +1,37 @@
 ﻿@using LivingMessiah.Web.Pages.UpcomingEvents
 @using LivingMessiah.Web.Pages.KeyDates.Enums
 
+@*
+	- Location: Pages\UpcomingEvents\DetailKeyDate.razor
+	- Called by: Pages\UpcomingEvents\Index.razor
+		- foreach (var item in UpcomingEventList
+			- if (item.EventTypeEnum == EventTypeEnum.KeyDate)
+				<DetailKeyDate UpcomingEvent="@item"
+
+	[Parameter]	public UpcomingEvent UpcomingEvent { get; set; }
+
+*@
+
 @switch (UpcomingEvent.DateTypeEnum)
 {
 	case DateTypeEnum.Month:
-		<LunarMonth EventDate="@UpcomingEvent.EventDate" DaysAhead="@UpcomingEvent.DaysAhead" IsXsOrSm="@IsXsOrSm"
+		<LunarMonth EventDate="@UpcomingEvent.EventDate"
+								DaysAhead="@UpcomingEvent.DaysAhead" IsXsOrSm="@IsXsOrSm"
 								BaseLunarMonthSmartEnum="@BaseLunarMonthSmartEnum.FromValue(UpcomingEvent.EnumId)">
 		</LunarMonth>
 		break;
 
 	case DateTypeEnum.Feast:
-		<Feast EventDate="@UpcomingEvent.EventDate" DaysAhead="@UpcomingEvent.DaysAhead" IsXsOrSm="@IsXsOrSm"
+		<Feast EventDate="@UpcomingEvent.EventDate"
+					 DaysAhead="@UpcomingEvent.DaysAhead" IsXsOrSm="@IsXsOrSm"
 					 FeastDayLocal="@FeastDayLocal.FromInt(UpcomingEvent.EnumId)"
-					 ImgUrl ="@UpcomingEvent.ImageUrl">
+					 ImgUrl="@UpcomingEvent.ImageUrl">
 		</Feast>
 		break;
 
 	case DateTypeEnum.Season:
-		<Season EventDate="@UpcomingEvent.EventDate" DaysAhead="@UpcomingEvent.DaysAhead" IsXsOrSm="@IsXsOrSm"
+		<Season EventDate="@UpcomingEvent.EventDate"
+						DaysAhead="@UpcomingEvent.DaysAhead" IsXsOrSm="@IsXsOrSm"
 						SeasonLocal="@SeasonLocal.FromInt(UpcomingEvent.EnumId)">
 		</Season>
 		break;

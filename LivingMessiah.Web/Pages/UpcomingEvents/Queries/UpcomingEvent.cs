@@ -9,7 +9,7 @@ namespace LivingMessiah.Web.Pages.UpcomingEvents.Queries
 		public DateTime EventDate { get; set; } 
 		public EventTypeEnum EventTypeEnum { get; set; }
 		public DateTypeEnum DateTypeEnum { get; set; }    
-		public int EnumId { get; set; }     
+		public int EnumId { get; set; }     // ToDo Depricated
 		public int DaysDiff { get; set; }
 		public string DaysDiffDescr { get; set; }
 		public string Title { get; set; }

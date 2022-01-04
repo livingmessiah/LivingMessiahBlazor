@@ -142,7 +142,8 @@ WHERE Id = @Id
 			base.Sql = $@"
 --DECLARE @DaysAhead int =100, @DaysPast int =-3
 SELECT
-  Id, EventDate, EventTypeEnum, DateTypeEnum, EnumId
+  Id, EventDate, EventTypeEnum, DateTypeEnum
+, EnumId  -- ToDo: Depricated
 , DaysDiff, DaysDiffDescr
 , Title, SubTitle, ImageUrl, WebsiteUrl, WebsiteDescr, YouTubeId
 , ISNULL(Description, '') AS Description -- MarkDig doesnt like nulls
