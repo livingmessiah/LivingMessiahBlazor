@@ -9,8 +9,6 @@ namespace LivingMessiah.Web.Pages.BlazorSyncFusion.Schedule
 {
 	public class ScheduleData
 	{
-		/*
-		*/
 
 		public static Dictionary<string, object> ApplyCategoryColor(string CategoryColor, Dictionary<string, object> Attributes, Syncfusion.Blazor.Schedule.View CurrentView)
 		{
@@ -511,6 +509,1749 @@ namespace LivingMessiah.Web.Pages.BlazorSyncFusion.Schedule
 			});
 			return readonlyEventsData;
 		}
+
+		#region WebinarData
+		public class WebinarData : AppointmentData
+		{
+			public string Tags { get; set; }
+			public string ImageName { get; set; }
+			public string PrimaryColor { get; set; }
+			public string SecondaryColor { get; set; }
+		}
+
+		public List<WebinarData> GetWebinarData()
+		{
+			List<WebinarData> webinarData = new List<WebinarData>();
+			webinarData.Add(new WebinarData
+			{
+				Id = 1,
+				Subject = "Environment Day",
+				Tags = "Eco day, Forest conserving, Earth & its resources",
+				Description = "A day that creates awareness to promote the healthy planet and reduce the air pollution crisis on nature earth.",
+				StartTime = new DateTime(2020, 1, 13, 9, 0, 0),
+				EndTime = new DateTime(2020, 1, 13, 14, 0, 0),
+				ImageName = "environment-day",
+				PrimaryColor = "#1aaa55",
+				SecondaryColor = "#47bb76"
+			});
+			webinarData.Add(new WebinarData
+			{
+				Id = 2,
+				Subject = "Health Day",
+				Tags = "Reduce mental stress, Follow good food habits",
+				Description = "A day that raises awareness on different health issues. It marks the anniversary of the foundation of WHO.",
+				StartTime = new DateTime(2020, 1, 14, 9, 0, 0),
+				EndTime = new DateTime(2020, 1, 14, 14, 0, 0),
+				ImageName = "health-day",
+				PrimaryColor = "#357cd2",
+				SecondaryColor = "#5d96db"
+			});
+			webinarData.Add(new WebinarData
+			{
+				Id = 3,
+				Subject = "Cancer Day",
+				Tags = "Life threatening cancer effects, Palliative care",
+				Description = "A day that raises awareness on cancer and its preventive measures. Early detection saves life.",
+				StartTime = new DateTime(2020, 1, 15, 9, 0, 0),
+				EndTime = new DateTime(2020, 1, 15, 14, 0, 0),
+				ImageName = "cancer-day",
+				PrimaryColor = "#7fa900",
+				SecondaryColor = "#a4c932"
+			});
+			webinarData.Add(new WebinarData
+			{
+				Id = 4,
+				Subject = "Happiness Day",
+				Tags = "Stress-free, Smile, Resolve frustration and bring happiness",
+				Description = "A general idea is to promote happiness and smile around the world.",
+				StartTime = new DateTime(2020, 1, 16, 9, 0, 0),
+				EndTime = new DateTime(2020, 1, 16, 14, 0, 0),
+				ImageName = "happiness-day",
+				PrimaryColor = "#ea7a57",
+				SecondaryColor = "#ee9478"
+			});
+			webinarData.Add(new WebinarData
+			{
+				Id = 5,
+				Subject = "Tourism Day",
+				Tags = "Diverse cultural heritage, strengthen peace",
+				Description = "A day that raises awareness on the role of tourism and its effect on social and economic values.",
+				StartTime = new DateTime(2020, 1, 17, 9, 0, 0),
+				EndTime = new DateTime(2020, 1, 17, 14, 0, 0),
+				ImageName = "tourism-day",
+				PrimaryColor = "#00bdae",
+				SecondaryColor = "#32cabe"
+			});
+			return webinarData;
+		}
+		#endregion
+
+		#region RoomData
+		public class RoomData : AppointmentData
+		{
+			public int RoomId { get; set; }
+			public bool IsBlock { get; set; }
+			public virtual string ElementType { get; set; }
+			public virtual DateTime? StartTimeValue { get; set; }
+			public virtual DateTime? EndTimeValue { get; set; }
+		}
+		public class RoomsData
+		{
+			public string Name { get; set; }
+			public int? Id { get; set; }
+			public int Capacity { get; set; }
+			public string Color { get; set; }
+			public string Type { get; set; }
+		}
+
+		public List<RoomData> GetRoomData()
+		{
+			List<RoomData> roomData = new List<RoomData>();
+			roomData.Add(new RoomData
+			{
+				Id = 1,
+				Subject = "Board Meeting",
+				Description = "Meeting to discuss business goal of 2020.",
+				StartTime = new DateTime(2019, 12, 30, 9, 0, 0),
+				EndTime = new DateTime(2019, 12, 30, 11, 0, 0),
+				RoomId = 1
+			});
+			roomData.Add(new RoomData
+			{
+				Id = 2,
+				Subject = "Training session on JSP",
+				Description = "Knowledge sharing on JSP topics.",
+				StartTime = new DateTime(2019, 12, 30, 15, 0, 0),
+				EndTime = new DateTime(2019, 12, 30, 17, 0, 0),
+				RoomId = 5
+			});
+			roomData.Add(new RoomData
+			{
+				Id = 3,
+				Subject = "Sprint Planning with Team members",
+				Description = "Planning tasks for sprint.",
+				StartTime = new DateTime(2019, 12, 30, 9, 30, 0),
+				EndTime = new DateTime(2019, 12, 30, 11, 0, 0),
+				RoomId = 3
+			});
+			roomData.Add(new RoomData
+			{
+				Id = 4,
+				Subject = "Meeting with Client",
+				Description = "Customer meeting to discuss features.",
+				StartTime = new DateTime(2019, 12, 30, 11, 0, 0),
+				EndTime = new DateTime(2019, 12, 30, 13, 0, 0),
+				RoomId = 4
+			});
+			roomData.Add(new RoomData
+			{
+				Id = 5,
+				Subject = "Support Meeting with Managers",
+				Description = "Meeting to discuss support plan.",
+				StartTime = new DateTime(2019, 12, 30, 16, 0, 0),
+				EndTime = new DateTime(2019, 12, 30, 17, 30, 0),
+				RoomId = 5
+			});
+			roomData.Add(new RoomData
+			{
+				Id = 6,
+				Subject = "Client Meeting",
+				Description = "Meeting to discuss client requirements.",
+				StartTime = new DateTime(2019, 12, 30, 10, 30, 0),
+				EndTime = new DateTime(2019, 12, 30, 13, 0, 0),
+				RoomId = 6
+			});
+			roomData.Add(new RoomData
+			{
+				Id = 7,
+				Subject = "Appraisal Meeting",
+				Description = "Meeting to discuss employee appraisals.",
+				StartTime = new DateTime(2019, 12, 30, 15, 0, 0),
+				EndTime = new DateTime(2019, 12, 30, 16, 30, 0),
+				RoomId = 7
+			});
+			roomData.Add(new RoomData
+			{
+				Id = 8,
+				Subject = "HR Meeting",
+				Description = "Meeting to discuss HR plans.",
+				StartTime = new DateTime(2019, 12, 30, 8, 0, 0),
+				EndTime = new DateTime(2019, 12, 30, 9, 0, 0),
+				RoomId = 4
+			});
+			roomData.Add(new RoomData
+			{
+				Id = 9,
+				Subject = "Customer Meeting",
+				Description = "Meeting to discuss customer reported issues.",
+				StartTime = new DateTime(2019, 12, 30, 10, 0, 0),
+				EndTime = new DateTime(2019, 12, 30, 12, 0, 0),
+				RoomId = 8
+			});
+			roomData.Add(new RoomData
+			{
+				Id = 10,
+				Subject = "Board Meeting",
+				Description = "Meeting to discuss business plans.",
+				StartTime = new DateTime(2019, 12, 30, 14, 30, 0),
+				EndTime = new DateTime(2019, 12, 30, 17, 0, 0),
+				RoomId = 9
+			});
+			roomData.Add(new RoomData
+			{
+				Id = 11,
+				Subject = "Training session on Vue",
+				Description = "Knowledge sharing on Vue concepts.",
+				StartTime = new DateTime(2019, 12, 30, 9, 0, 0),
+				EndTime = new DateTime(2019, 12, 30, 10, 30, 0),
+				RoomId = 10
+			});
+			roomData.Add(new RoomData
+			{
+				Id = 12,
+				Subject = "Meeting with Team members",
+				Description = "Meeting to discuss on work report.",
+				StartTime = new DateTime(2019, 12, 30, 11, 30, 0),
+				EndTime = new DateTime(2019, 12, 30, 12, 0, 0),
+				RoomId = 5
+			});
+			roomData.Add(new RoomData
+			{
+				Id = 13,
+				Subject = "Meeting with General Manager",
+				Description = "Meeting to discuss support plan.",
+				StartTime = new DateTime(2019, 12, 30, 14, 0, 0),
+				EndTime = new DateTime(2019, 12, 30, 16, 0, 0),
+				RoomId = 5
+			});
+			roomData.Add(new RoomData
+			{
+				Id = 14,
+				Subject = "Board Meeting",
+				Description = "Meeting to discuss business goal of 2020.",
+				StartTime = new DateTime(2019, 12, 31, 9, 0, 0),
+				EndTime = new DateTime(2019, 12, 31, 11, 0, 0),
+				RoomId = 1
+			});
+			roomData.Add(new RoomData
+			{
+				Id = 15,
+				Subject = "Training session on JSP",
+				Description = "Knowledge sharing on JSP topics.",
+				StartTime = new DateTime(2019, 12, 31, 14, 0, 0),
+				EndTime = new DateTime(2019, 12, 31, 17, 0, 0),
+				RoomId = 6
+			});
+			roomData.Add(new RoomData
+			{
+				Id = 16,
+				Subject = "Sprint Planning with Team members",
+				Description = "Planning tasks for sprint.",
+				StartTime = new DateTime(2019, 12, 31, 9, 30, 0),
+				EndTime = new DateTime(2019, 12, 31, 11, 0, 0),
+				RoomId = 2
+			});
+			roomData.Add(new RoomData
+			{
+				Id = 17,
+				Subject = "Meeting with Client",
+				Description = "Customer meeting to discuss features.",
+				StartTime = new DateTime(2019, 12, 31, 11, 0, 0),
+				EndTime = new DateTime(2019, 12, 31, 13, 0, 0),
+				RoomId = 7
+			});
+			roomData.Add(new RoomData
+			{
+				Id = 18,
+				Subject = "Support Meeting with Managers",
+				Description = "Meeting to discuss support plan.",
+				StartTime = new DateTime(2019, 12, 31, 16, 0, 0),
+				EndTime = new DateTime(2019, 12, 31, 17, 30, 0),
+				RoomId = 2
+			});
+			roomData.Add(new RoomData
+			{
+				Id = 19,
+				Subject = "Training session on C#",
+				Description = "Training session",
+				StartTime = new DateTime(2019, 12, 31, 14, 30, 0),
+				EndTime = new DateTime(2019, 12, 31, 16, 0, 0),
+				RoomId = 9
+			});
+			roomData.Add(new RoomData
+			{
+				Id = 20,
+				Subject = "Client Meeting",
+				Description = "Meeting to discuss client requirements.",
+				StartTime = new DateTime(2019, 12, 31, 10, 30, 0),
+				EndTime = new DateTime(2019, 12, 31, 13, 0, 0),
+				RoomId = 3
+			});
+			roomData.Add(new RoomData
+			{
+				Id = 21,
+				Subject = "Appraisal Meeting",
+				Description = "Meeting to discuss employee appraisals.",
+				StartTime = new DateTime(2019, 12, 31, 15, 0, 0),
+				EndTime = new DateTime(2019, 12, 31, 16, 30, 0),
+				RoomId = 3
+			});
+			roomData.Add(new RoomData
+			{
+				Id = 22,
+				Subject = "HR Meeting",
+				Description = "Meeting to discuss HR plans.",
+				StartTime = new DateTime(2019, 12, 31, 8, 0, 0),
+				EndTime = new DateTime(2019, 12, 31, 9, 0, 0),
+				RoomId = 4
+			});
+			roomData.Add(new RoomData
+			{
+				Id = 23,
+				Subject = "Customer Meeting",
+				Description = "Meeting to discuss customer reported issues.",
+				StartTime = new DateTime(2019, 12, 31, 10, 0, 0),
+				EndTime = new DateTime(2019, 12, 31, 12, 0, 0),
+				RoomId = 4
+			});
+			roomData.Add(new RoomData
+			{
+				Id = 24,
+				Subject = "Board Meeting",
+				Description = "Meeting to discuss business plans.",
+				StartTime = new DateTime(2020, 1, 1, 16, 30, 0),
+				EndTime = new DateTime(2020, 1, 1, 18, 0, 0),
+				RoomId = 10
+			});
+			roomData.Add(new RoomData
+			{
+				Id = 25,
+				Subject = "Training session on Vue",
+				Description = "Knowledge sharing on Vue concepts.",
+				StartTime = new DateTime(2019, 12, 31, 9, 0, 0),
+				EndTime = new DateTime(2019, 12, 31, 10, 30, 0),
+				RoomId = 5
+			});
+			roomData.Add(new RoomData
+			{
+				Id = 26,
+				Subject = "Meeting with Team members",
+				Description = "Meeting to discuss on work report.",
+				StartTime = new DateTime(2019, 12, 31, 11, 30, 0),
+				EndTime = new DateTime(2019, 12, 31, 12, 0, 0),
+				RoomId = 5
+			});
+			roomData.Add(new RoomData
+			{
+				Id = 27,
+				Subject = "Meeting with General Manager",
+				Description = "Meeting to discuss support plan.",
+				StartTime = new DateTime(2019, 12, 31, 14, 0, 0),
+				EndTime = new DateTime(2019, 12, 31, 16, 0, 0),
+				RoomId = 10
+			});
+
+			roomData.Add(new RoomData
+			{
+				Id = 28,
+				Subject = "Board Meeting",
+				Description = "Meeting to discuss business goal of 2020.",
+				StartTime = new DateTime(2020, 1, 1, 9, 0, 0),
+				EndTime = new DateTime(2020, 1, 1, 11, 0, 0),
+				RoomId = 1
+			});
+			roomData.Add(new RoomData
+			{
+				Id = 29,
+				Subject = "Training session on JSP",
+				Description = "Knowledge sharing on JSP topics.",
+				StartTime = new DateTime(2020, 1, 1, 17, 0, 0),
+				EndTime = new DateTime(2020, 1, 1, 20, 0, 0),
+				RoomId = 6
+			});
+			roomData.Add(new RoomData
+			{
+				Id = 30,
+				Subject = "Sprint Planning with Team members",
+				Description = "Planning tasks for sprint.",
+				StartTime = new DateTime(2020, 1, 1, 10, 30, 0),
+				EndTime = new DateTime(2020, 1, 1, 12, 0, 0),
+				RoomId = 2
+			});
+			roomData.Add(new RoomData
+			{
+				Id = 31,
+				Subject = "Meeting with Client",
+				Description = "Customer meeting to discuss features.",
+				StartTime = new DateTime(2020, 1, 1, 18, 0, 0),
+				EndTime = new DateTime(2020, 1, 1, 20, 0, 0),
+				RoomId = 8
+			});
+			roomData.Add(new RoomData
+			{
+				Id = 32,
+				Subject = "Support Meeting with Managers",
+				Description = "Meeting to discuss support plan.",
+				StartTime = new DateTime(2020, 1, 1, 16, 0, 0),
+				EndTime = new DateTime(2020, 1, 1, 17, 30, 0),
+				RoomId = 7
+			});
+			roomData.Add(new RoomData
+			{
+				Id = 33,
+				Subject = "Training session on C#",
+				Location = "Office",
+				Description = "Training session",
+				StartTime = new DateTime(2020, 1, 1, 14, 30, 0),
+				EndTime = new DateTime(2020, 1, 1, 16, 0, 0),
+				RoomId = 2
+			});
+			roomData.Add(new RoomData
+			{
+				Id = 34,
+				Subject = "Client Meeting",
+				Description = "Meeting to discuss client requirements.",
+				StartTime = new DateTime(2020, 1, 1, 10, 30, 0),
+				EndTime = new DateTime(2020, 1, 1, 13, 0, 0),
+				RoomId = 3
+			});
+			roomData.Add(new RoomData
+			{
+				Id = 35,
+				Subject = "Appraisal Meeting",
+				Description = "Meeting to discuss employee appraisals.",
+				StartTime = new DateTime(2020, 1, 1, 15, 0, 0),
+				EndTime = new DateTime(2020, 1, 1, 16, 30, 0),
+				RoomId = 8
+			});
+			roomData.Add(new RoomData
+			{
+				Id = 36,
+				Subject = "HR Meeting",
+				Description = "Meeting to discuss HR plans.",
+				StartTime = new DateTime(2020, 1, 1, 9, 30, 0),
+				EndTime = new DateTime(2020, 1, 1, 11, 30, 0),
+				RoomId = 4
+			});
+			roomData.Add(new RoomData
+			{
+				Id = 37,
+				Subject = "Customer Meeting",
+				Description = "Meeting to discuss customer reported issues.",
+				StartTime = new DateTime(2020, 1, 1, 10, 0, 0),
+				EndTime = new DateTime(2020, 1, 1, 12, 0, 0),
+				RoomId = 9
+			});
+			roomData.Add(new RoomData
+			{
+				Id = 38,
+				Subject = "Board Meeting",
+				Description = "Meeting to discuss business plans.",
+				StartTime = new DateTime(2020, 1, 1, 15, 0, 0),
+				EndTime = new DateTime(2020, 1, 1, 17, 0, 0),
+				RoomId = 4
+			});
+			roomData.Add(new RoomData
+			{
+				Id = 39,
+				Subject = "Training session on Vue",
+				Description = "Knowledge sharing on Vue concepts.",
+				StartTime = new DateTime(2020, 1, 1, 9, 0, 0),
+				EndTime = new DateTime(2020, 1, 1, 10, 30, 0),
+				RoomId = 5
+			});
+			roomData.Add(new RoomData
+			{
+				Id = 40,
+				Subject = "Meeting with Team members",
+				Description = "Meeting to discuss on work report.",
+				StartTime = new DateTime(2020, 1, 1, 11, 30, 0),
+				EndTime = new DateTime(2020, 1, 1, 12, 30, 0),
+				RoomId = 5
+			});
+			roomData.Add(new RoomData
+			{
+				Id = 41,
+				Subject = "Meeting with General Manager",
+				Description = "Meeting to discuss support plan.",
+				StartTime = new DateTime(2020, 1, 1, 14, 0, 0),
+				EndTime = new DateTime(2020, 1, 1, 16, 0, 0),
+				RoomId = 10
+			});
+			roomData.Add(new RoomData
+			{
+				Id = 43,
+				Subject = "HR Meeting",
+				Description = "Meeting to discuss HR plans.",
+				StartTime = new DateTime(2020, 1, 1, 18, 0, 0),
+				EndTime = new DateTime(2020, 1, 1, 20, 0, 0),
+				RoomId = 2
+			});
+			roomData.Add(new RoomData
+			{
+				Id = 44,
+				Subject = "HR Meeting",
+				Description = "Meeting to discuss HR plans.",
+				StartTime = new DateTime(2020, 1, 1, 19, 0, 0),
+				EndTime = new DateTime(2020, 1, 1, 21, 0, 0),
+				RoomId = 1
+			});
+			roomData.Add(new RoomData
+			{
+				Id = 45,
+				Subject = "Client Meeting",
+				Description = "Meeting to discuss client requirements.",
+				StartTime = new DateTime(2020, 1, 1, 16, 30, 0),
+				EndTime = new DateTime(2020, 1, 1, 18, 0, 0),
+				RoomId = 3
+			});
+			roomData.Add(new RoomData
+			{
+				Id = 46,
+				Subject = "Board Meeting",
+				Description = "Meeting to discuss business plans.",
+				StartTime = new DateTime(2020, 1, 1, 18, 30, 0),
+				EndTime = new DateTime(2020, 1, 1, 20, 30, 0),
+				RoomId = 4
+			});
+			roomData.Add(new RoomData
+			{
+				Id = 47,
+				Subject = "Board Meeting",
+				Description = "Meeting to discuss business plans.",
+				StartTime = new DateTime(2020, 1, 1, 15, 30, 0),
+				EndTime = new DateTime(2020, 1, 1, 18, 0, 0),
+				RoomId = 5
+			});
+			roomData.Add(new RoomData
+			{
+				Id = 48,
+				Subject = "HR Meeting",
+				Description = "Meeting to discuss HR plans.",
+				StartTime = new DateTime(2020, 1, 1, 19, 30, 0),
+				EndTime = new DateTime(2020, 1, 1, 22, 0, 0),
+				RoomId = 5
+			});
+			roomData.Add(new RoomData
+			{
+				Id = 49,
+				Subject = "HR Meeting",
+				Description = "Meeting to discuss HR plans.",
+				StartTime = new DateTime(2020, 1, 1, 14, 30, 0),
+				EndTime = new DateTime(2020, 1, 1, 16, 0, 0),
+				RoomId = 6
+			});
+			roomData.Add(new RoomData
+			{
+				Id = 50,
+				Subject = "Board Meeting",
+				Description = "Meeting to discuss business plans.",
+				StartTime = new DateTime(2020, 1, 1, 9, 30, 0),
+				EndTime = new DateTime(2020, 1, 1, 12, 0, 0),
+				RoomId = 6
+			});
+			roomData.Add(new RoomData
+			{
+				Id = 51,
+				Subject = "Client Meeting",
+				Description = "Meeting to discuss client requirements.",
+				StartTime = new DateTime(2020, 1, 1, 10, 30, 0),
+				EndTime = new DateTime(2020, 1, 1, 12, 0, 0),
+				RoomId = 7
+			});
+			roomData.Add(new RoomData
+			{
+				Id = 52,
+				Subject = "Appraisal Meeting",
+				Description = "Meeting to discuss employee appraisals.",
+				StartTime = new DateTime(2020, 1, 1, 20, 0, 0),
+				EndTime = new DateTime(2020, 1, 1, 21, 30, 0),
+				RoomId = 7
+			});
+			roomData.Add(new RoomData
+			{
+				Id = 53,
+				Subject = "Support Meeting with Managers",
+				Description = "Meeting to discuss support plan.",
+				StartTime = new DateTime(2020, 1, 1, 15, 30, 0),
+				EndTime = new DateTime(2020, 1, 1, 17, 0, 0),
+				RoomId = 9
+			});
+			roomData.Add(new RoomData
+			{
+				Id = 54,
+				Subject = "Support Meeting with Managers",
+				Description = "Meeting to discuss support plan.",
+				StartTime = new DateTime(2020, 1, 1, 11, 0, 0),
+				EndTime = new DateTime(2020, 1, 1, 12, 30, 0),
+				RoomId = 8
+			});
+			roomData.Add(new RoomData
+			{
+				Id = 55,
+				Subject = "Support Meeting with Managers",
+				Description = "Meeting to discuss support plan.",
+				StartTime = new DateTime(2020, 1, 1, 11, 0, 0),
+				EndTime = new DateTime(2020, 1, 1, 12, 30, 0),
+				RoomId = 10
+			});
+			roomData.Add(new RoomData
+			{
+				Id = 56,
+				Subject = "Lunch Break",
+				StartTime = new DateTime(2020, 1, 1, 13, 0, 0),
+				EndTime = new DateTime(2020, 1, 1, 14, 0, 0),
+				RecurrenceRule = "FREQ=DAILY;INTERVAL=1;",
+				IsBlock = true,
+				RoomId = 1
+			});
+			roomData.Add(new RoomData
+			{
+				Id = 57,
+				Subject = "Lunch Break",
+				StartTime = new DateTime(2020, 1, 1, 13, 0, 0),
+				EndTime = new DateTime(2020, 1, 1, 14, 0, 0),
+				RecurrenceRule = "FREQ=DAILY;INTERVAL=1;",
+				IsBlock = true,
+				RoomId = 2
+			});
+			roomData.Add(new RoomData
+			{
+				Id = 58,
+				Subject = "Lunch Break",
+				StartTime = new DateTime(2020, 1, 1, 13, 0, 0),
+				EndTime = new DateTime(2020, 1, 1, 14, 0, 0),
+				RecurrenceRule = "FREQ=DAILY;INTERVAL=1;",
+				IsBlock = true,
+				RoomId = 3
+			});
+			roomData.Add(new RoomData
+			{
+				Id = 59,
+				Subject = "Lunch Break",
+				StartTime = new DateTime(2020, 1, 1, 13, 0, 0),
+				EndTime = new DateTime(2020, 1, 1, 14, 0, 0),
+				RecurrenceRule = "FREQ=DAILY;INTERVAL=1;",
+				IsBlock = true,
+				RoomId = 4
+			});
+			roomData.Add(new RoomData
+			{
+				Id = 60,
+				Subject = "Lunch Break",
+				StartTime = new DateTime(2020, 1, 1, 13, 0, 0),
+				EndTime = new DateTime(2020, 1, 1, 14, 0, 0),
+				RecurrenceRule = "FREQ=DAILY;INTERVAL=1;",
+				IsBlock = true,
+				RoomId = 5
+			});
+			roomData.Add(new RoomData
+			{
+				Id = 61,
+				Subject = "Lunch Break",
+				StartTime = new DateTime(2020, 1, 1, 13, 0, 0),
+				EndTime = new DateTime(2020, 1, 1, 14, 0, 0),
+				RecurrenceRule = "FREQ=DAILY;INTERVAL=1;",
+				IsBlock = true,
+				RoomId = 6
+			});
+			roomData.Add(new RoomData
+			{
+				Id = 62,
+				Subject = "Lunch Break",
+				StartTime = new DateTime(2020, 1, 1, 13, 0, 0),
+				EndTime = new DateTime(2020, 1, 1, 14, 0, 0),
+				RecurrenceRule = "FREQ=DAILY;INTERVAL=1;",
+				IsBlock = true,
+				RoomId = 7
+			});
+			roomData.Add(new RoomData
+			{
+				Id = 63,
+				Subject = "Lunch Break",
+				StartTime = new DateTime(2020, 1, 1, 13, 0, 0),
+				EndTime = new DateTime(2020, 1, 1, 14, 0, 0),
+				RecurrenceRule = "FREQ=DAILY;INTERVAL=1;",
+				IsBlock = true,
+				RoomId = 8
+			});
+			roomData.Add(new RoomData
+			{
+				Id = 64,
+				Subject = "Lunch Break",
+				StartTime = new DateTime(2020, 1, 1, 13, 0, 0),
+				EndTime = new DateTime(2020, 1, 1, 14, 0, 0),
+				RecurrenceRule = "FREQ=DAILY;INTERVAL=1;",
+				IsBlock = true,
+				RoomId = 9
+			});
+			roomData.Add(new RoomData
+			{
+				Id = 65,
+				Subject = "Lunch Break",
+				StartTime = new DateTime(2020, 1, 1, 13, 0, 0),
+				EndTime = new DateTime(2020, 1, 1, 14, 0, 0),
+				RecurrenceRule = "FREQ=DAILY;INTERVAL=1;",
+				IsBlock = true,
+				RoomId = 10
+			});
+			roomData.Add(new RoomData
+			{
+				Id = 66,
+				Subject = "Support meeting with Managers",
+				Description = "Planning tasks for sprint.",
+				StartTime = new DateTime(2020, 1, 1, 11, 0, 0),
+				EndTime = new DateTime(2020, 1, 1, 12, 30, 0),
+				RoomId = 2
+			});
+			return roomData;
+		}
+		public List<RoomData> GetRoomsData()
+		{
+			List<RoomData> roomData = new List<RoomData>();
+			roomData.Add(new RoomData
+			{
+				Id = 1,
+				Subject = "Board Meeting",
+				Description = "Meeting to discuss business goal of 2020.",
+				StartTime = new DateTime(2020, 1, 5, 9, 30, 0),
+				EndTime = new DateTime(2020, 1, 5, 11, 0, 0),
+				RoomId = 10
+			});
+			roomData.Add(new RoomData
+			{
+				Id = 2,
+				Subject = "Training session on JSP",
+				Description = "Knowledge sharing on JSP topics.",
+				StartTime = new DateTime(2020, 1, 7, 9, 30, 0),
+				EndTime = new DateTime(2020, 1, 7, 11, 0, 0),
+				RoomId = 8
+			});
+			roomData.Add(new RoomData
+			{
+				Id = 3,
+				Subject = "Sprint Planning with Team members",
+				Description = "Planning tasks for sprint.",
+				StartTime = new DateTime(2020, 1, 9, 9, 30, 0),
+				EndTime = new DateTime(2020, 1, 9, 11, 0, 0),
+				RoomId = 3
+			});
+			roomData.Add(new RoomData
+			{
+				Id = 4,
+				Subject = "Meeting with Client",
+				Description = "Customer meeting to discuss features.",
+				StartTime = new DateTime(2020, 1, 11, 9, 0, 0),
+				EndTime = new DateTime(2020, 1, 11, 10, 30, 0),
+				RoomId = 2
+			});
+			roomData.Add(new RoomData
+			{
+				Id = 5,
+				Subject = "Support Meeting with Managers",
+				Description = "Meeting to discuss support plan.",
+				StartTime = new DateTime(2020, 1, 6, 12, 0, 0),
+				EndTime = new DateTime(2020, 1, 6, 13, 30, 0),
+				RoomId = 5
+			});
+			roomData.Add(new RoomData
+			{
+				Id = 6,
+				Subject = "Client Meeting",
+				Description = "Meeting to discuss client requirements.",
+				StartTime = new DateTime(2020, 1, 8, 11, 30, 0),
+				EndTime = new DateTime(2020, 1, 8, 13, 0, 0),
+				RoomId = 1
+			});
+			roomData.Add(new RoomData
+			{
+				Id = 7,
+				Subject = "Appraisal Meeting",
+				Description = "Meeting to discuss employee appraisals.",
+				StartTime = new DateTime(2020, 1, 10, 11, 0, 0),
+				EndTime = new DateTime(2020, 1, 10, 12, 30, 0),
+				RoomId = 7
+			});
+			roomData.Add(new RoomData
+			{
+				Id = 8,
+				Subject = "HR Meeting",
+				Description = "Meeting to discuss HR plans.",
+				StartTime = new DateTime(2020, 1, 5, 13, 0, 0),
+				EndTime = new DateTime(2020, 1, 5, 14, 30, 0),
+				RoomId = 6
+			});
+			roomData.Add(new RoomData
+			{
+				Id = 9,
+				Subject = "Customer Meeting",
+				Description = "Meeting to discuss customer reported issues.",
+				StartTime = new DateTime(2020, 1, 9, 12, 30, 0),
+				EndTime = new DateTime(2020, 1, 9, 14, 0, 0),
+				RoomId = 4
+			});
+			roomData.Add(new RoomData
+			{
+				Id = 10,
+				Subject = "Board Meeting",
+				Description = "Meeting to discuss business plans.",
+				StartTime = new DateTime(2020, 1, 11, 13, 0, 0),
+				EndTime = new DateTime(2020, 1, 11, 14, 30, 0),
+				RoomId = 9
+			});
+			return roomData;
+		}
+		#endregion
+
+		#region FifaEventsData
+		public class FifaEventsData : AppointmentData
+		{
+			public string City { get; set; }
+			public int GroupId { get; set; }
+		}
+		public List<FifaEventsData> GetFifaEventsData()
+		{
+			List<FifaEventsData> fifaEventsData = new List<FifaEventsData>();
+			fifaEventsData.Add(new FifaEventsData
+			{
+				Id = 1,
+				Subject = "RUSSIA vs SAUDI ARABIA",
+				Description = "Group A",
+				StartTime = new DateTime(2020, 1, 16, 15, 0, 0),
+				EndTime = new DateTime(2020, 1, 16, 17, 0, 0),
+				StartTimezone = "Europe/Moscow",
+				EndTimezone = "Europe/Moscow",
+				City = "Moscow",
+				CategoryColor = "#1aaa55",
+				GroupId = 1
+			});
+			fifaEventsData.Add(new FifaEventsData
+			{
+				Id = 2,
+				Subject = "EGYPT vs URUGUAY",
+				Description = "Group A",
+				StartTime = new DateTime(2020, 1, 17, 12, 0, 0),
+				EndTime = new DateTime(2020, 1, 17, 14, 0, 0),
+				StartTimezone = "Asia/Yekaterinburg",
+				EndTimezone = "Asia/Yekaterinburg",
+				City = "Ekaterinburg",
+				CategoryColor = "#1aaa55",
+				GroupId = 1
+			});
+			fifaEventsData.Add(new FifaEventsData
+			{
+				Id = 3,
+				Subject = "MOROCCO vs IR IRAN",
+				Description = "Group B",
+				StartTime = new DateTime(2020, 1, 17, 15, 0, 0),
+				EndTime = new DateTime(2020, 1, 17, 17, 0, 0),
+				StartTimezone = "Europe/Moscow",
+				EndTimezone = "Europe/Moscow",
+				City = "Saint Petersburg",
+				CategoryColor = "#357cd2",
+				GroupId = 2
+			});
+			fifaEventsData.Add(new FifaEventsData
+			{
+				Id = 4,
+				Subject = "PORTUGAL vs SPAIN",
+				Description = "Group B",
+				StartTime = new DateTime(2020, 1, 17, 18, 0, 0),
+				EndTime = new DateTime(2020, 1, 17, 20, 0, 0),
+				StartTimezone = "Europe/Moscow",
+				EndTimezone = "Europe/Moscow",
+				City = "Sochi",
+				CategoryColor = "#357cd2",
+				GroupId = 2
+			});
+			fifaEventsData.Add(new FifaEventsData
+			{
+				Id = 5,
+				Subject = "FRANCE vs AUSTRALIA",
+				Description = "Group C",
+				StartTime = new DateTime(2020, 1, 18, 10, 0, 0),
+				EndTime = new DateTime(2020, 1, 18, 12, 0, 0),
+				StartTimezone = "Europe/Moscow",
+				EndTimezone = "Europe/Moscow",
+				City = "Kazan",
+				CategoryColor = "#7fa900",
+				GroupId = 1
+			});
+			fifaEventsData.Add(new FifaEventsData
+			{
+				Id = 6,
+				Subject = "ARGENTINA vs ICELAND",
+				Description = "Group D",
+				StartTime = new DateTime(2020, 1, 18, 13, 0, 0),
+				EndTime = new DateTime(2020, 1, 18, 15, 0, 0),
+				StartTimezone = "Europe/Moscow",
+				EndTimezone = "Europe/Moscow",
+				City = "Moscow",
+				CategoryColor = "#ea7a57",
+				GroupId = 2
+			});
+			fifaEventsData.Add(new FifaEventsData
+			{
+				Id = 7,
+				Subject = "PERU vs DENMARK",
+				Description = "Group C",
+				StartTime = new DateTime(2020, 1, 18, 16, 0, 0),
+				EndTime = new DateTime(2020, 1, 18, 18, 0, 0),
+				StartTimezone = "Europe/Moscow",
+				EndTimezone = "Europe/Moscow",
+				City = "Saransk",
+				CategoryColor = "#7fa900",
+				GroupId = 1
+			});
+			fifaEventsData.Add(new FifaEventsData
+			{
+				Id = 8,
+				Subject = "CROATIA vs NIGERIA",
+				Description = "Group D",
+				StartTime = new DateTime(2020, 1, 18, 19, 0, 0),
+				EndTime = new DateTime(2020, 1, 18, 21, 0, 0),
+				StartTimezone = "Europe/Kaliningrad",
+				EndTimezone = "Europe/Kaliningrad",
+				City = "Kaliningrad",
+				CategoryColor = "#ea7a57",
+				GroupId = 2
+			});
+			fifaEventsData.Add(new FifaEventsData
+			{
+				Id = 9,
+				Subject = "COSTA RICA vs SERBIA",
+				Description = "Group E",
+				StartTime = new DateTime(2020, 1, 19, 12, 0, 0),
+				EndTime = new DateTime(2020, 1, 19, 14, 0, 0),
+				StartTimezone = "Europe/Samara",
+				EndTimezone = "Europe/Samara",
+				City = "Samara",
+				CategoryColor = "#00bdae",
+				GroupId = 1
+			});
+			fifaEventsData.Add(new FifaEventsData
+			{
+				Id = 10,
+				Subject = "GERMANY vs MEXICO",
+				Description = "Group F",
+				StartTime = new DateTime(2020, 1, 19, 15, 0, 0),
+				EndTime = new DateTime(2020, 1, 19, 17, 0, 0),
+				StartTimezone = "Europe/Moscow",
+				EndTimezone = "Europe/Moscow",
+				City = "Moscow",
+				CategoryColor = "#f57f17",
+				GroupId = 2
+			});
+			fifaEventsData.Add(new FifaEventsData
+			{
+				Id = 11,
+				Subject = "BRAZIL vs SWITZERLAND",
+				Description = "Group E",
+				StartTime = new DateTime(2020, 1, 19, 18, 0, 0),
+				EndTime = new DateTime(2020, 1, 19, 20, 0, 0),
+				StartTimezone = "Europe/Moscow",
+				EndTimezone = "Europe/Moscow",
+				City = "Rostov-On-Don",
+				CategoryColor = "#00bdae",
+				GroupId = 1
+			});
+			fifaEventsData.Add(new FifaEventsData
+			{
+				Id = 12,
+				Subject = "SWEDEN vs KOREA REPUBLIC",
+				Description = "Group F",
+				StartTime = new DateTime(2020, 1, 20, 12, 0, 0),
+				EndTime = new DateTime(2020, 1, 20, 14, 0, 0),
+				StartTimezone = "Europe/Moscow",
+				EndTimezone = "Europe/Moscow",
+				City = "Nizhny Novgorod",
+				CategoryColor = "#f57f17",
+				GroupId = 2
+			});
+			fifaEventsData.Add(new FifaEventsData
+			{
+				Id = 13,
+				Subject = "BELGIUM vs PANAMA",
+				Description = "Group G",
+				StartTime = new DateTime(2020, 1, 20, 15, 0, 0),
+				EndTime = new DateTime(2020, 1, 20, 17, 0, 0),
+				StartTimezone = "Europe/Moscow",
+				EndTimezone = "Europe/Moscow",
+				City = "Sochi",
+				CategoryColor = "#8e24aa",
+				GroupId = 1
+			});
+			fifaEventsData.Add(new FifaEventsData
+			{
+				Id = 14,
+				Subject = "TUNISIA vs ENGLAND",
+				Description = "Group G",
+				StartTime = new DateTime(2020, 1, 20, 18, 0, 0),
+				EndTime = new DateTime(2020, 1, 20, 20, 0, 0),
+				StartTimezone = "Europe/Volgograd",
+				EndTimezone = "Europe/Volgograd",
+				City = "Volgograd",
+				CategoryColor = "#8e24aa",
+				GroupId = 2
+			});
+			fifaEventsData.Add(new FifaEventsData
+			{
+				Id = 15,
+				Subject = "COLOMBIA vs JAPAN",
+				Description = "Group H",
+				StartTime = new DateTime(2020, 1, 21, 12, 0, 0),
+				EndTime = new DateTime(2020, 1, 21, 14, 0, 0),
+				StartTimezone = "Europe/Moscow",
+				EndTimezone = "Europe/Moscow",
+				City = "Saransk",
+				CategoryColor = "#7fa900",
+				GroupId = 1
+			});
+			fifaEventsData.Add(new FifaEventsData
+			{
+				Id = 16,
+				Subject = "POLAND vs SENEGAL",
+				Description = "Group H",
+				StartTime = new DateTime(2020, 1, 21, 15, 0, 0),
+				EndTime = new DateTime(2020, 1, 21, 17, 0, 0),
+				StartTimezone = "Europe/Moscow",
+				EndTimezone = "Europe/Moscow",
+				City = "Moscow",
+				CategoryColor = "#7fa900",
+				GroupId = 2
+			});
+			fifaEventsData.Add(new FifaEventsData
+			{
+				Id = 17,
+				Subject = "RUSSIA vs EGYPT",
+				Description = "Group A",
+				StartTime = new DateTime(2020, 1, 21, 18, 0, 0),
+				EndTime = new DateTime(2020, 1, 21, 20, 0, 0),
+				StartTimezone = "Europe/Moscow",
+				EndTimezone = "Europe/Moscow",
+				City = "Saint Petersburg",
+				CategoryColor = "#1aaa55",
+				GroupId = 1
+			});
+			fifaEventsData.Add(new FifaEventsData
+			{
+				Id = 18,
+				Subject = "PORTUGAL vs MOROCCO",
+				Description = "Group B",
+				StartTime = new DateTime(2020, 1, 22, 12, 0, 0),
+				EndTime = new DateTime(2020, 1, 22, 14, 0, 0),
+				StartTimezone = "Europe/Moscow",
+				EndTimezone = "Europe/Moscow",
+				City = "Rostov-On-Don",
+				CategoryColor = "#357cd2",
+				GroupId = 2
+			});
+			fifaEventsData.Add(new FifaEventsData
+			{
+				Id = 19,
+				Subject = "URUGUAY vs SAUDI ARABIA",
+				Description = "Group A",
+				StartTime = new DateTime(2020, 1, 22, 15, 0, 0),
+				EndTime = new DateTime(2020, 1, 22, 17, 0, 0),
+				StartTimezone = "Europe/Moscow",
+				EndTimezone = "Europe/Moscow",
+				City = "Moscow",
+				CategoryColor = "#1aaa55",
+				GroupId = 1
+			});
+			fifaEventsData.Add(new FifaEventsData
+			{
+				Id = 20,
+				Subject = "IR IRAN vs SPAIN",
+				Description = "Group B",
+				StartTime = new DateTime(2020, 1, 22, 18, 0, 0),
+				EndTime = new DateTime(2020, 1, 22, 20, 0, 0),
+				StartTimezone = "Europe/Moscow",
+				EndTimezone = "Europe/Moscow",
+				City = "Kazan",
+				CategoryColor = "#357cd2",
+				GroupId = 2
+			});
+			fifaEventsData.Add(new FifaEventsData
+			{
+				Id = 21,
+				Subject = "DENMARK vs AUSTRALIA",
+				Description = "Group C",
+				StartTime = new DateTime(2020, 1, 23, 12, 0, 0),
+				EndTime = new DateTime(2020, 1, 23, 14, 0, 0),
+				StartTimezone = "Europe/Samara",
+				EndTimezone = "Europe/Samara",
+				City = "Samara",
+				CategoryColor = "#7fa900",
+				GroupId = 1
+			});
+			fifaEventsData.Add(new FifaEventsData
+			{
+				Id = 22,
+				Subject = "FRANCE vs PERU",
+				Description = "Group D",
+				StartTime = new DateTime(2020, 1, 23, 15, 0, 0),
+				EndTime = new DateTime(2020, 1, 23, 17, 0, 0),
+				StartTimezone = "Asia/Yekaterinburg",
+				EndTimezone = "Asia/Yekaterinburg",
+				City = "Ekaterinburg",
+				CategoryColor = "#ea7a57",
+				GroupId = 2
+			});
+			fifaEventsData.Add(new FifaEventsData
+			{
+				Id = 23,
+				Subject = "ARGENTINA vs CROATIA",
+				Description = "Group D",
+				StartTime = new DateTime(2020, 1, 23, 18, 0, 0),
+				EndTime = new DateTime(2020, 1, 23, 20, 0, 0),
+				StartTimezone = "Europe/Moscow",
+				EndTimezone = "Europe/Moscow",
+				City = "Nizhny Novgorod",
+				CategoryColor = "#ea7a57",
+				GroupId = 1
+			});
+			fifaEventsData.Add(new FifaEventsData
+			{
+				Id = 24,
+				Subject = "BRAZIL vs COSTA RICA",
+				Description = "Group E",
+				StartTime = new DateTime(2020, 1, 24, 12, 0, 0),
+				EndTime = new DateTime(2020, 1, 24, 14, 0, 0),
+				StartTimezone = "Europe/Moscow",
+				EndTimezone = "Europe/Moscow",
+				City = "Saint Petersburg",
+				CategoryColor = "#00bdae",
+				GroupId = 2
+			});
+			fifaEventsData.Add(new FifaEventsData
+			{
+				Id = 25,
+				Subject = "NIGERIA vs ICELAND",
+				Description = "Group D",
+				StartTime = new DateTime(2020, 1, 24, 15, 0, 0),
+				EndTime = new DateTime(2020, 1, 24, 17, 0, 0),
+				StartTimezone = "Europe/Volgograd",
+				EndTimezone = "Europe/Volgograd",
+				City = "Volgograd",
+				CategoryColor = "#ea7a57",
+				GroupId = 1
+			});
+			fifaEventsData.Add(new FifaEventsData
+			{
+				Id = 26,
+				Subject = "SERBIA vs SWITZERLAND",
+				Description = "Group E",
+				StartTime = new DateTime(2020, 1, 24, 18, 0, 0),
+				EndTime = new DateTime(2020, 1, 24, 20, 0, 0),
+				StartTimezone = "Europe/Kaliningrad",
+				EndTimezone = "Europe/Kaliningrad",
+				City = "Kaliningrad",
+				CategoryColor = "#00bdae",
+				GroupId = 2
+			});
+			fifaEventsData.Add(new FifaEventsData
+			{
+				Id = 27,
+				Subject = "BELGIUM vs TUNISIA",
+				Description = "Group G",
+				StartTime = new DateTime(2020, 1, 25, 12, 0, 0),
+				EndTime = new DateTime(2020, 1, 25, 14, 0, 0),
+				StartTimezone = "Europe/Moscow",
+				EndTimezone = "Europe/Moscow",
+				City = "Moscow",
+				CategoryColor = "#8e24aa",
+				GroupId = 1
+			});
+			fifaEventsData.Add(new FifaEventsData
+			{
+				Id = 28,
+				Subject = "KOREA REPUBLIC vs MEXICO",
+				Description = "Group F",
+				StartTime = new DateTime(2020, 1, 25, 15, 0, 0),
+				EndTime = new DateTime(2020, 1, 25, 17, 0, 0),
+				StartTimezone = "Europe/Moscow",
+				EndTimezone = "Europe/Moscow",
+				City = "Rostov-On-Don",
+				CategoryColor = "#f57f17",
+				GroupId = 2
+			});
+			fifaEventsData.Add(new FifaEventsData
+			{
+				Id = 29,
+				Subject = "GERMANY vs SWEDEN",
+				Description = "Group F",
+				StartTime = new DateTime(2020, 1, 25, 18, 0, 0),
+				EndTime = new DateTime(2020, 1, 25, 20, 0, 0),
+				StartTimezone = "Europe/Moscow",
+				EndTimezone = "Europe/Moscow",
+				City = "Sochi",
+				CategoryColor = "#f57f17",
+				GroupId = 1
+			});
+			fifaEventsData.Add(new FifaEventsData
+			{
+				Id = 30,
+				Subject = "ENGLAND vs PANAMA",
+				Description = "Group G",
+				StartTime = new DateTime(2020, 1, 26, 12, 0, 0),
+				EndTime = new DateTime(2020, 1, 26, 14, 0, 0),
+				StartTimezone = "Europe/Moscow",
+				EndTimezone = "Europe/Moscow",
+				City = "Nizhny Novgorod",
+				CategoryColor = "#8e24aa",
+				GroupId = 2
+			});
+			fifaEventsData.Add(new FifaEventsData
+			{
+				Id = 31,
+				Subject = "JAPAN vs SENEGAL",
+				Description = "Group H",
+				StartTime = new DateTime(2020, 1, 26, 15, 0, 0),
+				EndTime = new DateTime(2020, 1, 26, 17, 0, 0),
+				StartTimezone = "Asia/Yekaterinburg",
+				EndTimezone = "Asia/Yekaterinburg",
+				City = "Ekaterinburg",
+				CategoryColor = "#7fa900",
+				GroupId = 1
+			});
+			fifaEventsData.Add(new FifaEventsData
+			{
+				Id = 32,
+				Subject = "POLAND vs COLOMBIA",
+				Description = "Group H",
+				StartTime = new DateTime(2020, 1, 26, 18, 0, 0),
+				EndTime = new DateTime(2020, 1, 26, 20, 0, 0),
+				StartTimezone = "Europe/Moscow",
+				EndTimezone = "Europe/Moscow",
+				City = "Kazan",
+				CategoryColor = "#7fa900",
+				GroupId = 2
+			});
+			fifaEventsData.Add(new FifaEventsData
+			{
+				Id = 33,
+				Subject = "URUGUAY vs RUSSIA",
+				Description = "Group A",
+				StartTime = new DateTime(2020, 1, 27, 14, 0, 0),
+				EndTime = new DateTime(2020, 1, 27, 16, 0, 0),
+				StartTimezone = "Europe/Samara",
+				EndTimezone = "Europe/Samara",
+				City = "Samara",
+				CategoryColor = "#1aaa55",
+				GroupId = 1
+			});
+			fifaEventsData.Add(new FifaEventsData
+			{
+				Id = 34,
+				Subject = "SAUDI ARABIA vs EGYPT",
+				Description = "Group A",
+				StartTime = new DateTime(2020, 1, 27, 14, 0, 0),
+				EndTime = new DateTime(2020, 1, 27, 16, 0, 0),
+				StartTimezone = "Europe/Volgograd",
+				EndTimezone = "Europe/Volgograd",
+				City = "Volgograd",
+				CategoryColor = "#1aaa55",
+				GroupId = 1
+			});
+			fifaEventsData.Add(new FifaEventsData
+			{
+				Id = 35,
+				Subject = "IR IRAN vs PORTUGAL",
+				Description = "Group B",
+				StartTime = new DateTime(2020, 1, 27, 18, 0, 0),
+				EndTime = new DateTime(2020, 1, 27, 20, 0, 0),
+				StartTimezone = "Europe/Moscow",
+				EndTimezone = "Europe/Moscow",
+				City = "Saransk",
+				CategoryColor = "#357cd2",
+				GroupId = 2
+			});
+			fifaEventsData.Add(new FifaEventsData
+			{
+				Id = 36,
+				Subject = "SPAIN vs MOROCCO",
+				Description = "Group B",
+				StartTime = new DateTime(2020, 1, 27, 18, 0, 0),
+				EndTime = new DateTime(2020, 1, 27, 20, 0, 0),
+				StartTimezone = "Europe/Kaliningrad",
+				EndTimezone = "Europe/Kaliningrad",
+				City = "Kaliningrad",
+				CategoryColor = "#357cd2",
+				GroupId = 2
+			});
+			fifaEventsData.Add(new FifaEventsData
+			{
+				Id = 37,
+				Subject = "DENMARK vs FRANCE",
+				Description = "Group C",
+				StartTime = new DateTime(2020, 1, 28, 14, 0, 0),
+				EndTime = new DateTime(2020, 1, 28, 16, 0, 0),
+				StartTimezone = "Europe/Moscow",
+				EndTimezone = "Europe/Moscow",
+				City = "Moscow",
+				CategoryColor = "#7fa900",
+				GroupId = 1
+			});
+			fifaEventsData.Add(new FifaEventsData
+			{
+				Id = 38,
+				Subject = "AUSTRALIA vs PERU",
+				Description = "Group C",
+				StartTime = new DateTime(2020, 1, 28, 14, 0, 0),
+				EndTime = new DateTime(2020, 1, 28, 16, 0, 0),
+				StartTimezone = "Europe/Moscow",
+				EndTimezone = "Europe/Moscow",
+				City = "Sochi",
+				CategoryColor = "#7fa900",
+				GroupId = 2
+			});
+			fifaEventsData.Add(new FifaEventsData
+			{
+				Id = 39,
+				Subject = "NIGERIA vs ARGENTINA",
+				Description = "Group D",
+				StartTime = new DateTime(2020, 1, 28, 18, 0, 0),
+				EndTime = new DateTime(2020, 1, 28, 20, 0, 0),
+				StartTimezone = "Europe/Moscow",
+				EndTimezone = "Europe/Moscow",
+				City = "Saint Petersburg",
+				CategoryColor = "#ea7a57",
+				GroupId = 1
+			});
+			fifaEventsData.Add(new FifaEventsData
+			{
+				Id = 40,
+				Subject = "ICELAND vs CROATIA",
+				Description = "Group D",
+				StartTime = new DateTime(2020, 1, 28, 18, 0, 0),
+				EndTime = new DateTime(2020, 1, 28, 20, 0, 0),
+				StartTimezone = "Europe/Moscow",
+				EndTimezone = "Europe/Moscow",
+				City = "Rostov-On-Don",
+				CategoryColor = "#ea7a57",
+				GroupId = 2
+			});
+			fifaEventsData.Add(new FifaEventsData
+			{
+				Id = 41,
+				Subject = "MEXICO vs SWEDEN",
+				Description = "Group F",
+				StartTime = new DateTime(2020, 1, 29, 14, 0, 0),
+				EndTime = new DateTime(2020, 1, 29, 16, 0, 0),
+				StartTimezone = "Asia/Yekaterinburg",
+				EndTimezone = "Asia/Yekaterinburg",
+				City = "Ekaterinburg",
+				CategoryColor = "#f57f17",
+				GroupId = 1
+			});
+			fifaEventsData.Add(new FifaEventsData
+			{
+				Id = 42,
+				Subject = "KOREA REPUBLIC vs GERMANY",
+				Description = "Group F",
+				StartTime = new DateTime(2020, 1, 29, 14, 0, 0),
+				EndTime = new DateTime(2020, 1, 29, 16, 0, 0),
+				StartTimezone = "Europe/Moscow",
+				EndTimezone = "Europe/Moscow",
+				City = "Kazan",
+				CategoryColor = "#f57f17",
+				GroupId = 2
+			});
+			fifaEventsData.Add(new FifaEventsData
+			{
+				Id = 43,
+				Subject = "SERBIA vs BRAZIL",
+				Description = "Group E",
+				StartTime = new DateTime(2020, 1, 29, 18, 0, 0),
+				EndTime = new DateTime(2020, 1, 29, 20, 0, 0),
+				StartTimezone = "Europe/Moscow",
+				EndTimezone = "Europe/Moscow",
+				City = "Moscow",
+				CategoryColor = "#00bdae",
+				GroupId = 1
+			});
+			fifaEventsData.Add(new FifaEventsData
+			{
+				Id = 44,
+				Subject = "SWITZERLAND vs COSTA RICA",
+				Description = "Group E",
+				StartTime = new DateTime(2020, 1, 29, 18, 0, 0),
+				EndTime = new DateTime(2020, 1, 29, 20, 0, 0),
+				StartTimezone = "Europe/Moscow",
+				EndTimezone = "Europe/Moscow",
+				City = "Nizhny Novgorod",
+				CategoryColor = "#00bdae",
+				GroupId = 2
+			});
+			fifaEventsData.Add(new FifaEventsData
+			{
+				Id = 45,
+				Subject = "JAPAN vs POLAND",
+				Description = "Group H",
+				StartTime = new DateTime(2020, 1, 30, 14, 0, 0),
+				EndTime = new DateTime(2020, 1, 30, 16, 0, 0),
+				StartTimezone = "Europe/Volgograd",
+				EndTimezone = "Europe/Volgograd",
+				City = "Volgograd",
+				CategoryColor = "#7fa900",
+				GroupId = 1
+			});
+			fifaEventsData.Add(new FifaEventsData
+			{
+				Id = 46,
+				Subject = "SENEGAL vs COLOMBIA",
+				Description = "Group H",
+				StartTime = new DateTime(2020, 1, 30, 14, 0, 0),
+				EndTime = new DateTime(2020, 1, 30, 16, 0, 0),
+				StartTimezone = "Europe/Samara",
+				EndTimezone = "Europe/Samara",
+				City = "Samara",
+				CategoryColor = "#7fa900",
+				GroupId = 2
+			});
+			fifaEventsData.Add(new FifaEventsData
+			{
+				Id = 47,
+				Subject = "PANAMA vs TUNISIA",
+				Description = "Group G",
+				StartTime = new DateTime(2020, 1, 30, 18, 0, 0),
+				EndTime = new DateTime(2020, 1, 30, 20, 0, 0),
+				StartTimezone = "Europe/Moscow",
+				EndTimezone = "Europe/Moscow",
+				City = "Saransk",
+				CategoryColor = "#8e24aa",
+				GroupId = 1
+			});
+			fifaEventsData.Add(new FifaEventsData
+			{
+				Id = 48,
+				Subject = "ENGLAND vs BELGIUM",
+				Description = "Group G",
+				StartTime = new DateTime(2020, 1, 30, 18, 0, 0),
+				EndTime = new DateTime(2020, 1, 30, 20, 0, 0),
+				StartTimezone = "Europe/Kaliningrad",
+				EndTimezone = "Europe/Kaliningrad",
+				City = "Kaliningrad",
+				CategoryColor = "#8e24aa",
+				GroupId = 2
+			});
+			fifaEventsData.Add(new FifaEventsData
+			{
+				Id = 49,
+				Subject = "RUSSIA vs SAUDI ARABIA",
+				Description = "Group A",
+				StartTime = new DateTime(2020, 2, 1, 15, 0, 0),
+				EndTime = new DateTime(2020, 2, 1, 17, 0, 0),
+				StartTimezone = "Europe/Moscow",
+				EndTimezone = "Europe/Moscow",
+				City = "Moscow",
+				CategoryColor = "#1aaa55",
+				GroupId = 1
+			});
+			fifaEventsData.Add(new FifaEventsData
+			{
+				Id = 50,
+				Subject = "EGYPT vs URUGUAY",
+				Description = "Group A",
+				StartTime = new DateTime(2020, 2, 3, 12, 0, 0),
+				EndTime = new DateTime(2020, 2, 3, 14, 0, 0),
+				StartTimezone = "Asia/Yekaterinburg",
+				EndTimezone = "Asia/Yekaterinburg",
+				City = "Ekaterinburg",
+				CategoryColor = "#1aaa55",
+				GroupId = 1
+			});
+			fifaEventsData.Add(new FifaEventsData
+			{
+				Id = 51,
+				Subject = "MOROCCO vs IR IRAN",
+				Description = "Group B",
+				StartTime = new DateTime(2020, 2, 4, 15, 0, 0),
+				EndTime = new DateTime(2020, 2, 4, 17, 0, 0),
+				StartTimezone = "Europe/Moscow",
+				EndTimezone = "Europe/Moscow",
+				City = "Saint Petersburg",
+				CategoryColor = "#357cd2",
+				GroupId = 2
+			});
+			fifaEventsData.Add(new FifaEventsData
+			{
+				Id = 52,
+				Subject = "PORTUGAL vs SPAIN",
+				Description = "Group B",
+				StartTime = new DateTime(2020, 2, 5, 18, 0, 0),
+				EndTime = new DateTime(2020, 2, 5, 20, 0, 0),
+				StartTimezone = "Europe/Moscow",
+				EndTimezone = "Europe/Moscow",
+				City = "Sochi",
+				CategoryColor = "#357cd2",
+				GroupId = 2
+			});
+			fifaEventsData.Add(new FifaEventsData
+			{
+				Id = 53,
+				Subject = "FRANCE vs AUSTRALIA",
+				Description = "Group C",
+				StartTime = new DateTime(2020, 2, 6, 10, 0, 0),
+				EndTime = new DateTime(2020, 2, 6, 12, 0, 0),
+				StartTimezone = "Europe/Moscow",
+				EndTimezone = "Europe/Moscow",
+				City = "Kazan",
+				CategoryColor = "#7fa900",
+				GroupId = 1
+			});
+			fifaEventsData.Add(new FifaEventsData
+			{
+				Id = 54,
+				Subject = "ARGENTINA vs ICELAND",
+				Description = "Group D",
+				StartTime = new DateTime(2020, 2, 7, 13, 0, 0),
+				EndTime = new DateTime(2020, 2, 7, 15, 0, 0),
+				StartTimezone = "Europe/Moscow",
+				EndTimezone = "Europe/Moscow",
+				City = "Moscow",
+				CategoryColor = "#ea7a57",
+				GroupId = 2
+			});
+			fifaEventsData.Add(new FifaEventsData
+			{
+				Id = 55,
+				Subject = "PERU vs DENMARK",
+				Description = "Group C",
+				StartTime = new DateTime(2020, 2, 9, 16, 0, 0),
+				EndTime = new DateTime(2020, 2, 9, 18, 0, 0),
+				StartTimezone = "Europe/Moscow",
+				EndTimezone = "Europe/Moscow",
+				City = "Saransk",
+				CategoryColor = "#7fa900",
+				GroupId = 1
+			});
+			fifaEventsData.Add(new FifaEventsData
+			{
+				Id = 56,
+				Subject = "CROATIA vs NIGERIA",
+				Description = "Group D",
+				StartTime = new DateTime(2020, 2, 10, 19, 0, 0),
+				EndTime = new DateTime(2020, 2, 10, 21, 0, 0),
+				StartTimezone = "Europe/Kaliningrad",
+				EndTimezone = "Europe/Kaliningrad",
+				City = "Kaliningrad",
+				CategoryColor = "#ea7a57",
+				GroupId = 2
+			});
+			fifaEventsData.Add(new FifaEventsData
+			{
+				Id = 57,
+				Subject = "COSTA RICA vs SERBIA",
+				Description = "Group E",
+				StartTime = new DateTime(2020, 2, 13, 12, 0, 0),
+				EndTime = new DateTime(2020, 2, 13, 14, 0, 0),
+				StartTimezone = "Europe/Samara",
+				EndTimezone = "Europe/Samara",
+				City = "Samara",
+				CategoryColor = "#00bdae",
+				GroupId = 1
+			});
+			fifaEventsData.Add(new FifaEventsData
+			{
+				Id = 58,
+				Subject = "GERMANY vs MEXICO",
+				Description = "Group F",
+				StartTime = new DateTime(2020, 2, 14, 15, 0, 0),
+				EndTime = new DateTime(2020, 2, 14, 17, 0, 0),
+				StartTimezone = "Europe/Moscow",
+				EndTimezone = "Europe/Moscow",
+				City = "Moscow",
+				CategoryColor = "#f57f17",
+				GroupId = 2
+			});
+			fifaEventsData.Add(new FifaEventsData
+			{
+				Id = 59,
+				Subject = "BRAZIL vs SWITZERLAND",
+				Description = "Group E",
+				StartTime = new DateTime(2020, 2, 14, 18, 0, 0),
+				EndTime = new DateTime(2020, 2, 14, 20, 0, 0),
+				StartTimezone = "Europe/Moscow",
+				EndTimezone = "Europe/Moscow",
+				City = "Rostov-On-Don",
+				CategoryColor = "#00bdae",
+				GroupId = 1
+			});
+			fifaEventsData.Add(new FifaEventsData
+			{
+				Id = 60,
+				Subject = "SWEDEN vs KOREA REPUBLIC",
+				Description = "Group F",
+				StartTime = new DateTime(2020, 2, 17, 12, 0, 0),
+				EndTime = new DateTime(2020, 2, 17, 14, 0, 0),
+				StartTimezone = "Europe/Moscow",
+				EndTimezone = "Europe/Moscow",
+				City = "Nizhny Novgorod",
+				CategoryColor = "#f57f17",
+				GroupId = 2
+			});
+			fifaEventsData.Add(new FifaEventsData
+			{
+				Id = 61,
+				Subject = "BELGIUM vs PANAMA",
+				Description = "Group G",
+				StartTime = new DateTime(2020, 2, 17, 15, 0, 0),
+				EndTime = new DateTime(2020, 2, 17, 17, 0, 0),
+				StartTimezone = "Europe/Moscow",
+				EndTimezone = "Europe/Moscow",
+				City = "Sochi",
+				CategoryColor = "#8e24aa",
+				GroupId = 1
+			});
+			fifaEventsData.Add(new FifaEventsData
+			{
+				Id = 62,
+				Subject = "TUNISIA vs ENGLAND",
+				Description = "Group G",
+				StartTime = new DateTime(2020, 2, 17, 18, 0, 0),
+				EndTime = new DateTime(2020, 2, 17, 20, 0, 0),
+				StartTimezone = "Europe/Volgograd",
+				EndTimezone = "Europe/Volgograd",
+				City = "Volgograd",
+				CategoryColor = "#8e24aa",
+				GroupId = 2
+			});
+			fifaEventsData.Add(new FifaEventsData
+			{
+				Id = 63,
+				Subject = "COLOMBIA vs JAPAN",
+				Description = "Group H",
+				StartTime = new DateTime(2020, 2, 18, 12, 0, 0),
+				EndTime = new DateTime(2020, 2, 18, 14, 0, 0),
+				StartTimezone = "Europe/Moscow",
+				EndTimezone = "Europe/Moscow",
+				City = "Saransk",
+				CategoryColor = "#7fa900",
+				GroupId = 1
+			});
+			fifaEventsData.Add(new FifaEventsData
+			{
+				Id = 64,
+				Subject = "POLAND vs SENEGAL",
+				Description = "Group H",
+				StartTime = new DateTime(2020, 2, 21, 15, 0, 0),
+				EndTime = new DateTime(2020, 2, 21, 17, 0, 0),
+				StartTimezone = "Europe/Moscow",
+				EndTimezone = "Europe/Moscow",
+				City = "Moscow",
+				CategoryColor = "#7fa900",
+				GroupId = 2
+			});
+			fifaEventsData.Add(new FifaEventsData
+			{
+				Id = 65,
+				Subject = "RUSSIA vs EGYPT",
+				Description = "Group A",
+				StartTime = new DateTime(2020, 2, 21, 18, 0, 0),
+				EndTime = new DateTime(2020, 2, 21, 20, 0, 0),
+				StartTimezone = "Europe/Moscow",
+				EndTimezone = "Europe/Moscow",
+				City = "Saint Petersburg",
+				CategoryColor = "#1aaa55",
+				GroupId = 1
+			});
+			fifaEventsData.Add(new FifaEventsData
+			{
+				Id = 66,
+				Subject = "PORTUGAL vs MOROCCO",
+				Description = "Group B",
+				StartTime = new DateTime(2020, 2, 22, 12, 0, 0),
+				EndTime = new DateTime(2020, 2, 22, 14, 0, 0),
+				StartTimezone = "Europe/Moscow",
+				EndTimezone = "Europe/Moscow",
+				City = "Rostov-On-Don",
+				CategoryColor = "#357cd2",
+				GroupId = 2
+			});
+			fifaEventsData.Add(new FifaEventsData
+			{
+				Id = 67,
+				Subject = "URUGUAY vs SAUDI ARABIA",
+				Description = "Group A",
+				StartTime = new DateTime(2020, 2, 22, 15, 0, 0),
+				EndTime = new DateTime(2020, 2, 22, 17, 0, 0),
+				StartTimezone = "Europe/Moscow",
+				EndTimezone = "Europe/Moscow",
+				City = "Moscow",
+				CategoryColor = "#1aaa55",
+				GroupId = 1
+			});
+			fifaEventsData.Add(new FifaEventsData
+			{
+				Id = 68,
+				Subject = "IR IRAN vs SPAIN",
+				Description = "Group B",
+				StartTime = new DateTime(2020, 3, 4, 18, 0, 0),
+				EndTime = new DateTime(2020, 3, 4, 20, 0, 0),
+				StartTimezone = "Europe/Moscow",
+				EndTimezone = "Europe/Moscow",
+				City = "Kazan",
+				CategoryColor = "#357cd2",
+				GroupId = 2
+			});
+			fifaEventsData.Add(new FifaEventsData
+			{
+				Id = 69,
+				Subject = "DENMARK vs AUSTRALIA",
+				Description = "Group C",
+				StartTime = new DateTime(2020, 3, 5, 12, 0, 0),
+				EndTime = new DateTime(2020, 3, 5, 14, 0, 0),
+				StartTimezone = "Europe/Samara",
+				EndTimezone = "Europe/Samara",
+				City = "Samara",
+				CategoryColor = "#7fa900",
+				GroupId = 1
+			});
+			fifaEventsData.Add(new FifaEventsData
+			{
+				Id = 70,
+				Subject = "FRANCE vs PERU",
+				Description = "Group D",
+				StartTime = new DateTime(2020, 3, 5, 15, 0, 0),
+				EndTime = new DateTime(2020, 3, 7, 17, 0, 0),
+				StartTimezone = "Asia/Yekaterinburg",
+				EndTimezone = "Asia/Yekaterinburg",
+				City = "Ekaterinburg",
+				CategoryColor = "#ea7a57",
+				GroupId = 2
+			});
+			fifaEventsData.Add(new FifaEventsData
+			{
+				Id = 71,
+				Subject = "ARGENTINA vs CROATIA",
+				Description = "Group D",
+				StartTime = new DateTime(2020, 3, 7, 18, 0, 0),
+				EndTime = new DateTime(2020, 3, 7, 20, 0, 0),
+				StartTimezone = "Europe/Moscow",
+				EndTimezone = "Europe/Moscow",
+				City = "Nizhny Novgorod",
+				CategoryColor = "#ea7a57",
+				GroupId = 1
+			});
+			fifaEventsData.Add(new FifaEventsData
+			{
+				Id = 72,
+				Subject = "BRAZIL vs COSTA RICA",
+				Description = "Group E",
+				StartTime = new DateTime(2020, 3, 24, 12, 0, 0),
+				EndTime = new DateTime(2020, 3, 24, 14, 0, 0),
+				StartTimezone = "Europe/Moscow",
+				EndTimezone = "Europe/Moscow",
+				City = "Saint Petersburg",
+				CategoryColor = "#00bdae",
+				GroupId = 2
+			});
+			return fifaEventsData;
+		}
+
+		#endregion
 
 		/*
 						public List<ContextEventsData> GetContextEventData()
@@ -2027,703 +3768,6 @@ namespace LivingMessiah.Web.Pages.BlazorSyncFusion.Schedule
 							});
 							return resourceTeamData;
 						}
-						public List<RoomData> GetRoomData()
-						{
-							List<RoomData> roomData = new List<RoomData>();
-							roomData.Add(new RoomData
-							{
-								Id = 1,
-								Subject = "Board Meeting",
-								Description = "Meeting to discuss business goal of 2020.",
-								StartTime = new DateTime(2019, 12, 30, 9, 0, 0),
-								EndTime = new DateTime(2019, 12, 30, 11, 0, 0),
-								RoomId = 1
-							});
-							roomData.Add(new RoomData
-							{
-								Id = 2,
-								Subject = "Training session on JSP",
-								Description = "Knowledge sharing on JSP topics.",
-								StartTime = new DateTime(2019, 12, 30, 15, 0, 0),
-								EndTime = new DateTime(2019, 12, 30, 17, 0, 0),
-								RoomId = 5
-							});
-							roomData.Add(new RoomData
-							{
-								Id = 3,
-								Subject = "Sprint Planning with Team members",
-								Description = "Planning tasks for sprint.",
-								StartTime = new DateTime(2019, 12, 30, 9, 30, 0),
-								EndTime = new DateTime(2019, 12, 30, 11, 0, 0),
-								RoomId = 3
-							});
-							roomData.Add(new RoomData
-							{
-								Id = 4,
-								Subject = "Meeting with Client",
-								Description = "Customer meeting to discuss features.",
-								StartTime = new DateTime(2019, 12, 30, 11, 0, 0),
-								EndTime = new DateTime(2019, 12, 30, 13, 0, 0),
-								RoomId = 4
-							});
-							roomData.Add(new RoomData
-							{
-								Id = 5,
-								Subject = "Support Meeting with Managers",
-								Description = "Meeting to discuss support plan.",
-								StartTime = new DateTime(2019, 12, 30, 16, 0, 0),
-								EndTime = new DateTime(2019, 12, 30, 17, 30, 0),
-								RoomId = 5
-							});
-							roomData.Add(new RoomData
-							{
-								Id = 6,
-								Subject = "Client Meeting",
-								Description = "Meeting to discuss client requirements.",
-								StartTime = new DateTime(2019, 12, 30, 10, 30, 0),
-								EndTime = new DateTime(2019, 12, 30, 13, 0, 0),
-								RoomId = 6
-							});
-							roomData.Add(new RoomData
-							{
-								Id = 7,
-								Subject = "Appraisal Meeting",
-								Description = "Meeting to discuss employee appraisals.",
-								StartTime = new DateTime(2019, 12, 30, 15, 0, 0),
-								EndTime = new DateTime(2019, 12, 30, 16, 30, 0),
-								RoomId = 7
-							});
-							roomData.Add(new RoomData
-							{
-								Id = 8,
-								Subject = "HR Meeting",
-								Description = "Meeting to discuss HR plans.",
-								StartTime = new DateTime(2019, 12, 30, 8, 0, 0),
-								EndTime = new DateTime(2019, 12, 30, 9, 0, 0),
-								RoomId = 4
-							});
-							roomData.Add(new RoomData
-							{
-								Id = 9,
-								Subject = "Customer Meeting",
-								Description = "Meeting to discuss customer reported issues.",
-								StartTime = new DateTime(2019, 12, 30, 10, 0, 0),
-								EndTime = new DateTime(2019, 12, 30, 12, 0, 0),
-								RoomId = 8
-							});
-							roomData.Add(new RoomData
-							{
-								Id = 10,
-								Subject = "Board Meeting",
-								Description = "Meeting to discuss business plans.",
-								StartTime = new DateTime(2019, 12, 30, 14, 30, 0),
-								EndTime = new DateTime(2019, 12, 30, 17, 0, 0),
-								RoomId = 9
-							});
-							roomData.Add(new RoomData
-							{
-								Id = 11,
-								Subject = "Training session on Vue",
-								Description = "Knowledge sharing on Vue concepts.",
-								StartTime = new DateTime(2019, 12, 30, 9, 0, 0),
-								EndTime = new DateTime(2019, 12, 30, 10, 30, 0),
-								RoomId = 10
-							});
-							roomData.Add(new RoomData
-							{
-								Id = 12,
-								Subject = "Meeting with Team members",
-								Description = "Meeting to discuss on work report.",
-								StartTime = new DateTime(2019, 12, 30, 11, 30, 0),
-								EndTime = new DateTime(2019, 12, 30, 12, 0, 0),
-								RoomId = 5
-							});
-							roomData.Add(new RoomData
-							{
-								Id = 13,
-								Subject = "Meeting with General Manager",
-								Description = "Meeting to discuss support plan.",
-								StartTime = new DateTime(2019, 12, 30, 14, 0, 0),
-								EndTime = new DateTime(2019, 12, 30, 16, 0, 0),
-								RoomId = 5
-							});
-							roomData.Add(new RoomData
-							{
-								Id = 14,
-								Subject = "Board Meeting",
-								Description = "Meeting to discuss business goal of 2020.",
-								StartTime = new DateTime(2019, 12, 31, 9, 0, 0),
-								EndTime = new DateTime(2019, 12, 31, 11, 0, 0),
-								RoomId = 1
-							});
-							roomData.Add(new RoomData
-							{
-								Id = 15,
-								Subject = "Training session on JSP",
-								Description = "Knowledge sharing on JSP topics.",
-								StartTime = new DateTime(2019, 12, 31, 14, 0, 0),
-								EndTime = new DateTime(2019, 12, 31, 17, 0, 0),
-								RoomId = 6
-							});
-							roomData.Add(new RoomData
-							{
-								Id = 16,
-								Subject = "Sprint Planning with Team members",
-								Description = "Planning tasks for sprint.",
-								StartTime = new DateTime(2019, 12, 31, 9, 30, 0),
-								EndTime = new DateTime(2019, 12, 31, 11, 0, 0),
-								RoomId = 2
-							});
-							roomData.Add(new RoomData
-							{
-								Id = 17,
-								Subject = "Meeting with Client",
-								Description = "Customer meeting to discuss features.",
-								StartTime = new DateTime(2019, 12, 31, 11, 0, 0),
-								EndTime = new DateTime(2019, 12, 31, 13, 0, 0),
-								RoomId = 7
-							});
-							roomData.Add(new RoomData
-							{
-								Id = 18,
-								Subject = "Support Meeting with Managers",
-								Description = "Meeting to discuss support plan.",
-								StartTime = new DateTime(2019, 12, 31, 16, 0, 0),
-								EndTime = new DateTime(2019, 12, 31, 17, 30, 0),
-								RoomId = 2
-							});
-							roomData.Add(new RoomData
-							{
-								Id = 19,
-								Subject = "Training session on C#",
-								Description = "Training session",
-								StartTime = new DateTime(2019, 12, 31, 14, 30, 0),
-								EndTime = new DateTime(2019, 12, 31, 16, 0, 0),
-								RoomId = 9
-							});
-							roomData.Add(new RoomData
-							{
-								Id = 20,
-								Subject = "Client Meeting",
-								Description = "Meeting to discuss client requirements.",
-								StartTime = new DateTime(2019, 12, 31, 10, 30, 0),
-								EndTime = new DateTime(2019, 12, 31, 13, 0, 0),
-								RoomId = 3
-							});
-							roomData.Add(new RoomData
-							{
-								Id = 21,
-								Subject = "Appraisal Meeting",
-								Description = "Meeting to discuss employee appraisals.",
-								StartTime = new DateTime(2019, 12, 31, 15, 0, 0),
-								EndTime = new DateTime(2019, 12, 31, 16, 30, 0),
-								RoomId = 3
-							});
-							roomData.Add(new RoomData
-							{
-								Id = 22,
-								Subject = "HR Meeting",
-								Description = "Meeting to discuss HR plans.",
-								StartTime = new DateTime(2019, 12, 31, 8, 0, 0),
-								EndTime = new DateTime(2019, 12, 31, 9, 0, 0),
-								RoomId = 4
-							});
-							roomData.Add(new RoomData
-							{
-								Id = 23,
-								Subject = "Customer Meeting",
-								Description = "Meeting to discuss customer reported issues.",
-								StartTime = new DateTime(2019, 12, 31, 10, 0, 0),
-								EndTime = new DateTime(2019, 12, 31, 12, 0, 0),
-								RoomId = 4
-							});
-							roomData.Add(new RoomData
-							{
-								Id = 24,
-								Subject = "Board Meeting",
-								Description = "Meeting to discuss business plans.",
-								StartTime = new DateTime(2020, 1, 1, 16, 30, 0),
-								EndTime = new DateTime(2020, 1, 1, 18, 0, 0),
-								RoomId = 10
-							});
-							roomData.Add(new RoomData
-							{
-								Id = 25,
-								Subject = "Training session on Vue",
-								Description = "Knowledge sharing on Vue concepts.",
-								StartTime = new DateTime(2019, 12, 31, 9, 0, 0),
-								EndTime = new DateTime(2019, 12, 31, 10, 30, 0),
-								RoomId = 5
-							});
-							roomData.Add(new RoomData
-							{
-								Id = 26,
-								Subject = "Meeting with Team members",
-								Description = "Meeting to discuss on work report.",
-								StartTime = new DateTime(2019, 12, 31, 11, 30, 0),
-								EndTime = new DateTime(2019, 12, 31, 12, 0, 0),
-								RoomId = 5
-							});
-							roomData.Add(new RoomData
-							{
-								Id = 27,
-								Subject = "Meeting with General Manager",
-								Description = "Meeting to discuss support plan.",
-								StartTime = new DateTime(2019, 12, 31, 14, 0, 0),
-								EndTime = new DateTime(2019, 12, 31, 16, 0, 0),
-								RoomId = 10
-							});
-
-							roomData.Add(new RoomData
-							{
-								Id = 28,
-								Subject = "Board Meeting",
-								Description = "Meeting to discuss business goal of 2020.",
-								StartTime = new DateTime(2020, 1, 1, 9, 0, 0),
-								EndTime = new DateTime(2020, 1, 1, 11, 0, 0),
-								RoomId = 1
-							});
-							roomData.Add(new RoomData
-							{
-								Id = 29,
-								Subject = "Training session on JSP",
-								Description = "Knowledge sharing on JSP topics.",
-								StartTime = new DateTime(2020, 1, 1, 17, 0, 0),
-								EndTime = new DateTime(2020, 1, 1, 20, 0, 0),
-								RoomId = 6
-							});
-							roomData.Add(new RoomData
-							{
-								Id = 30,
-								Subject = "Sprint Planning with Team members",
-								Description = "Planning tasks for sprint.",
-								StartTime = new DateTime(2020, 1, 1, 10, 30, 0),
-								EndTime = new DateTime(2020, 1, 1, 12, 0, 0),
-								RoomId = 2
-							});
-							roomData.Add(new RoomData
-							{
-								Id = 31,
-								Subject = "Meeting with Client",
-								Description = "Customer meeting to discuss features.",
-								StartTime = new DateTime(2020, 1, 1, 18, 0, 0),
-								EndTime = new DateTime(2020, 1, 1, 20, 0, 0),
-								RoomId = 8
-							});
-							roomData.Add(new RoomData
-							{
-								Id = 32,
-								Subject = "Support Meeting with Managers",
-								Description = "Meeting to discuss support plan.",
-								StartTime = new DateTime(2020, 1, 1, 16, 0, 0),
-								EndTime = new DateTime(2020, 1, 1, 17, 30, 0),
-								RoomId = 7
-							});
-							roomData.Add(new RoomData
-							{
-								Id = 33,
-								Subject = "Training session on C#",
-								Location = "Office",
-								Description = "Training session",
-								StartTime = new DateTime(2020, 1, 1, 14, 30, 0),
-								EndTime = new DateTime(2020, 1, 1, 16, 0, 0),
-								RoomId = 2
-							});
-							roomData.Add(new RoomData
-							{
-								Id = 34,
-								Subject = "Client Meeting",
-								Description = "Meeting to discuss client requirements.",
-								StartTime = new DateTime(2020, 1, 1, 10, 30, 0),
-								EndTime = new DateTime(2020, 1, 1, 13, 0, 0),
-								RoomId = 3
-							});
-							roomData.Add(new RoomData
-							{
-								Id = 35,
-								Subject = "Appraisal Meeting",
-								Description = "Meeting to discuss employee appraisals.",
-								StartTime = new DateTime(2020, 1, 1, 15, 0, 0),
-								EndTime = new DateTime(2020, 1, 1, 16, 30, 0),
-								RoomId = 8
-							});
-							roomData.Add(new RoomData
-							{
-								Id = 36,
-								Subject = "HR Meeting",
-								Description = "Meeting to discuss HR plans.",
-								StartTime = new DateTime(2020, 1, 1, 9, 30, 0),
-								EndTime = new DateTime(2020, 1, 1, 11, 30, 0),
-								RoomId = 4
-							});
-							roomData.Add(new RoomData
-							{
-								Id = 37,
-								Subject = "Customer Meeting",
-								Description = "Meeting to discuss customer reported issues.",
-								StartTime = new DateTime(2020, 1, 1, 10, 0, 0),
-								EndTime = new DateTime(2020, 1, 1, 12, 0, 0),
-								RoomId = 9
-							});
-							roomData.Add(new RoomData
-							{
-								Id = 38,
-								Subject = "Board Meeting",
-								Description = "Meeting to discuss business plans.",
-								StartTime = new DateTime(2020, 1, 1, 15, 0, 0),
-								EndTime = new DateTime(2020, 1, 1, 17, 0, 0),
-								RoomId = 4
-							});
-							roomData.Add(new RoomData
-							{
-								Id = 39,
-								Subject = "Training session on Vue",
-								Description = "Knowledge sharing on Vue concepts.",
-								StartTime = new DateTime(2020, 1, 1, 9, 0, 0),
-								EndTime = new DateTime(2020, 1, 1, 10, 30, 0),
-								RoomId = 5
-							});
-							roomData.Add(new RoomData
-							{
-								Id = 40,
-								Subject = "Meeting with Team members",
-								Description = "Meeting to discuss on work report.",
-								StartTime = new DateTime(2020, 1, 1, 11, 30, 0),
-								EndTime = new DateTime(2020, 1, 1, 12, 30, 0),
-								RoomId = 5
-							});
-							roomData.Add(new RoomData
-							{
-								Id = 41,
-								Subject = "Meeting with General Manager",
-								Description = "Meeting to discuss support plan.",
-								StartTime = new DateTime(2020, 1, 1, 14, 0, 0),
-								EndTime = new DateTime(2020, 1, 1, 16, 0, 0),
-								RoomId = 10
-							});
-							roomData.Add(new RoomData
-							{
-								Id = 43,
-								Subject = "HR Meeting",
-								Description = "Meeting to discuss HR plans.",
-								StartTime = new DateTime(2020, 1, 1, 18, 0, 0),
-								EndTime = new DateTime(2020, 1, 1, 20, 0, 0),
-								RoomId = 2
-							});
-							roomData.Add(new RoomData
-							{
-								Id = 44,
-								Subject = "HR Meeting",
-								Description = "Meeting to discuss HR plans.",
-								StartTime = new DateTime(2020, 1, 1, 19, 0, 0),
-								EndTime = new DateTime(2020, 1, 1, 21, 0, 0),
-								RoomId = 1
-							});
-							roomData.Add(new RoomData
-							{
-								Id = 45,
-								Subject = "Client Meeting",
-								Description = "Meeting to discuss client requirements.",
-								StartTime = new DateTime(2020, 1, 1, 16, 30, 0),
-								EndTime = new DateTime(2020, 1, 1, 18, 0, 0),
-								RoomId = 3
-							});
-							roomData.Add(new RoomData
-							{
-								Id = 46,
-								Subject = "Board Meeting",
-								Description = "Meeting to discuss business plans.",
-								StartTime = new DateTime(2020, 1, 1, 18, 30, 0),
-								EndTime = new DateTime(2020, 1, 1, 20, 30, 0),
-								RoomId = 4
-							});
-							roomData.Add(new RoomData
-							{
-								Id = 47,
-								Subject = "Board Meeting",
-								Description = "Meeting to discuss business plans.",
-								StartTime = new DateTime(2020, 1, 1, 15, 30, 0),
-								EndTime = new DateTime(2020, 1, 1, 18, 0, 0),
-								RoomId = 5
-							});
-							roomData.Add(new RoomData
-							{
-								Id = 48,
-								Subject = "HR Meeting",
-								Description = "Meeting to discuss HR plans.",
-								StartTime = new DateTime(2020, 1, 1, 19, 30, 0),
-								EndTime = new DateTime(2020, 1, 1, 22, 0, 0),
-								RoomId = 5
-							});
-							roomData.Add(new RoomData
-							{
-								Id = 49,
-								Subject = "HR Meeting",
-								Description = "Meeting to discuss HR plans.",
-								StartTime = new DateTime(2020, 1, 1, 14, 30, 0),
-								EndTime = new DateTime(2020, 1, 1, 16, 0, 0),
-								RoomId = 6
-							});
-							roomData.Add(new RoomData
-							{
-								Id = 50,
-								Subject = "Board Meeting",
-								Description = "Meeting to discuss business plans.",
-								StartTime = new DateTime(2020, 1, 1, 9, 30, 0),
-								EndTime = new DateTime(2020, 1, 1, 12, 0, 0),
-								RoomId = 6
-							});
-							roomData.Add(new RoomData
-							{
-								Id = 51,
-								Subject = "Client Meeting",
-								Description = "Meeting to discuss client requirements.",
-								StartTime = new DateTime(2020, 1, 1, 10, 30, 0),
-								EndTime = new DateTime(2020, 1, 1, 12, 0, 0),
-								RoomId = 7
-							});
-							roomData.Add(new RoomData
-							{
-								Id = 52,
-								Subject = "Appraisal Meeting",
-								Description = "Meeting to discuss employee appraisals.",
-								StartTime = new DateTime(2020, 1, 1, 20, 0, 0),
-								EndTime = new DateTime(2020, 1, 1, 21, 30, 0),
-								RoomId = 7
-							});
-							roomData.Add(new RoomData
-							{
-								Id = 53,
-								Subject = "Support Meeting with Managers",
-								Description = "Meeting to discuss support plan.",
-								StartTime = new DateTime(2020, 1, 1, 15, 30, 0),
-								EndTime = new DateTime(2020, 1, 1, 17, 0, 0),
-								RoomId = 9
-							});
-							roomData.Add(new RoomData
-							{
-								Id = 54,
-								Subject = "Support Meeting with Managers",
-								Description = "Meeting to discuss support plan.",
-								StartTime = new DateTime(2020, 1, 1, 11, 0, 0),
-								EndTime = new DateTime(2020, 1, 1, 12, 30, 0),
-								RoomId = 8
-							});
-							roomData.Add(new RoomData
-							{
-								Id = 55,
-								Subject = "Support Meeting with Managers",
-								Description = "Meeting to discuss support plan.",
-								StartTime = new DateTime(2020, 1, 1, 11, 0, 0),
-								EndTime = new DateTime(2020, 1, 1, 12, 30, 0),
-								RoomId = 10
-							});
-							roomData.Add(new RoomData
-							{
-								Id = 56,
-								Subject = "Lunch Break",
-								StartTime = new DateTime(2020, 1, 1, 13, 0, 0),
-								EndTime = new DateTime(2020, 1, 1, 14, 0, 0),
-								RecurrenceRule = "FREQ=DAILY;INTERVAL=1;",
-								IsBlock = true,
-								RoomId = 1
-							});
-							roomData.Add(new RoomData
-							{
-								Id = 57,
-								Subject = "Lunch Break",
-								StartTime = new DateTime(2020, 1, 1, 13, 0, 0),
-								EndTime = new DateTime(2020, 1, 1, 14, 0, 0),
-								RecurrenceRule = "FREQ=DAILY;INTERVAL=1;",
-								IsBlock = true,
-								RoomId = 2
-							});
-							roomData.Add(new RoomData
-							{
-								Id = 58,
-								Subject = "Lunch Break",
-								StartTime = new DateTime(2020, 1, 1, 13, 0, 0),
-								EndTime = new DateTime(2020, 1, 1, 14, 0, 0),
-								RecurrenceRule = "FREQ=DAILY;INTERVAL=1;",
-								IsBlock = true,
-								RoomId = 3
-							});
-							roomData.Add(new RoomData
-							{
-								Id = 59,
-								Subject = "Lunch Break",
-								StartTime = new DateTime(2020, 1, 1, 13, 0, 0),
-								EndTime = new DateTime(2020, 1, 1, 14, 0, 0),
-								RecurrenceRule = "FREQ=DAILY;INTERVAL=1;",
-								IsBlock = true,
-								RoomId = 4
-							});
-							roomData.Add(new RoomData
-							{
-								Id = 60,
-								Subject = "Lunch Break",
-								StartTime = new DateTime(2020, 1, 1, 13, 0, 0),
-								EndTime = new DateTime(2020, 1, 1, 14, 0, 0),
-								RecurrenceRule = "FREQ=DAILY;INTERVAL=1;",
-								IsBlock = true,
-								RoomId = 5
-							});
-							roomData.Add(new RoomData
-							{
-								Id = 61,
-								Subject = "Lunch Break",
-								StartTime = new DateTime(2020, 1, 1, 13, 0, 0),
-								EndTime = new DateTime(2020, 1, 1, 14, 0, 0),
-								RecurrenceRule = "FREQ=DAILY;INTERVAL=1;",
-								IsBlock = true,
-								RoomId = 6
-							});
-							roomData.Add(new RoomData
-							{
-								Id = 62,
-								Subject = "Lunch Break",
-								StartTime = new DateTime(2020, 1, 1, 13, 0, 0),
-								EndTime = new DateTime(2020, 1, 1, 14, 0, 0),
-								RecurrenceRule = "FREQ=DAILY;INTERVAL=1;",
-								IsBlock = true,
-								RoomId = 7
-							});
-							roomData.Add(new RoomData
-							{
-								Id = 63,
-								Subject = "Lunch Break",
-								StartTime = new DateTime(2020, 1, 1, 13, 0, 0),
-								EndTime = new DateTime(2020, 1, 1, 14, 0, 0),
-								RecurrenceRule = "FREQ=DAILY;INTERVAL=1;",
-								IsBlock = true,
-								RoomId = 8
-							});
-							roomData.Add(new RoomData
-							{
-								Id = 64,
-								Subject = "Lunch Break",
-								StartTime = new DateTime(2020, 1, 1, 13, 0, 0),
-								EndTime = new DateTime(2020, 1, 1, 14, 0, 0),
-								RecurrenceRule = "FREQ=DAILY;INTERVAL=1;",
-								IsBlock = true,
-								RoomId = 9
-							});
-							roomData.Add(new RoomData
-							{
-								Id = 65,
-								Subject = "Lunch Break",
-								StartTime = new DateTime(2020, 1, 1, 13, 0, 0),
-								EndTime = new DateTime(2020, 1, 1, 14, 0, 0),
-								RecurrenceRule = "FREQ=DAILY;INTERVAL=1;",
-								IsBlock = true,
-								RoomId = 10
-							});
-							roomData.Add(new RoomData
-							{
-								Id = 66,
-								Subject = "Support meeting with Managers",
-								Description = "Planning tasks for sprint.",
-								StartTime = new DateTime(2020, 1, 1, 11, 0, 0),
-								EndTime = new DateTime(2020, 1, 1, 12, 30, 0),
-								RoomId = 2
-							});
-							return roomData;
-						}
-						public List<RoomData> GetRoomsData()
-						{
-							List<RoomData> roomData = new List<RoomData>();
-							roomData.Add(new RoomData
-							{
-								Id = 1,
-								Subject = "Board Meeting",
-								Description = "Meeting to discuss business goal of 2020.",
-								StartTime = new DateTime(2020, 1, 5, 9, 30, 0),
-								EndTime = new DateTime(2020, 1, 5, 11, 0, 0),
-								RoomId = 10
-							});
-							roomData.Add(new RoomData
-							{
-								Id = 2,
-								Subject = "Training session on JSP",
-								Description = "Knowledge sharing on JSP topics.",
-								StartTime = new DateTime(2020, 1, 7, 9, 30, 0),
-								EndTime = new DateTime(2020, 1, 7, 11, 0, 0),
-								RoomId = 8
-							});
-							roomData.Add(new RoomData
-							{
-								Id = 3,
-								Subject = "Sprint Planning with Team members",
-								Description = "Planning tasks for sprint.",
-								StartTime = new DateTime(2020, 1, 9, 9, 30, 0),
-								EndTime = new DateTime(2020, 1, 9, 11, 0, 0),
-								RoomId = 3
-							});
-							roomData.Add(new RoomData
-							{
-								Id = 4,
-								Subject = "Meeting with Client",
-								Description = "Customer meeting to discuss features.",
-								StartTime = new DateTime(2020, 1, 11, 9, 0, 0),
-								EndTime = new DateTime(2020, 1, 11, 10, 30, 0),
-								RoomId = 2
-							});
-							roomData.Add(new RoomData
-							{
-								Id = 5,
-								Subject = "Support Meeting with Managers",
-								Description = "Meeting to discuss support plan.",
-								StartTime = new DateTime(2020, 1, 6, 12, 0, 0),
-								EndTime = new DateTime(2020, 1, 6, 13, 30, 0),
-								RoomId = 5
-							});
-							roomData.Add(new RoomData
-							{
-								Id = 6,
-								Subject = "Client Meeting",
-								Description = "Meeting to discuss client requirements.",
-								StartTime = new DateTime(2020, 1, 8, 11, 30, 0),
-								EndTime = new DateTime(2020, 1, 8, 13, 0, 0),
-								RoomId = 1
-							});
-							roomData.Add(new RoomData
-							{
-								Id = 7,
-								Subject = "Appraisal Meeting",
-								Description = "Meeting to discuss employee appraisals.",
-								StartTime = new DateTime(2020, 1, 10, 11, 0, 0),
-								EndTime = new DateTime(2020, 1, 10, 12, 30, 0),
-								RoomId = 7
-							});
-							roomData.Add(new RoomData
-							{
-								Id = 8,
-								Subject = "HR Meeting",
-								Description = "Meeting to discuss HR plans.",
-								StartTime = new DateTime(2020, 1, 5, 13, 0, 0),
-								EndTime = new DateTime(2020, 1, 5, 14, 30, 0),
-								RoomId = 6
-							});
-							roomData.Add(new RoomData
-							{
-								Id = 9,
-								Subject = "Customer Meeting",
-								Description = "Meeting to discuss customer reported issues.",
-								StartTime = new DateTime(2020, 1, 9, 12, 30, 0),
-								EndTime = new DateTime(2020, 1, 9, 14, 0, 0),
-								RoomId = 4
-							});
-							roomData.Add(new RoomData
-							{
-								Id = 10,
-								Subject = "Board Meeting",
-								Description = "Meeting to discuss business plans.",
-								StartTime = new DateTime(2020, 1, 11, 13, 0, 0),
-								EndTime = new DateTime(2020, 1, 11, 14, 30, 0),
-								RoomId = 9
-							});
-							return roomData;
-						}
 						public List<HospitalData> GetHospitalData()
 						{
 							List<HospitalData> hospitalData = new List<HospitalData>();
@@ -3326,947 +4370,6 @@ namespace LivingMessiah.Web.Pages.BlazorSyncFusion.Schedule
 							});
 							return recurrenceData;
 						}
-						public List<FifaEventsData> GetFifaEventsData()
-						{
-							List<FifaEventsData> fifaEventsData = new List<FifaEventsData>();
-							fifaEventsData.Add(new FifaEventsData
-							{
-								Id = 1,
-								Subject = "RUSSIA vs SAUDI ARABIA",
-								Description = "Group A",
-								StartTime = new DateTime(2020, 1, 16, 15, 0, 0),
-								EndTime = new DateTime(2020, 1, 16, 17, 0, 0),
-								StartTimezone = "Europe/Moscow",
-								EndTimezone = "Europe/Moscow",
-								City = "Moscow",
-								CategoryColor = "#1aaa55",
-								GroupId = 1
-							});
-							fifaEventsData.Add(new FifaEventsData
-							{
-								Id = 2,
-								Subject = "EGYPT vs URUGUAY",
-								Description = "Group A",
-								StartTime = new DateTime(2020, 1, 17, 12, 0, 0),
-								EndTime = new DateTime(2020, 1, 17, 14, 0, 0),
-								StartTimezone = "Asia/Yekaterinburg",
-								EndTimezone = "Asia/Yekaterinburg",
-								City = "Ekaterinburg",
-								CategoryColor = "#1aaa55",
-								GroupId = 1
-							});
-							fifaEventsData.Add(new FifaEventsData
-							{
-								Id = 3,
-								Subject = "MOROCCO vs IR IRAN",
-								Description = "Group B",
-								StartTime = new DateTime(2020, 1, 17, 15, 0, 0),
-								EndTime = new DateTime(2020, 1, 17, 17, 0, 0),
-								StartTimezone = "Europe/Moscow",
-								EndTimezone = "Europe/Moscow",
-								City = "Saint Petersburg",
-								CategoryColor = "#357cd2",
-								GroupId = 2
-							});
-							fifaEventsData.Add(new FifaEventsData
-							{
-								Id = 4,
-								Subject = "PORTUGAL vs SPAIN",
-								Description = "Group B",
-								StartTime = new DateTime(2020, 1, 17, 18, 0, 0),
-								EndTime = new DateTime(2020, 1, 17, 20, 0, 0),
-								StartTimezone = "Europe/Moscow",
-								EndTimezone = "Europe/Moscow",
-								City = "Sochi",
-								CategoryColor = "#357cd2",
-								GroupId = 2
-							});
-							fifaEventsData.Add(new FifaEventsData
-							{
-								Id = 5,
-								Subject = "FRANCE vs AUSTRALIA",
-								Description = "Group C",
-								StartTime = new DateTime(2020, 1, 18, 10, 0, 0),
-								EndTime = new DateTime(2020, 1, 18, 12, 0, 0),
-								StartTimezone = "Europe/Moscow",
-								EndTimezone = "Europe/Moscow",
-								City = "Kazan",
-								CategoryColor = "#7fa900",
-								GroupId = 1
-							});
-							fifaEventsData.Add(new FifaEventsData
-							{
-								Id = 6,
-								Subject = "ARGENTINA vs ICELAND",
-								Description = "Group D",
-								StartTime = new DateTime(2020, 1, 18, 13, 0, 0),
-								EndTime = new DateTime(2020, 1, 18, 15, 0, 0),
-								StartTimezone = "Europe/Moscow",
-								EndTimezone = "Europe/Moscow",
-								City = "Moscow",
-								CategoryColor = "#ea7a57",
-								GroupId = 2
-							});
-							fifaEventsData.Add(new FifaEventsData
-							{
-								Id = 7,
-								Subject = "PERU vs DENMARK",
-								Description = "Group C",
-								StartTime = new DateTime(2020, 1, 18, 16, 0, 0),
-								EndTime = new DateTime(2020, 1, 18, 18, 0, 0),
-								StartTimezone = "Europe/Moscow",
-								EndTimezone = "Europe/Moscow",
-								City = "Saransk",
-								CategoryColor = "#7fa900",
-								GroupId = 1
-							});
-							fifaEventsData.Add(new FifaEventsData
-							{
-								Id = 8,
-								Subject = "CROATIA vs NIGERIA",
-								Description = "Group D",
-								StartTime = new DateTime(2020, 1, 18, 19, 0, 0),
-								EndTime = new DateTime(2020, 1, 18, 21, 0, 0),
-								StartTimezone = "Europe/Kaliningrad",
-								EndTimezone = "Europe/Kaliningrad",
-								City = "Kaliningrad",
-								CategoryColor = "#ea7a57",
-								GroupId = 2
-							});
-							fifaEventsData.Add(new FifaEventsData
-							{
-								Id = 9,
-								Subject = "COSTA RICA vs SERBIA",
-								Description = "Group E",
-								StartTime = new DateTime(2020, 1, 19, 12, 0, 0),
-								EndTime = new DateTime(2020, 1, 19, 14, 0, 0),
-								StartTimezone = "Europe/Samara",
-								EndTimezone = "Europe/Samara",
-								City = "Samara",
-								CategoryColor = "#00bdae",
-								GroupId = 1
-							});
-							fifaEventsData.Add(new FifaEventsData
-							{
-								Id = 10,
-								Subject = "GERMANY vs MEXICO",
-								Description = "Group F",
-								StartTime = new DateTime(2020, 1, 19, 15, 0, 0),
-								EndTime = new DateTime(2020, 1, 19, 17, 0, 0),
-								StartTimezone = "Europe/Moscow",
-								EndTimezone = "Europe/Moscow",
-								City = "Moscow",
-								CategoryColor = "#f57f17",
-								GroupId = 2
-							});
-							fifaEventsData.Add(new FifaEventsData
-							{
-								Id = 11,
-								Subject = "BRAZIL vs SWITZERLAND",
-								Description = "Group E",
-								StartTime = new DateTime(2020, 1, 19, 18, 0, 0),
-								EndTime = new DateTime(2020, 1, 19, 20, 0, 0),
-								StartTimezone = "Europe/Moscow",
-								EndTimezone = "Europe/Moscow",
-								City = "Rostov-On-Don",
-								CategoryColor = "#00bdae",
-								GroupId = 1
-							});
-							fifaEventsData.Add(new FifaEventsData
-							{
-								Id = 12,
-								Subject = "SWEDEN vs KOREA REPUBLIC",
-								Description = "Group F",
-								StartTime = new DateTime(2020, 1, 20, 12, 0, 0),
-								EndTime = new DateTime(2020, 1, 20, 14, 0, 0),
-								StartTimezone = "Europe/Moscow",
-								EndTimezone = "Europe/Moscow",
-								City = "Nizhny Novgorod",
-								CategoryColor = "#f57f17",
-								GroupId = 2
-							});
-							fifaEventsData.Add(new FifaEventsData
-							{
-								Id = 13,
-								Subject = "BELGIUM vs PANAMA",
-								Description = "Group G",
-								StartTime = new DateTime(2020, 1, 20, 15, 0, 0),
-								EndTime = new DateTime(2020, 1, 20, 17, 0, 0),
-								StartTimezone = "Europe/Moscow",
-								EndTimezone = "Europe/Moscow",
-								City = "Sochi",
-								CategoryColor = "#8e24aa",
-								GroupId = 1
-							});
-							fifaEventsData.Add(new FifaEventsData
-							{
-								Id = 14,
-								Subject = "TUNISIA vs ENGLAND",
-								Description = "Group G",
-								StartTime = new DateTime(2020, 1, 20, 18, 0, 0),
-								EndTime = new DateTime(2020, 1, 20, 20, 0, 0),
-								StartTimezone = "Europe/Volgograd",
-								EndTimezone = "Europe/Volgograd",
-								City = "Volgograd",
-								CategoryColor = "#8e24aa",
-								GroupId = 2
-							});
-							fifaEventsData.Add(new FifaEventsData
-							{
-								Id = 15,
-								Subject = "COLOMBIA vs JAPAN",
-								Description = "Group H",
-								StartTime = new DateTime(2020, 1, 21, 12, 0, 0),
-								EndTime = new DateTime(2020, 1, 21, 14, 0, 0),
-								StartTimezone = "Europe/Moscow",
-								EndTimezone = "Europe/Moscow",
-								City = "Saransk",
-								CategoryColor = "#7fa900",
-								GroupId = 1
-							});
-							fifaEventsData.Add(new FifaEventsData
-							{
-								Id = 16,
-								Subject = "POLAND vs SENEGAL",
-								Description = "Group H",
-								StartTime = new DateTime(2020, 1, 21, 15, 0, 0),
-								EndTime = new DateTime(2020, 1, 21, 17, 0, 0),
-								StartTimezone = "Europe/Moscow",
-								EndTimezone = "Europe/Moscow",
-								City = "Moscow",
-								CategoryColor = "#7fa900",
-								GroupId = 2
-							});
-							fifaEventsData.Add(new FifaEventsData
-							{
-								Id = 17,
-								Subject = "RUSSIA vs EGYPT",
-								Description = "Group A",
-								StartTime = new DateTime(2020, 1, 21, 18, 0, 0),
-								EndTime = new DateTime(2020, 1, 21, 20, 0, 0),
-								StartTimezone = "Europe/Moscow",
-								EndTimezone = "Europe/Moscow",
-								City = "Saint Petersburg",
-								CategoryColor = "#1aaa55",
-								GroupId = 1
-							});
-							fifaEventsData.Add(new FifaEventsData
-							{
-								Id = 18,
-								Subject = "PORTUGAL vs MOROCCO",
-								Description = "Group B",
-								StartTime = new DateTime(2020, 1, 22, 12, 0, 0),
-								EndTime = new DateTime(2020, 1, 22, 14, 0, 0),
-								StartTimezone = "Europe/Moscow",
-								EndTimezone = "Europe/Moscow",
-								City = "Rostov-On-Don",
-								CategoryColor = "#357cd2",
-								GroupId = 2
-							});
-							fifaEventsData.Add(new FifaEventsData
-							{
-								Id = 19,
-								Subject = "URUGUAY vs SAUDI ARABIA",
-								Description = "Group A",
-								StartTime = new DateTime(2020, 1, 22, 15, 0, 0),
-								EndTime = new DateTime(2020, 1, 22, 17, 0, 0),
-								StartTimezone = "Europe/Moscow",
-								EndTimezone = "Europe/Moscow",
-								City = "Moscow",
-								CategoryColor = "#1aaa55",
-								GroupId = 1
-							});
-							fifaEventsData.Add(new FifaEventsData
-							{
-								Id = 20,
-								Subject = "IR IRAN vs SPAIN",
-								Description = "Group B",
-								StartTime = new DateTime(2020, 1, 22, 18, 0, 0),
-								EndTime = new DateTime(2020, 1, 22, 20, 0, 0),
-								StartTimezone = "Europe/Moscow",
-								EndTimezone = "Europe/Moscow",
-								City = "Kazan",
-								CategoryColor = "#357cd2",
-								GroupId = 2
-							});
-							fifaEventsData.Add(new FifaEventsData
-							{
-								Id = 21,
-								Subject = "DENMARK vs AUSTRALIA",
-								Description = "Group C",
-								StartTime = new DateTime(2020, 1, 23, 12, 0, 0),
-								EndTime = new DateTime(2020, 1, 23, 14, 0, 0),
-								StartTimezone = "Europe/Samara",
-								EndTimezone = "Europe/Samara",
-								City = "Samara",
-								CategoryColor = "#7fa900",
-								GroupId = 1
-							});
-							fifaEventsData.Add(new FifaEventsData
-							{
-								Id = 22,
-								Subject = "FRANCE vs PERU",
-								Description = "Group D",
-								StartTime = new DateTime(2020, 1, 23, 15, 0, 0),
-								EndTime = new DateTime(2020, 1, 23, 17, 0, 0),
-								StartTimezone = "Asia/Yekaterinburg",
-								EndTimezone = "Asia/Yekaterinburg",
-								City = "Ekaterinburg",
-								CategoryColor = "#ea7a57",
-								GroupId = 2
-							});
-							fifaEventsData.Add(new FifaEventsData
-							{
-								Id = 23,
-								Subject = "ARGENTINA vs CROATIA",
-								Description = "Group D",
-								StartTime = new DateTime(2020, 1, 23, 18, 0, 0),
-								EndTime = new DateTime(2020, 1, 23, 20, 0, 0),
-								StartTimezone = "Europe/Moscow",
-								EndTimezone = "Europe/Moscow",
-								City = "Nizhny Novgorod",
-								CategoryColor = "#ea7a57",
-								GroupId = 1
-							});
-							fifaEventsData.Add(new FifaEventsData
-							{
-								Id = 24,
-								Subject = "BRAZIL vs COSTA RICA",
-								Description = "Group E",
-								StartTime = new DateTime(2020, 1, 24, 12, 0, 0),
-								EndTime = new DateTime(2020, 1, 24, 14, 0, 0),
-								StartTimezone = "Europe/Moscow",
-								EndTimezone = "Europe/Moscow",
-								City = "Saint Petersburg",
-								CategoryColor = "#00bdae",
-								GroupId = 2
-							});
-							fifaEventsData.Add(new FifaEventsData
-							{
-								Id = 25,
-								Subject = "NIGERIA vs ICELAND",
-								Description = "Group D",
-								StartTime = new DateTime(2020, 1, 24, 15, 0, 0),
-								EndTime = new DateTime(2020, 1, 24, 17, 0, 0),
-								StartTimezone = "Europe/Volgograd",
-								EndTimezone = "Europe/Volgograd",
-								City = "Volgograd",
-								CategoryColor = "#ea7a57",
-								GroupId = 1
-							});
-							fifaEventsData.Add(new FifaEventsData
-							{
-								Id = 26,
-								Subject = "SERBIA vs SWITZERLAND",
-								Description = "Group E",
-								StartTime = new DateTime(2020, 1, 24, 18, 0, 0),
-								EndTime = new DateTime(2020, 1, 24, 20, 0, 0),
-								StartTimezone = "Europe/Kaliningrad",
-								EndTimezone = "Europe/Kaliningrad",
-								City = "Kaliningrad",
-								CategoryColor = "#00bdae",
-								GroupId = 2
-							});
-							fifaEventsData.Add(new FifaEventsData
-							{
-								Id = 27,
-								Subject = "BELGIUM vs TUNISIA",
-								Description = "Group G",
-								StartTime = new DateTime(2020, 1, 25, 12, 0, 0),
-								EndTime = new DateTime(2020, 1, 25, 14, 0, 0),
-								StartTimezone = "Europe/Moscow",
-								EndTimezone = "Europe/Moscow",
-								City = "Moscow",
-								CategoryColor = "#8e24aa",
-								GroupId = 1
-							});
-							fifaEventsData.Add(new FifaEventsData
-							{
-								Id = 28,
-								Subject = "KOREA REPUBLIC vs MEXICO",
-								Description = "Group F",
-								StartTime = new DateTime(2020, 1, 25, 15, 0, 0),
-								EndTime = new DateTime(2020, 1, 25, 17, 0, 0),
-								StartTimezone = "Europe/Moscow",
-								EndTimezone = "Europe/Moscow",
-								City = "Rostov-On-Don",
-								CategoryColor = "#f57f17",
-								GroupId = 2
-							});
-							fifaEventsData.Add(new FifaEventsData
-							{
-								Id = 29,
-								Subject = "GERMANY vs SWEDEN",
-								Description = "Group F",
-								StartTime = new DateTime(2020, 1, 25, 18, 0, 0),
-								EndTime = new DateTime(2020, 1, 25, 20, 0, 0),
-								StartTimezone = "Europe/Moscow",
-								EndTimezone = "Europe/Moscow",
-								City = "Sochi",
-								CategoryColor = "#f57f17",
-								GroupId = 1
-							});
-							fifaEventsData.Add(new FifaEventsData
-							{
-								Id = 30,
-								Subject = "ENGLAND vs PANAMA",
-								Description = "Group G",
-								StartTime = new DateTime(2020, 1, 26, 12, 0, 0),
-								EndTime = new DateTime(2020, 1, 26, 14, 0, 0),
-								StartTimezone = "Europe/Moscow",
-								EndTimezone = "Europe/Moscow",
-								City = "Nizhny Novgorod",
-								CategoryColor = "#8e24aa",
-								GroupId = 2
-							});
-							fifaEventsData.Add(new FifaEventsData
-							{
-								Id = 31,
-								Subject = "JAPAN vs SENEGAL",
-								Description = "Group H",
-								StartTime = new DateTime(2020, 1, 26, 15, 0, 0),
-								EndTime = new DateTime(2020, 1, 26, 17, 0, 0),
-								StartTimezone = "Asia/Yekaterinburg",
-								EndTimezone = "Asia/Yekaterinburg",
-								City = "Ekaterinburg",
-								CategoryColor = "#7fa900",
-								GroupId = 1
-							});
-							fifaEventsData.Add(new FifaEventsData
-							{
-								Id = 32,
-								Subject = "POLAND vs COLOMBIA",
-								Description = "Group H",
-								StartTime = new DateTime(2020, 1, 26, 18, 0, 0),
-								EndTime = new DateTime(2020, 1, 26, 20, 0, 0),
-								StartTimezone = "Europe/Moscow",
-								EndTimezone = "Europe/Moscow",
-								City = "Kazan",
-								CategoryColor = "#7fa900",
-								GroupId = 2
-							});
-							fifaEventsData.Add(new FifaEventsData
-							{
-								Id = 33,
-								Subject = "URUGUAY vs RUSSIA",
-								Description = "Group A",
-								StartTime = new DateTime(2020, 1, 27, 14, 0, 0),
-								EndTime = new DateTime(2020, 1, 27, 16, 0, 0),
-								StartTimezone = "Europe/Samara",
-								EndTimezone = "Europe/Samara",
-								City = "Samara",
-								CategoryColor = "#1aaa55",
-								GroupId = 1
-							});
-							fifaEventsData.Add(new FifaEventsData
-							{
-								Id = 34,
-								Subject = "SAUDI ARABIA vs EGYPT",
-								Description = "Group A",
-								StartTime = new DateTime(2020, 1, 27, 14, 0, 0),
-								EndTime = new DateTime(2020, 1, 27, 16, 0, 0),
-								StartTimezone = "Europe/Volgograd",
-								EndTimezone = "Europe/Volgograd",
-								City = "Volgograd",
-								CategoryColor = "#1aaa55",
-								GroupId = 1
-							});
-							fifaEventsData.Add(new FifaEventsData
-							{
-								Id = 35,
-								Subject = "IR IRAN vs PORTUGAL",
-								Description = "Group B",
-								StartTime = new DateTime(2020, 1, 27, 18, 0, 0),
-								EndTime = new DateTime(2020, 1, 27, 20, 0, 0),
-								StartTimezone = "Europe/Moscow",
-								EndTimezone = "Europe/Moscow",
-								City = "Saransk",
-								CategoryColor = "#357cd2",
-								GroupId = 2
-							});
-							fifaEventsData.Add(new FifaEventsData
-							{
-								Id = 36,
-								Subject = "SPAIN vs MOROCCO",
-								Description = "Group B",
-								StartTime = new DateTime(2020, 1, 27, 18, 0, 0),
-								EndTime = new DateTime(2020, 1, 27, 20, 0, 0),
-								StartTimezone = "Europe/Kaliningrad",
-								EndTimezone = "Europe/Kaliningrad",
-								City = "Kaliningrad",
-								CategoryColor = "#357cd2",
-								GroupId = 2
-							});
-							fifaEventsData.Add(new FifaEventsData
-							{
-								Id = 37,
-								Subject = "DENMARK vs FRANCE",
-								Description = "Group C",
-								StartTime = new DateTime(2020, 1, 28, 14, 0, 0),
-								EndTime = new DateTime(2020, 1, 28, 16, 0, 0),
-								StartTimezone = "Europe/Moscow",
-								EndTimezone = "Europe/Moscow",
-								City = "Moscow",
-								CategoryColor = "#7fa900",
-								GroupId = 1
-							});
-							fifaEventsData.Add(new FifaEventsData
-							{
-								Id = 38,
-								Subject = "AUSTRALIA vs PERU",
-								Description = "Group C",
-								StartTime = new DateTime(2020, 1, 28, 14, 0, 0),
-								EndTime = new DateTime(2020, 1, 28, 16, 0, 0),
-								StartTimezone = "Europe/Moscow",
-								EndTimezone = "Europe/Moscow",
-								City = "Sochi",
-								CategoryColor = "#7fa900",
-								GroupId = 2
-							});
-							fifaEventsData.Add(new FifaEventsData
-							{
-								Id = 39,
-								Subject = "NIGERIA vs ARGENTINA",
-								Description = "Group D",
-								StartTime = new DateTime(2020, 1, 28, 18, 0, 0),
-								EndTime = new DateTime(2020, 1, 28, 20, 0, 0),
-								StartTimezone = "Europe/Moscow",
-								EndTimezone = "Europe/Moscow",
-								City = "Saint Petersburg",
-								CategoryColor = "#ea7a57",
-								GroupId = 1
-							});
-							fifaEventsData.Add(new FifaEventsData
-							{
-								Id = 40,
-								Subject = "ICELAND vs CROATIA",
-								Description = "Group D",
-								StartTime = new DateTime(2020, 1, 28, 18, 0, 0),
-								EndTime = new DateTime(2020, 1, 28, 20, 0, 0),
-								StartTimezone = "Europe/Moscow",
-								EndTimezone = "Europe/Moscow",
-								City = "Rostov-On-Don",
-								CategoryColor = "#ea7a57",
-								GroupId = 2
-							});
-							fifaEventsData.Add(new FifaEventsData
-							{
-								Id = 41,
-								Subject = "MEXICO vs SWEDEN",
-								Description = "Group F",
-								StartTime = new DateTime(2020, 1, 29, 14, 0, 0),
-								EndTime = new DateTime(2020, 1, 29, 16, 0, 0),
-								StartTimezone = "Asia/Yekaterinburg",
-								EndTimezone = "Asia/Yekaterinburg",
-								City = "Ekaterinburg",
-								CategoryColor = "#f57f17",
-								GroupId = 1
-							});
-							fifaEventsData.Add(new FifaEventsData
-							{
-								Id = 42,
-								Subject = "KOREA REPUBLIC vs GERMANY",
-								Description = "Group F",
-								StartTime = new DateTime(2020, 1, 29, 14, 0, 0),
-								EndTime = new DateTime(2020, 1, 29, 16, 0, 0),
-								StartTimezone = "Europe/Moscow",
-								EndTimezone = "Europe/Moscow",
-								City = "Kazan",
-								CategoryColor = "#f57f17",
-								GroupId = 2
-							});
-							fifaEventsData.Add(new FifaEventsData
-							{
-								Id = 43,
-								Subject = "SERBIA vs BRAZIL",
-								Description = "Group E",
-								StartTime = new DateTime(2020, 1, 29, 18, 0, 0),
-								EndTime = new DateTime(2020, 1, 29, 20, 0, 0),
-								StartTimezone = "Europe/Moscow",
-								EndTimezone = "Europe/Moscow",
-								City = "Moscow",
-								CategoryColor = "#00bdae",
-								GroupId = 1
-							});
-							fifaEventsData.Add(new FifaEventsData
-							{
-								Id = 44,
-								Subject = "SWITZERLAND vs COSTA RICA",
-								Description = "Group E",
-								StartTime = new DateTime(2020, 1, 29, 18, 0, 0),
-								EndTime = new DateTime(2020, 1, 29, 20, 0, 0),
-								StartTimezone = "Europe/Moscow",
-								EndTimezone = "Europe/Moscow",
-								City = "Nizhny Novgorod",
-								CategoryColor = "#00bdae",
-								GroupId = 2
-							});
-							fifaEventsData.Add(new FifaEventsData
-							{
-								Id = 45,
-								Subject = "JAPAN vs POLAND",
-								Description = "Group H",
-								StartTime = new DateTime(2020, 1, 30, 14, 0, 0),
-								EndTime = new DateTime(2020, 1, 30, 16, 0, 0),
-								StartTimezone = "Europe/Volgograd",
-								EndTimezone = "Europe/Volgograd",
-								City = "Volgograd",
-								CategoryColor = "#7fa900",
-								GroupId = 1
-							});
-							fifaEventsData.Add(new FifaEventsData
-							{
-								Id = 46,
-								Subject = "SENEGAL vs COLOMBIA",
-								Description = "Group H",
-								StartTime = new DateTime(2020, 1, 30, 14, 0, 0),
-								EndTime = new DateTime(2020, 1, 30, 16, 0, 0),
-								StartTimezone = "Europe/Samara",
-								EndTimezone = "Europe/Samara",
-								City = "Samara",
-								CategoryColor = "#7fa900",
-								GroupId = 2
-							});
-							fifaEventsData.Add(new FifaEventsData
-							{
-								Id = 47,
-								Subject = "PANAMA vs TUNISIA",
-								Description = "Group G",
-								StartTime = new DateTime(2020, 1, 30, 18, 0, 0),
-								EndTime = new DateTime(2020, 1, 30, 20, 0, 0),
-								StartTimezone = "Europe/Moscow",
-								EndTimezone = "Europe/Moscow",
-								City = "Saransk",
-								CategoryColor = "#8e24aa",
-								GroupId = 1
-							});
-							fifaEventsData.Add(new FifaEventsData
-							{
-								Id = 48,
-								Subject = "ENGLAND vs BELGIUM",
-								Description = "Group G",
-								StartTime = new DateTime(2020, 1, 30, 18, 0, 0),
-								EndTime = new DateTime(2020, 1, 30, 20, 0, 0),
-								StartTimezone = "Europe/Kaliningrad",
-								EndTimezone = "Europe/Kaliningrad",
-								City = "Kaliningrad",
-								CategoryColor = "#8e24aa",
-								GroupId = 2
-							});
-							fifaEventsData.Add(new FifaEventsData
-							{
-								Id = 49,
-								Subject = "RUSSIA vs SAUDI ARABIA",
-								Description = "Group A",
-								StartTime = new DateTime(2020, 2, 1, 15, 0, 0),
-								EndTime = new DateTime(2020, 2, 1, 17, 0, 0),
-								StartTimezone = "Europe/Moscow",
-								EndTimezone = "Europe/Moscow",
-								City = "Moscow",
-								CategoryColor = "#1aaa55",
-								GroupId = 1
-							});
-							fifaEventsData.Add(new FifaEventsData
-							{
-								Id = 50,
-								Subject = "EGYPT vs URUGUAY",
-								Description = "Group A",
-								StartTime = new DateTime(2020, 2, 3, 12, 0, 0),
-								EndTime = new DateTime(2020, 2, 3, 14, 0, 0),
-								StartTimezone = "Asia/Yekaterinburg",
-								EndTimezone = "Asia/Yekaterinburg",
-								City = "Ekaterinburg",
-								CategoryColor = "#1aaa55",
-								GroupId = 1
-							});
-							fifaEventsData.Add(new FifaEventsData
-							{
-								Id = 51,
-								Subject = "MOROCCO vs IR IRAN",
-								Description = "Group B",
-								StartTime = new DateTime(2020, 2, 4, 15, 0, 0),
-								EndTime = new DateTime(2020, 2, 4, 17, 0, 0),
-								StartTimezone = "Europe/Moscow",
-								EndTimezone = "Europe/Moscow",
-								City = "Saint Petersburg",
-								CategoryColor = "#357cd2",
-								GroupId = 2
-							});
-							fifaEventsData.Add(new FifaEventsData
-							{
-								Id = 52,
-								Subject = "PORTUGAL vs SPAIN",
-								Description = "Group B",
-								StartTime = new DateTime(2020, 2, 5, 18, 0, 0),
-								EndTime = new DateTime(2020, 2, 5, 20, 0, 0),
-								StartTimezone = "Europe/Moscow",
-								EndTimezone = "Europe/Moscow",
-								City = "Sochi",
-								CategoryColor = "#357cd2",
-								GroupId = 2
-							});
-							fifaEventsData.Add(new FifaEventsData
-							{
-								Id = 53,
-								Subject = "FRANCE vs AUSTRALIA",
-								Description = "Group C",
-								StartTime = new DateTime(2020, 2, 6, 10, 0, 0),
-								EndTime = new DateTime(2020, 2, 6, 12, 0, 0),
-								StartTimezone = "Europe/Moscow",
-								EndTimezone = "Europe/Moscow",
-								City = "Kazan",
-								CategoryColor = "#7fa900",
-								GroupId = 1
-							});
-							fifaEventsData.Add(new FifaEventsData
-							{
-								Id = 54,
-								Subject = "ARGENTINA vs ICELAND",
-								Description = "Group D",
-								StartTime = new DateTime(2020, 2, 7, 13, 0, 0),
-								EndTime = new DateTime(2020, 2, 7, 15, 0, 0),
-								StartTimezone = "Europe/Moscow",
-								EndTimezone = "Europe/Moscow",
-								City = "Moscow",
-								CategoryColor = "#ea7a57",
-								GroupId = 2
-							});
-							fifaEventsData.Add(new FifaEventsData
-							{
-								Id = 55,
-								Subject = "PERU vs DENMARK",
-								Description = "Group C",
-								StartTime = new DateTime(2020, 2, 9, 16, 0, 0),
-								EndTime = new DateTime(2020, 2, 9, 18, 0, 0),
-								StartTimezone = "Europe/Moscow",
-								EndTimezone = "Europe/Moscow",
-								City = "Saransk",
-								CategoryColor = "#7fa900",
-								GroupId = 1
-							});
-							fifaEventsData.Add(new FifaEventsData
-							{
-								Id = 56,
-								Subject = "CROATIA vs NIGERIA",
-								Description = "Group D",
-								StartTime = new DateTime(2020, 2, 10, 19, 0, 0),
-								EndTime = new DateTime(2020, 2, 10, 21, 0, 0),
-								StartTimezone = "Europe/Kaliningrad",
-								EndTimezone = "Europe/Kaliningrad",
-								City = "Kaliningrad",
-								CategoryColor = "#ea7a57",
-								GroupId = 2
-							});
-							fifaEventsData.Add(new FifaEventsData
-							{
-								Id = 57,
-								Subject = "COSTA RICA vs SERBIA",
-								Description = "Group E",
-								StartTime = new DateTime(2020, 2, 13, 12, 0, 0),
-								EndTime = new DateTime(2020, 2, 13, 14, 0, 0),
-								StartTimezone = "Europe/Samara",
-								EndTimezone = "Europe/Samara",
-								City = "Samara",
-								CategoryColor = "#00bdae",
-								GroupId = 1
-							});
-							fifaEventsData.Add(new FifaEventsData
-							{
-								Id = 58,
-								Subject = "GERMANY vs MEXICO",
-								Description = "Group F",
-								StartTime = new DateTime(2020, 2, 14, 15, 0, 0),
-								EndTime = new DateTime(2020, 2, 14, 17, 0, 0),
-								StartTimezone = "Europe/Moscow",
-								EndTimezone = "Europe/Moscow",
-								City = "Moscow",
-								CategoryColor = "#f57f17",
-								GroupId = 2
-							});
-							fifaEventsData.Add(new FifaEventsData
-							{
-								Id = 59,
-								Subject = "BRAZIL vs SWITZERLAND",
-								Description = "Group E",
-								StartTime = new DateTime(2020, 2, 14, 18, 0, 0),
-								EndTime = new DateTime(2020, 2, 14, 20, 0, 0),
-								StartTimezone = "Europe/Moscow",
-								EndTimezone = "Europe/Moscow",
-								City = "Rostov-On-Don",
-								CategoryColor = "#00bdae",
-								GroupId = 1
-							});
-							fifaEventsData.Add(new FifaEventsData
-							{
-								Id = 60,
-								Subject = "SWEDEN vs KOREA REPUBLIC",
-								Description = "Group F",
-								StartTime = new DateTime(2020, 2, 17, 12, 0, 0),
-								EndTime = new DateTime(2020, 2, 17, 14, 0, 0),
-								StartTimezone = "Europe/Moscow",
-								EndTimezone = "Europe/Moscow",
-								City = "Nizhny Novgorod",
-								CategoryColor = "#f57f17",
-								GroupId = 2
-							});
-							fifaEventsData.Add(new FifaEventsData
-							{
-								Id = 61,
-								Subject = "BELGIUM vs PANAMA",
-								Description = "Group G",
-								StartTime = new DateTime(2020, 2, 17, 15, 0, 0),
-								EndTime = new DateTime(2020, 2, 17, 17, 0, 0),
-								StartTimezone = "Europe/Moscow",
-								EndTimezone = "Europe/Moscow",
-								City = "Sochi",
-								CategoryColor = "#8e24aa",
-								GroupId = 1
-							});
-							fifaEventsData.Add(new FifaEventsData
-							{
-								Id = 62,
-								Subject = "TUNISIA vs ENGLAND",
-								Description = "Group G",
-								StartTime = new DateTime(2020, 2, 17, 18, 0, 0),
-								EndTime = new DateTime(2020, 2, 17, 20, 0, 0),
-								StartTimezone = "Europe/Volgograd",
-								EndTimezone = "Europe/Volgograd",
-								City = "Volgograd",
-								CategoryColor = "#8e24aa",
-								GroupId = 2
-							});
-							fifaEventsData.Add(new FifaEventsData
-							{
-								Id = 63,
-								Subject = "COLOMBIA vs JAPAN",
-								Description = "Group H",
-								StartTime = new DateTime(2020, 2, 18, 12, 0, 0),
-								EndTime = new DateTime(2020, 2, 18, 14, 0, 0),
-								StartTimezone = "Europe/Moscow",
-								EndTimezone = "Europe/Moscow",
-								City = "Saransk",
-								CategoryColor = "#7fa900",
-								GroupId = 1
-							});
-							fifaEventsData.Add(new FifaEventsData
-							{
-								Id = 64,
-								Subject = "POLAND vs SENEGAL",
-								Description = "Group H",
-								StartTime = new DateTime(2020, 2, 21, 15, 0, 0),
-								EndTime = new DateTime(2020, 2, 21, 17, 0, 0),
-								StartTimezone = "Europe/Moscow",
-								EndTimezone = "Europe/Moscow",
-								City = "Moscow",
-								CategoryColor = "#7fa900",
-								GroupId = 2
-							});
-							fifaEventsData.Add(new FifaEventsData
-							{
-								Id = 65,
-								Subject = "RUSSIA vs EGYPT",
-								Description = "Group A",
-								StartTime = new DateTime(2020, 2, 21, 18, 0, 0),
-								EndTime = new DateTime(2020, 2, 21, 20, 0, 0),
-								StartTimezone = "Europe/Moscow",
-								EndTimezone = "Europe/Moscow",
-								City = "Saint Petersburg",
-								CategoryColor = "#1aaa55",
-								GroupId = 1
-							});
-							fifaEventsData.Add(new FifaEventsData
-							{
-								Id = 66,
-								Subject = "PORTUGAL vs MOROCCO",
-								Description = "Group B",
-								StartTime = new DateTime(2020, 2, 22, 12, 0, 0),
-								EndTime = new DateTime(2020, 2, 22, 14, 0, 0),
-								StartTimezone = "Europe/Moscow",
-								EndTimezone = "Europe/Moscow",
-								City = "Rostov-On-Don",
-								CategoryColor = "#357cd2",
-								GroupId = 2
-							});
-							fifaEventsData.Add(new FifaEventsData
-							{
-								Id = 67,
-								Subject = "URUGUAY vs SAUDI ARABIA",
-								Description = "Group A",
-								StartTime = new DateTime(2020, 2, 22, 15, 0, 0),
-								EndTime = new DateTime(2020, 2, 22, 17, 0, 0),
-								StartTimezone = "Europe/Moscow",
-								EndTimezone = "Europe/Moscow",
-								City = "Moscow",
-								CategoryColor = "#1aaa55",
-								GroupId = 1
-							});
-							fifaEventsData.Add(new FifaEventsData
-							{
-								Id = 68,
-								Subject = "IR IRAN vs SPAIN",
-								Description = "Group B",
-								StartTime = new DateTime(2020, 3, 4, 18, 0, 0),
-								EndTime = new DateTime(2020, 3, 4, 20, 0, 0),
-								StartTimezone = "Europe/Moscow",
-								EndTimezone = "Europe/Moscow",
-								City = "Kazan",
-								CategoryColor = "#357cd2",
-								GroupId = 2
-							});
-							fifaEventsData.Add(new FifaEventsData
-							{
-								Id = 69,
-								Subject = "DENMARK vs AUSTRALIA",
-								Description = "Group C",
-								StartTime = new DateTime(2020, 3, 5, 12, 0, 0),
-								EndTime = new DateTime(2020, 3, 5, 14, 0, 0),
-								StartTimezone = "Europe/Samara",
-								EndTimezone = "Europe/Samara",
-								City = "Samara",
-								CategoryColor = "#7fa900",
-								GroupId = 1
-							});
-							fifaEventsData.Add(new FifaEventsData
-							{
-								Id = 70,
-								Subject = "FRANCE vs PERU",
-								Description = "Group D",
-								StartTime = new DateTime(2020, 3, 5, 15, 0, 0),
-								EndTime = new DateTime(2020, 3, 7, 17, 0, 0),
-								StartTimezone = "Asia/Yekaterinburg",
-								EndTimezone = "Asia/Yekaterinburg",
-								City = "Ekaterinburg",
-								CategoryColor = "#ea7a57",
-								GroupId = 2
-							});
-							fifaEventsData.Add(new FifaEventsData
-							{
-								Id = 71,
-								Subject = "ARGENTINA vs CROATIA",
-								Description = "Group D",
-								StartTime = new DateTime(2020, 3, 7, 18, 0, 0),
-								EndTime = new DateTime(2020, 3, 7, 20, 0, 0),
-								StartTimezone = "Europe/Moscow",
-								EndTimezone = "Europe/Moscow",
-								City = "Nizhny Novgorod",
-								CategoryColor = "#ea7a57",
-								GroupId = 1
-							});
-							fifaEventsData.Add(new FifaEventsData
-							{
-								Id = 72,
-								Subject = "BRAZIL vs COSTA RICA",
-								Description = "Group E",
-								StartTime = new DateTime(2020, 3, 24, 12, 0, 0),
-								EndTime = new DateTime(2020, 3, 24, 14, 0, 0),
-								StartTimezone = "Europe/Moscow",
-								EndTimezone = "Europe/Moscow",
-								City = "Saint Petersburg",
-								CategoryColor = "#00bdae",
-								GroupId = 2
-							});
-							return fifaEventsData;
-						}
 						public List<DoctorsEventData> GetDoctorsEventData()
 						{
 							List<DoctorsEventData> doctorsEventData = new List<DoctorsEventData>();
@@ -4471,71 +4574,6 @@ namespace LivingMessiah.Web.Pages.BlazorSyncFusion.Schedule
 								EndTime = new DateTime(2020, 1, 17, 15, 30, 0, 0)
 							});
 							return doctorsEventData;
-						}
-						public List<WebinarData> GetWebinarData()
-						{
-							List<WebinarData> webinarData = new List<WebinarData>();
-							webinarData.Add(new WebinarData
-							{
-								Id = 1,
-								Subject = "Environment Day",
-								Tags = "Eco day, Forest conserving, Earth & its resources",
-								Description = "A day that creates awareness to promote the healthy planet and reduce the air pollution crisis on nature earth.",
-								StartTime = new DateTime(2020, 1, 13, 9, 0, 0),
-								EndTime = new DateTime(2020, 1, 13, 14, 0, 0),
-								ImageName = "environment-day",
-								PrimaryColor = "#1aaa55",
-								SecondaryColor = "#47bb76"
-							});
-							webinarData.Add(new WebinarData
-							{
-								Id = 2,
-								Subject = "Health Day",
-								Tags = "Reduce mental stress, Follow good food habits",
-								Description = "A day that raises awareness on different health issues. It marks the anniversary of the foundation of WHO.",
-								StartTime = new DateTime(2020, 1, 14, 9, 0, 0),
-								EndTime = new DateTime(2020, 1, 14, 14, 0, 0),
-								ImageName = "health-day",
-								PrimaryColor = "#357cd2",
-								SecondaryColor = "#5d96db"
-							});
-							webinarData.Add(new WebinarData
-							{
-								Id = 3,
-								Subject = "Cancer Day",
-								Tags = "Life threatening cancer effects, Palliative care",
-								Description = "A day that raises awareness on cancer and its preventive measures. Early detection saves life.",
-								StartTime = new DateTime(2020, 1, 15, 9, 0, 0),
-								EndTime = new DateTime(2020, 1, 15, 14, 0, 0),
-								ImageName = "cancer-day",
-								PrimaryColor = "#7fa900",
-								SecondaryColor = "#a4c932"
-							});
-							webinarData.Add(new WebinarData
-							{
-								Id = 4,
-								Subject = "Happiness Day",
-								Tags = "Stress-free, Smile, Resolve frustration and bring happiness",
-								Description = "A general idea is to promote happiness and smile around the world.",
-								StartTime = new DateTime(2020, 1, 16, 9, 0, 0),
-								EndTime = new DateTime(2020, 1, 16, 14, 0, 0),
-								ImageName = "happiness-day",
-								PrimaryColor = "#ea7a57",
-								SecondaryColor = "#ee9478"
-							});
-							webinarData.Add(new WebinarData
-							{
-								Id = 5,
-								Subject = "Tourism Day",
-								Tags = "Diverse cultural heritage, strengthen peace",
-								Description = "A day that raises awareness on the role of tourism and its effect on social and economic values.",
-								StartTime = new DateTime(2020, 1, 17, 9, 0, 0),
-								EndTime = new DateTime(2020, 1, 17, 14, 0, 0),
-								ImageName = "tourism-day",
-								PrimaryColor = "#00bdae",
-								SecondaryColor = "#32cabe"
-							});
-							return webinarData;
 						}
 						public List<EventsData> GetEventsData()
 						{
@@ -7354,22 +7392,7 @@ namespace LivingMessiah.Web.Pages.BlazorSyncFusion.Schedule
 					public string Color { get; set; }
 					public string Designation { get; set; }
 				}
-				public class RoomData : AppointmentData
-				{
-					public int RoomId { get; set; }
-					public bool IsBlock { get; set; }
-					public virtual string ElementType { get; set; }
-					public virtual DateTime? StartTimeValue { get; set; }
-					public virtual DateTime? EndTimeValue { get; set; }
-				}
-				public class RoomsData
-				{
-					public string Name { get; set; }
-					public int? Id { get; set; }
-					public int Capacity { get; set; }
-					public string Color { get; set; }
-					public string Type { get; set; }
-				}
+
 				public class ResourceTeamData : AppointmentData
 				{
 					public int ProjectId { get; set; }
@@ -7382,22 +7405,12 @@ namespace LivingMessiah.Web.Pages.BlazorSyncFusion.Schedule
 					public int ConsultantID { get; set; }
 					public string DepartmentName { get; set; }
 				}
-				public class FifaEventsData : AppointmentData
-				{
-					public string City { get; set; }
-					public int GroupId { get; set; }
-				}
+
 				public class DoctorsEventData : AppointmentData
 				{
 					public string EventType { get; set; }
 				}
-				public class WebinarData : AppointmentData
-				{
-					public string Tags { get; set; }
-					public string ImageName { get; set; }
-					public string PrimaryColor { get; set; }
-					public string SecondaryColor { get; set; }
-				}
+
 				public class EventsData : AppointmentData
 				{
 					public string EventType { get; set; }

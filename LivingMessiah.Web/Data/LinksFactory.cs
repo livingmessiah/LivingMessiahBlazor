@@ -174,16 +174,7 @@ namespace LivingMessiah.Web.Data
 					HomeTitleSuffix=" zaken H2205",
 					SitemapUsage=true
 				},
-				new Link
-				{
-					Index = KeyDates.Index,
-					Title = KeyDates.Title,
-					Icon = KeyDates.Icon,
-					HomeSidebarUsage=true,
-					HomeFloatRightHebrew="מוֹעֲדָי",
-					HomeTitleSuffix=" Moed H4150",
-					SitemapUsage=true
-				},
+
 				new Link
 				{
 					Index = PayPal.Donate.Index,

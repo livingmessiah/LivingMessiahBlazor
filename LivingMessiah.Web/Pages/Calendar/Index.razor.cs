@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using System;
+
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+
 using Syncfusion.Blazor.Schedule;
 
 using LivingMessiah.Web.Settings;
@@ -11,7 +13,7 @@ using static LivingMessiah.Web.Pages.Calendar.ScheduleData;
 
 using LivingMessiah.Web.Pages.KeyDates.Data;
 using LivingMessiah.Web.Pages.KeyDates.Enums;
-
+using System.Linq;
 
 namespace LivingMessiah.Web.Pages.Calendar
 {
@@ -27,6 +29,9 @@ namespace LivingMessiah.Web.Pages.Calendar
 		public IKeyDateRepository db { get; set; }
 
 		public int YearId { get; set; }
+		protected bool CalenderReadyForSale = true;
+
+		protected SfSchedule<ReadonlyEventsData> ScheduleRef;
 
 		public DateTime CurrentDate = new DateTime(2022, 1, 1); // ToDo: fix this
 
@@ -72,7 +77,7 @@ namespace LivingMessiah.Web.Pages.Calendar
 				}
 				else
 				{
-					LoadAppointmentDataLista();
+					LoadAppointmentDataList();
 				}
 			}
 			catch (Exception ex)
@@ -83,9 +88,9 @@ namespace LivingMessiah.Web.Pages.Calendar
 			}
 		}
 
-		private void LoadAppointmentDataLista()
+		private void LoadAppointmentDataList()
 		{
-			Logger.LogDebug(string.Format("Inside {0}", nameof(Index) + "!" + nameof(LoadAppointmentDataLista)));
+			Logger.LogDebug(string.Format("Inside {0}", nameof(Index) + "!" + nameof(LoadAppointmentDataList)));
 			AppointmentDataList = new List<ReadonlyEventsData>();
 
 			string color = "";
@@ -134,16 +139,75 @@ namespace LivingMessiah.Web.Pages.Calendar
 
 		public void OnEventRendered(EventRenderedArgs<ReadonlyEventsData> args)
 		{
-			args.Attributes = ScheduleData.ApplyCategoryColor(args.Data.CategoryColor, args.Attributes, ViewNow);
+			args.Attributes = ScheduleData.ApplyCategoryColor(
+				args.Data.CategoryColor, args.Attributes, ViewNow);
 		}
 
+		#region Header
+		private DateTime SystemTime { get; set; } = DateTime.UtcNow.AddHours(+2);
+
+		public async void OnPrintClick()
+		{
+			await ScheduleRef.PrintAsync();
+		}
+
+		public async void OnExportClick(Syncfusion.Blazor.SplitButtons.MenuEventArgs args)
+		{
+			if (args.Item.Text == "Excel")
+			{
+				List<ReadonlyEventsData> ExportDatas = new List<ReadonlyEventsData>();
+				List<ReadonlyEventsData> EventCollection = await ScheduleRef.GetEventsAsync();
+				List<ReadonlyEventsData> datas = EventCollection.ToList();
+				foreach (ReadonlyEventsData data in datas)
+				{
+					ExportDatas.Add(data);
+				}
+				ExportOptions Options = new ExportOptions()
+				{
+					ExportType = ExcelFormat.Xlsx,
+					CustomData = ExportDatas,
+					Fields = new string[] { "Id", "Subject", "StartTime", "EndTime" }
+				};
+				await ScheduleRef.ExportToExcelAsync(Options);
+			}
+			else
+			{
+				await ScheduleRef.ExportToICalendarAsync();
+			}
+		}
+		#endregion
+
+
+		#region ErrorHandling
+		/*
+		private void InitializeErrorHandling()
+		{
+			//DatabaseInformationMsg = "";
+			//DatabaseInformation = false;
+			DatabaseWarningMsg = "";
+			DatabaseWarning = false;
+			DatabaseErrorMsg = "";
+			DatabaseError = false;
+		}
+		*/
+
+		//protected bool DatabaseInformation = false;
+		//protected string DatabaseInformationMsg { get; set; }
 		protected bool DatabaseError { get; set; } = false;
 		protected string DatabaseErrorMsg { get; set; }
 		protected bool DatabaseWarning = false;
 		protected string DatabaseWarningMsg { get; set; }
 
+		//void Failure(Syncfusion.Blazor.Grids.FailureEventArgs e)
+		//{
+		//	DatabaseErrorMsg = $"Error inside {nameof(Failure)}";  //; e.Error: {e.Error}
+		//	Logger.LogError(string.Format("Inside {0}; e.Error: {1}", nameof(Index) + "!" + nameof(Failure), e.Error));
+		//	DatabaseError = true;
+		//}
+
+		#endregion
+
 		protected int NumberOfMonths { get; set; } = 16;
 		protected int FirstMonthOfYear { get; set; } = 9;
-
 	}
 }

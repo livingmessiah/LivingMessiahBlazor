@@ -45,9 +45,11 @@
 						</td>
 						<td style="width: 50%;">
 							<div>
-								<SfDropDownList TValue="string" TItem="DropDownData" @bind-Index="@indexDay" DataSource="@DropDownListData">
-									<DropDownListEvents TValue="string" TItem="DropDownData" ValueChange="OnHideEmptyDaysChange"></DropDownListEvents>
-									<DropDownListFieldSettings Text="Name" Value="Value"></DropDownListFieldSettings>
+								<SfDropDownList TValue="string" TItem="DropDownData" 
+																@bind-Index="@indexDay" DataSource="@DropDownListData">
+									<DropDownListEvents TValue="string" TItem="DropDownData" 
+																			ValueChange="OnHideEmptyDaysChange"/>
+									<DropDownListFieldSettings Text="Name" Value="Value"/>
 								</SfDropDownList>
 							</div>
 						</td>
@@ -60,7 +62,8 @@
 						</td>
 						<td style="width: 50%;">
 							<div>
-								<SfNumericTextBox TValue="int" Format="n0" @bind-Value="@AgendaDaysCount" Min=1 Max=15></SfNumericTextBox>
+								<SfNumericTextBox TValue="int" Format="n0" Min=1 Max=15
+																	@bind-Value="@AgendaDaysCount"/>
 							</div>
 						</td>
 					</tr>
@@ -85,7 +88,8 @@
 	
 	public void OnEventRendered(EventRenderedArgs<ScheduleData.AppointmentData> args)
 	{
-		args.Attributes = ScheduleData.ApplyCategoryColor(args.Data.CategoryColor, args.Attributes, View.Agenda);
+		args.Attributes = ScheduleData.ApplyCategoryColor(
+			args.Data.CategoryColor, args.Attributes, View.Agenda);
 	}
 
 	List<DropDownData> DropDownListData = new List<DropDownData>() {

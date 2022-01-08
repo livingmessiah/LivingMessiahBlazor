@@ -1,21 +1,17 @@
 ﻿@using LivingMessiah.Web.Pages.KeyDates.Queries
 @using LivingMessiah.Web.Pages.KeyDates.Enums
-@using Syncfusion.Blazor.Data
 
 @*
 			Syncfusion.Blazor.Data
 			- Provides methods to generate query which can be executed against data source using Syncfusion.Blazor.Data.SfDataManager.
 			- Methods in this class are chainable.
-
 *@
 
 
-<div class="row mt-4">
 	<SfGrid ID="Grid" @ref="Grid"
 					DataSource="@CalendarEntries"
-					Toolbar="@(new List<string>() { SyncFusionToolbar.Excel.Arg, SyncFusionToolbar.Csv.Arg, SyncFusionToolbar.Pdf.Arg, SyncFusionToolbar.Print.Arg })"
-					AllowFiltering="true" AllowExcelExport="true" AllowPdfExport="true">
-		<GridEvents OnToolbarClick="@ToolbarClickHandler" TValue="@CalendarEntry" OnActionFailure="Failure"></GridEvents>
+					AllowFiltering="true">
+		<GridEvents TValue="@CalendarEntry" OnActionFailure="Failure"></GridEvents>
 		<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
 
 		<GridTemplates>
@@ -38,7 +34,7 @@
 		</GridSortSettings>
 
 		<GridColumns>
-			<GridColumn Field=@nameof(CalendarEntry.Descr) HeaderText="Description" Width="70"
+			<GridColumn Field=@nameof(CalendarEntry.Descr) HeaderText="Description" Width="85"
 									AllowSorting="false" AllowFiltering="false">
 				<Template>
 					@{
@@ -47,30 +43,65 @@
 						{
 							case DateTypeEnum.Month:
 								{
-									<h3>
-										<span class="badge badge-dark"><i class="far fa-moon"></i> <b>@row.Descr</b></span>
-									</h3>
+									@if (IsXsOrSm)
+									{
+										<h5>
+											<span class="badge badge-dark"><i class="far fa-moon"></i> <b>@row.Descr</b></span>
+										</h5>
+
+									}
+									else
+									{
+										<h3>
+											<span class="badge badge-dark"><i class="far fa-moon"></i> <b>@row.Descr</b></span>
+										</h3>
+									}
 								}
 
 								break;
 
 							case DateTypeEnum.Feast:
 								{
-									<h3>
-										<span class="badge badge-info"><i class="fas fa-glass-cheers"></i> <b>@row.Descr</b></span>
-									</h3>
+									@if (IsXsOrSm)
+									{
+										<h5>
+											<span class="badge badge-info"><i class="fas fa-glass-cheers"></i> <b>@row.Descr</b></span>
+										</h5>
+
+									}
+									else
+									{
+										<h3>
+											<span class="badge badge-info"><i class="fas fa-glass-cheers"></i> <b>@row.Descr</b></span>
+										</h3>
+									}
 								}
 								break;
 
 							case DateTypeEnum.Season:
 								{
-									<h3>
-										<span class="badge @BaseSeasonSmartEnum.FromValue(row.Detail).BadgeColor">
-											<i class="@BaseSeasonSmartEnum.FromValue(row.Detail).Icon"></i>
-											@BaseSeasonSmartEnum.FromValue(row.Detail).Name
-											@BaseSeasonSmartEnum.FromValue(row.Detail).Type
-										</span>
-									</h3>
+
+									@if (IsXsOrSm)
+									{
+										<h5>
+											<span class="badge @BaseSeasonSmartEnum.FromValue(row.Detail).BadgeColor">
+												<i class="@BaseSeasonSmartEnum.FromValue(row.Detail).Icon"></i>
+												@BaseSeasonSmartEnum.FromValue(row.Detail).Name
+												@BaseSeasonSmartEnum.FromValue(row.Detail).Type
+											</span>
+										</h5>
+									}
+									else
+									{
+										<h3>
+											<span class="badge @BaseSeasonSmartEnum.FromValue(row.Detail).BadgeColor">
+												<i class="@BaseSeasonSmartEnum.FromValue(row.Detail).Icon"></i>
+												@BaseSeasonSmartEnum.FromValue(row.Detail).Name
+												@BaseSeasonSmartEnum.FromValue(row.Detail).Type
+											</span>
+										</h3>
+									}
+
 								}
 
 								break;
@@ -82,18 +113,18 @@
 				</Template>
 			</GridColumn>
 
-			<GridColumn Field=@nameof(CalendarEntry.DateTypeEnum) HeaderText="Type" Width="40" AllowSorting="false"
+			<GridColumn Field=@nameof(CalendarEntry.DateTypeEnum) HeaderText="Type" Width="35" AllowSorting="false"
 									FilterSettings="@(new FilterSettings { Type = Syncfusion.Blazor.Grids.FilterType.CheckBox })">
 			</GridColumn>
 
-			<GridColumn Field=@nameof(CalendarEntry.Date) Format="ddd, MMMM dd, yyyy" HeaderText="Date" Width="70"
+			<GridColumn Field=@nameof(CalendarEntry.Date) Format="@DateFormat" HeaderText="Date" Width="60"
 									AllowSorting="false" AllowFiltering="true">
 			</GridColumn>
 
 		</GridColumns>
 
 	</SfGrid>
-</div>
+
 
 @if (DatabaseError)
 {
@@ -108,8 +139,6 @@ else
 }
 
 @*Hidden:Lines*@
-
-@* .photo, .e-tab .e-context and .e-tab-header not included *@
 
 <style type="text/css" class="cssStyles">
 	.position {

@@ -1,66 +1,100 @@
 ﻿@page "/Calendar"
+@page "/KeyDates"
 @using Page = LivingMessiah.Web.Links.Calendar
-@using Syncfusion.Blazor.Schedule
+
 @using static LivingMessiah.Web.Pages.Calendar.ScheduleData
 
-<p class="my-1 float-right text-black-50"><small>Year: @YearId</small></p>
+@using Syncfusion.Blazor.Schedule
+@using Syncfusion.Blazor.Buttons
+@using Syncfusion.Blazor.SplitButtons;
 
 <div class="pb-1 mt-4 mb-5 border-bottom border-info bor">
 	<h2><i class="@Page.Icon"></i> @Page.Title</h2>
 </div>
 
 
+<div class="card bg-secondary text-white mb-0">
+	<div class="row">
+		<div class="col-4 ">
+			Living Messiah Calendar | @YearId
+		</div>
 
+		<div class="col-4 text-center p-1">
+			<SfIcon IconCss="oi oi-clock"></SfIcon>
+			Jerusalem @SystemTime.ToString("hh:mm:ss tt")
+		</div>
 
-<div class="row">
-	<div class="col-12">
+		<div class="col-4 justify-content-end">
 
-		<SfSchedule TValue="ReadonlyEventsData"
-								MonthsCount="@NumberOfMonths"
-								MinDate="@CalendarRange.MinDate" MaxDate="@CalendarRange.MaxDate"
-								Width="100%" Height="650px"
-								@bind-SelectedDate="@CurrentDate" @bind-CurrentView="@ViewNow">
+			<SfButton IconCss="e-icons e-schedule-print" CssClass="title-bar-btn"
+								OnClick="OnPrintClick">Print</SfButton>
 
-			<ScheduleEventSettings DataSource="@AppointmentDataList"></ScheduleEventSettings>
-			<ScheduleEvents TValue="ReadonlyEventsData"
-											EventRendered="OnEventRendered" />
-			<ScheduleViews>
-				<ScheduleView Option="View.Week"></ScheduleView>
-				<ScheduleView Option="View.Month"></ScheduleView>
-				<ScheduleView Option="View.Year"></ScheduleView>
-			</ScheduleViews>
+			<SfDropDownButton Content="Export">
+				<DropDownMenuItems>
+					<DropDownMenuItem Text="iCalendar" IconCss="e-icons e-schedule-ical-export"></DropDownMenuItem>
+					<DropDownMenuItem Text="Excel" IconCss="e-icons e-schedule-excel-export"></DropDownMenuItem>
+				</DropDownMenuItems>
+				<DropDownButtonEvents ItemSelected="OnExportClick"></DropDownButtonEvents>
+			</SfDropDownButton>
 
-
-		</SfSchedule>
+		</div>
 	</div>
 </div>
 
-<ButtonShowHide Title="Appointment List">
-	<ChildContent>
-		<div class="card-body  m-0 px-4">
 
-			<LoadingComponent IsLoading="AppointmentDataList==null">
-				<TableTemplate Items="AppointmentDataList">
-					<TableHeader>
-						<th>Id</th>
-						<th>Subject</th>
-						<th>Description</th>
-						<th>Start Time</th>
-						<th>End Time</th>
-					</TableHeader>
-					<RowTemplate>
-						<td>@context.Id</td>
-						<td>@context.Subject</td>
-						<td>@context.Description</td>
-						<td>@context.StartTime.ToShortDateString()</td>
-						<td>@context.EndTime.ToShortDateString()</td>
-					</RowTemplate>
-				</TableTemplate>
-			</LoadingComponent>
+<div id="ControlRegion">
+	<SfSchedule TValue="ReadonlyEventsData" @ref="ScheduleRef"
+							MonthsCount="@NumberOfMonths"
+							MinDate="@CalendarRange.MinDate" MaxDate="@CalendarRange.MaxDate"
+							ShowQuickInfo="true"
+							Width="100%" Height="650px"
+							@bind-SelectedDate="@CurrentDate" @bind-CurrentView="@ViewNow">
 
-		</div>
-	</ChildContent>
-</ButtonShowHide>
+		<ScheduleEventSettings DataSource="@AppointmentDataList"></ScheduleEventSettings>
+		<ScheduleEvents TValue="ReadonlyEventsData"
+										EventRendered="OnEventRendered" />
+		<ScheduleViews>
+			<ScheduleView Option="View.Week"></ScheduleView>
+			<ScheduleView Option="View.Month"></ScheduleView>
+			<ScheduleView Option="View.Year"></ScheduleView>
+		</ScheduleViews>
+
+	</SfSchedule>
+
+</div>
+
+
+<!-- IsXsOrSm="true" -->
+<div class="d-md-none">
+	<ShowHideGridButton>
+		<ChildContent>
+			<LivingMessiah.Web.Pages.KeyDates.CalendarGrid YearId="@YearId" IsXsOrSm="true" />
+		</ChildContent>
+	</ShowHideGridButton>
+
+	@if (CalenderReadyForSale)
+	{
+		<LmmCalendarAdvertisement CalenderReadyForSale="@CalenderReadyForSale" IsXsOrSm="true" />
+	}
+
+</div>
+
+<!-- IsXsOrSm="false" -->
+<div class="d-none d-md-block">
+	<ShowHideGridButton>
+		<ChildContent>
+			<LivingMessiah.Web.Pages.KeyDates.CalendarGrid YearId="@YearId" IsXsOrSm="false" />
+		</ChildContent>
+	</ShowHideGridButton>
+
+	@if (CalenderReadyForSale)
+	{
+		<LmmCalendarAdvertisement CalenderReadyForSale="@CalenderReadyForSale" IsXsOrSm="false" />
+	}
+
+</div>
+
+
 
 
 @if (DatabaseError)
@@ -74,3 +108,4 @@ else
 		<p class="text-warning">@DatabaseWarningMsg</p>
 	}
 }
+

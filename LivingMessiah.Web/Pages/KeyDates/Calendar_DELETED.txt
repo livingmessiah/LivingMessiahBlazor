@@ -1,0 +1,33 @@
+﻿
+
+C:\Source\LivingMessiahBlazor\src\LivingMessiah.Web\Pages\KeyDates\CalendarGrid.razor
+
+
+<div class="row mt-4"></div>
+
+<div class="row mt-4">
+	<SfGrid ID="Grid" @ref="Grid"
+					DataSource="@CalendarEntries"
+					Toolbar="@(new List<string>() { SyncFusionToolbar.Excel.Arg, SyncFusionToolbar.Csv.Arg, SyncFusionToolbar.Pdf.Arg, SyncFusionToolbar.Print.Arg })"
+					AllowFiltering="true" AllowExcelExport="true" AllowPdfExport="true">
+		<GridEvents OnToolbarClick="@ToolbarClickHandler" TValue="@CalendarEntry" OnActionFailure="Failure"></GridEvents>
+		<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+
+
+@* .photo, .e-tab .e-context and .e-tab-header not included *@
+
+		public async Task ToolbarClickHandler(Syncfusion.Blazor.Navigations.ClickEventArgs args)
+		{
+			if (args.Item.Id == SyncFusionToolbar.Pdf.ArgId)
+			{
+				await this.Grid.ExportToPdfAsync();
+			}
+			if (args.Item.Id == SyncFusionToolbar.Excel.ArgId)
+			{
+				await this.Grid.ExportToExcelAsync();
+			}
+			if (args.Item.Id == SyncFusionToolbar.Csv.ArgId)
+			{
+				await this.Grid.ExportToCsvAsync();
+			}
+		}

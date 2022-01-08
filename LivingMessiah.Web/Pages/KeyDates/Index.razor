@@ -1,82 +1,46 @@
-﻿@page "/KeyDates"
-@using Page = LivingMessiah.Web.Links.KeyDates
+﻿@page "/Admin/KeyDatesEdit"
+
+@using Page = LivingMessiah.Web.Links.KeyDatesEdit
 @using static LivingMessiah.Web.Services.Auth0
 
 <p class="my-1 float-right text-black-50"><small>Year: @SelectedYear (@SelectedValue)</small></p>
 
-<div class="pb-1 mt-4 mb-5 border-bottom border-info bor">
+<div class="pb-1 mt-4 mb-5 border-bottom border-info">
 	<h2><i class="@Page.Icon"></i> @Page.Title</h2>
 </div>
 
-<SfTab>
-	<TabItems>
+<AuthorizeView Roles="@Roles.AdminOrAnnouncements">
 
-		@if (CalenderReadyForSale)
-		{
-			<TabItem>
-				<ChildContent>
-					<TabHeader Text="Living Messiah 2022 Calendar"></TabHeader>
-				</ChildContent>
-				<ContentTemplate>
-					<LmmCalendarAdvertisement CalenderReadyForSale="@CalenderReadyForSale"></LmmCalendarAdvertisement>
-				</ContentTemplate>
-			</TabItem>
-		}
+	<Authorized>
+		<EditGrid YearId="@SelectedYear"></EditGrid>
+	</Authorized>
 
-		<TabItem>
-			<ChildContent>
-				<TabHeader Text="List"></TabHeader>
-			</ChildContent>
-			<ContentTemplate>
-				<CalendarGrid YearId="@SelectedYear"></CalendarGrid>
-			</ContentTemplate>
-		</TabItem>
+	<NotAuthorized>
 
+		<div class="card border-warning my-5">
+			<div class="card-header">Not Authorized</div>
 
-		<TabItem>
-			<ChildContent>
-				<TabHeader Text="Edit"></TabHeader>
-			</ChildContent>
-			<ContentTemplate>
-				<AuthorizeView Roles="@Roles.AdminOrAnnouncements">
+			<div class="card-body">
+				<h5 class="">To view <b>@Page.Title</b> you need to be logged in.</h5>
+				<button @onclick="@(() => RedirectToLoginClick(Page.Index))"
+								type="button" class="btn-primary btn-sm">
+					Login <i class='fas fa-sign-in-alt'></i>
+				</button>
+			</div>
+		</div>
 
-					<Authorized>
-						<EditGridComponent YearId="@SelectedYear"></EditGridComponent>
-					</Authorized>
+	</NotAuthorized>
 
-					<NotAuthorized>
-
-						<div class="card border-warning my-5">
-							<div class="card-header">Not Authorized</div>
-
-							<div class="card-body">
-								<h5 class="">To view <b>@Page.TitleEdit</b> you need to be logged in.</h5>
-								<button @onclick="@(() => RedirectToLoginClick(Page.Index))"
-												type="button" class="btn-primary btn-sm">
-									Login <i class='fas fa-sign-in-alt'></i>
-								</button>
-							</div>
-						</div>
-
-					</NotAuthorized>
-
-				</AuthorizeView>
-
-			</ContentTemplate>
-		</TabItem>
-	</TabItems>
-</SfTab>
-
-
+</AuthorizeView>
 
 
 
 @*
 
 	ToDo: Make this a modal
-	
+
 	<hr />
-	
+
 	<div class="row">
 		<div class="col-9">
 			<SfDropDownList TItem="DropDownListVM" TValue="string" PopupHeight="230px"

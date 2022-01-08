@@ -23,10 +23,15 @@ namespace LivingMessiah.Web.Pages.KeyDates
 		[Parameter]
 		public int YearId { get; set; }
 
+		[Parameter]
+		public bool IsXsOrSm { get; set; }
+		protected string DateFormat; // = "ddd, MMMM dd, yyyy";
+
 		protected List<CalendarEntry> CalendarEntries;
 
 		protected override async Task OnInitializedAsync()
 		{
+			DateFormat = IsXsOrSm ? "yyyy/MM/dd" : "ddd, MMMM dd, yyyy";
 			Logger.LogDebug(string.Format("Inside {0}, year={1}", nameof(CalendarGrid) + "!" + nameof(OnInitializedAsync), YearId) );
 			try
 			{
@@ -46,21 +51,7 @@ namespace LivingMessiah.Web.Pages.KeyDates
 		}
 
 		private SfGrid<CalendarEntry> Grid;  
-		public async Task ToolbarClickHandler(Syncfusion.Blazor.Navigations.ClickEventArgs args)
-		{
-			if (args.Item.Id == SyncFusionToolbar.Pdf.ArgId)
-			{
-				await this.Grid.ExportToPdfAsync();
-			}
-			if (args.Item.Id == SyncFusionToolbar.Excel.ArgId)
-			{
-				await this.Grid.ExportToExcelAsync();
-			}
-			if (args.Item.Id == SyncFusionToolbar.Csv.ArgId)
-			{
-				await this.Grid.ExportToCsvAsync();
-			}
-		}
+
 
 		#region ErrorHandling
 		private void InitializeErrorHandling()

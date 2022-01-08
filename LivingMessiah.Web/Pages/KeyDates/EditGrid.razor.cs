@@ -16,23 +16,25 @@ using Syncfusion.Blazor.Grids;
 namespace LivingMessiah.Web.Pages.KeyDates
 {
 	[Authorize(Roles = Roles.AdminOrKeyDates)]
-	public partial class EditGridComponent
+	public partial class EditGrid
 	{
 		[Inject]
 		public IKeyDateRepository db { get; set; }
 
 		[Inject]
-		public ILogger<EditGridComponent> Logger { get; set; }
-
-		protected List<CalendarEntry> CalendarEntries;
+		public ILogger<EditGrid> Logger { get; set; }
 
 		[Parameter]
 		public int YearId { get; set; }
 
+		protected List<CalendarEntry> CalendarEntries;
+
+		private SfGrid<CalendarEntry> Grid;
+
 		protected override async Task OnInitializedAsync()
 		{
 			Logger.LogDebug(String.Format("Inside {0}, YearId: {1}"
-				, nameof(EditGridComponent) + "!" + nameof(OnInitializedAsync), YearId));
+				, nameof(EditGrid) + "!" + nameof(OnInitializedAsync), YearId));
 
 			try
 			{
@@ -82,24 +84,6 @@ namespace LivingMessiah.Web.Pages.KeyDates
 
 		}
 
-		private SfGrid<CalendarEntry> Grid;
-		public async Task ToolbarClickHandler(Syncfusion.Blazor.Navigations.ClickEventArgs args)
-		{
-			if (args.Item.Id == SyncFusionToolbar.Pdf.ArgId)
-			{
-				await this.Grid.ExportToPdfAsync();
-			}
-			if (args.Item.Id == SyncFusionToolbar.Excel.ArgId)
-			{
-				await this.Grid.ExportToExcelAsync();
-			}
-			if (args.Item.Id == SyncFusionToolbar.Csv.ArgId)
-			{
-				await this.Grid.ExportToCsvAsync();
-			}
-		}
-
-
 		#region ErrorHandling
 		private void InitializeErrorHandling()
 		{
@@ -121,7 +105,7 @@ namespace LivingMessiah.Web.Pages.KeyDates
 		void Failure(FailureEventArgs e)
 		{
 			DatabaseErrorMsg = $"Error inside {nameof(Failure)}";  //; e.Error: {e.Error}
-			Logger.LogError(string.Format("Inside {0}; e.Error: {1}", nameof(EditGridComponent) + "!" + nameof(Failure), e.Error));
+			Logger.LogError(string.Format("Inside {0}; e.Error: {1}", nameof(EditGrid) + "!" + nameof(Failure), e.Error));
 			DatabaseError = true;
 		}
 		#endregion
