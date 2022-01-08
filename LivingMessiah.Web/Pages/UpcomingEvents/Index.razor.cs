@@ -33,7 +33,7 @@ namespace LivingMessiah.Web.Pages.UpcomingEvents
 				Logger.LogDebug(string.Format("Inside {0} i:{1}", nameof(Index) + "!" + nameof(OnInitializedAsync), 0));
 
 				//ToDo: Instead of using a service, use LazyCache (https://github.com/alastairtree/LazyCache) to cache this content
-				UpcomingEventList = await db.GetEvents(daysAhead: 100, daysPast: -100);
+				UpcomingEventList = await db.GetEvents(daysAhead: 100, daysPast: -3);
 				if (UpcomingEventList is not null)
 				{
 					Logger.LogDebug($"...UpcomingEventList.Count:{UpcomingEventList.Count}");
