@@ -29,23 +29,13 @@ namespace LivingMessiah.Web.Pages.Calendar
 		public IKeyDateRepository db { get; set; }
 
 		public int YearId { get; set; }
-		protected bool CalenderReadyForSale = true;
+		protected PrintedCalendarEnum printedCalendarEnum = PrintedCalendarEnum.ReadyForSale;
 
 		protected SfSchedule<ReadonlyEventsData> ScheduleRef;
 
-		public DateTime CurrentDate = new DateTime(2022, 1, 1); // ToDo: fix this
+		public DateTime CurrentDate = DateTime.Now;
 
 		protected List<KeyDates.Queries.CalendarEntry> CalendarEntries;
-
-		//ToDo: need to assign this dynamically 
-		protected DateRange CalendarRange => new DateRange(DateTime.Parse("9/22/2021"), DateTime.Parse("1/21/2023"));
-
-		public class DateRange
-		{
-			public DateTime MinDate { get; set; }
-			public DateTime MaxDate { get; set; }
-			public DateRange(DateTime x, DateTime y) => (MinDate, MaxDate) = (x, y);
-		}
 
 		public List<ReadonlyEventsData> AppointmentDataList { get; set; }
 
@@ -207,7 +197,5 @@ namespace LivingMessiah.Web.Pages.Calendar
 
 		#endregion
 
-		protected int NumberOfMonths { get; set; } = 16;
-		protected int FirstMonthOfYear { get; set; } = 9;
 	}
 }

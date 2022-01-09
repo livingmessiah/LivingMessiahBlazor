@@ -2,7 +2,7 @@
 
 @switch (DateTypeEnum)
 {
-	case Enums.DateTypeEnum.Month:
+	case LivingMessiah.Web.Pages.KeyDates.Enums.DateTypeEnum.Month:
 		<div class="row">
 			<div class="col-6">
 				Biblical<br /> <span class="hebrew36">@BaseLunarMonthSmartEnum.FromValue(Detail).BiblicalHebrew</span><br />
@@ -15,7 +15,7 @@
 		</div>
 		break;
 
-	case Enums.DateTypeEnum.Feast:
+	case LivingMessiah.Web.Pages.KeyDates.Enums.DateTypeEnum.Feast:
 		<div class="row">
 			<div class="col-7">
 				<span class="hebrew36">@BaseFeastDaySmartEnum.FromValue(Detail).Hebrew</span> <br />
@@ -45,11 +45,11 @@
 				<div class="card card-body text-white bg-secondary py-1 mb-4">
 					@foreach (var fdd in SukkotDetails)
 					{
-					<div class="row">
-						<div class="col-1">&nbsp;</div>
-						<div class="col-6">@fdd.Description</div>
-						<div class="col-5">@NotesFDD(fdd.AddDays)</div>
-					</div>
+						<div class="row">
+							<div class="col-1">&nbsp;</div>
+							<div class="col-6">@fdd.Description</div>
+							<div class="col-5">@NotesFDD(fdd.AddDays)</div>
+						</div>
 					}
 				</div>
 			}
@@ -58,12 +58,7 @@
 
 		break;
 
-	case Enums.DateTypeEnum.Season:
-		@*<div class="row">
-				<div class="col">
-					<span class="float-right mr-3">@BaseSeasonSmartEnum.FromValue(Detail).Type @Date.ToString(DateFormat.ddd_mm_dd)</span>
-				</div>
-			</div>*@
+	case LivingMessiah.Web.Pages.KeyDates.Enums.DateTypeEnum.Season:
 		break;
 
 
@@ -71,11 +66,4 @@
 		<p>????</p>
 		break;
 }
-
-
-@*
-	<th>Name</th>
-	<td>@BaseFeastDaySmartEnum.FromValue(Detail).Name</td>
-	<div class="col-3"><span class="float-right">@Date.ToString(DateFormat.ddd_mm_dd)</span></div>
-*@
 

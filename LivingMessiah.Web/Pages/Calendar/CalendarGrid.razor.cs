@@ -10,12 +10,12 @@ using LivingMessiah.Web.Pages.KeyDates.Queries;
 
 using Syncfusion.Blazor.Grids;
 
-namespace LivingMessiah.Web.Pages.KeyDates
+namespace LivingMessiah.Web.Pages.Calendar
 {
 	public partial class CalendarGrid
 	{
 		[Inject]
-		public  IKeyDateRepository db { get; set; }
+		public IKeyDateRepository db { get; set; }
 
 		[Inject]
 		public ILogger<CalendarGrid> Logger { get; set; }
@@ -25,6 +25,7 @@ namespace LivingMessiah.Web.Pages.KeyDates
 
 		[Parameter]
 		public bool IsXsOrSm { get; set; }
+
 		protected string DateFormat; // = "ddd, MMMM dd, yyyy";
 
 		protected List<CalendarEntry> CalendarEntries;
@@ -32,7 +33,7 @@ namespace LivingMessiah.Web.Pages.KeyDates
 		protected override async Task OnInitializedAsync()
 		{
 			DateFormat = IsXsOrSm ? "yyyy/MM/dd" : "ddd, MMMM dd, yyyy";
-			Logger.LogDebug(string.Format("Inside {0}, year={1}", nameof(CalendarGrid) + "!" + nameof(OnInitializedAsync), YearId) );
+			Logger.LogDebug(string.Format("Inside {0}, year={1}", nameof(CalendarGrid) + "!" + nameof(OnInitializedAsync), YearId));
 			try
 			{
 				CalendarEntries = await db.GetCalendarEntries(YearId);
@@ -50,8 +51,16 @@ namespace LivingMessiah.Web.Pages.KeyDates
 			}
 		}
 
-		private SfGrid<CalendarEntry> Grid;  
+		private SfGrid<CalendarEntry> Grid;
 
+		#region IsCollapsed
+
+		public bool IsCollapsed { get; set; } = true;
+		protected void ToggleButtonClick(bool isCollapsed)
+		{
+			IsCollapsed = !isCollapsed;
+		}
+		#endregion
 
 		#region ErrorHandling
 		private void InitializeErrorHandling()

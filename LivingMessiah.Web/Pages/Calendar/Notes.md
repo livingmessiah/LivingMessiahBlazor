@@ -1,13 +1,48 @@
 ﻿
 # Notes on Calendar
 
+## Syncfusion.Blazor.Data
+- Provides methods to generate query which can be executed against data source using Syncfusion.Blazor.Data.SfDataManager.
+- Methods in this class are chainable.
+
+
+
 ## 
 
 ```html
-<SfSchedule HideEmptyAgendaDays="@HideEmptyAgendaDays" AgendaDaysCount="@AgendaDaysCount"
+
+	<SfSchedule TValue="ReadonlyEventsData" @ref="ScheduleRef"
+							MonthsCount="@NumberOfMonths"
+							MinDate="@CalendarRange.MinDate" MaxDate="@CalendarRange.MaxDate"  ** DELETED **
+							ShowQuickInfo="true"
+							Width="100%" Height="650px"
+							@bind-SelectedDate="@CurrentDate" @bind-CurrentView="@ViewNow">
+
+		<ScheduleEventSettings DataSource="@AppointmentDataList"></ScheduleEventSettings>
+		<ScheduleEvents TValue="ReadonlyEventsData"
+										EventRendered="OnEventRendered" />
+		<ScheduleViews>
+			<ScheduleView Option="View.Week"></ScheduleView>
+			<ScheduleView Option="View.Month"></ScheduleView>
+			<ScheduleView Option="View.Year"></ScheduleView>
+		</ScheduleViews>
+
+	</SfSchedule>
+
+
 ```
 
 ```csharp
+		protected DateRange CalendarRange => new DateRange(DateTime.Parse("9/22/2021"), DateTime.Parse("1/21/2023"));
+
+		public class DateRange
+		{
+			public DateTime MinDate { get; set; }
+			public DateTime MaxDate { get; set; }
+			public DateRange(DateTime x, DateTime y) => (MinDate, MaxDate) = (x, y);
+		}
+
+
 // 						HideEmptyAgendaDays="true" AgendaDaysCount="30"
 
 	public bool HideEmptyAgendaDays = true;
@@ -228,3 +263,74 @@ C:\Source\LivingMessiahBlazor\src\LivingMessiah.Web\Pages\Calendar\ShowHideGridB
 			//this.CurrentView = this.ViewRef.Checked ? View.TimelineYear : View.Year;
 			this.CurrentView = View.Year;
 		}
+
+
+# Index.razor
+				<!-- regular button"
+				<button @onclick="OnPrintClick"
+								class="btn-primary btn-sm">
+					<span class="fas fa-print"></span> Print
+				</button>
+				-->
+
+
+
+				<!-- Bootstrap Solution"
+				<div class="btn-group">
+					<button type="button" class="btn btn-primary">Export</button>
+					<button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<span class="sr-only">Toggle Dropdown</span>
+					</button>
+					<div class="dropdown-menu">
+						<button class="dropdown-item" href="#">iCalendar</button>
+						<button class="dropdown-item" href="#">Excel</button>
+					</div>
+				</div>
+				-->
+
+
+# GridDetail
+
+		/*
+		 * ddd, MMMM dd/yyyy
+		 * 
+		return addedDaysDescr + " " + Date.AddDays(d).ToShortDateString();		
+				public string DateHtml
+				{
+					get
+					{
+						if (AddDaysDescr == "" || AddDays == 0)
+						{
+							return "<span class='float-right'>" + Date.ToString("ddd, MM/dd") + "</span>";
+						}
+						else
+						{
+							if (AddDays < 0)
+							{
+								return $@"
+		 <span class='float-right'> 
+		{AddDaysDescr} {Date.AddDays(AddDays):ddd, MM/dd} 
+		</span>
+		<br /> 
+		<span class='float-right'> 
+		{Date:ddd, MM/dd}
+		</span>
+		";
+							}
+							else
+							{
+								return $@"
+		 <span class='float-right'>
+		{Date:ddd, MM/dd}
+		</span>
+		<br /> 
+		<span class='float-right'> 
+		{AddDaysDescr} {Date.AddDays(AddDays):ddd, MM/dd} 
+		</span>
+		";
+							}
+
+						}
+					}
+				}
+		*/

@@ -1,9 +1,8 @@
 ﻿@page "/Calendar"
 @page "/KeyDates"
+
 @using Page = LivingMessiah.Web.Links.Calendar
-
 @using static LivingMessiah.Web.Pages.Calendar.ScheduleData
-
 @using Syncfusion.Blazor.Schedule
 @using Syncfusion.Blazor.Buttons
 @using Syncfusion.Blazor.SplitButtons;
@@ -12,40 +11,85 @@
 	<h2><i class="@Page.Icon"></i> @Page.Title</h2>
 </div>
 
+<!-- IsXsOrSm="true" -->
+<div class="d-md-none">
+	<LmmCalendarAdvertisement IsXsOrSm="true" PrintedCalendarEnum="@printedCalendarEnum" />
+</div>
+<!-- IsXsOrSm="false" -->
+<div class="d-none d-md-block">
+	<LmmCalendarAdvertisement IsXsOrSm="false" PrintedCalendarEnum="@printedCalendarEnum" />
+</div>
 
-<div class="card bg-secondary text-white mb-0">
-	<div class="row">
-		<div class="col-4 ">
-			Living Messiah Calendar | @YearId
+
+<!-- IsXsOrSm="true" -->
+<div class="d-md-none">
+	<div class="card bg-secondary text-white mb-0">
+		<div class="row pl-3">
+
+			<div class="col-12 text-center ">
+				Living Messiah Calendar
+			</div>
+
 		</div>
 
-		<div class="col-4 text-center p-1">
-			<SfIcon IconCss="oi oi-clock"></SfIcon>
-			Jerusalem @SystemTime.ToString("hh:mm:ss tt")
+		<div class="row pr-2">
+			<div class="col-12">
+
+				<SfButton IconCss="fas fa-print" CssClass="title-bar-btn"
+									OnClick="OnPrintClick">Print</SfButton>
+
+				<SfDropDownButton Content="Export">
+					<DropDownMenuItems>
+						<DropDownMenuItem Text="iCalendar" IconCss="fas fa-file-download"></DropDownMenuItem>
+						<DropDownMenuItem Text="Excel" IconCss="far fa-file-excel"></DropDownMenuItem>
+					</DropDownMenuItems>
+					<DropDownButtonEvents ItemSelected="OnExportClick"></DropDownButtonEvents>
+				</SfDropDownButton>
+
+				<span class="float-right">Jerusalem @SystemTime.ToString("hh:mm:ss tt")</span>
+
+			</div>
 		</div>
 
-		<div class="col-4 justify-content-end">
+	</div>
+</div>
 
-			<SfButton IconCss="e-icons e-schedule-print" CssClass="title-bar-btn"
-								OnClick="OnPrintClick">Print</SfButton>
+<!-- IsXsOrSm="false" -->
+<div class="d-none d-md-block">
 
-			<SfDropDownButton Content="Export">
-				<DropDownMenuItems>
-					<DropDownMenuItem Text="iCalendar" IconCss="e-icons e-schedule-ical-export"></DropDownMenuItem>
-					<DropDownMenuItem Text="Excel" IconCss="e-icons e-schedule-excel-export"></DropDownMenuItem>
-				</DropDownMenuItems>
-				<DropDownButtonEvents ItemSelected="OnExportClick"></DropDownButtonEvents>
-			</SfDropDownButton>
+	<div class="card bg-secondary text-white mb-0">
+		<div class="row pl-3">
 
+			<div class="col-4">
+
+				<SfButton IconCss="fas fa-print" CssClass="title-bar-btn"
+									OnClick="OnPrintClick">Print</SfButton>
+
+				<SfDropDownButton Content="Export">
+					<DropDownMenuItems>
+						<DropDownMenuItem Text="iCalendar" IconCss="fas fa-file-download"></DropDownMenuItem>
+						<DropDownMenuItem Text="Excel" IconCss="far fa-file-excel"></DropDownMenuItem>
+					</DropDownMenuItems>
+					<DropDownButtonEvents ItemSelected="OnExportClick"></DropDownButtonEvents>
+				</SfDropDownButton>
+
+			</div>
+
+			<div class="col-4 ">
+				Living Messiah Calendar
+			</div>
+
+			<div class="col-4 text-center">
+				Jerusalem @SystemTime.ToString("hh:mm:ss tt")
+			</div>
 		</div>
 	</div>
+
 </div>
 
 
 <div id="ControlRegion">
 	<SfSchedule TValue="ReadonlyEventsData" @ref="ScheduleRef"
-							MonthsCount="@NumberOfMonths"
-							MinDate="@CalendarRange.MinDate" MaxDate="@CalendarRange.MaxDate"
 							ShowQuickInfo="true"
 							Width="100%" Height="650px"
 							@bind-SelectedDate="@CurrentDate" @bind-CurrentView="@ViewNow">
@@ -63,38 +107,14 @@
 
 </div>
 
-
-<!-- IsXsOrSm="true" -->
 <div class="d-md-none">
-	<ShowHideGridButton>
-		<ChildContent>
-			<LivingMessiah.Web.Pages.KeyDates.CalendarGrid YearId="@YearId" IsXsOrSm="true" />
-		</ChildContent>
-	</ShowHideGridButton>
-
-	@if (CalenderReadyForSale)
-	{
-		<LmmCalendarAdvertisement CalenderReadyForSale="@CalenderReadyForSale" IsXsOrSm="true" />
-	}
-
+	<CalendarGrid YearId="@YearId" IsXsOrSm="true" />
 </div>
 
 <!-- IsXsOrSm="false" -->
 <div class="d-none d-md-block">
-	<ShowHideGridButton>
-		<ChildContent>
-			<LivingMessiah.Web.Pages.KeyDates.CalendarGrid YearId="@YearId" IsXsOrSm="false" />
-		</ChildContent>
-	</ShowHideGridButton>
-
-	@if (CalenderReadyForSale)
-	{
-		<LmmCalendarAdvertisement CalenderReadyForSale="@CalenderReadyForSale" IsXsOrSm="false" />
-	}
-
+	<CalendarGrid YearId="@YearId" IsXsOrSm="false" />
 </div>
-
-
 
 
 @if (DatabaseError)

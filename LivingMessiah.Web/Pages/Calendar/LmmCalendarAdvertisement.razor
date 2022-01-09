@@ -1,69 +1,123 @@
 ﻿@using static LivingMessiah.Web.Links.Store
 
-@* <div class="card border-warning mt-5 mb-3"> *@
-
-@if (CalenderReadyForSale)
+@switch (PrintedCalendarEnum)
 {
-	<div class="d-print-none">
-		<div class="card mt-5">
+	case PrintedCalendarEnum.CommingSoon:
 
-			<div class="card-body">
-				<h3 class="card-text text-center mb-3 bg-dark text-white p-2 rounded">
-					Living Messiah Calendar! Get It!
-				</h3>
 
-				<div class="text-center my-2">
-					<a href="@LivingMessiah.Web.Links.Store.Index"
-						 title="@Items.TitleCalendar"
-						 class="btn btn-primary btn-lg">
-						Order Now
-						<i class="fas fa-chevron-right"></i>
-					</a>
+		@*
+				ToDo: This needs to be thought out, like it needs to have a button
+
+
+				<div class="d-print-none">
+				<div class="card">
+
+					<div class="card-body">
+						<h3 class="card-text text-center">
+							Living Messiah Calendar! Coming Soon
+						</h3>
+					</div>
+
+					<img src="@Blobs.UrlRoot("lmm-calendar-2022-1020-1020.jpg")"
+							 class="card-img-top p-2"
+							 alt="@Items.TitleCalendar">
+
+				</div>
+			</div>*@
+
+		break;
+
+
+	case PrintedCalendarEnum.ReadyForSale:
+
+		<div class="card bg-secondary text-white mb-3">
+			<div class="row mb-2">
+				<div class="col-12">
+
+					@if (IsCollapsed)
+					{
+						<Button @onclick="@(e => ToggleButtonClick(IsCollapsed))"
+										class="btn-primary btn-sm  float-right">
+							Details <i class='fas fa-chevron-down'></i>
+						</Button>
+					}
+					else
+					{
+						<Button @onclick="@(e => ToggleButtonClick(IsCollapsed))"
+										class="btn-primary btn-sm float-right">
+							Hide <i class='fas fa-chevron-up'></i>
+						</Button>
+					}
+
+					<div class="lead">
+						<span class="badge badge-warning mt-1 ml-2 p-3">Living Messiah Calendar <b><u>Get It Now!</u></b></span>
+					</div>
+
 				</div>
 			</div>
 
-			@if (IsXsOrSm)
+			@if (!IsCollapsed)
 			{
-				<img src="@Blobs.UrlRoot("lmm-calendar-2022-603-601.jpg")"
-						 class="card-img-top p-2"
-						 alt="@Items.TitleCalendar">
+
+				<div class="row my-2">
+					<div class="col-12">
+						@if (IsXsOrSm)
+						{
+							<img src="@Blobs.UrlRoot("lmm-calendar-2022-603-601.jpg")" class="card-img-top p-1"
+									 alt="@Items.TitleCalendar">
+						}
+						else
+						{
+							<img src="@Blobs.UrlRoot("lmm-calendar-2022-1020-1020.jpg")" class="card-img-top p-1"
+									 alt="@Items.TitleCalendar">
+						}
+
+						<div class="text-center my-2">
+							<a href="@LivingMessiah.Web.Links.Store.Index"
+								 title="@Items.TitleCalendar"
+								 class="btn btn-primary btn-lg">
+								Order Now
+								<i class="fas fa-chevron-right"></i>
+							</a>
+						</div>
+
+					</div>
+				</div>
+
+
 			}
-			else
-			{
-				<img src="@Blobs.UrlRoot("lmm-calendar-2022-1020-1020.jpg")"
-						 class="card-img-top p-2"
-						 alt="@Items.TitleCalendar">
-			}
-		</div>
-	</div>
 
-}
-else
-{
-	<div class="d-print-none">
-		<div class="card">
-
-			<div class="card-body">
-				<h3 class="card-text text-center">
-					Living Messiah Calendar! Coming Soon
-				</h3>
-			</div>
-
-			<img src="@Blobs.UrlRoot("lmm-calendar-2022-1020-1020.jpg")"
-					 class="card-img-top p-2"
-					 alt="@Items.TitleCalendar">
 
 		</div>
-	</div>
 
 
+
+
+
+		break;
+
+
+	case PrintedCalendarEnum.NotAvailable:
+		break;
+
+
+	default:
+		break;
 }
+
 
 @code {
 	[Parameter]
-	public bool CalenderReadyForSale { get; set; }
+	public PrintedCalendarEnum PrintedCalendarEnum { get; set; }
 
 	[Parameter]
 	public bool IsXsOrSm { get; set; }
+
+	public bool IsCollapsed { get; set; } = true;
+	protected void ToggleButtonClick(bool isCollapsed)
+	{
+		IsCollapsed = !isCollapsed;
+	}
+
 
 }

@@ -19,8 +19,6 @@ namespace LivingMessiah.Web.Pages.KeyDates
 		[Inject]
 		NavigationManager NavigationManager { get; set; }
 
-		protected bool CalenderReadyForSale = true;
-
 		#region DropDownList
 		
 		// ToDo: not referenced, wanted to convert the UI (Index.razor) to a modal
