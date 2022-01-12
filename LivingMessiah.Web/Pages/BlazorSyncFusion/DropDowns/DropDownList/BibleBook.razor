@@ -15,7 +15,7 @@
 			</div>
 			<div class="card-body py-1">
 				<SfDropDownList TItem="VM" TValue="string" PopupHeight="230px"
-												Placeholder="Select a game"
+												Placeholder="Select a book"
 												@bind-Value="@SelectedValue" DataSource="@Books">
 					<DropDownListEvents TItem="VM" TValue="string" ValueChange="OnChange"></DropDownListEvents>
 					<DropDownListFieldSettings Text="Text" Value="Value"></DropDownListFieldSettings>
@@ -44,7 +44,6 @@
 	</div>
 
 </div>
-
 
 @code {
 	public class VM

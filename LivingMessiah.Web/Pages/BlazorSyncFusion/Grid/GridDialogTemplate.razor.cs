@@ -11,7 +11,6 @@ namespace LivingMessiah.Web.Pages.BlazorSyncFusion.Grid
 {
 	public partial class GridDialogTemplate
 	{
-
 		[Inject]
 		public ILogger<GridDialogTemplate> Logger { get; set; }
 

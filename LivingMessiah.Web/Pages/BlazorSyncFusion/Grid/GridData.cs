@@ -190,26 +190,33 @@ namespace LivingMessiah.Web.Pages.BlazorSyncFusion.Grid
     public string ShipCity { get; set; }
 
     public DateTime? OrderDate { get; set; }
-
     public string ShipName { get; set; }
-
     public string ShipCountry { get; set; }
-
     public DateTime? ShippedDate { get; set; }
-
     public string ShipAddress { get; set; }
-
     public string Mail { get; set; }
-
     public string Location { get; set; }
+
   }
+
   public class OrdersDetails
   {
-    public OrdersDetails()
-    {
+    public OrdersDetails()  {  }
 
-    }
-    public OrdersDetails(int OrderID, string CustomerId, int EmployeeId, double Freight, bool Verified, DateTime OrderDate, string ShipCity, string ShipName, string ShipCountry, DateTime ShippedDate, string ShipAddress, string Mail, string Location)
+    public OrdersDetails(
+      int OrderID
+      , string CustomerId
+      , int EmployeeId
+      , double Freight
+      , bool Verified
+      , DateTime OrderDate
+      , string ShipCity
+      , string ShipName
+      , string ShipCountry
+      , DateTime ShippedDate
+      , string ShipAddress
+      , string Mail
+      , string Location)
     {
       this.OrderID = OrderID;
       this.CustomerID = CustomerId;
@@ -249,18 +256,15 @@ namespace LivingMessiah.Web.Pages.BlazorSyncFusion.Grid
     public string ShipCity { get; set; }
     public bool Verified { get; set; }
     public DateTime? OrderDate { get; set; }
-
     public string ShipName { get; set; }
-
     public string ShipCountry { get; set; }
-
     public DateTime? ShippedDate { get; set; }
     public string ShipAddress { get; set; }
-
     public string Mail { get; set; }
-
     public string Location { get; set; }
+
   }
+
   public class OverviewData
   {
     public OverviewData()

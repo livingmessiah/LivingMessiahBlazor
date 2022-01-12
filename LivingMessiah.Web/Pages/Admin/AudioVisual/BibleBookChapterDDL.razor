@@ -1,0 +1,13 @@
+﻿
+@using LivingMessiah.Web.Services
+@using Syncfusion.Blazor.Inputs
+
+<SfDropDownList TItem="DropDownListVM" TValue="string" PopupHeight="230px"
+								Placeholder="Select a book"
+								@bind-Value="@SelectedValue" DataSource="@DataSource">
+	<DropDownListEvents TItem="DropDownListVM" TValue="string" ValueChange="OnChange"></DropDownListEvents>
+	<DropDownListFieldSettings Text="Text" Value="Value"></DropDownListFieldSettings>
+</SfDropDownList>
+
+<SfNumericTextBox TValue="int" Value=1 Min="1" Max="@CurrentLastChapter" />
+<p class="mt-1">Last Chapter: @CurrentLastChapter</p>

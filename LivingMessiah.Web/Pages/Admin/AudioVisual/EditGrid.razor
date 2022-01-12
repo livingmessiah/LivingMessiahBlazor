@@ -1,0 +1,88 @@
+﻿@using LivingMessiah.Web.Services
+
+@using Syncfusion.Blazor.Grids
+@using Syncfusion.Blazor.Calendars
+@using Syncfusion.Blazor.DropDowns
+@using Syncfusion.Blazor.Inputs
+@using Syncfusion.Blazor.Popups
+
+<SfGrid ID="Grid" @ref="Grid" DataSource="@GridData" AllowPaging="true"
+				Toolbar="@(new string[] {"Add", "Edit", "Delete", "Update", "Cancel" })">
+	<GridEvents OnActionComplete="ActionCompleteHandler" TValue="EditGridVM"
+							OnActionBegin="ActionBeginHandler"
+							OnToolbarClick="ToolbarClickHandler">
+	</GridEvents>
+	<GridEditSettings AllowAdding="true" AllowEditing="true" AllowDeleting="true"
+										ShowDeleteConfirmDialog="true"
+										Mode="@EditMode.Dialog" Dialog="DialogParams">
+		<Template>
+			@{
+				var VM = (context as EditGridVM);
+			}
+			<div>
+
+				<div class="form-row">
+					<div class="form-group col-md-6">
+						<SfNumericTextBox ID="Id" @bind-Value="@(VM.Id)" Enabled="@Check" Readonly="true"
+															FloatLabelType="FloatLabelType.Always" Placeholder="Id">
+						</SfNumericTextBox>
+					</div>
+
+					<div class="form-group col-md-6">
+						<label for="weeklyVideoTypeEnum" class="control-label">Weekly Event Type</label>
+						<InputSelectEnum @bind-Value="VM.WeeklyVideoTypeEnum" class="form-control" id="weeklyVideoTypeEnum" />
+						<ValidationMessage For="@(() => VM.WeeklyVideoTypeEnum)" />
+						<p><small>VM.WeeklyVideoTypeEnum: @VM.WeeklyVideoTypeEnum</small></p>
+					</div>
+
+				</div>
+
+				<div class="form-group row">
+					<div class="form-group col-md-6">
+						<label for="title" class="col-md-3 col-form-label">Title:</label>
+						<InputText id="title" class="form-control" @bind-Value="VM.Title" />
+						<ValidationMessage For="@(() => VM.Title)" />
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<label for="youTubeId" class="col-md-3 col-form-label">YouTube Id:</label>
+					<InputText id="youTubeId" class="form-control" @bind-Value="VM.YouTubeId" />
+					<ValidationMessage For="@(() => VM.YouTubeId)" />
+				</div>
+
+
+				<div class="form-row">
+					<div class="form-group col-md-6">
+						<SfDropDownList TItem="DropDownListVM" TValue="string" PopupHeight="230px"
+														Placeholder="Select a book"
+														@bind-Value="@BookChapterSelectedValue" DataSource="@DataSourceBibleBooks">
+							<DropDownListEvents TItem="DropDownListVM" TValue="string" ValueChange="OnChange"></DropDownListEvents>
+							<DropDownListFieldSettings Text="Text" Value="Value"></DropDownListFieldSettings>
+						</SfDropDownList>
+					</div>
+				</div>
+				
+				<div class="form-group col-md-6">
+					<SfNumericTextBox TValue="int" Value=1 Min="1" Max="@CurrentLastChapter" />
+				</div>
+
+
+			</div>
+		</Template>
+	</GridEditSettings>
+
+	<GridColumns>
+
+		<GridColumn Field=@nameof(EditGridVM.Id) IsPrimaryKey="true" Visible="false" Width="40" />
+		<GridColumn Field=@nameof(EditGridVM.ShabbatWeekId) HeaderText="SW Id" Width="40" TextAlign="@TextAlign.Center" />
+		<GridColumn Field=@nameof(EditGridVM.WeeklyVideoTypeEnum) HeaderText="WVT Enum" Width="50" TextAlign="@TextAlign.Center" />
+		<GridColumn Field=@nameof(EditGridVM.Title) HeaderText="Title" Width="100"></GridColumn>
+		<GridColumn Field=@nameof(EditGridVM.YouTubeId) HeaderText="YouTube Id" Width="50" />
+		<GridColumn Field=@nameof(EditGridVM.Book) HeaderText="Book" Width="40" TextAlign="@TextAlign.Center" />
+		<GridColumn Field=@nameof(EditGridVM.Chapter) HeaderText="Chapter" Width="40" TextAlign="@TextAlign.Center" />
+
+
+	</GridColumns>
+
+</SfGrid>

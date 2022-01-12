@@ -527,6 +527,15 @@
 		public const string CancelIcon = "fas fa-window-close"; //"far fa-window-close";
 	}
 
+
+	public static class WeeklyVideosEditGrid
+	{
+		public const string Index = "/Admin/WeeklyVideosEditGrid";
+		public const string Title = "Weekly Videos Edit Grid";
+		public const string Icon = "fab fa-youtube";
+	}
+
+
 	public static class Wirecast
 	{
 		// There is not Index because the link should only be known by the translators

@@ -1,6 +1,5 @@
 ﻿using Ardalis.SmartEnum;
 
-
 namespace LivingMessiah.Web.Enums
 {
 	public enum BookGroupEnum
@@ -112,6 +111,7 @@ namespace LivingMessiah.Web.Enums
 		public abstract string Abrv { get; }
 		public abstract BookGroupEnum BookGroupEnum { get; }
 		public abstract BookEnum BookEnum { get;  }
+		public abstract int LastChapter { get; }
 		/*
 		public abstract string EnglishTitle { get; }
 		public abstract string HebrewTitle { get; }
@@ -127,6 +127,7 @@ namespace LivingMessiah.Web.Enums
 			public override string Abrv => "Gen";
 			public override BookGroupEnum BookGroupEnum => BookGroupEnum.Torah;
 			public override BookEnum BookEnum => BookEnum.Genesis;
+			public override int LastChapter => 50;
 		}
 
 		private sealed class ExodusSE : BaseBibleBookSmartEnum
@@ -135,6 +136,7 @@ namespace LivingMessiah.Web.Enums
 			public override string Abrv => "Exo";
 			public override BookGroupEnum BookGroupEnum => BookGroupEnum.Torah;
 			public override BookEnum BookEnum => BookEnum.Exodus;
+			public override int LastChapter => 40;
 		}
 
 		private sealed class LeviticusSE : BaseBibleBookSmartEnum
@@ -143,6 +145,7 @@ namespace LivingMessiah.Web.Enums
 			public override string Abrv => "Lev";
 			public override BookGroupEnum BookGroupEnum => BookGroupEnum.Torah;
 			public override BookEnum BookEnum => BookEnum.Leviticus;
+			public override int LastChapter => 27;
 		}
 
 		private sealed class NumbersSE : BaseBibleBookSmartEnum
@@ -151,6 +154,7 @@ namespace LivingMessiah.Web.Enums
 			public override string Abrv => "Num";
 			public override BookGroupEnum BookGroupEnum => BookGroupEnum.Torah;
 			public override BookEnum BookEnum => BookEnum.Numbers;
+			public override int LastChapter => 36;
 		}
 
 		private sealed class DeuteronomySE : BaseBibleBookSmartEnum
@@ -159,6 +163,7 @@ namespace LivingMessiah.Web.Enums
 			public override string Abrv => "Deu";
 			public override BookGroupEnum BookGroupEnum => BookGroupEnum.Torah;
 			public override BookEnum BookEnum => BookEnum.Deuteronomy;
+			public override int LastChapter => 34;
 		}
 
 		private sealed class PsalmsSE : BaseBibleBookSmartEnum
@@ -167,6 +172,7 @@ namespace LivingMessiah.Web.Enums
 			public override string Abrv => "Psa";
 			public override BookGroupEnum BookGroupEnum => BookGroupEnum.Poetry;
 			public override BookEnum BookEnum => BookEnum.Psalms;
+			public override int LastChapter => 150;
 		}
 
 		private sealed class ProverbsSE : BaseBibleBookSmartEnum
@@ -175,6 +181,7 @@ namespace LivingMessiah.Web.Enums
 			public override string Abrv => "Pro";
 			public override BookGroupEnum BookGroupEnum => BookGroupEnum.Poetry;
 			public override BookEnum BookEnum => BookEnum.Proverbs;
+			public override int LastChapter => 31;
 		}
 		#endregion
 

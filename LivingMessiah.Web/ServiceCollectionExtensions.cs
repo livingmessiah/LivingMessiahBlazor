@@ -19,6 +19,7 @@ using LivingMessiah.Web.Pages.Contacts.Data;
 using LivingMessiah.Web.Pages.KeyDates.Data;
 using LivingMessiah.Web.Pages.UpcomingEvents.Data;
 using LivingMessiah.Web.Pages.BlazorSyncFusion.Shared;
+using LivingMessiah.Web.Pages.Admin.AudioVisual;
 
 namespace LivingMessiah.Web
 {
@@ -34,6 +35,8 @@ namespace LivingMessiah.Web
 				.AddSingleton<ILeadershipService, LeadershipService>()
 				.AddSingleton<IAddressService, AddressService>()
 				.AddSingleton<ILinkService, LinkService>()
+
+				.AddTransient<IWeeklyVideosRepository, WeeklyVideosRepository>()
 
 				.AddSingleton<IShabbatWeekService, ShabbatWeekService>()
 				.AddSingleton<IShabbatWeekCacheService, ShabbatWeekCacheService>()

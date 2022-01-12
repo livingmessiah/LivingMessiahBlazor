@@ -58,13 +58,8 @@
 	private string Message = string.Empty;
 
 	private EventTypeEnum eventTypeEnum = EventTypeEnum.ErevShabbat;
-
 	protected void HandleValidSubmit()
 	{
-
-		vm.EventType = EventType.FromEnum(eventTypeEnum);
-
-
 		vm.EventType = EventType.FromEnum(eventTypeEnum);
 		if (vm.EventType != null)
 		{
