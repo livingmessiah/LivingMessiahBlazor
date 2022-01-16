@@ -14,6 +14,7 @@ namespace LivingMessiah.Web.Pages.BlazorSyncFusion.Grid
 		[Inject]
 		public ILogger<GridDialogTemplate> Logger { get; set; }
 
+
 		public List<OrdersDetails> GridData { get; set; }
 		private Boolean Check = false;
 		private DialogSettings DialogParams = new DialogSettings

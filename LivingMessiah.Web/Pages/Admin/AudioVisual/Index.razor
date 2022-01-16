@@ -8,6 +8,29 @@
 	<h2><i class="@Icon"></i> @Title</h2>
 </div>
 
+<AuthorizeView Roles="@Roles.AdminOrAnnouncements">
+
+	<Authorized>
+		<EditGrid></EditGrid>
+	</Authorized>
+
+	<NotAuthorized>
+
+		<div class="card border-warning my-5">
+			<div class="card-header">Not Authorized</div>
+
+			<div class="card-body">
+				<h5 class="">To view <b>@Page.Title</b> you need to be logged in.</h5>
+				<button @onclick="@(() => RedirectToLoginClick(Page.Redirect))"
+								type="button" class="btn-primary btn-sm">
+					Login <i class='fas fa-sign-in-alt'></i>
+				</button>
+			</div>
+		</div>
+
+	</NotAuthorized>
+</AuthorizeView>
+
 <div class="card" style="width: 25rem;">
 	<div class="card-header">Audio Visual Links</div>
 
@@ -32,26 +55,3 @@
 
 	</ul>
 </div>
-
-<AuthorizeView Roles="@Roles.AdminOrAnnouncements">
-
-	<Authorized>
-		<EditGrid></EditGrid>
-	</Authorized>
-
-	<NotAuthorized>
-
-		<div class="card border-warning my-5">
-			<div class="card-header">Not Authorized</div>
-
-			<div class="card-body">
-				<h5 class="">To view <b>@Page.Title</b> you need to be logged in.</h5>
-				<button @onclick="@(() => RedirectToLoginClick(Page.Index))"
-								type="button" class="btn-primary btn-sm">
-					Login <i class='fas fa-sign-in-alt'></i>
-				</button>
-			</div>
-		</div>
-
-	</NotAuthorized>
-</AuthorizeView>

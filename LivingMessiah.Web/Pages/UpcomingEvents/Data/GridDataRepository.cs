@@ -17,7 +17,8 @@ using static LivingMessiah.Web.Pages.SqlServer;
 using System.Text;
 using System.Data.SqlClient;
 
-namespace LivingMessiah.Web.Data
+
+namespace LivingMessiah.Web.Pages.UpcomingEvents.Data
 {
 	public interface IGridDataRepository
 	{
@@ -27,7 +28,6 @@ namespace LivingMessiah.Web.Data
 		Task UpdateNonKeyDate(EditVM vm);
 		Task RemoveNonKeyDate(int id);
 	}
-
 
 	public class GridDataRepository : IGridDataRepository
 	{

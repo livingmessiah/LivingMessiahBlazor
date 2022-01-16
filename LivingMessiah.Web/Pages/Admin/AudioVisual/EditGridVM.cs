@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using LivingMessiah.Web.Enums;
 
 namespace LivingMessiah.Web.Pages.Admin.AudioVisual
 {
@@ -9,13 +10,49 @@ namespace LivingMessiah.Web.Pages.Admin.AudioVisual
 		public WeeklyVideoTypeEnum WeeklyVideoTypeEnum { get; set; }
 
 		public int ShabbatWeekId { get; set; }
+		
+		public string ShabbatWeekIdString { get; set; }
 
 		[Required]
 		[Display(Name = "YouTube Id")]
-		[StringLength(50, MinimumLength = 3, ErrorMessage = "length {0} must be between {2} and {1}.")]
+		[StringLength(11, MinimumLength = 3, ErrorMessage = "length {0} must be between {2} and {1}.")]
 		public string YouTubeId { get; set; }
 
-		/*
+		public string Url()
+		{
+			if (YouTubeId != null)
+			{
+				return $"https://www.youtube.com/watch?v={YouTubeId}";
+			}
+			else
+			{
+				return "";
+			}
+		}
+
+
+		public string MHBUrl()
+		{
+			if (Book != 0 && Chapter != 0)
+			{
+				if (BaseBibleBookSmartEnum.TryFromValue(Book, out var se))
+				{
+					return $"https://myhebrewbible.com/BookChapter/{se.Name}/{Chapter}/Slug";
+				}
+				else
+				{
+					return "";
+				}
+			}
+			else
+			{
+				return "";
+			}
+		}
+
+
+
+		/* 
 Unique every week
 - 1 MS Eng:  The Spiritual State of Faithlessness
 - 2 MS Esp:  El Estado Espiritual De Infidelidad

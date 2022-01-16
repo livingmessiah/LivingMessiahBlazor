@@ -4,6 +4,12 @@ using System.Threading.Tasks;
 using System.Linq;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
+using System;
+
+// From Base Class
+using System.Text;
+using System.Data.SqlClient;
+
 
 namespace LivingMessiah.Web.Pages.Admin.AudioVisual
 {
@@ -11,9 +17,9 @@ namespace LivingMessiah.Web.Pages.Admin.AudioVisual
 	{
 		string BaseSqlDump { get; }
 
-		// Query 		
-		Task<List<ShabbatWeekLookup>> GetShabbatWeekLookup(int top);
-		Task<List<EditGridVM>> GetTopWeeklyVideos(int top);
+		// Query 
+		Task<Tuple<int, int, List<ShabbatWeekLookup>>> GetShabbatWeekLookup(int top = 3);
+		Task<List<EditGridVM>> GetTopWeeklyVideos(int top = 3);
 
 		// Command
 		Task<int> WeeklyVideoAdd(EditGridVM dto);
@@ -21,22 +27,63 @@ namespace LivingMessiah.Web.Pages.Admin.AudioVisual
 		Task<int> WeeklyVideoDelete(int id);
 	}
 
-	public class WeeklyVideosRepository : LivingMessiah.Data.BaseRepositoryAsync, IWeeklyVideosRepository
+	public class WeeklyVideosRepository : IWeeklyVideosRepository
 	{
-		public WeeklyVideosRepository(IConfiguration config, ILogger<WeeklyVideosRepository> logger) : base(config, logger)
+		public WeeklyVideosRepository(IConfiguration config, ILogger<WeeklyVideosRepository> logger)
 		{
+			this.config = config;
+			this.Logger = logger;
+			connectionString = config[configationConnectionKey];
 		}
 
 		public string BaseSqlDump
 		{
-			get { return base.SqlDump; }
+			get { return SqlDump; }
 		}
 
-		#region Query
-		public async Task<List<EditGridVM>> GetTopWeeklyVideos(int top)
+		#region BaseClass
+		const string configationConnectionKey = "ConnectionStrings:LivingMessiah";
+		private readonly IConfiguration config;
+		protected readonly ILogger Logger;
+
+		public string Sql { get; set; }
+		public DynamicParameters Parms { get; set; }  // using Dapper; Note, only place dependent on Dapper
+
+		string connectionString;
+
+		public string SqlDump
 		{
-			base.Parms = new DynamicParameters(new { Top = top });
-			base.Sql = $@"
+			get
+			{
+				string s = "";
+				s = Sql ?? "SQL IS NULL";
+				if (Parms != null)
+				{
+					string v = "";
+					var sb = new StringBuilder();
+					foreach (var name in Parms.ParameterNames) // Why is this empty? 
+					{
+						var pValue = Parms.Get<dynamic>(name);
+						v = (pValue != null) ? pValue.ToString() : "null";
+						sb.AppendFormat($"name {name}={v}\n");
+					}
+
+					s += ", parameter: " + sb.ToString();
+
+				}
+				return s;
+			}
+		}
+		#endregion
+
+
+		#region Query
+		public async Task<List<EditGridVM>> GetTopWeeklyVideos(int top = 3)
+		{
+			Logger.LogDebug(string.Format("Inside {0}, top={1}", nameof(WeeklyVideosRepository) + "!" + nameof(GetTopWeeklyVideos), top));
+			Parms = new DynamicParameters(new { Top = top });
+
+			Sql = $@"
 -- DECLARE @Top int = 3
 SELECT
 	wv.Id
@@ -46,18 +93,9 @@ SELECT
 , ROW_NUMBER () OVER (ORDER BY ShabbatDate DESC, tvf.WeeklyVideoTypeId )  AS RowNum
 , ShabbatDateYMD
 ,	ShabbatDate
-
 ,	wv.ShabbatWeekId,	wv.WeeklyVideoTypeId
 ,	wv.YouTubeId
-
 , wv.Title
---, CASE 
---   WHEN tvf.WeeklyVideoTypeId = 1 or tvf.WeeklyVideoTypeId = 2 -- MS Eng/Esp
---	   THEN wv.Title
---	   ELSE '' -- ELSE 'Use Book/Chapter' 
---	END AS Title
-
---, wv.GraphicFile , wv.NotesFile
 , CASE 
    WHEN wv.Id IS NULL OR wv.GraphicFile IS NOT NULL
 			THEN wv.GraphicFile
@@ -68,7 +106,6 @@ SELECT
 			THEN wv.NotesFile
 			ELSE CAST(tvf.WeeklyVideoTypeId AS varchar(10)) + '-notes-' +  ShabbatDateYMD -- + '-' + ISNULL(wv.Title, '***title***')
 	END AS NotesFile
-
 , wv.Book
 , wv.Chapter
 FROM tvfShabbatWeekCrossWeeklyVideoTypeByTop(@Top) tvf
@@ -77,28 +114,40 @@ LEFT OUTER JOIN WeeklyVideo wv
 	   tvf.WeeklyVideoTypeId = wv.WeeklyVideoTypeId
 ORDER BY ShabbatDate DESC, tvf.WeeklyVideoTypeId
 ";
-			return await WithConnectionAsync(async connection =>
-			{
-				var rows = await connection.QueryAsync<EditGridVM>(sql: base.Sql, param: base.Parms);
-				return rows.ToList();
-			});
+
+			using var connect = new SqlConnection(connectionString);
+			await connect.OpenAsync();
+			var rows = await connect.QueryAsync<EditGridVM>(sql: Sql, param: Parms);
+			//Logger.LogDebug(string.Format("...rows={0}, Sql {1}", rows, Sql));
+			Logger.LogDebug(string.Format("...Sql {0}", Sql));
+			return rows.ToList();
 		}
 
-		public async Task<List<ShabbatWeekLookup>> GetShabbatWeekLookup(int top) 
+		public async Task<Tuple<int, int, List<ShabbatWeekLookup>>> GetShabbatWeekLookup(int top = 3)
 		{
-			base.Parms = new DynamicParameters(new { Top = top });
-			base.Sql = $@"
+			Logger.LogDebug(string.Format("Inside {0}", nameof(WeeklyVideosRepository) + "!" + nameof(GetShabbatWeekLookup)));
+			Parms = new DynamicParameters(new { Top = top });
+			Sql = $@"
 -- DECLARE @Top int = 3
 SELECT TOP (@Top) Id, ShabbatDate
 FROM ShabbatWeek 
 WHERE ShabbatDate <= dbo.udfGetNextShabbatDate()
 ORDER BY ShabbatDate DESC
 ";
-			return await WithConnectionAsync(async connection =>
+			int MinId = 0;
+			int MaxId = 0;
+
+			using var connect = new SqlConnection(connectionString);
+			await connect.OpenAsync();
+			var rows = await connect.QueryAsync<ShabbatWeekLookup>(sql: Sql, param: Parms);
+			if (rows.Any())
 			{
-				var rows = await connection.QueryAsync<ShabbatWeekLookup>(sql: base.Sql, param: base.Parms);
-				return rows.ToList();
-			});
+				// Because the query is in DESC order, MaxId=First & MinId=Last
+				MaxId = rows.FirstOrDefault().Id;  
+				MinId = rows.LastOrDefault().Id;
+			}
+			Logger.LogDebug(string.Format("...MinId={0}, MaxId={1}, Sql {2}", MinId, MaxId, Sql));
+			return new Tuple<int, int, List<ShabbatWeekLookup>>(MinId, MaxId, rows.ToList());
 		}
 
 		#endregion
@@ -107,7 +156,8 @@ ORDER BY ShabbatDate DESC
 
 		public async Task<int> WeeklyVideoAdd(EditGridVM dto)
 		{
-			base.Parms = new DynamicParameters(new
+			Logger.LogDebug(string.Format("Inside {0}", nameof(WeeklyVideosRepository) + "!" + nameof(WeeklyVideoAdd)));
+			Parms = new DynamicParameters(new
 			{
 				dto.ShabbatWeekId,
 				dto.WeeklyVideoTypeEnum,
@@ -117,27 +167,25 @@ ORDER BY ShabbatDate DESC
 				dto.Chapter
 			});
 			//dto.GraphicFileRoot,dto.NotesFileRoot, ... GraphicFile, NotesFile ... , @GraphicFile, @NotesFile
-			base.Sql = $@"
+			Sql = $@"
 INSERT INTO WeeklyVideo
 (ShabbatWeekId, WeeklyVideoTypeId, YouTubeId, Title, Book, Chapter)
 VALUES (@ShabbatWeekId, @WeeklyVideoTypeEnum, @YouTubeId, @Title, @Book, @Chapter)
 ; SELECT CAST(SCOPE_IDENTITY() as int)
 ";
 			int newId;
-			return await WithConnectionAsync(async connection =>
-			{
-				//var count = await connection.ExecuteAsync(sql: base.Sql, param: base.Parms, commandType: System.Data.CommandType.Text);
-				//return count;
-				//var returnId = this.db.Query<int>(sql, dto).SingleOrDefault();
-				newId = await connection.ExecuteScalarAsync<int>(base.Sql, base.Parms);
-				return newId;
 
-			});
+			using var connect = new SqlConnection(connectionString);
+			await connect.OpenAsync();
+			newId = await connect.ExecuteScalarAsync<int>(Sql, Parms);
+			Logger.LogDebug(string.Format("...newId={0}, Sql {1}", newId, SqlDump));
+			return newId;
 		}
 
 		public async Task<int> WeeklyVideoUpdate(EditGridVM dto)
 		{
-			base.Parms = new DynamicParameters(new
+			Logger.LogDebug(string.Format("Inside {0}", nameof(WeeklyVideosRepository) + "!" + nameof(WeeklyVideoUpdate)));
+			Parms = new DynamicParameters(new
 			{
 				dto.Id,
 				dto.ShabbatWeekId,
@@ -150,7 +198,7 @@ VALUES (@ShabbatWeekId, @WeeklyVideoTypeEnum, @YouTubeId, @Title, @Book, @Chapte
 				dto.Chapter
 
 			});
-			base.Sql = $@"
+			Sql = $@"
 UPDATE WeeklyVideo SET
   ShabbatWeekId = @ShabbatWeekId
 , WeeklyVideoTypeId = @WeeklyVideoTypeEnum
@@ -163,22 +211,22 @@ UPDATE WeeklyVideo SET
 WHERE Id = @Id
 ";
 
-			return await WithConnectionAsync(async connection =>
-			{
-				var affectedrows = await connection.ExecuteAsync(sql: base.Sql, param: base.Parms);
-				return affectedrows;
-			});
+			using var connect = new SqlConnection(connectionString);
+			await connect.OpenAsync();
+			var affectedrows = await connect.ExecuteAsync(sql: Sql, param: Parms);
+			Logger.LogDebug(string.Format("...affectedrows={0}, SqlDump {1}", affectedrows, SqlDump));
+			return affectedrows;
 		}
 
 		public async Task<int> WeeklyVideoDelete(int id)
 		{
-			base.Sql = "DELETE FROM WeeklyVideo WHERE Id = @id";
-			base.Parms = new DynamicParameters(new { Id = id });
-			return await WithConnectionAsync(async connection =>
-			{
-				var affectedrows = await connection.ExecuteAsync(sql: base.Sql, param: base.Parms);
-				return affectedrows;
-			});
+			Sql = "DELETE FROM WeeklyVideo WHERE Id = @id";
+			Parms = new DynamicParameters(new { Id = id });
+			using var connect = new SqlConnection(connectionString);
+			await connect.OpenAsync();
+			var affectedrows = await connect.ExecuteAsync(sql: Sql, param: Parms);
+			Logger.LogDebug(string.Format("...affectedrows={0}, SqlDump {1}", affectedrows, SqlDump));
+			return affectedrows;
 		}
 
 		#endregion

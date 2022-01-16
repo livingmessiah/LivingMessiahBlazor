@@ -530,7 +530,8 @@
 
 	public static class WeeklyVideosEditGrid
 	{
-		public const string Index = "/Admin/WeeklyVideosEditGrid";
+		//public const string Index = "/Admin/WeeklyVideosEditGrid";
+		public const string Redirect = "/Admin/AudioVisual";
 		public const string Title = "Weekly Videos Edit Grid";
 		public const string Icon = "fab fa-youtube";
 	}

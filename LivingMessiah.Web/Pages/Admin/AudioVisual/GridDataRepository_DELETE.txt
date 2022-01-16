@@ -1,0 +1,77 @@
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+// From Base Class
+using System.Text;
+using System.Data.SqlClient;
+using Dapper;
+
+namespace LivingMessiah.Web.Pages.Admin.AudioVisual
+{
+	public interface IGridDataRepository
+	{
+		Task<List<EditGridVM>> GetUpcomingEventsEditList();
+		Task<int> GetUpcomingEventsEditCount();
+		Task Create(EditGridVM EditGridVM);
+		Task UpdateNonKeyDate(EditGridVM vm);
+		Task RemoveNonKeyDate(int id);
+	}
+
+	public class GridDataRepository
+	{
+		public GridDataRepository(IConfiguration config, ILogger<GridDataRepository> logger)
+		{
+			this.config = config;
+			this.Logger = logger;
+			connectionString = config[configationConnectionKey];
+		}
+
+
+		public string BaseSqlDump
+		{
+			get { return SqlDump; }
+		}
+
+		#region BaseClass
+		const string configationConnectionKey = "ConnectionStrings:LivingMessiah";
+		private readonly IConfiguration config;
+		protected readonly ILogger Logger;
+
+		public string Sql { get; set; }
+		public DynamicParameters Parms { get; set; }  // using Dapper; Note, only place dependent on Dapper
+
+
+		string connectionString;
+
+		public string SqlDump
+		{
+			get
+			{
+				string s = "";
+				s = Sql ?? "SQL IS NULL";
+				if (Parms != null)
+				{
+					string v = "";
+					var sb = new StringBuilder();
+					foreach (var name in Parms.ParameterNames) // Why is this empty? 
+					{
+						var pValue = Parms.Get<dynamic>(name);
+						v = (pValue != null) ? pValue.ToString() : "null";
+						sb.AppendFormat($"name {name}={v}\n");
+					}
+
+					s += ", parameter: " + sb.ToString();
+
+				}
+				return s;
+			}
+		}
+		#endregion
+	
+	
+	}
+}

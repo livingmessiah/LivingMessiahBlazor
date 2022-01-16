@@ -1,4 +1,5 @@
 ﻿@using LivingMessiah.Web.Data
+@using LivingMessiah.Web.Pages.UpcomingEvents.Data
 @using Syncfusion.Blazor.Data
 @using LinkEditMarkdown = LivingMessiah.Web.Links.UpcomingEventsEditMarkdown
 @using LinkUploadImage = LivingMessiah.Web.Links.UpcomingEventsUploadImage
@@ -9,11 +10,10 @@
 
 			<SfGrid TValue="EditVM"
 							Toolbar="@(new List<string>() { "Add", "Edit", "Delete", "Update", "Cancel" })">
-				<SfDataManager AdaptorInstance="typeof(IGridDataAdaptor)" Adaptor="Adaptors.CustomAdaptor"></SfDataManager>
+				<SfDataManager AdaptorInstance="typeof(IUpcomingEventsGridDataAdaptor)" Adaptor="Adaptors.CustomAdaptor"></SfDataManager>
 
 				<GridEditSettings AllowAdding="true" AllowEditing="true" AllowDeleting="true" ShowDeleteConfirmDialog="true">
 				</GridEditSettings>
-
 
 				<GridColumns>
 

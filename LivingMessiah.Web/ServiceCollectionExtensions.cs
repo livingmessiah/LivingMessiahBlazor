@@ -36,15 +36,18 @@ namespace LivingMessiah.Web
 				.AddSingleton<IAddressService, AddressService>()
 				.AddSingleton<ILinkService, LinkService>()
 
-				.AddTransient<IWeeklyVideosRepository, WeeklyVideosRepository>()
-
 				.AddSingleton<IShabbatWeekService, ShabbatWeekService>()
 				.AddSingleton<IShabbatWeekCacheService, ShabbatWeekCacheService>()
 				.AddSingleton<IShabbatWeekRepository, ShabbatWeekRepository>()
-				.AddTransient<IGridDataRepository, GridDataRepository>()
+
 				.AddTransient<IUpcomingEventsRepository, UpcomingEventsRepository>()
-				.AddTransient<IGridDataAdaptor, GridDataAdaptor>()
+				.AddTransient<IGridDataRepository, GridDataRepository>()
+				.AddTransient<IUpcomingEventsGridDataAdaptor, UpcomingEventsGridDataAdaptor>()
+				
 				.AddSingleton<IKeyDateRepository, KeyDateRepository>()
+
+				.AddTransient<IWeeklyVideosGridDataAdaptor, WeeklyVideosGridDataAdaptor>()
+				.AddTransient<IWeeklyVideosRepository, WeeklyVideosRepository>()
 
 				.AddTransient<ISecurityClaimsService, SecurityClaimsService>()
 

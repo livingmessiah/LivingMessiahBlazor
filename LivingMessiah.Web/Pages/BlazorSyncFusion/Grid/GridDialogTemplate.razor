@@ -112,9 +112,12 @@
 									</SfDropDownList>
 								</div>
 								<div class="form-group col-md-6">
-									<SfDropDownList ID="ShipCity" TItem="OrdersDetails" @bind-Value="@(Order.ShipCity)" 
-																	TValue="string" DataSource="@GridData" FloatLabelType="FloatLabelType.Always" Placeholder="Ship City">
-										<DropDownListFieldSettings Value="ShipCity" Text="ShipCity"></DropDownListFieldSettings>
+									<SfDropDownList ID="ShipCity" TItem="OrdersDetails"
+																	@bind-Value="@(Order.ShipCity)" 
+																	TValue="string" DataSource="@GridData" 
+																	FloatLabelType="FloatLabelType.Always" 
+																	Placeholder="Ship City">
+										<DropDownListFieldSettings Value="ShipCity" Text="ShipCity"/>
 									</SfDropDownList>
 								</div>
 							</div>

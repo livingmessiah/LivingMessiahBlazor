@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.Linq;
 
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
@@ -9,7 +10,6 @@ using LivingMessiah.Web.Enums;
 using LivingMessiah.Web.Services;
 
 using Syncfusion.Blazor.Grids;
-using System.Linq;
 
 namespace LivingMessiah.Web.Pages.Admin.AudioVisual
 {
@@ -22,104 +22,135 @@ namespace LivingMessiah.Web.Pages.Admin.AudioVisual
 		public IWeeklyVideosRepository db { get; set; }
 
 		[Inject]
-
 		ISmartEnumServiceForSfDropDownList svcDDL { get; set; }
-
-		public List<ShabbatWeekLookup> ShabbatWeekLookup { get; set; }   // int Id, DateTime ShabbatDate 
 
 		public List<EditGridVM> GridData { get; set; }
 
 		private DialogSettings DialogParams = new DialogSettings
 		{ MinHeight = "400px", Width = "450px" };
 
-		/*
-		public async Task<IReadOnlyList<WeeklyVideoIndex>> GetTopWeeklyVideos(int top)
+
+		#region Shabbat Week Lookup
+		
+		private int MinShabbatWeekId;
+		private int MaxShabbatWeekId;
+		public List<ShabbatWeekLookup> ShabbatWeeks { get; set; }   // int Id, DateTime ShabbatDate 
+
+		private async Task PopulateShabbatWeek() 
 		{
-			return await db.GetTopWeeklyVideos(top);
+			Logger.LogDebug(string.Format("Inside {0} WeekCount:{1}", nameof(EditGrid) + "!" + nameof(OnInitialized), WeekCount));
+			Tuple<int, int, List<ShabbatWeekLookup>> ShabbatWeeksTuple;
+
+			try
+			{
+				ShabbatWeeksTuple = await db.GetShabbatWeekLookup(WeekCount);
+
+				if (ShabbatWeeksTuple is not null)
+				{
+					MinShabbatWeekId = ShabbatWeeksTuple.Item1;
+					MaxShabbatWeekId = ShabbatWeeksTuple.Item2;
+					ShabbatWeeks = ShabbatWeeksTuple.Item3;
+					Logger.LogDebug(string.Format("...MinShabbatWeekId:{0}/MaxShabbatWeekId:{1}", MinShabbatWeekId, MaxShabbatWeekId));
+				}
+				else
+				{
+					DatabaseWarning = true;
+					DatabaseWarningMsg = $"{nameof(ShabbatWeeksTuple)} NOT FOUND";
+				}
+
+			}
+			catch (Exception ex)
+			{
+				DatabaseError = true;
+				DatabaseErrorMsg = $"Error reading database";
+				Logger.LogError(ex, $"...{DatabaseErrorMsg}");
+			}
 		}
-		*/
+		#endregion
 
 		private int WeekCount = 3;
+
+
 		protected override async Task OnInitializedAsync()
 		{
-			Logger.LogDebug(string.Format("Inside {0} WeekCount:{WeekCount}", nameof(EditGrid) + "!" + nameof(OnInitialized), WeekCount));
-			GridData = await db.GetTopWeeklyVideos(WeekCount);
-			ShabbatWeekLookup = await db.GetShabbatWeekLookup(WeekCount);
+			Logger.LogDebug(string.Format("Inside {0} WeekCount:{1}", nameof(EditGrid) + "!" + nameof(OnInitialized), WeekCount));
+			await PopulateShabbatWeek();
 		}
 
-		private Boolean Check = false;
-		public void ActionCompleteHandler(ActionEventArgs<EditGridVM> args)
+
+		//private bool Check = false;
+		public void OnActionBegin(ActionEventArgs<EditGridVM> args)
 		{
 			if (args.RequestType.ToString() == "Add")
 			{
-				Check = true;
+				//Check = true;
+				args.Data.ShabbatWeekId = MaxShabbatWeekId;
+//				DateTime current = DateTime.Now;
+//				args.Data.YearId = current.Year;
+
 			}
 			else
 			{
-				Check = false;
+				//Check = false;
 			}
 		}
 
-		private SfGrid<EditGridVM> Grid;
-		public async Task ToolbarClickHandler(Syncfusion.Blazor.Navigations.ClickEventArgs args)
-		{
-			if (args.Item.Id == SyncFusionToolbarCRUD.Add.ArgId) { await this.Grid.AddRecordAsync(); }
-			if (args.Item.Id == SyncFusionToolbarCRUD.Edit.ArgId) { await this.Grid.StartEditAsync(); }
-			if (args.Item.Id == SyncFusionToolbarCRUD.Delete.ArgId) { await this.Grid.DeleteRecordAsync(); }
-			if (args.Item.Id == SyncFusionToolbarCRUD.Update.ArgId)
-			{
-				// update the specified row by given values without changing into edited state.
-				//(double index, TValue data)
-				//await this.Grid.UpdateRowAsync(); 
-			}
-			if (args.Item.Id == SyncFusionToolbarCRUD.Cancel.ArgId) { await this.Grid.CloseEditAsync(); }
-		}
+		private SfGrid<EditGridVM> Grid; 		/* ToDo do I need this?		*/
 
-		public async Task ActionBeginHandler(ActionEventArgs<EditGridVM> arg)
-		{
-			if (arg.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Save))
-			{
-				await Task.Delay(0);
-				/*
-				 
-						if (arg.Action == "Add")
-						{
-							arg.Data.ID_CONTACT = CurContact.ID_CONTACT;
-							await _db.InsertContactEvent(arg.Data);
-							System.Console.WriteLine("Insert.");
-						}
-						else if (arg.Action == "Edit")
-						{
-							await _db.UpdateContactEvent(arg.Data);
-							System.Console.WriteLine("Update.");
-						}
-					}
-					if (arg.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Delete))
-					{
-						await _db.DeleteContactEvent(arg.Data);
-					}
-				*/
-			}
-		}
+		#region Dropdowns
 
-		#region Book/Chapter Dropdown
-
+		//Book Chapter
 		public string BookChapterSelectedValue;
 		public int BookChapterSelectedId;
 		public int CurrentLastChapter = 150;
-		protected List<DropDownListVM> DataSourceBibleBooks => svcDDL.GetBibleBooksVM().ToList(); 
+		protected List<DropDownListVM> DataSourceBibleBooks => svcDDL.GetBibleBooksVM().ToList();
 
-		public void OnChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<string, DropDownListVM> args)
+		public void OnChangeBookChapterDDL(Syncfusion.Blazor.DropDowns.ChangeEventArgs<string, DropDownListVM> args)
 		{
 			int i = int.TryParse(args.ItemData.Value, out i) ? i : 0;
 			BookChapterSelectedId = i;
 			CurrentLastChapter = BaseBibleBookSmartEnum.FromValue(BookChapterSelectedId).LastChapter;
 		}
-		
-		
+
+		//Shabbat Week
+		/*
+			public string ShabbatWeekSelectedValue;
+			public int ShabbatWeekSelectedId;
+
+			public void OnChangeShabbatWeekDDL(Syncfusion.Blazor.DropDowns.ChangeEventArgs<string, DropDownListVM> args)
+			{
+				int i = int.TryParse(args.ItemData.Value, out i) ? i : 0;
+				ShabbatWeekSelectedId = i;
+			}
+	*/
 		#endregion
 
-		//private WeeklyVideoTypeEnum weeklyVideoTypeEnum; // = WeeklyVideoTypeEnum.InDepthStudy;
+
+		#region ErrorHandling
+		private void InitializeErrorHandling()
+		{
+			DatabaseInformationMsg = "";
+			DatabaseInformation = false;
+			DatabaseWarningMsg = "";
+			DatabaseWarning = false;
+			DatabaseErrorMsg = "";
+			DatabaseError = false;
+		}
+
+		protected bool DatabaseInformation = false;
+		protected string DatabaseInformationMsg { get; set; }
+		protected bool DatabaseWarning = false;
+		protected string DatabaseWarningMsg { get; set; }
+		protected bool DatabaseError { get; set; } // = false; handled by InitializeErrorHandling
+		protected string DatabaseErrorMsg { get; set; }
+
+		void Failure(FailureEventArgs e)
+		{
+			DatabaseErrorMsg = $"Error inside {nameof(Failure)}";  //; e.Error: {e.Error}
+			Logger.LogError(string.Format("Inside {0}; e.Error: {1}", nameof(EditGrid) + "!" + nameof(Failure), e.Error));
+			DatabaseError = true;
+		}
+		#endregion
 
 	}
 }
