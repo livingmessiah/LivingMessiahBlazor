@@ -389,7 +389,9 @@ FROM Bible.Book
 
 		}
 
-		public async Task<IReadOnlyList<LivingMessiah.Domain.Parasha.Queries.ParashaList>> GetParashotByBookId(int bookId)
+
+		/*		*/
+		public async Task<IReadOnlyList<Domain.Parasha.Queries.ParashaList>> GetParashotByBookId(int bookId)
 		{
 			base.Parms = new DynamicParameters(new { BookId = bookId });
 			base.Sql = $@"
@@ -411,6 +413,39 @@ ORDER BY Id
 				return rows.ToList();
 			});
 		}
+
+		
+		public async Task<Tuple<Domain.Parasha.Queries.BibleBook, 
+						List<Domain.Parasha.Queries.ParashaList>>> GetParashotForCurrentBook()
+		{
+			base.Sql = $@"
+
+SELECT Id, Abrv, Title AS EnglishTitle, HebrewTitle, HebrewName 
+FROM Bible.Book
+WHERE Id = (SELECT BookId FROM Bible.vwParasha WHERE ShabbatDate = dbo.udfGetNextShabbatDate())
+
+SELECT
+Id
+, ROW_NUMBER() OVER(PARTITION BY BookId ORDER BY Id ) AS RowCntByBookId
+, BookId, Torah, Name, TriNum, ParashaName
+, NameUrl, AhavtaURL, Meaning, IsNewBook, Haftorah, Brit
+, ShabbatDate
+, BaseParashaUrl, CurrentParashaUrl
+--, ShabbatWeekId
+FROM Bible.vwParasha
+WHERE BookId = (SELECT BookId FROM Bible.vwParasha WHERE ShabbatDate = dbo.udfGetNextShabbatDate())
+ORDER BY Id
+
+";
+			return await WithConnectionAsync(async connection =>
+			{
+				var multi = await connection.QueryMultipleAsync(sql: base.Sql);
+				var book = await multi.ReadAsync<Domain.Parasha.Queries.BibleBook>(); //.SingleOrDefault();
+				var parashot = await multi.ReadAsync<Domain.Parasha.Queries.ParashaList>();
+			return new Tuple<Domain.Parasha.Queries.BibleBook, List<Domain.Parasha.Queries.ParashaList>>(book.SingleOrDefault(), parashot.ToList());
+			});
+		}
+
 
 
 		/*

@@ -7,8 +7,11 @@ using Microsoft.Extensions.Logging;
 
 using LivingMessiah.Web.Pages.KeyDates.Data;
 using LivingMessiah.Web.Pages.KeyDates.Queries;
+using CacheSettings = LivingMessiah.Web.Settings.Constants.CalendarCache;
 
 using Syncfusion.Blazor.Grids;
+
+using Microsoft.Extensions.Caching.Memory;
 
 namespace LivingMessiah.Web.Pages.Calendar
 {
@@ -16,6 +19,9 @@ namespace LivingMessiah.Web.Pages.Calendar
 	{
 		[Inject]
 		public IKeyDateRepository db { get; set; }
+
+		[Inject]
+		public IMemoryCache Cache { get; set; }
 
 		[Inject]
 		public ILogger<CalendarGrid> Logger { get; set; }
@@ -28,20 +34,41 @@ namespace LivingMessiah.Web.Pages.Calendar
 
 		protected string DateFormat; // = "ddd, MMMM dd, yyyy";
 
+		protected string CachedMsg { get; set; }
 		protected List<CalendarEntry> CalendarEntries;
 
 		protected override async Task OnInitializedAsync()
 		{
+			CachedMsg = "";
 			DateFormat = IsXsOrSm ? "yyyy/MM/dd" : "ddd, MMMM dd, yyyy";
 			Logger.LogDebug(string.Format("Inside {0}, year={1}", nameof(CalendarGrid) + "!" + nameof(OnInitializedAsync), YearId));
 			try
 			{
-				CalendarEntries = await db.GetCalendarEntries(YearId);
-				if (CalendarEntries == null)
+				CalendarEntries = Cache.Get<List<CalendarEntry>>(CacheSettings.Key);
+
+				if (CalendarEntries is null)
 				{
-					DatabaseWarning = true;
-					DatabaseWarningMsg = "Calendar Entries NOT FOUND";
+					CalendarEntries = await db.GetCalendarEntries(YearId);
+
+					if (CalendarEntries is not null)
+					{
+						//CachedMsg = "Data gotten from DATABASE";
+						Logger.LogDebug(string.Format("... Data gotten from DATABASE"));
+						Cache.Set(CacheSettings.Key, CalendarEntries, TimeSpan.FromMinutes(CacheSettings.FromMinutes));
+					}
+					else
+					{
+						DatabaseWarning = true;
+						DatabaseWarningMsg = "Calendar Entries NOT FOUND";
+					}
+
 				}
+				else
+				{
+					//CachedMsg = "Data gotten from CACHE";
+					Logger.LogDebug(string.Format("... Data gotten from CACHE"));
+				}
+
 			}
 			catch (Exception ex)
 			{

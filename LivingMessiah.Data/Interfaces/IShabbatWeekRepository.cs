@@ -1,4 +1,5 @@
 ﻿using LivingMessiah.Domain;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 //using System.Linq;
@@ -31,8 +32,8 @@ namespace LivingMessiah.Data
 
 		//Parasha
 		Task<LivingMessiah.Domain.Parasha.Queries.Parasha> GetCurrentParashaAndChildren();
-		Task<IReadOnlyList<LivingMessiah.Domain.Parasha.Queries.ParashaList>> GetParashotByBookId(int bookId);
-
+		Task<IReadOnlyList<Domain.Parasha.Queries.ParashaList>> GetParashotByBookId(int bookId);
+		Task<Tuple<Domain.Parasha.Queries.BibleBook, List<Domain.Parasha.Queries.ParashaList>>> GetParashotForCurrentBook();
 		#region ToDo: Move somewhere else
 
 		// ToDo Why are these here? It needs to be pulled out of here and ISukkotAdminRepository

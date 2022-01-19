@@ -107,6 +107,11 @@
 
 </div>
 
+@if (!String.IsNullOrEmpty(CachedMsg))
+{
+	<p class="text-muted float-right mt-1"><small><sup>@CachedMsg</sup></small></p>
+}
+
 <div class="d-md-none">
 	<CalendarGrid YearId="@YearId" IsXsOrSm="true" />
 </div>

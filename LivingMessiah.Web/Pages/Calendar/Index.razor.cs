@@ -15,6 +15,10 @@ using LivingMessiah.Web.Pages.KeyDates.Data;
 using LivingMessiah.Web.Pages.KeyDates.Enums;
 using System.Linq;
 
+using Microsoft.Extensions.Caching.Memory;
+using CacheSettings = LivingMessiah.Web.Settings.Constants.CalendarCache;
+using Page = LivingMessiah.Web.Links.Calendar;
+
 namespace LivingMessiah.Web.Pages.Calendar
 {
 	public partial class Index
@@ -27,6 +31,8 @@ namespace LivingMessiah.Web.Pages.Calendar
 
 		[Inject]
 		public IKeyDateRepository db { get; set; }
+
+		[Inject] public IMemoryCache Cache { get; set; }
 
 		public int YearId { get; set; }
 		protected PrintedCalendarEnum printedCalendarEnum = PrintedCalendarEnum.ReadyForSale;
@@ -53,35 +59,54 @@ namespace LivingMessiah.Web.Pages.Calendar
 			public View Value { get; set; }
 		}
 
+		protected string CachedMsg { get; set; }
+
 		protected override async Task OnInitializedAsync()
 		{
 			YearId = AppSettings.Value.YearId;
-			Logger.LogDebug(string.Format("Inside {0} YearId:{1}", nameof(Index) + "!" + nameof(OnInitializedAsync), YearId));
-			try
+			Logger.LogDebug(string.Format("Inside Page: {0}, Class!Method: {1}, YearId:{2}", Page.Index, nameof(Index) + "!" + nameof(OnInitializedAsync), YearId));
+
+			CachedMsg = "";
+			CalendarEntries = Cache.Get<List<KeyDates.Queries.CalendarEntry>>(CacheSettings.Key);
+			if (CalendarEntries is null)
 			{
-				CalendarEntries = await db.GetCalendarEntries(YearId);
-				if (CalendarEntries == null)
+				try
 				{
-					DatabaseWarning = true;
-					DatabaseWarningMsg = "CalendarEntries NOT FOUND";
+					CalendarEntries = await db.GetCalendarEntries(YearId);
+					if (CalendarEntries != null)
+					{
+						//CachedMsg = "Data gotten from DATABASE";
+						Logger.LogDebug(string.Format("... Data gotten from DATABASE"));
+						Cache.Set(CacheSettings.Key, CalendarEntries, TimeSpan.FromMinutes(CacheSettings.FromMinutes));
+						LoadAppointmentDataList();
+					}
+					else
+					{
+						DatabaseWarning = true;
+						DatabaseWarningMsg = "CalendarEntries NOT FOUND";
+					}
 				}
-				else
+				catch (Exception ex)
 				{
-					LoadAppointmentDataList();
+					DatabaseError = true;
+					DatabaseErrorMsg = $"Error reading database";
+					Logger.LogError(ex, $"...{DatabaseErrorMsg}");
 				}
 			}
-			catch (Exception ex)
+			else
 			{
-				DatabaseError = true;
-				DatabaseErrorMsg = $"Error reading database";
-				Logger.LogError(ex, $"...{DatabaseErrorMsg}");
+				//CachedMsg = "Data gotten from CACHE";
+				Logger.LogDebug(string.Format("... Data gotten from CACHE"));
 			}
 		}
 
+
 		private void LoadAppointmentDataList()
 		{
-			Logger.LogDebug(string.Format("Inside {0}", nameof(Index) + "!" + nameof(LoadAppointmentDataList)));
+			Logger.LogDebug(string.Format("...{0}", nameof(Index) + "!" + nameof(LoadAppointmentDataList)));
 			AppointmentDataList = new List<ReadonlyEventsData>();
+
+
 
 			string color = "";
 			try
@@ -102,8 +127,8 @@ namespace LivingMessiah.Web.Pages.Calendar
 					{
 						color = baseDateTypeSmartEnum.CalendarColor;
 					}
-					
-						AppointmentDataList.Add(new ReadonlyEventsData
+
+					AppointmentDataList.Add(new ReadonlyEventsData
 					{
 						Id = item.Id,
 						Subject = item.Descr,
@@ -114,7 +139,7 @@ namespace LivingMessiah.Web.Pages.Calendar
 						IsAllDay = true,
 						IsReadonly = true
 					}
-					);
+				);
 				}
 
 			}

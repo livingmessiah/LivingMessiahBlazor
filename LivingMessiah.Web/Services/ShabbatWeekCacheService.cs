@@ -11,13 +11,11 @@ namespace LivingMessiah.Web.Services
 	public interface IShabbatWeekCacheService
 	{
 
-		Task<IReadOnlyList<ShabbatWeekCache>> GetCurrentShabbatWeek();
-
 		// Psalms and Videos
 		Task<PsalmAndProverb> GetCurrentPsalmAndProverb();
 
 		// Parasha
-		Task<LivingMessiah.Domain.Parasha.Queries.Parasha> GetCurrentParasha();
+		Task<LivingMessiah.Domain.Parasha.Queries.Parasha> GetCurrentParasha();  // ToDo: remove this
 		//Task<IReadOnlyList<Parasha>> GetParashotByBookId(int bookId);
 
 		// Weekly Videos
@@ -48,32 +46,6 @@ namespace LivingMessiah.Web.Services
 		#endregion
 
 
-		//ToDo called by RegularVideoedEvents, but why is currentShabbatWeek returning null?
-		public async Task<IReadOnlyList<ShabbatWeekCache>> GetCurrentShabbatWeek()
-		{
-			var cacheKey = "currentShabbatWeek";
-			string msg = $"Inside { nameof(ShabbatWeekCacheService)}!{ nameof(GetCurrentShabbatWeek)}; cacheKey:{cacheKey};...";
-
-			if (!memoryCache.TryGetValue(cacheKey, out IReadOnlyList<ShabbatWeekCache> currentShabbatWeek))
-			{
-				//log.LogDebug($"{msg}; Key NOT found in cache, calling {nameof(db.GetTorahBookById)}");
-				currentShabbatWeek = null; 
-				var cacheExpiryOptions = new MemoryCacheEntryOptions
-				{
-					AbsoluteExpiration = DateTime.Now.AddMinutes(5),
-					Priority = CacheItemPriority.High,
-					SlidingExpiration = TimeSpan.FromMinutes(2)
-				};
-				memoryCache.Set(cacheKey, currentShabbatWeek, cacheExpiryOptions);
-			}
-			else
-			{
-				await Task.Delay(0);
-				//log.LogDebug($"{msg}; Key found in cache");
-			}
-			return null; // shabbatWeeksList.Where(w => w.IsCurrentShabbat = true).ToList();
-		}
-
 		public async Task<PsalmAndProverb> GetCurrentPsalmAndProverb()
 		{
 			var cacheKey = Settings.Constants.PsalmsAndProverbsCache.Key;
@@ -98,6 +70,7 @@ namespace LivingMessiah.Web.Services
 			return psalmAndProverb;
 		}
 
+		/*	*/
 		// Parasha
 		public async Task<LivingMessiah.Domain.Parasha.Queries.Parasha> GetCurrentParasha()
 		{
@@ -133,12 +106,7 @@ namespace LivingMessiah.Web.Services
 			}
 			return parasha;
 		}
-
-
-		//public async Task<IReadOnlyList<Parasha>> GetParashotByBookId(int bookId)
-		//{
-		//	return await db.GetParashotByBookId(bookId);
-		//}
+	
 
 		// Bible
 		public async Task<BibleBook> GetCurrentParashaTorahBookById(int id)

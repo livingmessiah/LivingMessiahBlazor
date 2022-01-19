@@ -1,7 +1,6 @@
 ﻿@page  "/Parasha"
 @using static LivingMessiah.Web.Links.Parasha
 @inherits BaseButtonToggleVisibility
-
 @*
 	ToDo: figure out how to make this work
 	<HebrewDate></HebrewDate>
@@ -45,6 +44,11 @@
 
 		</div>
 	</div>
+
+	@if (!String.IsNullOrEmpty(CachedMsg))
+	{
+		<p class="text-muted float-right mt-1"><small><sup>@CachedMsg</sup></small></p>
+	}
 
 </LoadingComponent>
 
@@ -95,7 +99,12 @@
 					<li><a href="@IndexPrint"><small><b>Print Version</b></small></a></li>
 				</ul>
 
-				<IndexTable IsXsOrSm="false" BookId="@Parasha.BookId"></IndexTable>
+				@if (Parasha is not null)
+				{
+					<IndexTable IsXsOrSm="false" BookId="@Parasha.BookId"></IndexTable>
+				}
+
+
 
 			</div>
 		</ChildContent>
@@ -123,42 +132,21 @@ else
 	}
 }
 
-@*<div class="d-none d-sm-block">
-		<button type="button" @onclick="HebrewMonthsStatic_ButtonClick"
-						bs-toggle-modal="instructions"
-						class="btn btn-danger btn-lg mb-4">
-			<i class="far fa-moon"></i> Hebrew Months
-		</button>
-		@if (MakeModalVisible)
-		{
-			<HebrewMonthsStatic></HebrewMonthsStatic>
-		}
-	</div>*@
-
-@*<div class="d-none d-sm-block">
-		<HebrewMonthsStatic></HebrewMonthsStatic>
-		<a href="#hebMonths" data-toggle="modal"><i class="far fa-moon"></i> Hebrew Months</a><br />
-		<a href="@LivingMessiah.Web.Links.ParashaArchive.Index">
-			<i class="@LivingMessiah.Web.Links.ParashaArchive.Icon"></i>
-			@Title
+@if (TorahTuesdayLink is not null)
+{
+	<h1 class="mt-5 mb-1">Related</h1>
+	<div class="list-group">
+		<a href="@TorahTuesdayLink.Index" title="@TorahTuesdayLink.Title @TorahTuesdayLink.HomeTitleSuffix"
+			 class="list-group-item list-group-item-warning ">
+			<i class="@TorahTuesdayLink.Icon fa-fw fa-3x" aria-hidden="true"></i>
+			<span class="home-page-xs"><b>@TorahTuesdayLink.Title</b></span>
+			<span class="float-right text-info">
+				<span class="hebrew">@TorahTuesdayLink.HomeFloatRightHebrew</span>
+			</span>
 		</a>
 	</div>
-	<div class="d-block d-sm-none">
-		<HebrewMonthsXsStatic></HebrewMonthsXsStatic>
-		<a href="#hebMonthsXs" data-toggle="modal"> Hebrew Months</a>
-	</div>*@
+}
 
-<h1 class="mt-5 mb-1">Related</h1>
-<div class="list-group">
-	<a href="@TorahTuesdayLink.Index" title="@TorahTuesdayLink.Title @TorahTuesdayLink.HomeTitleSuffix"
-		 class="list-group-item list-group-item-warning ">
-		<i class="@TorahTuesdayLink.Icon fa-fw fa-3x" aria-hidden="true"></i>
-		<span class="home-page-xs"><b>@TorahTuesdayLink.Title</b></span>
-		<span class="float-right text-info">
-			<span class="hebrew">@TorahTuesdayLink.HomeFloatRightHebrew</span>
-		</span>
-	</a>
-</div>
 
 <AlephBetFooter></AlephBetFooter>
 
