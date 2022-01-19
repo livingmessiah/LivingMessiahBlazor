@@ -1,27 +1,27 @@
 ﻿using Microsoft.AspNetCore.Components;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using LivingMessiah.Web.Services;
 using LivingMessiah.Domain;
 using System;
 using Microsoft.Extensions.Logging;
+
+using ParashaDomain = LivingMessiah.Domain.Parasha.Queries;
+using Microsoft.Extensions.Caching.Memory;
+
+using CacheSettings = LivingMessiah.Web.Settings.Constants.ParashaIndexTableTupleCache;
+using Component = LivingMessiah.Web.Components.Names;
 
 namespace LivingMessiah.Web.Pages.Parasha
 {
 	public partial class IndexTable
 	{
-		[Inject]
-		public ILogger<IndexTable> Logger { get; set; }
+		[Inject] public ILogger<IndexTable> Logger { get; set; }
+		[Inject] private LivingMessiah.Data.IShabbatWeekRepository db { get; set; }
+		[Inject] public IMemoryCache Cache { get; set; }
 
-		[Inject]
-		protected IShabbatWeekCacheService SvcCache { get; set; }
-
-		[Inject]
-		protected IShabbatWeekService Svc { get; set; }
-
-		protected IReadOnlyList<LivingMessiah.Domain.Parasha.Queries.ParashaList> ParashaList;
-		protected BibleBook Book { get; set; }
-		protected LivingMessiah.Domain.Parasha.Queries.Parasha Parasha;
+		protected IReadOnlyList<ParashaDomain.ParashaList> ParashaList;
+		protected ParashaDomain.BibleBook BibleBook;
+		protected Tuple<ParashaDomain.BibleBook, List<ParashaDomain.ParashaList>> ParashaListTuple;
 
 		[Parameter]
 		public bool IsXsOrSm { get; set; }
@@ -32,34 +32,68 @@ namespace LivingMessiah.Web.Pages.Parasha
 		protected string Colspan;
 		protected int prevGregorianYear = 0;
 
-		protected bool DatabaseError { get; set; } = false;
-		protected string DatabaseErrorMsg { get; set; }
-		protected bool DatabaseWarning = false;
-		protected string DatabaseWarningMsg { get; set; }
-
+		protected string CachedMsg { get; set; }
 		protected override async Task OnInitializedAsync()
 		{
-			Logger.LogDebug($"Inside {nameof(IndexTable)}!{nameof(OnInitializedAsync)}");
-			try
+			Logger.LogDebug(string.Format("Inside Component: {0}, Class!Method: {1}; BookId{2}"
+				, Component.ParashaIndexTable, nameof(IndexTable) + "!" + nameof(OnInitializedAsync), BookId));
+			
+			Colspan = (!IsXsOrSm) ? "8" : "6";			
+
+			CachedMsg = "";
+			ParashaListTuple = Cache.Get<Tuple<ParashaDomain.BibleBook, List<ParashaDomain.ParashaList>>>(CacheSettings.Key);
+
+			if (ParashaListTuple is null)
 			{
-				Colspan = (!IsXsOrSm) ? "8" : "6";
-				if (BookId != 0)
+				Logger.LogDebug(string.Format("...ParashaListTuple is null"));
+				try
 				{
-					ParashaList = await Svc.GetParashotByBookId(BookId);
-					Book = await SvcCache.GetCurrentParashaTorahBookById(BookId);
+					ParashaListTuple = await db.GetParashotByBookId(BookId);
+					if (ParashaListTuple is not null)
+					{
+						//CachedMsg = "Data gotten from DATABASE";
+						Logger.LogDebug(string.Format("... Data gotten from DATABASE"));
+						BibleBook = ParashaListTuple.Item1;  
+						ParashaList = ParashaListTuple.Item2;
+						Cache.Set(CacheSettings.Key, ParashaListTuple, TimeSpan.FromMinutes(CacheSettings.FromMinutes));
+					}
+					else
+					{
+						DatabaseWarning = true;
+						DatabaseWarningMsg = $"{nameof(ParashaListTuple)} NOT FOUND";
+					}
 				}
-				else
+				catch (Exception ex)
 				{
-					DatabaseWarning = true;
-					DatabaseWarningMsg = $"Book Id = 0";
+					DatabaseError = true;
+					DatabaseErrorMsg = $"Error reading database";
+					Logger.LogError(ex, string.Format("...Exception, DatabaseErrorMsg: {0}", DatabaseErrorMsg));
 				}
 			}
-			catch (System.Exception ex)
+			else
 			{
-				DatabaseError = true;
-				DatabaseErrorMsg = $"Error reading database";
-				Logger.LogError(ex, $"...{DatabaseErrorMsg}");
+				//CachedMsg = "...Attempting to extract objects from chached tuple";
+				Logger.LogDebug(string.Format("...Attempting to extract objects from chached tuple"));
+				try
+				{
+					BibleBook = ParashaListTuple.Item1;
+					ParashaList = ParashaListTuple.Item2;
+					//CachedMsg = "Data gotten from CACHE";
+					Logger.LogDebug(string.Format("... Data gotten from CACHE"));
+				}
+				catch (Exception ex)
+				{
+					DatabaseError = true;
+					DatabaseErrorMsg = $"Error reading database";
+					Logger.LogError(ex, string.Format("...Exception, DatabaseErrorMsg: {0}", DatabaseErrorMsg));
+				}
+
 			}
+
+			//Logger.LogDebug(string.Format("...BOT BibleBook {0} null, ParashaList {1} null"
+			//	, BibleBook == null ? "is" : "is NOT"
+			//	, ParashaList == null ? "is" : "is NOT"));
+
 		}
 
 		public static string CurrentReadDateTextFormat(DateTime readDate)
@@ -81,6 +115,13 @@ namespace LivingMessiah.Web.Pages.Parasha
 			string url2 = !String.IsNullOrEmpty(url) ? url : "";
 			return "https://myhebrewbible.com/Parasha/Triennial/LivingMessiah/" + id.ToString() + "?slug=" + url2;
 		}
+
+		#region ErrorHandling
+		protected bool DatabaseError { get; set; } = false;
+		protected string DatabaseErrorMsg { get; set; }
+		protected bool DatabaseWarning = false;
+		protected string DatabaseWarningMsg { get; set; }
+		#endregion
 
 	}
 }

@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using LivingMessiah.Domain;
-using LivingMessiah.Domain.Parasha.Queries;
 
 namespace LivingMessiah.Web.Services
 {
@@ -15,10 +13,6 @@ namespace LivingMessiah.Web.Services
 		Task<int> WeeklyVideoAdd(WeeklyVideoModel dto);
 		Task<int> WeeklyVideoUpdate(WeeklyVideoModel dto);
 		Task<int> WeeklyVideoDelete(int id);
-
-		// Parasha
-		Task<IReadOnlyList<LivingMessiah.Domain.Parasha.Queries.ParashaList>> GetParashotByBookId(int bookId);
-
 	}
 
 
@@ -68,14 +62,6 @@ namespace LivingMessiah.Web.Services
 		}
 		#endregion
 
-
-
-		// Parasha
-		public async Task<IReadOnlyList<LivingMessiah.Domain.Parasha.Queries.ParashaList>> GetParashotByBookId(int bookId)
-		{
-			return await db.GetParashotByBookId(bookId);
-		}
 	}
-
 }
 

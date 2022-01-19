@@ -9,6 +9,51 @@ using LivingMessiah.Domain;
 
 namespace LivingMessiah.Data
 {
+
+	public interface IShabbatWeekRepository
+	{
+		string BaseSqlDump { get; }
+
+		// Wirecast
+		Task<int> UpdateWirecastLink(int id, string wireCastLink);
+		Task<int> UpdateScratchpad(string scratchPad);
+		Task<Wirecast> GetCurrentWirecast();
+		Task<ScratchPad> GetScratchPadWireCast();
+
+		// Psalms and Proverbs
+		Task<PsalmAndProverb> GetCurrentPsalmAndProverb();
+		Task<List<vwPsalmsAndProverbs>> GetPsalmsAndProverbsList();
+
+		// Weekly Videos
+		Task<IReadOnlyList<vwCurrentWeeklyVideo>> GetCurrentWeeklyVideos(int daysOld);
+		Task<IReadOnlyList<WeeklyVideoIndex>> GetTopWeeklyVideos(int top);
+		Task<int> WeeklyVideoAdd(WeeklyVideoModel dto);
+		Task<int> WeeklyVideoUpdate(WeeklyVideoModel dto);
+		Task<int> WeeklyVideoDelete(int id);
+
+		//Parasha
+		Task<LivingMessiah.Domain.Parasha.Queries.Parasha> GetCurrentParashaAndChildren();
+
+		Task<Tuple<Domain.Parasha.Queries.BibleBook, List<Domain.Parasha.Queries.ParashaList>>> GetParashotByBookId(int bookId);
+
+
+		Task<Tuple<Domain.Parasha.Queries.BibleBook, List<Domain.Parasha.Queries.ParashaList>>> GetParashotForCurrentBook();
+		#region ToDo: Move somewhere else
+
+		// ToDo Why are these here? It needs to be pulled out of here and ISukkotAdminRepository
+		// and put into something like LivingMessiahAdmin
+		Task<int> LogErrorTest();
+		Task<List<zvwErrorLog>> GetzvwErrorLog();
+		Task<int> EmptyErrorLog();
+
+
+		// ToDo does this go with LivingMessiahAdmin as well
+		Task<int> UpdateContactSukkotInviteDate(int id);
+		Task<List<Download>> GetDownloads(bool selectAll, bool testEmails);
+		#endregion
+	}
+
+
 	public class ShabbatWeekRepository : BaseRepositoryAsync, IShabbatWeekRepository
 	{
 		public ShabbatWeekRepository(IConfiguration config, ILogger<ShabbatWeekRepository> logger) : base(config, logger)
@@ -331,32 +376,9 @@ WHERE Id = @Id
 		}
 		#endregion
 
-		#region Bible
-
-		//ToDo: Deprecated, see GetCurrentParashaAndChildren
-		//Not True: used by Services\ShabbatWeekCacheService!GetCurrentParashaTorahBookById 
-		//  via Book = await SvcCache.GetCurrentParashaTorahBookById(BookId); inside Pages\Parasha\IndexTable.razor.cs
-		public async Task<BibleBook> GetTorahBookById(int id)
-		{
-			base.Parms = new DynamicParameters(new { Id = id });
-			base.Sql = $@"
-SELECT
-Id, Abrv, Title AS EnglishTitle, HebrewTitle, HebrewName 
-FROM Bible.Book
-WHERE Id = @Id
-";
-			return await WithConnectionAsync(async connection =>
-			{
-				var rows = await connection.QueryAsync<BibleBook>(sql: base.Sql, param: base.Parms);
-				return rows.SingleOrDefault();
-			});
-		}
-
-		#endregion
-
 		#region Parasha
 
-		public async Task<LivingMessiah.Domain.Parasha.Queries.Parasha> GetCurrentParashaAndChildren()
+		public async Task<Domain.Parasha.Queries.Parasha> GetCurrentParashaAndChildren()
 		{
 			base.Sql = $@"
 SELECT 
@@ -389,12 +411,18 @@ FROM Bible.Book
 
 		}
 
-
-		/*		*/
-		public async Task<IReadOnlyList<Domain.Parasha.Queries.ParashaList>> GetParashotByBookId(int bookId)
+		public async Task<Tuple<Domain.Parasha.Queries.BibleBook,
+						List<Domain.Parasha.Queries.ParashaList>>> GetParashotByBookId(int bookId)
 		{
 			base.Parms = new DynamicParameters(new { BookId = bookId });
 			base.Sql = $@"
+--DECLARE @BookId int=1
+
+SELECT
+Id, Abrv, Title AS EnglishTitle, HebrewTitle, HebrewName 
+FROM Bible.Book
+WHERE Id = @BookId
+
 SELECT
 Id
 , ROW_NUMBER() OVER(PARTITION BY BookId ORDER BY Id ) AS RowCntByBookId
@@ -402,24 +430,25 @@ Id
 , NameUrl, AhavtaURL, Meaning, IsNewBook, Haftorah, Brit
 , ShabbatDate
 , BaseParashaUrl, CurrentParashaUrl
---, ShabbatWeekId
 FROM Bible.vwParasha
 WHERE BookId = @BookId
 ORDER BY Id
 ";
+
 			return await WithConnectionAsync(async connection =>
 			{
-				var rows = await connection.QueryAsync<LivingMessiah.Domain.Parasha.Queries.ParashaList>(sql: base.Sql, param: base.Parms);
-				return rows.ToList();
+				var multi = await connection.QueryMultipleAsync(sql: base.Sql, param: base.Parms);
+				var book = await multi.ReadAsync<Domain.Parasha.Queries.BibleBook>(); 
+				var parashot = await multi.ReadAsync<Domain.Parasha.Queries.ParashaList>();
+				return new Tuple<Domain.Parasha.Queries.BibleBook, List<Domain.Parasha.Queries.ParashaList>>(book.SingleOrDefault(), parashot.ToList());
 			});
+
 		}
 
-		
 		public async Task<Tuple<Domain.Parasha.Queries.BibleBook, 
 						List<Domain.Parasha.Queries.ParashaList>>> GetParashotForCurrentBook()
 		{
 			base.Sql = $@"
-
 SELECT Id, Abrv, Title AS EnglishTitle, HebrewTitle, HebrewName 
 FROM Bible.Book
 WHERE Id = (SELECT BookId FROM Bible.vwParasha WHERE ShabbatDate = dbo.udfGetNextShabbatDate())
@@ -431,7 +460,6 @@ Id
 , NameUrl, AhavtaURL, Meaning, IsNewBook, Haftorah, Brit
 , ShabbatDate
 , BaseParashaUrl, CurrentParashaUrl
---, ShabbatWeekId
 FROM Bible.vwParasha
 WHERE BookId = (SELECT BookId FROM Bible.vwParasha WHERE ShabbatDate = dbo.udfGetNextShabbatDate())
 ORDER BY Id
@@ -440,7 +468,7 @@ ORDER BY Id
 			return await WithConnectionAsync(async connection =>
 			{
 				var multi = await connection.QueryMultipleAsync(sql: base.Sql);
-				var book = await multi.ReadAsync<Domain.Parasha.Queries.BibleBook>(); //.SingleOrDefault();
+				var book = await multi.ReadAsync<Domain.Parasha.Queries.BibleBook>();
 				var parashot = await multi.ReadAsync<Domain.Parasha.Queries.ParashaList>();
 			return new Tuple<Domain.Parasha.Queries.BibleBook, List<Domain.Parasha.Queries.ParashaList>>(book.SingleOrDefault(), parashot.ToList());
 			});

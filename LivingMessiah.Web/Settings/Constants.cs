@@ -36,14 +36,13 @@
 			public const string Item1BibleBook = "ParashaPrintTupleCacheBibleBook";
 			public const string Item2ParashaList = "ParashaPrintTupleCacheParashaList";
 		}
-
 	}
 
-	public static class ParashaTorahBookCache
+
+	public static class ParashaIndexTableTupleCache
 	{
-		public const string Key = "parashaTorahBook";
-		public const int AbsoluteExpirationInMinutes = 15;
-		public const int SlidingExpirationInMinutes = 10;
+		public const string Key = "ParashaIndexTableTupleCache";
+		public const int FromMinutes = 1; // 40;
 	}
 
 	public static class CurrentWeeklyVideosCache

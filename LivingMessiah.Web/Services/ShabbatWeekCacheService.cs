@@ -14,16 +14,9 @@ namespace LivingMessiah.Web.Services
 		// Psalms and Videos
 		Task<PsalmAndProverb> GetCurrentPsalmAndProverb();
 
-		// Parasha
-		Task<LivingMessiah.Domain.Parasha.Queries.Parasha> GetCurrentParasha();  // ToDo: remove this
-		//Task<IReadOnlyList<Parasha>> GetParashotByBookId(int bookId);
-
 		// Weekly Videos
 		Task<IReadOnlyList<vwCurrentWeeklyVideo>> GetCurrentWeeklyVideos();
 		Task<vwCurrentWeeklyVideo> GetCurrentWeeklyVideoByTypeId(int typeId);
-
-		// Bible
-		Task<BibleBook> GetCurrentParashaTorahBookById(int id);
 	}
 
 	public class ShabbatWeekCacheService : IShabbatWeekCacheService
@@ -68,69 +61,6 @@ namespace LivingMessiah.Web.Services
 				//log.LogDebug($"{msg}; Key found in cache");
 			}
 			return psalmAndProverb;
-		}
-
-		/*	*/
-		// Parasha
-		public async Task<LivingMessiah.Domain.Parasha.Queries.Parasha> GetCurrentParasha()
-		{
-
-			var cacheKey = Settings.Constants.ParashaCache.Key;
-
-			log.LogDebug($"Inside {nameof(ShabbatWeekCacheService)}!{nameof(GetCurrentParasha)}; cacheKey:{cacheKey}");
-			if (!memoryCache.TryGetValue(cacheKey, out LivingMessiah.Domain.Parasha.Queries.Parasha parasha))
-			{
-				log.LogDebug($"...Key NOT found in cache, calling {nameof(db.GetCurrentParashaAndChildren)}");
-				parasha = await db.GetCurrentParashaAndChildren();
-				log.LogDebug($"...After calling {nameof(db.GetCurrentParashaAndChildren)}; parasha: {parasha}");
-
-
-				if (parasha != null && parasha.Id != 0)
-				{
-					var cacheExpiryOptions = new MemoryCacheEntryOptions
-					{
-						AbsoluteExpiration = DateTime.Now.AddMinutes(Settings.Constants.ParashaCache.AbsoluteExpirationInMinutes),
-						Priority = CacheItemPriority.High,
-						SlidingExpiration = TimeSpan.FromMinutes(Settings.Constants.ParashaCache.SlidingExpirationInMinutes)
-					};
-					memoryCache.Set(cacheKey, parasha, cacheExpiryOptions);
-				}
-				else
-				{
-					log.LogInformation($"...parasha.Id == 0 WHICH IS WRONG!!!, so NOT saving to memoryCache. See 779-Bug-...");
-				}
-			}
-			else
-			{
-				log.LogDebug($"...Key found in cache");
-			}
-			return parasha;
-		}
-	
-
-		// Bible
-		public async Task<BibleBook> GetCurrentParashaTorahBookById(int id)
-		{
-			var cacheKey = Settings.Constants.ParashaTorahBookCache.Key;
-			string msg = $"Inside { nameof(ShabbatWeekCacheService)}!{ nameof(GetCurrentParashaTorahBookById)}; cacheKey:{cacheKey}; id: {id};...";
-
-			if (!memoryCache.TryGetValue(cacheKey, out BibleBook book))
-			{
-				//log.LogDebug($"{msg}; Key NOT found in cache, calling {nameof(db.GetTorahBookById)}");
-				book = await db.GetTorahBookById(id);
-				var cacheExpiryOptions = new MemoryCacheEntryOptions
-				{
-					AbsoluteExpiration = DateTime.Now.AddMinutes(Settings.Constants.ParashaTorahBookCache.AbsoluteExpirationInMinutes),
-					Priority = CacheItemPriority.High,
-					SlidingExpiration = TimeSpan.FromMinutes(Settings.Constants.ParashaTorahBookCache.SlidingExpirationInMinutes)
-				};
-				memoryCache.Set(cacheKey, book, cacheExpiryOptions);
-			}
-			else
-			{
-				//log.LogDebug($"{msg}; Key found in cache");
-			}
-			return book;
 		}
 
 		// Weekly Videos
