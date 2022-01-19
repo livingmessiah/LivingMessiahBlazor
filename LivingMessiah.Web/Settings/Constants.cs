@@ -42,7 +42,7 @@
 	public static class ParashaIndexTableTupleCache
 	{
 		public const string Key = "ParashaIndexTableTupleCache";
-		public const int FromMinutes = 1; // 40;
+		public const int FromMinutes = 40; 
 	}
 
 	public static class CurrentWeeklyVideosCache

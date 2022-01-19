@@ -1,20 +1,21 @@
 ﻿@page  "/Parasha"
-@using static LivingMessiah.Web.Links.Parasha
+@using Page = LivingMessiah.Web.Links.Parasha
 @inherits BaseButtonToggleVisibility
 @*
 	ToDo: figure out how to make this work
 	<HebrewDate></HebrewDate>
 *@
 
-<PageHeader Icon="@Icon"
-						Title="@Title"
-						AddBorderBottom="false" />
+<div class="pb-1 mt-4 mb-5">
+	<h2><i class="@Page.Icon"></i> @Page.Title</h2>
+</div>
+
 
 <LoadingComponent IsLoading="Parasha==null && DatabaseWarning==false">
 	<div class="d-md-none">
 		<div class="card bg-light text-center">
 			<div class="card-header">
-				<h3> <i class="@IconCurrent"></i> Current Parasha <sup><small># @Parasha.TriNum</small></sup></h3>
+				<h3> <i class="@Page.Icon"></i> Current Parasha <sup><small># @Parasha.TriNum</small></sup></h3>
 			</div>
 
 			<div class="card-body">
@@ -31,7 +32,7 @@
 	<div class="d-none d-md-block">
 		<div class="card bg-light">
 			<div class="card-header text-center">
-				<h3> <i class="@IconCurrent"></i> Current Parasha</h3>
+				<h3> <i class="@Page.Icon"></i> Current Parasha</h3>
 			</div>
 
 			<div class="card-body">
@@ -96,7 +97,7 @@
 					We are currently studying the Torah on a three year cycle which allows us more time to delve deeper into His Word.
 				</h6>
 				<ul class="list-inline">
-					<li><a href="@IndexPrint"><small><b>Print Version</b></small></a></li>
+					<li><a href="@Page.IndexPrint"><small><b>Print Version</b></small></a></li>
 				</ul>
 
 				@if (Parasha is not null)
