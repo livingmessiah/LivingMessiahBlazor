@@ -218,6 +218,7 @@ ORDER BY ShabbatWeekId
 		{
 			base.Parms = new DynamicParameters(new { DaysOld = daysOld });
 			base.Sql = $@"
+--Declare @DaysOld int=12
 SELECT
 Id
 , ShabbatWeekId

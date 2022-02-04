@@ -5,7 +5,7 @@
 	Here is a listing of some of the more common questions that we are asked along with our responses.
 	This is a "work in progress" and changes as we receive different questions.
 	Please feel free to ask us a question and if it is of common interest to others, we'll post both the question and our response in this column.
-	You may submit your questions via email to <a href="mailto:info@livingmessiah.com">info@livingmessiah.com </a>
+	You may submit your questions via email to @((MarkupString)AnchorEmail)
 </p>
 <br />
 
@@ -22,7 +22,7 @@
 				This happens on the Spring Equinox, when the length of the day equals the length of the night.
 				This occurs around March 21 of each year.
 				So we began counting the days of this year on the first new moon after the Spring Equinox which places the Holy Days later than the regular Jewish calendar.
-				<a href="FurtherStudies"
+				<a href="@LivingMessiah.Web.Links.FurtherStudies.Index"
 					 class="btn-primary btn-sm ">
 					Learn More...
 				</a>
@@ -91,5 +91,8 @@
 
 
 @code {
+	const string EmailSubject = "?Subject=Questions";
+	protected readonly MarkupString AnchorEmail =
+		new MarkupString($"<a href='{Address.EmailHref()}{EmailSubject}'>{Address.Email()}</a>");
 
 }

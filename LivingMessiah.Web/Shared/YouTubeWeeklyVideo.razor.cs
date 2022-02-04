@@ -17,31 +17,49 @@ namespace LivingMessiah.Web.Shared
 		[Parameter]
 		public WeeklyVideoType WeeklyVideoType { get; set; }
 
-		protected bool LoadFailed = false;
 		public vwCurrentWeeklyVideo CurrentWeeklyVideo;
 
 		protected override async Task OnInitializedAsync()
 		{
 			try
 			{
-				LoadFailed = false;
-				Logger.LogDebug($"Inside {nameof(YouTubeWeeklyVideo)}!{nameof(OnInitializedAsync)}; weeklyVideoType:{(int)WeeklyVideoType}");
-
+				Logger.LogDebug(string.Format("Inside {0} WeeklyVideoType:{1}", nameof(YouTubeWeeklyVideo) + "!" + nameof(OnInitialized), (int)WeeklyVideoType));
 				CurrentWeeklyVideo = await svc.GetCurrentWeeklyVideoByTypeId((int)WeeklyVideoType);
 
 				if (CurrentWeeklyVideo == null)
 				{
-					LoadFailed = true;
+					DatabaseWarning = true;
+					DatabaseWarningMsg = string.Format("{0} NOT FOUND, WeeklyVideoType:{1}", nameof(CurrentWeeklyVideo), (int)WeeklyVideoType);
 				}
 			}
 
 			catch (System.Exception ex)
 			{
-				LoadFailed = true;
-				Logger.LogError(ex, $"<br /><br /> {nameof(OnInitializedAsync)}");
+				DatabaseError = true;
+				DatabaseErrorMsg = $"Error reading database";
+				Logger.LogError(ex, string.Format("...Exception, DatabaseErrorMsg: {0}", DatabaseErrorMsg));
 			}
 
 		}
+
+		#region ErrorHandling
+		private void InitializeErrorHandling()
+		{
+			DatabaseInformationMsg = "";
+			DatabaseInformation = false;
+			DatabaseWarningMsg = "";
+			DatabaseWarning = false;
+			DatabaseErrorMsg = "";
+			DatabaseError = false;
+		}
+
+		protected bool DatabaseInformation = false;
+		protected string DatabaseInformationMsg { get; set; }
+		protected bool DatabaseWarning = false;
+		protected string DatabaseWarningMsg { get; set; }
+		protected bool DatabaseError { get; set; } // = false; handled by InitializeErrorHandling
+		protected string DatabaseErrorMsg { get; set; }
+		#endregion
 
 	}
 }
