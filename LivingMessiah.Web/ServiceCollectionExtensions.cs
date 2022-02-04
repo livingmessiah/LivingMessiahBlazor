@@ -9,7 +9,6 @@ using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Sukkot.Web.Service;
 using SukkotApi.Data;
 using LivingMessiah.Web.Services;
-using LivingMessiah.Web.Data;
 using LivingMessiah.Data;
 
 using LivingMessiah.Web.Pages.SukkotAdmin.Donations.Data;
@@ -66,12 +65,10 @@ namespace LivingMessiah.Web
 
 				.AddTransient<ISukkotRepository, SukkotRepository>()
 				.AddTransient<ISukkotAdminRepository, SukkotAdminRepository>()
-				.AddSingleton<ILiturgyService, LiturgyService>()
 				.AddSingleton<ISmartEnumServiceForSfDropDownList, SmartEnumServiceForSfDropDownList>();
 
 			return services;
 		}
-		//.AddSingleton<ILiturgyService, UpcomingEventsService>();  // ToDo: Delete?
 
 		public static IServiceCollection AddCustomAuthentication(
 				this IServiceCollection services,

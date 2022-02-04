@@ -1,10 +1,11 @@
 ﻿@page
 @using Microsoft.AspNetCore.Authentication;
 @using Microsoft.AspNetCore.Mvc;
+@using static LivingMessiah.Web.Services.Auth0
 
 @functions {
 	public ChallengeResult OnGet(string returnUrl = "/")
 	{
-		return Challenge(new AuthenticationProperties() { RedirectUri = returnUrl }, "Auth0");
+		return Challenge(new AuthenticationProperties() { RedirectUri = returnUrl }, SchemeName);
 	}
 }

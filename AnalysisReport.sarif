@@ -32,7 +32,7 @@
         {
           "ruleId": "UA105",
           "message": {
-            "text": "Package Syncfusion.Blazor.Calendars, Version=19.3.0.55 needs to be deleted."
+            "text": "Package Syncfusion.Blazor.Calendars, Version=19.4.0.48 needs to be deleted."
           },
           "locations": [
             {
@@ -48,7 +48,7 @@
         {
           "ruleId": "UA105",
           "message": {
-            "text": "Package Syncfusion.Blazor.DropDowns, Version=19.3.0.55 needs to be deleted."
+            "text": "Package Syncfusion.Blazor.DropDowns, Version=19.4.0.48 needs to be deleted."
           },
           "locations": [
             {
@@ -64,7 +64,7 @@
         {
           "ruleId": "UA105",
           "message": {
-            "text": "Package Syncfusion.Blazor.Grid, Version=19.3.0.55 needs to be deleted."
+            "text": "Package Syncfusion.Blazor.Grid, Version=19.4.0.48 needs to be deleted."
           },
           "locations": [
             {
@@ -80,7 +80,7 @@
         {
           "ruleId": "UA105",
           "message": {
-            "text": "Package Syncfusion.Blazor.Navigations, Version=19.3.0.55 needs to be deleted."
+            "text": "Package Syncfusion.Blazor.Navigations, Version=19.4.0.48 needs to be deleted."
           },
           "locations": [
             {

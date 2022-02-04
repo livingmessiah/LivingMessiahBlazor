@@ -1,6 +1,4 @@
-﻿@using LivingMessiah.RazorClassLibrary
-
-@inherits BaseSection
+﻿@inherits BaseSection
 
 @if (!LoadQuickly)
 {
@@ -19,14 +17,14 @@
 			@if (IsCollapsed)
 			{
 				<Button @onclick="Collapsed_ButtonClick"
-								class="btn-primary btn-sm  float-right">
+						class="btn-primary btn-sm  float-right">
 					Detail <i class='fas fa-chevron-down'></i>
 				</Button>
 			}
 			else
 			{
 				<Button @onclick="Collapsed_ButtonClick"
-								class="btn-primary btn-sm float-right">
+						class="btn-primary btn-sm float-right">
 					Hide <i class='fas fa-chevron-up'></i>
 				</Button>
 
@@ -41,14 +39,4 @@
 
 </div>
 
-@if (!ShowCarousel)
-{
-	<div class="mt-3">
-		<Carousel imageset="@AssetImages" CssClass="col-12"></Carousel>
-	</div>
 
-}
-else
-{
-	<p class="text-black-50 float-lg-right"><small>Carousel of images not shown. <b>ToDo:</b> add text instead</small></p>
-}

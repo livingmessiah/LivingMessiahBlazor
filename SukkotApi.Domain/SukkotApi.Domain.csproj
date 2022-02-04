@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="Ardalis.SmartEnum" Version="2.0.1" />
+    <PackageReference Include="Microsoft.DotNet.UpgradeAssistant.Extensions.Default.Analyzers" Version="0.3.261602" />
   </ItemGroup>
 
 </Project>
