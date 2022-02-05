@@ -1,5 +1,8 @@
 ﻿@page "/account/profile"
 
+@using Page = LivingMessiah.Web.Links.Account
+<PageTitle>@Page.TitleProfile</PageTitle>
+
 <h3><i class="fab fa-superpowers"></i> User Claims</h3>
 
 <button class="btn btn-lg btn-outline-primary my-3" @onclick="GetClaimsPrincipalData">

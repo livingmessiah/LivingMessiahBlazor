@@ -1,8 +1,9 @@
 ﻿@page "/"
+@using Microsoft.AspNetCore.Components.Web
 @namespace LivingMessiah.Web.Pages
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
-    Layout = null;
+	Layout = null;
 }
 
 <!DOCTYPE html>
@@ -20,10 +21,10 @@
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
 				integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay"
 				crossorigin="anonymous">
+	<component type="typeof(HeadOutlet)" render-mode="ServerPrerendered" />
 </head>
 <body>
 	<component type="typeof(App)" render-mode="ServerPrerendered" />
-
 	<div id="blazor-error-ui">
 		<environment include="Staging,Production">
 			An error has occurred. This application may no longer respond until reloaded.
@@ -36,9 +37,6 @@
 	</div>
 
 	<script src="_framework/blazor.server.js"></script>
-
-	@*<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-	<script src="~/lib/font-awesome/js/all.min.js"></script>*@
 
 </body>
 </html>

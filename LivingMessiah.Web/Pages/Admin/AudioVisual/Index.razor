@@ -4,6 +4,8 @@
 @using Page = LivingMessiah.Web.Links.WeeklyVideosEditGrid
 @using static LivingMessiah.Web.Services.Auth0
 
+<PageTitle>@Page.Title</PageTitle>
+
 <div class="pb-2 mt-4 mb-2 border-bottom">
 	<h2><i class="@Icon"></i> @Title</h2>
 </div>
@@ -45,11 +47,11 @@
 		</li>
 
 		<li class="list-group-item">
-			<a href="@LivingMessiah.Web.Links.Wirecast.Edit"
+			<a href="@LivingMessiah.Web.Links.Wirecast.Edit.Page"
 				 title="@LivingMessiah.Web.Links.Wirecast.Title"
 				 class="list-group-item list-group-item-warning">
 				<b>@LivingMessiah.Web.Links.Wirecast.Title</b>
-				<i class="@LivingMessiah.Web.Links.Wirecast.IconEdit"></i>
+				<i class="@LivingMessiah.Web.Links.Wirecast.Edit.Icon"></i>
 			</a>
 		</li>
 
