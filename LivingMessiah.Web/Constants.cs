@@ -1,4 +1,6 @@
-﻿namespace LivingMessiah.Web
+﻿using Microsoft.AspNetCore.Components;
+
+namespace LivingMessiah.Web
 {
 	public static class DateFormat
 	{
@@ -128,14 +130,21 @@
 		public static string Zip() { return "85201"; }
 		public static string LatLong() { return "33.415833, -111.836272"; }
 		public static string Phone() { return "555.555.1212"; }
-		public static string Email() { return "info@livingmessiah.com"; }
-		public static string EmailHref() { return "mailto:info@livingmessiah.com"; }
+	}
 
-
-		public static string EmailAnchor()
+	public static class Emails
+	{
+		public static class Donations
 		{
-			return $"<a href='{EmailHref()}'>{Email()}</a>";
-		}	
+			public static string Email() { return "donations@livingmessiah.com"; }
+		}
+
+		public static class Info
+		{
+			public static string Email() { return "info@livingmessiah.com"; }
+			public static string Subject = "?Subject=Questions";
+		}
+
 	}
 
 	/*

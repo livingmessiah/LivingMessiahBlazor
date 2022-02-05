@@ -1,5 +1,11 @@
 ﻿@page "/HealThySelf"
 
+@using Page = LivingMessiah.Web.Links.ImportantLinks
+<PageTitle>@Page.HealThySelf.Title</PageTitle>
+<div class="pb-2 mt-4 mb-2 border-bottom">
+	<h2><i class="@Page.HealThySelf.Icon"></i> @Page.HealThySelf.Title</h2>
+</div>
+
 <PhysicianHealThyself />
 
 @code {

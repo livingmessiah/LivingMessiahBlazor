@@ -2,10 +2,12 @@
 @using Microsoft.AspNetCore.Hosting
 @using Microsoft.Extensions.Hosting
 @using static LivingMessiah.Web.Services.Auth0
-@using static LivingMessiah.Web.Links.DashBoard
+@using Page = LivingMessiah.Web.Links.DashBoard
+
+<PageTitle>@Page.Title</PageTitle>
 
 <div class="pb-2 mt-4 mb-2 border-bottom">
-	<h2><i class="@Icon"></i> @Title</h2>
+	<h2><i class="@Page.Icon"></i> @Page.Title</h2>
 </div>
 
 @inject IWebHostEnvironment Env
@@ -50,7 +52,7 @@
 
 	<ul class="list-group list-group-flush">
 		<li class="list-group-item">
-			<a href="@FontAwesome"
+			<a href="@Page.FontAwesome"
 				 title="Font Awesome" class="list-group-item list-group-item-warning">
 				<b>FontAwesome</b>
 				<i class="fas fa-chevron-right"></i>
@@ -58,7 +60,7 @@
 		</li>
 
 		<li class="list-group-item">
-			<a href="@PerformanceCompliance"
+			<a href="@Page.PerformanceCompliance"
 				 title="Performance Compliance" class="list-group-item list-group-item-warning">
 				<b>Performance Compliance</b>
 				<i class="fas fa-chevron-right"></i>
@@ -74,10 +76,10 @@
 		</li>
 
 		<li class="list-group-item">
-			<a href="@Routes"
-				 title="@RoutesTitle" class="list-group-item list-group-item-warning">
-				<i class="@RoutesIcon"></i>
-				<b>@RoutesTitle</b>
+			<a href="@Page.Routes"
+				 title="@Page.RoutesTitle" class="list-group-item list-group-item-warning">
+				<i class="@Page.RoutesIcon"></i>
+				<b>@Page.RoutesTitle</b>
 				<i class="fas fa-chevron-right"></i>
 			</a>
 		</li>

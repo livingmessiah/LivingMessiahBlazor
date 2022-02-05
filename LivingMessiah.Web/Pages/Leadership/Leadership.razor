@@ -1,5 +1,7 @@
 ﻿@page "/Leadership"
-@using static LivingMessiah.Web.Links.Leadership
+
+@using Page = LivingMessiah.Web.Links.Leadership
+<PageTitle>@Page.Title</PageTitle>
 
 <Header></Header>
 
@@ -45,7 +47,7 @@
 
 	<div class="row">
 		<div class="col-sm-10">
-			<div id="@Fragments.Leadership" class="row">
+			<div id="@Page.Fragments.Leadership" class="row">
 				<hr class="warning" />
 				<ElderQualifications></ElderQualifications>
 			</div>

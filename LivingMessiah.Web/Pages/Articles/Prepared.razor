@@ -1,11 +1,13 @@
 ﻿@page "/articles/Prepared"
 
-@using static LivingMessiah.Web.Links.Articles.Prepared
+@using Page = LivingMessiah.Web.Links.Articles
 
-<BreadCrumbs Href="/Articles" 
-						 ParentTitle="Articles" 
-						 Title="@Title" 
-						 Icon="@Icon">
+<PageTitle>@Page.Prepared.Title</PageTitle>
+
+<BreadCrumbs Href="@Page.Index" 
+						 ParentTitle="@Page.Title" 
+						 Title="@Page.Prepared.Title" 
+						 Icon="@Page.Prepared.Icon">
 </BreadCrumbs>
 
 <h5>A Thought on Preparing</h5>

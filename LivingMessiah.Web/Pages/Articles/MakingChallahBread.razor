@@ -1,11 +1,12 @@
 ﻿@page "/articles/MakingChallahBread"
+@using Page = LivingMessiah.Web.Links.Articles
 
-@using static LivingMessiah.Web.Links.Articles.MakingChallahBread
+<PageTitle>@Page.MakingChallahBread.Title</PageTitle>
 
-<BreadCrumbs Href="/Articles" 
-						 ParentTitle="Articles" 
-						 Title="@Title" 
-						 Icon="@Icon">
+<BreadCrumbs Href="@Page.Index" 
+						 ParentTitle="@Page.Title" 
+						 Title="@Page.MakingChallahBread.Title" 
+						 Icon="@Page.MakingChallahBread.Icon">
 </BreadCrumbs>
 
 <div class="row">

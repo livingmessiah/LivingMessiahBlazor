@@ -1,7 +1,9 @@
 ﻿@page "/About"
-@using static LivingMessiah.Web.Links.About
 
-<h2><i class="@Icon"></i> @Title</h2>
+@using Page = LivingMessiah.Web.Links.About
+<PageTitle>@Page.Title</PageTitle>
+
+<h2><i class="@Page.Icon"></i> @Page.Title</h2>
 
 <StatementOfFaith></StatementOfFaith>
 <VisionStatement></VisionStatement>

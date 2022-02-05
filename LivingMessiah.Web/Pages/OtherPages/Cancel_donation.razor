@@ -1,8 +1,14 @@
 ﻿@page "/cancel_donation.html"
-@using static LivingMessiah.Web.Links.PayPal.CancelDonation
+@*
+	ToDo This doesnt work
+	https://livingmessiah.com/cancel_donation.html  This livingmessiah.com page can’t be found
+	                   page "/cancel_donation.html"
+*@
+@using Page = LivingMessiah.Web.Links.PayPal
+<PageTitle>@Page.CancelDonation.Title</PageTitle>
 
 <div class="pb-2 mt-4 mb-2 border-bottom">
-	<h1><span class="text-warning @Icon"></span> @Title</h1>
+	<h1><span class="text-warning @Page.CancelDonation.Icon"></span> @Page.CancelDonation.Title</h1>
 </div>
 
 <div id="content">
@@ -12,7 +18,7 @@
 			<p>
 				It appears that your donation transaction was not completed.  If you changed your mind, that's perfectly fine.
 				However, if you ran into some other difficulty, feel free to contact us and we will work to correct the problem.
-				You can email us at <a href="mailto:donations@livingmessiah.com">donations@livingmessiah.com</a>.
+				You can email us at @((MarkupString)AnchorEmail).
 			</p>
 			<p>In any case, we appreciate your interest in supporting our ministry.</p>
 			<br>
@@ -21,3 +27,10 @@
 </div>
 <!-- end #content -->
 <h3>cancel_donation</h3>
+
+@code {
+	protected readonly MarkupString AnchorEmail = 
+		new MarkupString($"<a href='mailto:{Emails.Donations.Email()}'>{Emails.Donations.Email()}</a>");
+}
+
+				

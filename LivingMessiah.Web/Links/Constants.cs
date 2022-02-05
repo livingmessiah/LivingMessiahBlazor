@@ -172,7 +172,7 @@
 	public static class Home
 	{
 		public const string Index = "/";
-		//public const string Title = "Home";
+		public const string Title = "Home | LMM";
 		//public const string Icon = "fas fa-home";
 		public const string Error = "/Error";
 	}
@@ -182,6 +182,13 @@
 		public const string Index = "/ImportantLinks";
 		public const string Title = "External Links";
 		public const string Icon = "fas fa-external-link-square-alt";
+
+		public static class HealThySelf
+		{
+			public const string Index = "/HealThySelf";
+			public const string Title = "Heal Thy Self!";
+			public const string Icon = "fas fa-heartbeat"; //
+		}
 	}
 
 	public static class IndepthStudy

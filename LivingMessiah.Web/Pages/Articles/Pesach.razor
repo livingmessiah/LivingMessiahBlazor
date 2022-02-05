@@ -1,11 +1,15 @@
 ﻿@page "/articles/pesach"
-@using static LivingMessiah.Web.Links.Articles.Pesach
 
-<BreadCrumbs Href="/Articles"
-						 ParentTitle="Articles"
-						 Title="@PesachTitle"
-						 Icon="@Icon">
+@using Page = LivingMessiah.Web.Links.Articles
+
+<PageTitle>@PesachTitle</PageTitle>
+
+<BreadCrumbs Href="@Page.Index" 
+						 ParentTitle="@Page.Title" 
+						 Title="@PesachTitle" 
+						 Icon="@Page.Pesach.Icon">
 </BreadCrumbs>
+
 
 @* ToDo: This image used to be above the h2 Title *@
 

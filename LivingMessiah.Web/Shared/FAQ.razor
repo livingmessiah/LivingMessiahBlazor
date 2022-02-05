@@ -88,11 +88,7 @@
 	</li>
 </ul>
 
-
-
 @code {
-	const string EmailSubject = "?Subject=Questions";
-	protected readonly MarkupString AnchorEmail =
-		new MarkupString($"<a href='{Address.EmailHref()}{EmailSubject}'>{Address.Email()}</a>");
-
+		protected readonly MarkupString AnchorEmail =
+			new MarkupString($"<a href='mailto:{Emails.Info.Email()}{Emails.Info.Subject}'>{Emails.Info.Email()}</a>");
 }

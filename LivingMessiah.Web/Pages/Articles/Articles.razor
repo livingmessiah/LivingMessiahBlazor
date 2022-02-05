@@ -1,9 +1,11 @@
 ﻿@page "/Articles"
-@using static LivingMessiah.Web.Links.Articles
+@using Page = LivingMessiah.Web.Links.Articles
+
+<PageTitle>@Page.Title</PageTitle>
 
 @*	border-bottom*@
 <div class="pb-2 mt-4 mb-2">
-	<h2><span class="text-warning @Icon"></span> @Title</h2>
+	<h2><span class="text-warning @Page.Icon"></span> @Page.Title</h2>
 </div>
 
 <div class="list-group">

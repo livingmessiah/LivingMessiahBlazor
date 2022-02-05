@@ -1,8 +1,11 @@
 ﻿@page "/AboutUs"
-@using static LivingMessiah.Web.Links.AboutUs
+
+@using Page = LivingMessiah.Web.Links.AboutUs
+<PageTitle>@Page.Title</PageTitle>
+@*<h2><i class="@Page.Icon"></i> @Page.Title</h2>*@
 
 <img src='@Blobs.UrlOther("about-us-1-1024-385.jpeg")'
-		 alt="@Descr" class="img-fluid rounded mt-3" />
+		 alt="@Page.Descr" class="img-fluid rounded mt-3" />
 
 <div class="card border-primary mb-3">
 

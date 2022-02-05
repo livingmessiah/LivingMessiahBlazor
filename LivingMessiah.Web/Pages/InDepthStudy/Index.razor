@@ -1,7 +1,11 @@
 ﻿@page "/InDepthStudy"
-@using static LivingMessiah.Web.Links.IndepthStudy
+@using Page = LivingMessiah.Web.Links.IndepthStudy
+<PageTitle>@Page.Title</PageTitle>
 
-<PageHeader Icon="@Icon" Title="@Title" AddBreak="true"></PageHeader>
+<div class="pb-2 mt-4 mb-4 border-bottom">
+	<h2><i class="@Page.Icon"></i> @Page.Title</h2>
+</div>
+
 
 <h3><span class="badge badge-warning">Torah perspective of the Gospels</span></h3>
 
@@ -16,7 +20,7 @@
 <div class="card border-primary mb-3">
 
 	<div class="card-header">
-		<h4 class="card-title">@Title</h4>
+		<h4 class="card-title">@Page.Title</h4>
 	</div>
 
 	<div class="body">

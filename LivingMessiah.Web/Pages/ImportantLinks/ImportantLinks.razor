@@ -1,8 +1,10 @@
 ﻿@page "/importantlinks"
-@using static LivingMessiah.Web.Links.ImportantLinks
+
+@using Page = LivingMessiah.Web.Links.ImportantLinks
+<PageTitle>@Page.Title</PageTitle>
 
 <div class="pb-2 mt-4 mb-2">
-	<h2><span class="text-warning @Icon"></span> @Title</h2>
+	<h2><span class="text-warning @Page.Icon"></span> @Page.Title</h2>
 
 </div>
 

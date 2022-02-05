@@ -1,9 +1,11 @@
 ﻿@page "/Contact/"
-@using static LivingMessiah.Web.Links.Contact
 @using LivingMessiah.Web.Pages.Contacts.Domain
+@using Page = LivingMessiah.Web.Links.Contact
+
+<PageTitle>@Page.Title</PageTitle>
 
 <div class="pb-2 mt-4 mb-4">
-	<h3><i class="@Icon"></i> @Title</h3>
+	<h3><i class="@Page.Icon"></i> @Page.Title</h3>
 </div>
 
 <div class="col-lg-12 control-section">
