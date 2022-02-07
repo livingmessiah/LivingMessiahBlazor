@@ -1,10 +1,12 @@
 ﻿@page "/UpcomingEventsUploadImage/{Id:int}"
-@using LinkUpload = LivingMessiah.Web.Links.UpcomingEventsUploadImage
-@using LinkLogin = LivingMessiah.Web.Links.Account
+
+@* Because the razor page is called `Page.razor` I have to call this `PageLink` *@
+@using PageLink = LivingMessiah.Web.Links.UpcomingEvents.UploadImage
+@using LoginLink = LivingMessiah.Web.Links.Account
 @using static LivingMessiah.Web.Services.Auth0;
 
 <h2 class="mt-2">
-	<i class="@LinkUpload.Icon"></i> @LinkUpload.Title
+	<i class="@PageLink.Icon"></i> @PageLink.Title
 </h2>
 
 <AuthorizeView Roles="@Roles.AdminOrAnnouncements">
@@ -20,8 +22,8 @@
 
 			<div class="card-body">
 
-				<h5 class="">To upload image for <b>@LinkUpload.Title (Id:@Id)</b> you need to be logged in.</h5>
-				<button @onclick="@(() => RedirectToLoginClick(LinkUpload.Upload, Id))"
+				<h5 class="">To upload image for <b>@PageLink.Title (Id:@Id)</b> you need to be logged in.</h5>
+				<button @onclick="@(() => RedirectToLoginClick(PageLink.Page, Id))"
 								type="button" class="btn-primary btn-sm">
 					Login <i class='fas fa-sign-in-alt'></i>
 				</button>
@@ -44,7 +46,7 @@
 
 	void RedirectToLoginClick(string returnUrl, int id)
 	{
-		NavigationManager.NavigateTo($"{LinkLogin.Login}?returnUrl={returnUrl}/{id}", true);
+		NavigationManager.NavigateTo($"{LoginLink.Login}?returnUrl={returnUrl}/{id}", true);
 	}
 
 }

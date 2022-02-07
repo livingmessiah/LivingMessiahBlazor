@@ -1,8 +1,10 @@
 ﻿@page "/Gallery"
-@using static LivingMessiah.Web.Links.Gallery
+
+@using Page = LivingMessiah.Web.Links.Gallery
+<PageTitle>@Page.Title</PageTitle>
 
 <div class="pb-2 mt-4 mb-2 border-bottom">
-	<h1><i class="text-primary @Icon"></i> @Title</h1>
+	<h1><i class="text-primary @Page.Icon"></i> @Page.Title</h1>
 </div>
 
 <div class="row">

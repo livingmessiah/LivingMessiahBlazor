@@ -11,10 +11,11 @@
 	<SukkotAdminMenubar></SukkotAdminMenubar>
 </AuthorizeView>
 
-<h2>@Title [#@Id]</h2>
+@using Page = LivingMessiah.Web.Links.Sukkot
+<PageTitle>@Page.DeleteConfirmationTitle</PageTitle>
 
+<h2>@Page.DeleteConfirmationSubTitle [#@Id]</h2>
 <hr class="warning" />
-
 <br />
 
 @*<form method="post" action="">
@@ -52,7 +53,7 @@
 
 <div class="row">
 	<div class="col-12">
-		<a href="@LivingMessiah.Web.Links.Sukkot.RegistrationShell"
+		<a href="@Page.RegistrationShell"
 			 class="btn btn-primary" title="Cancel Sukkot Registration Deletion">
 			<i class="far fa-hand-paper"></i>	Cancel
 		</a>

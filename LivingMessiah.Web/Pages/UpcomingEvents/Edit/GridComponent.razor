@@ -1,8 +1,9 @@
 ﻿@using LivingMessiah.Web.Data
 @using LivingMessiah.Web.Pages.UpcomingEvents.Data
 @using Syncfusion.Blazor.Data
-@using LinkEditMarkdown = LivingMessiah.Web.Links.UpcomingEventsEditMarkdown
-@using LinkUploadImage = LivingMessiah.Web.Links.UpcomingEventsUploadImage
+
+@using PageEditMarkdown = LivingMessiah.Web.Links.UpcomingEvents.EditMarkdown
+@using PageUploadImage = LivingMessiah.Web.Links.UpcomingEvents.UploadImage
 
 <div class="col-lg-12 control-section">
 	<div class="content-wrapper">
@@ -51,8 +52,8 @@
 							@{
 								var vm = (context as EditVM);
 								<button @onclick="@(e => Image_ButtonClick(vm.Id))"
-												class="btn-default btn-xs" title="@LinkUploadImage.Title Id: @vm.Id">
-									<i class="@LinkUploadImage.Icon"></i>
+												class="btn-default btn-xs" title="@PageUploadImage.Title Id: @vm.Id">
+									<i class="@PageUploadImage.Icon"></i>
 								</button>
 							}
 						</Template>
@@ -63,8 +64,8 @@
 							@{
 								var vm = (context as EditVM);
 								<button @onclick="@(e => Edit_ButtonClick(vm.Id))"
-												class="btn-default btn-xs" title="@LinkEditMarkdown.Title Id: @vm.Id">
-									<i class="@LinkEditMarkdown.Icon"></i>
+												class="btn-default btn-xs" title="@PageEditMarkdown.Title Id: @vm.Id">
+									<i class="@PageEditMarkdown.Icon"></i>
 								</button>
 							}
 						</Template>

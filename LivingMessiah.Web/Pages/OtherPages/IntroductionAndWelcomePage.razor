@@ -1,0 +1,28 @@
+﻿@page "/IntroductionAndWelcome"
+
+@using LivingMessiah.Web.Pages.Home
+@using Page = LivingMessiah.Web.Links.IntroductionAndWelcome
+
+<PageTitle>@Page.Title</PageTitle>
+
+<div class="pb-2 mt-4 mb-2 border-bottom">
+	<h2><i class="@Page.Icon"></i> @Page.Title</h2>
+</div>
+
+<div class="card border-warning mr-0">
+	<div class="card-header">
+		<h2 class="text-warning text-center"><b>Welcome</b></h2>
+	</div>
+
+	<div class="body p-2">
+		<Welcome />
+	</div>
+	<div class="body p-2">
+		<VisionAndMission />
+	</div>
+		<div class="body p-2">
+		<Resolve MediaQueryEnum="@MediaQueryEnum.Lg"></Resolve>
+	</div>
+
+</div>
+

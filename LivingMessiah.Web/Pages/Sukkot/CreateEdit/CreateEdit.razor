@@ -13,13 +13,14 @@
 	<SukkotAdminMenubar></SukkotAdminMenubar>
 </AuthorizeView>
 
+@using Page = LivingMessiah.Web.Links.Sukkot
+<PageTitle>@Page.CreateEditTitle</PageTitle>
+
 @*<LoadingComponent IsLoading="Registration==null">
 	</LoadingComponent>*@
 
-
 @if (Registration != null && UI != null)
 {
-
 	@if (Env.IsDevelopment())
 	{
 		<p class="float-right">

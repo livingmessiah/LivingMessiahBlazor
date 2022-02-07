@@ -1,10 +1,13 @@
 ﻿@page "/UpcomingEventsEdit"
-@using LinkEdit = LivingMessiah.Web.Links.UpcomingEventsEdit
-@using LinkLogin = LivingMessiah.Web.Links.Account
+
+@using LoginLink = LivingMessiah.Web.Links.Account
 @using static LivingMessiah.Web.Services.Auth0;
 
+@* Because the razor page is called `Page.razor` I have to call this `PageLink` *@
+@using PageLink = LivingMessiah.Web.Links.UpcomingEvents.Edit
+<PageTitle>@PageLink.Title</PageTitle>
 <h2 class="mt-2">
-	<i class="@LinkEdit.Icon"></i> @LinkEdit.Title
+	<i class="@PageLink.Icon"></i> @PageLink.Title
 </h2>
 
 <AuthorizeView Roles="@Roles.AdminOrAnnouncements">
@@ -19,8 +22,8 @@
 			<div class="card-header">Not Authorized</div>
 
 			<div class="card-body">
-				<h5 class="">To view <b>@LinkEdit.Title</b> you need to be logged in.</h5>
-				<button @onclick="@(() => RedirectToLoginClick(LinkEdit.Edit))"
+				<h5 class="">To view <b>@PageLink.Title</b> you need to be logged in.</h5>
+				<button @onclick="@(() => RedirectToLoginClick(PageLink.Page))"
 								type="button" class="btn-primary btn-sm">
 					Login <i class='fas fa-sign-in-alt'></i>
 				</button>
@@ -41,7 +44,7 @@
 
 	void RedirectToLoginClick(string returnUrl)
 	{
-		NavigationManager.NavigateTo($"{LinkLogin.Login}?returnUrl={returnUrl}", true);
+		NavigationManager.NavigateTo($"{LoginLink.Login}?returnUrl={returnUrl}", true);
 	}
 
 }

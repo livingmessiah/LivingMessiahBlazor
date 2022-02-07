@@ -7,6 +7,9 @@
 	<SukkotAdminMenubar></SukkotAdminMenubar>
 </AuthorizeView>
 
+@using Page = LivingMessiah.Web.Links.Sukkot
+<PageTitle>@Page.NotesTitle</PageTitle>
+
 <div class="d-print-none">
 	<a class="btn btn-sm btn-default float-right" href="javascript:window.print()">
 		<span class="fa fa-print"></span> Print
@@ -14,7 +17,7 @@
 </div>
 
 <div class="pb-2 mt-4 mb-2 border-bottom">
-	<h3> <span class="text-warning"><i class="fa fa-sticky-note"></i></span> Registration Notes</h3>
+	<h3> <span class="text-warning"><i class="fa fa-sticky-note"></i></span> @Page.NotesTitle</h3>
 	<div class="d-print-none">
 		<h5 class="text-muted">
 			Sorted by @MySort.Name

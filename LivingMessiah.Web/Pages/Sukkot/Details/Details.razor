@@ -5,11 +5,12 @@
 @using static LivingMessiah.Web.Services.Auth0
 @using LivingMessiah.Web.Shared.Sukkot
 
-@* @page "/Sukkot/Details/{Id:int}" *@
-
 <AuthorizeView Roles="@Roles.SukkotMenuBar">
 	<SukkotAdminMenubar></SukkotAdminMenubar>
 </AuthorizeView>
+
+@using Page = LivingMessiah.Web.Links.Sukkot
+<PageTitle>@Page.DetailsTitle</PageTitle>
 
 <div class="d-print-none float-right">
 	<a class="btn btn-sm btn-default" href="javascript:window.print()">
@@ -119,7 +120,7 @@
 
 <div class="row d-print-none">
 	<div class="col-12">
-		<a href="@LivingMessiah.Web.Links.Sukkot.RegistrationShell"
+		<a href="@Page.RegistrationShell"
 			 class="btn btn-info" title="Back to Registration Shell">
 			<i class="far fa-arrow-alt-circle-left"></i> Back to Registration
 		</a>

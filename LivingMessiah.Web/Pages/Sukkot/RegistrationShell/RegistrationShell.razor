@@ -1,5 +1,4 @@
 ﻿@page "/Sukkot/RegistrationShell"
-@using static LivingMessiah.Web.Links.Sukkot
 @using Microsoft.AspNetCore.Hosting;
 @using Microsoft.Extensions.Hosting;
 @using LivingMessiah.Web.Shared.Sukkot
@@ -7,7 +6,12 @@
 
 @inject IWebHostEnvironment Env
 
-<PageHeader Icon="@Icon" Title="@Title"></PageHeader>
+@using Page = LivingMessiah.Web.Links.Sukkot
+<PageTitle>@Title</PageTitle>
+
+<div class="pb-2 mt-4 mb-2 border-bottom">
+	<h2><i class="@Page.Icon"></i> @Title</h2>
+</div>
 
 <AuthorizeView Roles="@Roles.SukkotMenuBar">
 	<SukkotAdminMenubar></SukkotAdminMenubar>
@@ -40,7 +44,7 @@
 
 <div class="row col-12">
 	<br />
-	<a href="@LivingMessiah.Web.Links.Sukkot.Index"
+	<a href="@Page.Index"
 		 title="Sukkot Introduction" class="btn-info btn-sm">
 		<i class="far fa-arrow-alt-circle-left"></i> Back to Introduction
 	</a>

@@ -1,7 +1,9 @@
 ﻿@page "/Showlow"
-@using static LivingMessiah.Web.Links.ShowLow
 
-<img src='@Blobs.UrlOther("show-low-1024-385.jpeg")' alt="@Descr" class="img-fluid rounded mt-3" />
+@using Page = LivingMessiah.Web.Links.ShowLow
+<PageTitle>@Page.Title</PageTitle>
+
+<img src='@Blobs.UrlOther("show-low-1024-385.jpeg")' alt="@Page.Descr" class="img-fluid rounded mt-3" />
 
 <div class="card border-primary mb-3">
 
@@ -9,7 +11,8 @@
 		<p class="lead">
 			If you are in the Show Low Arizona area, consider celebrating Shabbat at <b>Brett</b> and <b>Claudette's</b> house.
 			<br /><br />
-			Please email Mark for location and times at <a href="mailto:mark@livingmessiah.com?Subject=Show%20Low%20Location%20and%20Time">mark@livingmessiah.com</a> <i class="far fa-envelope"></i>
+			Please email Mark for location and times at 
+			<a href="mailto:mark@livingmessiah.com?Subject=Show%20Low%20Location%20and%20Time">mark@livingmessiah.com</a> <i class="far fa-envelope"></i>
 		</p>
 	</div>
 

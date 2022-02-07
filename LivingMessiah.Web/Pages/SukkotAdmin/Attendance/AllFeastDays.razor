@@ -1,8 +1,10 @@
 ﻿@page "/SukkotAdmin/AttendanceAllFeastDays/"
 @using LivingMessiah.Web.Pages.SukkotAdmin.Constants
-@using static LivingMessiah.Web.Links.Sukkot
 @using static LivingMessiah.Web.Services.Auth0
 @using LivingMessiah.Web.Shared.Sukkot
+
+@using Page = LivingMessiah.Web.Links.Sukkot
+<PageTitle>@Page.Title</PageTitle>
 
 <AuthorizeView Roles="@Roles.SukkotMenuBar">
 	<SukkotAdminMenubar></SukkotAdminMenubar>
@@ -10,7 +12,7 @@
 
 <div class="d-print-none">
 	<div class="float-right">
-		<a href="@AttendanceChart"
+		<a href="@Page.AttendanceChart"
 			 class="btn btn-info btn-sm">
 			<i class="fas fa-chart-line fa-lg"></i>
 			Chart

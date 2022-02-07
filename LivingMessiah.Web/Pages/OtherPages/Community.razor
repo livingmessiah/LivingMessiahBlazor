@@ -1,7 +1,9 @@
 ﻿@page "/Community"
-@using static LivingMessiah.Web.Links.Community
 
-<img src='@Blobs.UrlOther("community-bb-1024-385.jpeg")' alt="@Descr" class="img-fluid rounded mt-3" />
+@using Page = LivingMessiah.Web.Links.Community
+<PageTitle>@Page.Title</PageTitle>
+
+<img src='@Blobs.UrlOther("community-bb-1024-385.jpeg")' alt="@Page.Descr" class="img-fluid rounded mt-3" />
 
 <div class="card border-primary mb-3">
 	<div class="card-body">

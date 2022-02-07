@@ -4,6 +4,9 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Authorization;
 using static LivingMessiah.Web.Services.Auth0;
 
+using PageEditMarkdown = LivingMessiah.Web.Links.UpcomingEvents.EditMarkdown;
+using PageUploadImage = LivingMessiah.Web.Links.UpcomingEvents.UploadImage;
+
 using Syncfusion.Blazor.Grids;
 
 namespace LivingMessiah.Web.Pages.UpcomingEvents.Edit
@@ -32,12 +35,12 @@ namespace LivingMessiah.Web.Pages.UpcomingEvents.Edit
 
 		private void Image_ButtonClick(int id)
 		{
-			NavManager.NavigateTo(Links.UpcomingEventsUploadImage.Upload + "/" + id);
+			NavManager.NavigateTo(PageUploadImage.Page + "/" + id);
 		}
 
 		private void Edit_ButtonClick(int id)
 		{
-			NavManager.NavigateTo(Links.UpcomingEventsEditMarkdown.Edit + "/" + id);
+			NavManager.NavigateTo(PageEditMarkdown.Page + "/" + id);
 		}
 
 		#region ErrorHandling

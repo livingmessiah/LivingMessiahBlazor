@@ -53,6 +53,14 @@ namespace LivingMessiah.Web.Data
 			{
 				new Link
 				{
+					Index = IntroductionAndWelcome.Index,
+					Title = IntroductionAndWelcome.Title,
+					Icon = IntroductionAndWelcome.Icon,
+					HomeSidebarUsage=false,
+					SitemapUsage=true
+				},
+				new Link
+				{
 					Index = Calendar.Index,
 					Title = Calendar.Title,
 					Icon = Calendar.Icon,
@@ -286,6 +294,14 @@ namespace LivingMessiah.Web.Data
 					Index = Links.Mishpocha.Index,
 					Title = Links.Mishpocha.Title,
 					Icon = Links.Mishpocha.Icon,
+					HomeSidebarUsage=false,
+					SitemapUsage=true
+				},
+				new Link
+				{
+					Index = Links.Community.Index,
+					Title = Links.Community.Title,
+					Icon = Links.Community.Icon,
 					HomeSidebarUsage=false,
 					SitemapUsage=true
 				},

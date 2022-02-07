@@ -71,7 +71,7 @@ namespace LivingMessiah.Web.Pages.UpcomingEvents
 
 		private void Edit_ButtonClick(int id)
 		{
-			NavManager.NavigateTo(Links.UpcomingEventsEditMarkdown.Edit + "/" + id);
+			NavManager.NavigateTo(Links.UpcomingEvents.EditMarkdown.Page + "/" + id);
 		}
 	}
 }

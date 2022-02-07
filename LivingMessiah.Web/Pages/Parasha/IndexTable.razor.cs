@@ -27,6 +27,9 @@ namespace LivingMessiah.Web.Pages.Parasha
 		public bool IsXsOrSm { get; set; }
 
 		[Parameter]
+		public bool IsNextTorahBook { get; set; } = false;
+
+		[Parameter]
 		public int BookId { get; set; } = 0;
 
 		protected string Colspan;
@@ -35,10 +38,10 @@ namespace LivingMessiah.Web.Pages.Parasha
 		protected string CachedMsg { get; set; }
 		protected override async Task OnInitializedAsync()
 		{
-			Logger.LogDebug(string.Format("Inside Component: {0}, Class!Method: {1}; BookId{2}"
-				, Component.ParashaIndexTable, nameof(IndexTable) + "!" + nameof(OnInitializedAsync), BookId));
+			Logger.LogDebug(string.Format("Inside Component: {0}, Class!Method: {1}; BookId{2}; IsNextBook{3}"
+				, Component.ParashaIndexTable, nameof(IndexTable) + "!" + nameof(OnInitializedAsync), BookId, IsNextTorahBook));
 			
-			Colspan = (!IsXsOrSm) ? "8" : "6";			
+			Colspan = (!IsXsOrSm) ? "8" : "6";
 
 			CachedMsg = "";
 			ParashaListTuple = Cache.Get<Tuple<ParashaDomain.BibleBook, List<ParashaDomain.ParashaList>>>(CacheSettings.Key);
@@ -48,7 +51,7 @@ namespace LivingMessiah.Web.Pages.Parasha
 				Logger.LogDebug(string.Format("...ParashaListTuple is null"));
 				try
 				{
-					ParashaListTuple = await db.GetParashotByBookId(BookId);
+					ParashaListTuple = await db.GetParashotByBookId(GetNextBookId());
 					if (ParashaListTuple is not null)
 					{
 						//CachedMsg = "Data gotten from DATABASE";
@@ -94,6 +97,19 @@ namespace LivingMessiah.Web.Pages.Parasha
 			//	, BibleBook == null ? "is" : "is NOT"
 			//	, ParashaList == null ? "is" : "is NOT"));
 
+		}
+
+		private int GetNextBookId() 
+		{
+			const int _firstBookOfTorah = 1;  // Genesis
+			const int _lastBookOfTorah = 5;   // Deuteronomy
+			int _torahBookId = BookId;
+
+			if (IsNextTorahBook)
+			{
+				_torahBookId = (_torahBookId != _lastBookOfTorah) ? _torahBookId + 1 : _firstBookOfTorah;
+			}
+			return _torahBookId;
 		}
 
 		public static string CurrentReadDateTextFormat(DateTime readDate)

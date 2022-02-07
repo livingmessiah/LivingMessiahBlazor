@@ -33,7 +33,6 @@ namespace LivingMessiah.Web.Pages.Sukkot.Payment
 		protected string AlertMsg = "";
 		protected string ExceptionMessage = "";
 		protected bool LoadFailed;
-		protected string Title = "Donations Earmarked for Sukkot";
 
 		protected override async Task OnInitializedAsync()
 		{

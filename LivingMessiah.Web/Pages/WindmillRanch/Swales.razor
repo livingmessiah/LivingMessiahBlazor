@@ -1,8 +1,14 @@
 ﻿@page "/swales"
-@using static LivingMessiah.Web.Links.WindmillRanchSwales
+
+
+@using Page = LivingMessiah.Web.Links.WindmillRanch.Swales
+<PageTitle>@Page.Title</PageTitle>
+<div class="pb-2 mt-4 mb-2 border-bottom">
+	<h2><i class="@Page.Icon"></i> @Page.Title</h2>
+</div>
 
 <div class="pb-2 mt-4 mb-2 border-bottom">
-	<h2><span class="text-primary @Icon"></span> @Title</h2>
+	<h2><span class="text-primary @Page.Icon"></span> @Page.Title</h2>
 </div>
 
 <p class="lead">
@@ -49,7 +55,7 @@
 		<li><sup>10:40</sup> in arid areas it's most important to plant trees on swells because salt concentration may occur downhill and collapse soils</li>
 		<li><sup>11:00</sup> In the long run, swales are temporary as they replaced by trees... They are the precursor to forest rehabilitation</li>
 		<li><sup>11:30</sup> the base of a swell can be ripped to increase absorption. They can also be covered in sand or gravel (don't know why). Gypsum is good for heavy clay</li>
-		<li><sup>12:30</sup> on flat country you you don't have a mound because you spread the material out spread the mound out (on the lower side usually). In hill country</li>
+		<li><sup>12:30</sup> on flat country you don't have a mound because you spread the material out spread the mound out (on the lower side usually). In hill country</li>
 		<li>
 			<sup>12:38</sup> Hill country "the potential vertical height of the tree maturity projected horizontally back to the hill determines the maximum density (ie distance between the each swale).
 			<ul>

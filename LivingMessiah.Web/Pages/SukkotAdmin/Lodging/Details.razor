@@ -1,6 +1,5 @@
 ﻿@page "/SukkotAdmin/LodgingDetails/"
 @using LivingMessiah.Web.Pages.SukkotAdmin.Constants
-@using static LivingMessiah.Web.Links.Sukkot
 @using static LivingMessiah.Web.Services.Auth0
 @using LivingMessiah.Web.Shared.Sukkot
 
@@ -8,9 +7,12 @@
 	<SukkotAdminMenubar></SukkotAdminMenubar>
 </AuthorizeView>
 
+@using Page = LivingMessiah.Web.Links.Sukkot
+<PageTitle>@Page.LodgingDetailsTitle</PageTitle>
+
 <div class="d-print-none">
 	<div class="float-right">
-		<a href="@LodgingDaysPivotOnCampCode"
+		<a href="@Page.LodgingDaysPivotOnCampCode"
 			 class="btn btn-info btn-sm">
 			<i class="far fa-calendar fa-lg"></i> &Sigma; By Day
 		</a>

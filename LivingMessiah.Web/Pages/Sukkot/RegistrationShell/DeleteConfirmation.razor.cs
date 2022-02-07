@@ -31,7 +31,6 @@ namespace LivingMessiah.Web.Pages.Sukkot.RegistrationShell
 		public vwRegistration vwRegistration { get; set; }
 
 		public string ExceptionMessage { get; set; }
-		public string Title = "Delete Registration? | "; // + vwRegistration.FamilyName
 
 		protected override async Task OnInitializedAsync()
 		{

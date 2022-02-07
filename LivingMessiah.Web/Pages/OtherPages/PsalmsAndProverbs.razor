@@ -1,11 +1,12 @@
 ﻿@page "/PsalmsAndProverbs"
 @page "/PAndP"
-@using static LivingMessiah.Web.Pages.ImportantLinks.Constants.MyHebrewBible
 
-<PageHeader Icon="@LivingMessiah.Web.Links.PsalmsAndProverbs.Icon"
-						Title="@LivingMessiah.Web.Links.PsalmsAndProverbs.Title">
+@using Page = LivingMessiah.Web.Links.PsalmsAndProverbs
+<PageTitle>@Page.Title</PageTitle>
 
-</PageHeader>
+<div class="pb-2 mt-4 mb-2 border-bottom">
+	<h2><i class="@Page.Icon"></i> @Page.Title</h2>
+</div>
 
 <div class="card border-primary my-3">
 	<PsalmAndProverbCurrent PerformHtmlValidation="true" />
@@ -61,6 +62,3 @@ else
 {
 	<p><em>Loading...</em></p>
 }
-
-
-

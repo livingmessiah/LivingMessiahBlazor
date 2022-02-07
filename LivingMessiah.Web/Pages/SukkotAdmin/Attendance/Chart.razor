@@ -1,8 +1,10 @@
 ﻿@page "/SukkotAdmin/AttendanceChart/"
 @using LivingMessiah.Web.Pages.SukkotAdmin.Constants
-@using static LivingMessiah.Web.Links.Sukkot
 @using static LivingMessiah.Web.Services.Auth0
 @using LivingMessiah.Web.Shared.Sukkot
+
+@using Page = LivingMessiah.Web.Links.Sukkot
+<PageTitle>@Page.Title</PageTitle>
 
 @{
 	//var XLabels = Newtonsoft.Json.JsonConvert.SerializeObject(Model.XLabelAges.ToList());
@@ -16,7 +18,7 @@
 
 <div class="d-print-none">
 	<div class="float-right">
-		<a href="@AttendanceAllFeastDays"
+		<a href="@Page.AttendanceAllFeastDays"
 			 class="btn btn-info btn-sm">
 			<i class="fa fa-calculator fa-lg"></i>
 			Table

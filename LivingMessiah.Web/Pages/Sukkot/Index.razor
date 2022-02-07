@@ -1,7 +1,6 @@
 ﻿@page "/sukkot"
 @using LivingMessiah.Web.Pages.Sukkot.Constants
 @using static SukkotApi.Domain.Constants
-@using static LivingMessiah.Web.Links.Sukkot
 @using static LivingMessiah.Web.Services.Auth0
 @using LivingMessiah.Web.Shared.Sukkot
 
@@ -14,7 +13,12 @@
 	<SukkotAdminMenubar></SukkotAdminMenubar>
 </AuthorizeView>
 
-<PageHeader Icon="@Icon" Title="@Title"></PageHeader>
+@using Page = LivingMessiah.Web.Links.Sukkot
+<PageTitle>@Page.Title</PageTitle>
+
+<div class="pb-2 mt-4 mb-2 border-bottom">
+	<h2><i class="@Page.Icon"></i> @Page.Title</h2>
+</div>
 
 <AuthorizeView>
 	<Authorized>
@@ -87,7 +91,7 @@
 			<div class="col-12">
 
 				<a class="btn btn-success btn-lg"
-					 href="@LivingMessiah.Web.Links.Sukkot.RegistrationShell">
+					 href="@Page.RegistrationShell">
 					Begin Registration
 					<i class="fas fa-caret-right"></i>
 				</a>

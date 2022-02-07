@@ -4,40 +4,20 @@
 @using Page = LivingMessiah.Web.Links.Home
 <PageTitle>@Page.Title</PageTitle>
 
-
 <HomeImage></HomeImage>
 
 <div class="d-md-none">
-
-	<AuthorizeView Roles=@Roles.Admin>
-		<Admin></Admin>
+	<SectionMain />
+	<br />
+	<AuthorizeView Roles="@Roles.AdminOrElder">
+		<NotAuthorized>
+			<div class="row">
+				<div class="col-12">
+					<IntroductionAndWelcome MediaQueryEnum="MediaQueryEnum.Sm" />
+				</div>
+			</div>
+		</NotAuthorized>
 	</AuthorizeView>
-
-	<AuthorizeView Roles=@Roles.AdminOrAudiovisual>
-		<AudioVisualButton></AudioVisualButton>
-	</AuthorizeView>
-
-	<AuthorizeView Roles=@Roles.AdminOrKeyDates>
-		<KeyDatesEditButton></KeyDatesEditButton>
-	</AuthorizeView>
-
-	<AuthorizeView Roles=@Roles.Admin>
-		<DashboardButton></DashboardButton>
-	</AuthorizeView>
-
-	<AuthorizeView Roles=@Roles.AdminOrElder>
-		<DashboardButton></DashboardButton>
-	</AuthorizeView>
-
-	<AuthorizeView Roles=@Roles.AdminOrSukkot>
-		<SukkotButton></SukkotButton>
-	</AuthorizeView>
-
-	<div class="row">
-		<div class="col-12">
-			<IntroductionAndWelcome MediaQueryEnum="MediaQueryEnum.Sm" />
-		</div>
-	</div>
 
 	<SidebarButtons></SidebarButtons>
 	<ShabbatMeter></ShabbatMeter>
@@ -50,26 +30,16 @@
 <div class="d-none d-md-block d-lg-none d-xl-none">
 	<div class="row">
 		<div class="col-7">
-			<IntroductionAndWelcome  MediaQueryEnum="MediaQueryEnum.Md" />
+			<SectionMain />
+			<AuthorizeView Roles="@Roles.AdminOrElder">
+				<NotAuthorized>
+					<IntroductionAndWelcome MediaQueryEnum="MediaQueryEnum.Md" />
+				</NotAuthorized>
+			</AuthorizeView>
 		</div>
+
 		<div class="col-5">
-			<AuthorizeView Roles=@Roles.Admin>
-				<Admin></Admin>
-			</AuthorizeView>
-
-			<AuthorizeView Roles=@Roles.AdminOrAudiovisual>
-				<AudioVisualButton></AudioVisualButton>
-			</AuthorizeView>
-			
-			<AuthorizeView Roles=@Roles.AdminOrKeyDates>
-				<KeyDatesEditButton></KeyDatesEditButton>
-			</AuthorizeView>
-
-			<AuthorizeView Roles=@Roles.Admin>
-				<DashboardButton></DashboardButton>
-			</AuthorizeView>
 			<SidebarButtons></SidebarButtons>
-			@* <ShabbatMeter IsMini="true" Format="MMMM dd"></ShabbatMeter> *@
 			<ShabbatMeter></ShabbatMeter>
 			<div class="d-print-none">
 				<SocialMediaButtons></SocialMediaButtons>
@@ -77,31 +47,23 @@
 		</div>
 	</div>
 </div>
+
+
 
 <div class="d-none d-lg-block">
 	<div class="row">
+
 		<div class="col-8">
-			<IntroductionAndWelcome MediaQueryEnum="MediaQueryEnum.Lg" />
+			<SectionMain />
+			<AuthorizeView Roles="@Roles.AdminOrElder">
+				<NotAuthorized>
+					<IntroductionAndWelcome MediaQueryEnum="MediaQueryEnum.Lg" />
+				</NotAuthorized>
+			</AuthorizeView>
 		</div>
+
 		<div class="col-4">
-
-			<AuthorizeView Roles=@Roles.Admin>
-				<Admin></Admin>
-			</AuthorizeView>
-
-			<AuthorizeView Roles=@Roles.AdminOrAudiovisual>
-				<AudioVisualButton></AudioVisualButton>
-			</AuthorizeView>
-
-			<AuthorizeView Roles=@Roles.AdminOrKeyDates>
-				<KeyDatesEditButton></KeyDatesEditButton>
-			</AuthorizeView>
-
-			<AuthorizeView Roles=@Roles.Admin>
-				<DashboardButton></DashboardButton>
-			</AuthorizeView>
 			<SidebarButtons></SidebarButtons>
-
 			<ShabbatMeter></ShabbatMeter>
 			<div class="d-print-none">
 				<SocialMediaButtons></SocialMediaButtons>
@@ -110,3 +72,7 @@
 		</div>
 	</div>
 </div>
+
+@*<AuthorizeView Roles="@Roles.AdminOrElder"> </AuthorizeView>*@
+@* <ShabbatMeter IsMini="true" Format="MMMM dd"></ShabbatMeter> *@
+<!---->

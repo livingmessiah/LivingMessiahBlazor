@@ -3,18 +3,21 @@
 @using static LivingMessiah.Web.Services.Auth0
 @using LivingMessiah.Web.Shared.Sukkot
 
+@* Hint: If the only reason you need a code behind is to implement Authorize, then just use the `@attrubue` this e.g.*@
+@attribute [Authorize(Roles = Roles.AdminOrSukkot)]
+
 <AuthorizeView Roles="@Roles.SukkotMenuBar">
 	<SukkotSettingsList />
 	<SukkotAdminMenubar></SukkotAdminMenubar>
 </AuthorizeView>
 
-@*<PageHeader Icon="@Icon" Title="@Title"></PageHeader>*@
-
+@using Page = LivingMessiah.Web.Links.Sukkot
+<PageTitle>@Page.AdminIndexTitle</PageTitle>
 
 <div class="pb-2 mt-4 mb-2 border-bottom">
 	<h3>
 		<i class="fas fa-fighter-jet"></i>
-		<span class="text-danger">Sukkot Admin</span>
+		<span class="text-danger">@Page.AdminIndexTitle</span>
 	</h3>
 </div>
 

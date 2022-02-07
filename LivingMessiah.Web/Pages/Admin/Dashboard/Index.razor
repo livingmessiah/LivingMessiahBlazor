@@ -22,7 +22,7 @@
 		</div>
 
 		<div class="card-body">
-			@if (Env.IsDevelopment() | Env.IsStaging())
+			@if (Env.IsProduction() | Env.IsStaging())
 			{
 				<p >
 					HostingEnvironment.EnvironmentName is <strong><span class="text-danger">Staging or Production</span></strong>
@@ -45,27 +45,8 @@
 
 <div class="card" style="width: 25rem;">
 	<div class="card-header">Admin Links</div>
-	@*<div class="card-body">
-			<h5 class="card-title">card-body goes here</h5>
-			<p class="card-text">card-text goes here</p>
-		</div>*@
 
 	<ul class="list-group list-group-flush">
-		<li class="list-group-item">
-			<a href="@Page.FontAwesome"
-				 title="Font Awesome" class="list-group-item list-group-item-warning">
-				<b>FontAwesome</b>
-				<i class="fas fa-chevron-right"></i>
-			</a>
-		</li>
-
-		<li class="list-group-item">
-			<a href="@Page.PerformanceCompliance"
-				 title="Performance Compliance" class="list-group-item list-group-item-warning">
-				<b>Performance Compliance</b>
-				<i class="fas fa-chevron-right"></i>
-			</a>
-		</li>
 
 		<li class="list-group-item">
 			<button @onclick="@(e => ThrowException_ButtonClick())"
@@ -74,38 +55,10 @@
 				<i class="fas fa-chevron-right"></i>
 			</button>
 		</li>
-
-		<li class="list-group-item">
-			<a href="@Page.Routes"
-				 title="@Page.RoutesTitle" class="list-group-item list-group-item-warning">
-				<i class="@Page.RoutesIcon"></i>
-				<b>@Page.RoutesTitle</b>
-				<i class="fas fa-chevron-right"></i>
-			</a>
-		</li>
-
 	</ul>
 </div>
 
-<hr class="warning" />
-
-<h2>Routes</h2>
-<p>
-	ToDo: Not ported, see LivingMessiah.Web\Features\Routes2\Routes2Controller.cs
-	<br /> see also <a href="https://ardalis.com/debugging-aspnet-core-routes">ardalis.com/debugging-aspnet-core-routes</a>
-</p>
-
-@*
-	https://blazor.syncfusion.com/documentation/dashboard-layout/getting-started/
-	https://www.syncfusion.com/blazor-components/blazor-dashboard
-*@
-
-@*<h2>MiniProfiler</h2>
-	<p>ToDo: Not ported, see ???</p>*@
-
-
-@*<h4>Not sure how this works exactly</h4>
-	<profile name="My Profiling Step via a <profile> Tag">
-		@{ @SomethingExpansive } Hello Mars!
-	</profile>*@
-
+@if (DatabaseError)
+{
+	<p class="text-danger"><em>@DatabaseErrorMsg</em></p>
+}

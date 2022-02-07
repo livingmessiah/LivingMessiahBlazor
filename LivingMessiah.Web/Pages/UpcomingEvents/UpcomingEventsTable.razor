@@ -1,13 +1,14 @@
 ﻿@page "/UpcomingEventsTable"
 @using LivingMessiah.Web.Pages.UpcomingEvents.Data
 @using LivingMessiah.Web.Pages.UpcomingEvents.Queries
-@using static LivingMessiah.Web.Links.UpcomingEventsTable
 @inject IUpcomingEventsRepository db
 
-<h2 class="mt-2">
-	<i class="@Icon"></i> @Title
-</h2>
+@using Page = LivingMessiah.Web.Links.UpcomingEvents
+<PageTitle>@Page.Table.Title</PageTitle>
 
+<h2 class="mt-2">
+	<i class="@Page.Table.Icon"></i> @Page.Table.Title
+</h2>
 
 <LoadingComponent IsLoading="UpcomingEventList == null">
 	<TableTemplate Items="UpcomingEventList">
@@ -21,7 +22,7 @@
 			<th class="text-info">Image URL</th>
 			<th class="text-info">YouTubeId</th>
 			<th class="text-info">Website URL</th>
-			<th class="text-info">Decription</th>
+			<th class="text-info">Description</th>
 		</TableHeader>
 
 		<RowTemplate>

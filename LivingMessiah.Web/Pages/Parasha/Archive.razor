@@ -1,9 +1,11 @@
 ﻿@page "/parasha/Archive"
-@using static LivingMessiah.Web.Links.ParashaArchive
+
+@using Page = LivingMessiah.Web.Links.ParashaArchive
+<PageTitle>@Page.Title</PageTitle>
 
 <div class="pb-2 mt-4 mb-2 border-bottom">
 
-	<h3><i class="@Icon"></i>  @Title</h3>
+	<h3><i class="@Page.Icon"></i> @Page.Title</h3>
 	<div class="row col-12 mb-2">
 		<a href="@LivingMessiah.Web.Links.Parasha.Index"
 			 title="Current Parasha" class="btn btn-outline-info btn-sm">

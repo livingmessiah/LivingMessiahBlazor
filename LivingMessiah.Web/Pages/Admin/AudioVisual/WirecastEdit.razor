@@ -1,7 +1,11 @@
 ﻿@page "/Wirecast/Edit/"
-@using static LivingMessiah.Web.Links.Wirecast.Edit
 
-<PageHeader Icon="@Icon" Title="@Title"></PageHeader>
+@using Page = LivingMessiah.Web.Links.Wirecast
+<PageTitle>@Page.Edit.Title</PageTitle>
+
+<h2 class="mt-2">
+	<i class="@Page.Edit.Icon"></i> @Page.Edit.Title
+</h2>
 
 <LoadingComponent IsLoading="Wirecast==null">
 	<EditForm Model="@Wirecast"

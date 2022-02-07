@@ -1,7 +1,11 @@
 ﻿@page "/WindmillRanch"
 @using static LivingMessiah.Web.Links.WindmillRanch
 
-@*<h2><i class="@LivingMessiah.Web.WindmillRanch.Anchors.Icon"></i> @LivingMessiah.Web.WindmillRanch.Anchors.Title</h2>*@
+@using Page = LivingMessiah.Web.Links.WindmillRanch
+<PageTitle>@Page.Title</PageTitle>
+<div class="pb-2 mt-4 mb-2 border-bottom">
+	<h2><i class="@Page.Icon"></i> @Page.Title</h2>
+</div>
 
 
 @*<div class="pb-2 mt-4 mb-2 border-bottom">
@@ -13,7 +17,7 @@
 		 alt="@Descr" class="img-fluid rounded my-3" />
 
 
-<a href="@LivingMessiah.Web.Links.WindmillRanchSwales.Index" 
+<a href="@Page.Swales.Index" 
 	 class="my-3 btn btn-xlarge btn-primary">
 	Swales and Food Forest <i class="fas fa-chevron-circle-right"></i>
 </a>
@@ -81,7 +85,7 @@
 
 <h1>Page Enhancements</h1>
 <p class="lead">
-	I've bee waiting patienty to greatly improve this page as I see this as main part of my position at LMM and local resident/overseer/ground keeper of the property.
+	I've bee waiting patiently to greatly improve this page as I see this as main part of my position at LMM and local resident/overseer/ground keeper of the property.
 
 	<blockquote class="blockquote mx-5">
 		Where there is no vision, the people perish: but he that keepeth the <b>Torah</b>	<sup>the law</sup>, happy is he.
@@ -117,7 +121,7 @@
 
 <h3>SyncFusion Components</h3>
 <p class="lead">
-	Since i'm already implementing this suite of components I thought I could leverage other ones that would be useful to this page
+	Since I'm already implementing this suite of components I thought I could leverage other ones that would be useful to this page
 </p>
 
 <ul>

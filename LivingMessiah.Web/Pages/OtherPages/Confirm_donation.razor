@@ -1,8 +1,11 @@
 ﻿@page "/confirm_donation.html"
-@using static LivingMessiah.Web.Links.PayPal.ConfirmDonation
+@page "/confirm_donation"
+
+@using Page = LivingMessiah.Web.Links.PayPal.ConfirmDonation
+<PageTitle>@Page.Title</PageTitle>
 
 <div class="pb-2 mt-4 mb-2 border-bottom">
-	<h1><span class="text-success @Icon"></span> @Title</h1>
+	<h1><span class="text-success @Page.Icon"></span> @Page.Title</h1>
 </div>
 
 <div id="content">
@@ -11,8 +14,7 @@
 		<div class="entry">
 			<p>
 				We're confident that God will bless you for supporting our ministry.
-				If you have any questions concerning your donation, please feel free to contact us at
-				<a href="mailto:donations@livingmessiah.com">donations@livingmessiah.com</a>.
+				If you have any questions concerning your donation, please feel free to contact us at @((MarkupString)AnchorEmail).
 			</p>
 			<p>Again, we greatly appreciate your support of this ministry.</p>
 			<br>
@@ -20,3 +22,9 @@
 	</div>
 </div>
 <!-- end #content -->
+
+
+@code {
+	protected readonly MarkupString AnchorEmail = 
+		new MarkupString($"<a href='mailto:{Emails.Donations.Email()}'>{Emails.Donations.Email()}</a>");
+}

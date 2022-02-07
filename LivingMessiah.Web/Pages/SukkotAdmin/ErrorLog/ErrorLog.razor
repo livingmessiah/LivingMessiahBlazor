@@ -7,6 +7,9 @@
 @using LivingMessiah.Domain
 @using LivingMessiah.Web.Pages
 
+@using Page = LivingMessiah.Web.Links.Sukkot.Errors
+<PageTitle>@Page.ErrorLogTitle</PageTitle>
+
 <AuthorizeView Roles="@Roles.SukkotMenuBar">
 	<SukkotAdminMenubar></SukkotAdminMenubar>
 </AuthorizeView>

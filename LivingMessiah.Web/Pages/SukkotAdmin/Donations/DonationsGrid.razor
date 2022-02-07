@@ -6,6 +6,9 @@
 @using LivingMessiah.Web.Pages.SukkotAdmin.Donations.Enums
 @using Grid = Syncfusion.Blazor.Grids
 
+@using Page = LivingMessiah.Web.Links.Sukkot.Donations
+<PageTitle>@Page.GridTitle</PageTitle>
+
 <AuthorizeView Roles="@Roles.SukkotMenuBar">
 	<SukkotAdminMenubar></SukkotAdminMenubar>
 </AuthorizeView>

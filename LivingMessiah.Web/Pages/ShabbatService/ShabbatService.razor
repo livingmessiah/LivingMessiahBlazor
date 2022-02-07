@@ -1,8 +1,9 @@
 ﻿@page "/shabbatservice"
-@using LivingMessiah.Web.Shared;
 @using LivingMessiah.Web.Links;
-@using static LivingMessiah.Web.Links.ShabbatService;
 @inherits ShabbatServiceBase
+
+@using Page = LivingMessiah.Web.Links.ShabbatService
+<PageTitle>@Page.Title</PageTitle>
 
 <div class="d-print-none float-right">
 	<a class="btn btn-sm btn-default" href="@LivingMessiah.Web.Links.ShabbatService.Index"
@@ -20,7 +21,7 @@
 	</div>
 
 	<h4 class="text-center">
-		Living Messiah Ministries @Title
+		Living Messiah Ministries @Page.Title
 		@*Shabbat: @Html.GetNextShabbat()*@
 	</h4>
 }

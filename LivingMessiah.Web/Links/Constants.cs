@@ -114,7 +114,7 @@
 	{
 		public const string Index = "/Calendar";
 		public const string Title = "Calendar";
-		public const string Icon = "far fa-calendar-alt";  
+		public const string Icon = "far fa-calendar-alt";
 	}
 
 	public static class Contact
@@ -127,9 +127,11 @@
 
 	public static class Community
 	{
+		public const string Index = "/Community";
 		public const string Title = "Community";
-		public const string FragmentId = "Community";
 		public const string Descr = "Community Bulletin Board";
+		public const string Icon = "fas fa-chalkboard";
+		public const string Icon2 = "fas fa-city";
 	}
 
 	public static class DashBoard
@@ -137,15 +139,6 @@
 		public const string Index = "/Admin/Dashboard/Index";
 		public const string Title = "DashBoard";
 		public const string Icon = "fas fa-tachometer-alt";
-
-		public const string ThrowException = "/Admin/ThrowException";
-		public const string FontAwesome = "/Admin/FontAwesome";
-
-		public const string PerformanceCompliance = "/Admin/PerformanceCompliance";
-
-		public const string Routes = "/Admin/Routes";
-		public const string RoutesTitle = "Show routing endpoints";
-		public const string RoutesIcon = "fas fa-route";
 	}
 
 	public static class FurtherStudies
@@ -199,6 +192,12 @@
 		//public const string ImgUrl = Blobs.UrlOther("in-depth-book-of-john-1024-385.jpeg");
 	}
 
+	public static class IntroductionAndWelcome
+	{
+		public const string Index = "/IntroductionAndWelcome";
+		public const string Title = "Introduction and Welcome";
+		public const string Icon = "far fa-smile";
+	}
 
 	public static class KeyDatesEdit
 	{
@@ -390,27 +389,46 @@
 		public const string Title2 = "Sukkot 2021";
 		public const string Icon = "fas fa-campground";
 		public const string RegistrationShell = "/Sukkot/RegistrationShell"; // See Startup.cs options.Conventions.AddPageRoute("/Sukkot/RegistrationShell", "/Sukkot/Registration");
+
 		public const string CreateEdit = "/Sukkot/CreateEdit";
+		public const string CreateEditTitle = "Sukkot Create/Edit";
+
 		public const string Details = "/Sukkot/Details";
+		public const string DetailsTitle = "Sukkot Details";
+
 		public const string DeleteConfirmation = "/Sukkot/DeleteConfirmation";
+		public const string DeleteConfirmationTitle = "Delete Sukkot Registration?";
+		public const string DeleteConfirmationSubTitle = "Delete Registration? | ";
 
 		public const string AdminIndex = "/SukkotAdmin";
+		public const string AdminIndexTitle = "Sukkot Admin";
+
 		public const string RegistrationList = "/SukkotAdmin/RegistrationList";
+		public const string RegistrationListTitle = "Sukkot Admin Registration List";
+
 		public const string RegistrationGrid = "/SukkotAdmin/RegistrationGrid";
+		public const string RegistrationGridTitle = "Sukkot Admin Registration Grid";
+
 		public const string Notes = "/SukkotAdmin/Notes";
+		public const string NotesTitle = "Sukkot Admin Registration Notes";
+
 		public const string AttendanceAllFeastDays = "/SukkotAdmin/AttendanceAllFeastDays";
 		public const string AttendanceChart = "/SukkotAdmin/AttendanceChart";
 		public const string ReturnUrlSukkotRegistration = "/Sukkot/Registration";
 
 		public const string LodgingDaysAll = "/SukkotAdmin/LodgingDaysAll";
+
 		public const string LodgingDaysChart = "/SukkotAdmin/LodgingDaysChart";
 		public const string LodgingDaysPivotOnCampCode = "/SukkotAdmin/LodgingDaysPivotOnCampCode";
-		public const string LodgingDetails = "/SukkotAdmin/LodgingDetails";
+		public const string LodgingDaysPivotOnCampCodeTitle = "Sukkot Admin Lodging Days Pivot on Camp";
 
+		public const string LodgingDetails = "/SukkotAdmin/LodgingDetails";
+		public const string LodgingDetailsTitle = "Sukkot Admin Lodging Details";
 
 		public static class Donations
 		{
 			public const string Grid = "/SukkotAdmin/DonationsGrid";
+			public const string GridTitle = "Sukkot Admin DonationsGrid";
 			public const string CreateDonation = "/SukkotAdmin/CreateDonation";
 		}
 
@@ -426,6 +444,7 @@
 		{
 			public const string LogErrorTest = "/SukkotAdmin/LogErrorTest";
 			public const string ErrorLog = "/SukkotAdmin/ErrorLog";
+			public const string ErrorLogTitle = "Sukkot Admin ErrorLog";
 			public const string ErrorLogEmpty = "/SukkotAdmin/ErrorLogEmpty";
 		}
 
@@ -443,12 +462,13 @@
 			public const string Edit = "/SukkotAdmin/KitchenWork/Edit";
 		}
 
-		public static class Links2 
+		public static class Links2
 		{
 			public const string EditMeals = "/Sukkot/EditMeals";
 			public const string DetailsMealTicket = "/Sukkot/DetailsMealTicket";
 			public const string Details = "/Sukkot/Details";
 			public const string Payment = "/Sukkot/Payment";
+			public const string PaymentTitle = "Donations Earmarked for Sukkot";
 			public const string KitchenWork = "/Sukkot/KitchenWork";
 		}
 		//public const string TitleMealPlanner = "Sukkot Meal Planner";
@@ -477,45 +497,45 @@
 		public const string Index = "/UpcomingEvents/";
 		public const string Title = "Upcoming Events";
 		public const string Icon = "far fa-clock";
-		public const string Grid = "/UpcomingEventsGrid";
+
+		public static class Edit
+		{
+			public const string Page = "/UpcomingEventsEdot";
+			public const string Title = "Upcoming Events Edit";
+			public const string Icon = "fas fa-pencil-alt";
+		}
+
+		public static class Grid
+		{
+			public const string Page = "/UpcomingEventsGrid"; // ToDo: No references
+			public const string Title = "Upcoming Events Grid";
+			public const string Icon = "far fa-clock";
+		}
+
+		public static class Table
+		{
+			public const string Page = "/UpcomingEventsTable";  // ToDo: No references
+			public const string Title = "Upcoming Events Table";
+			public const string Icon = "fas fa-table";
+		}
+
+		public static class UploadImage
+		{
+			public const string Page = "/UpcomingEventsUploadImage";
+			public const string Title = "Upload Upcoming Events Image ";
+			public const string Icon = "fas fa-cloud-upload-alt";
+			public const string Icon2 = "fas fa-image";
+		}
+
+		public static class EditMarkdown
+		{
+			public const string Page = "/UpcomingEventsEditMarkdown";
+			public const string Title = "Edit Upcoming Events Markdown ";
+			public const string Icon = "fab fa-markdown";
+			public const string Icon2 = "fas fa-pencil-alt";
+		}
 	}
 
-	public static class UpcomingEventsEdit
-	{
-		public const string Edit = "/UpcomingEventsEdit";
-		public const string Title = "Upcoming Events Edit";
-		public const string Icon = "fas fa-pencil-alt";
-	}
-
-	public static class UpcomingEventsUploadImage
-	{
-		public const string Upload = "/UpcomingEventsUploadImage";
-		public const string Title = "Upload Upcoming Events Image ";
-		public const string Icon = "fas fa-cloud-upload-alt"; 
-		public const string Icon2 = "fas fa-image"; 
-	}
-
-	public static class UpcomingEventsEditMarkdown
-	{
-		public const string Edit = "/UpcomingEventsEditMarkdown";
-		public const string Title = "Edit Upcoming Events Markdown ";
-		public const string Icon = "fab fa-markdown";
-		public const string Icon2 = "fas fa-pencil-alt";
-	}
-
-	public static class UpcomingEventsGrid
-	{
-		public const string Grid = "/UpcomingEventsGrid";
-		public const string Title = "Upcoming Events Grid";
-		public const string Icon = "far fa-clock";
-	}
-
-	public static class UpcomingEventsTable
-	{
-		public const string Table = "/UpcomingEventsTable";
-		public const string Title = "Upcoming Events Table";
-		public const string Icon = "fas fa-table"; 
-	}
 
 	public static class WeeklyVideos
 	{
@@ -573,17 +593,23 @@
 		//public const string Icon = "fas fa-tractor";
 		public const string Icon = "fas fa-dharmachakra";
 		public const string Descr = "Landing page for the Windmill Ranch project";
-		public const string IndexCodeOfConduct = "/CodeOfConduct/";
-		public const string TitleCodeOfConduct = "Code Of Conduct";
-		public const string IconCodeOfConduct = "fas fa-handshake";
+		
+		public static class CodeOfConduct
+		{
+			public const string Page = "/CodeOfConduct/";
+			public const string Title = "Code Of Conduct";
+			public const string Icon = "fas fa-handshake";
+		}
+
+		public static class Swales
+		{
+			public const string Index = "/swales/";
+			public const string Title = "Swales / Food Forest";
+			public const string Icon = "fas fa-drafting-compass";
+			public const string Descr = "Swales and Food Forest";
+		}
+
 	}
 
-	public static class WindmillRanchSwales
-	{
-		public const string Index = "/swales/";
-		public const string Title = "Swales / Food Forest";
-		//public const string Icon = "fas fa-tractor";
-		public const string Icon = "fas fa-drafting-compass";
-		public const string Descr = "Swales and Food Forest";
-	}
+
 }

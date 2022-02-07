@@ -18,20 +18,7 @@ namespace LivingMessiah.Web.Pages.Admin.Dashboard
 
 		void ThrowException_ButtonClick()
 		{
-			/*
-			for (int i = 0; i < 10; i++)
-			{
-				if (i == 5)
-				{
-					throw new Exception("This is our demo exception");
-				}
-				else
-				{
-					Logger.LogDebug($"The value of i is {i}");
-				}
-			}
-			*/
-	
+			Logger.LogDebug(string.Format("Inside {0}", nameof(Index) + "!" + nameof(ThrowException_ButtonClick)));
 			try
 			{
 				for (int i = 0; i < 10; i++)
@@ -49,15 +36,14 @@ namespace LivingMessiah.Web.Pages.Admin.Dashboard
 			}
 			catch (Exception ex)
 			{
-				Logger.LogError(ex, $"We caught this exception inside {nameof(Index)}!{nameof(ThrowException_ButtonClick)}");
-				NavManager.NavigateTo(LivingMessiah.Web.Links.Home.Error, forceLoad: true);
+				DatabaseError = true;
+				DatabaseErrorMsg = $"We caught this exception inside {nameof(Index)}!{nameof(ThrowException_ButtonClick)}";
+				Logger.LogError(ex, $"...{DatabaseErrorMsg}");
 			}
-
-
 		}
 
-		
-
+		protected bool DatabaseError { get; set; } = false;
+		protected string DatabaseErrorMsg { get; set; }
 
 	}
 }

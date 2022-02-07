@@ -1,15 +1,17 @@
 ﻿@page "/mishpocha"
-@using static LivingMessiah.Web.Links.Mishpocha
+
+@using Page = LivingMessiah.Web.Links.Mishpocha
+<PageTitle>@Page.Title</PageTitle>
 
 <p class="lead"><i>Mishpocha</i> is Hebrew for Family Life</p>
 
-<img src='@Blobs.UrlOther("mishpocha-1024-385.jpeg")' alt="@Descr" class="img-fluid rounded mt-3" />
+<img src='@Blobs.UrlOther("mishpocha-1024-385.jpeg")' alt="@Page.Descr" class="img-fluid rounded mt-3" />
 
 <div class="card border-primary mb-3">
 
 	<div class="card-body">
 		<img src='@Blobs.UrlOther("wanda-marie-hebron-cancer-free.jpg")' 
-				 alt="@Descr" class="img-fluid rounded mt-3" />
+				 alt="@Page.Descr" class="img-fluid rounded mt-3" />
 
 		<p class="size14">
 			My name is <b>Wanda Marie Hebron</b>. I was recently diagnosed with triple negative breast cancer grade 3, which is the worst kind of breast cancer you can get. They found no genetic markers, and have said I am currently stage 2b.

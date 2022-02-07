@@ -1,8 +1,10 @@
 ﻿@page "/Location"
-@using static LivingMessiah.Web.Links.Location; 
+@using Page = LivingMessiah.Web.Links.Location;
+<PageTitle>@Page.Title</PageTitle>
+
 <div class="pb-2 mt-4 mb-2 border-bottom">
 	<h2>
-		<i class="@Icon"></i> @Title
+		<i class="@Page.Icon"></i> @Page.Title
 	</h2>
 </div>
 

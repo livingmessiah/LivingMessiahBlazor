@@ -19,8 +19,11 @@
 	<SukkotAdminMenubar></SukkotAdminMenubar>
 </AuthorizeView>
 
+@using Page = LivingMessiah.Web.Links.Sukkot
+<PageTitle>@Page.RegistrationListTitle</PageTitle>
+
 <div class="pb-2 mt-4 mb-4 border-bottom">
-	<h3><i class="fas fa-table"></i> Registration List</h3>
+	<h3><i class="fas fa-table"></i> @Page.RegistrationListTitle</h3>
 	<h5 class="text-muted">
 		Sorted by @sortField
 

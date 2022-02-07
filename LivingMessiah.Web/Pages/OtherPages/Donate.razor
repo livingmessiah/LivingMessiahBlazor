@@ -1,6 +1,8 @@
 ﻿@page "/donate"
-@using static LivingMessiah.Web.Links.PayPal.Donate
-<h2><span class="text-primary @Icon mb-3"></span> @Title</h2>
+@using Page = LivingMessiah.Web.Links.PayPal.Donate
+<PageTitle>@Page.Title</PageTitle>
+
+<h2><span class="text-primary @Page.Icon mb-3"></span> @Page.Title</h2>
 
 <p class="lead text-primary text-center">
 	<sup><small><i class="far fa-heart text-muted"></i></small></sup> We greatly appreciate your support of this ministry <sup><small><i class="far fa-heart text-muted"></i></small></sup>

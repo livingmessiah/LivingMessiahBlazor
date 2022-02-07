@@ -1,9 +1,6 @@
 ﻿@page "/cancel_donation.html"
-@*
-	ToDo This doesnt work
-	https://livingmessiah.com/cancel_donation.html  This livingmessiah.com page can’t be found
-	                   page "/cancel_donation.html"
-*@
+@page "/cancel_donation"
+
 @using Page = LivingMessiah.Web.Links.PayPal
 <PageTitle>@Page.CancelDonation.Title</PageTitle>
 
@@ -26,7 +23,6 @@
 	</div>
 </div>
 <!-- end #content -->
-<h3>cancel_donation</h3>
 
 @code {
 	protected readonly MarkupString AnchorEmail = 
