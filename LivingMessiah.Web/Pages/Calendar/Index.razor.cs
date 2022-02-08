@@ -97,6 +97,7 @@ namespace LivingMessiah.Web.Pages.Calendar
 			{
 				//CachedMsg = "Data gotten from CACHE";
 				Logger.LogDebug(string.Format("... Data gotten from CACHE"));
+				LoadAppointmentDataList();
 			}
 		}
 
@@ -105,8 +106,6 @@ namespace LivingMessiah.Web.Pages.Calendar
 		{
 			Logger.LogDebug(string.Format("...{0}", nameof(Index) + "!" + nameof(LoadAppointmentDataList)));
 			AppointmentDataList = new List<ReadonlyEventsData>();
-
-
 
 			string color = "";
 			try

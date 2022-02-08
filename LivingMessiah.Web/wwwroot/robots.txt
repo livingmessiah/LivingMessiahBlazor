@@ -1,0 +1,6 @@
+﻿User-Agent: *
+Disallow: /Admin/
+Disallow: /BlazorExamples/
+Disallow: /BlazorSyncFusion/
+Disallow: /Contact/
+
