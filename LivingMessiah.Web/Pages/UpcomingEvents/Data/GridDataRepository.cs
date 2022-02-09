@@ -18,29 +18,29 @@ using System.Text;
 using System.Data.SqlClient;
 
 
-namespace LivingMessiah.Web.Pages.UpcomingEvents.Data
+namespace LivingMessiah.Web.Pages.UpcomingEvents.Data;
+
+public interface IGridDataRepository
 {
-	public interface IGridDataRepository
-	{
 		Task<List<EditVM>> GetUpcomingEventsEditList();
 		Task<int> GetUpcomingEventsEditCount();
 		Task Create(EditVM EditVM);
 		Task UpdateNonKeyDate(EditVM vm);
 		Task RemoveNonKeyDate(int id);
-	}
+}
 
-	public class GridDataRepository : IGridDataRepository
-	{
+public class GridDataRepository : IGridDataRepository
+{
 		public GridDataRepository(IConfiguration config, ILogger<GridDataRepository> logger)
 		{
-			this.config = config;
-			this.Logger = logger;
-			connectionString = config[configationConnectionKey];
+				this.config = config;
+				this.Logger = logger;
+				connectionString = config[configationConnectionKey];
 		}
 
 		public string BaseSqlDump
 		{
-			get { return SqlDump; }
+				get { return SqlDump; }
 		}
 
 		#region BaseClass
@@ -56,32 +56,32 @@ namespace LivingMessiah.Web.Pages.UpcomingEvents.Data
 
 		public string SqlDump
 		{
-			get
-			{
-				string s = "";
-				s = Sql ?? "SQL IS NULL";
-				if (Parms != null)
+				get
 				{
-					string v = "";
-					var sb = new StringBuilder();
-					foreach (var name in Parms.ParameterNames) // Why is this empty? 
-					{
-						var pValue = Parms.Get<dynamic>(name);
-						v = (pValue != null) ? pValue.ToString() : "null";
-						sb.AppendFormat($"name {name}={v}\n");
-					}
+						string s = "";
+						s = Sql ?? "SQL IS NULL";
+						if (Parms != null)
+						{
+								string v = "";
+								var sb = new StringBuilder();
+								foreach (var name in Parms.ParameterNames) // Why is this empty? 
+								{
+										var pValue = Parms.Get<dynamic>(name);
+										v = (pValue != null) ? pValue.ToString() : "null";
+										sb.AppendFormat($"name {name}={v}\n");
+								}
 
-					s += ", parameter: " + sb.ToString();
+								s += ", parameter: " + sb.ToString();
 
+						}
+						return s;
 				}
-				return s;
-			}
 		}
 		#endregion
 
 		public async Task<List<EditVM>> GetUpcomingEventsEditList()
 		{
-			Sql = $@"
+				Sql = $@"
 SELECT 
   Id, YearId, DateId, DateTime AS EventDate
 , EventTypeId AS EventTypeEnum
@@ -92,49 +92,49 @@ FROM KeyDate.UpcomingEvent
 WHERE EventTypeId <> 1 -- 1=KeyDate
 ORDER BY Id DESC
 ";
-			using (var connect = new SqlConnection(connectionString))
-			{
-				await connect.OpenAsync();
-				var rows = await connect.QueryAsync<EditVM>(Sql);
-				return rows.ToList();
-			}
+				using (var connect = new SqlConnection(connectionString))
+				{
+						await connect.OpenAsync();
+						var rows = await connect.QueryAsync<EditVM>(Sql);
+						return rows.ToList();
+				}
 		}
 
 		public async Task<int> GetUpcomingEventsEditCount()
 		{
-			Sql = $@"
+				Sql = $@"
 SELECT COUNT(*)
 FROM KeyDate.UpcomingEvent
 WHERE EventTypeId <> 1 -- 1=KeyDate
 ";
-			using (IDbConnection connect = new SqlConnection(connectionString))
-			{
-				int result = await connect.ExecuteScalarAsync<int>(Sql);
-				return result;
-			}
+				using (IDbConnection connect = new SqlConnection(connectionString))
+				{
+						int result = await connect.ExecuteScalarAsync<int>(Sql);
+						return result;
+				}
 		}
 
 		public async Task UpdateNonKeyDate(EditVM EditVM)
 		{
-			Parms = new DynamicParameters(new
-			{
-				Id = EditVM.Id,
-				YearId = EditVM.YearId,
-				DateId = EditVM.DateId,
-				EventDate = EditVM.EventDate,
-				ShowBeginDate = EditVM.ShowBeginDate,
-				ShowEndDate = EditVM.ShowEndDate,
-				EventTypeEnum = EditVM.EventTypeEnum,
-				Title = EditVM.Title,
-				SubTitle = EditVM.SubTitle,
-				Description = EditVM.Description,
-				ImageUrl = EditVM.ImageUrl,
-				WebsiteUrl = EditVM.WebsiteUrl,
-				WebsiteDescr = EditVM.WebsiteDescr,
-				YouTubeId = EditVM.YouTubeId
-			});
+				Parms = new DynamicParameters(new
+				{
+						Id = EditVM.Id,
+						YearId = EditVM.YearId,
+						DateId = EditVM.DateId,
+						EventDate = EditVM.EventDate,
+						ShowBeginDate = EditVM.ShowBeginDate,
+						ShowEndDate = EditVM.ShowEndDate,
+						EventTypeEnum = EditVM.EventTypeEnum,
+						Title = EditVM.Title,
+						SubTitle = EditVM.SubTitle,
+						Description = EditVM.Description,
+						ImageUrl = EditVM.ImageUrl,
+						WebsiteUrl = EditVM.WebsiteUrl,
+						WebsiteDescr = EditVM.WebsiteDescr,
+						YouTubeId = EditVM.YouTubeId
+				});
 
-			Sql = $@"
+				Sql = $@"
 UPDATE KeyDate.UpcomingEvent SET
 	YearId = @YearId,
 	DateId = @DateId,
@@ -151,81 +151,80 @@ UPDATE KeyDate.UpcomingEvent SET
 	YouTubeId = @YouTubeId
 WHERE Id = @Id
 ";
-			using (IDbConnection connect = new SqlConnection(connectionString))
-			{
-				await connect.ExecuteAsync(Sql, Parms);
-			}
+				using (IDbConnection connect = new SqlConnection(connectionString))
+				{
+						await connect.ExecuteAsync(Sql, Parms);
+				}
 		}
 
 		public async Task RemoveNonKeyDate(int id)
 		{
-			Parms = new DynamicParameters(new { Id = id });
-			Sql = $@" DELETE KeyDate.UpcomingEvent WHERE Id = @Id";
-			using (IDbConnection connect = new SqlConnection(connectionString))
-			{
-				await connect.ExecuteAsync(Sql, Parms);
-			}
+				Parms = new DynamicParameters(new { Id = id });
+				Sql = $@" DELETE KeyDate.UpcomingEvent WHERE Id = @Id";
+				using (IDbConnection connect = new SqlConnection(connectionString))
+				{
+						await connect.ExecuteAsync(Sql, Parms);
+				}
 		}
 
 		public async Task Create(EditVM EditVM)
 		{
-			Logger.LogDebug(string.Format("Inside {0}", nameof(GridDataRepository) + "!" + nameof(EditVM)));
+				Logger.LogDebug(string.Format("Inside {0}", nameof(GridDataRepository) + "!" + nameof(EditVM)));
 
-			Sql = "KeyDate.stpUpcomingEventInsert";
-			Parms = new DynamicParameters(new
-			{
-				YearId = EditVM.YearId,
-				DateId = EditVM.DateId,
-				DateTime = EditVM.EventDate,
-				ShowBeginDate = EditVM.ShowBeginDate,
-				ShowEndDate = EditVM.ShowEndDate,
-				EventTypeId = 7, // EditVM.EventTypeEnum,
-				Title = EditVM.Title,
-				SubTitle = EditVM.SubTitle,
-				Description = EditVM.Description,
-				ImageUrl = EditVM.ImageUrl,
-				WebsiteUrl = EditVM.WebsiteUrl,
-				WebsiteDescr = EditVM.WebsiteDescr,
-				YouTubeId = EditVM.YouTubeId
-			});
-
-			Parms.Add("@NewId", dbType: DbType.Int32, direction: ParameterDirection.Output);
-			Parms.Add(ReturnValueParm, dbType: DbType.Int32, direction: ParameterDirection.ReturnValue);
-
-			int NewId = 0;
-			int SprocReturnValue = 0;
-			string ReturnMsg = "";
-
-			using (var connect = new SqlConnection(connectionString))
-			{
-				await connect.OpenAsync();
-				var affectedrows = await connect.ExecuteAsync(Sql, Parms, commandType: System.Data.CommandType.StoredProcedure);
-				SprocReturnValue = Parms.Get<int>(ReturnValueName);
-				int? x = Parms.Get<int?>("NewId");
-
-				if (x == null)
+				Sql = "KeyDate.stpUpcomingEventInsert";
+				Parms = new DynamicParameters(new
 				{
-					if (SprocReturnValue == ReturnValueViolationInUniqueIndex)
-					{
-						ReturnMsg = $"Database call did not insert a new record because it caused a Unique Index Violation; registration.EMail: {EditVM.Title}; ";
-						Logger.LogWarning($"...ReturnMsg: {ReturnMsg}; {Environment.NewLine} {Sql}");
-					}
-					else
-					{
-						ReturnMsg = $"Database call falied; registration.EMail: {EditVM.Title}; SprocReturnValue: {SprocReturnValue}";
-						Logger.LogWarning($"...ReturnMsg: {ReturnMsg}; {Environment.NewLine} {Sql}");
-					}
-				}
-				else
+						YearId = EditVM.YearId,
+						DateId = EditVM.DateId,
+						DateTime = EditVM.EventDate,
+						ShowBeginDate = EditVM.ShowBeginDate,
+						ShowEndDate = EditVM.ShowEndDate,
+						EventTypeId = 7, // EditVM.EventTypeEnum,
+						Title = EditVM.Title,
+						SubTitle = EditVM.SubTitle,
+						Description = EditVM.Description,
+						ImageUrl = EditVM.ImageUrl,
+						WebsiteUrl = EditVM.WebsiteUrl,
+						WebsiteDescr = EditVM.WebsiteDescr,
+						YouTubeId = EditVM.YouTubeId
+				});
+
+				Parms.Add("@NewId", dbType: DbType.Int32, direction: ParameterDirection.Output);
+				Parms.Add(ReturnValueParm, dbType: DbType.Int32, direction: ParameterDirection.ReturnValue);
+
+				int NewId = 0;
+				int SprocReturnValue = 0;
+				string ReturnMsg = "";
+
+				using (var connect = new SqlConnection(connectionString))
 				{
-					NewId = int.TryParse(x.ToString(), out NewId) ? NewId : 0;
-					ReturnMsg = $"Upcoming Event created for {EditVM.Title}; NewId={NewId}";
-					Logger.LogDebug($"...Return NewId:{NewId}");
+						await connect.OpenAsync();
+						var affectedrows = await connect.ExecuteAsync(Sql, Parms, commandType: System.Data.CommandType.StoredProcedure);
+						SprocReturnValue = Parms.Get<int>(ReturnValueName);
+						int? x = Parms.Get<int?>("NewId");
+
+						if (x == null)
+						{
+								if (SprocReturnValue == ReturnValueViolationInUniqueIndex)
+								{
+										ReturnMsg = $"Database call did not insert a new record because it caused a Unique Index Violation; registration.EMail: {EditVM.Title}; ";
+										Logger.LogWarning($"...ReturnMsg: {ReturnMsg}; {Environment.NewLine} {Sql}");
+								}
+								else
+								{
+										ReturnMsg = $"Database call falied; registration.EMail: {EditVM.Title}; SprocReturnValue: {SprocReturnValue}";
+										Logger.LogWarning($"...ReturnMsg: {ReturnMsg}; {Environment.NewLine} {Sql}");
+								}
+						}
+						else
+						{
+								NewId = int.TryParse(x.ToString(), out NewId) ? NewId : 0;
+								ReturnMsg = $"Upcoming Event created for {EditVM.Title}; NewId={NewId}";
+								Logger.LogDebug($"...Return NewId:{NewId}");
+						}
 				}
-			}
 
 		}
 
 
-	}
 }

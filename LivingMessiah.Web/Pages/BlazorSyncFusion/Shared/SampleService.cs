@@ -2,12 +2,13 @@
 using Microsoft.AspNetCore.Components;
 
 namespace LivingMessiah.Web.Pages.BlazorSyncFusion.Shared //  BlazorDemos.Shared 
+;
+
+/// <summary>
+/// The injectable service class used to handle common functionalities all over the application.
+/// </summary>
+public class SampleService
 {
-	/// <summary>
-	/// The injectable service class used to handle common functionalities all over the application.
-	/// </summary>
-	public class SampleService
-	{
 		/// <summary>
 		/// Specifies the app is rendering in device or not.
 		/// </summary>
@@ -74,5 +75,4 @@ public LivingMessiah.Web.Pages.BlazorSyncFusion.Shared.SampleService. SampleInfo
 
 		// Updates the SampleInfo and ComponentName based on current loaded uri.
 		//internal void Update(NavigationManager urlHelper)
-	}  // public class SampleService
-}
+}  // public class SampleService

@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Components;
 using System.Collections.Generic;
 
-namespace LivingMessiah.Web.Shared
+namespace LivingMessiah.Web.Shared;
+
+public partial class TableTemplate<TItem>
 {
-	public partial class TableTemplate<TItem>
-	{
 		[Parameter]
 		public RenderFragment TableHeader { get; set; }
 
@@ -14,5 +14,4 @@ namespace LivingMessiah.Web.Shared
 
 		[Parameter]
 		public IReadOnlyList<TItem> Items { get; set; }
-	}
 }

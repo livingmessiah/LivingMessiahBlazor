@@ -2,3 +2,6 @@
 
 # IDE0037: Use inferred member name
 dotnet_diagnostic.IDE0037.severity = silent
+csharp_style_namespace_declarations = file_scoped:warning
+indent_style = tab
+tab_width=2

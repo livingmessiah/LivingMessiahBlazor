@@ -2,10 +2,10 @@
 using System.Linq;
 
 
-namespace LivingMessiah.Web.Pages.KeyDates.Enums
+namespace LivingMessiah.Web.Pages.KeyDates.Enums;
+
+public enum FeastDayEnum
 {
-	public enum FeastDayEnum
-	{
 		Hanukkah = 1,
 		Purim = 2,
 		Passover = 3,
@@ -14,10 +14,10 @@ namespace LivingMessiah.Web.Pages.KeyDates.Enums
 		YomKippur = 6,
 		Tabernacles = 7,
 		HanukkahEOY = 8
-	}
+}
 
-	public class FeastDayLocal
-	{
+public class FeastDayLocal
+{
 		public static List<FeastDayLocal> All { get; } = new List<FeastDayLocal>();
 
 		/*
@@ -44,32 +44,31 @@ namespace LivingMessiah.Web.Pages.KeyDates.Enums
 		public string Details { get; private set; }
 
 		private FeastDayLocal(FeastDayEnum feastDayEnum, int id, string name, string transliteration
-			, string hebrew, string details, string addDaysDescr, int? addDays, string icon) 
+			, string hebrew, string details, string addDaysDescr, int? addDays, string icon)
 		{
-			FeastDayEnum = feastDayEnum;
-			Id = id;
-			Name = name;
-			Transliteration = transliteration;
-			Hebrew = hebrew;
-			Details = details;
-			AddDaysDescr = addDaysDescr;
-			AddDays = addDays;
-			Icon = icon;
-			All.Add(this);
+				FeastDayEnum = feastDayEnum;
+				Id = id;
+				Name = name;
+				Transliteration = transliteration;
+				Hebrew = hebrew;
+				Details = details;
+				AddDaysDescr = addDaysDescr;
+				AddDays = addDays;
+				Icon = icon;
+				All.Add(this);
 		}
 
 		public static FeastDayLocal FromEnum(FeastDayEnum enumValue)
 		{
-			return All.SingleOrDefault(r => r.FeastDayEnum == enumValue);
+				return All.SingleOrDefault(r => r.FeastDayEnum == enumValue);
 		}
 
 
 		public static FeastDayLocal FromInt(int intValue)
 		{
-			return All.SingleOrDefault(r => r.Id == intValue);
+				return All.SingleOrDefault(r => r.Id == intValue);
 		}
 
 
-	} // class FeastDayLocal
-} // namespace
+} // class FeastDayLocal
 

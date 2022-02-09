@@ -14,16 +14,16 @@ using Microsoft.AspNetCore.Authorization;
 using Syncfusion.Blazor.Grids;
 
 
-namespace LivingMessiah.Web.Pages.SukkotAdmin.Donations
+namespace LivingMessiah.Web.Pages.SukkotAdmin.Donations;
+
+[Authorize(Roles = Roles.AdminOrSukkot)]
+public partial class DonationsGrid
 {
-	[Authorize(Roles = Roles.AdminOrSukkot)]
-	public partial class DonationsGrid
-	{
 		[Inject]
 		public ILogger<DonationsGrid> Logger { get; set; }
 
 		[Inject]
-		public IDonationRepository db { get; set; }  
+		public IDonationRepository db { get; set; }
 
 		public IEnumerable<DonationReport> DonationReportList { get; set; }
 
@@ -36,82 +36,81 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Donations
 
 		protected override async Task OnInitializedAsync()
 		{
-			await GetDataWithParms(CurrentFilter);
+				await GetDataWithParms(CurrentFilter);
 		}
 
 		private SfGrid<DonationReport> Grid;
 		public async Task ToolbarClickHandler(Syncfusion.Blazor.Navigations.ClickEventArgs args)
 		{
-			if (args.Item.Id == SyncFusionToolbar.Pdf.ArgId)
-			{
-				await this.Grid.ExportToPdfAsync();
-			}
-			if (args.Item.Id == SyncFusionToolbar.Excel.ArgId)
-			{
-				await this.Grid.ExportToExcelAsync();
-			}
-			if (args.Item.Id == SyncFusionToolbar.Csv.ArgId)
-			{
-				await this.Grid.ExportToCsvAsync();
-			}
+				if (args.Item.Id == SyncFusionToolbar.Pdf.ArgId)
+				{
+						await this.Grid.ExportToPdfAsync();
+				}
+				if (args.Item.Id == SyncFusionToolbar.Excel.ArgId)
+				{
+						await this.Grid.ExportToExcelAsync();
+				}
+				if (args.Item.Id == SyncFusionToolbar.Csv.ArgId)
+				{
+						await this.Grid.ExportToCsvAsync();
+				}
 
 		}
 
 		public void CustomizeCell(QueryCellInfoEventArgs<DonationReport> args)
 		{
-			if (args.Column.Field == nameof(DonationReport.LocationName)) 
-			{
-				BaseLocationSmartEnum e = BaseLocationSmartEnum.FromName(args.Data.LocationName, false);
-				//Logger.LogDebug($"Inside {nameof(CustomizeCell)}; args.Column.Field:{args.Column.Field}; textColor:{textColor}");
-				args.Cell.AddClass(new string[] { e.TextColor });
-			}
+				if (args.Column.Field == nameof(DonationReport.LocationName))
+				{
+						BaseLocationSmartEnum e = BaseLocationSmartEnum.FromName(args.Data.LocationName, false);
+						//Logger.LogDebug($"Inside {nameof(CustomizeCell)}; args.Column.Field:{args.Column.Field}; textColor:{textColor}");
+						args.Cell.AddClass(new string[] { e.TextColor });
+				}
 		}
 
 		private async Task GetDataWithParms(BaseDonationStatusFilterSmartEnum filter)
 		{
-			BaseRegistrationSortSmartEnum sortAndDirection = BaseRegistrationSortSmartEnum.ByFirstName;
-			string sort = sortAndDirection.SqlTableColumnName + sortAndDirection.Order;
+				BaseRegistrationSortSmartEnum sortAndDirection = BaseRegistrationSortSmartEnum.ByFirstName;
+				string sort = sortAndDirection.SqlTableColumnName + sortAndDirection.Order;
 
-			Logger.LogDebug($"Inside {nameof(DonationsGrid)}!{nameof(GetDataWithParms)}; smartEnumFilter.Name:{filter.Name}; sort:{sort}");
-			try
-			{
-				DonationReportList = await db.GetDonationReport(filter, sort);
-				if (DonationReportList == null)
+				Logger.LogDebug($"Inside {nameof(DonationsGrid)}!{nameof(GetDataWithParms)}; smartEnumFilter.Name:{filter.Name}; sort:{sort}");
+				try
 				{
-					DatabaseWarning = true;
-					DatabaseWarningMsg = "DonationReportList NOT FOUND";
+						DonationReportList = await db.GetDonationReport(filter, sort);
+						if (DonationReportList == null)
+						{
+								DatabaseWarning = true;
+								DatabaseWarningMsg = "DonationReportList NOT FOUND";
+						}
 				}
-			}
-			catch (Exception ex)
-			{
-				DatabaseError = true;
-				DatabaseErrorMsg = $"Error reading database";
-				Logger.LogError(ex, $"...{DatabaseErrorMsg}");
-			}
-			StateHasChanged();  // https://stackoverflow.com/questions/56436577/blazor-form-submit-needs-two-clicks-to-refresh-view
+				catch (Exception ex)
+				{
+						DatabaseError = true;
+						DatabaseErrorMsg = $"Error reading database";
+						Logger.LogError(ex, $"...{DatabaseErrorMsg}");
+				}
+				StateHasChanged();  // https://stackoverflow.com/questions/56436577/blazor-form-submit-needs-two-clicks-to-refresh-view
 		}
 
 
 		protected async void OnClickFilter(BaseDonationStatusFilterSmartEnum newFilter)
 		{
-			CurrentFilter = newFilter;
-			Logger.LogDebug($"Inside {nameof(OnClickFilter)}; {newFilter.Name} is now the current filter");
-			await GetDataWithParms(newFilter);
+				CurrentFilter = newFilter;
+				Logger.LogDebug($"Inside {nameof(OnClickFilter)}; {newFilter.Name} is now the current filter");
+				await GetDataWithParms(newFilter);
 		}
 
 		public string ActiveFilter(BaseDonationStatusFilterSmartEnum filter)
 		{
-			if (filter == CurrentFilter)
-			{
-				//Logger.LogDebug($"Inside {nameof(ActiveFilter)}; {filter.Name} now active");
-				return "active";
-			}
-			else
-			{
-				return "";
-			}
+				if (filter == CurrentFilter)
+				{
+						//Logger.LogDebug($"Inside {nameof(ActiveFilter)}; {filter.Name} now active");
+						return "active";
+				}
+				else
+				{
+						return "";
+				}
 		}
 
-	}
 }
 

@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Components;
 
-namespace LivingMessiah.Web.Pages.ShabbatService
+namespace LivingMessiah.Web.Pages.ShabbatService;
+
+public abstract class BaseSection : ComponentBase
 {
-	public abstract class BaseSection : ComponentBase
-	{
 		[Parameter]
 		public RenderFragment SubTitle { get; set; }
 
@@ -29,8 +29,7 @@ namespace LivingMessiah.Web.Pages.ShabbatService
 
 		protected void Collapsed_ButtonClick()
 		{
-			IsCollapsed = !IsCollapsed;
+				IsCollapsed = !IsCollapsed;
 		}
 
-	}
 }

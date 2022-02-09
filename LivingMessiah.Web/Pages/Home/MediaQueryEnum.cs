@@ -1,14 +1,12 @@
-﻿namespace LivingMessiah.Web.Pages.Home
+﻿namespace LivingMessiah.Web.Pages.Home;
+
+public enum MediaQueryEnum
 {
-	public enum MediaQueryEnum
-	{
 		Xs = 1,
 		Sm = 2,
 		Md = 3,
 		Lg = 5,
 		Xl = 6
-	}
-
 }
 /*
 Breakpoint	Class infix	Dimensions

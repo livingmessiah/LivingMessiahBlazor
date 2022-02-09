@@ -3,10 +3,10 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using LivingMessiah.Web.Pages.SukkotAdmin.Enums;
 
-namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration.Domain
+namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration.Domain;
+
+public class RegistrationVM
 {
-	public class RegistrationVM
-	{
 		[Required]
 		[Key]
 		[DisplayName("Reg #")]
@@ -64,8 +64,8 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration.Domain
 		 */
 		[Required(ErrorMessage = "A location is required")]
 		[DisplayName("Location")]
-		public SukkotApi.Domain.Enums.LocationEnum LocationEnum  { get; set; } // = SukkotApi.Domain.Enums.LocationEnum.GreenhouseTrolleyHobbyFarm;
-		public BaseLocationSmartEnum LocationSmartEnum { get; set; } 
+		public SukkotApi.Domain.Enums.LocationEnum LocationEnum { get; set; } // = SukkotApi.Domain.Enums.LocationEnum.GreenhouseTrolleyHobbyFarm;
+		public BaseLocationSmartEnum LocationSmartEnum { get; set; }
 
 
 		[Required]
@@ -104,5 +104,4 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration.Domain
 		[DisplayName("I want some Kitchen Duties?")]
 		public bool WillHelpWithMeals { get; set; }
 
-	}
 }

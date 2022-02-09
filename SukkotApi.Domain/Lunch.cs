@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace SukkotApi.Domain
+namespace SukkotApi.Domain;
+
+public class Lunch
 {
-	public class Lunch
-	{
 		[DisplayName("Day 1")]
 		[Range(0, 12, ErrorMessage = "{0} must be between {1} and {2}")]
 		public int Day01 { get; set; }
@@ -51,5 +51,4 @@ namespace SukkotApi.Domain
 
 		[DisplayFormat(DataFormatString = "{0:C0}")]
 		public decimal MealCost { get; set; }
-	}
 }

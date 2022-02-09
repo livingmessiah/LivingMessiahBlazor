@@ -1,9 +1,9 @@
 ﻿using System;
 
-namespace SukkotApi.Domain
+namespace SukkotApi.Domain;
+
+public class MealsRelatedRegistrationData
 {
-	public class MealsRelatedRegistrationData
-	{
 		public int Id { get; set; }
 		public String EMail { get; set; }
 		public String FamilyName { get; set; }
@@ -18,5 +18,4 @@ namespace SukkotApi.Domain
 		public decimal MealRateAdult { get; set; }
 		public decimal MealRateChildBig { get; set; }
 
-	}
 }

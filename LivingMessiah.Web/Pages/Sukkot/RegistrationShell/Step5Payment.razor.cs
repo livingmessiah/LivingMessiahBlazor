@@ -4,10 +4,10 @@ using SukkotApi.Domain;
 using Microsoft.AspNetCore.Components.Web;
 using static LivingMessiah.Web.Links.Sukkot;
 
-namespace LivingMessiah.Web.Pages.Sukkot.RegistrationShell
+namespace LivingMessiah.Web.Pages.Sukkot.RegistrationShell;
+
+public partial class Step5Payment
 {
-	public partial class Step5Payment
-	{
 		[Inject]
 		NavigationManager NavManager { get; set; }
 
@@ -19,13 +19,12 @@ namespace LivingMessiah.Web.Pages.Sukkot.RegistrationShell
 
 		void Payment_ButtonClick(MouseEventArgs e, int id)
 		{
-			NavManager.NavigateTo(Links2.Payment + "/" + id);
+				NavManager.NavigateTo(Links2.Payment + "/" + id);
 		}
 
 		void Details_ButtonClick(MouseEventArgs e, int id, bool showPrintMsg)
 		{
-			NavManager.NavigateTo(LivingMessiah.Web.Links.Sukkot.Details + "/" + id + "/" + showPrintMsg);
+				NavManager.NavigateTo(LivingMessiah.Web.Links.Sukkot.Details + "/" + id + "/" + showPrintMsg);
 		}
 
-	}
 }

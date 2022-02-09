@@ -19,10 +19,10 @@ using Microsoft.Extensions.Caching.Memory;
 using CacheSettings = LivingMessiah.Web.Settings.Constants.CalendarCache;
 using Page = LivingMessiah.Web.Links.Calendar;
 
-namespace LivingMessiah.Web.Pages.Calendar
+namespace LivingMessiah.Web.Pages.Calendar;
+
+public partial class Index
 {
-	public partial class Index
-	{
 		[Inject]
 		public IOptions<AppSettings> AppSettings { get; set; }
 
@@ -55,106 +55,106 @@ namespace LivingMessiah.Web.Pages.Calendar
 
 		public class DropDownData
 		{
-			public string Name { get; set; }
-			public View Value { get; set; }
+				public string Name { get; set; }
+				public View Value { get; set; }
 		}
 
 		protected string CachedMsg { get; set; }
 
 		protected override async Task OnInitializedAsync()
 		{
-			YearId = AppSettings.Value.YearId;
-			Logger.LogDebug(string.Format("Inside Page: {0}, Class!Method: {1}, YearId:{2}", Page.Index, nameof(Index) + "!" + nameof(OnInitializedAsync), YearId));
+				YearId = AppSettings.Value.YearId;
+				Logger.LogDebug(string.Format("Inside Page: {0}, Class!Method: {1}, YearId:{2}", Page.Index, nameof(Index) + "!" + nameof(OnInitializedAsync), YearId));
 
-			CachedMsg = "";
-			CalendarEntries = Cache.Get<List<KeyDates.Queries.CalendarEntry>>(CacheSettings.Key);
-			if (CalendarEntries is null)
-			{
-				try
+				CachedMsg = "";
+				CalendarEntries = Cache.Get<List<KeyDates.Queries.CalendarEntry>>(CacheSettings.Key);
+				if (CalendarEntries is null)
 				{
-					CalendarEntries = await db.GetCalendarEntries(YearId);
-					if (CalendarEntries != null)
-					{
-						//CachedMsg = "Data gotten from DATABASE";
-						Logger.LogDebug(string.Format("... Data gotten from DATABASE"));
-						Cache.Set(CacheSettings.Key, CalendarEntries, TimeSpan.FromMinutes(CacheSettings.FromMinutes));
+						try
+						{
+								CalendarEntries = await db.GetCalendarEntries(YearId);
+								if (CalendarEntries != null)
+								{
+										//CachedMsg = "Data gotten from DATABASE";
+										Logger.LogDebug(string.Format("... Data gotten from DATABASE"));
+										Cache.Set(CacheSettings.Key, CalendarEntries, TimeSpan.FromMinutes(CacheSettings.FromMinutes));
+										LoadAppointmentDataList();
+								}
+								else
+								{
+										DatabaseWarning = true;
+										DatabaseWarningMsg = "CalendarEntries NOT FOUND";
+								}
+						}
+						catch (Exception ex)
+						{
+								DatabaseError = true;
+								DatabaseErrorMsg = $"Error reading database";
+								Logger.LogError(ex, $"...{DatabaseErrorMsg}");
+						}
+				}
+				else
+				{
+						//CachedMsg = "Data gotten from CACHE";
+						Logger.LogDebug(string.Format("... Data gotten from CACHE"));
 						LoadAppointmentDataList();
-					}
-					else
-					{
-						DatabaseWarning = true;
-						DatabaseWarningMsg = "CalendarEntries NOT FOUND";
-					}
 				}
-				catch (Exception ex)
-				{
-					DatabaseError = true;
-					DatabaseErrorMsg = $"Error reading database";
-					Logger.LogError(ex, $"...{DatabaseErrorMsg}");
-				}
-			}
-			else
-			{
-				//CachedMsg = "Data gotten from CACHE";
-				Logger.LogDebug(string.Format("... Data gotten from CACHE"));
-				LoadAppointmentDataList();
-			}
 		}
 
 
 		private void LoadAppointmentDataList()
 		{
-			Logger.LogDebug(string.Format("...{0}", nameof(Index) + "!" + nameof(LoadAppointmentDataList)));
-			AppointmentDataList = new List<ReadonlyEventsData>();
+				Logger.LogDebug(string.Format("...{0}", nameof(Index) + "!" + nameof(LoadAppointmentDataList)));
+				AppointmentDataList = new List<ReadonlyEventsData>();
 
-			string color = "";
-			try
-			{
-				BaseDateTypeSmartEnum baseDateTypeSmartEnum;
-				BaseSeasonSmartEnum baseSeasonSmartEnum;
-
-				foreach (var item in CalendarEntries)
+				string color = "";
+				try
 				{
-					baseDateTypeSmartEnum = BaseDateTypeSmartEnum.FromValue((int)item.DateTypeEnum);
+						BaseDateTypeSmartEnum baseDateTypeSmartEnum;
+						BaseSeasonSmartEnum baseSeasonSmartEnum;
 
-					if (baseDateTypeSmartEnum.Value == BaseDateTypeSmartEnum.Season)
-					{
-						baseSeasonSmartEnum = BaseSeasonSmartEnum.FromValue(item.Detail);
-						color = baseSeasonSmartEnum.CalendarColor;
-					}
-					else
-					{
-						color = baseDateTypeSmartEnum.CalendarColor;
-					}
+						foreach (var item in CalendarEntries)
+						{
+								baseDateTypeSmartEnum = BaseDateTypeSmartEnum.FromValue((int)item.DateTypeEnum);
 
-					AppointmentDataList.Add(new ReadonlyEventsData
-					{
-						Id = item.Id,
-						Subject = item.Descr,
-						Description = item.Descr,
-						StartTime = item.Date,
-						EndTime = item.Date,
-						CategoryColor = color, // item.DateTypeSmartEnum.CalendarColor,
-						IsAllDay = true,
-						IsReadonly = true
-					}
-				);
+								if (baseDateTypeSmartEnum.Value == BaseDateTypeSmartEnum.Season)
+								{
+										baseSeasonSmartEnum = BaseSeasonSmartEnum.FromValue(item.Detail);
+										color = baseSeasonSmartEnum.CalendarColor;
+								}
+								else
+								{
+										color = baseDateTypeSmartEnum.CalendarColor;
+								}
+
+								AppointmentDataList.Add(new ReadonlyEventsData
+								{
+										Id = item.Id,
+										Subject = item.Descr,
+										Description = item.Descr,
+										StartTime = item.Date,
+										EndTime = item.Date,
+										CategoryColor = color, // item.DateTypeSmartEnum.CalendarColor,
+										IsAllDay = true,
+										IsReadonly = true
+								}
+							);
+						}
+
 				}
-
-			}
-			catch (Exception ex)
-			{
-				DatabaseError = true;
-				DatabaseErrorMsg = $"Error loading AppointmentDataList";
-				Logger.LogError(ex, $"...{DatabaseErrorMsg}");
-			}
+				catch (Exception ex)
+				{
+						DatabaseError = true;
+						DatabaseErrorMsg = $"Error loading AppointmentDataList";
+						Logger.LogError(ex, $"...{DatabaseErrorMsg}");
+				}
 
 		}
 
 		public void OnEventRendered(EventRenderedArgs<ReadonlyEventsData> args)
 		{
-			args.Attributes = ScheduleData.ApplyCategoryColor(
-				args.Data.CategoryColor, args.Attributes, ViewNow);
+				args.Attributes = ScheduleData.ApplyCategoryColor(
+					args.Data.CategoryColor, args.Attributes, ViewNow);
 		}
 
 		#region Header
@@ -162,32 +162,32 @@ namespace LivingMessiah.Web.Pages.Calendar
 
 		public async void OnPrintClick()
 		{
-			await ScheduleRef.PrintAsync();
+				await ScheduleRef.PrintAsync();
 		}
 
 		public async void OnExportClick(Syncfusion.Blazor.SplitButtons.MenuEventArgs args)
 		{
-			if (args.Item.Text == "Excel")
-			{
-				List<ReadonlyEventsData> ExportDatas = new List<ReadonlyEventsData>();
-				List<ReadonlyEventsData> EventCollection = await ScheduleRef.GetEventsAsync();
-				List<ReadonlyEventsData> datas = EventCollection.ToList();
-				foreach (ReadonlyEventsData data in datas)
+				if (args.Item.Text == "Excel")
 				{
-					ExportDatas.Add(data);
+						List<ReadonlyEventsData> ExportDatas = new List<ReadonlyEventsData>();
+						List<ReadonlyEventsData> EventCollection = await ScheduleRef.GetEventsAsync();
+						List<ReadonlyEventsData> datas = EventCollection.ToList();
+						foreach (ReadonlyEventsData data in datas)
+						{
+								ExportDatas.Add(data);
+						}
+						ExportOptions Options = new ExportOptions()
+						{
+								ExportType = ExcelFormat.Xlsx,
+								CustomData = ExportDatas,
+								Fields = new string[] { "Id", "Subject", "StartTime", "EndTime" }
+						};
+						await ScheduleRef.ExportToExcelAsync(Options);
 				}
-				ExportOptions Options = new ExportOptions()
+				else
 				{
-					ExportType = ExcelFormat.Xlsx,
-					CustomData = ExportDatas,
-					Fields = new string[] { "Id", "Subject", "StartTime", "EndTime" }
-				};
-				await ScheduleRef.ExportToExcelAsync(Options);
-			}
-			else
-			{
-				await ScheduleRef.ExportToICalendarAsync();
-			}
+						await ScheduleRef.ExportToICalendarAsync();
+				}
 		}
 		#endregion
 
@@ -221,5 +221,4 @@ namespace LivingMessiah.Web.Pages.Calendar
 
 		#endregion
 
-	}
 }

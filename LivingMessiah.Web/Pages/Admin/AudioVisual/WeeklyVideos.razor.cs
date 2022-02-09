@@ -9,11 +9,11 @@ using Microsoft.AspNetCore.Authorization;
 using static LivingMessiah.Web.Services.Auth0;
 //using Microsoft.AspNetCore.Components.Forms;
 
-namespace LivingMessiah.Web.Pages.Admin.AudioVisual
+namespace LivingMessiah.Web.Pages.Admin.AudioVisual;
+
+[Authorize(Roles = Roles.AdminOrAudiovisual)]
+public partial class WeeklyVideos
 {
-	[Authorize(Roles = Roles.AdminOrAudiovisual)]
-	public partial class WeeklyVideos
-	{
 		const bool IsWorkInProgress = false;
 
 		[Inject]
@@ -37,192 +37,192 @@ namespace LivingMessiah.Web.Pages.Admin.AudioVisual
 
 		protected override async Task OnInitializedAsync()
 		{
-			await Read();
+				await Read();
 		}
 
 		protected async Task HandleValidSubmit()
 		{
-			//Debug(nameof(HandleValidSubmit) + "-Beg");
+				//Debug(nameof(HandleValidSubmit) + "-Beg");
 
-			if (IsWorkInProgress != true)
-			{
+				if (IsWorkInProgress != true)
+				{
 
-				if (CrudOperation == CRUD.Add)
-				{
-					await Add();
-				}
-				else
-				{
-					if (CrudOperation == CRUD.Edit)
-					{
-						await Update();
-					}
-					else
-					{
-						if (CrudOperation == CRUD.Delete)
+						if (CrudOperation == CRUD.Add)
 						{
-							await Delete();
+								await Add();
 						}
 						else
 						{
-							//Debug(nameof(HandleValidSubmit) + "** Unexpected CrudOperation **");
+								if (CrudOperation == CRUD.Edit)
+								{
+										await Update();
+								}
+								else
+								{
+										if (CrudOperation == CRUD.Delete)
+										{
+												await Delete();
+										}
+										else
+										{
+												//Debug(nameof(HandleValidSubmit) + "** Unexpected CrudOperation **");
+										}
+								}
 						}
-					}
+
 				}
 
-			}
-
-			await Read();
-			MakeModalVisible = false;
-			//Debug(nameof(HandleValidSubmit) + "-End");
+				await Read();
+				MakeModalVisible = false;
+				//Debug(nameof(HandleValidSubmit) + "-End");
 		}
 
 		// This crap method exists because I can't controll the invalid form scenarios
 		private bool IsFormValid(string youTubeId)
 		{
-			if (!String.IsNullOrEmpty(youTubeId))
-			{
-				if (youTubeId.Length <= 50)
+				if (!String.IsNullOrEmpty(youTubeId))
 				{
-					return true;
+						if (youTubeId.Length <= 50)
+						{
+								return true;
+						}
+						else
+						{
+								return false;
+						}
 				}
 				else
 				{
-					return false;
+						return false;
 				}
-			}
-			else
-			{
-				return false;
-			}
 		}
 
 		#region Service CRUD Calls
 
 		protected async Task Read()
 		{
-			CrudOperationFailed = false;
-			//Debug(nameof(Read) + "-Beg");
+				CrudOperationFailed = false;
+				//Debug(nameof(Read) + "-Beg");
 
-			try
-			{
-				WeeklyVideoIndex = await svc.GetTopWeeklyVideos(3);
-			}
+				try
+				{
+						WeeklyVideoIndex = await svc.GetTopWeeklyVideos(3);
+				}
 
-			catch (System.Exception ex)
-			{
-				CrudOperationFailed = true;
-				Logger.LogError(ex, $"<br /><br /> {nameof(Read)}");
-				NavManager.NavigateTo(LivingMessiah.Web.Links.Home.Error);
-			}
-			//Debug(nameof(Read) + "-End");
+				catch (System.Exception ex)
+				{
+						CrudOperationFailed = true;
+						Logger.LogError(ex, $"<br /><br /> {nameof(Read)}");
+						NavManager.NavigateTo(LivingMessiah.Web.Links.Home.Error);
+				}
+				//Debug(nameof(Read) + "-End");
 		}
 
 		protected async Task Add()
 		{
-			if (IsFormValid(WeeklyVideoModel.YouTubeId))
-			{
-				try
+				if (IsFormValid(WeeklyVideoModel.YouTubeId))
 				{
-					NewId = 0;
-					CrudOperationFailed = false;
-					NewId = await svc.WeeklyVideoAdd(WeeklyVideoModel);
+						try
+						{
+								NewId = 0;
+								CrudOperationFailed = false;
+								NewId = await svc.WeeklyVideoAdd(WeeklyVideoModel);
+						}
+						catch (System.Exception ex)
+						{
+								CrudOperationFailed = true;
+								Logger.LogWarning(ex, $"Calling {nameof(svc.WeeklyVideoAdd)}");
+								NavManager.NavigateTo(LivingMessiah.Web.Links.Home.Error);
+						}
 				}
-				catch (System.Exception ex)
+				else
 				{
-					CrudOperationFailed = true;
-					Logger.LogWarning(ex, $"Calling {nameof(svc.WeeklyVideoAdd)}");
-					NavManager.NavigateTo(LivingMessiah.Web.Links.Home.Error);
+						//Debug(nameof(Add) + "IsFormValid is NOT Valid");
 				}
-			}
-			else
-			{
-				//Debug(nameof(Add) + "IsFormValid is NOT Valid");
-			}
 
 
 		}
 
 		protected async Task Update()
 		{
-			if (IsFormValid(WeeklyVideoModel.YouTubeId))
-			{
-				try
+				if (IsFormValid(WeeklyVideoModel.YouTubeId))
 				{
-					Affectedrows = 0;
-					CrudOperationFailed = false;
-					Affectedrows = await svc.WeeklyVideoUpdate(WeeklyVideoModel);
+						try
+						{
+								Affectedrows = 0;
+								CrudOperationFailed = false;
+								Affectedrows = await svc.WeeklyVideoUpdate(WeeklyVideoModel);
+						}
+						catch (System.Exception ex)
+						{
+								CrudOperationFailed = true;
+								Logger.LogWarning(ex, $"Calling {nameof(svc.WeeklyVideoUpdate)}");
+								NavManager.NavigateTo(LivingMessiah.Web.Links.Home.Error);
+						}
 				}
-				catch (System.Exception ex)
+				else
 				{
-					CrudOperationFailed = true;
-					Logger.LogWarning(ex, $"Calling {nameof(svc.WeeklyVideoUpdate)}");
-					NavManager.NavigateTo(LivingMessiah.Web.Links.Home.Error);
+						//Debug(nameof(Update) + "IsFormValid is NOT Valid");
 				}
-			}
-			else
-			{
-				//Debug(nameof(Update) + "IsFormValid is NOT Valid");
-			}
 
 		}
 
 		protected async Task Delete()
 		{
-			try
-			{
-				Affectedrows = 0;
-				CrudOperationFailed = false;
-				Affectedrows = await svc.WeeklyVideoDelete(WeeklyVideoModel.Id);
-			}
-			catch (System.Exception ex)
-			{
-				CrudOperationFailed = true;
-				Logger.LogWarning(ex, $"Calling {nameof(svc.WeeklyVideoDelete)}");
-				NavManager.NavigateTo(LivingMessiah.Web.Links.Home.Error);
-			}
+				try
+				{
+						Affectedrows = 0;
+						CrudOperationFailed = false;
+						Affectedrows = await svc.WeeklyVideoDelete(WeeklyVideoModel.Id);
+				}
+				catch (System.Exception ex)
+				{
+						CrudOperationFailed = true;
+						Logger.LogWarning(ex, $"Calling {nameof(svc.WeeklyVideoDelete)}");
+						NavManager.NavigateTo(LivingMessiah.Web.Links.Home.Error);
+				}
 		}
 
 		#endregion
 
 		void ShowModal_ButtonClick(string buttonName, WeeklyVideoIndex weeklyVideoIndex)
 		{
-			CrudOperation = buttonName;
-			MakeModalVisible = true;
+				CrudOperation = buttonName;
+				MakeModalVisible = true;
 
-			if (CrudOperation == CRUD.Add)
-			{
-				WeeklyVideoModel.Id = 0;
-			}
-			else
-			{
-				WeeklyVideoModel.Id = (int)weeklyVideoIndex.WeeklyVideoId;
-			}
+				if (CrudOperation == CRUD.Add)
+				{
+						WeeklyVideoModel.Id = 0;
+				}
+				else
+				{
+						WeeklyVideoModel.Id = (int)weeklyVideoIndex.WeeklyVideoId;
+				}
 
-			WeeklyVideoModel.WeeklyVideoTypeId = weeklyVideoIndex.TypeId;
-			WeeklyVideoModel.ShabbatWeekId = weeklyVideoIndex.ShabbatWeekId;
-			WeeklyVideoModel.YouTubeId = weeklyVideoIndex.YouTubeId;
-			WeeklyVideoModel.Title = weeklyVideoIndex.Title;
-			WeeklyVideoModel.GraphicFileRoot = weeklyVideoIndex.GraphicFile;
-			WeeklyVideoModel.NotesFileRoot = weeklyVideoIndex.NotesFile;
-			WeeklyVideoModel.Book = weeklyVideoIndex.Book;  //(int)
-			WeeklyVideoModel.Chapter = weeklyVideoIndex.Chapter;
-			//Debug(nameof(ShowModal_ButtonClick));
+				WeeklyVideoModel.WeeklyVideoTypeId = weeklyVideoIndex.TypeId;
+				WeeklyVideoModel.ShabbatWeekId = weeklyVideoIndex.ShabbatWeekId;
+				WeeklyVideoModel.YouTubeId = weeklyVideoIndex.YouTubeId;
+				WeeklyVideoModel.Title = weeklyVideoIndex.Title;
+				WeeklyVideoModel.GraphicFileRoot = weeklyVideoIndex.GraphicFile;
+				WeeklyVideoModel.NotesFileRoot = weeklyVideoIndex.NotesFile;
+				WeeklyVideoModel.Book = weeklyVideoIndex.Book;  //(int)
+				WeeklyVideoModel.Chapter = weeklyVideoIndex.Chapter;
+				//Debug(nameof(ShowModal_ButtonClick));
 		}
 
 		#region Save and Cancel Button Click
 		async Task SaveModal_ButtonClick()
 		{
-			await HandleValidSubmit();
-			MakeModalVisible = false;
-			//Debug(nameof(SaveModal_ButtonClick));
+				await HandleValidSubmit();
+				MakeModalVisible = false;
+				//Debug(nameof(SaveModal_ButtonClick));
 		}
 
 		void CancelModal_ButtonClick()
 		{
-			MakeModalVisible = false;
-			CrudOperation = CRUD.Read;
-			//Debug(nameof(CancelModal_ButtonClick));
+				MakeModalVisible = false;
+				CrudOperation = CRUD.Read;
+				//Debug(nameof(CancelModal_ButtonClick));
 		}
 		#endregion
 
@@ -240,7 +240,6 @@ namespace LivingMessiah.Web.Pages.Admin.AudioVisual
 			}
 		}
 		*/
-	}
 }
 
 /*

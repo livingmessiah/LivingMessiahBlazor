@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
 
-namespace LivingMessiah.Domain
+namespace LivingMessiah.Domain;
+
+public class Column
 {
-	public class Column
-	{
-		public string StackedDimensionOne { get; set; }
-		public List<ColumnPart> ColumnParts
-		{ get; set; }
-	}
+	public string StackedDimensionOne { get; set; }
+	public List<ColumnPart> ColumnParts
+	{ get; set; }
 }

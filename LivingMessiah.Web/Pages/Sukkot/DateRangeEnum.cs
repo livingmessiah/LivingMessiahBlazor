@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace LivingMessiah.Web.Pages.Sukkot
+namespace LivingMessiah.Web.Pages.Sukkot;
+
+public enum DateRangeEnum
 {
-	public enum DateRangeEnum
-	{
 		AttendanceDays = 1,
 		LodgingDays = 2
-	}
+}
 
-	public class DateRangeLocal
-	{
+public class DateRangeLocal
+{
 		public static List<DateRangeLocal> All { get; } = new List<DateRangeLocal>();
 
 		public static DateRangeLocal AttendanceDays { get; } = new DateRangeLocal(
@@ -30,16 +30,16 @@ namespace LivingMessiah.Web.Pages.Sukkot
 
 		private DateRangeLocal(DateRangeEnum crudEnum, DateRange dateRange, string placeholder)
 		{
-			DateRangeEnum = crudEnum;
-			//Id = id;  , int id
-			DateRange = dateRange;
-			Placeholder = placeholder;
-			All.Add(this);
+				DateRangeEnum = crudEnum;
+				//Id = id;  , int id
+				DateRange = dateRange;
+				Placeholder = placeholder;
+				All.Add(this);
 		}
 
 		public static DateRangeLocal FromEnum(DateRangeEnum enumValue)
 		{
-			return All.SingleOrDefault(r => r.DateRangeEnum == enumValue);
+				return All.SingleOrDefault(r => r.DateRangeEnum == enumValue);
 		}
 
 		/*
@@ -54,29 +54,29 @@ namespace LivingMessiah.Web.Pages.Sukkot
 			return All.SingleOrDefault(r => String.Equals(r.Name, formatString, StringComparison.OrdinalIgnoreCase));
 		}
 		*/
-	}
+}
 
-	public class DateRange
-	{
+public class DateRange
+{
 		public DateTime MinDate { get; set; }
 		public DateTime MaxDate { get; set; }
 		public DateRange(DateTime x, DateTime y) => (MinDate, MaxDate) = (x, y);
-	}
+}
 
 
-	public static class DateFactory
-	{
+public static class DateFactory
+{
 		public static int GetAttendanceBitwise(DateTime dateTime)
 		{
-			bool found = _AttendanceDictionary.TryGetValue(dateTime, out int bitwise);
-			if (found)
-			{
-				return bitwise;
-			}
-			else
-			{
-				return 0;
-			}
+				bool found = _AttendanceDictionary.TryGetValue(dateTime, out int bitwise);
+				if (found)
+				{
+						return bitwise;
+				}
+				else
+				{
+						return 0;
+				}
 		}
 
 		static Dictionary<DateTime, int> _AttendanceDictionary = new Dictionary<DateTime, int>
@@ -95,15 +95,15 @@ namespace LivingMessiah.Web.Pages.Sukkot
 
 		public static int GetLodgingBitwise(DateTime dateTime)
 		{
-			bool found = _LodgingDictionary.TryGetValue(dateTime, out int bitwise);
-			if (found)
-			{
-				return bitwise;
-			}
-			else
-			{
-				return 0;
-			}
+				bool found = _LodgingDictionary.TryGetValue(dateTime, out int bitwise);
+				if (found)
+				{
+						return bitwise;
+				}
+				else
+				{
+						return 0;
+				}
 		}
 
 		static Dictionary<DateTime, int> _LodgingDictionary = new Dictionary<DateTime, int>
@@ -121,8 +121,5 @@ namespace LivingMessiah.Web.Pages.Sukkot
 			{ Convert.ToDateTime("2021-10-28"), 1024 },
 			{ Convert.ToDateTime("2021-10-29"), 2048 }
 		};
-
-	}
-
 
 }

@@ -13,11 +13,11 @@ using LivingMessiah.Web.Pages.KeyDates.Queries;
 
 using Syncfusion.Blazor.Grids;
 
-namespace LivingMessiah.Web.Pages.KeyDates
+namespace LivingMessiah.Web.Pages.KeyDates;
+
+[Authorize(Roles = Roles.AdminOrKeyDates)]
+public partial class EditGrid
 {
-	[Authorize(Roles = Roles.AdminOrKeyDates)]
-	public partial class EditGrid
-	{
 		[Inject]
 		public IKeyDateRepository db { get; set; }
 
@@ -33,66 +33,66 @@ namespace LivingMessiah.Web.Pages.KeyDates
 
 		protected override async Task OnInitializedAsync()
 		{
-			Logger.LogDebug(String.Format("Inside {0}, YearId: {1}"
-				, nameof(EditGrid) + "!" + nameof(OnInitializedAsync), YearId));
+				Logger.LogDebug(String.Format("Inside {0}, YearId: {1}"
+					, nameof(EditGrid) + "!" + nameof(OnInitializedAsync), YearId));
 
-			try
-			{
-				CalendarEntries = await db.GetCalendarEntries(YearId);
-				if (CalendarEntries == null)
+				try
 				{
-					DatabaseWarning = true;
-					DatabaseWarningMsg = "CalendarEntries NOT FOUND";
+						CalendarEntries = await db.GetCalendarEntries(YearId);
+						if (CalendarEntries == null)
+						{
+								DatabaseWarning = true;
+								DatabaseWarningMsg = "CalendarEntries NOT FOUND";
+						}
+						else
+						{
+								StateHasChanged();
+						}
 				}
-				else
+				catch (Exception ex)
 				{
-					StateHasChanged();
+						DatabaseError = true;
+						DatabaseErrorMsg = $"Error reading database";
+						Logger.LogError(ex, $"...{DatabaseErrorMsg}");
 				}
-			}
-			catch (Exception ex)
-			{
-				DatabaseError = true;
-				DatabaseErrorMsg = $"Error reading database";
-				Logger.LogError(ex, $"...{DatabaseErrorMsg}");
-			}
 		}
 
 		public async Task OnSave(BeforeBatchSaveArgs<CalendarEntry> Args)
 		{
-			var BatchChanges = Args.BatchChanges;
-			int rows = 0;
+				var BatchChanges = Args.BatchChanges;
+				int rows = 0;
 
-			if (BatchChanges.ChangedRecords.Count > 0)
-			{
-				Logger.LogDebug($"Changed Records: {BatchChanges.ChangedRecords.Count}");
-				try
+				if (BatchChanges.ChangedRecords.Count > 0)
 				{
-					foreach (var item in BatchChanges.ChangedRecords)
-					{
-						rows += await db.UpdateKeyDateCalendar(YearId, item.CalendarTemplateId, item.Date);
-					}
+						Logger.LogDebug($"Changed Records: {BatchChanges.ChangedRecords.Count}");
+						try
+						{
+								foreach (var item in BatchChanges.ChangedRecords)
+								{
+										rows += await db.UpdateKeyDateCalendar(YearId, item.CalendarTemplateId, item.Date);
+								}
 
+						}
+						catch (Exception ex)
+						{
+								DatabaseError = true;
+								DatabaseErrorMsg = $"Error updating database";
+								Logger.LogError(ex, $"...{DatabaseErrorMsg}");
+						}
+						Logger.LogDebug($"...rows: {rows}");
 				}
-				catch (Exception ex)
-				{
-					DatabaseError = true;
-					DatabaseErrorMsg = $"Error updating database";
-					Logger.LogError(ex, $"...{DatabaseErrorMsg}");
-				}
-				Logger.LogDebug($"...rows: {rows}");
-			}
 
 		}
 
 		#region ErrorHandling
 		private void InitializeErrorHandling()
 		{
-			DatabaseInformationMsg = "";
-			DatabaseInformation = false;
-			DatabaseWarningMsg = "";
-			DatabaseWarning = false;
-			DatabaseErrorMsg = "";
-			DatabaseError = false;
+				DatabaseInformationMsg = "";
+				DatabaseInformation = false;
+				DatabaseWarningMsg = "";
+				DatabaseWarning = false;
+				DatabaseErrorMsg = "";
+				DatabaseError = false;
 		}
 
 		protected bool DatabaseInformation = false;
@@ -104,11 +104,10 @@ namespace LivingMessiah.Web.Pages.KeyDates
 
 		void Failure(FailureEventArgs e)
 		{
-			DatabaseErrorMsg = $"Error inside {nameof(Failure)}";  //; e.Error: {e.Error}
-			Logger.LogError(string.Format("Inside {0}; e.Error: {1}", nameof(EditGrid) + "!" + nameof(Failure), e.Error));
-			DatabaseError = true;
+				DatabaseErrorMsg = $"Error inside {nameof(Failure)}";  //; e.Error: {e.Error}
+				Logger.LogError(string.Format("Inside {0}; e.Error: {1}", nameof(EditGrid) + "!" + nameof(Failure), e.Error));
+				DatabaseError = true;
 		}
 		#endregion
 
-	}
 }

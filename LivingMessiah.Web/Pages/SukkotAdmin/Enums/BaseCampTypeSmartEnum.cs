@@ -1,24 +1,24 @@
 ﻿using Ardalis.SmartEnum;
 using SukkotApi.Domain.Enums;
 
-namespace LivingMessiah.Web.Pages.SukkotAdmin.Enums
+namespace LivingMessiah.Web.Pages.SukkotAdmin.Enums;
+
+public abstract class BaseCampTypeSmartEnum : SmartEnum<BaseCampTypeSmartEnum>
 {
-	public abstract class BaseCampTypeSmartEnum: SmartEnum<BaseCampTypeSmartEnum>
-	{
 
 		#region Id's
 		private static class Id
 		{
-			internal const int OffSite = 0; // 1
-			internal const int Tent = 1; // 2
-			internal const int RvOrCampTrailer = 2; // 3
-			internal const int CabinOrBunkhouse = 3; // 4
-			internal const int RvDryCampOnly = 4; // 5
+				internal const int OffSite = 0; // 1
+				internal const int Tent = 1; // 2
+				internal const int RvOrCampTrailer = 2; // 3
+				internal const int CabinOrBunkhouse = 3; // 4
+				internal const int RvDryCampOnly = 4; // 5
 		}
 		#endregion
 
 		#region  Declared Public Instances
-		public static readonly BaseCampTypeSmartEnum Offsite = new OffSiteSE();  
+		public static readonly BaseCampTypeSmartEnum Offsite = new OffSiteSE();
 		public static readonly BaseCampTypeSmartEnum Tent = new TentSE();
 		public static readonly BaseCampTypeSmartEnum RvOrCampTrailer = new RvOrCampTrailerSE();
 		public static readonly BaseCampTypeSmartEnum CabinOrBunkhouse = new CabinOrBunkhouseSE();
@@ -37,36 +37,35 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Enums
 
 		private sealed class OffSiteSE : BaseCampTypeSmartEnum
 		{
-			public OffSiteSE() : base($"{nameof(Id.OffSite)}", Id.OffSite) { }
-			public override string LongDescr => "OffSite";
-			//public override CampType CampTypeEnum => CampType.OffSite;
+				public OffSiteSE() : base($"{nameof(Id.OffSite)}", Id.OffSite) { }
+				public override string LongDescr => "OffSite";
+				//public override CampType CampTypeEnum => CampType.OffSite;
 		}
 		private sealed class TentSE : BaseCampTypeSmartEnum
 		{
-			public TentSE() : base($"{nameof(Id.Tent)}", Id.Tent) { }
-			public override string LongDescr => "Tent";
-			//public override CampType CampTypeEnum => CampType.Tent;
+				public TentSE() : base($"{nameof(Id.Tent)}", Id.Tent) { }
+				public override string LongDescr => "Tent";
+				//public override CampType CampTypeEnum => CampType.Tent;
 		}
 		private sealed class RvOrCampTrailerSE : BaseCampTypeSmartEnum
 		{
-			public RvOrCampTrailerSE() : base($"{nameof(Id.RvOrCampTrailer)}", Id.RvOrCampTrailer) { }
-			public override string LongDescr => "RV or Camp Trailer";
-			//public override CampType CampTypeEnum => CampType.RvDryCampOnly;
+				public RvOrCampTrailerSE() : base($"{nameof(Id.RvOrCampTrailer)}", Id.RvOrCampTrailer) { }
+				public override string LongDescr => "RV or Camp Trailer";
+				//public override CampType CampTypeEnum => CampType.RvDryCampOnly;
 		}
 		private sealed class CabinOrBunkhouseSE : BaseCampTypeSmartEnum
 		{
-			public CabinOrBunkhouseSE() : base($"{nameof(Id.CabinOrBunkhouse)}", Id.CabinOrBunkhouse) { }
-			public override string LongDescr => "Indoor Facility";
-			//public override CampType CampTypeEnum => CampType.CabinOrBunkhouse;
+				public CabinOrBunkhouseSE() : base($"{nameof(Id.CabinOrBunkhouse)}", Id.CabinOrBunkhouse) { }
+				public override string LongDescr => "Indoor Facility";
+				//public override CampType CampTypeEnum => CampType.CabinOrBunkhouse;
 		}
 		private sealed class RvDryCampOnlySE : BaseCampTypeSmartEnum
 		{
-			public RvDryCampOnlySE() : base($"{nameof(Id.RvDryCampOnly)}", Id.RvDryCampOnly) { }
-			public override string LongDescr => "RV Dry Camp Only, NO HOOKUPs";
-			//public override CampType CampTypeEnum => CampType.RvDryCampOnly;
+				public RvDryCampOnlySE() : base($"{nameof(Id.RvDryCampOnly)}", Id.RvDryCampOnly) { }
+				public override string LongDescr => "RV Dry Camp Only, NO HOOKUPs";
+				//public override CampType CampTypeEnum => CampType.RvDryCampOnly;
 		}
 
 		#endregion
 
-	}
 }

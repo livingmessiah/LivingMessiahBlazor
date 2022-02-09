@@ -11,11 +11,11 @@ using LivingMessiah.Web.Settings;
 
 
 
-namespace LivingMessiah.Web.Pages.Admin.Dashboard
+namespace LivingMessiah.Web.Pages.Admin.Dashboard;
+
+//[Authorize(Roles = Roles.Admin)]
+public partial class ApplicationSettings
 {
-	//[Authorize(Roles = Roles.Admin)]
-	public partial class ApplicationSettings
-	{
 		//https://stackoverflow.com/questions/42726171/asp-net-core-ioptions-with-a-list#42726313
 
 		//[Inject]
@@ -48,5 +48,4 @@ namespace LivingMessiah.Web.Pages.Admin.Dashboard
 
 		//}
 
-	}
 }

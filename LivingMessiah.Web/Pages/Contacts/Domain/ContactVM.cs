@@ -1,7 +1,7 @@
-﻿namespace LivingMessiah.Web.Pages.Contacts.Domain
+﻿namespace LivingMessiah.Web.Pages.Contacts.Domain;
+
+public class ContactVM
 {
-	public class ContactVM
-	{
 		public int Id { get; set; }
 		public string FirstName { get; set; }
 		public string MiddleName { get; set; }
@@ -14,17 +14,17 @@
 
 		public string Name
 		{
-			get
-			{
-				if (!string.IsNullOrEmpty(MiddleName))
+				get
 				{
-					return $"{FirstName} {LastName}";
+						if (!string.IsNullOrEmpty(MiddleName))
+						{
+								return $"{FirstName} {LastName}";
+						}
+						else
+						{
+								return $"{FirstName} {MiddleName} {LastName}";
+						}
 				}
-				else
-				{
-					return $"{FirstName} {MiddleName} {LastName}";
-				}
-			}
 		}
 
 
@@ -43,5 +43,4 @@
 
 		 */
 
-	}
 }

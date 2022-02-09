@@ -1,20 +1,19 @@
 ﻿using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-namespace SukkotApi.Domain
+namespace SukkotApi.Domain;
+
+public class MealTicketPunch
 {
-	public class MealTicketPunch
-	{
 		[Required]
 		public int RegistrationId { get; set; }
 
 		[Required]
-		public MealTypeEnum MealTypeEnum { get; set; } 
+		public MealTypeEnum MealTypeEnum { get; set; }
 
 		[Required]
 		public AgeEnum AgeEnum { get; set; }
 
-	}
 }
 /*
 		[Required]

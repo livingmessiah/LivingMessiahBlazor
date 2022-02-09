@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Components;
 
-namespace LivingMessiah.Web.Pages.UpcomingEvents.EditMarkdown
+namespace LivingMessiah.Web.Pages.UpcomingEvents.EditMarkdown;
+
+public partial class Display
 {
-	public partial class Display
-	{
 		[Parameter]
 		public int Id { get; set; }
 
@@ -12,5 +12,4 @@ namespace LivingMessiah.Web.Pages.UpcomingEvents.EditMarkdown
 
 		[Parameter]
 		public string Description { get; set; }
-	}
 }

@@ -4,10 +4,10 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace SukkotApi.Domain
+namespace SukkotApi.Domain;
+
+public class KitchenWork
 {
-	public class KitchenWork
-	{
 		[Required]
 		public int Id { get; set; }
 
@@ -15,11 +15,11 @@ namespace SukkotApi.Domain
 		[Required]
 		public int RegistrationId { get; set; }
 
-//		[Required]
-//		public int MealPlanId { get; set; }
+		//		[Required]
+		//		public int MealPlanId { get; set; }
 
-//		[Required]
-//		public int MealTimeDateId { get; set; }
+		//		[Required]
+		//		public int MealTimeDateId { get; set; }
 
 		//[Required]
 		public string MealDay { get; set; }
@@ -34,8 +34,6 @@ namespace SukkotApi.Domain
 		[MaxLength(50)]
 		public String Volunteer { get; set; }
 
-
-	}
 
 }
 

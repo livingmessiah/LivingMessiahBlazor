@@ -10,11 +10,11 @@ using Microsoft.AspNetCore.Authorization;
 
 using Syncfusion.Blazor.Grids;
 
-namespace LivingMessiah.Web.Pages.Contacts
+namespace LivingMessiah.Web.Pages.Contacts;
+
+[Authorize(Roles = Roles.AdminOrElder)]
+public partial class Index
 {
-	[Authorize(Roles = Roles.AdminOrElder)]
-	public partial class Index
-	{
 		[Inject]
 		public ILogger<Index> Logger { get; set; }
 
@@ -27,23 +27,23 @@ namespace LivingMessiah.Web.Pages.Contacts
 
 		protected override async Task OnInitializedAsync()
 		{
-			Logger.LogDebug($"Inside {nameof(Index)}!{nameof(OnInitializedAsync)}");
-			try
-			{
-				Contacts = await db.GetAll();
-				if (Contacts == null)
+				Logger.LogDebug($"Inside {nameof(Index)}!{nameof(OnInitializedAsync)}");
+				try
 				{
-					DatabaseWarning = true;
-					DatabaseWarningMsg = "Contacts NOT FOUND";
+						Contacts = await db.GetAll();
+						if (Contacts == null)
+						{
+								DatabaseWarning = true;
+								DatabaseWarningMsg = "Contacts NOT FOUND";
+						}
 				}
-			}
-			catch (Exception ex)
-			{
-				DatabaseError = true;
-				DatabaseErrorMsg = $"Error reading database";
-				Logger.LogError(ex, $"...{DatabaseErrorMsg}");
-			}
-			StateHasChanged();
+				catch (Exception ex)
+				{
+						DatabaseError = true;
+						DatabaseErrorMsg = $"Error reading database";
+						Logger.LogError(ex, $"...{DatabaseErrorMsg}");
+				}
+				StateHasChanged();
 		}
 
 
@@ -51,12 +51,12 @@ namespace LivingMessiah.Web.Pages.Contacts
 
 		private void InitializeErrorHandling()
 		{
-			DatabaseInformationMsg = "";
-			DatabaseInformation = false;
-			DatabaseWarningMsg = "";
-			DatabaseWarning = false;
-			DatabaseErrorMsg = "";
-			DatabaseError = false;
+				DatabaseInformationMsg = "";
+				DatabaseInformation = false;
+				DatabaseWarningMsg = "";
+				DatabaseWarning = false;
+				DatabaseErrorMsg = "";
+				DatabaseError = false;
 		}
 
 		protected bool DatabaseInformation = false;
@@ -68,5 +68,4 @@ namespace LivingMessiah.Web.Pages.Contacts
 		#endregion
 
 
-	}
 }

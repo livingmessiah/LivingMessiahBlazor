@@ -1,10 +1,10 @@
 ﻿using LivingMessiah.Domain.Parasha.Queries;
 using Microsoft.AspNetCore.Components;
 
-namespace LivingMessiah.Web.Pages.Parasha
+namespace LivingMessiah.Web.Pages.Parasha;
+
+public partial class CurrentParasha
 {
-	public partial class CurrentParasha
-	{
 		[Parameter]
 		public LivingMessiah.Domain.Parasha.Queries.Parasha Parasha { get; set; }
 
@@ -18,7 +18,6 @@ namespace LivingMessiah.Web.Pages.Parasha
 		public string CssUlClass { get; set; }
 
 		private const string _WarningCaretRight = "<span class='text-warning'><i class='fa-li fas fa-caret-right'></i></span>";
-		public MarkupString GetWarningCaretRight() { return IsXsOrSm? (MarkupString)string.Empty : (MarkupString)_WarningCaretRight; }
+		public MarkupString GetWarningCaretRight() { return IsXsOrSm ? (MarkupString)string.Empty : (MarkupString)_WarningCaretRight; }
 
-	}
 }

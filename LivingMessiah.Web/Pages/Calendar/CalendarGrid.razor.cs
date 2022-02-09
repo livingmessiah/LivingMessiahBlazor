@@ -13,10 +13,10 @@ using Syncfusion.Blazor.Grids;
 
 using Microsoft.Extensions.Caching.Memory;
 
-namespace LivingMessiah.Web.Pages.Calendar
+namespace LivingMessiah.Web.Pages.Calendar;
+
+public partial class CalendarGrid
 {
-	public partial class CalendarGrid
-	{
 		[Inject]
 		public IKeyDateRepository db { get; set; }
 
@@ -39,43 +39,43 @@ namespace LivingMessiah.Web.Pages.Calendar
 
 		protected override async Task OnInitializedAsync()
 		{
-			CachedMsg = "";
-			DateFormat = IsXsOrSm ? "yyyy/MM/dd" : "ddd, MMMM dd, yyyy";
-			Logger.LogDebug(string.Format("Inside {0}, year={1}", nameof(CalendarGrid) + "!" + nameof(OnInitializedAsync), YearId));
-			try
-			{
-				CalendarEntries = Cache.Get<List<CalendarEntry>>(CacheSettings.Key);
-
-				if (CalendarEntries is null)
+				CachedMsg = "";
+				DateFormat = IsXsOrSm ? "yyyy/MM/dd" : "ddd, MMMM dd, yyyy";
+				Logger.LogDebug(string.Format("Inside {0}, year={1}", nameof(CalendarGrid) + "!" + nameof(OnInitializedAsync), YearId));
+				try
 				{
-					CalendarEntries = await db.GetCalendarEntries(YearId);
+						CalendarEntries = Cache.Get<List<CalendarEntry>>(CacheSettings.Key);
 
-					if (CalendarEntries is not null)
-					{
-						//CachedMsg = "Data gotten from DATABASE";
-						Logger.LogDebug(string.Format("... Data gotten from DATABASE"));
-						Cache.Set(CacheSettings.Key, CalendarEntries, TimeSpan.FromMinutes(CacheSettings.FromMinutes));
-					}
-					else
-					{
-						DatabaseWarning = true;
-						DatabaseWarningMsg = "Calendar Entries NOT FOUND";
-					}
+						if (CalendarEntries is null)
+						{
+								CalendarEntries = await db.GetCalendarEntries(YearId);
+
+								if (CalendarEntries is not null)
+								{
+										//CachedMsg = "Data gotten from DATABASE";
+										Logger.LogDebug(string.Format("... Data gotten from DATABASE"));
+										Cache.Set(CacheSettings.Key, CalendarEntries, TimeSpan.FromMinutes(CacheSettings.FromMinutes));
+								}
+								else
+								{
+										DatabaseWarning = true;
+										DatabaseWarningMsg = "Calendar Entries NOT FOUND";
+								}
+
+						}
+						else
+						{
+								//CachedMsg = "Data gotten from CACHE";
+								Logger.LogDebug(string.Format("... Data gotten from CACHE"));
+						}
 
 				}
-				else
+				catch (Exception ex)
 				{
-					//CachedMsg = "Data gotten from CACHE";
-					Logger.LogDebug(string.Format("... Data gotten from CACHE"));
+						DatabaseError = true;
+						DatabaseErrorMsg = $"Error reading database";
+						Logger.LogError(ex, string.Format("...Error calling={0}", nameof(db.GetCalendarEntries)));
 				}
-
-			}
-			catch (Exception ex)
-			{
-				DatabaseError = true;
-				DatabaseErrorMsg = $"Error reading database";
-				Logger.LogError(ex, string.Format("...Error calling={0}", nameof(db.GetCalendarEntries)));
-			}
 		}
 
 		private SfGrid<CalendarEntry> Grid;
@@ -85,19 +85,19 @@ namespace LivingMessiah.Web.Pages.Calendar
 		public bool IsCollapsed { get; set; } = true;
 		protected void ToggleButtonClick(bool isCollapsed)
 		{
-			IsCollapsed = !isCollapsed;
+				IsCollapsed = !isCollapsed;
 		}
 		#endregion
 
 		#region ErrorHandling
 		private void InitializeErrorHandling()
 		{
-			DatabaseInformationMsg = "";
-			DatabaseInformation = false;
-			DatabaseWarningMsg = "";
-			DatabaseWarning = false;
-			DatabaseErrorMsg = "";
-			DatabaseError = false;
+				DatabaseInformationMsg = "";
+				DatabaseInformation = false;
+				DatabaseWarningMsg = "";
+				DatabaseWarning = false;
+				DatabaseErrorMsg = "";
+				DatabaseError = false;
 		}
 
 		protected bool DatabaseInformation = false;
@@ -109,11 +109,10 @@ namespace LivingMessiah.Web.Pages.Calendar
 
 		void Failure(FailureEventArgs e)
 		{
-			DatabaseErrorMsg = $"Error inside {nameof(Failure)}";  //; e.Error: {e.Error}
-			Logger.LogError(string.Format("Inside {0}; e.Error: {1}", nameof(CalendarGrid) + "!" + nameof(Failure), e.Error));
-			DatabaseError = true;
+				DatabaseErrorMsg = $"Error inside {nameof(Failure)}";  //; e.Error: {e.Error}
+				Logger.LogError(string.Format("Inside {0}; e.Error: {1}", nameof(CalendarGrid) + "!" + nameof(Failure), e.Error));
+				DatabaseError = true;
 		}
 		#endregion
 
-	}
 }

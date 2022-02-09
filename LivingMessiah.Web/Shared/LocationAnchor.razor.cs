@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Components;
 
-namespace LivingMessiah.Web.Shared
+namespace LivingMessiah.Web.Shared;
+
+public partial class LocationAnchor
 {
-	public partial class LocationAnchor
-	{
 		[Parameter]
 		public string AddressName { get; set; } = "Living Messiah";
 
@@ -19,7 +19,6 @@ namespace LivingMessiah.Web.Shared
 		[Parameter]
 		public bool IsRemote { get; set; } = false;
 
-	}
 }
 /*
 <li> Default: <LocationAnchor></LocationAnchor></li>

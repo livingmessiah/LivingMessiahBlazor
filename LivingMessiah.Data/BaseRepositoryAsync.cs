@@ -7,18 +7,18 @@ using Dapper;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
-namespace LivingMessiah.Data
+namespace LivingMessiah.Data;
+
+public abstract class BaseRepositoryAsync
 {
-	public abstract class BaseRepositoryAsync
-	{
 		const string configationConnectionKey = "ConnectionStrings:LivingMessiah";
 
 		private readonly IConfiguration config;
 		protected readonly ILogger log;
 		protected BaseRepositoryAsync(IConfiguration config, ILogger<BaseRepositoryAsync> logger)
 		{
-			this.config = config;
-			this.log = logger;
+				this.config = config;
+				this.log = logger;
 		}
 
 		/// <summary>
@@ -31,48 +31,48 @@ namespace LivingMessiah.Data
 		/// <returns>Task of type T - we'll be using this to build and execute our query</returns>
 		protected async Task<T> WithConnectionAsync<T>(Func<IDbConnection, Task<T>> getData)
 		{
-			string connectionString = config[configationConnectionKey];
-			string errMsg = "";
+				string connectionString = config[configationConnectionKey];
+				string errMsg = "";
 
-			try
-			{
-				if (string.IsNullOrEmpty(connectionString))
+				try
 				{
-					string err = $"Inside {GetType().FullName}.{nameof(WithConnectionAsync)}; Connection string is null or empty.  configationConnectionKey={configationConnectionKey}";
-					throw new ArgumentException(err);
-				}
+						if (string.IsNullOrEmpty(connectionString))
+						{
+								string err = $"Inside {GetType().FullName}.{nameof(WithConnectionAsync)}; Connection string is null or empty.  configationConnectionKey={configationConnectionKey}";
+								throw new ArgumentException(err);
+						}
 
-				using (var connect = new SqlConnection(connectionString))
-				{
-					await connect.OpenAsync();
-					return await getData(connect);
+						using (var connect = new SqlConnection(connectionString))
+						{
+								await connect.OpenAsync();
+								return await getData(connect);
+						}
 				}
-			}
-			catch (TimeoutException ex)
-			{
-				errMsg = $"{GetType().FullName}.{nameof(WithConnectionAsync)} experienced a Sql Timeout <br /><br /> Sql...<br />[{SqlDump}] <br /><br />";
-				log.LogError(ex, errMsg);
-				throw new Exception(errMsg, ex);
-			}
-			catch (SqlException ex)
-			{
-				errMsg = $"{GetType().FullName}.{nameof(WithConnectionAsync)} experienced a Sql Exception <br /><br /> Sql...<br />[{SqlDump}] <br /><br />";
-				log.LogError(ex, errMsg);
-				if (ex.Message != null) { errMsg += "<br /> ex.Message:" + ex.Message;	}
-				throw new Exception(errMsg, ex);
-			}
-			catch (InvalidOperationException ex)
-			{
-				errMsg = $"{GetType().FullName}.{nameof(WithConnectionAsync)} experienced a Invalid Operation Exception <br /><br /> Sql...<br />[{SqlDump}] <br /><br />";
-				log.LogError(ex, errMsg);
-				throw new Exception(errMsg, ex);
-			}
-			catch (Exception ex)
-			{
-				errMsg = $"{GetType().FullName}.{nameof(WithConnectionAsync)} Generic Exception <br /><br /> Sql...<br />[{SqlDump}] <br /><br />";
-				log.LogError(ex, errMsg);
-				throw new Exception(errMsg, ex);
-			}
+				catch (TimeoutException ex)
+				{
+						errMsg = $"{GetType().FullName}.{nameof(WithConnectionAsync)} experienced a Sql Timeout <br /><br /> Sql...<br />[{SqlDump}] <br /><br />";
+						log.LogError(ex, errMsg);
+						throw new Exception(errMsg, ex);
+				}
+				catch (SqlException ex)
+				{
+						errMsg = $"{GetType().FullName}.{nameof(WithConnectionAsync)} experienced a Sql Exception <br /><br /> Sql...<br />[{SqlDump}] <br /><br />";
+						log.LogError(ex, errMsg);
+						if (ex.Message != null) { errMsg += "<br /> ex.Message:" + ex.Message; }
+						throw new Exception(errMsg, ex);
+				}
+				catch (InvalidOperationException ex)
+				{
+						errMsg = $"{GetType().FullName}.{nameof(WithConnectionAsync)} experienced a Invalid Operation Exception <br /><br /> Sql...<br />[{SqlDump}] <br /><br />";
+						log.LogError(ex, errMsg);
+						throw new Exception(errMsg, ex);
+				}
+				catch (Exception ex)
+				{
+						errMsg = $"{GetType().FullName}.{nameof(WithConnectionAsync)} Generic Exception <br /><br /> Sql...<br />[{SqlDump}] <br /><br />";
+						log.LogError(ex, errMsg);
+						throw new Exception(errMsg, ex);
+				}
 		}
 
 		public string Sql { get; set; }
@@ -81,29 +81,28 @@ namespace LivingMessiah.Data
 
 		public string SqlDump
 		{
-			get
-			{
-				string s = "";
-				s = Sql ?? "SQL IS NULL";
-				if (Parms != null)
+				get
 				{
-					string v = "";
-					var sb = new StringBuilder();
-					foreach (var name in Parms.ParameterNames) // Why is this empty? 
-					{
-						var pValue = Parms.Get<dynamic>(name);  
-						v = (pValue != null) ? pValue.ToString() : "null";
-						sb.AppendFormat($"name {name}={v}\n");
-					}
+						string s = "";
+						s = Sql ?? "SQL IS NULL";
+						if (Parms != null)
+						{
+								string v = "";
+								var sb = new StringBuilder();
+								foreach (var name in Parms.ParameterNames) // Why is this empty? 
+								{
+										var pValue = Parms.Get<dynamic>(name);
+										v = (pValue != null) ? pValue.ToString() : "null";
+										sb.AppendFormat($"name {name}={v}\n");
+								}
 
-					s += ", parameter: " + sb.ToString();
-			
+								s += ", parameter: " + sb.ToString();
+
+						}
+						return s;
 				}
-				return s;
-			}
 		}
 
 
-	}
 }
 

@@ -1,10 +1,10 @@
 ﻿
 using Microsoft.AspNetCore.Components;
 
-namespace LivingMessiah.Web.Pages.OtherPages
+namespace LivingMessiah.Web.Pages.OtherPages;
+
+public partial class FurtherStudies
 {
-	public partial class FurtherStudies
-	{
 		public bool IsCollapsed { get; set; } = true;
 		public int VerseId { get; set; }
 		public string ButtonText { get; set; } = "Details";
@@ -12,10 +12,9 @@ namespace LivingMessiah.Web.Pages.OtherPages
 
 		protected void ToggleVersePopupClick(bool isCollapsed, int verseId)
 		{
-			IsCollapsed = !isCollapsed;
-			VerseId = verseId;
-			ButtonText = IsCollapsed ? "Details" : "Hide";
-			ButtonChevron = IsCollapsed ? "fas fa-chevron-down" : "fas fa-chevron-up";
+				IsCollapsed = !isCollapsed;
+				VerseId = verseId;
+				ButtonText = IsCollapsed ? "Details" : "Hide";
+				ButtonChevron = IsCollapsed ? "fas fa-chevron-down" : "fas fa-chevron-up";
 		}
-	}
 }

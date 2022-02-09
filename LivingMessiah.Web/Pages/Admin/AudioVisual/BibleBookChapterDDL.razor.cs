@@ -4,10 +4,10 @@ using LivingMessiah.Web.Enums;
 using LivingMessiah.Web.Services;
 using Microsoft.AspNetCore.Components;
 
-namespace LivingMessiah.Web.Pages.Admin.AudioVisual
+namespace LivingMessiah.Web.Pages.Admin.AudioVisual;
+
+public partial class BibleBookChapterDDL
 {
-	public partial class BibleBookChapterDDL
-	{
 		[Inject]
 		ISmartEnumServiceForSfDropDownList svcDDL { get; set; }
 
@@ -20,9 +20,8 @@ namespace LivingMessiah.Web.Pages.Admin.AudioVisual
 
 		public void OnChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<string, DropDownListVM> args)
 		{
-			int i = int.TryParse(args.ItemData.Value, out i) ? i : 0;
-			SelectedId = i;
-			CurrentLastChapter = BaseBibleBookSmartEnum.FromValue(SelectedId).LastChapter;
+				int i = int.TryParse(args.ItemData.Value, out i) ? i : 0;
+				SelectedId = i;
+				CurrentLastChapter = BaseBibleBookSmartEnum.FromValue(SelectedId).LastChapter;
 		}
-	}
 }

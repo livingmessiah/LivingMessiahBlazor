@@ -1,9 +1,8 @@
 ﻿
-namespace LivingMessiah.Web.Pages.ShabbatService
+namespace LivingMessiah.Web.Pages.ShabbatService;
+
+public partial class CardWithToggleVisiblity : BaseSection
 {
-	public partial class CardWithToggleVisiblity : BaseSection
-	{
-	}
 }
 /*
 

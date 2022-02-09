@@ -11,11 +11,11 @@ using Microsoft.AspNetCore.Components;
 using System.Linq;
 using SukkotApi.Domain.Registrations.Enums;
 
-namespace LivingMessiah.Web.Pages.SukkotAdmin.RegistrationList
+namespace LivingMessiah.Web.Pages.SukkotAdmin.RegistrationList;
+
+[Authorize(Roles = Roles.AdminOrSukkot)]
+public partial class RegistrationList
 {
-	[Authorize(Roles = Roles.AdminOrSukkot)]
-	public partial class RegistrationList
-	{
 		[Inject]
 		public ILogger<RegistrationList> Logger { get; set; }
 
@@ -40,79 +40,78 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.RegistrationList
 
 		protected override async Task OnInitializedAsync()
 		{
-			try
-			{
-				Logger.LogDebug($"Inside: {nameof(RegistrationList)}!{nameof(OnInitializedAsync)}, RegistrationSort:{RegistrationSort}, calling {nameof(svc.GetAll)}");
-				//Seasons = CalendarYear.Seasons.Where(w => w.YearId == CalendarYear.Year).ToList();
-				Registrations = await svc.GetAll(RegistrationSort);
-				if (Registrations != null) 
-				{ 
-					RecordCount = Registrations.Count;
-					RegistrationsGHTHF = Registrations.Where(w => w.LocationEnum == LocationEnum.GreenhouseTrolleyHobbyFarm).ToList();
-					RegistrationsWildernessRanch = Registrations.Where(w => w.LocationEnum == LocationEnum.WildernessRanch).ToList();
-					RegistrationsWindmillRanch = Registrations.Where(w => w.LocationEnum == LocationEnum.WindmillRanch).ToList();
+				try
+				{
+						Logger.LogDebug($"Inside: {nameof(RegistrationList)}!{nameof(OnInitializedAsync)}, RegistrationSort:{RegistrationSort}, calling {nameof(svc.GetAll)}");
+						//Seasons = CalendarYear.Seasons.Where(w => w.YearId == CalendarYear.Year).ToList();
+						Registrations = await svc.GetAll(RegistrationSort);
+						if (Registrations != null)
+						{
+								RecordCount = Registrations.Count;
+								RegistrationsGHTHF = Registrations.Where(w => w.LocationEnum == LocationEnum.GreenhouseTrolleyHobbyFarm).ToList();
+								RegistrationsWildernessRanch = Registrations.Where(w => w.LocationEnum == LocationEnum.WildernessRanch).ToList();
+								RegistrationsWindmillRanch = Registrations.Where(w => w.LocationEnum == LocationEnum.WindmillRanch).ToList();
+						}
+
 				}
-				
-			}
-			catch (Exception)
-			{
-				ExceptionMessage = svc.ExceptionMessage;
-				NavManager.NavigateTo(LivingMessiah.Web.Links.Home.Error);
-			}
+				catch (Exception)
+				{
+						ExceptionMessage = svc.ExceptionMessage;
+						NavManager.NavigateTo(LivingMessiah.Web.Links.Home.Error);
+				}
 		}
 
 		async Task Sort_ButtonClick(RegistrationSortEnum sort)
 		{
-			Logger.LogDebug($"Inside: {nameof(RegistrationList)}!{nameof(Sort_ButtonClick)}, sort:{sort}");
+				Logger.LogDebug($"Inside: {nameof(RegistrationList)}!{nameof(Sort_ButtonClick)}, sort:{sort}");
 
-			RegistrationSort = sort;
-			RecordCount = 0;
-			try
-			{
-				Registrations = await svc.GetAll(RegistrationSort);
-				if (Registrations != null) { RecordCount = Registrations.Count; }
-			}
-			catch (Exception)
-			{
-				ExceptionMessage = svc.ExceptionMessage;
-				NavManager.NavigateTo(LivingMessiah.Web.Links.Home.Error);
-			}
-			StateHasChanged();
+				RegistrationSort = sort;
+				RecordCount = 0;
+				try
+				{
+						Registrations = await svc.GetAll(RegistrationSort);
+						if (Registrations != null) { RecordCount = Registrations.Count; }
+				}
+				catch (Exception)
+				{
+						ExceptionMessage = svc.ExceptionMessage;
+						NavManager.NavigateTo(LivingMessiah.Web.Links.Home.Error);
+				}
+				StateHasChanged();
 		}
 
 		void Add_ButtonClick()
 		{
-			NavManager.NavigateTo(Links.Sukkot.CreateEdit + "/");
+				NavManager.NavigateTo(Links.Sukkot.CreateEdit + "/");
 		}
 
 		void DeleteConfirmation_ButtonClick(int id)
 		{
-			NavManager.NavigateTo(Links.Sukkot.DeleteConfirmation + "/" + id);
+				NavManager.NavigateTo(Links.Sukkot.DeleteConfirmation + "/" + id);
 		}
 
 		void Payment_ButtonClick(int id)
 		{
-			NavManager.NavigateTo(Links.Sukkot.Links2.Payment + "/" + id);
+				NavManager.NavigateTo(Links.Sukkot.Links2.Payment + "/" + id);
 		}
 
 		void Details_ButtonClick(int id)
 		{
-			NavManager.NavigateTo(Links.Sukkot.Details + "/" + id + "/False");
+				NavManager.NavigateTo(Links.Sukkot.Details + "/" + id + "/False");
 		}
 
 		void Edit_ButtonClick(int id)
 		{
-			NavManager.NavigateTo(Links.Sukkot.CreateEdit + "/" + id);
+				NavManager.NavigateTo(Links.Sukkot.CreateEdit + "/" + id);
 		}
 
 		void DetailsMealTicket_ButtonClick(int id)
 		{
-			NavManager.NavigateTo(Links.Sukkot.Meals.Index + "/" + id);
+				NavManager.NavigateTo(Links.Sukkot.Meals.Index + "/" + id);
 		}
 
 		void EditMeals_ButtonClick(int id)
 		{
-			NavManager.NavigateTo(Links.Sukkot.Meals.Index + "/" + id);
+				NavManager.NavigateTo(Links.Sukkot.Meals.Index + "/" + id);
 		}
-	}
 }

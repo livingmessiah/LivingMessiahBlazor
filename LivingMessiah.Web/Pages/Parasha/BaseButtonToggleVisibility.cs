@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Components;
 
-namespace LivingMessiah.Web.Pages.Parasha
+namespace LivingMessiah.Web.Pages.Parasha;
+
+public abstract class BaseButtonToggleVisibility : ComponentBase
 {
-	public abstract class BaseButtonToggleVisibility : ComponentBase
-	{
 		[Parameter]
 		public RenderFragment ChildContent { get; set; }
 
@@ -23,10 +23,9 @@ namespace LivingMessiah.Web.Pages.Parasha
 
 		protected void ToggleButtonClick(bool isCollapsed)
 		{
-			IsCollapsed = !isCollapsed;
-			ButtonText = IsCollapsed ? "Details" : "Hide";
-			ButtonChevron = IsCollapsed ? "fas fa-chevron-down" : "fas fa-chevron-up";
+				IsCollapsed = !isCollapsed;
+				ButtonText = IsCollapsed ? "Details" : "Hide";
+				ButtonChevron = IsCollapsed ? "fas fa-chevron-down" : "fas fa-chevron-up";
 		}
 
-	}
 }

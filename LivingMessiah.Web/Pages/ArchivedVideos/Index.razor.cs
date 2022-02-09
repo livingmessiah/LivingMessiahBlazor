@@ -6,10 +6,10 @@ using System;
 using LivingMessiah.Web.Services;
 using LivingMessiah.Domain;
 
-namespace LivingMessiah.Web.Pages.ArchivedVideos
+namespace LivingMessiah.Web.Pages.ArchivedVideos;
+
+public partial class Index
 {
-	public partial class Index
-	{
 		[Inject]
 		public IShabbatWeekService svc { get; set; }
 
@@ -25,18 +25,17 @@ namespace LivingMessiah.Web.Pages.ArchivedVideos
 
 		protected override async Task OnInitializedAsync()
 		{
-			try
-			{
-				ReadOperationFailed = false;
-				ArchivedVideos = await svc.GetTopWeeklyVideos(Top);
-			}
+				try
+				{
+						ReadOperationFailed = false;
+						ArchivedVideos = await svc.GetTopWeeklyVideos(Top);
+				}
 
-			catch (System.Exception ex)
-			{
-				ReadOperationFailed = true;
-				Logger.LogError(ex, $"<br /><br /> {nameof(OnInitializedAsync)}");
-			}
+				catch (System.Exception ex)
+				{
+						ReadOperationFailed = true;
+						Logger.LogError(ex, $"<br /><br /> {nameof(OnInitializedAsync)}");
+				}
 
 		}
-	}
 }

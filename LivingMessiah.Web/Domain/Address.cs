@@ -1,7 +1,7 @@
-﻿namespace LivingMessiah.Web.Domain
+﻿namespace LivingMessiah.Web.Domain;
+
+public class Address
 {
-	public class Address
-    {
 		public string Name { get; set; }
 		public string Street1 { get; set; }
 		public string Street2 { get; set; }
@@ -16,12 +16,11 @@
 
 		public string FullAddress
 		{
-			get
-			{
-				//var result = $"descending? {(isDescending ? "yes" : "no")}";
-				return $"{Street1 ?? "na"}  {Street2 ?? ""} {City ?? "na"} {Zip}";
-			}
+				get
+				{
+						//var result = $"descending? {(isDescending ? "yes" : "no")}";
+						return $"{Street1 ?? "na"}  {Street2 ?? ""} {City ?? "na"} {Zip}";
+				}
 		}
 
-	}
 }

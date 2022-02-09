@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Components;
 
-namespace LivingMessiah.Web.Pages.Home
+namespace LivingMessiah.Web.Pages.Home;
+
+public partial class IntroductionAndWelcome
 {
-	public partial class IntroductionAndWelcome
-	{
 		[Parameter]
 		public MediaQueryEnum MediaQueryEnum { get; set; }
 
@@ -12,9 +12,6 @@ namespace LivingMessiah.Web.Pages.Home
 
 		protected void Collapsed_ButtonClick()
 		{
-			IsCollapsed = !IsCollapsed;
+				IsCollapsed = !IsCollapsed;
 		}
-	}
-
-
 }

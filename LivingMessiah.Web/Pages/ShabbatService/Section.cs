@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace LivingMessiah.Web.Pages.ShabbatService
+namespace LivingMessiah.Web.Pages.ShabbatService;
+
+public enum SectionEnum
 {
-	public enum SectionEnum
-	{
 		CallToService = 1,
 		OpeningAdoration = 2,
 		PraiseAndWorship = 3,
@@ -25,10 +25,10 @@ namespace LivingMessiah.Web.Pages.ShabbatService
 		NewsFlash = 17,
 		PsalmsAndProverbs = 18,
 		ThankYou = 19,
-	}
+}
 
-	public class Section
-	{
+public class Section
+{
 		public static List<Section> All { get; } = new List<Section>();
 
 		public static Section CallToService { get; } = new Section(
@@ -93,19 +93,16 @@ namespace LivingMessiah.Web.Pages.ShabbatService
 
 		private Section(SectionEnum sectionEnum, string graphicUrl, string title, string toggleId, string time)
 		{
-			SectionEnum = sectionEnum;
-			GraphicUrl = graphicUrl;
-			Title = title;
-			ToggleId = toggleId;
-			Time = time;
-			All.Add(this);
+				SectionEnum = sectionEnum;
+				GraphicUrl = graphicUrl;
+				Title = title;
+				ToggleId = toggleId;
+				Time = time;
+				All.Add(this);
 		}
 
 		public static Section FromEnum(SectionEnum enumValue)
 		{
-			return All.SingleOrDefault(r => r.SectionEnum == enumValue);
+				return All.SingleOrDefault(r => r.SectionEnum == enumValue);
 		}
-	}
-	//ToDo Create a Carousel.cs with list of pages
-
 }

@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Components;
 
-namespace LivingMessiah.Web.Pages.HeavensDeclare
+namespace LivingMessiah.Web.Pages.HeavensDeclare;
+
+public partial class YouTubeHeavensDeclare
 {
-	public partial class YouTubeHeavensDeclare
-	{
 		[Parameter]
 		public string UrlId { get; set; }
 
@@ -13,13 +13,12 @@ namespace LivingMessiah.Web.Pages.HeavensDeclare
 		const string BaseUrl = "https://www.youtube.com/embed/";
 		protected string Url
 		{
-			get
-			{
-				return BaseUrl + UrlId + "?rel=0";
-			}
+				get
+				{
+						return BaseUrl + UrlId + "?rel=0";
+				}
 		}
 
-	}
 }
 
 

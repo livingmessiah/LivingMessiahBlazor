@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace SukkotApi.Data
+namespace SukkotApi.Data;
+
+public interface ISukkotRepository
 {
-	public interface ISukkotRepository
-	{
 		string BaseSqlDump { get; }
 		Task<vwRegistration> ById(int id);
 		Task<RegistrationPOCO> ById2(int id);
@@ -29,5 +29,4 @@ namespace SukkotApi.Data
 		Task<MealTicketPunchLog> MealTicketPunchLogById(int id);
 		Task<int> MealTicketPunchLogUpdate(int id, MealTicketPunchLog mealTicketPunchLog);
 		Task<int> MealTicketPunchLogDelete(int id);
-	}
 }

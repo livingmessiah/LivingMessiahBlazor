@@ -1,10 +1,10 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace SukkotApi.Domain
+namespace SukkotApi.Domain;
+
+public class vwRegistrationShell
 {
-	public class vwRegistrationShell
-    {
 		public int Id { get; set; }
 		public String FamilyName { get; set; }
 		public int StatusId { get; set; }
@@ -22,20 +22,19 @@ namespace SukkotApi.Domain
 		[DataType(DataType.Currency)]
 		public decimal TotalCost
 		{
-			get
-			{
-				return MealCost + CampCost;
-			}
+				get
+				{
+						return MealCost + CampCost;
+				}
 		}
 
 		[DataType(DataType.Currency)]
 		public decimal RemainingCost
 		{
-			get
-			{
-				return MealCost + CampCost - TotalDonation;
-			}
+				get
+				{
+						return MealCost + CampCost - TotalDonation;
+				}
 		}
 
-	}
 }

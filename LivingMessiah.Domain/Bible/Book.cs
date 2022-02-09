@@ -1,9 +1,9 @@
 ﻿using Ardalis.SmartEnum;
 
-namespace LivingMessiah.Domain.Bible
+namespace LivingMessiah.Domain.Bible;
+
+public enum BookGroupEnum
 {
-	public enum BookGroupEnum
-	{
 		Torah = 1,
 		History = 2,
 		Poetry = 3,
@@ -13,10 +13,10 @@ namespace LivingMessiah.Domain.Bible
 		PaulsEpistles = 7,
 		GeneralEpistles = 8,
 		Apocalypse = 9,
-	}
+}
 
-	public abstract class Book : SmartEnum<Book>
-	{
+public abstract class Book : SmartEnum<Book>
+{
 		public static readonly Book Genesis = new GenesisBook();
 		public static readonly Book Exodus = new ExodusBook();
 		public static readonly Book Leviticus = new LeviticusBook();
@@ -32,11 +32,12 @@ namespace LivingMessiah.Domain.Bible
 		public abstract string Abrv { get; }
 		public abstract BookGroupEnum BookGroupEnum { get; }
 
-		public string Dump 
+		public string Dump
 		{
-			get {
-				return  $" {this.Value}-{this.Abrv}-{this.Name}-{this.BookGroupEnum}";
-			}
+				get
+				{
+						return $" {this.Value}-{this.Abrv}-{this.Name}-{this.BookGroupEnum}";
+				}
 		}
 
 		/*
@@ -48,54 +49,53 @@ namespace LivingMessiah.Domain.Bible
 
 		private sealed class GenesisBook : Book
 		{
-			public GenesisBook() : base("Genesis", 1) { }
-			public override string Abrv => "Gen";
-			public override BookGroupEnum BookGroupEnum => BookGroupEnum.Torah;
+				public GenesisBook() : base("Genesis", 1) { }
+				public override string Abrv => "Gen";
+				public override BookGroupEnum BookGroupEnum => BookGroupEnum.Torah;
 		}
 
 		private sealed class ExodusBook : Book
 		{
-			public ExodusBook() : base("Exodus", 2) { }
-			public override string Abrv => "Exo";
-			public override BookGroupEnum BookGroupEnum => BookGroupEnum.Torah;
+				public ExodusBook() : base("Exodus", 2) { }
+				public override string Abrv => "Exo";
+				public override BookGroupEnum BookGroupEnum => BookGroupEnum.Torah;
 		}
 
 		private sealed class LeviticusBook : Book
 		{
-			public LeviticusBook() : base("Leviticus", 3) { }
-			public override string Abrv => "Lev";
-			public override BookGroupEnum BookGroupEnum => BookGroupEnum.Torah;
+				public LeviticusBook() : base("Leviticus", 3) { }
+				public override string Abrv => "Lev";
+				public override BookGroupEnum BookGroupEnum => BookGroupEnum.Torah;
 		}
 
 		private sealed class NumbersBook : Book
 		{
-			public NumbersBook() : base("Numbers", 4) { }
-			public override string Abrv => "Num";
-			public override BookGroupEnum BookGroupEnum => BookGroupEnum.Torah;
+				public NumbersBook() : base("Numbers", 4) { }
+				public override string Abrv => "Num";
+				public override BookGroupEnum BookGroupEnum => BookGroupEnum.Torah;
 		}
 
 		private sealed class DeuteronomyBook : Book
 		{
-			public DeuteronomyBook() : base("Deuteronomy", 5) { }
-			public override string Abrv => "Deu";
-			public override BookGroupEnum BookGroupEnum => BookGroupEnum.Torah;
+				public DeuteronomyBook() : base("Deuteronomy", 5) { }
+				public override string Abrv => "Deu";
+				public override BookGroupEnum BookGroupEnum => BookGroupEnum.Torah;
 		}
 
 		private sealed class PsalmsBook : Book
 		{
-			public PsalmsBook() : base("Psalms", 19) { }
-			public override string Abrv => "Psa";
-			public override BookGroupEnum BookGroupEnum => BookGroupEnum.Poetry;
+				public PsalmsBook() : base("Psalms", 19) { }
+				public override string Abrv => "Psa";
+				public override BookGroupEnum BookGroupEnum => BookGroupEnum.Poetry;
 		}
 
 		private sealed class ProverbsBook : Book
 		{
-			public ProverbsBook() : base("Proverbs", 20) { }
-			public override string Abrv => "Pro";
-			public override BookGroupEnum BookGroupEnum => BookGroupEnum.Poetry;
+				public ProverbsBook() : base("Proverbs", 20) { }
+				public override string Abrv => "Pro";
+				public override BookGroupEnum BookGroupEnum => BookGroupEnum.Poetry;
 		}
 
-	}
 }
 
 /*

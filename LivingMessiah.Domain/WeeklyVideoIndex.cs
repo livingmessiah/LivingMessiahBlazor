@@ -1,19 +1,19 @@
 ﻿using System;
-namespace LivingMessiah.Domain
+namespace LivingMessiah.Domain;
+
+public enum WeeklyVideoType
 {
-	public enum WeeklyVideoType
-	{
 		//public WeeklyVideoType Type { get; set; }  // WeeklyVideoTypeId
 		//		None = 0,
 		MainServiceEnglish = 1,
 		MainServiceSpanish = 2,
 		InDepthStudy = 3,
 		TorahTuesday = 4
-	}
+}
 
 
-	public class WeeklyVideoIndex
-	{
+public class WeeklyVideoIndex
+{
 		public int TypeId { get; set; }
 		public string Descr { get; set; }
 		public int ShabbatWeekId { get; set; }
@@ -29,21 +29,20 @@ namespace LivingMessiah.Domain
 
 		public override string ToString()
 		{
-			return $"Type Id: {TypeId}, ShabbatWeekId: {ShabbatWeekId}, YouTubeId: {YouTubeId}"; //, WeeklyVideoType: {WeeklyVideoType}
+				return $"Type Id: {TypeId}, ShabbatWeekId: {ShabbatWeekId}, YouTubeId: {YouTubeId}"; //, WeeklyVideoType: {WeeklyVideoType}
 		}
 
 
 		public string Url()
 		{
-			if (YouTubeId != null)
-			{
-				return $"https://www.youtube.com/watch?v={YouTubeId}";
-			}
-			else
-			{
-				return "";
-			}
+				if (YouTubeId != null)
+				{
+						return $"https://www.youtube.com/watch?v={YouTubeId}";
+				}
+				else
+				{
+						return "";
+				}
 		}
 
-	}
 }

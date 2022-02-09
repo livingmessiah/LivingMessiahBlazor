@@ -1,18 +1,18 @@
 ﻿using Ardalis.SmartEnum;
 
-namespace LivingMessiah.Web.Pages.SukkotAdmin.Enums
+namespace LivingMessiah.Web.Pages.SukkotAdmin.Enums;
+
+public abstract class BaseRegistrationSortSmartEnum : SmartEnum<BaseRegistrationSortSmartEnum>
 {
-	public abstract class BaseRegistrationSortSmartEnum : SmartEnum<BaseRegistrationSortSmartEnum>
-	{
 		#region Id's
 		private static class Id
 		{
-			internal const int ById = 1;
-			internal const int ByLastName = 2;
-			internal const int ByFirstName = 3;
-			internal const int ByIdDesc = 4;
-			internal const int ByLastNameDesc = 5;
-			internal const int ByFirstNameDesc = 6;
+				internal const int ById = 1;
+				internal const int ByLastName = 2;
+				internal const int ByFirstName = 3;
+				internal const int ByIdDesc = 4;
+				internal const int ByLastNameDesc = 5;
+				internal const int ByFirstNameDesc = 6;
 		}
 		#endregion
 
@@ -37,41 +37,40 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Enums
 		#region Explicit ie Named Instances
 		private sealed class ByIdSE : BaseRegistrationSortSmartEnum
 		{
-			public ByIdSE() : base($"{nameof(Id.ById)}", Id.ById) { }
-			public override string ColumnName => "Id"; public override string SqlTableColumnName => "Id"; public override string Order => "";
+				public ByIdSE() : base($"{nameof(Id.ById)}", Id.ById) { }
+				public override string ColumnName => "Id"; public override string SqlTableColumnName => "Id"; public override string Order => "";
 		}
 
 		private sealed class ByLastNameSE : BaseRegistrationSortSmartEnum
 		{
-			public ByLastNameSE() : base($"{nameof(Id.ByLastName)}", Id.ByLastName) { }
-			public override string ColumnName => "Last Name"; public override string SqlTableColumnName => "FamilyName"; public override string Order => "";
+				public ByLastNameSE() : base($"{nameof(Id.ByLastName)}", Id.ByLastName) { }
+				public override string ColumnName => "Last Name"; public override string SqlTableColumnName => "FamilyName"; public override string Order => "";
 		}
 
 		private sealed class ByFirstNameSE : BaseRegistrationSortSmartEnum
 		{
-			public ByFirstNameSE() : base($"{nameof(Id.ByFirstName)}", Id.ByFirstName) { }
-			public override string ColumnName => "First Name"; public override string SqlTableColumnName => "FirstName"; public override string Order => "";
+				public ByFirstNameSE() : base($"{nameof(Id.ByFirstName)}", Id.ByFirstName) { }
+				public override string ColumnName => "First Name"; public override string SqlTableColumnName => "FirstName"; public override string Order => "";
 		}
 
 		private sealed class ByIdDescSE : BaseRegistrationSortSmartEnum
 		{
-			public ByIdDescSE() : base($"{nameof(Id.ByIdDesc)}", Id.ByIdDesc) { }
-			public override string ColumnName => "Id"; public override string SqlTableColumnName => "Id"; public override string Order => " Desc";
+				public ByIdDescSE() : base($"{nameof(Id.ByIdDesc)}", Id.ByIdDesc) { }
+				public override string ColumnName => "Id"; public override string SqlTableColumnName => "Id"; public override string Order => " Desc";
 		}
 
 		private sealed class ByLastNameDescSE : BaseRegistrationSortSmartEnum
 		{
-			public ByLastNameDescSE() : base($"{nameof(Id.ByLastNameDesc)}", Id.ByLastNameDesc) { }
-			public override string ColumnName => "Last Name"; public override string SqlTableColumnName => "FamilyName"; public override string Order => " Desc";
+				public ByLastNameDescSE() : base($"{nameof(Id.ByLastNameDesc)}", Id.ByLastNameDesc) { }
+				public override string ColumnName => "Last Name"; public override string SqlTableColumnName => "FamilyName"; public override string Order => " Desc";
 		}
 
 		private sealed class ByFirstNameDescSE : BaseRegistrationSortSmartEnum
 		{
-			public ByFirstNameDescSE() : base($"{nameof(Id.ByFirstNameDesc)}", Id.ByFirstNameDesc) { }
-			public override string ColumnName => "First Name"; public override string SqlTableColumnName => "FirstName"; public override string Order => " Desc";
+				public ByFirstNameDescSE() : base($"{nameof(Id.ByFirstNameDesc)}", Id.ByFirstNameDesc) { }
+				public override string ColumnName => "First Name"; public override string SqlTableColumnName => "FirstName"; public override string Order => " Desc";
 		}
 
 		#endregion
 
-	}
 }

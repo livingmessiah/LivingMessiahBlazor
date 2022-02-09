@@ -5,10 +5,10 @@ using Microsoft.AspNetCore.Components.Authorization;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace LivingMessiah.Web.Shared
+namespace LivingMessiah.Web.Shared;
+
+public partial class LoginDisplay
 {
-	public partial class LoginDisplay
-	{
 		[Inject]
 		public AuthenticationStateProvider AuthenticationStateProvider { get; set; }
 
@@ -21,57 +21,56 @@ namespace LivingMessiah.Web.Shared
 
 		protected override async Task OnInitializedAsync()
 		{
-			base.OnInitialized();
-			var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-			var user = authState.User;
+				base.OnInitialized();
+				var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+				var user = authState.User;
 
-			if (user.Identity.IsAuthenticated)
-			{
-				Verified = true;
-				_claims = user.Claims;
-			}
-			else
-			{
-				Verified = false;
-			}
+				if (user.Identity.IsAuthenticated)
+				{
+						Verified = true;
+						_claims = user.Claims;
+				}
+				else
+				{
+						Verified = false;
+				}
 
-			Name = user.Identity.Name;
-			EmailAddress = user.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
-			Role = user.Claims.FirstOrDefault(c => c.Type == "https://schemas.livingmessiah.com/roles")?.Value;
+				Name = user.Identity.Name;
+				EmailAddress = user.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+				Role = user.Claims.FirstOrDefault(c => c.Type == "https://schemas.livingmessiah.com/roles")?.Value;
 
 		}
 
 		public bool IsAdmin
 		{
-			get
-			{
-				if (Verified && Role.Contains("admin", System.StringComparison.InvariantCultureIgnoreCase))
+				get
 				{
-					return true;
+						if (Verified && Role.Contains("admin", System.StringComparison.InvariantCultureIgnoreCase))
+						{
+								return true;
+						}
+						else
+						{
+								return false;
+						}
 				}
-				else
-				{
-					return false;
-				}
-			}
 		}
 
 		public string BlueCheck
 		{
-			get
-			{
-				if (Verified)
+				get
 				{
-					return "<span class='text-primary'><i class='fas fa-check'></i></span>";
+						if (Verified)
+						{
+								return "<span class='text-primary'><i class='fas fa-check'></i></span>";
+						}
+						else
+						{
+								return "<span class='text-danger'>Unverified<i class='fas fa-question'></i></span>";
+						}
 				}
-				else
-				{
-					return "<span class='text-danger'>Unverified<i class='fas fa-question'></i></span>";
-				}
-			}
 		}
 
-	}
 }
 
 /*

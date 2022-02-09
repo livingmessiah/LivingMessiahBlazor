@@ -4,11 +4,11 @@ using SukkotApi.Domain;
 using Microsoft.Extensions.Options;
 using LivingMessiah.Web.Settings;
 
-namespace LivingMessiah.Web.Pages.Sukkot.RegistrationShell
+namespace LivingMessiah.Web.Pages.Sukkot.RegistrationShell;
+
+//https://www.ripteq.com.au/blog/blazor-code-behinds-and-base-classes
+public abstract class BaseRegistrationBody : ComponentBase
 {
-	//https://www.ripteq.com.au/blog/blazor-code-behinds-and-base-classes
-	public abstract class BaseRegistrationBody : ComponentBase
-	{
 		[Parameter]
 		public bool IsXs { get; set; }
 
@@ -25,8 +25,7 @@ namespace LivingMessiah.Web.Pages.Sukkot.RegistrationShell
 
 		protected override void OnInitialized()
 		{
-			IsMealsAvailable = SukkotSettings.Value.IsMealsAvailable;
+				IsMealsAvailable = SukkotSettings.Value.IsMealsAvailable;
 		}
 
-	}
 }

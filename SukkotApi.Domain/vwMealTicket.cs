@@ -1,7 +1,7 @@
-﻿namespace SukkotApi.Domain
+﻿namespace SukkotApi.Domain;
+
+public class vwMealTicket
 {
-	public class vwMealTicket
-	{
 		public bool Selected { get; set; }
 		public int RegistrationId { get; set; }
 		public string NameAndSpouse { get; set; }
@@ -12,5 +12,4 @@
 		public int Child6to9Veg { get; set; }
 		public int ChildUnder6Reg { get; set; }
 		public int ChildUnder6Veg { get; set; }
-	}
 }

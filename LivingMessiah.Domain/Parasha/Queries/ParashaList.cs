@@ -1,8 +1,8 @@
 ﻿using System;
-namespace LivingMessiah.Domain.Parasha.Queries
+namespace LivingMessiah.Domain.Parasha.Queries;
+
+public class ParashaList
 {
-	public class ParashaList
-	{
 		public int Id { get; set; }
 		public int RowCntByBookId { get; set; } // , ROW_NUMBER() OVER(PARTITION BY BookId ORDER BY Id ) AS RowCntByBookId
 		public decimal TriNum { get; set; } // TriNum
@@ -10,7 +10,7 @@ namespace LivingMessiah.Domain.Parasha.Queries
 
 		public BibleBook BibleBook { get; set; }
 		public int ShabbatWeekId { get; set; }
-		
+
 		public string TorahLong { get; set; }
 		public string Name { get; set; }
 		public string ParashaName { get; set; }
@@ -20,17 +20,16 @@ namespace LivingMessiah.Domain.Parasha.Queries
 		public string Haftorah { get; set; }
 		public string Brit { get; set; }
 		public bool IsNewBook { get; set; }       //, IIF(StartNewBookID IS NULL, 0, 1) AS IsNewBook
-		
+
 		public string BaseParashaUrl { get; set; }
 
 		public string ParashaHref
 		{
-			get
-			{
-				//return $"{Constants.ParashaBaseUrl}/{Id}?slug={NameUrl}/";
-				return $"{BaseParashaUrl}/{Id}?slug={NameUrl}/";
-			}
+				get
+				{
+						//return $"{Constants.ParashaBaseUrl}/{Id}?slug={NameUrl}/";
+						return $"{BaseParashaUrl}/{Id}?slug={NameUrl}/";
+				}
 		}
 
-	}
 }

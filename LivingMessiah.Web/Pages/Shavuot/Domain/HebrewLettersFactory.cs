@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 
-namespace LivingMessiah.Web.Pages.Shavuot.Domain
+namespace LivingMessiah.Web.Pages.Shavuot.Domain;
+
+public static class HebrewLettersFactory
 {
-	public static class HebrewLettersFactory
-	{
 		public static List<HebrewLetter> HebrewLetters()
 		{
-			return new List<HebrewLetter>
+				return new List<HebrewLetter>
 			{
 
 new HebrewLetter {Id = 1, UnicodeName = "Aleph", Hebrew = "א", Gematria = 1, Sofit = "", WithoutDagesh = ""},
@@ -34,7 +34,6 @@ new HebrewLetter {Id = 22, UnicodeName = "Tav", Hebrew = "ת", Gematria = 400, S
 
 			};
 		}
-	}
 }
 
 /*

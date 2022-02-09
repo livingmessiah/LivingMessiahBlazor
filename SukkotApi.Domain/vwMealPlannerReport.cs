@@ -1,9 +1,9 @@
 ﻿using System;
 
-namespace SukkotApi.Domain
+namespace SukkotApi.Domain;
+
+public class vwMealPlannerReport
 {
-	public class vwMealPlannerReport
-	{
 		public string MealDay { get; set; }
 		public string BruOrDin { get; set; }
 		public string MealTypeDescr { get; set; }  //MealTypeEnum
@@ -12,5 +12,4 @@ namespace SukkotApi.Domain
 		public int ChildBig { get; set; }
 		public int ChildSmall { get; set; }
 		public int TotalMeals { get; set; }
-	}
 }

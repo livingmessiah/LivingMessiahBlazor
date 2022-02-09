@@ -2,10 +2,10 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace SukkotApi.Domain
+namespace SukkotApi.Domain;
+
+public class RegistrationSummary
 {
-	public class RegistrationSummary
-	{
 		public int Id { get; set; }
 		public string FamilyName { get; set; }
 		public string EMail { get; set; }
@@ -44,21 +44,20 @@ namespace SukkotApi.Domain
 		[DisplayFormat(DataFormatString = "{0:C0}")]
 		public decimal TotalCost
 		{
-			get
-			{
-				return RegistrationFee + MealTotalCostAdult + MealTotalCostChildBig + CampCost;
-			}
+				get
+				{
+						return RegistrationFee + MealTotalCostAdult + MealTotalCostChildBig + CampCost;
+				}
 		}
 
 
 		[DisplayFormat(DataFormatString = "{0:C0}")]
 		public decimal RemainingCost
 		{
-			get
-			{
-				return RegistrationFee + MealTotalCostAdult + MealTotalCostChildBig + CampCost - TotalDonation;
-			}
+				get
+				{
+						return RegistrationFee + MealTotalCostAdult + MealTotalCostChildBig + CampCost - TotalDonation;
+				}
 		}
 
-	}
 }

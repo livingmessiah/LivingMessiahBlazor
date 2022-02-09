@@ -1,8 +1,7 @@
 ﻿
-namespace LivingMessiah.Web.Components
+namespace LivingMessiah.Web.Components;
+
+public static class Names
 {
-	public static class Names
-	{
 		public const string ParashaIndexTable = "Parasha-IndexTable";
-	}
 }

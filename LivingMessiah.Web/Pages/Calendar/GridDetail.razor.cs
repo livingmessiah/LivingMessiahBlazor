@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using LivingMessiah.Web.Pages.KeyDates.Enums;
 using System.Linq;
 
-namespace LivingMessiah.Web.Pages.Calendar
+namespace LivingMessiah.Web.Pages.Calendar;
+
+public partial class GridDetail
 {
-	public partial class GridDetail  
-	{
 		[Parameter]
 		public DateTypeEnum DateTypeEnum { get; set; }
 
@@ -24,23 +24,22 @@ namespace LivingMessiah.Web.Pages.Calendar
 
 		protected string Notes(string addedDaysDescr, int? addedDays)
 		{
-			if (addedDaysDescr == "" || addedDays is null)
-			{
-				return "";
-			}
-			else
-			{
-				double d = (double)addedDays;
-				return addedDaysDescr + " " + Date.AddDays(d).ToString(DateFormat.ddd_mm_dd);
-			}
+				if (addedDaysDescr == "" || addedDays is null)
+				{
+						return "";
+				}
+				else
+				{
+						double d = (double)addedDays;
+						return addedDaysDescr + " " + Date.AddDays(d).ToString(DateFormat.ddd_mm_dd);
+				}
 		}
 
 		protected string NotesFDD(int addedDays)
 		{
-			double d = (double)addedDays;
-			return Date.AddDays(d).ToString(DateFormat.ddd_mm_dd);
+				double d = (double)addedDays;
+				return Date.AddDays(d).ToString(DateFormat.ddd_mm_dd);
 		}
 
-	}
 }
 

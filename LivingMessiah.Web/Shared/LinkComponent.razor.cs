@@ -1,20 +1,20 @@
 ﻿using Microsoft.AspNetCore.Components;
 
-namespace LivingMessiah.Web.Shared
+namespace LivingMessiah.Web.Shared;
+
+public enum LinkComponentEnum
 {
-	public enum LinkComponentEnum
-	{
 		Simple = 1,
 		InternalBtnSm = 2,
 		InternalHome = 3,
 		Location = 4
 		//, External = 5,
 		//ExternalButton = 6,
-	}
-	
+}
 
-	public partial class LinkComponent
-	{
+
+public partial class LinkComponent
+{
 		[Parameter]
 		public LinkComponentEnum LinkComponentEnum { get; set; }
 
@@ -41,5 +41,4 @@ namespace LivingMessiah.Web.Shared
 		}
 		*/
 
-	}
 }

@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Components;
 
-namespace LivingMessiah.Web.Pages.SukkotAdmin
+namespace LivingMessiah.Web.Pages.SukkotAdmin;
+
+public partial class IndexButtonList
 {
-	public partial class IndexButtonList
-	{
 		[Parameter]
 		public bool IsXs { get; set; }
 
@@ -19,5 +19,4 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin
 	
 		 */
 
-	}
 }

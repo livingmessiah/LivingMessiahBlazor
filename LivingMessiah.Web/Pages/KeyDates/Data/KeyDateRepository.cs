@@ -9,34 +9,34 @@ using Microsoft.Extensions.Logging;
 using LivingMessiah.Data;                   // ToDo: Move this to LivingMessiah.Web.Data
 using LivingMessiah.Web.Pages.KeyDates.Queries;
 
-namespace LivingMessiah.Web.Pages.KeyDates.Data
+namespace LivingMessiah.Web.Pages.KeyDates.Data;
+
+public interface IKeyDateRepository
 {
-	public interface IKeyDateRepository
-	{
 		string BaseSqlDump { get; }
 		Task<List<CalendarEntry>> GetCalendarEntries(int yearId);
 
 		// Command
 		Task<int> UpdateKeyDateCalendar(int yearId, int calendarTemplateId, DateTime date);
-	}
-	public class KeyDateRepository : BaseRepositoryAsync, IKeyDateRepository
-	{
+}
+public class KeyDateRepository : BaseRepositoryAsync, IKeyDateRepository
+{
 		public KeyDateRepository(IConfiguration config, ILogger<KeyDateRepository> logger) : base(config, logger)
 		{
 		}
 
 		public string BaseSqlDump
 		{
-			get { return base.SqlDump; }
+				get { return base.SqlDump; }
 		}
 
 
 
 		public async Task<List<CalendarEntry>> GetCalendarEntries(int yearId)
 		{
-			log.LogDebug(String.Format("Inside {0}, yearId={1}", nameof(KeyDateRepository) + "!" + nameof(GetCalendarEntries), yearId));
-			base.Parms = new DynamicParameters(new { YearId = yearId });
-			base.Sql = $@"
+				log.LogDebug(String.Format("Inside {0}, yearId={1}", nameof(KeyDateRepository) + "!" + nameof(GetCalendarEntries), yearId));
+				base.Parms = new DynamicParameters(new { YearId = yearId });
+				base.Sql = $@"
 -- DECLARE @yearId int=9999
 SELECT
 ct.Id, c.YearId, c.CalendarTemplateId, 
@@ -48,11 +48,11 @@ FROM KeyDate.Calendar c
 WHERE YearId=@yearId
 ORDER BY Date
 ";
-			return await WithConnectionAsync(async connection =>
-			{
-				var rows = await connection.QueryAsync<CalendarEntry>(sql: base.Sql, param: base.Parms);
-				return rows.ToList();
-			});
+				return await WithConnectionAsync(async connection =>
+				{
+						var rows = await connection.QueryAsync<CalendarEntry>(sql: base.Sql, param: base.Parms);
+						return rows.ToList();
+				});
 		}
 
 
@@ -61,22 +61,21 @@ ORDER BY Date
 
 		public async Task<int> UpdateKeyDateCalendar(int yearId, int calendarTemplateId, DateTime date)
 		{
-			base.Parms = new DynamicParameters(new { YearId = yearId, CalendarTemplateId = calendarTemplateId, Date = date });
-			base.Sql = $@"
+				base.Parms = new DynamicParameters(new { YearId = yearId, CalendarTemplateId = calendarTemplateId, Date = date });
+				base.Sql = $@"
 -- DECLARE int @YearId={yearId}, int @CalendarTemplateId={calendarTemplateId}
 UPDATE KeyDate.Calendar SET Date = @Date 
 WHERE YearId = @YearId AND CalendarTemplateId=@CalendarTemplateId;
 ";
-			return await WithConnectionAsync(async connection =>
-			{
-				log.LogDebug($"base.Sql: {base.Sql}, base.Parms:{base.Parms}");
-				var count = await connection.ExecuteAsync(sql: base.Sql, param: base.Parms);
-				return count;
-			});
+				return await WithConnectionAsync(async connection =>
+				{
+						log.LogDebug($"base.Sql: {base.Sql}, base.Parms:{base.Parms}");
+						var count = await connection.ExecuteAsync(sql: base.Sql, param: base.Parms);
+						return count;
+				});
 		}
 		#endregion
 
-	}
 }
 
 

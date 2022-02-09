@@ -1,10 +1,10 @@
 ﻿using LivingMessiah.Web.Pages.SukkotAdmin.Enums;
 using System;
 
-namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration.Domain
+namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration.Domain;
+
+public class Registration
 {
-	public class Registration
-	{
 		public int? Id { get; set; }  // If null, then adding a record
 		public string FirstName { get; set; }
 		public string FamilyName { get; set; }
@@ -20,10 +20,10 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration.Domain
 		public BaseStatusSmartEnum BaseStatusSmartEnum { get; set; }
 		public string StatusName
 		{
-			get
-			{
-				return BaseStatusSmartEnum.FromValue(StatusId).Name;
-			}
+				get
+				{
+						return BaseStatusSmartEnum.FromValue(StatusId).Name;
+				}
 		}
 
 		public int CampId { get; set; }
@@ -42,10 +42,10 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration.Domain
 		public int LocationInt { get; set; }
 		public string LocationName
 		{
-			get
-			{
-				return BaseLocationSmartEnum.FromValue(LocationInt).Name;
-			}
+				get
+				{
+						return BaseLocationSmartEnum.FromValue(LocationInt).Name;
+				}
 		}
 
 		//public string Avitar { get; set; }
@@ -53,5 +53,4 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration.Domain
 		//public decimal LmmDonation { get; set; }		// NOT NULL
 		public bool WillHelpWithMeals { get; set; }  // NOT NULL
 
-	}
 }

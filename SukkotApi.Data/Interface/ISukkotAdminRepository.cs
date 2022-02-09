@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using SukkotApi.Domain.Registrations.Enums;
 
-namespace SukkotApi.Data
+namespace SukkotApi.Data;
+
+public interface ISukkotAdminRepository
 {
-	public interface ISukkotAdminRepository
-	{
 		Task<List<vwRegistration>> GetAll(RegistrationSortEnum sort);
 		Task<List<Notes>> GetNotes(RegistrationSortEnum sort);
 
@@ -37,5 +37,4 @@ namespace SukkotApi.Data
 		Task<MealPlan> GetMealPlan(int Id);
 		Task<int> EditMealPlan(MealPlan mealPlan);
 		Task<int> UpdateKitchenWork(KitchenWork kitchenWork);
-	}
 }

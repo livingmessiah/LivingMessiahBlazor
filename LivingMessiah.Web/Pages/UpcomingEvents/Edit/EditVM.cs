@@ -3,11 +3,11 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using LivingMessiah.Web.Pages.KeyDates.Enums;
 
-namespace LivingMessiah.Web.Pages.UpcomingEvents.Edit
+namespace LivingMessiah.Web.Pages.UpcomingEvents.Edit;
+
+// This is for non-KeyDate events
+public class EditVM
 {
-	// This is for non-KeyDate events
-	public class EditVM
-	{
 		[Required]
 		[Key]
 		public int Id { get; set; }
@@ -67,7 +67,6 @@ namespace LivingMessiah.Web.Pages.UpcomingEvents.Edit
 
 		public string WebsiteDescr { get; set; }
 		public string Description { get; set; }  // ToDo: md?, probably going to be Component Body
-	}
 }
 /*
 

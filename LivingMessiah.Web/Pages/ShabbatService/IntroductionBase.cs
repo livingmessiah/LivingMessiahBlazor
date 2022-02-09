@@ -2,10 +2,10 @@
 using Microsoft.AspNetCore.Components.Web;
 using System.Threading.Tasks;
 
-namespace LivingMessiah.Web.Pages.ShabbatService
+namespace LivingMessiah.Web.Pages.ShabbatService;
+
+public class IntroductionBase : ComponentBase
 {
-	public class IntroductionBase : ComponentBase
-	{
 		[Parameter]
 		public string SpanishUrlId { get; set; }
 
@@ -17,9 +17,8 @@ namespace LivingMessiah.Web.Pages.ShabbatService
 
 		protected async Task CheckBoxChanged(ChangeEventArgs e)
 		{
-			await OnLanguageSelection.InvokeAsync((bool)e.Value);
+				await OnLanguageSelection.InvokeAsync((bool)e.Value);
 		}
 
 
-	}
 }

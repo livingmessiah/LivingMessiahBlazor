@@ -2,24 +2,24 @@
 using LivingMessiah.Web.Domain;
 using LivingMessiah.Web.Links;
 
-namespace LivingMessiah.Web.Data
+namespace LivingMessiah.Web.Data;
+
+public interface ILinksFactory
 {
-	public interface ILinksFactory
-	{
 		List<Link> GetLinks();
 		List<Link> GetFeastLinks();
 		List<LinkBasic> GetDashboardLinks();
 		List<LinkBasic> GetVideoProductionLinks();
 		List<LinkBasic> GetEldersLinks();
 		//List<LinkBasic> GetMarkdownLinks();
-	}
+}
 
-	public class LinksFactory : ILinksFactory
-	{
+public class LinksFactory : ILinksFactory
+{
 
 		public List<LinkBasic> GetVideoProductionLinks()
 		{
-			return new List<LinkBasic>
+				return new List<LinkBasic>
 			{
 				new LinkBasic {Index = WeeklyVideos.Index, Title = WeeklyVideos.Title, Icon = WeeklyVideos.Icon, },
  			};
@@ -27,7 +27,7 @@ namespace LivingMessiah.Web.Data
 
 		public List<LinkBasic> GetEldersLinks()
 		{
-			return new List<LinkBasic>
+				return new List<LinkBasic>
 			{
 				new LinkBasic {Index = PsalmsAndProverbs.Index, Title = PsalmsAndProverbs.Title, Icon = PsalmsAndProverbs.Icon, },
 				new LinkBasic {Index = Contact.Index, Title = Contact.Title, Icon = Contact.Icon, },
@@ -36,7 +36,7 @@ namespace LivingMessiah.Web.Data
 
 		public List<LinkBasic> GetDashboardLinks()
 		{
-			return new List<LinkBasic>
+				return new List<LinkBasic>
 			{
 				new LinkBasic {Index = "/Admin/Dashboard/Index", Title = "Dashboard", Icon = "fas fa-tachometer-alt", },
 				new LinkBasic {Index = "/Admin/Dashboard/Dump", Title = "Dump", Icon = "fas fa-truck-monster", },
@@ -49,7 +49,7 @@ namespace LivingMessiah.Web.Data
 
 		public List<Link> GetLinks()
 		{
-			return new List<Link>
+				return new List<Link>
 			{
 				new Link
 				{
@@ -321,7 +321,7 @@ namespace LivingMessiah.Web.Data
 		/**/
 		public List<Link> GetFeastLinks()
 		{
-			return new List<Link>
+				return new List<Link>
 			{
 				new Link
 				{
@@ -349,7 +349,7 @@ namespace LivingMessiah.Web.Data
 				{
 					FeastDay = LivingMessiah.Web.Pages.KeyDates.Enums.FeastDayEnum.Tabernacles,
 					Index = Links.Sukkot.Index,
-					Title = Links.Sukkot.Title, 
+					Title = Links.Sukkot.Title,
 					Icon = Links.Sukkot.Icon,
 					HomeSidebarUsage=false,
 					HomeFloatRightHebrew="סֻכּוֹת",
@@ -376,5 +376,4 @@ namespace LivingMessiah.Web.Data
 		*/
 
 
-	}
 }

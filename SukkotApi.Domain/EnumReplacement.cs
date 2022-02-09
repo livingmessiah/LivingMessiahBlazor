@@ -3,31 +3,31 @@ using System.Collections.Generic;
 using System.Linq;
 using System.ComponentModel.DataAnnotations;
 
-namespace SukkotApi.Domain
+namespace SukkotApi.Domain;
+
+// ToDo, Task 512: Merge AgeEnum with MealAges I don't need both 
+public enum AgeEnum
 {
-	// ToDo, Task 512: Merge AgeEnum with MealAges I don't need both 
-	public enum AgeEnum
-	{
 		Adult = 1,
 		ChildBig = 2,
 		ChildSmall = 3
-	}
+}
 
-	public enum MealTypeEnum
-	{
+public enum MealTypeEnum
+{
 		Regular = 1,    // R
 		Vegetarian = 2  // V
-	}
+}
 
 
-	public enum MealTimeEnum
-	{
+public enum MealTimeEnum
+{
 		Brunch = 1,
 		Dinner = 2
-	}
+}
 
-	public class MealTime
-	{
+public class MealTime
+{
 		public static List<MealTime> All { get; } = new List<MealTime>();
 		public static MealTime Bru { get; } = new MealTime(MealTimeEnum.Brunch, 9, 12);  // "09:00", "11:59"  9:30-11 
 		public static MealTime Din { get; } = new MealTime(MealTimeEnum.Dinner, 15, 17);  // "03:00", "5:00" 3:30-4:30
@@ -39,38 +39,38 @@ namespace SukkotApi.Domain
 
 		private MealTime(MealTimeEnum mealTimesEnum, int timeBegin, int timeEnd)  //, string timeBegin, string timeEnd
 		{
-			MealTimeEnum = mealTimesEnum;
-			TimeBegin = timeBegin;
-			TimeEnd = timeEnd;
-			All.Add(this);
+				MealTimeEnum = mealTimesEnum;
+				TimeBegin = timeBegin;
+				TimeEnd = timeEnd;
+				All.Add(this);
 		}
 
 		public static MealTime FromEnum(MealTimeEnum enumValue)
 		{
-			return All.SingleOrDefault(r => r.MealTimeEnum == enumValue);
+				return All.SingleOrDefault(r => r.MealTimeEnum == enumValue);
 		}
 
 		public static MealTime FromHour(int hour)
 		{
-			return All.SingleOrDefault(r => r.TimeBegin >= hour & r.TimeEnd <= hour);
+				return All.SingleOrDefault(r => r.TimeBegin >= hour & r.TimeEnd <= hour);
 		}
 
 		public override string ToString()
 		{
-			if (this.MealTimeEnum == MealTimeEnum.Brunch)
-			{
-				return "B";
-			}
-			else
-			{
-				return "D";
-			}
+				if (this.MealTimeEnum == MealTimeEnum.Brunch)
+				{
+						return "B";
+				}
+				else
+				{
+						return "D";
+				}
 		}
 
-	}
+}
 
-	public enum MealEnum
-	{
+public enum MealEnum
+{
 		AdultLunch = 2,
 		AdultDinner = 3,
 		ChildBigLunch = 5,
@@ -83,10 +83,10 @@ namespace SukkotApi.Domain
 		ChildBigDinnerVeg = 14,
 		ChildSmallLunchVeg = 16,
 		ChildSmallDinnerVeg = 17
-	}
+}
 
-	public enum MealDateEnum
-	{
+public enum MealDateEnum
+{
 		Day01 = 1,
 		Day02 = 2,
 		Day03 = 3,
@@ -97,12 +97,12 @@ namespace SukkotApi.Domain
 		Day08 = 8
 		//		Day09 = 9,
 		//		Day10 = 10
-	}
+}
 
-	//ToDo Task 574 Determine if table MealDate (and MealDateEnum) ...can be eliminated
-	//ToDo Instead, should I port this to MealDateTime and cordinate that with MealTicketEnum
-	public class MealDate
-	{
+//ToDo Task 574 Determine if table MealDate (and MealDateEnum) ...can be eliminated
+//ToDo Instead, should I port this to MealDateTime and cordinate that with MealTicketEnum
+public class MealDate
+{
 		public static List<MealDate> All { get; } = new List<MealDate>();
 		public static MealDate Day01 { get; } = new MealDate(MealDateEnum.Day01, "2019-10-13", "Sun, Oct 13<sup>nd</sup>", "Sukkot.vwMealsDay01");
 		public static MealDate Day02 { get; } = new MealDate(MealDateEnum.Day02, "2019-10-14", "Mon, Oct 14<sup>rd</sup>", "Sukkot.vwMealsDay02");
@@ -124,33 +124,33 @@ namespace SukkotApi.Domain
 
 		private MealDate(MealDateEnum mealDatesEnum, string dateString, string dateHtml, string sqlView)
 		{
-			Id = (int)mealDatesEnum;
-			MealDateEnum = mealDatesEnum;
-			Name = dateString;
-			MealDateTime = DateTime.Parse(dateString);
-			DateHtml = dateHtml;
-			SqlView = sqlView;
-			All.Add(this);
+				Id = (int)mealDatesEnum;
+				MealDateEnum = mealDatesEnum;
+				Name = dateString;
+				MealDateTime = DateTime.Parse(dateString);
+				DateHtml = dateHtml;
+				SqlView = sqlView;
+				All.Add(this);
 		}
 
 		public static MealDate FromString(string formatString)
 		{
-			return All.SingleOrDefault(r => String.Equals(r.Name, formatString, StringComparison.OrdinalIgnoreCase));
+				return All.SingleOrDefault(r => String.Equals(r.Name, formatString, StringComparison.OrdinalIgnoreCase));
 		}
 
 		public static MealDate FromEnum(MealDateEnum enumValue)
 		{
-			return All.SingleOrDefault(r => r.MealDateEnum == enumValue);
+				return All.SingleOrDefault(r => r.MealDateEnum == enumValue);
 		}
 
 		public static Dictionary<string, string> DictionaryList()
 		{
-			Dictionary<string, string> d = new Dictionary<string, string>();
-			foreach (MealDate f in All)
-			{
-				d.Add(f.MealDateEnum.ToString(), f.Name);
-			}
-			return d;
+				Dictionary<string, string> d = new Dictionary<string, string>();
+				foreach (MealDate f in All)
+				{
+						d.Add(f.MealDateEnum.ToString(), f.Name);
+				}
+				return d;
 		}
 
 		/*
@@ -160,12 +160,12 @@ namespace SukkotApi.Domain
 		}
 		*/
 
-	}
+}
 
 
-	//ToDo: I need a MealTicketFilterEnum
-	public enum MealTicketEnum
-	{
+//ToDo: I need a MealTicketFilterEnum
+public enum MealTicketEnum
+{
 		UpCommingMeal = 0,  // 
 		Day01Brunch = 1,  // Sun	10/13 9am Brunch
 		Day01Dinner = 2,  // Sun	10/13 5pm Dinner
@@ -183,10 +183,10 @@ namespace SukkotApi.Domain
 		Day07Dinner = 14, // Sat	10/19 5pm Dinner
 		Day08Brunch = 15, // Sun	10/20 9am Brunch
 		Day08Dinner = 16  // Sun	10/20 9am Dinner HasTicket = false, so should this be in here?
-	}
+}
 
-	public class MealTicket
-	{
+public class MealTicket
+{
 		public static List<MealTicket> All { get; } = new List<MealTicket>();
 
 
@@ -221,52 +221,51 @@ namespace SukkotApi.Domain
 
 		private MealTicket(MealTicketEnum mealTicketEnum, MealDateEnum mealDateEnum, string dateString, string name, bool hasTicket)  //, string sqlView
 		{
-			MealTicketEnum = mealTicketEnum;
-			Id = (int)mealTicketEnum;
-			MealDateEnum = mealDateEnum;
-			HasTicket = hasTicket;
+				MealTicketEnum = mealTicketEnum;
+				Id = (int)mealTicketEnum;
+				MealDateEnum = mealDateEnum;
+				HasTicket = hasTicket;
 
-			//Name = dateString;
-			Name = name;
+				//Name = dateString;
+				Name = name;
 
-			MealTicketDateTime = DateTime.Parse(dateString);
-			DateHtml = name;
-			//SqlView = sqlView;
+				MealTicketDateTime = DateTime.Parse(dateString);
+				DateHtml = name;
+				//SqlView = sqlView;
 
-			if (MealTicketEnum == MealTicketEnum.Day01Brunch ||
-					MealTicketEnum == MealTicketEnum.Day02Brunch ||
-					MealTicketEnum == MealTicketEnum.Day03Brunch ||
-					MealTicketEnum == MealTicketEnum.Day04Brunch ||
-					MealTicketEnum == MealTicketEnum.Day05Brunch ||
-					MealTicketEnum == MealTicketEnum.Day06Brunch ||
-					MealTicketEnum == MealTicketEnum.Day07Brunch ||
-					MealTicketEnum == MealTicketEnum.Day08Brunch)
-			{
-				MealTimeEnum = MealTimeEnum.Brunch;
-			}
-			else
-			{
-				MealTimeEnum = MealTimeEnum.Dinner;
-			}
+				if (MealTicketEnum == MealTicketEnum.Day01Brunch ||
+						MealTicketEnum == MealTicketEnum.Day02Brunch ||
+						MealTicketEnum == MealTicketEnum.Day03Brunch ||
+						MealTicketEnum == MealTicketEnum.Day04Brunch ||
+						MealTicketEnum == MealTicketEnum.Day05Brunch ||
+						MealTicketEnum == MealTicketEnum.Day06Brunch ||
+						MealTicketEnum == MealTicketEnum.Day07Brunch ||
+						MealTicketEnum == MealTicketEnum.Day08Brunch)
+				{
+						MealTimeEnum = MealTimeEnum.Brunch;
+				}
+				else
+				{
+						MealTimeEnum = MealTimeEnum.Dinner;
+				}
 
 
-			All.Add(this);
+				All.Add(this);
 		}
 
 		public static MealTicket FromString(string formatString)
 		{
-			return All.Single(r => String.Equals(r.Name, formatString, StringComparison.OrdinalIgnoreCase));
+				return All.Single(r => String.Equals(r.Name, formatString, StringComparison.OrdinalIgnoreCase));
 		}
 
 		public static MealTicket FromEnum(MealTicketEnum enumValue)
 		{
-			return All.SingleOrDefault(r => r.MealTicketEnum == enumValue);
+				return All.SingleOrDefault(r => r.MealTicketEnum == enumValue);
 		}
 
 		public static MealTicket FromInt(int intValue)
 		{
-			return All.SingleOrDefault(r => r.Id == intValue);
+				return All.SingleOrDefault(r => r.Id == intValue);
 		}
 
-	}
 }

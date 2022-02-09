@@ -8,11 +8,11 @@ using SukkotApi.Domain;
 using static LivingMessiah.Web.Services.Auth0;
 using Microsoft.AspNetCore.Components;
 
-namespace LivingMessiah.Web.Pages.SukkotAdmin.Attendance
+namespace LivingMessiah.Web.Pages.SukkotAdmin.Attendance;
+
+[Authorize(Roles = Roles.AdminOrSukkot)]
+public partial class AllFeastDays
 {
-	[Authorize(Roles = Roles.AdminOrSukkot)]
-	public partial class AllFeastDays
-	{
 		[Inject]
 		public ILogger<AllFeastDays> Logger { get; set; }
 
@@ -21,7 +21,7 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Attendance
 
 		[Inject]
 		NavigationManager NavManager { get; set; }
-		
+
 		public string ExceptionMessage { get; set; }
 
 		public List<vwAttendanceAllFeastDays> AttendanceAllFeastDaysList { get; set; }
@@ -31,22 +31,21 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Attendance
 
 		protected override async Task OnInitializedAsync()
 		{
-			try
-			{
-				//ToDo figure out how to do multiple calls using Dapper
-				Logger.LogInformation($"Calling {nameof(AllFeastDays)}!{nameof(db.GetAttendanceAllFeastDays)}");
-				AttendanceAllFeastDaysList = await db.GetAttendanceAllFeastDays();
+				try
+				{
+						//ToDo figure out how to do multiple calls using Dapper
+						Logger.LogInformation($"Calling {nameof(AllFeastDays)}!{nameof(db.GetAttendanceAllFeastDays)}");
+						AttendanceAllFeastDaysList = await db.GetAttendanceAllFeastDays();
 
-				Logger.LogInformation($"Calling {nameof(AllFeastDays)}!{nameof(db.GetAttendancePeopleSummary)}");
-				AttendancePeopleSummary = await db.GetAttendancePeopleSummary();
-			}
-			catch (Exception ex)
-			{
-				ExceptionMessage = $"Inside {nameof(AllFeastDays)}!{nameof(OnInitializedAsync)}, <br><br> {ex.Message}";
-				Logger.LogError(ex, ExceptionMessage);
-				NavManager.NavigateTo(LivingMessiah.Web.Links.Home.Error);
-			}
+						Logger.LogInformation($"Calling {nameof(AllFeastDays)}!{nameof(db.GetAttendancePeopleSummary)}");
+						AttendancePeopleSummary = await db.GetAttendancePeopleSummary();
+				}
+				catch (Exception ex)
+				{
+						ExceptionMessage = $"Inside {nameof(AllFeastDays)}!{nameof(OnInitializedAsync)}, <br><br> {ex.Message}";
+						Logger.LogError(ex, ExceptionMessage);
+						NavManager.NavigateTo(LivingMessiah.Web.Links.Home.Error);
+				}
 		}
 
-	}
 }

@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using static LivingMessiah.Web.Pages.BlazorSyncFusion.SampleBlazorDemo;
 
-namespace LivingMessiah.Web.Pages.BlazorSyncFusion.Schedule
+namespace LivingMessiah.Web.Pages.BlazorSyncFusion.Schedule;
+
+internal partial class SampleConfig
 {
-	internal partial class SampleConfig
-	{
 		public List<Sample> Scheduler { get; set; } = new List<Sample>{
 						new Sample
 						{
@@ -467,5 +467,4 @@ namespace LivingMessiah.Web.Pages.BlazorSyncFusion.Schedule
 								FileName = "Events.razor"
 						}
 				};
-	}
 }

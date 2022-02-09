@@ -1,12 +1,11 @@
-﻿namespace LivingMessiah.Web.Pages.KeyDates.Enums
+﻿namespace LivingMessiah.Web.Pages.KeyDates.Enums;
+
+public enum RelativeYearEnum
 {
-	public enum RelativeYearEnum
-	{
 		None = 0,
 		Previous = 1,
 		Current = 2,
 		Next = 3
-	}
 }
 /*
  - None = 0,  // Used this for testing scenarios where not data is gotten

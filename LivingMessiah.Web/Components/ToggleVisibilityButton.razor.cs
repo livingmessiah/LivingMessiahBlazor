@@ -2,18 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Components; 
+using Microsoft.AspNetCore.Components;
 //using Microsoft.AspNetCore.Components.Web;
 
-namespace LivingMessiah.Web.Components
+namespace LivingMessiah.Web.Components;
+
+public partial class ToggleVisibilityButton
 {
-	public partial class ToggleVisibilityButton
-	{
 		[Parameter] public RenderFragment ChildContent { get; set; }
 
 		[Parameter(CaptureUnmatchedValues = true)]
 		public IReadOnlyDictionary<string, object> AdditionalAttributes { get; set; }
-			= new Dictionary<string, object>() { 
+			= new Dictionary<string, object>() {
 				{ "badgecolor", "badge-warning" },
 				{ "buttoncolor", "btn-primary" },
 				{ "buttonsize", "btn-sm" },
@@ -39,7 +39,6 @@ namespace LivingMessiah.Web.Components
 		public bool IsCollapsed { get; set; } = true;
 		protected void Collapsed_ButtonClick()
 		{
-			IsCollapsed = !IsCollapsed;
+				IsCollapsed = !IsCollapsed;
 		}
-	}
 }

@@ -1,7 +1,7 @@
-﻿namespace LivingMessiah.Web.Domain
+﻿namespace LivingMessiah.Web.Domain;
+
+public class Link
 {
-	public class Link
-	{
 		public string Index { get; set; }
 		public string Title { get; set; }
 		public string Icon { get; set; }
@@ -24,5 +24,4 @@
 				Podcast.Title2
 				Pesach.Title //  = "** dynamically created **";
 		*/
-	}
 }

@@ -4,10 +4,10 @@ using System.Threading.Tasks;
 using static LivingMessiah.Web.Pages.Sukkot.Constants.Other;
 using static LivingMessiah.Web.Links.Sukkot;
 
-namespace LivingMessiah.Web.Pages.Sukkot.RegistrationShell
+namespace LivingMessiah.Web.Pages.Sukkot.RegistrationShell;
+
+public partial class HouseRulesConfirmationModal
 {
-	public partial class HouseRulesConfirmationModal
-	{
 		[Inject]
 		NavigationManager NavManager { get; set; }
 
@@ -25,41 +25,40 @@ namespace LivingMessiah.Web.Pages.Sukkot.RegistrationShell
 
 		protected override async Task OnInitializedAsync()
 		{
-			base.OnInitialized();
-			await Task.Delay(0);
+				base.OnInitialized();
+				await Task.Delay(0);
 
-			ModalId = IsXs ? ModalIdHouseRulesXs : ModalIdHouseRules;  //IsXs2 ?
-			FormatSize = IsXs ? "" : "lead"; // IsXs2 ?
+				ModalId = IsXs ? ModalIdHouseRulesXs : ModalIdHouseRules;  //IsXs2 ?
+				FormatSize = IsXs ? "" : "lead"; // IsXs2 ?
 		}
 
 
-		void BeginRegistration_ButtonClick() 
+		void BeginRegistration_ButtonClick()
 		{
-			Logger.LogDebug($"Event: {nameof(BeginRegistration_ButtonClick)} clicked");
-			MakeModalVisible = true;
-			StateHasChanged();
+				Logger.LogDebug($"Event: {nameof(BeginRegistration_ButtonClick)} clicked");
+				MakeModalVisible = true;
+				StateHasChanged();
 		}
 
-		void CancelModal_ButtonClick() 
+		void CancelModal_ButtonClick()
 		{
-			Logger.LogDebug($"Event: {nameof(CancelModal_ButtonClick)} clicked");
-			MakeModalVisible = false;
-			StateHasChanged();
+				Logger.LogDebug($"Event: {nameof(CancelModal_ButtonClick)} clicked");
+				MakeModalVisible = false;
+				StateHasChanged();
 		}
 
 		void DoNotAgree_ButtonClick()
 		{
-			Logger.LogDebug($"Event: {nameof(DoNotAgree_ButtonClick)} clicked");
-			NavManager.NavigateTo(LivingMessiah.Web.Links.Home.Index);
+				Logger.LogDebug($"Event: {nameof(DoNotAgree_ButtonClick)} clicked");
+				NavManager.NavigateTo(LivingMessiah.Web.Links.Home.Index);
 		}
 
 		//async Task Agree_ButtonClick()
 		void Agree_ButtonClick()
 		{
-			Logger.LogDebug($"Event: {nameof(Agree_ButtonClick)} clicked; Navigate to CreateEdit");
-			NavManager.NavigateTo(LivingMessiah.Web.Links.Sukkot.CreateEdit);
+				Logger.LogDebug($"Event: {nameof(Agree_ButtonClick)} clicked; Navigate to CreateEdit");
+				NavManager.NavigateTo(LivingMessiah.Web.Links.Sukkot.CreateEdit);
 		}
 
 
-	}
 }

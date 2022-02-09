@@ -5,11 +5,10 @@ using LivingMessiah.Web.Services;
 using LivingMessiah.Web.Domain;
 using System;
 
-namespace LivingMessiah.Web.Pages.Leadership
+namespace LivingMessiah.Web.Pages.Leadership;
+
+public partial class Office
 {
-	public partial class Office
-	{
 		[Parameter]
 		public Person Person { get; set; }
-	}
 }

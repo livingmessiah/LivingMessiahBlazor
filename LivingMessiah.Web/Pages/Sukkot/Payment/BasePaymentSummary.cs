@@ -3,10 +3,10 @@ using SukkotApi.Domain;
 using Microsoft.Extensions.Options;
 using LivingMessiah.Web.Settings;
 
-namespace LivingMessiah.Web.Pages.Sukkot
+namespace LivingMessiah.Web.Pages.Sukkot;
+
+public abstract class BasePaymentSummary : ComponentBase
 {
-	public abstract class BasePaymentSummary : ComponentBase
-	{
 		[Inject]
 		public IOptions<SukkotSettings> SukkotSettings { get; set; }
 
@@ -17,8 +17,7 @@ namespace LivingMessiah.Web.Pages.Sukkot
 		protected bool IsMealsAvailable;
 		protected override void OnInitialized()
 		{
-			IsMealsAvailable = SukkotSettings.Value.IsMealsAvailable;
+				IsMealsAvailable = SukkotSettings.Value.IsMealsAvailable;
 		}
 
-	}
 }

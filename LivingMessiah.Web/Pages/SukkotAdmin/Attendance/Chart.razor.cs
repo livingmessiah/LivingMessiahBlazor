@@ -8,11 +8,11 @@ using SukkotApi.Domain;
 using static LivingMessiah.Web.Services.Auth0;
 using Microsoft.AspNetCore.Components;
 
-namespace LivingMessiah.Web.Pages.SukkotAdmin.Attendance
+namespace LivingMessiah.Web.Pages.SukkotAdmin.Attendance;
+
+[Authorize(Roles = Roles.AdminOrSukkot)]
+public partial class Chart
 {
-	[Authorize(Roles = Roles.AdminOrSukkot)]
-	public partial class Chart
-	{
 		[Inject]
 		public ILogger<Chart> Logger { get; set; }
 
@@ -31,43 +31,42 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Attendance
 
 		protected override async Task OnInitializedAsync()
 		{
-			Logger.LogInformation($"Calling {nameof(Chart)}!{nameof(db.GetAttendanceChart)}");
-			try
-			{
-				AttendanceChartList = await db.GetAttendanceChart();
-			}
-			catch (Exception ex)
-			{
-				ExceptionMessage = $"Inside {nameof(Chart)}!{nameof(OnInitializedAsync)}, <br><br> {ex.Message}";
-				Logger.LogError(ex, ExceptionMessage);
-				NavManager.NavigateTo(LivingMessiah.Web.Links.Home.Error);
-			}
-			Load();
-			
+				Logger.LogInformation($"Calling {nameof(Chart)}!{nameof(db.GetAttendanceChart)}");
+				try
+				{
+						AttendanceChartList = await db.GetAttendanceChart();
+				}
+				catch (Exception ex)
+				{
+						ExceptionMessage = $"Inside {nameof(Chart)}!{nameof(OnInitializedAsync)}, <br><br> {ex.Message}";
+						Logger.LogError(ex, ExceptionMessage);
+						NavManager.NavigateTo(LivingMessiah.Web.Links.Home.Error);
+				}
+				Load();
+
 		}
 
 		public void Load()
 		{
-			Columns = new List<Column>();
-			List<ColumnPart> columnParts = new List<ColumnPart>();
+				Columns = new List<Column>();
+				List<ColumnPart> columnParts = new List<ColumnPart>();
 
-			string prevFeastDay2 = "";
-			foreach (var item in AttendanceChartList)
-			{
-				if (prevFeastDay2 == item.FeastDay2 | prevFeastDay2 == "")
+				string prevFeastDay2 = "";
+				foreach (var item in AttendanceChartList)
 				{
-					columnParts.Add(new ColumnPart() { DimensionOne = item.AgeDesc, Days = item.Days });
+						if (prevFeastDay2 == item.FeastDay2 | prevFeastDay2 == "")
+						{
+								columnParts.Add(new ColumnPart() { DimensionOne = item.AgeDesc, Days = item.Days });
+						}
+						else
+						{
+								Columns.Add(new Column { StackedDimensionOne = prevFeastDay2, ColumnParts = columnParts });
+								columnParts = null; //columnParts.Clear();
+								columnParts = new List<ColumnPart>();
+								columnParts.Add(new ColumnPart() { DimensionOne = item.AgeDesc, Days = item.Days });
+						}
+						prevFeastDay2 = item.FeastDay2;
 				}
-				else
-				{
-					Columns.Add(new Column { StackedDimensionOne = prevFeastDay2, ColumnParts = columnParts });
-					columnParts = null; //columnParts.Clear();
-					columnParts = new List<ColumnPart>();
-					columnParts.Add(new ColumnPart() { DimensionOne = item.AgeDesc, Days = item.Days });
-				}
-				prevFeastDay2 = item.FeastDay2;
-			}
-			Columns.Add(new Column { StackedDimensionOne = prevFeastDay2, ColumnParts = columnParts });
+				Columns.Add(new Column { StackedDimensionOne = prevFeastDay2, ColumnParts = columnParts });
 		}
-	}
 }

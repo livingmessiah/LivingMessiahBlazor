@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using LivingMessiah.Web.Services;
 
-namespace LivingMessiah.Web.Pages.Leadership
+namespace LivingMessiah.Web.Pages.Leadership;
+
+public partial class Leadership
 {
-	public partial class Leadership
-	{
 		[Inject]
 		protected ILeadershipService Svc { get; set; }
 
@@ -15,9 +15,8 @@ namespace LivingMessiah.Web.Pages.Leadership
 
 		protected override Task OnInitializedAsync()
 		{
-			People = Svc.LoadPeople();
-			return base.OnInitializedAsync();
+				People = Svc.LoadPeople();
+				return base.OnInitializedAsync();
 		}
 
-	}
 }

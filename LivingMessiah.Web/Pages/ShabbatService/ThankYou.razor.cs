@@ -1,6 +1,5 @@
-﻿namespace LivingMessiah.Web.Pages.ShabbatService
+﻿namespace LivingMessiah.Web.Pages.ShabbatService;
+
+public partial class ThankYou : BaseSection
 {
-	public partial class ThankYou : BaseSection
-	{
-	}
 }

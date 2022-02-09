@@ -1,21 +1,21 @@
 ﻿using Ardalis.SmartEnum;
 
-namespace LivingMessiah.Web.Pages.KeyDates.Enums
+namespace LivingMessiah.Web.Pages.KeyDates.Enums;
+
+public abstract class BaseKeyDateYearSmartEnum : SmartEnum<BaseKeyDateYearSmartEnum>
 {
-	public abstract class BaseKeyDateYearSmartEnum: SmartEnum<BaseKeyDateYearSmartEnum>
-	{
 		#region Id's
 		private static class Id
 		{
-			internal const int Previous = 1;
-			internal const int Current = 2;
-			internal const int Next = 3;
+				internal const int Previous = 1;
+				internal const int Current = 2;
+				internal const int Next = 3;
 		}
 		#endregion
 
 
 		#region  Declared Public Instances
-		public static readonly BaseKeyDateYearSmartEnum Previous = new PreviousSE(); 
+		public static readonly BaseKeyDateYearSmartEnum Previous = new PreviousSE();
 		public static readonly BaseKeyDateYearSmartEnum Current = new CurrentSE();
 		public static readonly BaseKeyDateYearSmartEnum Next = new NextSE();
 		// SE=SmartEnum
@@ -31,24 +31,23 @@ namespace LivingMessiah.Web.Pages.KeyDates.Enums
 		#region Private Instantiation
 		private sealed class PreviousSE : BaseKeyDateYearSmartEnum
 		{
-			public PreviousSE() : base($"{nameof(Id.Previous)}", Id.Previous) { }
-			public override int Year => 2021;
+				public PreviousSE() : base($"{nameof(Id.Previous)}", Id.Previous) { }
+				public override int Year => 2021;
 		}
 
 		private sealed class CurrentSE : BaseKeyDateYearSmartEnum
 		{
-			public CurrentSE() : base($"{nameof(Id.Current)}", Id.Current) { }
-			public override int Year => 2022;
+				public CurrentSE() : base($"{nameof(Id.Current)}", Id.Current) { }
+				public override int Year => 2022;
 		}
 
 		private sealed class NextSE : BaseKeyDateYearSmartEnum
 		{
-			public NextSE() : base($"{nameof(Id.Next)}", Id.Next) { }
-			public override int Year => 2023;
+				public NextSE() : base($"{nameof(Id.Next)}", Id.Next) { }
+				public override int Year => 2023;
 		}
 		#endregion
 
-	}
 }
 /*
 	public enum RelativeYearEnum

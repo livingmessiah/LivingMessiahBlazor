@@ -2,11 +2,10 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace LivingMessiah.Web.Pages.Sukkot.CreateEdit
-{
+namespace LivingMessiah.Web.Pages.Sukkot.CreateEdit;
 
-	public class RegistrationVM
-	{
+public class RegistrationVM
+{
 		[Required]
 		[Key]
 		[DisplayName("Reg #")]
@@ -65,7 +64,7 @@ namespace LivingMessiah.Web.Pages.Sukkot.CreateEdit
 		[Required(ErrorMessage = "A location is required")]
 		[DisplayName("Location")]
 		public SukkotApi.Domain.Enums.LocationEnum LocationEnum { get; set; } = SukkotApi.Domain.Enums.LocationEnum.GreenhouseTrolleyHobbyFarm;
-	
+
 		[Required]
 		[DisplayName("Camp")]
 		public SukkotApi.Domain.Enums.CampType CampTypeEnum { get; set; }
@@ -102,5 +101,4 @@ namespace LivingMessiah.Web.Pages.Sukkot.CreateEdit
 		[DisplayName("I want some Kitchen Duties?")]
 		public bool WillHelpWithMeals { get; set; }
 
-	}
 }

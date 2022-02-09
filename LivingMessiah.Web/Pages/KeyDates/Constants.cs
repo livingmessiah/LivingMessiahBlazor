@@ -1,49 +1,49 @@
-﻿namespace LivingMessiah.Web.Pages.KeyDates.Constants
+﻿namespace LivingMessiah.Web.Pages.KeyDates.Constants;
+
+/*
+ToDo: Delete
+Used by: LivingMessiah.Web\Components\Pages\Shavuot\... 
+- Header.razor
+- OmerCount.razor
+*/
+public static class Years
 {
-  /*
-  ToDo: Delete
-  Used by: LivingMessiah.Web\Components\Pages\Shavuot\... 
-  - Header.razor
-  - OmerCount.razor
-  */
-  public static class Years
-	{
 		public const int Previous = 2020;
 		public const int Current = 2021;
-	}
+}
 
-  /*
+/*
 ToDo: Delete
-  Used by: LivingMessiah.Web\Components\Pages\Shavuot\... 
-  - OmerCount.razor
-  - CountingInstructions.razor
-  - Shavuot.razor.cs
-  - TablePrint.razor
+Used by: LivingMessiah.Web\Components\Pages\Shavuot\... 
+- OmerCount.razor
+- CountingInstructions.razor
+- Shavuot.razor.cs
+- TablePrint.razor
 */
-  public static class Omer
-  {
-    // Days added to Dates._12_Passover
-    public const int DaysAdded = 2; // If Sadducee interpretation, it's always 2
-    public static System.DateTime Date { get; set; } = 
-      System.DateTime.Parse(Dates._12_Passover).AddDays(DaysAdded);
-    public static string FirstDayAfterTheSabbath = Date.ToString("d");
+public static class Omer
+{
+		// Days added to Dates._12_Passover
+		public const int DaysAdded = 2; // If Sadducee interpretation, it's always 2
+		public static System.DateTime Date { get; set; } =
+			System.DateTime.Parse(Dates._12_Passover).AddDays(DaysAdded);
+		public static string FirstDayAfterTheSabbath = Date.ToString("d");
 
-    public static int CountInDays()
-    {
-      System.DateTime start = Omer.Date;
-      start = start.AddDays(-1);
-      System.DateTime cur = System.DateTime.Now;
+		public static int CountInDays()
+		{
+				System.DateTime start = Omer.Date;
+				start = start.AddDays(-1);
+				System.DateTime cur = System.DateTime.Now;
 
-      System.TimeSpan difference = cur - start;
-      int days = (int)difference.TotalDays;
-      return days;
-    }
-  }
+				System.TimeSpan difference = cur - start;
+				int days = (int)difference.TotalDays;
+				return days;
+		}
+}
 
-  public static class Dates
-	{
-    public const string _12_Passover = "4/25/2021";
-    /*
+public static class Dates
+{
+		public const string _12_Passover = "4/25/2021";
+		/*
     " And you shall count from the <b>morrow of the Sabbath</b> from the day you bring the Omer [sheaf] of waving; ...
     Leviticus 23:15-16,21
     https://www.nehemiaswall.com/truth-shavuot
@@ -61,5 +61,4 @@ ToDo: Delete
     orElse FWIW
     - in the link above, Nehemiah Gordon says there's a third option of the <b>Essenes</b> 
  */
-  }
 }

@@ -2,15 +2,15 @@
 using System.ComponentModel.DataAnnotations;
 using LivingMessiah.Web.Enums;
 
-namespace LivingMessiah.Web.Pages.Admin.AudioVisual
+namespace LivingMessiah.Web.Pages.Admin.AudioVisual;
+
+public class EditGridVM
 {
-	public class EditGridVM
-	{
 		public int? Id { get; set; }
 		public WeeklyVideoTypeEnum WeeklyVideoTypeEnum { get; set; }
 
 		public int ShabbatWeekId { get; set; }
-		
+
 		public string ShabbatWeekIdString { get; set; }
 
 		[Required]
@@ -20,34 +20,34 @@ namespace LivingMessiah.Web.Pages.Admin.AudioVisual
 
 		public string Url()
 		{
-			if (YouTubeId != null)
-			{
-				return $"https://www.youtube.com/watch?v={YouTubeId}";
-			}
-			else
-			{
-				return "";
-			}
+				if (YouTubeId != null)
+				{
+						return $"https://www.youtube.com/watch?v={YouTubeId}";
+				}
+				else
+				{
+						return "";
+				}
 		}
 
 
 		public string MHBUrl()
 		{
-			if (Book != 0 && Chapter != 0)
-			{
-				if (BaseBibleBookSmartEnum.TryFromValue(Book, out var se))
+				if (Book != 0 && Chapter != 0)
 				{
-					return $"https://myhebrewbible.com/BookChapter/{se.Name}/{Chapter}/Slug";
+						if (BaseBibleBookSmartEnum.TryFromValue(Book, out var se))
+						{
+								return $"https://myhebrewbible.com/BookChapter/{se.Name}/{Chapter}/Slug";
+						}
+						else
+						{
+								return "";
+						}
 				}
 				else
 				{
-					return "";
+						return "";
 				}
-			}
-			else
-			{
-				return "";
-			}
 		}
 
 
@@ -85,7 +85,6 @@ More static as it derived from the Book/Chapter
 
 		public override string ToString()
 		{
-			return $@"  Id: {Id}; WeeklyVideoTypeEnum: {WeeklyVideoTypeEnum}; ShabbatWeekId: {ShabbatWeekId}; YouTubeId: {YouTubeId}";
+				return $@"  Id: {Id}; WeeklyVideoTypeEnum: {WeeklyVideoTypeEnum}; ShabbatWeekId: {ShabbatWeekId}; YouTubeId: {YouTubeId}";
 		}
-	}
 }

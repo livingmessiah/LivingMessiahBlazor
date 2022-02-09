@@ -1,10 +1,10 @@
 ﻿using System;
 using LivingMessiah.Web.Pages.SukkotAdmin.Enums;
 
-namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration.Domain
+namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration.Domain;
+
+public class RegistrationPOCO
 {
-	public class RegistrationPOCO
-	{
 		#region Simple Types
 		public int Id { get; set; }
 		public string FamilyName { get; set; }
@@ -53,78 +53,77 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration.Domain
 
 		public DateTime[] AttendanceDateList
 		{
-			get
-			{
-				if (!String.IsNullOrEmpty(AttendanceDatesCSV))
+				get
 				{
-					int length = AttendanceDatesCSV.Split(",").Length;
-					DateTime[] list = new DateTime[length];
-					string[] array = AttendanceDatesCSV.Split(',');
-					int i = 0;
-					foreach (string value in array)
-					{
-						list[i] = (DateTime.Parse(value));
-						i += 1;
-					}
-					return list;
+						if (!String.IsNullOrEmpty(AttendanceDatesCSV))
+						{
+								int length = AttendanceDatesCSV.Split(",").Length;
+								DateTime[] list = new DateTime[length];
+								string[] array = AttendanceDatesCSV.Split(',');
+								int i = 0;
+								foreach (string value in array)
+								{
+										list[i] = (DateTime.Parse(value));
+										i += 1;
+								}
+								return list;
+						}
+						else
+						{
+								return null;
+						}
 				}
-				else
-				{
-					return null;
-				}
-			}
 		}
 
 		public DateTime[] LodgingDateList
 		{
-			get
-			{
-				if (!String.IsNullOrEmpty(LodgingDatesCSV))
+				get
 				{
-					int length = LodgingDatesCSV.Split(",").Length;
-					DateTime[] list = new DateTime[length];
-					string[] array = LodgingDatesCSV.Split(',');
-					int i = 0;
-					foreach (string value in array)
-					{
-						list[i] = (DateTime.Parse(value));
-						i += 1;
-					}
-					return list;
+						if (!String.IsNullOrEmpty(LodgingDatesCSV))
+						{
+								int length = LodgingDatesCSV.Split(",").Length;
+								DateTime[] list = new DateTime[length];
+								string[] array = LodgingDatesCSV.Split(',');
+								int i = 0;
+								foreach (string value in array)
+								{
+										list[i] = (DateTime.Parse(value));
+										i += 1;
+								}
+								return list;
+						}
+						else
+						{
+								return null;
+						}
 				}
-				else
-				{
-					return null;
-				}
-			}
 		}
 
 
 
 		public int WillHelpWithMealsToInt
 		{
-			get
-			{
-				return Convert.ToInt32(WillHelpWithMeals);
-			}
+				get
+				{
+						return Convert.ToInt32(WillHelpWithMeals);
+				}
 		}
 
 		public string NotesScrubbed
 		{
-			get
-			{
-				if (!string.IsNullOrEmpty(Notes))
+				get
 				{
-					return Notes.Replace("\"", string.Empty).Replace("'", string.Empty);
-				}
-				else
-				{
-					return Notes;
-				}
+						if (!string.IsNullOrEmpty(Notes))
+						{
+								return Notes.Replace("\"", string.Empty).Replace("'", string.Empty);
+						}
+						else
+						{
+								return Notes;
+						}
 
-			}
+				}
 		}
 		#endregion
 
-	}
 }

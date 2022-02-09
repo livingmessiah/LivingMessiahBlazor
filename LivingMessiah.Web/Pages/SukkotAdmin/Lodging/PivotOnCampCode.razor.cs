@@ -8,11 +8,11 @@ using SukkotApi.Domain;
 using static LivingMessiah.Web.Services.Auth0;
 using Microsoft.AspNetCore.Components;
 
-namespace LivingMessiah.Web.Pages.SukkotAdmin.Lodging
+namespace LivingMessiah.Web.Pages.SukkotAdmin.Lodging;
+
+[Authorize(Roles = Roles.AdminOrSukkot)]
+public partial class PivotOnCampCode
 {
-	[Authorize(Roles = Roles.AdminOrSukkot)]
-	public partial class PivotOnCampCode
-	{
 		[Inject]
 		public ILogger<PivotOnCampCode> Logger { get; set; }
 
@@ -37,19 +37,17 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Lodging
 
 		protected override async Task OnInitializedAsync()
 		{
-			try
-			{
-				Logger.LogDebug($"Inside: {nameof(PivotOnCampCode)}!{nameof(OnInitializedAsync)}, calling {nameof(db.GetvwLodgingDaysPivotOnCampCode)}");
-				LodgingDaysPivotOnCampCodeList = await db.GetvwLodgingDaysPivotOnCampCode();
-				OffsiteCount = await db.GetOffsiteCount();
-			}
-			catch (Exception ex)
-			{
-				ExceptionMessage = $"{ex.Message}";
-				Logger.LogError(ex, ExceptionMessage);
-				NavManager.NavigateTo(LivingMessiah.Web.Links.Home.Error);
-			}
+				try
+				{
+						Logger.LogDebug($"Inside: {nameof(PivotOnCampCode)}!{nameof(OnInitializedAsync)}, calling {nameof(db.GetvwLodgingDaysPivotOnCampCode)}");
+						LodgingDaysPivotOnCampCodeList = await db.GetvwLodgingDaysPivotOnCampCode();
+						OffsiteCount = await db.GetOffsiteCount();
+				}
+				catch (Exception ex)
+				{
+						ExceptionMessage = $"{ex.Message}";
+						Logger.LogError(ex, ExceptionMessage);
+						NavManager.NavigateTo(LivingMessiah.Web.Links.Home.Error);
+				}
 		}
-	}
-
 }

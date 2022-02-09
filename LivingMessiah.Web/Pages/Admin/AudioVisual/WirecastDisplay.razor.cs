@@ -6,11 +6,11 @@ using LivingMessiah.Data;
 using LivingMessiah.Domain;
 using System;
 
-namespace LivingMessiah.Web.Pages.Admin.AudioVisual
+namespace LivingMessiah.Web.Pages.Admin.AudioVisual;
+
+[AllowAnonymous]
+public partial class WirecastDisplay
 {
-	[AllowAnonymous]
-	public partial class WirecastDisplay
-	{
 		[Inject]
 		public IShabbatWeekRepository db { get; set; }
 
@@ -23,23 +23,22 @@ namespace LivingMessiah.Web.Pages.Admin.AudioVisual
 
 		protected override async Task OnInitializedAsync()
 		{
-			Logger.LogDebug($"Inside {nameof(WirecastDisplay)}!{nameof(OnInitializedAsync)}");
-			DatabaseError = false;
-			try
-			{
-				Wirecast = await db.GetCurrentWirecast();
-				if (Wirecast == null)
+				Logger.LogDebug($"Inside {nameof(WirecastDisplay)}!{nameof(OnInitializedAsync)}");
+				DatabaseError = false;
+				try
 				{
-					Logger.LogDebug($"Wirecast is null, Sql:{db.BaseSqlDump}");
-				}
+						Wirecast = await db.GetCurrentWirecast();
+						if (Wirecast == null)
+						{
+								Logger.LogDebug($"Wirecast is null, Sql:{db.BaseSqlDump}");
+						}
 
-			}
-			catch (Exception ex)
-			{
-				DatabaseError = true;
-				DatabaseErrorMsg = $"Error reading database";
-				Logger.LogError(ex, $"...{DatabaseErrorMsg}");
-			}
+				}
+				catch (Exception ex)
+				{
+						DatabaseError = true;
+						DatabaseErrorMsg = $"Error reading database";
+						Logger.LogError(ex, $"...{DatabaseErrorMsg}");
+				}
 		}
-	}
 }

@@ -9,10 +9,10 @@ using System.Linq;
 using LivingMessiah.Web.Services;
 using LivingMessiah.Domain;
 
-namespace LivingMessiah.Web.Shared
+namespace LivingMessiah.Web.Shared;
+
+public partial class PsalmAndProverbCurrent
 {
-	public partial class PsalmAndProverbCurrent
-	{
 		[Inject]
 		public IShabbatWeekCacheService svc { get; set; }
 
@@ -27,59 +27,58 @@ namespace LivingMessiah.Web.Shared
 
 		protected string PsalmsHeading;
 		protected string PsalmsVerses;
-		protected string ProverbsHeading; 
+		protected string ProverbsHeading;
 		protected string ProverbsVerses;
 
 		protected bool LoadFailed;
 
 		protected override async Task OnInitializedAsync()
 		{
-			try
-			{
-				//Logger.LogDebug($"Inside {nameof(PsalmAndProverbCurrent)}!{nameof(OnInitializedAsync)}");
-				CurrentPsalmAndProverb = await svc.GetCurrentPsalmAndProverb();
-				ShabbatDateYMD = CurrentPsalmAndProverb.ShabbatDate.ToString("MMM dd");
-				PsalmsHeading = BuildHeading(CurrentPsalmAndProverb.PsalmsBCV, CurrentPsalmAndProverb.PsalmsTitle);
-				PsalmsVerses = ValidateHtml(CurrentPsalmAndProverb.PsalmsKJVHtmlConcat, hasNestedTags: true);
+				try
+				{
+						//Logger.LogDebug($"Inside {nameof(PsalmAndProverbCurrent)}!{nameof(OnInitializedAsync)}");
+						CurrentPsalmAndProverb = await svc.GetCurrentPsalmAndProverb();
+						ShabbatDateYMD = CurrentPsalmAndProverb.ShabbatDate.ToString("MMM dd");
+						PsalmsHeading = BuildHeading(CurrentPsalmAndProverb.PsalmsBCV, CurrentPsalmAndProverb.PsalmsTitle);
+						PsalmsVerses = ValidateHtml(CurrentPsalmAndProverb.PsalmsKJVHtmlConcat, hasNestedTags: true);
 
-				ProverbsHeading = BuildHeading(CurrentPsalmAndProverb.ProverbsBCV, "");
-				ProverbsVerses = ValidateHtml(CurrentPsalmAndProverb.ProverbsKJVHtmlConcat, hasNestedTags: true);
-				//Logger.LogDebug($"...{nameof(PsalmsHeading)}: {PsalmsHeading}; {nameof(ProverbsHeading)}: {ProverbsHeading}");
-			}
-			catch (Exception ex)
-			{
-				LoadFailed = true;
-				Logger.LogWarning(ex, $"Failed to load page {nameof(PsalmAndProverbCurrent)}, PerformHtmlValidation: {PerformHtmlValidation}");
-			}
+						ProverbsHeading = BuildHeading(CurrentPsalmAndProverb.ProverbsBCV, "");
+						ProverbsVerses = ValidateHtml(CurrentPsalmAndProverb.ProverbsKJVHtmlConcat, hasNestedTags: true);
+						//Logger.LogDebug($"...{nameof(PsalmsHeading)}: {PsalmsHeading}; {nameof(ProverbsHeading)}: {ProverbsHeading}");
+				}
+				catch (Exception ex)
+				{
+						LoadFailed = true;
+						Logger.LogWarning(ex, $"Failed to load page {nameof(PsalmAndProverbCurrent)}, PerformHtmlValidation: {PerformHtmlValidation}");
+				}
 		}
 
 		private string BuildHeading(string bookChapterVerse, string Title)
 		{
-			string s = $"{bookChapterVerse} <span class='float-right'><small><i>{ValidateHtml(Title)}</i></small></span>";
-			return ValidateHtml(s, hasNestedTags: true);
+				string s = $"{bookChapterVerse} <span class='float-right'><small><i>{ValidateHtml(Title)}</i></small></span>";
+				return ValidateHtml(s, hasNestedTags: true);
 		}
 
 		private string ValidateHtml(string html, bool hasNestedTags = false)
 		{
-			if (!PerformHtmlValidation)
-			{
-				return html;
-			}
-			else
-			{
-				var htmlDoc = new HtmlDocument();
-				htmlDoc.OptionFixNestedTags = hasNestedTags;
-				htmlDoc.LoadHtml(html);
-				if (htmlDoc.ParseErrors != null && htmlDoc.ParseErrors.Count() > 0)
+				if (!PerformHtmlValidation)
 				{
-					return $"<b>Html not well formed; inside {nameof(PsalmAndProverbCurrent)}!{nameof(ValidateHtml)}, hasNestedTags={hasNestedTags}</b>";
+						return html;
 				}
 				else
 				{
-					return html;
+						var htmlDoc = new HtmlDocument();
+						htmlDoc.OptionFixNestedTags = hasNestedTags;
+						htmlDoc.LoadHtml(html);
+						if (htmlDoc.ParseErrors != null && htmlDoc.ParseErrors.Count() > 0)
+						{
+								return $"<b>Html not well formed; inside {nameof(PsalmAndProverbCurrent)}!{nameof(ValidateHtml)}, hasNestedTags={hasNestedTags}</b>";
+						}
+						else
+						{
+								return html;
+						}
 				}
-			}
 		}
 
-	}
 }

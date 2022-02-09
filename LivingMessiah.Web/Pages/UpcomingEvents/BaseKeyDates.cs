@@ -1,12 +1,11 @@
 ﻿using System;
 using Microsoft.AspNetCore.Components;
 
-namespace LivingMessiah.Web.Pages.UpcomingEvents
-{
+namespace LivingMessiah.Web.Pages.UpcomingEvents;
 
-	//https://www.ripteq.com.au/blog/blazor-code-behinds-and-base-classes
-	public abstract class BaseKeyDates : ComponentBase
-	{
+//https://www.ripteq.com.au/blog/blazor-code-behinds-and-base-classes
+public abstract class BaseKeyDates : ComponentBase
+{
 		[Parameter]
 		public DateTime EventDate { get; set; }
 
@@ -18,6 +17,4 @@ namespace LivingMessiah.Web.Pages.UpcomingEvents
 
 		[Parameter]
 		public string ImgUrl { get; set; }
-	}
-
 }

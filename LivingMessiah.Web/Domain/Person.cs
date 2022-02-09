@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 
-namespace LivingMessiah.Web.Domain
+namespace LivingMessiah.Web.Domain;
+
+public enum OfficeEnum
 {
-	public enum OfficeEnum
-	{
 		//All = 0,
 		CongregationLeader = 1,
 		BeitDin1 = 2,
@@ -15,10 +15,10 @@ namespace LivingMessiah.Web.Domain
 		Elder2 = 6,
 		Elder3 = 7
 		//, MusicLeader = 7
-	}
+}
 
-	public class Person
-	{
+public class Person
+{
 		public int RowCount { get; set; }
 		public string OfficeEnumString { get; set; }
 		public string Id { get; set; }
@@ -30,26 +30,24 @@ namespace LivingMessiah.Web.Domain
 		public string BioFile { get; set; } // Markdown file
 		public string IdXs
 		{
-			get { return Id + "Xs"; }
+				get { return Id + "Xs"; }
 		}
 
 		public string CollapseClass
 		{
-			get 
-			{
-				return RowCount == 1 ? "collapse show " : "collapse ";
-			}
+				get
+				{
+						return RowCount == 1 ? "collapse show " : "collapse ";
+				}
 		}
 
 		public OfficeEnum OfficeEnum
 		{
-			get
-			{
-				Enum.TryParse(OfficeEnumString, out OfficeEnum newEnum);
-				return newEnum;
-			}
+				get
+				{
+						Enum.TryParse(OfficeEnumString, out OfficeEnum newEnum);
+						return newEnum;
+				}
 		}
-	}
-
 }
 

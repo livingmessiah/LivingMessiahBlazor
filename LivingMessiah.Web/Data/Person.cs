@@ -1,10 +1,10 @@
 ﻿//using Newtonsoft.Json.Converters;
 using J = Newtonsoft.Json.JsonPropertyAttribute;
 
-namespace LivingMessiah.Web.Data
+namespace LivingMessiah.Web.Data;
+
+public class Person
 {
-	public class Person
-	{
 		[J("rowcount")]
 		public int RowCount { get; set; }
 
@@ -48,5 +48,4 @@ namespace LivingMessiah.Web.Data
 		[J("biofile")]
 		public string BioFile { get; set; }
 
-	}
 }

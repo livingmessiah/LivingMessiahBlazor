@@ -1,18 +1,18 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace LivingMessiah.Web.Pages.KeyDates.Enums
+namespace LivingMessiah.Web.Pages.KeyDates.Enums;
+
+public enum SeasonEnum
 {
-	public enum SeasonEnum
-	{
 		Fall = 1,
 		Winter = 2,
 		Spring = 3,
 		Summer = 4
-	}
+}
 
-	public class SeasonLocal
-	{
+public class SeasonLocal
+{
 		public static List<SeasonLocal> All { get; } = new List<SeasonLocal>();
 
 		public static SeasonLocal Fall { get; } = new SeasonLocal(SeasonEnum.Fall, 1, "Fall", "badge-warning", "fab fa-canadian-maple-leaf", "Equinox");
@@ -29,23 +29,23 @@ namespace LivingMessiah.Web.Pages.KeyDates.Enums
 
 		private SeasonLocal(SeasonEnum seasonEnum, int id, string name, string badgeColor, string icon, string type)
 		{
-			SeasonEnum = seasonEnum;
-			Id = id;
-			Name = name;
-			BadgeColor = badgeColor;
-			Icon = icon;
-			Type = type;
-			All.Add(this);
+				SeasonEnum = seasonEnum;
+				Id = id;
+				Name = name;
+				BadgeColor = badgeColor;
+				Icon = icon;
+				Type = type;
+				All.Add(this);
 		}
 
 		public static SeasonLocal FromEnum(SeasonEnum enumValue)
 		{
-			return All.SingleOrDefault(r => r.SeasonEnum == enumValue);
+				return All.SingleOrDefault(r => r.SeasonEnum == enumValue);
 		}
 
 		public static SeasonLocal FromInt(int intValue)
 		{
-			return All.SingleOrDefault(r => r.Id == intValue);
+				return All.SingleOrDefault(r => r.Id == intValue);
 		}
 
 		/*
@@ -56,8 +56,7 @@ namespace LivingMessiah.Web.Pages.KeyDates.Enums
 		*/
 
 
-	} // class Season
-} // namespace
+} // class Season
 
 
 /*

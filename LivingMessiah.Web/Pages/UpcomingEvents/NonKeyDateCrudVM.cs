@@ -3,18 +3,18 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using LivingMessiah.Web.Pages.KeyDates.Enums;
 
-namespace LivingMessiah.Web.Pages.UpcomingEvents
+namespace LivingMessiah.Web.Pages.UpcomingEvents;
+
+// This is for non-KeyDate events
+public class NonKeyDateCrudVM
 {
-	// This is for non-KeyDate events
-	public class NonKeyDateCrudVM
-	{
 		[Required]
 		[Key]
 		public int Id { get; set; }
 
 		[Required]
 		public int YearId { get; set; }
-		
+
 		public int? DateId { get; set; }
 
 		/*
@@ -36,9 +36,9 @@ namespace LivingMessiah.Web.Pages.UpcomingEvents
 
 		[Required(ErrorMessage = "The End Date field is required.")]
 		public DateTime? ShowEndDate { get; set; }
-		
 
-		
+
+
 
 		[Required]
 		public DateTime EventDate { get; set; }
@@ -59,7 +59,7 @@ namespace LivingMessiah.Web.Pages.UpcomingEvents
 
 		[DataType(DataType.ImageUrl)]
 		public string ImageUrl { get; set; }
-		
+
 		public string YouTubeId { get; set; }
 
 		[DataType(DataType.Url)]
@@ -67,7 +67,6 @@ namespace LivingMessiah.Web.Pages.UpcomingEvents
 
 		public string WebsiteDescr { get; set; }
 		public string Description { get; set; }  // ToDo: md?, probably going to be Component Body
-	}
 }
 /*
 

@@ -6,10 +6,10 @@ using LivingMessiah.Domain;
 using Microsoft.Extensions.Logging;
 using System;
 
-namespace LivingMessiah.Web.Pages.OtherPages
+namespace LivingMessiah.Web.Pages.OtherPages;
+
+public partial class PsalmsAndProverbs
 {
-	public partial class PsalmsAndProverbs
-	{
 		[Inject]
 		public IShabbatWeekService svc { get; set; }
 
@@ -22,19 +22,18 @@ namespace LivingMessiah.Web.Pages.OtherPages
 
 		protected override async Task OnInitializedAsync()
 		{
-			try
-			{
-				LoadFailed = false;
-				PsalmsAndProverbsList = await svc.GetPsalmsAndProverbsList();
-			}
-			catch (Exception ex)
-			{
-				LoadFailed = true;
-				Logger.LogWarning(ex, $"Failed to load page {nameof(PsalmsAndProverbs)}");
-			}
-		
+				try
+				{
+						LoadFailed = false;
+						PsalmsAndProverbsList = await svc.GetPsalmsAndProverbsList();
+				}
+				catch (Exception ex)
+				{
+						LoadFailed = true;
+						Logger.LogWarning(ex, $"Failed to load page {nameof(PsalmsAndProverbs)}");
+				}
+
 		}
 
-	}
 }
 

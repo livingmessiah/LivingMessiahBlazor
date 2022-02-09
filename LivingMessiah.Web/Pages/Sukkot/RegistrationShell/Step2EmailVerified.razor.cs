@@ -2,10 +2,10 @@
 using Microsoft.AspNetCore.Components;
 using Link = LivingMessiah.Web.Links.Account;
 
-namespace LivingMessiah.Web.Pages.Sukkot.RegistrationShell
+namespace LivingMessiah.Web.Pages.Sukkot.RegistrationShell;
+
+public partial class Step2EmailVerified
 {
-	public partial class Step2EmailVerified
-	{
 		[Parameter]
 		public StatusFlagEnum StatusFlagEnum { get; set; }
 
@@ -14,8 +14,7 @@ namespace LivingMessiah.Web.Pages.Sukkot.RegistrationShell
 
 		void RedirectToLoginClick(string returnUrl)
 		{
-			NavigationManager.NavigateTo($"{Link.Login}?returnUrl={returnUrl}", true);
+				NavigationManager.NavigateTo($"{Link.Login}?returnUrl={returnUrl}", true);
 		}
 
-	}
 }

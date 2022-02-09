@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace LivingMessiah.Web.Pages.KeyDates.Enums
+namespace LivingMessiah.Web.Pages.KeyDates.Enums;
+
+public enum EventTypeEnum
 {
-	public enum EventTypeEnum
-	{
 		None = 0,
 		KeyDate = 1,
 		MensCoffeeClub = 2, // "fas fa-coffee"
@@ -14,10 +14,10 @@ namespace LivingMessiah.Web.Pages.KeyDates.Enums
 		Movie = 6, // "fas fa-film"
 		GuestSpeaker = 7,  // "fas fa-microphone"
 		Other = 8
-	}
+}
 
-	public class EventType
-	{
+public class EventType
+{
 		public static List<EventType> All { get; } = new List<EventType>();
 
 		public static EventType MensCoffeeClub { get; } = new EventType(
@@ -50,26 +50,25 @@ namespace LivingMessiah.Web.Pages.KeyDates.Enums
 
 		private EventType(EventTypeEnum eventTypeEnum, int id, string name, string icon)
 		{
-			EventTypeEnum = eventTypeEnum;
-			Id = id;
-			Name = name;
-			Icon = icon;
-			All.Add(this);
+				EventTypeEnum = eventTypeEnum;
+				Id = id;
+				Name = name;
+				Icon = icon;
+				All.Add(this);
 		}
 
 		public static EventType FromEnum(EventTypeEnum enumValue)
 		{
-			return All.SingleOrDefault(r => r.EventTypeEnum == enumValue);
+				return All.SingleOrDefault(r => r.EventTypeEnum == enumValue);
 		}
 
 		public static EventType FromInt(int intValue)
 		{
-			return All.SingleOrDefault(r => r.Id == intValue);
+				return All.SingleOrDefault(r => r.Id == intValue);
 		}
 
 
-	} // class Season
-} // namespace
+} // class Season
 
 
 

@@ -2,17 +2,17 @@
 using System.Text;
 using LivingMessiah.Web.Infrastructure;
 
-namespace LivingMessiah.Web.Shared
+namespace LivingMessiah.Web.Shared;
+
+public enum AnchorSuffixIcon
 {
-	public enum AnchorSuffixIcon
-	{
 		None = 0,
 		Internal = 1,
 		External = 2
-	}
+}
 
-	public partial class Anchor
-	{
+public partial class Anchor
+{
 		[Parameter]
 		public bool IsPrinterFriendly { get; set; } = false;
 
@@ -42,37 +42,37 @@ namespace LivingMessiah.Web.Shared
 
 		public string BuildAnchor
 		{
-			get
-			{
-				string s = new StringBuilder()
-				.AppendWhen("<i class='fas fa-link'></i> ", UsePrefixIcon==true)
-				.AppendWhen($"{Prefix} ", !string.IsNullOrWhiteSpace(Prefix))
-				.Append($"<a href='{Href}'")
-				.AppendWhen(" target='_blank'", TargetIsBlank==true)
-				.Append($"><u>{Descr}</u></a>")
-				.AppendWhen(" <i class='fas fa-arrow-circle-right'></i>", SuffixIcon == AnchorSuffixIcon.Internal)
-				.AppendWhen(" <i class='fas fa-external-link-square-alt'></i>", SuffixIcon == AnchorSuffixIcon.External)
-				.AppendWhen($" {Suffix} ", !string.IsNullOrWhiteSpace(Suffix))
-				.ToString();
-				return s;
-			}
+				get
+				{
+						string s = new StringBuilder()
+						.AppendWhen("<i class='fas fa-link'></i> ", UsePrefixIcon == true)
+						.AppendWhen($"{Prefix} ", !string.IsNullOrWhiteSpace(Prefix))
+						.Append($"<a href='{Href}'")
+						.AppendWhen(" target='_blank'", TargetIsBlank == true)
+						.Append($"><u>{Descr}</u></a>")
+						.AppendWhen(" <i class='fas fa-arrow-circle-right'></i>", SuffixIcon == AnchorSuffixIcon.Internal)
+						.AppendWhen(" <i class='fas fa-external-link-square-alt'></i>", SuffixIcon == AnchorSuffixIcon.External)
+						.AppendWhen($" {Suffix} ", !string.IsNullOrWhiteSpace(Suffix))
+						.ToString();
+						return s;
+				}
 		}
 
 		public string BuildButton
 		{
-			get
-			{
-				string s = new StringBuilder()
-				.AppendWhen($"{Prefix} ", !string.IsNullOrWhiteSpace(Prefix))
-				.Append($"<a href='{Href}'")
-				.Append($" class='{ButtonCss}'")
-				.AppendWhen(" target='_blank'", TargetIsBlank == true)
-				.AppendWhen($">{Descr} <i class='fas fa-arrow-circle-right'></i></a>", SuffixIcon == AnchorSuffixIcon.Internal)
-				.AppendWhen($">{Descr} <i class='fas fa-external-link-square-alt'></i></a>", SuffixIcon == AnchorSuffixIcon.External)
-				.AppendWhen($" {Suffix} ", !string.IsNullOrWhiteSpace(Suffix))
-				.ToString();
-				return s;
-			}
+				get
+				{
+						string s = new StringBuilder()
+						.AppendWhen($"{Prefix} ", !string.IsNullOrWhiteSpace(Prefix))
+						.Append($"<a href='{Href}'")
+						.Append($" class='{ButtonCss}'")
+						.AppendWhen(" target='_blank'", TargetIsBlank == true)
+						.AppendWhen($">{Descr} <i class='fas fa-arrow-circle-right'></i></a>", SuffixIcon == AnchorSuffixIcon.Internal)
+						.AppendWhen($">{Descr} <i class='fas fa-external-link-square-alt'></i></a>", SuffixIcon == AnchorSuffixIcon.External)
+						.AppendWhen($" {Suffix} ", !string.IsNullOrWhiteSpace(Suffix))
+						.ToString();
+						return s;
+				}
 		}
 
 		/*
@@ -84,5 +84,4 @@ namespace LivingMessiah.Web.Shared
 				</Anchor>
 			</li>
 		*/
-	}
 }

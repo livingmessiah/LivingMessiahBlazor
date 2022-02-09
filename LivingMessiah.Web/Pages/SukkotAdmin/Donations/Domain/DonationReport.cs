@@ -1,10 +1,10 @@
 ﻿using LivingMessiah.Web.Pages.SukkotAdmin.Enums;
 using System.ComponentModel.DataAnnotations;
 
-namespace LivingMessiah.Web.Pages.SukkotAdmin.Donations.Domain
+namespace LivingMessiah.Web.Pages.SukkotAdmin.Donations.Domain;
+
+public class DonationReport
 {
-	public class DonationReport
-	{
 		public int Id { get; set; }
 		public string EMail { get; set; }
 		public string FamilyName { get; set; }
@@ -32,19 +32,18 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Donations.Domain
 
 		public string LocationName
 		{
-			get
-			{
-				return BaseLocationSmartEnum.FromValue(LocationInt).Name;
-			} 
+				get
+				{
+						return BaseLocationSmartEnum.FromValue(LocationInt).Name;
+				}
 		}
 
 		public string FullyPaidIcon
 		{
-			get
-			{
-				return BaseStatusSmartEnum.FromValue(StatusId) == BaseStatusSmartEnum.FullyPaid ? "X" : "";
-			}
+				get
+				{
+						return BaseStatusSmartEnum.FromValue(StatusId) == BaseStatusSmartEnum.FullyPaid ? "X" : "";
+				}
 		}
 
-	}
 }

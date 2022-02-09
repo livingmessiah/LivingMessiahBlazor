@@ -9,11 +9,11 @@ using static LivingMessiah.Web.Services.Auth0;
 using Microsoft.AspNetCore.Components;
 using LivingMessiah.Web.Pages.Sukkot;
 
-namespace LivingMessiah.Web.Pages.SukkotAdmin.Lodging
+namespace LivingMessiah.Web.Pages.SukkotAdmin.Lodging;
+
+[Authorize(Roles = Roles.AdminOrSukkot)]
+public partial class Details
 {
-	[Authorize(Roles = Roles.AdminOrSukkot)]
-	public partial class Details
-	{
 		[Inject]
 		public ILogger<Details> Logger { get; set; }
 
@@ -33,27 +33,27 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Lodging
 
 		protected override async Task OnInitializedAsync()
 		{
-			try
-			{
-				Logger.LogDebug($"Inside: {nameof(Details)}!{nameof(OnInitializedAsync)}, calling {nameof(db.GetvwLodgingDetail)}");
-				LodgingDetails = await db.GetvwLodgingDetail();
-			}
-			catch (Exception ex)
-			{
-				ExceptionMessage = $"{ex.Message}";
-				Logger.LogError(ex, ExceptionMessage);
-				NavManager.NavigateTo(LivingMessiah.Web.Links.Home.Error);
-			}
+				try
+				{
+						Logger.LogDebug($"Inside: {nameof(Details)}!{nameof(OnInitializedAsync)}, calling {nameof(db.GetvwLodgingDetail)}");
+						LodgingDetails = await db.GetvwLodgingDetail();
+				}
+				catch (Exception ex)
+				{
+						ExceptionMessage = $"{ex.Message}";
+						Logger.LogError(ex, ExceptionMessage);
+						NavManager.NavigateTo(LivingMessiah.Web.Links.Home.Error);
+				}
 		}
 
 		void Edit_ButtonClick(int id)
 		{
-			NavManager.NavigateTo(Links.Sukkot.CreateEdit + "/" + id);
+				NavManager.NavigateTo(Links.Sukkot.CreateEdit + "/" + id);
 		}
 
 		void Details_ButtonClick(int id)
 		{
-			NavManager.NavigateTo(Links.Sukkot.Details + "/" + id + "/False");
+				NavManager.NavigateTo(Links.Sukkot.Details + "/" + id + "/False");
 		}
 
 		public DateRangeLocal DateRangeLodging { get; set; } = DateRangeLocal.FromEnum(DateRangeEnum.LodgingDays);
@@ -71,5 +71,4 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Lodging
 			return All.SingleOrDefault(r => r.LodgeDateEnum == lastDay);
 		}
 		*/
-	}
 }

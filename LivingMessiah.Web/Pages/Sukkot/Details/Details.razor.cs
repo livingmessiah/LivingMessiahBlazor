@@ -10,19 +10,19 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 //using static LivingMessiah.Web.Links.Sukkot;
 
-namespace LivingMessiah.Web.Pages.Sukkot.Details
+namespace LivingMessiah.Web.Pages.Sukkot.Details;
+
+public partial class Details
 {
-	public partial class Details
-	{
 		[Inject]
 		public ISukkotService svc { get; set; }
 
 		[Inject]
 		public ILogger<Details> Logger { get; set; }
-		
+
 		[Inject]
 		public AuthenticationStateProvider AuthenticationStateProvider { get; set; }
-		
+
 		[Inject]
 		NavigationManager NavManager { get; set; }
 
@@ -40,22 +40,22 @@ namespace LivingMessiah.Web.Pages.Sukkot.Details
 
 		protected override async Task OnInitializedAsync()
 		{
-			Logger.LogDebug($"Inside {nameof(Details)}!{nameof(OnInitializedAsync)}, Id: {Id}");
-			
-			var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-			User = authState.User;
+				Logger.LogDebug($"Inside {nameof(Details)}!{nameof(OnInitializedAsync)}, Id: {Id}");
 
-			try
-			{
-				Logger.LogDebug($"Calling {nameof(svc.Details)}");
-				vwRegistration = await svc.Details(Id, User, showPrintInstructionMessage);
-			}
-			catch (Exception)
-			{
-				//LoadFailed = true;
-				ExceptionMessage = svc.ExceptionMessage;
-				NavManager.NavigateTo(LivingMessiah.Web.Links.Home.Error);
-			}
+				var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+				User = authState.User;
+
+				try
+				{
+						Logger.LogDebug($"Calling {nameof(svc.Details)}");
+						vwRegistration = await svc.Details(Id, User, showPrintInstructionMessage);
+				}
+				catch (Exception)
+				{
+						//LoadFailed = true;
+						ExceptionMessage = svc.ExceptionMessage;
+						NavManager.NavigateTo(LivingMessiah.Web.Links.Home.Error);
+				}
 
 
 		}
@@ -64,23 +64,22 @@ namespace LivingMessiah.Web.Pages.Sukkot.Details
 
 		void PaymentInstructions_ButtonClick()
 		{
-			Logger.LogDebug($"Event: {nameof(PaymentInstructions_ButtonClick)} clicked");
-			MakeModalVisible = true;
-			StateHasChanged();
+				Logger.LogDebug($"Event: {nameof(PaymentInstructions_ButtonClick)} clicked");
+				MakeModalVisible = true;
+				StateHasChanged();
 
 		}
 		void CancelModal_ButtonClick()
 		{
-			Logger.LogDebug($"Event: {nameof(CancelModal_ButtonClick)} clicked");
-			MakeModalVisible = false;
-			StateHasChanged();
+				Logger.LogDebug($"Event: {nameof(CancelModal_ButtonClick)} clicked");
+				MakeModalVisible = false;
+				StateHasChanged();
 		}
 
 		void Edit_ButtonClick(MouseEventArgs e, int id)
 		{
-			NavManager.NavigateTo(Links.Sukkot.CreateEdit + "/" + id);
+				NavManager.NavigateTo(Links.Sukkot.CreateEdit + "/" + id);
 		}
 
 
-	}
 }

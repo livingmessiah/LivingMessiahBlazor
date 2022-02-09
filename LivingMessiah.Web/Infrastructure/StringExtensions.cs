@@ -1,9 +1,9 @@
 ﻿using System.Text;
 
-namespace LivingMessiah.Web.Infrastructure
+namespace LivingMessiah.Web.Infrastructure;
+
+public static class StringExtensions
 {
-	public static class StringExtensions
-	{
 		/*
 			string s = new StringBuilder()
 				.Append(MyHebrewBible.Torah)
@@ -22,16 +22,15 @@ namespace LivingMessiah.Web.Infrastructure
 		// See D:\TFS\OsisXmlToSql\BuildLetter\Helper\StringExtensions.cs
 		public static StringBuilder AppendIf(this StringBuilder builder, bool condition, string value)
 		{
-			if (condition) builder.Append(value);
-			return builder;
+				if (condition) builder.Append(value);
+				return builder;
 		}
 
 		public static string Truncate(this string value, int maxLength)
 		{
-			if (string.IsNullOrEmpty(value)) return value;
-			return value.Length <= maxLength ? value : value.Substring(0, maxLength);
+				if (string.IsNullOrEmpty(value)) return value;
+				return value.Length <= maxLength ? value : value.Substring(0, maxLength);
 		}
 
 
-	}
 }

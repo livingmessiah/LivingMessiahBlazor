@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 
-namespace LivingMessiah.Web.Pages.HeavensDeclare
+namespace LivingMessiah.Web.Pages.HeavensDeclare;
+
+public static class Data
 {
-	public static class Data
-	{
 		public static List<Video> GetAll()
 		{
-			return new List<Video>
+				return new List<Video>
 			{
 					new Video {UrlId="BndTK5faeQI", Title="Signs in the Heaven - Part 1" }
 				, new Video {UrlId="bhYCoBAaEgA", Title="Signs in the Heaven - Part 2" }
@@ -15,6 +15,5 @@ namespace LivingMessiah.Web.Pages.HeavensDeclare
 			};
 
 		}
-	}
 }
 

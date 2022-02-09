@@ -1,9 +1,9 @@
 ﻿using System;
 
-namespace LivingMessiah.Domain
+namespace LivingMessiah.Domain;
+
+public class vwCurrentWeeklyVideo
 {
-	public class vwCurrentWeeklyVideo
-	{
 		public int Id { get; set; }
 		public int ShabbatWeekId { get; set; }
 		public int WvtId { get; set; }
@@ -26,21 +26,20 @@ namespace LivingMessiah.Domain
 
 		public override string ToString()
 		{
-			return $"Id: {Id}, WvtId: {WvtId}, ShabbatWeekId: {ShabbatWeekId}, YouTubeId: {YouTubeId ?? "NULL"}"; 
+				return $"Id: {Id}, WvtId: {WvtId}, ShabbatWeekId: {ShabbatWeekId}, YouTubeId: {YouTubeId ?? "NULL"}";
 		}
 
 		// Can this be handled in the sql server view?
 		public DateTime EventDate()
 		{
-			if (WvtId == (int)WeeklyVideoType.TorahTuesday)
-			{
-				return ShabbatDate.AddDays(3);
-			}
-			else
-			{
-				return ShabbatDate;
-			}
+				if (WvtId == (int)WeeklyVideoType.TorahTuesday)
+				{
+						return ShabbatDate.AddDays(3);
+				}
+				else
+				{
+						return ShabbatDate;
+				}
 		}
 
-	}
 }

@@ -1,10 +1,9 @@
 ﻿using LivingMessiah.Web.Domain;
 using System.Collections.Generic;
 
-namespace LivingMessiah.Web.Services
+namespace LivingMessiah.Web.Services;
+
+public interface ILeadershipService
 {
-	public interface ILeadershipService
-	{
 		List<Domain.Person> LoadPeople();
-	}
 }

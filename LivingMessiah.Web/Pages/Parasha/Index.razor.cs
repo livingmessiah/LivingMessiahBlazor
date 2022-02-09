@@ -10,10 +10,10 @@ using CacheSettings = LivingMessiah.Web.Settings.Constants.ParashaCache;
 
 using Microsoft.Extensions.Caching.Memory;
 
-namespace LivingMessiah.Web.Pages.Parasha
+namespace LivingMessiah.Web.Pages.Parasha;
+
+public partial class Index
 {
-	public partial class Index
-	{
 		[Inject] private LivingMessiah.Data.IShabbatWeekRepository db { get; set; }
 		[Inject] public IMemoryCache Cache { get; set; }
 
@@ -30,61 +30,61 @@ namespace LivingMessiah.Web.Pages.Parasha
 		protected string CachedMsg { get; set; }
 		protected override async Task OnInitializedAsync()
 		{
-			Logger.LogDebug(string.Format("Inside Page: {0}, Class!Method: {1}", Page.Index, nameof(Index) + "!" + nameof(OnInitializedAsync)));
-			TorahTuesdayLink = GetTorahTuesdayLink();			
-			CachedMsg = "";
-			Parasha = Cache.Get<LivingMessiah.Domain.Parasha.Queries.Parasha>(CacheSettings.Key);
+				Logger.LogDebug(string.Format("Inside Page: {0}, Class!Method: {1}", Page.Index, nameof(Index) + "!" + nameof(OnInitializedAsync)));
+				TorahTuesdayLink = GetTorahTuesdayLink();
+				CachedMsg = "";
+				Parasha = Cache.Get<LivingMessiah.Domain.Parasha.Queries.Parasha>(CacheSettings.Key);
 
-			if (Parasha is null)
-			{
-				try
+				if (Parasha is null)
 				{
-					Logger.LogDebug(string.Format("...Key NOT found in cache, calling {0}", nameof(db.GetCurrentParashaAndChildren)));
-					Parasha = await db.GetCurrentParashaAndChildren();
-					Logger.LogDebug(string.Format("...After calling {0}; Parasha: {1}", nameof(db.GetCurrentParashaAndChildren), Parasha));
+						try
+						{
+								Logger.LogDebug(string.Format("...Key NOT found in cache, calling {0}", nameof(db.GetCurrentParashaAndChildren)));
+								Parasha = await db.GetCurrentParashaAndChildren();
+								Logger.LogDebug(string.Format("...After calling {0}; Parasha: {1}", nameof(db.GetCurrentParashaAndChildren), Parasha));
 
-					if (Parasha is not null)  
-					{
-						//CachedMsg = "Data gotten from DATABASE";
-						Logger.LogDebug(string.Format("...Parasha gotten from DATABASE, Parasha: {0}", Parasha));
-						Cache.Set(CacheSettings.Key, Parasha, TimeSpan.FromMinutes(CacheSettings.FromMinutes));
-						Logger.LogDebug(string.Format("...Set Cache Key: {0}, TimeSpan.FromMinutes{1}"
-							, CacheSettings.Key, CacheSettings.FromMinutes));
-					}
-					else
-					{
-						DatabaseWarning = true;
-						DatabaseWarningMsg = "Could not load because Current Parasha Unknown";
-						Logger.LogDebug(string.Format("...Parasha NOT found, DatabaseWarningMsg: {0}", DatabaseWarningMsg));
-					}
+								if (Parasha is not null)
+								{
+										//CachedMsg = "Data gotten from DATABASE";
+										Logger.LogDebug(string.Format("...Parasha gotten from DATABASE, Parasha: {0}", Parasha));
+										Cache.Set(CacheSettings.Key, Parasha, TimeSpan.FromMinutes(CacheSettings.FromMinutes));
+										Logger.LogDebug(string.Format("...Set Cache Key: {0}, TimeSpan.FromMinutes{1}"
+											, CacheSettings.Key, CacheSettings.FromMinutes));
+								}
+								else
+								{
+										DatabaseWarning = true;
+										DatabaseWarningMsg = "Could not load because Current Parasha Unknown";
+										Logger.LogDebug(string.Format("...Parasha NOT found, DatabaseWarningMsg: {0}", DatabaseWarningMsg));
+								}
 
+						}
+						catch (Exception ex)
+						{
+								DatabaseError = true;
+								DatabaseErrorMsg = $"Error reading database";
+								Logger.LogError(ex, string.Format("...Exception, DatabaseErrorMsg: {0}", DatabaseErrorMsg));
+						}
 				}
-				catch (Exception ex)
+				else
 				{
-					DatabaseError = true;
-					DatabaseErrorMsg = $"Error reading database";
-					Logger.LogError(ex, string.Format("...Exception, DatabaseErrorMsg: {0}", DatabaseErrorMsg));
+						//CachedMsg = "Data gotten from CACHE";
+						Logger.LogDebug(string.Format("... Data gotten from CACHE"));
 				}
-			}
-			else
-			{
-				//CachedMsg = "Data gotten from CACHE";
-				Logger.LogDebug(string.Format("... Data gotten from CACHE"));
-			}
 
 		}
 
 		protected bool MakeModalVisible = false;
 		void HebrewMonthsStatic_ButtonClick()
 		{
-			Logger.LogDebug($"Event: {nameof(HebrewMonthsStatic_ButtonClick)} clicked");
-			MakeModalVisible = true;
-			StateHasChanged();
+				Logger.LogDebug($"Event: {nameof(HebrewMonthsStatic_ButtonClick)} clicked");
+				MakeModalVisible = true;
+				StateHasChanged();
 		}
 
 		private Domain.Link GetTorahTuesdayLink()
 		{
-			return LinkService.GetHomeSidebarLinks().Where(w => w.Index == LivingMessiah.Web.Links.TorahTuesday.Index).SingleOrDefault();
+				return LinkService.GetHomeSidebarLinks().Where(w => w.Index == LivingMessiah.Web.Links.TorahTuesday.Index).SingleOrDefault();
 		}
 
 
@@ -97,5 +97,4 @@ namespace LivingMessiah.Web.Pages.Parasha
 		protected string DatabaseErrorMsg { get; set; } = string.Empty;
 		#endregion
 
-	}
 }

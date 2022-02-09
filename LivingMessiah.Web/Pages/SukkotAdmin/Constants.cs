@@ -1,47 +1,47 @@
-﻿namespace LivingMessiah.Web.Pages.SukkotAdmin.Constants
+﻿namespace LivingMessiah.Web.Pages.SukkotAdmin.Constants;
+
+/*
+
+ToDo: this is causing a conflict with LivingMessiah.Web\Links\Sukkot*
+Maybe make a seperate file LivingMessiah.Web.Pages.SukkotAdmin.Handlers
+
+public static class ErrorLog
 {
-	/*
-	
-	ToDo: this is causing a conflict with LivingMessiah.Web\Links\Sukkot*
-	Maybe make a seperate file LivingMessiah.Web.Pages.SukkotAdmin.Handlers
-
-	public static class ErrorLog
+	public static class Handler
 	{
-		public static class Handler
-		{
-			public const string LogErrorTest = "LogErrorTest";
-			public const string EmptyErrorLog = "EmptyErrorLog";
-		}
+		public const string LogErrorTest = "LogErrorTest";
+		public const string EmptyErrorLog = "EmptyErrorLog";
 	}
+}
 
-	public static class Donations
+public static class Donations
+{
+	public static class Handler
 	{
-		public static class Handler
-		{
-			public const string Create = "Post";
-		}
+		public const string Create = "Post";
 	}
+}
 
-	public static class Meals
+public static class Meals
+{
+	public static class Handler
 	{
-		public static class Handler
-		{
-			public const string EditMealPlan = "EditMealPlan";
-			public const string PunchTicket = "PunchTicket";
-		}
+		public const string EditMealPlan = "EditMealPlan";
+		public const string PunchTicket = "PunchTicket";
 	}
+}
 
-	public static class KitchenWork
+public static class KitchenWork
+{
+	public static class Handler
 	{
-		public static class Handler
-		{
-			public const string Edit = "Edit";
-		}
+		public const string Edit = "Edit";
 	}
-	*/
+}
+*/
 
-	public static class Anchors
-	{
+public static class Anchors
+{
 		//public const string Index = "/SukkotAdmin/Index";
 		//public const string RegistrationList = "/SukkotAdmin/RegistrationList";
 		//public const string Notes = "/SukkotAdmin/Notes";
@@ -60,7 +60,7 @@
 		//	public const string Edit = "/SukkotAdmin/KitchenWork/Edit";
 		//}
 
-		
+
 		public const string GetMealPlan = "/SukkotAdmin/GetMealPlan";
 		public const string EditMealPlan = "/SukkotAdmin/EditMealPlan";
 		public const string PunchTicket = "/SukkotAdmin/PunchTicket";
@@ -78,7 +78,5 @@
 		//public const string ErrorLogEmpty = "/SukkotAdmin/ErrorLogEmpty";
 
 		//public const string CreateDonation = "/SukkotAdmin/CreateDonation";
-	}
-
 }
 

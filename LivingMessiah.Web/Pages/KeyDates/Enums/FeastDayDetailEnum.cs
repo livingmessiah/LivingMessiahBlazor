@@ -1,25 +1,25 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace LivingMessiah.Web.Pages.KeyDates.Enums
+namespace LivingMessiah.Web.Pages.KeyDates.Enums;
+
+public enum FeastDayDetailEnum
 {
-	public enum FeastDayDetailEnum
-	{
 		//                          Id-FeastDayId-Detail
-		SederMeal = 1,						// 1-3-1
+		SederMeal = 1,            // 1-3-1
 		UnleavenedBreadDay1 = 2,  // 1-3-2
 		OmerStart = 3,            // 1-3-3
 		UnleavenedBreadDay7 = 4,  // 1-3-4
-		SukkotDay0 = 5,						// 5-7-2
-		SukkotDay1 = 6,						// 6-7-2
-		SukkotLastGreatDay = 7,		// 7-7-3
-		SukkotEndsAtSundown = 8,	// 8-7-4
-		HanukkahLastDay = 9,			// not using
-		YomKippurBegins = 10			// not using
-	}
+		SukkotDay0 = 5,           // 5-7-2
+		SukkotDay1 = 6,           // 6-7-2
+		SukkotLastGreatDay = 7,   // 7-7-3
+		SukkotEndsAtSundown = 8,  // 8-7-4
+		HanukkahLastDay = 9,      // not using
+		YomKippurBegins = 10      // not using
+}
 
-	public class FDD
-	{
+public class FDD
+{
 		public static List<FDD> All { get; } = new List<FDD>();
 
 		public static FDD SederMeal { get; } = new FDD(FeastDayDetailEnum.SederMeal, 1, 0, "Seder Meal", false);
@@ -27,14 +27,14 @@ namespace LivingMessiah.Web.Pages.KeyDates.Enums
 		public static FDD OmerStart { get; } = new FDD(FeastDayDetailEnum.OmerStart, 3, 2, "Omer Start", false);  // This is more dynamic
 		public static FDD UnleavenedBreadDay7 { get; } = new FDD(FeastDayDetailEnum.UnleavenedBreadDay7, 4, 7, "Last day of Unleavened Bread", true);
 
-		public static FDD SukkotDay0 { get; } = 
+		public static FDD SukkotDay0 { get; } =
 			new FDD(FeastDayDetailEnum.SukkotDay0, 5, -1, "Sukkot Day: Preparation Day, High Sabbath begins at sunset", true);
-		public static FDD SukkotDay1 { get; } = 
+		public static FDD SukkotDay1 { get; } =
 			new FDD(FeastDayDetailEnum.SukkotDay1, 6, 0, "Sukkot Day: First Day", false);
-		public static FDD SukkotLastGreatDay { get; } = 
+		public static FDD SukkotLastGreatDay { get; } =
 			new FDD(FeastDayDetailEnum.SukkotLastGreatDay, 7, 7, "Sukkot Last Day (Great Day)", true);
-		public static FDD SukkotEndsAtSundown { get; } = 
-			new FDD(FeastDayDetailEnum.SukkotEndsAtSundown, 8, 8, "Sukkot ended previoius night; tear down camp", false); 
+		public static FDD SukkotEndsAtSundown { get; } =
+			new FDD(FeastDayDetailEnum.SukkotEndsAtSundown, 8, 8, "Sukkot ended previoius night; tear down camp", false);
 
 		public static FDD HanukkahLastDay { get; } = new FDD(FeastDayDetailEnum.HanukkahLastDay, 9, 8, "Hanukkah Last Day", false);
 		public static FDD YomKippurBegins { get; } = new FDD(FeastDayDetailEnum.YomKippurBegins, 10, -1, "Yom Kippur Begins", true);
@@ -47,22 +47,22 @@ namespace LivingMessiah.Web.Pages.KeyDates.Enums
 
 		private FDD(FeastDayDetailEnum fddEnum, int id, int addDays, string description, bool isHighSabbath)
 		{
-			FeastDayDetailEnum = fddEnum;
-			Id = id;
-			AddDays = addDays;
-			Description = description;
-			IsHighSabbath = isHighSabbath;
-			All.Add(this);
+				FeastDayDetailEnum = fddEnum;
+				Id = id;
+				AddDays = addDays;
+				Description = description;
+				IsHighSabbath = isHighSabbath;
+				All.Add(this);
 		}
 
 		public static FDD FromEnum(FeastDayDetailEnum enumValue)
 		{
-			return All.SingleOrDefault(r => r.FeastDayDetailEnum == enumValue);
+				return All.SingleOrDefault(r => r.FeastDayDetailEnum == enumValue);
 		}
 
 		public static FDD FromInt(int intValue)
 		{
-			return All.SingleOrDefault(r => r.Id == intValue);
+				return All.SingleOrDefault(r => r.Id == intValue);
 		}
 
 		/*
@@ -72,8 +72,7 @@ namespace LivingMessiah.Web.Pages.KeyDates.Enums
 		}
 		*/
 
-	}  // class FDD
-}    // namespace
+}  // class FDD
 
 
 /*

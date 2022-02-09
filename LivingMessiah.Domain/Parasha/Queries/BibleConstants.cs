@@ -1,10 +1,9 @@
 ﻿
-namespace LivingMessiah.Domain.Parasha.Queries
+namespace LivingMessiah.Domain.Parasha.Queries;
+
+public class BibleConstants
 {
-	public class BibleConstants
-	{
-		public string BaseParashaUrl { get; set; } 
-	}
+		public string BaseParashaUrl { get; set; }
 }
 
 /*

@@ -9,10 +9,10 @@ using System.Linq;
 
 using LinkLogin = LivingMessiah.Web.Links.Account;
 
-namespace LivingMessiah.Web.Pages.KeyDates
+namespace LivingMessiah.Web.Pages.KeyDates;
+
+public partial class Index
 {
-	public partial class Index
-	{
 		[Inject]
 		ISmartEnumServiceForSfDropDownList svcDDL { get; set; }
 
@@ -20,7 +20,7 @@ namespace LivingMessiah.Web.Pages.KeyDates
 		NavigationManager NavigationManager { get; set; }
 
 		#region DropDownList
-		
+
 		// ToDo: not referenced, wanted to convert the UI (Index.razor) to a modal
 		protected List<DropDownListVM> DataSource => svcDDL.GetKeyDateYearVM().ToList();
 
@@ -31,17 +31,16 @@ namespace LivingMessiah.Web.Pages.KeyDates
 		// ToDo: not referenced, wanted to convert the UI (Index.razor) to a modal
 		public void OnChange(ChangeEventArgs<string, DropDownListVM> args)
 		{
-			int i = int.TryParse(args.ItemData.Value, out i) ? i : 0;
-			SelectedId = i;
-			SelectedYear = BaseKeyDateYearSmartEnum.FromValue(SelectedId).Year;
+				int i = int.TryParse(args.ItemData.Value, out i) ? i : 0;
+				SelectedId = i;
+				SelectedYear = BaseKeyDateYearSmartEnum.FromValue(SelectedId).Year;
 		}
 		#endregion
 
 		//ToDo: have it return to this Edit tab
 		void RedirectToLoginClick(string returnUrl)
 		{
-			NavigationManager.NavigateTo($"{LinkLogin.Login}?returnUrl={returnUrl}", true);
+				NavigationManager.NavigateTo($"{LinkLogin.Login}?returnUrl={returnUrl}", true);
 		}
 
-	}
 }

@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Components;
 
-namespace LivingMessiah.Web.Pages.Sukkot
+namespace LivingMessiah.Web.Pages.Sukkot;
+
+public partial class Index
 {
-	public partial class Index
-	{
 		//ToDo: fix this
 		public const string ContactName = "Ralphie";
 		public const string ContactEmail = "ralphie@livingmessiah.com";
@@ -20,5 +20,4 @@ namespace LivingMessiah.Web.Pages.Sukkot
 		//	builder.AddContent(1, "<b>Windmill Ranch</b> near <b>Bisbee, AZ</b>");
 		//};
 
-	}
 }

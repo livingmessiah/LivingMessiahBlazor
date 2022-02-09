@@ -13,11 +13,11 @@ using static LivingMessiah.Web.Pages.SqlServer;
 using Syncfusion.Blazor.RichTextEditor;
 using Markdig;
 
-namespace LivingMessiah.Web.Pages.UpcomingEvents
+namespace LivingMessiah.Web.Pages.UpcomingEvents;
+
+//[Authorize(Roles = Roles.AdminOrSukkot)]
+public partial class NonKeyDateCRUD
 {
-	//[Authorize(Roles = Roles.AdminOrSukkot)]
-	public partial class NonKeyDateCRUD
-	{
 		[Inject]
 		public IUpcomingEventsRepository db { get; set; }
 
@@ -33,45 +33,45 @@ namespace LivingMessiah.Web.Pages.UpcomingEvents
 
 		protected async Task HandleValidSubmit()
 		{
-			Logger.LogDebug(string.Format("Inside {0}", nameof(NonKeyDateCRUD) + "!" + nameof(HandleValidSubmit)));
-			try
-			{
-				NonKeyDateCrudVM.Id = 0;
-
-				//public async Task<Tuple<int, int, string>> Create(RegistrationVM registrationVM)
-
-				//RegistrationVM.StatusSmartEnum = BaseStatusSmartEnum.EmailConfirmation;
-
-				var sprocTuple = await db.Create(NonKeyDateCrudVM);
-				//var sprocTuple = await db.Create(DTO_From_VM_To_DB(registrationVM));
-				//return sprocTuple;
-
-				if (sprocTuple.Item1 != 0)
+				Logger.LogDebug(string.Format("Inside {0}", nameof(NonKeyDateCRUD) + "!" + nameof(HandleValidSubmit)));
+				try
 				{
-					DatabaseInformation = true;
-					DatabaseInformationMsg = $"{sprocTuple.Item3}";
-					NonKeyDateCrudVM = new NonKeyDateCrudVM();
+						NonKeyDateCrudVM.Id = 0;
+
+						//public async Task<Tuple<int, int, string>> Create(RegistrationVM registrationVM)
+
+						//RegistrationVM.StatusSmartEnum = BaseStatusSmartEnum.EmailConfirmation;
+
+						var sprocTuple = await db.Create(NonKeyDateCrudVM);
+						//var sprocTuple = await db.Create(DTO_From_VM_To_DB(registrationVM));
+						//return sprocTuple;
+
+						if (sprocTuple.Item1 != 0)
+						{
+								DatabaseInformation = true;
+								DatabaseInformationMsg = $"{sprocTuple.Item3}";
+								NonKeyDateCrudVM = new NonKeyDateCrudVM();
+						}
+						else
+						{
+								if (sprocTuple.Item2 == ReturnValueViolationInUniqueIndex)
+								{
+										DatabaseWarning = true;
+										DatabaseWarningMsg = sprocTuple.Item3;
+								}
+								else
+								{
+										DatabaseError = true;
+										DatabaseErrorMsg = sprocTuple.Item3;
+								}
+						}
+
 				}
-				else
+				catch (Exception)
 				{
-					if (sprocTuple.Item2 == ReturnValueViolationInUniqueIndex)
-					{
-						DatabaseWarning = true;
-						DatabaseWarningMsg = sprocTuple.Item3;
-					}
-					else
-					{
 						DatabaseError = true;
-						DatabaseErrorMsg = sprocTuple.Item3;
-					}
+						DatabaseErrorMsg = "Error adding to database";
 				}
-
-			}
-			catch (Exception)
-			{
-				DatabaseError = true;
-				DatabaseErrorMsg = "Error adding to database";
-			}
 
 
 		}
@@ -79,49 +79,49 @@ namespace LivingMessiah.Web.Pages.UpcomingEvents
 		private string Message = string.Empty;
 		private void OnInvalidSubmit()
 		{
-			Message = string.Empty;
+				Message = string.Empty;
 		}
 
-		private void InitializeVM() 
+		private void InitializeVM()
 		{
-			NonKeyDateCrudVM.EventDate = DateTime.Now;
-			NonKeyDateCrudVM.YearId = DateTime.Now.Year;
-			NonKeyDateCrudVM.EventTypeEnum = KeyDates.Enums.EventTypeEnum.GuestSpeaker;
+				NonKeyDateCrudVM.EventDate = DateTime.Now;
+				NonKeyDateCrudVM.YearId = DateTime.Now.Year;
+				NonKeyDateCrudVM.EventTypeEnum = KeyDates.Enums.EventTypeEnum.GuestSpeaker;
 		}
 
 
 		private void OnValueChange(Syncfusion.Blazor.RichTextEditor.ChangeEventArgs args)
 		{
-			if (args.Value == null)
-			{
-				this.HtmlValue = null;
-			}
-			else
-			{
-				this.HtmlValue = Markdig.Markdown.ToHtml(args.Value, Pipeline);
-			}
+				if (args.Value == null)
+				{
+						this.HtmlValue = null;
+				}
+				else
+				{
+						this.HtmlValue = Markdig.Markdown.ToHtml(args.Value, Pipeline);
+				}
 		}
 
 		private bool IsPreview { get; set; }
 		private string HtmlValue { get; set; }
 		private MarkdownPipeline Pipeline { get; set; }
-/*
-		private string MarkdownValue { get; set; } = @"The sample is added to showcase **markdown editing**.
+		/*
+				private string MarkdownValue { get; set; } = @"The sample is added to showcase **markdown editing**.
 
-Type or edit the content and apply formatting to view markdown formatted content.
+		Type or edit the content and apply formatting to view markdown formatted content.
 
-We can add our own custom formation syntax for the Markdown formation, [sample link](https://blazor.syncfusion.com/demos/rich-text-editor/markdown-custom-format).
+		We can add our own custom formation syntax for the Markdown formation, [sample link](https://blazor.syncfusion.com/demos/rich-text-editor/markdown-custom-format).
 
-The third-party library **Marked** is used in this sample to convert markdown into HTML content.";
-*/
+		The third-party library **Marked** is used in this sample to convert markdown into HTML content.";
+		*/
 		private void PreviewClick()
 		{
-			this.IsPreview = true;
+				this.IsPreview = true;
 		}
 
 		private void CodeClick()
 		{
-			this.IsPreview = false;
+				this.IsPreview = false;
 		}
 
 		private List<ToolbarItemModel> Items = new List<ToolbarItemModel>() {
@@ -155,12 +155,12 @@ The third-party library **Marked** is used in this sample to convert markdown in
 
 		private void InitializeErrorHandling()
 		{
-			DatabaseInformationMsg = "";
-			DatabaseInformation = false;
-			DatabaseWarningMsg = "";
-			DatabaseWarning = false;
-			DatabaseErrorMsg = "";
-			DatabaseError = false;
+				DatabaseInformationMsg = "";
+				DatabaseInformation = false;
+				DatabaseWarningMsg = "";
+				DatabaseWarning = false;
+				DatabaseErrorMsg = "";
+				DatabaseError = false;
 		}
 
 		protected bool DatabaseInformation = false;
@@ -172,6 +172,5 @@ The third-party library **Marked** is used in this sample to convert markdown in
 		#endregion
 
 
-	} // class 
-} // namespace
+} // class 
 

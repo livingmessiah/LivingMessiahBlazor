@@ -1,10 +1,10 @@
 ﻿using System;
 
 
-namespace LivingMessiah.Domain
+namespace LivingMessiah.Domain;
+
+public class Download
 {
-	public class Download
-	{
 		public bool Selected { get; set; }
 		public int ZeroBasedRowCnt { get; set; }
 		public int Id { get; set; }
@@ -20,5 +20,4 @@ namespace LivingMessiah.Domain
 		public Decimal CampCost { get; set; }
 		public int MealCount { get; set; }
 
-	}
 }

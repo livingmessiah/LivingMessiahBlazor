@@ -1,10 +1,10 @@
 ﻿using SukkotApi.Domain;
 using System.ComponentModel.DataAnnotations;
 
-namespace LivingMessiah.Web.Pages.Sukkot
+namespace LivingMessiah.Web.Pages.Sukkot;
+
+public class EditMealsVM
 {
-	public class EditMealsVM
-	{
 		public string Title { get; set; }
 		public string FamilyName { get; set; }
 		public int RegistrationId { get; set; }
@@ -31,6 +31,5 @@ namespace LivingMessiah.Web.Pages.Sukkot
 
 		[DisplayFormat(DataFormatString = "{0:C0}")]
 		public decimal MealTotalCostChildBig { get; set; }
-	}
 }
 

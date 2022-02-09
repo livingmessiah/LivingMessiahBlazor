@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace SukkotApi.Domain
+namespace SukkotApi.Domain;
+
+public class MealPlan
 {
-	public class MealPlan
-	{
 		[Required]
 		[Key]
 		public int Id { get; set; }
@@ -18,6 +18,5 @@ namespace SukkotApi.Domain
 		[Required]
 		[MaxLength(255)]
 		public string Menu { get; set; }
-	}
 }
 

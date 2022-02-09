@@ -2,10 +2,10 @@
 using System.Threading.Tasks;
 using LivingMessiah.Web.Pages.KeyDates.Constants;
 
-namespace LivingMessiah.Web.Pages.Articles
+namespace LivingMessiah.Web.Pages.Articles;
+
+public partial class Pesach
 {
-	public partial class Pesach
-	{
 		protected string PesachTitle;
 		protected string PesachDate;
 
@@ -13,10 +13,9 @@ namespace LivingMessiah.Web.Pages.Articles
 
 		protected override Task OnInitializedAsync()
 		{
-			pesachDate = DateTime.Parse(Dates._12_Passover);
-			PesachDate = pesachDate.ToString(DateFormat.dddd_MMMM_dd);
-			PesachTitle = "Passover " + pesachDate.ToString("y");
-			return base.OnInitializedAsync();
+				pesachDate = DateTime.Parse(Dates._12_Passover);
+				PesachDate = pesachDate.ToString(DateFormat.dddd_MMMM_dd);
+				PesachTitle = "Passover " + pesachDate.ToString("y");
+				return base.OnInitializedAsync();
 		}
-	}
 }

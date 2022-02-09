@@ -1,9 +1,9 @@
 ﻿using System;
 
-namespace LivingMessiah.Web.Pages.SukkotAdmin.Donations.Domain
+namespace LivingMessiah.Web.Pages.SukkotAdmin.Donations.Domain;
+
+public class DonationDetail
 {
-	public class DonationDetail
-	{
 		public int Id { get; set; }
 		public int RegistrationId { get; set; } // Note 1
 		public int Detail { get; set; }
@@ -13,7 +13,6 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Donations.Domain
 		public DateTime CreateDate { get; set; }
 		public string CreatedBy { get; set; }
 		public string Name { get; set; }  // ToDo: this should be deleted
-	}
 }
 
 /*

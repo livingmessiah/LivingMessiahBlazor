@@ -1,10 +1,10 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace LivingMessiah.Domain
+namespace LivingMessiah.Domain;
+
+public class Wirecast
 {
-	public class Wirecast
-	{
 		[Required]
 		public Int32 Id { get; set; }
 
@@ -16,5 +16,4 @@ namespace LivingMessiah.Domain
 		[Url]
 		public String WirecastLink { get; set; }
 
-	}
 }

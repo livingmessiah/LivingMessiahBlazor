@@ -4,17 +4,17 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using static SukkotApi.Domain.Constants;
 
-namespace SukkotApi.Domain
+namespace SukkotApi.Domain;
+
+public class vwRegistration
 {
-	public class vwRegistration
-	{
 		public int Id { get; set; }
 		[DisplayName("Family Name")]
 		public string FamilyName { get; set; }
 
 		[DisplayName("First Name")]
 		public string FirstName { get; set; }
-		
+
 		[DisplayName("Spouse Name")]
 		public string SpouseName { get; set; }
 
@@ -38,7 +38,7 @@ namespace SukkotApi.Domain
 		[DisplayName("WHWM?")]
 		public bool WillHelpWithMeals { get; set; }
 
-		public int StatusId { get; set; } 
+		public int StatusId { get; set; }
 
 		[DisplayName("Lodging Days Total")]
 		public int LodgingDaysTotal { get; set; }
@@ -97,67 +97,67 @@ namespace SukkotApi.Domain
 
 		public string FullName(bool includeOthers)
 		{
-			string s = FirstName;
-			if (!string.IsNullOrEmpty(SpouseName)) { s += " and " + SpouseName;  }
-			s += " " + FamilyName;
-			if (includeOthers) { s += " and " + OtherNames;			}
-			return s;
+				string s = FirstName;
+				if (!string.IsNullOrEmpty(SpouseName)) { s += " and " + SpouseName; }
+				s += " " + FamilyName;
+				if (includeOthers) { s += " and " + OtherNames; }
+				return s;
 		}
 
 		public int TotalAdultMeals
 		{
-			get
-			{
-				return TotalAdultLun + TotalAdultDin + TotalAdultLunVeg + TotalAdultDinVeg;
-			}
+				get
+				{
+						return TotalAdultLun + TotalAdultDin + TotalAdultLunVeg + TotalAdultDinVeg;
+				}
 		}
 
 		public DateTime[] AttendanceDateList
 		{
-			get
-			{
-				if (!String.IsNullOrEmpty(AttendanceDatesCSV))
+				get
 				{
-					int length = AttendanceDatesCSV.Split(",").Length;
-					DateTime[] list = new DateTime[length];
-					string[] array = AttendanceDatesCSV.Split(",");
-					int i = 0;
-					foreach (string value in array)
-					{
-						list[i]=(DateTime.Parse(value));
-						i += 1;
-					}
-					return list;
+						if (!String.IsNullOrEmpty(AttendanceDatesCSV))
+						{
+								int length = AttendanceDatesCSV.Split(",").Length;
+								DateTime[] list = new DateTime[length];
+								string[] array = AttendanceDatesCSV.Split(",");
+								int i = 0;
+								foreach (string value in array)
+								{
+										list[i] = (DateTime.Parse(value));
+										i += 1;
+								}
+								return list;
+						}
+						else
+						{
+								return null;
+						}
 				}
-				else
-				{
-					return null;
-				}
-			}
 		}
 
 		public DateTime[] LodgingDateList
 		{
-			get
-			{
-				if (!String.IsNullOrEmpty(LodgingDatesCSV))
+				get
 				{
-					int length = LodgingDatesCSV.Split(",").Length;
-					DateTime[] list = new DateTime[length];
-					string[] array = LodgingDatesCSV.Split(",");
-					int i = 0;
-					foreach (string value in array)
-					{
-						list[i] = (DateTime.Parse(value));
-						i += 1;
-					}
-					return list;
+						if (!String.IsNullOrEmpty(LodgingDatesCSV))
+						{
+								int length = LodgingDatesCSV.Split(",").Length;
+								DateTime[] list = new DateTime[length];
+								string[] array = LodgingDatesCSV.Split(",");
+								int i = 0;
+								foreach (string value in array)
+								{
+										list[i] = (DateTime.Parse(value));
+										i += 1;
+								}
+								return list;
+						}
+						else
+						{
+								return null;
+						}
 				}
-				else
-				{
-					return null;
-				}
-			}
 		}
 
 
@@ -165,47 +165,46 @@ namespace SukkotApi.Domain
 		[DataType(DataType.Currency)]
 		public decimal AdultMealCost
 		{
-			get
-			{
-				return TotalAdultMeals * AdultMeals;
-			}
+				get
+				{
+						return TotalAdultMeals * AdultMeals;
+				}
 		}
 
-		
+
 		public int TotalChildBigMeals
 		{
-			get
-			{
-				return TotalChildBigLun + TotalChildBigDin + TotalChildBigLunVeg + TotalChildBigDinVeg;
-			}
+				get
+				{
+						return TotalChildBigLun + TotalChildBigDin + TotalChildBigLunVeg + TotalChildBigDinVeg;
+				}
 		}
 
 
 		[DataType(DataType.Currency)]
 		public decimal ChildBigMealCost
 		{
-			get
-			{
-				return TotalChildBigMeals * ChildMeals; // 2.5m
-			}
+				get
+				{
+						return TotalChildBigMeals * ChildMeals; // 2.5m
+				}
 		}
 
 		[DataType(DataType.Currency)]
 		public decimal TotalCost
 		{
-			get
-			{
-				if (IncludeCampCost)
+				get
 				{
-					return CampCost + AdultMealCost + ChildBigMealCost + RegistrationFee;
+						if (IncludeCampCost)
+						{
+								return CampCost + AdultMealCost + ChildBigMealCost + RegistrationFee;
+						}
+						else
+						{
+								return AdultMealCost + ChildBigMealCost + RegistrationFee;
+						}
+
 				}
-				else
-				{
-					return AdultMealCost + ChildBigMealCost + RegistrationFee;
-				}
-				
-			}
 		}
 
-	}
 }

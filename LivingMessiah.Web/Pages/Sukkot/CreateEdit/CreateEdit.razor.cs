@@ -11,11 +11,11 @@ using Microsoft.AspNetCore.Authorization;
 using System.Collections.Generic;
 using Syncfusion.Blazor.DropDowns;
 
-namespace LivingMessiah.Web.Pages.Sukkot.CreateEdit
+namespace LivingMessiah.Web.Pages.Sukkot.CreateEdit;
+
+[Authorize]
+public partial class CreateEdit
 {
-	[Authorize]
-	public partial class CreateEdit
-	{
 		[Inject]
 		public AuthenticationStateProvider AuthenticationStateProvider { get; set; }
 
@@ -38,57 +38,58 @@ namespace LivingMessiah.Web.Pages.Sukkot.CreateEdit
 		//ToDo this shoud come from the Sukkot.Constants and saved in cache		
 		public DateRangeLocal DateRangeAttendance { get; set; } = DateRangeLocal.FromEnum(DateRangeEnum.AttendanceDays);
 		public DateRangeLocal DateRangeLodging { get; set; } = DateRangeLocal.FromEnum(DateRangeEnum.LodgingDays);
-		
+
 		[Parameter]
 		public int? id { get; set; }
 
 		protected bool LoadFailed;
-		protected bool CanEditCampType => Registration.LocationEnum == LocationEnum.WildernessRanch;  
+		protected bool CanEditCampType => Registration.LocationEnum == LocationEnum.WildernessRanch;
 
 		protected override async Task OnInitializedAsync()
 		{
-			//Logger.LogDebug($"Inside {nameof(CreateEdit)}!{nameof(OnInitializedAsync)}, id: {id}");
-			var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-			User = authState.User;
+				//Logger.LogDebug($"Inside {nameof(CreateEdit)}!{nameof(OnInitializedAsync)}, id: {id}");
+				var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+				User = authState.User;
 
-			int Id2 = id.HasValue ? id.Value : 0; // if id? is null, Id2 is set to 0 and...
-			UI = (Id2 == 0) ? new UI(SukkotEnums.CRUD.Add) : new UI(SukkotEnums.CRUD.Edit); // ...  an Add is assumed (i.e. SukkotEnums.CRUD.Add)
-																																											
-			//Logger.LogDebug($"..., id2={Id2}, UI.CRUD={UI.CRUD}");
+				int Id2 = id.HasValue ? id.Value : 0; // if id? is null, Id2 is set to 0 and...
+				UI = (Id2 == 0) ? new UI(SukkotEnums.CRUD.Add) : new UI(SukkotEnums.CRUD.Edit); // ...  an Add is assumed (i.e. SukkotEnums.CRUD.Add)
 
-			try
-			{
-				if (UI.CRUD == SukkotEnums.CRUD.Add)
+				//Logger.LogDebug($"..., id2={Id2}, UI.CRUD={UI.CRUD}");
+
+				try
 				{
-					Registration = new RegistrationVM
-					{
-						Id = 0, StatusEnum = StatusEnum.EmailConfirmation,
-						//HouseRulesAgreement = DateTime.UtcNow, // Task 687: Persist the moment House Rules were agreed to database
-						EMail = User.GetUserEmail()
-					};
+						if (UI.CRUD == SukkotEnums.CRUD.Add)
+						{
+								Registration = new RegistrationVM
+								{
+										Id = 0,
+										StatusEnum = StatusEnum.EmailConfirmation,
+										//HouseRulesAgreement = DateTime.UtcNow, // Task 687: Persist the moment House Rules were agreed to database
+										EMail = User.GetUserEmail()
+								};
+						}
+						else
+						{
+								Registration = await svc.Update(Id2, User);
+						}
+
+						SetTitle();
+
 				}
-				else
+				catch (RegistratationException e)
 				{
-					Registration = await svc.Update(Id2, User);
+						LoadFailed = true;
+						Logger.LogWarning(e, $"Failed to load page {nameof(CreateEdit)}");
 				}
 
-				SetTitle();
+				catch (Exception)
+				{
+						LoadFailed = true;
+						ExceptionMessage = svc.ExceptionMessage;
+						NavManager.NavigateTo(LivingMessiah.Web.Links.Home.Error);
+				}
 
-			}
-			catch (RegistratationException e)
-			{
-				LoadFailed = true;
-				Logger.LogWarning(e, $"Failed to load page {nameof(CreateEdit)}");
-			}
-
-			catch (Exception)
-			{
-				LoadFailed = true;
-				ExceptionMessage = svc.ExceptionMessage;
-				NavManager.NavigateTo(LivingMessiah.Web.Links.Home.Error);
-			}
-
-			Logger.LogInformation($"Finished {nameof(CreateEdit)}!{nameof(OnInitializedAsync)}");
+				Logger.LogInformation($"Finished {nameof(CreateEdit)}!{nameof(OnInitializedAsync)}");
 		}
 
 		protected string Title = "";
@@ -96,23 +97,23 @@ namespace LivingMessiah.Web.Pages.Sukkot.CreateEdit
 
 		private void SetTitle()
 		{
-			Title = UI.Title + " - Registration";
+				Title = UI.Title + " - Registration";
 
-			if (Registration != null)
-			{
-				if (UI.EditMode)
+				if (Registration != null)
 				{
-					Title2 = $"{Registration.EMail ?? "NO EMAIL!"} - #{Registration.Id}";
+						if (UI.EditMode)
+						{
+								Title2 = $"{Registration.EMail ?? "NO EMAIL!"} - #{Registration.Id}";
+						}
+						else
+						{
+								Title2 = $"{Registration.EMail ?? "NO EMAIL!"}";
+						}
 				}
 				else
 				{
-					Title2 = $"{Registration.EMail ?? "NO EMAIL!"}";
+						Title2 = "Model.Registration is null";
 				}
-			}
-			else
-			{
-				Title2 = "Model.Registration is null";
-			}
 		}
 
 
@@ -121,46 +122,45 @@ namespace LivingMessiah.Web.Pages.Sukkot.CreateEdit
 
 		protected async Task HandleValidSubmit()
 		{
-			//Logger.LogDebug($"Inside {nameof(HandleValidSubmit)}, UI.EditMode: {UI.EditMode} ");
+				//Logger.LogDebug($"Inside {nameof(HandleValidSubmit)}, UI.EditMode: {UI.EditMode} ");
 
-			if (UI.EditMode)
-			{
-				UI = new UI(SukkotEnums.CRUD.Edit);
-				int count = 0;
-				try
+				if (UI.EditMode)
 				{
-					count = await svc.Edit(Registration, User);
-				}
-				catch (Exception)
-				{
-					ExceptionMessage = svc.ExceptionMessage; // Log is handled in the service
-					NavManager.NavigateTo(LivingMessiah.Web.Links.Home.Error);
-				}
+						UI = new UI(SukkotEnums.CRUD.Edit);
+						int count = 0;
+						try
+						{
+								count = await svc.Edit(Registration, User);
+						}
+						catch (Exception)
+						{
+								ExceptionMessage = svc.ExceptionMessage; // Log is handled in the service
+								NavManager.NavigateTo(LivingMessiah.Web.Links.Home.Error);
+						}
 
-				AlertMsg = $"Registration Updated!";
-				Logger.LogInformation(AlertMsg);
-				NavManager.NavigateTo(LivingMessiah.Web.Links.Sukkot.RegistrationShell);
+						AlertMsg = $"Registration Updated!";
+						Logger.LogInformation(AlertMsg);
+						NavManager.NavigateTo(LivingMessiah.Web.Links.Sukkot.RegistrationShell);
 
-			}
-			else
-			{
-				int newId = 0;
-				try
-				{
-					newId = await svc.Create(Registration, User);
 				}
-				catch (Exception)
+				else
 				{
-					ExceptionMessage = svc.ExceptionMessage; // Log is handled in the service
-					NavManager.NavigateTo(LivingMessiah.Web.Links.Home.Error);
-				}
-				AlertMsg = $"Registration created! Id={newId}";
-				Logger.LogInformation(AlertMsg);
-				NavManager.NavigateTo(LivingMessiah.Web.Links.Sukkot.RegistrationShell);
+						int newId = 0;
+						try
+						{
+								newId = await svc.Create(Registration, User);
+						}
+						catch (Exception)
+						{
+								ExceptionMessage = svc.ExceptionMessage; // Log is handled in the service
+								NavManager.NavigateTo(LivingMessiah.Web.Links.Home.Error);
+						}
+						AlertMsg = $"Registration created! Id={newId}";
+						Logger.LogInformation(AlertMsg);
+						NavManager.NavigateTo(LivingMessiah.Web.Links.Sukkot.RegistrationShell);
 
-			}
+				}
 		}
 
 
-	} // class 
-} // namespace
+} // class 

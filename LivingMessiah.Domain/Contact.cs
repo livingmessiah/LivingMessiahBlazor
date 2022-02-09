@@ -1,9 +1,9 @@
 ﻿using System;
 
-namespace LivingMessiah.Domain
+namespace LivingMessiah.Domain;
+
+public class Contact
 {
-	public class Contact
-	{
 		public bool Selected { get; set; }
 		public int ZeroBasedRowCnt { get; set; }
 		public int Id { get; set; }
@@ -19,28 +19,27 @@ namespace LivingMessiah.Domain
 
 		public string Name
 		{
-			get
-			{
-				if (!string.IsNullOrEmpty(MiddleName))
+				get
 				{
-					return $"{FirstName} {LastName}";
-				}
-				else
-				{
-					return $"{FirstName} {MiddleName} {LastName}";
-				}
+						if (!string.IsNullOrEmpty(MiddleName))
+						{
+								return $"{FirstName} {LastName}";
+						}
+						else
+						{
+								return $"{FirstName} {MiddleName} {LastName}";
+						}
 
-			}
+				}
 		}
 
 		public string SukkotInviteDate2
 		{
-			get
-			{
-				return SukkotInviteDate.ToString("yyyy-MM-dd");
-			}
+				get
+				{
+						return SukkotInviteDate.ToString("yyyy-MM-dd");
+				}
 		}
 
 
-	}
 }

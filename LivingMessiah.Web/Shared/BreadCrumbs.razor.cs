@@ -2,10 +2,10 @@
 using System;
 using System.Threading.Tasks;
 
-namespace LivingMessiah.Web.Shared
+namespace LivingMessiah.Web.Shared;
+
+public partial class BreadCrumbs
 {
-	public partial class BreadCrumbs
-	{
 
 		[Parameter]
 		public string Href { get; set; }
@@ -23,26 +23,25 @@ namespace LivingMessiah.Web.Shared
 
 		protected override Task OnInitializedAsync()
 		{
-			if (!String.IsNullOrWhiteSpace(Href))
-			{
-				IsValid = true;
-			}
-			else
-			{
-				IsValid = false;
-			}
+				if (!String.IsNullOrWhiteSpace(Href))
+				{
+						IsValid = true;
+				}
+				else
+				{
+						IsValid = false;
+				}
 
-			if (String.IsNullOrWhiteSpace(ParentTitle))
-			{
-				ParentTitle = "???";
-			}
+				if (String.IsNullOrWhiteSpace(ParentTitle))
+				{
+						ParentTitle = "???";
+				}
 
-			if (String.IsNullOrWhiteSpace(Title))
-			{
-				Title = "???";
-			}
+				if (String.IsNullOrWhiteSpace(Title))
+				{
+						Title = "???";
+				}
 
-			return base.OnInitializedAsync();
+				return base.OnInitializedAsync();
 		}
-	}
 }

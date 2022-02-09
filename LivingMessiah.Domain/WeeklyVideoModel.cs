@@ -3,10 +3,10 @@
 // ToDo: does this belong here?
 // Moved from LivingMessiah.Web.Pages.Admin.WeeklyVideos because 
 //   LivingMessiah.Data\ShabbatWeekRepository.cs needed it
-namespace LivingMessiah.Domain
+namespace LivingMessiah.Domain;
+
+public class WeeklyVideoModel
 {
-	public class WeeklyVideoModel
-	{
 		public int Id { get; set; }
 		public int WeeklyVideoTypeId { get; set; }
 		public int ShabbatWeekId { get; set; }
@@ -35,7 +35,7 @@ More static as it derived from the Book/Chapter
 
 		public string NotesFileRoot { get; set; }   // File given by Mark
 
-		[Range(1,66, ErrorMessage = "length of {0} must be between {1} and {2}")]
+		[Range(1, 66, ErrorMessage = "length of {0} must be between {1} and {2}")]
 		public int Book { get; set; }
 
 		[Range(1, 150, ErrorMessage = "length of {0} must be between {1} and {2}")]
@@ -49,7 +49,6 @@ More static as it derived from the Book/Chapter
 
 		public override string ToString()
 		{
-			return $@"  Id: {Id}; Type Id: {WeeklyVideoTypeId}; ShabbatWeekId: {ShabbatWeekId}; YouTubeId: {YouTubeId}";
+				return $@"  Id: {Id}; Type Id: {WeeklyVideoTypeId}; ShabbatWeekId: {ShabbatWeekId}; YouTubeId: {YouTubeId}";
 		}
-	}
 }

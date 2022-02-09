@@ -1,9 +1,9 @@
 ﻿using System;
 
-namespace LivingMessiah.Domain
+namespace LivingMessiah.Domain;
+
+public class vwPsalmsAndProverbs
 {
-	public class vwPsalmsAndProverbs
-	{
 		public int ShabbatWeekId { get; set; }
 		public DateTime ShabbatDate { get; set; }
 		public string ShabbatDateYMD { get; set; }
@@ -25,9 +25,8 @@ namespace LivingMessiah.Domain
 		//public int ProverbsEndVerse { get; set; }
 		//public string ProverbsKJVHtmlConcat { get; set; }
 		public string ProverbsUrl { get; set; }
-		
+
 		public int TotalVerseCount { get; set; }
-	}
 }
 
 /*

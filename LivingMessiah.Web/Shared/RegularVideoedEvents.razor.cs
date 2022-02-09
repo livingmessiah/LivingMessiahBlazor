@@ -8,10 +8,10 @@ using LivingMessiah.Web.Settings;
 using Microsoft.Extensions.Options;
 using System;
 
-namespace LivingMessiah.Web.Shared
+namespace LivingMessiah.Web.Shared;
+
+public partial class RegularVideoedEvents
 {
-	public partial class RegularVideoedEvents
-	{
 		[Inject]
 		public IOptions<AppSettings> AppSettings { get; set; }
 
@@ -33,34 +33,33 @@ namespace LivingMessiah.Web.Shared
 
 		protected override async Task OnInitializedAsync()
 		{
-			ShowCurrentWeeklyVideos = AppSettings.Value.ShowCurrentWeeklyVideos;
+				ShowCurrentWeeklyVideos = AppSettings.Value.ShowCurrentWeeklyVideos;
 
-			Logger.LogDebug($"Inside {nameof(RegularVideoedEvents)}!{nameof(OnInitializedAsync)}; ShowCurrentWeeklyVideos:{ShowCurrentWeeklyVideos}");
-			if (ShowCurrentWeeklyVideos)
-			{
-				try
+				Logger.LogDebug($"Inside {nameof(RegularVideoedEvents)}!{nameof(OnInitializedAsync)}; ShowCurrentWeeklyVideos:{ShowCurrentWeeklyVideos}");
+				if (ShowCurrentWeeklyVideos)
 				{
-					CurrentWeeklyVideos = await svc.GetCurrentWeeklyVideos();
+						try
+						{
+								CurrentWeeklyVideos = await svc.GetCurrentWeeklyVideos();
 
-					if (CurrentWeeklyVideos is not null)
-					{
-						Logger.LogDebug($"...{nameof(CurrentWeeklyVideos)}.Count:{CurrentWeeklyVideos.Count}");
-					}
-					else
-					{
-						DatabaseWarning = true;
-						DatabaseWarningMsg = $"{nameof(CurrentWeeklyVideos)} NOT FOUND";
-						//Logger.LogDebug($"{nameof(CurrentWeeklyVideos)} is null, Sql:{db.BaseSqlDump}");
-					}
+								if (CurrentWeeklyVideos is not null)
+								{
+										Logger.LogDebug($"...{nameof(CurrentWeeklyVideos)}.Count:{CurrentWeeklyVideos.Count}");
+								}
+								else
+								{
+										DatabaseWarning = true;
+										DatabaseWarningMsg = $"{nameof(CurrentWeeklyVideos)} NOT FOUND";
+										//Logger.LogDebug($"{nameof(CurrentWeeklyVideos)} is null, Sql:{db.BaseSqlDump}");
+								}
+						}
+						catch (System.Exception ex)
+						{
+								DatabaseError = true;
+								DatabaseErrorMsg = $"Error reading database";
+								Logger.LogError(ex, $"...{DatabaseErrorMsg}");
+						}
 				}
-				catch (System.Exception ex)
-				{
-					DatabaseError = true;
-					DatabaseErrorMsg = $"Error reading database";
-					Logger.LogError(ex, $"...{DatabaseErrorMsg}");
-				}
-			}
 		}
 
-	}
 }

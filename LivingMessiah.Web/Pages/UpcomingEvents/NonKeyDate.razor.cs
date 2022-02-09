@@ -2,10 +2,10 @@
 using LivingMessiah.Web.Pages.KeyDates.Enums;
 using System;
 
-namespace LivingMessiah.Web.Pages.UpcomingEvents
+namespace LivingMessiah.Web.Pages.UpcomingEvents;
+
+public partial class NonKeyDate
 {
-	public partial class NonKeyDate
-	{
 		[Inject]
 		NavigationManager NavManager { get; set; }
 
@@ -41,7 +41,7 @@ namespace LivingMessiah.Web.Pages.UpcomingEvents
 
 		protected override void OnInitialized()
 		{
-			SetShowVideoButton();
+				SetShowVideoButton();
 		}
 
 		public bool ShowVideo { get; set; } = false;
@@ -50,28 +50,27 @@ namespace LivingMessiah.Web.Pages.UpcomingEvents
 
 		protected void ShowVideo_Button_Click()
 		{
-			ShowVideo = !ShowVideo;
-			SetShowVideoButton();
-			StateHasChanged();
+				ShowVideo = !ShowVideo;
+				SetShowVideoButton();
+				StateHasChanged();
 		}
 
 		protected void SetShowVideoButton()
 		{
-			if (ShowVideo)
-			{
-				OppositeIcon = "<i class='far fa-arrow-alt-circle-up'></i>";
-				OppositeToggleMsg = "Hide Video";
-			}
-			else
-			{
-				OppositeIcon = "<i class='far fa-arrow-alt-circle-down'></i>";
-				OppositeToggleMsg = "Show Video";
-			}
+				if (ShowVideo)
+				{
+						OppositeIcon = "<i class='far fa-arrow-alt-circle-up'></i>";
+						OppositeToggleMsg = "Hide Video";
+				}
+				else
+				{
+						OppositeIcon = "<i class='far fa-arrow-alt-circle-down'></i>";
+						OppositeToggleMsg = "Show Video";
+				}
 		}
 
 		private void Edit_ButtonClick(int id)
 		{
-			NavManager.NavigateTo(Links.UpcomingEvents.EditMarkdown.Page + "/" + id);
+				NavManager.NavigateTo(Links.UpcomingEvents.EditMarkdown.Page + "/" + id);
 		}
-	}
 }

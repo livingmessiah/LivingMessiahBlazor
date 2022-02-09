@@ -1,9 +1,9 @@
 ﻿using System;
 
-namespace LivingMessiah.Domain.Parasha.Queries
+namespace LivingMessiah.Domain.Parasha.Queries;
+
+public class Parasha
 {
-	public class Parasha
-	{
 		public int Id { get; set; }
 
 		public decimal TriNum { get; set; }
@@ -31,18 +31,17 @@ namespace LivingMessiah.Domain.Parasha.Queries
 
 		public override string ToString()
 		{
-			return $"Id: {Id}; BookId: {BookId}, TorahLong: {TorahLong}";
+				return $"Id: {Id}; BookId: {BookId}, TorahLong: {TorahLong}";
 		}
 
 		/**/
 		public string ParashaHref
 		{
-			get
-			{
-				//return $"{BibleConstants.BaseParashaUrl}/{Id}?slug={NameUrl}/";  
-				return $"{BaseParashaUrl}/{Id}?slug={NameUrl}/";  
-			}
+				get
+				{
+						//return $"{BibleConstants.BaseParashaUrl}/{Id}?slug={NameUrl}/";  
+						return $"{BaseParashaUrl}/{Id}?slug={NameUrl}/";
+				}
 		}
-		
-	}
+
 }

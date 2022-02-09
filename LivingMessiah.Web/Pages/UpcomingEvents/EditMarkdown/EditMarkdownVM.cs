@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace LivingMessiah.Web.Pages.UpcomingEvents.EditMarkdown
+namespace LivingMessiah.Web.Pages.UpcomingEvents.EditMarkdown;
+
+public class EditMarkdownVM
 {
-	public class EditMarkdownVM
-	{
 		[Required]
 		[Key]
 		public int Id { get; set; }
@@ -16,6 +16,5 @@ namespace LivingMessiah.Web.Pages.UpcomingEvents.EditMarkdown
 		//[MinLength(10, ErrorMessage = "Please enter at least 10 characters based on HTML.")]
 		//[MaxLength(3000, ErrorMessage = "Please enter no more than at least 3,000... were not writing a novel.")]
 		[DisplayName("Markdown Description")]
-		public string Description { get; set; }  
-	}
+		public string Description { get; set; }
 }

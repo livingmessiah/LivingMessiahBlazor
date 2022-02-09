@@ -16,11 +16,11 @@ using LivingMessiah.Web.Pages.Sukkot;
 using Syncfusion.Blazor.Grids;
 using LivingMessiah.Web.Pages.SukkotAdmin.Enums;
 
-namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration
+namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration;
+
+//[Authorize(Roles = Roles.AdminOrSukkot)]
+public partial class List
 {
-	//[Authorize(Roles = Roles.AdminOrSukkot)]
-	public partial class List
-	{
 		[Inject]
 		public ILogger<RegistrationGrid> Logger { get; set; }
 
@@ -42,44 +42,44 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration
 
 		protected override async Task OnInitializedAsync()
 		{
-			Logger.LogDebug($"Inside {nameof(List)}!{nameof(OnInitializedAsync)}");
-			try
-			{
-				Registrations = await db.GetAll();  
-				if (Registrations == null)
+				Logger.LogDebug($"Inside {nameof(List)}!{nameof(OnInitializedAsync)}");
+				try
 				{
-					DatabaseWarning = true;
-					DatabaseWarningMsg = "Registrations NOT FOUND";
+						Registrations = await db.GetAll();
+						if (Registrations == null)
+						{
+								DatabaseWarning = true;
+								DatabaseWarningMsg = "Registrations NOT FOUND";
+						}
 				}
-			}
-			catch (Exception ex)
-			{
-				DatabaseError = true;
-				DatabaseErrorMsg = $"Error reading database";
-				Logger.LogError(ex, $"...{DatabaseErrorMsg}");
-			}
-			StateHasChanged();
+				catch (Exception ex)
+				{
+						DatabaseError = true;
+						DatabaseErrorMsg = $"Error reading database";
+						Logger.LogError(ex, $"...{DatabaseErrorMsg}");
+				}
+				StateHasChanged();
 		}
 
 		public void CustomizeCell(QueryCellInfoEventArgs<Domain.Registration> args)
 		{
-			if (args.Column.Field == nameof(Domain.Registration.LocationName))
-			{
-				BaseLocationSmartEnum e = BaseLocationSmartEnum.FromName(args.Data.LocationName, false);
-				args.Cell.AddClass(new string[] { e.TextColor });
-			}
+				if (args.Column.Field == nameof(Domain.Registration.LocationName))
+				{
+						BaseLocationSmartEnum e = BaseLocationSmartEnum.FromName(args.Data.LocationName, false);
+						args.Cell.AddClass(new string[] { e.TextColor });
+				}
 		}
 
 		#region ErrorHandling
 
 		private void InitializeErrorHandling()
 		{
-			DatabaseInformationMsg = "";
-			DatabaseInformation = false;
-			DatabaseWarningMsg = "";
-			DatabaseWarning = false;
-			DatabaseErrorMsg = "";
-			DatabaseError = false;
+				DatabaseInformationMsg = "";
+				DatabaseInformation = false;
+				DatabaseWarningMsg = "";
+				DatabaseWarning = false;
+				DatabaseErrorMsg = "";
+				DatabaseError = false;
 		}
 
 		protected bool DatabaseInformation = false;
@@ -91,5 +91,4 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration
 		#endregion
 
 
-	}
 }

@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Components;
 
-namespace LivingMessiah.Web.Shared
+namespace LivingMessiah.Web.Shared;
+
+public partial class ButtonShowHide
 {
-	public partial class ButtonShowHide
-	{
 		[Parameter]
 		public RenderFragment ChildContent { get; set; }
 
@@ -23,13 +23,12 @@ namespace LivingMessiah.Web.Shared
 
 		protected void ToggleButtonClick(bool isCollapsed)
 		{
-			IsCollapsed = !isCollapsed;
-			ButtonText = IsCollapsed ? "Details ⬇️" : "Hide ⬆️";
-			
-			// NO WORKY
-			//ButtonText = IsCollapsed ? "Details" : "Hide";
-			//ButtonChevron = IsCollapsed ? "fas fa-chevron-down" : "fas fa-chevron-up";
+				IsCollapsed = !isCollapsed;
+				ButtonText = IsCollapsed ? "Details ⬇️" : "Hide ⬆️";
+
+				// NO WORKY
+				//ButtonText = IsCollapsed ? "Details" : "Hide";
+				//ButtonChevron = IsCollapsed ? "fas fa-chevron-down" : "fas fa-chevron-up";
 		}
 
-	}
 }

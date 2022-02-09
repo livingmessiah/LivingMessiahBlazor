@@ -1,13 +1,12 @@
 ﻿using Microsoft.AspNetCore.Components;
 
-namespace LivingMessiah.Web.Pages.WindmillRanch
+namespace LivingMessiah.Web.Pages.WindmillRanch;
+
+public partial class Index
 {
-	public partial class Index
-	{
 		protected override void OnInitialized()
 		{
-			base.OnInitialized();
+				base.OnInitialized();
 		}
 
-	}
 }

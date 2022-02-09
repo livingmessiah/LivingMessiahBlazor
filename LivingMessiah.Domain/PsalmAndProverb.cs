@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace LivingMessiah.Domain
+namespace LivingMessiah.Domain;
+
+public class PsalmAndProverb
 {
-	public class PsalmAndProverb
-	{
 		public int ShabbatWeekId { get; set; }
 		public DateTime ShabbatDate { get; set; }
 		public string PsalmsBCV { get; set; }
@@ -17,5 +17,4 @@ namespace LivingMessiah.Domain
 		public int ProverbsChapter { get; set; }
 		public string ProverbsKJVHtmlConcat { get; set; }
 		public string ProverbsUrl { get; set; }
-	}
 }

@@ -4,43 +4,43 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 
-namespace LivingMessiah.Web
+namespace LivingMessiah.Web;
+
+public class Program
 {
-	public class Program
-	{
 		public static void Main(string[] args)
 		{
-			string appSettingJson;
-			if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == Environments.Development)
-			{
-				appSettingJson = "appsettings.Development.json";
-			}
-			else
-			{
-				appSettingJson = "appsettings.Production.json";
-			}
+				string appSettingJson;
+				if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == Environments.Development)
+				{
+						appSettingJson = "appsettings.Development.json";
+				}
+				else
+				{
+						appSettingJson = "appsettings.Production.json";
+				}
 
-			var configuration = new ConfigurationBuilder()
-				.AddJsonFile(appSettingJson)  // "appsettings.json"
-				.Build();
+				var configuration = new ConfigurationBuilder()
+					.AddJsonFile(appSettingJson)  // "appsettings.json"
+					.Build();
 
-			Log.Logger = new LoggerConfiguration()
-				.ReadFrom.Configuration(configuration)
-				.CreateLogger();
-			Log.Warning($"Inside {nameof(Program)}; testing that this message gets saved to the Serilog console and file sinks. ASPNETCORE_ENVIRONMENT: {Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")}");
-			try
-			{
-				Log.Information("Application Starting Up"); // Note 1
-				CreateHostBuilder(args).Build().Run();
-			}
-			catch (Exception ex)
-			{
-				Log.Fatal(ex, "The application failed to start correctly"); // Total fale
-			}
-			finally
-			{
-				Log.CloseAndFlush(); // Note 2
-			}
+				Log.Logger = new LoggerConfiguration()
+					.ReadFrom.Configuration(configuration)
+					.CreateLogger();
+				Log.Warning($"Inside {nameof(Program)}; testing that this message gets saved to the Serilog console and file sinks. ASPNETCORE_ENVIRONMENT: {Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")}");
+				try
+				{
+						Log.Information("Application Starting Up"); // Note 1
+						CreateHostBuilder(args).Build().Run();
+				}
+				catch (Exception ex)
+				{
+						Log.Fatal(ex, "The application failed to start correctly"); // Total fale
+				}
+				finally
+				{
+						Log.CloseAndFlush(); // Note 2
+				}
 		}
 		/*
 		Note 1: because we are in static void Main, we have to use the static keyword Log.Information not LogInformation
@@ -53,7 +53,6 @@ namespace LivingMessiah.Web
 						.UseSerilog()
 						.ConfigureWebHostDefaults(webBuilder =>
 						{
-							webBuilder.UseStartup<Startup>();
+								webBuilder.UseStartup<Startup>();
 						});
-	}
 }

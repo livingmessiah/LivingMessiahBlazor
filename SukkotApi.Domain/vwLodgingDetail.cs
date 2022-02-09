@@ -1,9 +1,9 @@
 ﻿using System;
 
-namespace SukkotApi.Domain
+namespace SukkotApi.Domain;
+
+public class vwLodgingDetail
 {
-	public class vwLodgingDetail
-	{
 		public Int32 Id { get; set; }
 		public String FamilyName { get; set; }
 		public String CampCD { get; set; }
@@ -13,5 +13,4 @@ namespace SukkotApi.Domain
 		public Decimal CampCost { get; set; }
 		public string CampDays { get; set; }
 		public int StatusId { get; set; }
-	}
 }

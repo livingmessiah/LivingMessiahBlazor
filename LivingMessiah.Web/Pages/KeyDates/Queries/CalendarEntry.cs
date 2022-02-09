@@ -1,10 +1,10 @@
 ﻿using System;
 using LivingMessiah.Web.Pages.KeyDates.Enums;
 
-namespace LivingMessiah.Web.Pages.KeyDates.Queries
+namespace LivingMessiah.Web.Pages.KeyDates.Queries;
+
+public class CalendarEntry
 {
-	public class CalendarEntry
-	{
 		public int Id { get; set; }
 		//public int YearId { get; set; }
 		public int CalendarTemplateId { get; set; } //Id
@@ -39,9 +39,8 @@ namespace LivingMessiah.Web.Pages.KeyDates.Queries
 
 		public override string ToString()
 		{
-			return $" Date: {Date.ToString("yyyy-MM-dd")}, Detail: {Detail}, Descr: {Descr}, DateTypeEnum: {DateTypeEnum}";
-			//return $@" @CalendarTemplateId:{@CalendarTemplateId}; YearId:{YearId}, Date: {Date.ToString("yyyy-MM-dd")}";
+				return $" Date: {Date.ToString("yyyy-MM-dd")}, Detail: {Detail}, Descr: {Descr}, DateTypeEnum: {DateTypeEnum}";
+				//return $@" @CalendarTemplateId:{@CalendarTemplateId}; YearId:{YearId}, Date: {Date.ToString("yyyy-MM-dd")}";
 		}
 
-	}
 }
