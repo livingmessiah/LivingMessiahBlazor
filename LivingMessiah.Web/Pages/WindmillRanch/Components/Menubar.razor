@@ -1,0 +1,65 @@
+﻿@using Page = LivingMessiah.Web.Links.WindmillRanch
+
+<div class="d-print-none mt-3">
+	<ol class="breadcrumb mx-n3 mt-n3">
+
+		<li class="@classActive">
+			<a class="badge badge-dark" href="@Page.Audit.Page">
+				<sup>@Page.Audit.Title</sup>
+			</a>&nbsp;&nbsp;
+		</li>
+
+		<li class="@classActive">
+			<a class="badge badge-light" href="@Page.Permaculture.Page">
+				<sup>@Page.Permaculture.Title</sup>
+			</a>&nbsp;&nbsp;
+		</li>
+
+		<li class="@classActive">
+			<a class="badge badge-warning" href="@Page.Projects.Page">
+				<sup>@Page.Projects.Title</sup>
+			</a>&nbsp;&nbsp;
+		</li>
+
+		<li class="@classActive">
+			<a class="badge badge-info" href="@Page.Album.Page">
+				<sup>@Page.Album.Title</sup>
+			</a>&nbsp;&nbsp;
+		</li>
+
+		<li class="@classActive">
+			<a class="badge badge-success" href="@Page.Support.Page">
+				<sup>@Page.Support.Title</sup>
+			</a>&nbsp;&nbsp;
+		</li>
+
+		<li class="@classActive">
+			<a class="badge badge-danger" href="@Page.Archive.Page">
+				<sup>@Page.Archive.Title</sup>
+			</a>&nbsp;&nbsp;
+		</li>
+
+		<li class="@classActive">
+			<a class="badge badge-secondary" href="@Page.CodeOfConduct.Page">
+				<sup>@Page.CodeOfConduct.Title</sup>
+			</a>&nbsp;&nbsp;
+		</li>
+
+		<li class="@classActive">
+			<a class="badge badge-warning" href="@Page.Swales.Page">
+				<sup>@Page.Swales.Title</sup>
+			</a>&nbsp;&nbsp;
+		</li>
+
+	</ol>
+
+
+</div>
+
+
+
+@code {
+	string classActive = ""; // "active"  // This doesn't work
+
+	//</i>&nbsp;<sup>Registration Grid</sup>
+}

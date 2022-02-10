@@ -1,14 +1,19 @@
 ﻿@page "/CodeOfConduct"
+@page "/WindmillRanch/CodeOfConduct"
 
+@using LivingMessiah.Web.Pages.WindmillRanch.Components
 @using Page = LivingMessiah.Web.Links.WindmillRanch.CodeOfConduct
+
 <PageTitle>@Page.Title</PageTitle>
 
-<h2><i class="@Page.Icon"></i> @Page.Title</h2>
+<Menubar></Menubar>
+
+<div class="pb-2 mt-4 mb-2 border-bottom">
+	<h2><i class="@Page.Icon"></i> @Page.Title</h2>
+</div>
 
 <h5>Work in progress</h5>
 
 <p>ToDo: What is expected of people when they visit the Windmill Ranch</p>
 
-@code {
-
-}
+<ReturnAnchor/>

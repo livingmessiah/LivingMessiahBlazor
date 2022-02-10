@@ -1,140 +1,62 @@
 ﻿@page "/WindmillRanch"
-@using static LivingMessiah.Web.Links.WindmillRanch
 
+@using LivingMessiah.Web.Pages.WindmillRanch.Components
 @using Page = LivingMessiah.Web.Links.WindmillRanch
 <PageTitle>@Page.Title</PageTitle>
-<div class="pb-2 mt-4 mb-2 border-bottom">
+
+<Menubar></Menubar>
+
+<div class="pb-2 mt-4 mb-2">
 	<h2><i class="@Page.Icon"></i> @Page.Title</h2>
 </div>
 
+<img src='@Blobs.UrlWindmillRanch("windmill-ranch-logo-1024-379.jpg")'
+		 alt="@Page.Descr" class="img-fluid rounded my-3" />
+
+<div class="card ">
+	<div class="card-header"><h5 class="text-center">Welcome</h5></div>
+	<div class="card-body">
+		<p class="lead">
+			Windmill Ranch is Living Messiah Ministries alternative off grid campus.
+			The ranch campus provides a place to gather for community projects and events.
+			Currently, minimal facilities are available, plan your visit accordingly.
+			Visit our
+			<a href="@Links.Home.Index"
+				 title="@Links.Home.Title" class="btn btn-outline-primary btn-sm">
+				<i class="@Links.Home.Icon" aria-hidden="true"></i>
+				&nbsp;<b>@Links.Home.Title</b>
+			</a>
+			to view our vision, mission, guidelines and code of conduct statements.
+			Community projects are on going.
+			Join us in learning and developing sustaining life skills together.
+		</p>
+	</div>
+</div>
+
+<h2 class="mt-5 mb-0"><span class="badge badge-warning">Windmill Ranch Introduction</span></h2>
+<p class="lead">
+	For the past several years Living Messiah	has been looking for land for community	development.
+	We've called this project our <b>Land Vision</b> see
+	<Anchor Href="@Blobs.UrlWindmillRanch("original-land-vision-by-jerry-watkins.pdf")"
+					UsePrefixIcon="false"
+					Descr="Initial Vision (PDF)">
+	</Anchor>.
+	We are happy to announce this vision <b>is a reality</b> and we are now in the initial development phase!
+</p>
+
+<p class="lead">
+	On October 5<sup>th</sup> 2020 we paid in full for a 40 acre ranch just South of Bisbee Arizona
+	It has 2 wells. One is working and is driven by an electric motor and the second is driven by a windmill, but it is not working because it needs new <i>leathers</i>.
+	The property has two trailers in the South West corner that sit on a hill along.
+	The property is off-grid and uses a solar system and wind generators. It also has two propane tanks and a septic tank.
+	Our desire is to build a Hebrew roots community that is self-reliant and also good stewards of the land by leveraging good permaculture design.
+</p>
+
 
 @*<div class="pb-2 mt-4 mb-2 border-bottom">
-		<h1><span class="text-primary @Anchors.GodsEconomy.Icon"></span> @Anchors.GodsEconomy.Title</h1>
+	<h1><span class="text-primary @Anchors.GodsEconomy.Icon"></span> @Anchors.GodsEconomy.Title</h1>
 	</div>*@
 
-
-<img src='@Blobs.UrlWindmillRanch("windmill-ranch-logo-1024-379.jpg")'
-		 alt="@Descr" class="img-fluid rounded my-3" />
-
-
-<a href="@Page.Swales.Index" 
-	 class="my-3 btn btn-xlarge btn-primary">
-	Swales and Food Forest <i class="fas fa-chevron-circle-right"></i>
-</a>
-
-<h1>2021 Annual Update</h1>
-
-<p>Here are some of the notes I have jotted down</p>
-
-<h4></h4>
-<p class="lead">
-	To help me try to tackle the solution(s) to plan a well thought out design for the property, I filled out the
-	<a href='@Blobs.UrlWindmillRanch("RAD-Questionnaire-Windmill-Ranch/Index.html")'
-		 target="_blank">
-		<i class="fas fa-file-pdf"></i>
-		RAD Permaculture Design Questionnaire for the Windmill Ranch
-	</a>
-	and submitted it to the good people at
-	<a href='http://restorationag.com/'
-		 target="_blank">
-		<i class="fas fa-file-pdf"></i>
-		RestorationAG.com
-	</a>.
-
-</p>
-
-<h4>People that have come out to the ranch</h4>
-<p class="lead">
-	Two people have come out to the property that possess a good knowledge of permaculture.
-	In both cases we walked the land and discussed possibilities for future development.
-	The first was <b>Grant Tims</b> who is associated with the Savory Institute
-	and the second was <b>Don Decker</b> of the NRCS USDA (located in Douglas).
-	Both agreed that fencing off the land to give it rest for was a good thing.
-</p>
-<p class="lead">
-	Grant was quite knowledgeable in many aspects of permaculture but more versed in composting and jumpstarting the microbiology.
-	I believe he said his wife was going to be accredited by Dr. Elaine Ingham who is a guru in microbiology.
-	He wasn't very knowledgeable with water harvesting and creating swales but his boss, <b>Ricardo Aguirre</b> was.
-</p>
-<p class="lead">
-	Don knew a lot about the history of the area and the plants that were here before the introduction of open range grazing.
-	He said this used to be much more of grassland and that there was much less bushes and the small trees that now dominate the land.
-	I was hoping to get more information from him about building swales and other strategies for rehydrating the land but that didn't happen.'
-</p>
-
-<h4>Other people that I have networked with.</h4>
-<p class="lead">
-	<b>Dennis Maroney</b> of the 47 Ranch which is a big spread of land just North East of Bisbee Arizona.
-	He is well versed in agriculture and has given many suggestions.
-	I met him at the Farmer's Market and chatted with him multiple times about what I'm trying to accomplish.
-</p>
-
-@*<h4>Other Events</h4>
-	<ol>
-		<li>4 corners marked out. John Connor came out and marked the four corners</li>
-		<li></li>
-		<li></li>
-		<li></li>
-		<li></li>
-		<li></li>
-		video of the water down the wash
-		observation, mini swales.
-	</ol>*@
-
-<hr />
-
-<h1>Page Enhancements</h1>
-<p class="lead">
-	I've bee waiting patiently to greatly improve this page as I see this as main part of my position at LMM and local resident/overseer/ground keeper of the property.
-
-	<blockquote class="blockquote mx-5">
-		Where there is no vision, the people perish: but he that keepeth the <b>Torah</b>	<sup>the law</sup>, happy is he.
-		<footer class="blockquote-footer"><cite title="Proverbs 29:18">Proverbs 29:18</cite></footer>
-	</blockquote>
-
-	I see a big part of my task therefore is to keep the vision going.
-	Part of that is showing and documenting progress which can more effectively be done if you are systematic / formal about documenting work that has been done and work that needs to be done.
-	Therefore what I want to do with this page is for it to be seen as a Project Management page.
-</p>
-
-<h3>Project Management Technical Requirements</h3>
-<h5>A database of tables</h5>
-
-<ul class="list-inline">
-	<li>Projects and Project Categories</li>.
-	<li>People</li>.
-	<li>Folders and Tags</li>.
-	<li>???</li>.
-</ul>
-
-<p class="lead">
-	<b>Project Data Points:</b> status, priority, prerequisites, cost, phases, justification, approval, funding
-</p>
-
-<p class="lead">
-	<b>People Data Points:</b> Who worked on which project and how much time did they spend and how should they be compensated
-</p>
-
-<p class="lead">
-	<b>Folders and Tags:</b> This is to aide in searching / filtering the projects.
-</p>
-
-<h3>SyncFusion Components</h3>
-<p class="lead">
-	Since I'm already implementing this suite of components I thought I could leverage other ones that would be useful to this page
-</p>
-
-<ul>
-	<li><a href="https://blazor.syncfusion.com/demos/kanban/dialog-editing?theme=bootstrap4"></a>A Kanban Board</li>.
-	<li><a href="https://blazor.syncfusion.com/demos/diagramcomponent/hierarchical-tree?theme=bootstrap4"></a>Diagrams</li>.
-</ul>
-
-
-<ul>
-	<li>Other keep track of hours</li>.
-</ul>
-
-<PartialViewButtons />
 
 
 

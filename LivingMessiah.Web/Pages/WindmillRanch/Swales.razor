@@ -1,14 +1,16 @@
 ﻿@page "/swales"
+@page "/WindmillRanch/swales"
 
+@using LivingMessiah.Web.Pages.WindmillRanch.Components
 
 @using Page = LivingMessiah.Web.Links.WindmillRanch.Swales
 <PageTitle>@Page.Title</PageTitle>
-<div class="pb-2 mt-4 mb-2 border-bottom">
-	<h2><i class="@Page.Icon"></i> @Page.Title</h2>
-</div>
+
+<Menubar></Menubar>
 
 <div class="pb-2 mt-4 mb-2 border-bottom">
-	<h2><span class="text-primary @Page.Icon"></span> @Page.Title</h2>
+	<h2><i class="@Page.Icon"></i> @Page.Title</h2>
+	@*<h2><span class="text-primary @Page.Icon"></span> @Page.Title</h2>*@
 </div>
 
 <p class="lead">
@@ -213,7 +215,4 @@
 	31.502467501152175, -109.76110475912121
 	https://goo.gl/maps/6RezqhTt3D5UgiG16*@
 
-
-@code {
-
-}
+<ReturnAnchor/>
