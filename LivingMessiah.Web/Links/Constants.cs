@@ -655,7 +655,7 @@ public static class WindmillRanch
 	public static class Swales
 	{
 		public const string Page = "/swales/";
-		public const string Title = "Swales / Food Forest";
+		public const string Title = "Swales";
 		public const string Icon = "fas fa-drafting-compass";
 		public const string Descr = "Swales and Food Forest";
 	}
