@@ -265,6 +265,16 @@ public class LinksFactory : ILinksFactory
 				},
 				new Link
 				{
+					Index = Feast.Index,
+					Title = Feast.Title,
+					Icon = Feast.Icon,
+					HomeSidebarUsage=true,
+					HomeFloatRightHebrew="מוֹעֵד",
+					HomeTitleSuffix=" moed H4150",
+					SitemapUsage=true
+				},
+				new Link
+				{
 					Index = AboveAllImages.Url,
 					Title = AboveAllImages.Title,
 					Icon = "fas fa-external-link-square-alt",
@@ -331,7 +341,7 @@ public class LinksFactory : ILinksFactory
 					Icon = Pesach.Icon,
 					HomeSidebarUsage=false,
 					HomeFloatRightHebrew="פֶסַח",
-					HomeTitleSuffix=" shavuot H7620",
+					HomeTitleSuffix=" pesach H6453",
 					SitemapUsage=false
 				},
 				new Link

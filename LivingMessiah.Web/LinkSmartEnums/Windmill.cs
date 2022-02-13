@@ -1,4 +1,4 @@
-﻿namespace LivingMessiah.Web.LinksSmartEnums;
+﻿namespace LivingMessiah.Web.LinkSmartEnums;
 using Ardalis.SmartEnum;
 using LivingMessiah.Web.Links;
 

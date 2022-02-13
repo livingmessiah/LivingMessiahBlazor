@@ -1,0 +1,19 @@
+﻿@page "/Passover"
+@using Articles = LivingMessiah.Web.Links.Articles
+@using LivingMessiah.Web.Pages.Feasts.Components
+
+@using Page = LivingMessiah.Web.Links.Feast
+<PageTitle>@Page.Passover.Title</PageTitle>
+
+<ReturnAnchor></ReturnAnchor>
+
+<div class="pb-1 mt-4 mb-5 border-bottom border-primary">
+	<h2><i class="@Page.Passover.Icon"></i> @Page.Passover.Title</h2>
+</div>
+
+<BibleReference Feast="@LinkSmartEnums.Feast.Passover"/>
+
+<a class="btn btn-primary btn-sm mt-3"
+		href="@Articles.Pesach.Index">
+	<i class="fas fa-link"></i> Pesach
+</a>

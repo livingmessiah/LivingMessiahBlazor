@@ -1,0 +1,26 @@
+﻿@page "/Omer"
+@using LivingMessiah.Web.Pages.Feasts.Components
+
+@using LivingMessiah.Web.Pages.Shavuot
+
+@using Page = LivingMessiah.Web.Links.Feast
+<PageTitle>@Page.Omer.Title</PageTitle>
+<ReturnAnchor></ReturnAnchor>
+
+<div class="pb-1 mt-4 mb-5 border-bottom border-primary">
+	<h2><i class="@Page.Omer.Icon"></i> @Page.Omer.Title</h2>
+</div>
+
+<BibleReference Feast="@LinkSmartEnums.Feast.Omer"/>
+
+
+<!-- IsXsOrSm="true" -->
+<div class="d-md-none mt-3">
+	<OmerCount IsXsOrSm=true OverrideOmerCount=4></OmerCount>
+</div>
+<!-- IsXsOrSm="false" -->
+<div class="d-none d-md-block mt-3">
+	<OmerCount IsXsOrSm=false OverrideOmerCount=4></OmerCount>
+</div>
+
+

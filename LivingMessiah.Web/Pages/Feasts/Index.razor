@@ -1,0 +1,46 @@
+﻿@page "/Feasts"
+
+@using LivingMessiah.Web.LinkSmartEnums
+
+@using Page = LivingMessiah.Web.Links.Feast
+<PageTitle>@Page.Title</PageTitle>
+<div class="pb-2 mt-4 mb-2 ">
+	<h2><i class="@Page.Icon"></i> @Page.Title</h2>
+</div>
+
+
+@*
+	ToDo: check out LivingMessiah.Web\Pages\SmartEnums\FeastDays.razor
+	<TableTemplate Items="BaseFeastDaySmartEnum.List.OrderBy(o => o.Value).ToList()">
+	</TableTemplate>
+*@
+
+<LoadingComponent IsLoading="Feasts==null">
+	<div class="list-group">
+		@foreach (var item in Feasts)
+		{
+			<a href="@item.Page" title="@item.Hebrew.TitleSuffix @item.Hebrew.Strongs"
+			 class="list-group-item list-group-item-warning ">
+				<i class="@item.Icon fa-fw fa-3x" aria-hidden="true"></i>
+				<span class="home-page-xs"><b>@item.Title</b></span>
+				<span class="float-right text-info">
+					<span class="hebrew">@item.Hebrew.FloatRightHebrew</span>
+				</span>
+			</a>
+		}
+
+	</div>
+</LoadingComponent>
+
+@if (DatabaseError)
+{
+	<p class="text-danger"><em>@DatabaseErrorMsg</em></p>
+}
+else
+{
+	if (DatabaseWarning)
+	{
+		<p class="text-warning">@DatabaseWarningMsg</p>
+	}
+}
+

@@ -1,0 +1,21 @@
+﻿@page "/Tabernacles"
+@using Sukkot = LivingMessiah.Web.Links.Sukkot
+@using LivingMessiah.Web.Pages.Feasts.Components
+
+@using Page = LivingMessiah.Web.Links.Feast
+<PageTitle>@Page.Tabernacles.Title</PageTitle>
+
+<ReturnAnchor></ReturnAnchor>
+
+<div class="pb-1 mt-4 mb-5 border-bottom border-primary">
+	<h2><i class="@Page.Tabernacles.Icon"></i> @Page.Tabernacles.Title</h2>
+</div>
+
+<BibleReference Feast="@LinkSmartEnums.Feast.Tabernacles"/>
+
+<a class="btn btn-primary btn-sm mt-3"
+		href="@Sukkot.Index">
+	<i class="fas fa-link"></i> @Sukkot.Title Registration
+</a>
+
+
