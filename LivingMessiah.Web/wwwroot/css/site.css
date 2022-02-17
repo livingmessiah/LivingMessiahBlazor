@@ -83,6 +83,13 @@ hr.warning {
 }
 
 
+.hebrew30 {
+  font-size: 30.0pt;
+  font-family: david;
+  direction: rtl;
+  margin-top: .2em;
+}
+
 .hebrew36 {
   font-size: 36.0pt;
   font-family: david;
@@ -105,6 +112,28 @@ hr.warning {
 .hebrew.tiny {
   font-size: 10.0pt;
 }
+
+.hebrew.xs {
+  font-size: 10.0pt;
+}
+
+.hebrew.sm {
+  font-size: 16.0pt;
+}
+
+.hebrew.md {
+  font-size: 22.0pt;
+}
+
+.hebrew.lg {
+  font-size: 30.0pt;
+}
+
+.hebrew.xl {
+  font-size: 36.0pt;
+}
+
+
 
 /*color: #800000;*/
 .at-red {

@@ -151,6 +151,13 @@ public static class Feast
 	public const string Icon = "fas fa-pizza-slice"; // <i class="fas fa-drumstick-bite"></i> <i class="fas fa-pizza-slice"></i>
 	public const string Descr = "Landing page for Feasts of YHVH";
 
+	public static class Shabbat
+	{
+		public const string Page = "/Shabbat";
+		public const string Title = "Shabbat";
+		public const string Icon = "far fa-hand-spock";
+	}
+
 	public static class Hanukkah
 	{
 		public const string Page = "/Hanukkah";

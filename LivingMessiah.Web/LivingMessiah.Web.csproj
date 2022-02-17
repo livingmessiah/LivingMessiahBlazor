@@ -12,6 +12,7 @@
   <ItemGroup>
     <Content Remove="Pages\BlazorExamples\Wizard.razor" />
     <Content Remove="Pages\BlazorSyncFusion\Dialogs\SfDialogNestedDialogs.razor" />
+    <Content Remove="Pages\Parasha\AlephBetFooter.razor" />
     <!--<Content Remove="Pages\KeyDates\Obsolete\Index.razor" />-->
     <Content Remove="Shared\EnvComponent.razor" />
   </ItemGroup>

@@ -1,0 +1,84 @@
+﻿@using LivingMessiah.Web.SmartEnums
+
+<div class="@MediaQuery.Xs.DivClass">
+	<div class="px-0 mt-4 mb-2 mx-0">
+		<div class="mx-auto" style="width: 300px;">
+			<span class="hebrew xs bg-light text-muted align-content-center">
+				@((MarkupString)alephbet)
+			</span>
+		</div>	<!-- mx-auto -->
+	</div>		<!-- px-0 mt-4 mb-2 mx-0 -->
+</div>			<!-- Xs -->
+
+<div class="@MediaQuery.Sm.DivClass">
+	<div class="px-0 mt-4 mb-2 mx-0">
+		<div class="mx-auto" style="width: 600px;">
+			<span class="hebrew sm bg-light text-muted align-content-center">
+				@((MarkupString)alephbet)
+			</span>
+		</div>	<!-- mx-auto -->
+	</div>				<!-- row  .... -->
+</div>				<!-- Sm -->
+
+<div class="@MediaQuery.Md.DivClass">
+	<div class="px-0 mt-4 mb-2 mx-0">
+		<div class="mx-auto" style="width: 800px;">
+			<span class="hebrew md bg-light text-muted align-content-center">
+				@((MarkupString)alephbet)
+			</span>
+		</div>	<!-- mx-auto -->
+	</div>			<!-- px-0 mt-4 mb-2 mx-0 -->
+</div>				<!-- Md -->
+
+<div class="@MediaQuery.Lg.DivClass">
+	<div class="px-0 mt-4 mb-2 mx-0">
+		<div class="mx-auto" style="width: 1000px;">
+			<span class="hebrew lg bg-light text-muted align-content-center">
+				@((MarkupString)alephbet)
+			</span>
+		</div>	<!-- mx-auto -->
+	</div>		<!-- row col-12 .... -->
+</div>			<!-- Lg -->
+
+<div class="@MediaQuery.Xl.DivClass">
+	<div class="px-0 mt-4 mb-2 mx-0">
+		<div class="mx-auto" style="width: 1250px;">
+			<span class="hebrew xl bg-light text-muted align-content-center">
+				@((MarkupString)alephbet)
+			</span>
+		</div>	<!-- mx-auto -->
+	</div>		<!-- row col-12 .... -->
+</div>			<!-- Xl -->
+@code {
+	// <div class="row col-12 px-0 mt-4 mb-2 mx-0">
+	protected string alephbet = @"
+	<a title='Aleph'>א</a>
+	<a title='Bet'>ב</a>
+	<a title='Gimel'>ג</a>
+	<a title='Dalet'>ד</a>
+	<a title='He'>ה</a>
+	<a title='Vav'>ו</a>
+	<a title='Zayin'>ז</a>
+	<a title='Cheth'>ח</a>
+	<a title='Teth'>ט</a>
+	<a title='Yodh'>י</a>
+	<a title='Kaph'>כ</a>
+	<a title='Lamed'>ל</a>
+	<a title='Mem'>מ</a>
+	<a title='Nun'>נ</a>
+	<a title='Samek'>ס</a>
+	<a title='Ayin'>ע</a>
+	<a title='Pe'>פ</a>
+	<a title='Tsade'>צ</a>
+	<a title='Qoph'>ק</a>
+	<a title='Resh'>ר</a>
+	<a title='Shin'>ש</a>
+	<a title='Tav'>ת</a>
+	&nbsp;&nbsp;-&nbsp;&nbsp;
+	<a title='Kaph Sofit'>ך</a>
+	<a title='Mem Sofit'>ם</a>
+	<a title='Nun Sofit'>ן</a>
+	<a title='Pe Sofit'>ף</a>
+	<a title='Tsade Sofit'>ץ</a>
+";
+}
