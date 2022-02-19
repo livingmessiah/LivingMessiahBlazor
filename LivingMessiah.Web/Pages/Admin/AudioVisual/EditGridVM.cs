@@ -1,6 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using LivingMessiah.Web.Enums;
+using LivingMessiah.Web.SmartEnums;
 
 namespace LivingMessiah.Web.Pages.Admin.AudioVisual;
 
@@ -35,7 +35,7 @@ public class EditGridVM
 		{
 				if (Book != 0 && Chapter != 0)
 				{
-						if (BaseBibleBookSmartEnum.TryFromValue(Book, out var se))
+						if (BibleBook.TryFromValue(Book, out var se))
 						{
 								return $"https://myhebrewbible.com/BookChapter/{se.Name}/{Chapter}/Slug";
 						}

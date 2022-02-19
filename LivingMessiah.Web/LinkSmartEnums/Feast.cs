@@ -30,7 +30,7 @@ public abstract class Feast : SmartEnum<Feast>
 		internal const int Hanukkah = 2;
 		internal const int Purim = 3;
 		internal const int Passover = 4;
-		internal const int Omer = 5;
+		//internal const int Omer = 5;
 		internal const int Weeks = 6;  
 		internal const int Trumpets = 7;
 		internal const int YomKippur = 8;
@@ -43,7 +43,7 @@ public abstract class Feast : SmartEnum<Feast>
 	public static readonly Feast Hanukkah = new HanukkahSE();
 	public static readonly Feast Purim = new PurimSE();
 	public static readonly Feast Passover = new PassoverSE();
-	public static readonly Feast Omer = new OmerSE();
+	//public static readonly Feast Omer = new OmerSE();
 	public static readonly Feast Weeks = new WeeksSE();
 	public static readonly Feast Trumpets = new TrumpetsSE();
 	public static readonly Feast YomKippur = new YomKippurSE();
@@ -57,6 +57,7 @@ public abstract class Feast : SmartEnum<Feast>
 	public abstract string Page { get; }
 	public abstract string Title { get; }
 	public abstract string Icon { get; }
+	public abstract string ListGroupItemColor { get; }
 	public abstract Hebrew Hebrew { get; }
 	public abstract MarkupString Verses { get; }
 	#endregion
@@ -68,6 +69,7 @@ public abstract class Feast : SmartEnum<Feast>
 		public override string Page => PageLink.Shabbat.Page;
 		public override string Title => PageLink.Shabbat.Title;
 		public override string Icon => PageLink.Shabbat.Icon;
+		public override string ListGroupItemColor => "list-group-item-warning";
 		public override Hebrew Hebrew => new Hebrew { TitleSuffix = "Shabbat", FloatRightHebrew = "שַׁבָּת", Strongs = "H7676" };
 		public override MarkupString Verses => new MarkupString($"");
 	}
@@ -78,6 +80,7 @@ public abstract class Feast : SmartEnum<Feast>
 		public override string Page => PageLink.Hanukkah.Page;
 		public override string Title => PageLink.Hanukkah.Title;
 		public override string Icon => PageLink.Hanukkah.Icon;
+		public override string ListGroupItemColor => "list-group-item-success";
 		public override Hebrew Hebrew => new Hebrew { TitleSuffix= "Hanukkah", FloatRightHebrew = "חֲנֻכָּה", Strongs= "H2598" };
 		public override MarkupString Verses => new MarkupString($"");
 	}
@@ -88,6 +91,7 @@ public abstract class Feast : SmartEnum<Feast>
 		public override string Page => PageLink.Purim.Page;
 		public override string Title => PageLink.Purim.Title;
 		public override string Icon => PageLink.Purim.Icon;
+		public override string ListGroupItemColor => "list-group-item-success";
 		public override Hebrew Hebrew => new Hebrew { TitleSuffix = "Purim", FloatRightHebrew = "פּוּר", Strongs = "H6332" };
 		public override MarkupString Verses => new MarkupString($"");
 	}
@@ -98,19 +102,21 @@ public abstract class Feast : SmartEnum<Feast>
 		public override string Page => PageLink.Passover.Page;
 		public override string Title => PageLink.Passover.Title;
 		public override string Icon => PageLink.Passover.Icon;
+		public override string ListGroupItemColor => "list-group-item-warning";
 		public override Hebrew Hebrew => new Hebrew { TitleSuffix = "Pesach", FloatRightHebrew = "פֶּסַח", Strongs = "H6453" };
 		public override MarkupString Verses => new MarkupString($"");
 	}
 
-	private sealed class OmerSE : Feast
-	{
-		public OmerSE() : base($"{nameof(Id.Omer)}", Id.Omer) { }
-		public override string Page => PageLink.Omer.Page;
-		public override string Title => PageLink.Omer.Title;
-		public override string Icon => PageLink.Omer.Icon;
-		public override Hebrew Hebrew => new Hebrew { TitleSuffix = "Omer", FloatRightHebrew = "עֹמֶר", Strongs = "H6016" };
-		public override MarkupString Verses => new MarkupString($"");
-	}
+	//private sealed class OmerSE : Feast
+	//{
+	//	public OmerSE() : base($"{nameof(Id.Omer)}", Id.Omer) { }
+	//	public override string Page => PageLink.Omer.Page;
+	//	public override string Title => PageLink.Omer.Title;
+	//	public override string Icon => PageLink.Omer.Icon;
+	//	public override string ListGroupItemColor => "list-group-item-success";
+	//	public override Hebrew Hebrew => new Hebrew { TitleSuffix = "Omer", FloatRightHebrew = "עֹמֶר", Strongs = "H6016" };
+	//	public override MarkupString Verses => new MarkupString($"");
+	//}
 
 	private sealed class WeeksSE : Feast
 	{
@@ -118,6 +124,7 @@ public abstract class Feast : SmartEnum<Feast>
 		public override string Page => PageLink.Weeks.Page;
 		public override string Title => PageLink.Weeks.Title;
 		public override string Icon => PageLink.Weeks.Icon;
+		public override string ListGroupItemColor => "list-group-item-warning";
 		public override Hebrew Hebrew => new Hebrew { TitleSuffix = "Shavu'ot", FloatRightHebrew = "שָׁבוּעוֹת", Strongs = "H7620" };
 		public override MarkupString Verses => new MarkupString($"");
 	}
@@ -128,6 +135,7 @@ public abstract class Feast : SmartEnum<Feast>
 		public override string Page => PageLink.Trumpets.Page;
 		public override string Title => PageLink.Trumpets.Title;
 		public override string Icon => PageLink.Trumpets.Icon;
+		public override string ListGroupItemColor => "list-group-item-warning";
 		public override Hebrew Hebrew => new Hebrew { TitleSuffix = "Yom Teruah", FloatRightHebrew = "יוֹם תְּרוּעָה", Strongs = "H8643" };
 		public override MarkupString Verses => new MarkupString($"");
 	}
@@ -138,6 +146,7 @@ public abstract class Feast : SmartEnum<Feast>
 		public override string Page => PageLink.YomKippur.Page;
 		public override string Title => PageLink.YomKippur.Title;
 		public override string Icon => PageLink.YomKippur.Icon;
+		public override string ListGroupItemColor => "list-group-item-warning";
 		public override Hebrew Hebrew => new Hebrew { TitleSuffix = "Yom Kippur", FloatRightHebrew = "יוֹם כִּיפּוּר", Strongs = "H3725" };
 		public override MarkupString Verses => new MarkupString($"");
 	}
@@ -148,6 +157,7 @@ public abstract class Feast : SmartEnum<Feast>
 		public override string Page => PageLink.Tabernacles.Page;
 		public override string Title => PageLink.Tabernacles.Title;
 		public override string Icon => PageLink.Tabernacles.Icon;
+		public override string ListGroupItemColor => "list-group-item-warning";
 		public override Hebrew Hebrew => new Hebrew { TitleSuffix = "Sukkot", FloatRightHebrew = "סֻּכּוֹת", Strongs = "H5523" };
 		public override MarkupString Verses => new MarkupString($"");
 	}

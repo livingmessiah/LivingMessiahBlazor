@@ -5,15 +5,68 @@
 
 @using Page = LivingMessiah.Web.Links.Feast
 <PageTitle>@Page.Title</PageTitle>
-<div class="pb-2 mt-4 mb-2 ">
+<div class="pb-2 mt-1 mb-2 ">
 	<h2><i class="@Page.Icon"></i> @Page.Title</h2>
+</div>
+
+
+
+	@*
+
+btn-sm float-right
+
+		
+Except for the most part, this page lists the feasts
+
+
+	 
+
+	H4150 <i>moed</i>
+	From יָעַד (H3259)  meet (7x), together (5x), assemble (4x), appointed (3x), set (3x), time (2x), betrothed (2x), agreed (1x), appointment (1x), gather (1x).
+	<a href="https://www.blueletterbible.org/lexicon/h4150/kjv/wlc/0-1/"
+			class="btn-primary " target="_blank">
+		<span class="fas fa-external-link-alt"></span> Learn More...
+	</a>
+	 
+	
+	H4744 <i>mikra</i> something called out, i.e. a public meeting (the act, the persons, or the place); also a rehearsal:—assembly, calling, convocation, reading.
+	From קָרָא (H7121)  call (528x), cried (98x), read (38x), proclaim (36x), named (7x), guests (4x), invited (3x), gave (3x), renowned (3x), bidden (2x), preach (2x), miscellaneous (11x).
+	<a href="https://www.blueletterbible.org/lexicon/h4150/kjv/wlc/0-1/"
+			class="btn-primary " target="_blank">
+		<span class="fas fa-external-link-alt"></span> Learn More...
+	</a>
+	<i>mikrei</i> <span class="hebrew16">מִקְרָאֵי</span> <sup>convocations</sup>
+	
+	H2282 <i>chag</i> feast (56x), sacrifice (3x), feast days (2x), solemnity (1x). pilgrim-feast; Lev 23:6, 34,39,41
+	From חָגַג (h2287) Lev 23:39, 41; : keep (8x), ...feast (3x), celebrate (1x), keep a solemn feast (1x), dancing (1x), holyday (1x), reel to and fro (1x).
+
+	<a href="https://www.blueletterbible.org/lexicon/h2282/kjv/wlc/0-1/"
+			class="btn-primary " target="_blank">
+		<span class="fas fa-external-link-alt"></span> Learn More...
+	</a>
+	<i>chag</i> <span class="hebrew16">חַג</span> <sup>feast</sup>
+
+	*@
+
+
+<div class="card bg-light mt-1 mb-4">
+
+	<div class="card-header"><h5 class="text-center">Introduction</h5></div>
+	<div class="card-body">
+		<p>
+			For the most part, this page lists the feasts which in Hebrew is transliterated as <i>moadim</i> or sometimes <i>(c)hag</i>
+			the <i>moadim</i> are listed in <span class="badge badge-warning">yellow</span> and others are listed in <span class="badge badge-success">green</span>.
+			They are listed in chronological order.
+		</p>
+	</div>
+
 </div>
 
 <div class="list-group">
 	@foreach (var item in Feast.List.OrderBy(o => o.Value).ToList())
 	{
 		<a href="@item.Page" title="@item.Hebrew.TitleSuffix @item.Hebrew.Strongs"
-		 class="list-group-item list-group-item-warning ">
+		 class="list-group-item @item.ListGroupItemColor">
 			<i class="@item.Icon fa-fw fa-3x" aria-hidden="true"></i>
 			<span class="home-page-xs"><b>@item.Title</b></span>
 			<span class="float-right text-info">
@@ -27,20 +80,20 @@
 	<div class="card-header"><h5 class="text-center">Feast Bible References | Leviticus 23</h5></div>
 
 	<div class="card-body">
-			<h5 class="card-title">Leviticus 23:1-2</h5>
+		<h5 class="card-title">Leviticus 23:1-2</h5>
 		<blockquote>
-			<ol start="1">
-				<li>
-					And <span class="hebrew16">יְהוָה</span> <sup>the LORD</sup> <i>vaydabber</i> <span class="hebrew16">וַיְדַבֵּר</span> <sup>spake unto</sup> 
-					<i>Moseh</i> <span class="hebrew16">מֹשֶׁה</span> <sup>Moses</sup>, saying,
-				</li>
 
-				<li>
-					Speak unto <i>benei</i> <span class="hebrew16">בְּנֵי</span> <sup>the children</sup> <i>Yisrael</i> <span class="hebrew16">יִשְׂרָאֵל</span> <sup>of Israel</sup>
-					, and say unto them, Concerning the <i>moadei</i> <span class="hebrew16">מוֹעֲדֵי</span> <sup>feasts</sup> <span class="hebrew16">יְהוָה</span> <sup>the LORD</sup>
-					, which ye shall proclaim to be <i>kodesh</i> <span class="hebrew16">קֹדֶשׁ</span> <sup>holy</sup> convocations, even these are my <i>moedi</i> <span class="hebrew16">מוֹעֲדֵי</span> <sup>feasts</sup>.
-				</li>
-			</ol>
+			<p><sup><b>1</b></sup>
+				And <span class="hebrew16">יְהוָה</span> <sup>the LORD</sup> <i>vaydabber</i> <span class="hebrew16">וַיְדַבֵּר</span> <sup>spake unto</sup>
+				<i>Moseh</i> <span class="hebrew16">מֹשֶׁה</span> <sup>Moses</sup>, saying,
+			</p>
+
+			<p><sup><b>2</b></sup>
+				Speak unto <i>benei</i> <span class="hebrew16">בְּנֵי</span> <sup>the children</sup> <i>Yisrael</i> <span class="hebrew16">יִשְׂרָאֵל</span> <sup>of Israel</sup>
+				, and say unto them, Concerning the <i>moadei</i> <span class="hebrew16">מוֹעֲדֵי</span> <sup>feasts</sup> <span class="hebrew16">יְהוָה</span> <sup>the LORD</sup>
+				, which ye shall proclaim to be <i>kodesh</i> <span class="hebrew16">קֹדֶשׁ</span> <sup>holy</sup> convocations, even these are my <i>moedi</i> <span class="hebrew16">מוֹעֲדֵי</span> <sup>feasts</sup>.
+			</p>
+
 			<small class="float-right"><i>Vayiqra</i> <span class="hebrew16">וַיִּקְרָא</span> <sup>Leviticus </sup> 23:1-2</small>
 		</blockquote>
 

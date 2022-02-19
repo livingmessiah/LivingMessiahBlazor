@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using LivingMessiah.Web.Enums;
+using LivingMessiah.Web.SmartEnums;
 using LivingMessiah.Web.Services;
 using Microsoft.AspNetCore.Components;
 
@@ -22,6 +22,6 @@ public partial class BibleBookChapterDDL
 		{
 				int i = int.TryParse(args.ItemData.Value, out i) ? i : 0;
 				SelectedId = i;
-				CurrentLastChapter = BaseBibleBookSmartEnum.FromValue(SelectedId).LastChapter;
+				CurrentLastChapter = BibleBook.FromValue(SelectedId).LastChapter;
 		}
 }

@@ -41,7 +41,7 @@ else
 
 # BibleBookChapterCascadingDDL.razor.cs
 ```csharp
-using LivingMessiah.Web.Enums;
+using LivingMessiah.Web.SmartEnums;
 using System.Collections.Generic;
 using System.Linq;
 using Syncfusion.Blazor.DropDowns;
@@ -65,7 +65,7 @@ namespace LivingMessiah.Web.Pages.Admin.AudioVisual
 
 		protected override void OnInitialized()
 		{
-			var query = (from b in BaseBibleBookSmartEnum.List.ToList()
+			var query = (from b in BibleBook.List.ToList()
 									 select new { b.Value, b.Name, b.LastChapter })
 									 .OrderBy(o => o.Value).ToList();
 
@@ -143,7 +143,7 @@ namespace LivingMessiah.Web.Pages.Admin.AudioVisual
 
 # BibleBookChapterPage.razor
 @page "/BBCP"
-@using LivingMessiah.Web.Enums
+@using LivingMessiah.Web.SmartEnums
 
 <div class="pb-1 mt-4 mb-4 border-bottom">
 	<h3>Bible Book Chapter Page</h3>

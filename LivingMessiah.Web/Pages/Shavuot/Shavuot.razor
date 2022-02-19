@@ -2,38 +2,16 @@
 @using static LivingMessiah.Web.Pages.Shavuot.Domain.OmerGematriaFactory
 
 @using Page = LivingMessiah.Web.Links.Shavuot
+@using LivingMessiah.Web.BibleVerses
+
 <PageTitle>@Page.Title</PageTitle>
 
 <Header></Header>
 
-<div class="d-block d-sm-none">
-	<TableXs CurrentDay="CurrentDay"></TableXs>
-</div>
+<BodyTableOrGrid CurrentDay="CurrentDay"></BodyTableOrGrid>
 
-<div class="d-print-none">
-	<div class="row d-none d-sm-block">
-		<GridSixWideSmMdLgXl CurrentDay="CurrentDay"></GridSixWideSmMdLgXl>
-	</div>
-</div>
-
-<div class="d-none d-print-block">
-	<TablePrint></TablePrint>
-</div>
-
-<div class="card border-warning text-center">
-	<div class="card-header bg-warning">
-		<h2><span class="card-title mb-0"><b><i>Shavuot</i></b> !!!</span></h2>
-	</div>
-
-	<div class="card-body">
-		<span class='fa-stack fa-5x'>
-			<i class='far fa-calendar'></i>
-			<strong class='calendar-text'><span class='text-danger'>@GetHebrew(50)</span></strong>
-		</span>
-		<p class="display-2"><span class='badge badge-info'>50!</span></p>
-	</div>
-
-</div>
+<Lev_023_15_to_16 Header="Omer Counting Instructions">
+</Lev_023_15_to_16>
 
 <Footer></Footer>
 <AlephBet></AlephBet>

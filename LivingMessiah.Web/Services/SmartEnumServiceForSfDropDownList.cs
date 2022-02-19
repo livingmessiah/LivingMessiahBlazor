@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using LivingMessiah.Web.Enums;
+using LivingMessiah.Web.SmartEnums;
 using LivingMessiah.Web.Pages.KeyDates.Enums;
 
 namespace LivingMessiah.Web.Services;
@@ -23,7 +23,7 @@ public class SmartEnumServiceForSfDropDownList : ISmartEnumServiceForSfDropDownL
 		public List<DropDownListVM> GetBibleBooksVM()
 		{
 				List<DropDownListVM> books = new List<DropDownListVM>();
-				var query = (from b in BaseBibleBookSmartEnum.List.ToList()
+				var query = (from b in BibleBook.List.ToList()
 										 select new { b.Value, b.Name }).ToList();
 
 				foreach (var item in query)

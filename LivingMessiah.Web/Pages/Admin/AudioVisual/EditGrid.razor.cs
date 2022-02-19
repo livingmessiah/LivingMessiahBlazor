@@ -6,7 +6,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 
-using LivingMessiah.Web.Enums;
+using LivingMessiah.Web.SmartEnums;
 using LivingMessiah.Web.Services;
 
 using Syncfusion.Blazor.Grids;
@@ -109,7 +109,7 @@ public partial class EditGrid
 		{
 				int i = int.TryParse(args.ItemData.Value, out i) ? i : 0;
 				BookChapterSelectedId = i;
-				CurrentLastChapter = BaseBibleBookSmartEnum.FromValue(BookChapterSelectedId).LastChapter;
+				CurrentLastChapter = BibleBook.FromValue(BookChapterSelectedId).LastChapter;
 		}
 
 		//Shabbat Week

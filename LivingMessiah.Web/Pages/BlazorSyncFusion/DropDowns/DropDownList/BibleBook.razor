@@ -1,5 +1,5 @@
 ﻿@page "/BlazorSyncFusion/DropDowns/DropDownList/BibleBook"
-@using LivingMessiah.Web.Enums 
+@using LivingMessiah.Web.SmartEnums 
 
 <div class="pb-1 mt-4 mb-4 border-bottom">
 	<h3>Bible Book | <code>SfDropDownList</code> | <code>SmartEnum</code></h3>
@@ -55,7 +55,7 @@
 	private List<VM> Books = new List<VM>();
 	protected override void OnInitialized()
 	{
-		var query = (from b in BaseBibleBookSmartEnum.List.ToList()
+		var query = (from b in LivingMessiah.Web.SmartEnums.BibleBook.List.ToList()
 								 select new { b.Value, b.Name }).ToList();
 
 		foreach (var item in query)
@@ -64,9 +64,9 @@
 		}
 	}
 
-	public string SelectedValue = BaseBibleBookSmartEnum.Genesis.Value.ToString();
-	public string SelectedText { get; set; } = BaseBibleBookSmartEnum.Genesis.Name;
-	public int SelectedId { get; set; } = BaseBibleBookSmartEnum.Genesis.Value;
+	public string SelectedValue = LivingMessiah.Web.SmartEnums.BibleBook.Genesis.Value.ToString();
+	public string SelectedText { get; set; } = LivingMessiah.Web.SmartEnums.BibleBook.Genesis.Name;
+	public int SelectedId { get; set; } = LivingMessiah.Web.SmartEnums.BibleBook.Genesis.Value;
 
 	public void OnChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<string, VM> args)
 	{

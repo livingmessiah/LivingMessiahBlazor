@@ -1,5 +1,5 @@
 ﻿@page "/BlazorSyncFusion/DropDowns/DropDownList/SfDropDownListTuple"
-@using LivingMessiah.Web.Enums
+@using LivingMessiah.Web.SmartEnums
 @using LivingMessiah.Web.Services
 @inject ISmartEnumServiceForSfDropDownList svc
 
@@ -34,7 +34,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using LivingMessiah.Web.Enums;
+using LivingMessiah.Web.SmartEnums;
 
 namespace LivingMessiah.Web.Services
 {
@@ -48,7 +48,7 @@ namespace LivingMessiah.Web.Services
 		public List<Tuple<string, string>> GetBibleBooks()
 		{
 			List<Tuple<string, string>> books = new List<Tuple<string, string>>();
-			var query = (from b in BaseBibleBookSmartEnum.List.ToList()
+			var query = (from b in BibleBook.List.ToList()
 									 select new { b.Value, b.Name }).ToList();
 
 			foreach (var item in query)
