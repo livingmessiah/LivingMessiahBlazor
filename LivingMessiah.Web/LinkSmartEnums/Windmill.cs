@@ -24,6 +24,7 @@ public abstract class Windmill : SmartEnum<Windmill>
 		internal const int Archive = 6;
 		internal const int CodeOfConduct = 7;
 		internal const int Swales = 8;  // really part of Permaculture, but such a big thing, it get's its on URL
+		internal const int Bulldozer = 9;
 	}
 	#endregion
 
@@ -36,6 +37,7 @@ public abstract class Windmill : SmartEnum<Windmill>
 	public static readonly Windmill Archive = new ArchiveSE();
 	public static readonly Windmill CodeOfConduct = new CodeOfConductSE();
 	public static readonly Windmill Swales = new SwalesSE();
+	public static readonly Windmill Bulldozer = new BulldozerSE();
 
 	// SE=SmartEnum
 	#endregion
@@ -111,6 +113,14 @@ public abstract class Windmill : SmartEnum<Windmill>
 		public override string Color => "primary";
 		public override string Page => WindmillRanch.Swales.Page;
 		public override string Title => WindmillRanch.Swales.Title;
+	}
+
+	private sealed class BulldozerSE : Windmill
+	{
+		public BulldozerSE() : base($"{nameof(Id.Bulldozer)}", Id.Bulldozer) { }
+		public override string Color => "primary";
+		public override string Page => WindmillRanch.Bulldozer.Page;
+		public override string Title => WindmillRanch.Bulldozer.Title;
 	}
 
 	#endregion

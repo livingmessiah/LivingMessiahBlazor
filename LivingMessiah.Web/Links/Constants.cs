@@ -708,6 +708,13 @@ public static class WindmillRanch
 		//public const string Icon = "fa-solid fa-1";
 	}
 
+	public static class Bulldozer
+	{
+		public const string Page = "/Windmillranch/Bulldozer";
+		public const string Title = "Bulldozer Work";
+		public const string Icon = "fas fa-tractor";
+	}
+
 	public static class Support
 	{
 		public const string Page = "/Windmillranch/Support";

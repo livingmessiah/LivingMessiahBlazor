@@ -18,6 +18,8 @@ public static class Blobs
 		private const string maps = "https://livingmessiahstorage.blob.core.windows.net/images/events/";
 		private const string other = "https://livingmessiahstorage.blob.core.windows.net/images/other/";
 		private const string windmillRanch = "https://livingmessiahstorage.blob.core.windows.net/windmill-ranch/";
+		private const string windmillRanchBulldozer = "https://livingmessiahstorage.blob.core.windows.net/windmill-ranch/Bulldozer/";
+	
 		private const string events = "https://livingmessiahstorage.blob.core.windows.net/images/events/";
 		private const string godseconomy = "https://livingmessiahstorage.blob.core.windows.net/images/godseconomy/";
 		private const string pdfs = "https://livingmessiahstorage.blob.core.windows.net/pdfs/";
@@ -116,6 +118,11 @@ public static class Blobs
 		{
 				return windmillRanch + blob;
 		}
+
+	public static string UrlWindmillRanchBulldozer(string blob)
+	{
+		return windmillRanchBulldozer + blob;
+	}
 
 
 }
