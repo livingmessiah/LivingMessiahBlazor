@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+using LivingMessiah.Web.Pages.Admin.AudioVisual.Components;
 using Syncfusion.Blazor;
 using Syncfusion.Blazor.Data;
 
@@ -32,7 +32,7 @@ public class WeeklyVideosGridDataAdaptor : DataAdaptor, IWeeklyVideosGridDataAda
 				//System.ArgumentNullException: Value cannot be null. (Parameter 'logger') at Microsoft.Extensions.Logging.LoggerExtensions.Log(ILogger logger,
 				//Logger.LogDebug(string.Format("Inside {0}", nameof(GridDataAdaptor) + "!" + nameof(ReadAsync)));
 
-				List<EditGridVM> recs = await db.GetTopWeeklyVideos();
+				List<WeekCrudGridVM> recs = await db.GetTopWeeklyVideos();
 				//int count = await db.GetUpcomingEventsEditCount();
 				int count = recs.Count;
 
@@ -43,13 +43,13 @@ public class WeeklyVideosGridDataAdaptor : DataAdaptor, IWeeklyVideosGridDataAda
 
 		public override async Task<object> InsertAsync(DataManager dataManager, object data, string key)
 		{
-				await db.WeeklyVideoAdd(data as EditGridVM);
+				await db.WeeklyVideoAdd(data as WeekCrudGridVM);
 				return data;
 		}
 
 		public override async Task<object> UpdateAsync(DataManager dataManager, object data, string keyField, string key)
 		{
-				await db.WeeklyVideoUpdate(data as EditGridVM);
+				await db.WeeklyVideoUpdate(data as WeekCrudGridVM);
 				return data;
 		}
 

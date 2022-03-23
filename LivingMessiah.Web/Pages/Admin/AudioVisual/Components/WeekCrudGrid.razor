@@ -7,18 +7,26 @@
 @using Syncfusion.Blazor.Popups
 @using Syncfusion.Blazor.Data
 
-<SfGrid ID="Grid" @ref="Grid" DataSource="@GridData"
-				Toolbar="@(new string[] {"Add", "Edit", "Delete", "Update", "Cancel" })">
-	<SfDataManager AdaptorInstance="typeof(IWeeklyVideosGridDataAdaptor)" Adaptor="Adaptors.CustomAdaptor"/>
-	<GridEvents TValue="EditGridVM" OnActionFailure="Failure" OnActionBegin="OnActionBegin" />
+
+<p class="text-right text-muted mt-5 mb-0">
+	<sup>Shabbat Week Id: @ShabbatWeekId</sup>
+</p>
+
+<h4 class="mt-0 mb-1"><span class="badge badge-warning">Shabbat Week @ShabbatDate.ToShortDateString()</span></h4>
+
+<SfGrid ID="Grid" @ref="Grid" DataSource="@GridData"	Toolbar="@Toolbar">
+	<GridSearchSettings Fields="@InitSearchField" Key="@ShabbatWeekId.ToString()"
+		Operator=Syncfusion.Blazor.Operator.Contains IgnoreCase="true" />	 
+	<SfDataManager AdaptorInstance="typeof(IWeeklyVideosGridDataAdaptor)" Adaptor="Adaptors.CustomAdaptor" />
+	<GridEvents TValue="WeekCrudGridVM" OnActionFailure="Failure" OnActionBegin="OnActionBegin" />
 
 	<GridEditSettings AllowAdding="true" AllowEditing="true" AllowDeleting="true"
 										ShowDeleteConfirmDialog="true"
 										Mode="@EditMode.Dialog" Dialog="DialogParams">
 		<Template>
 			@{
-				// ToDo: in the Template, test if I can use EditForm, DataAnnotationsValidator and ValidationSummary 
-				var VM = (context as EditGridVM);
+				// ToDo: in the Template, test if I can use EditForm, DataAnnotationsValidator and ValidationSummary
+				var VM = (context as WeekCrudGridVM);
 			}
 
 			<div class="form-row">
@@ -28,26 +36,18 @@
 					<InputSelectEnum @bind-Value="VM.WeeklyVideoTypeEnum" class="form-control" id="weeklyVideoTypeEnum" />
 				</div>
 
-				<div class="form-group col-md-6">
-
-					<SfNumericTextBox ID="ShabbatWeekId" @bind-Value="@(VM.ShabbatWeekId)"
-														Min="@MinShabbatWeekId" Max="@MaxShabbatWeekId"
-														FloatLabelType="FloatLabelType.Always" Placeholder="Shabbat Week Id"></SfNumericTextBox>
-
+				<div class="form-group col-md-5">
+					<SfTextBox ID="YouTubeId" @bind-Value="@(VM.YouTubeId)" FloatLabelType="FloatLabelType.Always"
+										 ValidateOnInput="true"
+										 Placeholder="YouTube Id"></SfTextBox>
 				</div>
 
 			</div>
 
 			<div class="form row">
-				<div class="form-group col-md-8">
+				<div class="form-group col-md-12">
 					<SfTextBox ID="Title" @bind-Value="@(VM.Title)" FloatLabelType="FloatLabelType.Always"
 										 Placeholder="Title"></SfTextBox>
-				</div>
-
-				<div class="form-group col-md-4">
-					<SfTextBox ID="YouTubeId" @bind-Value="@(VM.YouTubeId)" FloatLabelType="FloatLabelType.Always"
-										 ValidateOnInput="true"
-										 Placeholder="YouTube Id"></SfTextBox>
 				</div>
 			</div>
 
@@ -70,19 +70,19 @@
 
 	<GridColumns>
 
-		<GridColumn Field=@nameof(EditGridVM.Id) IsPrimaryKey="true" HeaderText="PK Id" Visible="true" Width="40" />
-		<GridColumn Field=@nameof(EditGridVM.ShabbatWeekId) HeaderText="SW Id" Width="40" TextAlign="@TextAlign.Center" />
-		<GridColumn Field=@nameof(EditGridVM.WeeklyVideoTypeEnum) HeaderText="WVT Enum" Width="50" TextAlign="@TextAlign.Left" />
-		<GridColumn Field=@nameof(EditGridVM.Title) HeaderText="Title" Width="100"></GridColumn>
+		<GridColumn Field=@nameof(WeekCrudGridVM.Id) IsPrimaryKey="true" HeaderText="PK Id" Visible="false" Width="40" />
+		<GridColumn Field=@nameof(WeekCrudGridVM.ShabbatWeekId) HeaderText="Id" Width="40" TextAlign="@TextAlign.Center" />
+		<GridColumn Field=@nameof(WeekCrudGridVM.WeeklyVideoTypeEnum) HeaderText="WVT Enum" Width="50" TextAlign="@TextAlign.Left" />
+		<GridColumn Field=@nameof(WeekCrudGridVM.Title) HeaderText="Title" Width="100"></GridColumn>
 
 		<GridColumn HeaderText="YouTube Id" Width="50">
 			<Template>
 				@{
-					var youTubeInfo = (context as EditGridVM);
+					var youTubeInfo = (context as WeekCrudGridVM);
 					@if (youTubeInfo.YouTubeId != null)
 					{
 						<a href="@youTubeInfo.Url()" target="_blank"
-							 title="@youTubeInfo.Url()">
+					 	title="@youTubeInfo.Url()">
 							<u>@youTubeInfo.YouTubeId</u>
 							<i class="fas fa-external-link-square-alt"></i>
 						</a>
@@ -98,12 +98,12 @@
 		<GridColumn HeaderText="Book/Chapter" Width="50">
 			<Template>
 				@{
-					var bc = (context as EditGridVM);
+					var bc = (context as WeekCrudGridVM);
 
 					@if (bc.Book != 0 && bc.Chapter != 0)
 					{
 						<a href="@bc.MHBUrl()" target="_blank"
-							 title="@bc.MHBUrl()">
+					 	title="@bc.MHBUrl()">
 							<u>@bc.Book / @bc.Chapter</u>
 							<i class="fas fa-external-link-square-alt"></i>
 						</a>
@@ -121,11 +121,6 @@
 
 </SfGrid>
 
-<p class="text-right my-5 bg-light">
-	<Anchor Href="https://www.youtube.com/results?search_query=living+messiah"
-					Descr="YouTube Search=living+messiah" UsePrefixIcon="false">
-	</Anchor>
-</p>
 
 @if (DatabaseError)
 {

@@ -19,6 +19,7 @@ using LivingMessiah.Web.Pages.KeyDates.Data;
 using LivingMessiah.Web.Pages.UpcomingEvents.Data;
 using LivingMessiah.Web.Pages.BlazorSyncFusion.Shared;
 using LivingMessiah.Web.Pages.Admin.AudioVisual;
+using LivingMessiah.Web.Pages.Admin.AudioVisual.Components;
 
 namespace LivingMessiah.Web;
 
@@ -45,6 +46,7 @@ public static class ServiceCollectionExtensions
 
 					.AddSingleton<IKeyDateRepository, KeyDateRepository>()
 
+					.AddTransient<IWeekCrudGridDA, WeekCrudGridDA>()
 					.AddTransient<IWeeklyVideosGridDataAdaptor, WeeklyVideosGridDataAdaptor>()
 					.AddTransient<IWeeklyVideosRepository, WeeklyVideosRepository>()
 

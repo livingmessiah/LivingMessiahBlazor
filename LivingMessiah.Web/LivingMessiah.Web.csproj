@@ -64,7 +64,8 @@
     <PackageReference Include="Syncfusion.Blazor.Schedule" Version="19.4.0.48" />
     <PackageReference Include="Syncfusion.Blazor.TreeGrid" Version="19.4.0.48" />
     <PackageReference Include="System.ValueTuple" Version="4.5.0" />
-  </ItemGroup>
+		<PackageReference Include="System.ServiceModel.Syndication" Version="6.0.0" />
+	</ItemGroup>
 
   <ItemGroup>
     <UpToDateCheckInput Remove="Shared\EnvComponent.razor" />

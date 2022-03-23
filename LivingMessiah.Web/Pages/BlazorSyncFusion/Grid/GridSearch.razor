@@ -1,0 +1,19 @@
+﻿@page "/BlazorSyncFusion/datagrid/gridsearch"
+@*@layout MainLayout*@
+
+<PageTitle>Grid Search</PageTitle>
+
+<SfGrid DataSource="@Orders" Toolbar=@Tool>
+    <GridSearchSettings Fields=@InitSearchField 
+      Operator=Syncfusion.Blazor.Operator.Contains Key="anton" IgnoreCase="true"></GridSearchSettings>
+    <GridColumns>
+        <GridColumn Field=@nameof(Order.OrderID) HeaderText="Order ID" TextAlign="TextAlign.Right" Width="120"></GridColumn>
+        <GridColumn Field=@nameof(Order.CustomerID) HeaderText="Customer Name" Width="150"></GridColumn>
+        <GridColumn Field=@nameof(Order.OrderDate) HeaderText=" Order Date" Format="d" Type="ColumnType.Date" TextAlign="TextAlign.Right" Width="130"></GridColumn>
+        <GridColumn Field=@nameof(Order.Freight) HeaderText="Freight" Format="C2" TextAlign="TextAlign.Right" Width="120"></GridColumn>
+    </GridColumns>
+</SfGrid>
+
+@*
+<SfButton Content="Search" OnClick="SearchBtnHandler"></SfButton>
+*@

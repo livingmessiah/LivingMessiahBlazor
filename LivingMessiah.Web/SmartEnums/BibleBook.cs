@@ -99,6 +99,7 @@ public abstract class BibleBook : SmartEnum<BibleBook>
 	public static readonly BibleBook Deuteronomy = new DeuteronomySE();
 	public static readonly BibleBook Psalms = new PsalmsSE();
 	public static readonly BibleBook Proverbs = new ProverbsSE();
+	public static readonly BibleBook Acts = new ActsSE();
 	// SE=SmartEnum
 	#endregion
 
@@ -195,6 +196,18 @@ public abstract class BibleBook : SmartEnum<BibleBook>
 		public override int LastChapter => 31;
 		public override string TransliterationInHebrew => "Mishle";
 		public override string NameInHebrew => "מִשְׁלֵי";
+
+	}
+
+	private sealed class ActsSE : BibleBook
+	{
+		public ActsSE() : base("Acts", 44) { }
+		public override string Abrv => "Act";
+		public override BookGroupEnum BookGroupEnum => BookGroupEnum.Gospels;
+		public override BookEnum BookEnum => BookEnum.Acts;
+		public override int LastChapter => 28;
+		public override string TransliterationInHebrew => "Maaseh Shlichim";
+		public override string NameInHebrew => "";
 
 	}
 	#endregion

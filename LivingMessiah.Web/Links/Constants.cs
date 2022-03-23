@@ -51,6 +51,21 @@ public static class Account
 	}
 }
 
+
+public static class Admin
+{
+	public static class AudioVisual
+	{
+		public const string Index = "/Admin/AudioVisual/";
+		public const string Redirect = "/Admin/AudioVisual";
+		public const string Title = "Audio Visual";
+		public const string Icon = "fab fa-teamspeak";
+		//public const string Icon2 = "fas fa-theater-masks";
+		//public const string Icon3 = "fas fa-broadcast-tower";
+	}
+}
+
+
 public static class ArchivedVideos
 {
 	public const string Index = "/ArchivedVideos/";
