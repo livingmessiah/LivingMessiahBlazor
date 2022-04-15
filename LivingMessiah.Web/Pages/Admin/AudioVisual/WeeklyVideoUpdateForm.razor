@@ -1,0 +1,27 @@
+﻿@page "/Admin/AudioVisual/WeeklyVideoUpdateForm/"
+
+@using Page = LivingMessiah.Web.Links.Admin.AudioVisual.Update
+@using PageBack = LivingMessiah.Web.Links.Admin.AudioVisual
+
+<PageTitle>@Page.Title</PageTitle>
+<div class="pb-2 mt-4 mb-2 border-bottom">
+	<h2><i class="@Page.Icon"></i> @Page.Title</h2>
+</div>
+
+
+<div class="p-5 mb-4 bg-light rounded-3">
+	<div class="container-fluid py-5">
+		<h1 class="display-5 fw-bold">Work in Progress</h1>
+		<p class="col-md-8 fs-4">for now use WeeklyVideos</p>
+	</div>
+</div>
+
+
+<div class="row d-print-none">
+	<div class="col-12">
+		<a href="@PageBack.Index"
+			 class="btn btn-info" title="Back to @PageBack.Title">
+			<i class="far fa-arrow-alt-circle-left"></i> Back to @PageBack.Title
+		</a>
+	</div>
+</div>

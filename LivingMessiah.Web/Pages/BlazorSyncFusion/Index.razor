@@ -1,8 +1,11 @@
 ﻿@page "/BlazorSyncFusion"
-<h2>Blazor SyncFusion</h2>
+<PageTitle>Blazor SyncFusion</PageTitle>
 
-<h3>Calendars</h3>
-<h4>Calendar</h4>
+<div class="pb-2 mt-4 mb-2 border-bottom">
+	<h2>Blazor SyncFusion</h2>
+</div>
+
+<h4>Calendars\Calendar</h4>
 
 <ul>
 	<li><a href='@GetUrl("Calendar/Default-Functionalities")' target="_blank">Calendar/Default-Functionalities</a></li>
@@ -13,10 +16,20 @@
 	<li><a href='@GetUrl("Calendar/Week-Number")' target="_blank">Calendar/Week-Number</a></li>
 </ul>
 
+<h4>Grid</h4>
+<ul>
+	<li><a href='@GetUrl("DataGrid/cell-edit-template")' target="_blank">DataGrid/Cell-Edit-Template</a></li>
+	<li><a href='@GetUrl("DataGrid/GridSearch")' target="_blank">DataGrid/GridSearch</a></li>
+	<li><a href='@GetUrl("DataGrid/grid-dialog-template")' target="_blank">Calendar/Grid-Dialog-Template</a></li>
+</ul>
+
 <h4>DatePicker</h4>
 <h4>DateRangePicker</h4>
 <h4>DateTimePicker</h4>
 <h4>TimePicker</h4>
+
+<h4>Schedule</h4>
+<li><a href='@GetUrl("scheduler/agenda-view")' target="_blank">Scheduler/Agenda-View</a> <code>SfDropDownList</code> of True/False or False/True  </li>
 
 @code {
 	private string GetUrl(string s)

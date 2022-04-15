@@ -55,14 +55,14 @@
     <PackageReference Include="Serilog.Sinks.Console" Version="4.0.1" />
     <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
     <PackageReference Include="Serilog.Sinks.Seq" Version="5.1.1" />
-    <PackageReference Include="Syncfusion.Blazor.Calendars" Version="19.4.0.48" />
-		<PackageReference Include="Syncfusion.Blazor.Charts" Version="19.4.0.48" />
-    <PackageReference Include="Syncfusion.Blazor.DropDowns" Version="19.4.0.48" />
-    <PackageReference Include="Syncfusion.Blazor.Grid" Version="19.4.0.48" />
-    <PackageReference Include="Syncfusion.Blazor.Navigations" Version="19.4.0.48" />
-    <PackageReference Include="Syncfusion.Blazor.RichTextEditor" Version="19.4.0.48" />
-    <PackageReference Include="Syncfusion.Blazor.Schedule" Version="19.4.0.48" />
-    <PackageReference Include="Syncfusion.Blazor.TreeGrid" Version="19.4.0.48" />
+    <PackageReference Include="Syncfusion.Blazor.Calendars" Version="19.4.0.56" />
+		<PackageReference Include="Syncfusion.Blazor.Charts" Version="19.4.0.56" />
+    <PackageReference Include="Syncfusion.Blazor.DropDowns" Version="19.4.0.56" />
+    <PackageReference Include="Syncfusion.Blazor.Grid" Version="19.4.0.56" />
+    <PackageReference Include="Syncfusion.Blazor.Navigations" Version="19.4.0.56" />
+    <PackageReference Include="Syncfusion.Blazor.RichTextEditor" Version="19.4.0.56" />
+    <PackageReference Include="Syncfusion.Blazor.Schedule" Version="19.4.0.56" />
+    <PackageReference Include="Syncfusion.Blazor.TreeGrid" Version="19.4.0.56" />
     <PackageReference Include="System.ValueTuple" Version="4.5.0" />
 		<PackageReference Include="System.ServiceModel.Syndication" Version="6.0.0" />
 	</ItemGroup>

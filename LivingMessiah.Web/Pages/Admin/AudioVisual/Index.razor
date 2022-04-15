@@ -1,83 +1,98 @@
 ﻿@page "/Admin/AudioVisual/"
-@using static LivingMessiah.Web.Links.AudioVisual
 
 @using Page = LivingMessiah.Web.Links.Admin.AudioVisual
 @using static LivingMessiah.Web.Services.Auth0
-@using LivingMessiah.Web.Pages.Admin.AudioVisual.Components
+
+@using PageAdd = LivingMessiah.Web.Links.Admin.AudioVisual.Add
+@using PageUpdate = LivingMessiah.Web.Links.Admin.AudioVisual.Update
+
+@using PageCrudDeprecated = LivingMessiah.Web.Links.Wirecast
 
 <PageTitle>@Page.Title</PageTitle>
 
 <div class="pb-2 mt-4 mb-2 border-bottom">
-	<h2><i class="@Icon"></i> @Title</h2>
+	<h2><i class="@Page.Icon"></i> @Page.Title</h2>
 </div>
 
-@using Microsoft.AspNetCore.Hosting
-@using Microsoft.Extensions.Hosting
-@inject IWebHostEnvironment Env
-@if (Env.IsDevelopment())
-{
-	<YouTubeFeed Url="@SocialMedia.YouTube.YouTubeFeed()" Take="5" />
-	<hr class="warning" />
-	<WeeklyVideoCrudGrid ShabbatWeekId="@MinShabbatWeekId" ShabbatDate="@MinShabbatDate" />
-}
-else
-{
-	<AuthorizeView Roles="@Roles.AdminOrAnnouncements">
+<AuthorizeView Roles="@Roles.AdminOrAnnouncements">
 
-		<Authorized>
-			<p class="text-muted my-1">
-				<a href="@SocialMedia.YouTube.YouTubeNormal()"
+	<Authorized>
+		<p class="text-muted my-1">
+			<a href="@SocialMedia.YouTube.YouTubeNormal()"
 				 class="btn btn-danger" title="Watch our videos on YouTube">
-					<i class="fab fa-youtube" aria-hidden="true"></i>
-					YouTube Search=living+messiah
-				</a>
-			</p>
+				<i class="fab fa-youtube" aria-hidden="true"></i>
+				YouTube Search=living+messiah
+			</a>
+		</p>
 
-			<YouTubeFeed Url="@SocialMedia.YouTube.YouTubeFeed()" Take="5" />
-			<hr class="warning" />
-			<WeeklyVideoCrudGrid ShabbatWeekId="@MinShabbatWeekId" ShabbatDate="@MinShabbatDate" />
 
-		</Authorized>
+		<div class="card mt-5" style="width: 25rem;">
+			<div class="card-header">Audio Visual Add / Update Links</div>
 
-		<NotAuthorized>
+			<ul class="list-group list-group-flush">
+				<li class="list-group-item">
+					<a href="@PageAdd.Index"
+						 title="@PageAdd.Title"
+						 class="list-group-item list-group-item-warning">
+						<b>@PageAdd.Title</b>
+						<i class="@PageAdd.Icon"></i>
+					</a>
+				</li>
 
-			<div class="card border-warning my-5">
-				<div class="card-header">Not Authorized</div>
+				<li class="list-group-item">
+					<a href="@PageUpdate.Index"
+						 title="@PageUpdate.Title"
+						 class="list-group-item list-group-item-warning">
+						<b>@PageUpdate.Title</b>
+						<i class="@PageUpdate.Icon"></i>
+					</a>
 
-				<div class="card-body">
-					<h5 class="">To view <b>@Page.Title</b> you need to be logged in.</h5>
-					<button @onclick="@(() => RedirectToLoginClick(Page.Redirect))"
+				</li>
+
+				<li class="list-group-item">
+					<a href="@PageCrudDeprecated.Edit.Page"
+						 title="@PageCrudDeprecated.Title"
+						 class="list-group-item list-group-item-warning">
+						<b>@PageCrudDeprecated.Title</b>
+						<i class="@PageCrudDeprecated.Edit.Icon"></i>
+					</a>
+				</li>
+
+			</ul>
+		</div>
+
+	</Authorized>
+
+	<NotAuthorized>
+
+		<div class="card border-warning my-5">
+			<div class="card-header">Not Authorized</div>
+
+			<div class="card-body">
+				<h5 class="">To view <b>@Page.Title</b> you need to be logged in.</h5>
+				<button @onclick="@(() => RedirectToLoginClick(Page.Redirect))"
 								type="button" class="btn-primary btn-sm">
-						Login <i class='fas fa-sign-in-alt'></i>
-					</button>
-				</div>
+					Login <i class='fas fa-sign-in-alt'></i>
+				</button>
 			</div>
+		</div>
 
-		</NotAuthorized>
-	</AuthorizeView>
-}
+	</NotAuthorized>
+</AuthorizeView>
 
-<div class="card mt-5" style="width: 25rem;">
-	<div class="card-header">Audio Visual Links</div>
 
-	<ul class="list-group list-group-flush">
-		<li class="list-group-item">
-			<a href="@LivingMessiah.Web.Links.WeeklyVideos.Index"
-				 title="@LivingMessiah.Web.Links.WeeklyVideos.Title"
-				 class="list-group-item list-group-item-warning">
-				<b>@LivingMessiah.Web.Links.WeeklyVideos.Title</b>
-				<i class="@LivingMessiah.Web.Links.WeeklyVideos.Icon"></i>
-			</a>
-		</li>
+@*
+	@using Microsoft.AspNetCore.Hosting
+	@using Microsoft.Extensions.Hosting
+	@inject IWebHostEnvironment Env
+	@if (Env.IsDevelopment())
+	{
+	<WeeklyVideoAddForm/>
+	}
+	else
+	{
+	...
+	}
+*@
 
-		<li class="list-group-item">
-			<a href="@LivingMessiah.Web.Links.Wirecast.Edit.Page"
-				 title="@LivingMessiah.Web.Links.Wirecast.Title"
-				 class="list-group-item list-group-item-warning">
-				<b>@LivingMessiah.Web.Links.Wirecast.Title</b>
-				<i class="@LivingMessiah.Web.Links.Wirecast.Edit.Icon"></i>
-			</a>
-		</li>
 
-	</ul>
-</div>

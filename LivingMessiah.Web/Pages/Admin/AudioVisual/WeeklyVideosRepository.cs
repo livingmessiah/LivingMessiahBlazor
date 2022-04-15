@@ -9,7 +9,7 @@ using System;
 // From Base Class
 using System.Text;
 using System.Data.SqlClient;
-using LivingMessiah.Web.Pages.Admin.AudioVisual.Components;
+
 
 namespace LivingMessiah.Web.Pages.Admin.AudioVisual;
 
@@ -18,13 +18,12 @@ public interface IWeeklyVideosRepository
 	string BaseSqlDump { get; }
 
 	// Query 
-	Task<Tuple<int, DateTime, int, DateTime>> GetShabbatWeekLookup(int top);
-	Task<List<WeekCrudGridVM>> GetTopWeeklyVideos(int top = 3);
-	Task<List<WeeklyVideoCrudGridVM>> GetWeeklyVideos();
+	Task<List<ShabbatWeek>> GetShabbatWeekList(int top);
+	Task<List<WeeklyVideoTable>> GetWeeklyVideoTableList(int top);
 
 	// Command
-	Task<int> WeeklyVideoAdd(WeekCrudGridVM dto);
-	Task<int> WeeklyVideoUpdate(WeekCrudGridVM dto);
+	Task<int> WeeklyVideoAdd(WeeklyVideoInsert dto);
+	Task<int> WeeklyVideoUpdate(WeeklyVideoUpdate dto);
 	Task<int> WeeklyVideoDelete(int id);
 }
 
@@ -80,76 +79,42 @@ public class WeeklyVideosRepository : IWeeklyVideosRepository
 
 	#region Query
 
-	public async Task<List<WeeklyVideoCrudGridVM>> GetWeeklyVideos()
+
+
+	public async Task<List<WeeklyVideoTable>> GetWeeklyVideoTableList(int top = 9)
 	{
-		Logger.LogDebug(string.Format("Inside {0}", nameof(WeeklyVideosRepository) + "!" + nameof(GetWeeklyVideos)));
-		Sql = $@"
-SELECT TOP 20
-wv.Id, wv.ShabbatWeekId, wv.WeeklyVideoTypeId AS WeeklyVideoTypeEnum, wv.YouTubeId, wv.Title
-, wv.Book, wv.Chapter
-
-FROM  WeeklyVideo wv
-	INNER JOIN ShabbatWeek sw
-		ON wv.ShabbatWeekId = sw.Id
-WHERE sw.ShabbatDate <= dbo.udfGetNextShabbatDate()
-ORDER BY sw.ShabbatDate DESC
-";
-
-		using var connect = new SqlConnection(connectionString);
-		await connect.OpenAsync();
-		var rows = await connect.QueryAsync<WeeklyVideoCrudGridVM>(sql: Sql);
-		Logger.LogDebug(string.Format("...Sql {0}", Sql));
-		return rows.ToList();
-	}
-
-	public async Task<List<WeekCrudGridVM>> GetTopWeeklyVideos(int top = 2)
-	{
-		Logger.LogDebug(string.Format("Inside {0}, top={1}", nameof(WeeklyVideosRepository) + "!" + nameof(GetTopWeeklyVideos), top));
+		Logger.LogDebug(string.Format("Inside {0}, top={1}", nameof(WeeklyVideosRepository) + "!" + nameof(GetWeeklyVideoTableList), top));
 		Parms = new DynamicParameters(new { Top = top });
 
 		Sql = $@"
 -- DECLARE @Top int = 3
-SELECT
-	wv.Id
-, tvf.WeeklyVideoTypeId AS WeeklyVideoTypeEnum
-, Descr
-, tvf.ShabbatWeekId
-, ROW_NUMBER () OVER (ORDER BY ShabbatDate DESC, tvf.WeeklyVideoTypeId )  AS RowNum
-, ShabbatDateYMD
-,	ShabbatDate
-,	wv.ShabbatWeekId,	wv.WeeklyVideoTypeId
+SELECT 
+ wv.Id
+, Descr AS WeeklyVideoTypeDescr
+, ShabbatDate
+, wv.ShabbatWeekId,	wv.WeeklyVideoTypeId
 ,	wv.YouTubeId
 , wv.Title
-, CASE 
-   WHEN wv.Id IS NULL OR wv.GraphicFile IS NOT NULL
-			THEN wv.GraphicFile
-			ELSE CAST(tvf.WeeklyVideoTypeId AS varchar(10)) + '-graphic-' +  ShabbatDateYMD -- + '-' + ISNULL(wv.Title, '***title***')
-	END AS GraphicFile
-, CASE 
-   WHEN wv.Id IS NULL OR wv.NotesFile IS NOT NULL
-			THEN wv.NotesFile
-			ELSE CAST(tvf.WeeklyVideoTypeId AS varchar(10)) + '-notes-' +  ShabbatDateYMD -- + '-' + ISNULL(wv.Title, '***title***')
-	END AS NotesFile
-, wv.Book
-, wv.Chapter
+--, LAG(wv.ShabbatWeekId, 1, 0) OVER (ORDER BY ShabbatDate DESC, tvf.WeeklyVideoTypeId) AS PrevShabbatWeekId
 FROM tvfShabbatWeekCrossWeeklyVideoTypeByTop(@Top) tvf
 LEFT OUTER JOIN WeeklyVideo wv 
 	ON tvf.ShabbatWeekId = wv.ShabbatWeekId AND
 	   tvf.WeeklyVideoTypeId = wv.WeeklyVideoTypeId
+WHERE wv.Id IS NOT NULL
 ORDER BY ShabbatDate DESC, tvf.WeeklyVideoTypeId
 ";
 
 		using var connect = new SqlConnection(connectionString);
 		await connect.OpenAsync();
-		var rows = await connect.QueryAsync<WeekCrudGridVM>(sql: Sql, param: Parms);
-		//Logger.LogDebug(string.Format("...rows={0}, Sql {1}", rows, Sql));
-		Logger.LogDebug(string.Format("...Sql {0}", Sql));
+		var rows = await connect.QueryAsync<WeeklyVideoTable>(sql: Sql, param: Parms);
+		//Logger.LogDebug(string.Format("...Sql {0}", Sql));
 		return rows.ToList();
 	}
 
-	public async Task<Tuple<int, DateTime, int, DateTime>> GetShabbatWeekLookup(int top)
+
+	public async Task<List<ShabbatWeek>> GetShabbatWeekList(int top = 3)
 	{
-		Logger.LogDebug(string.Format("Inside {0}, top={1}", nameof(WeeklyVideosRepository) + "!" + nameof(GetShabbatWeekLookup), top));
+		Logger.LogDebug(string.Format("Inside {0}, top={1}", nameof(WeeklyVideosRepository) + "!" + nameof(GetShabbatWeekList), top));
 		Parms = new DynamicParameters(new { Top = top });
 		Sql = $@"
 -- DECLARE @Top int = 3
@@ -158,38 +123,26 @@ FROM ShabbatWeek
 WHERE ShabbatDate <= dbo.udfGetNextShabbatDate()
 ORDER BY ShabbatDate DESC
 ";
-		int MaxId;
-		DateTime MaxShabbatDate;
-		int MinId;
-		DateTime MinShabbatDate;
-
 		using var connect = new SqlConnection(connectionString);
 		await connect.OpenAsync();
-		var rows = await connect.QueryAsync<ShabbatWeekLookup>(sql: Sql, param: Parms);
-		if (rows.Any())
-		{
-			// Because the query is in DESC order, MaxId=First & MinId=Last
-			MaxId = rows.FirstOrDefault().Id;
-			MaxShabbatDate = rows.FirstOrDefault().ShabbatDate;
-			MinId = rows.LastOrDefault().Id;
-			MinShabbatDate = rows.LastOrDefault().ShabbatDate;
-			Logger.LogDebug(string.Format("...MinId={0}, MaxId={1}, Sql {2}", MinId, MaxId, Sql));
-			return new Tuple<int, DateTime, int, DateTime>(MaxId, MaxShabbatDate, MinId, MinShabbatDate);
-		}
-		return new Tuple<int, DateTime, int, DateTime>(0, default(DateTime), 0, default(DateTime));
+		var rows = await connect.QueryAsync<ShabbatWeek>(sql: Sql, param: Parms);
+		Logger.LogDebug(string.Format("...Sql {0}", Sql));
+		return rows.ToList();
 	}
+
 
 	#endregion
 
 	#region Command
 
-	public async Task<int> WeeklyVideoAdd(WeekCrudGridVM dto)
+	
+	public async Task<int> WeeklyVideoAdd(WeeklyVideoInsert dto)
 	{
 		Logger.LogDebug(string.Format("Inside {0}", nameof(WeeklyVideosRepository) + "!" + nameof(WeeklyVideoAdd)));
 		Parms = new DynamicParameters(new
 		{
 			dto.ShabbatWeekId,
-			dto.WeeklyVideoTypeEnum,
+			dto.WeeklyVideoTypeId,
 			dto.YouTubeId,
 			dto.Title,
 			dto.Book,
@@ -199,7 +152,7 @@ ORDER BY ShabbatDate DESC
 		Sql = $@"
 INSERT INTO WeeklyVideo
 (ShabbatWeekId, WeeklyVideoTypeId, YouTubeId, Title, Book, Chapter)
-VALUES (@ShabbatWeekId, @WeeklyVideoTypeEnum, @YouTubeId, @Title, @Book, @Chapter)
+VALUES (@ShabbatWeekId, @WeeklyVideoTypeId, @YouTubeId, @Title, @Book, @Chapter)
 ; SELECT CAST(SCOPE_IDENTITY() as int)
 ";
 		int newId;
@@ -211,14 +164,14 @@ VALUES (@ShabbatWeekId, @WeeklyVideoTypeEnum, @YouTubeId, @Title, @Book, @Chapte
 		return newId;
 	}
 
-	public async Task<int> WeeklyVideoUpdate(WeekCrudGridVM dto)
+	public async Task<int> WeeklyVideoUpdate(WeeklyVideoUpdate dto)
 	{
 		Logger.LogDebug(string.Format("Inside {0}", nameof(WeeklyVideosRepository) + "!" + nameof(WeeklyVideoUpdate)));
 		Parms = new DynamicParameters(new
 		{
 			dto.Id,
 			dto.ShabbatWeekId,
-			dto.WeeklyVideoTypeEnum,
+			dto.WeeklyVideoTypeId,
 			dto.YouTubeId,
 			dto.Title,
 			//dto.GraphicFileRoot,
@@ -230,7 +183,7 @@ VALUES (@ShabbatWeekId, @WeeklyVideoTypeEnum, @YouTubeId, @Title, @Book, @Chapte
 		Sql = $@"
 UPDATE WeeklyVideo SET
   ShabbatWeekId = @ShabbatWeekId
-, WeeklyVideoTypeId = @WeeklyVideoTypeEnum
+, WeeklyVideoTypeId = @WeeklyVideoTypeId
 , YouTubeId = @YouTubeId
 , Title = @Title
 --, GraphicFile = @GraphicFile

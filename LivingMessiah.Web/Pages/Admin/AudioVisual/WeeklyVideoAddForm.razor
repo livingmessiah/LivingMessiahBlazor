@@ -1,0 +1,165 @@
+﻿@page "/Admin/AudioVisual/WeeklyVideoAddForm/"
+@using LivingMessiah.Web.SmartEnums
+@using Page = LivingMessiah.Web.Links.Admin.AudioVisual.Add
+@using PageBack = LivingMessiah.Web.Links.Admin.AudioVisual
+
+<PageTitle>@Page.Title</PageTitle>
+<div class="pb-2 mt-4 mb-2 border-bottom">
+	<h2><i class="@Page.Icon"></i> @Page.Title</h2>
+</div>
+
+<h4 class="mt-4 mb-1"><span class="badge badge-warning">YouTube Feed</span></h4>
+
+<LoadingComponent IsLoading="YouTubeList==null">
+	<TableTemplate Items="YouTubeList">
+		<TableHeader>
+			<th>Title</th>
+			<th>Id</th>
+			<th>Published Date</th>
+			<th>Add</th>
+		</TableHeader>
+		<RowTemplate>
+			<td>@context.Title</td>
+			<td>@context.YouTubeId</td>
+			<td>@context.PublishDate.Date.ToShortDateString()</td>
+			<td>
+				<button class="btn-sm btn-primary" @onclick="() => Add(context)">
+					<i class="fas fa-level-down-alt"></i>
+				</button>
+			</td>
+		</RowTemplate>
+	</TableTemplate>
+</LoadingComponent>
+
+
+<LoadingComponent IsLoading="vm==null || ShabbatWeekList==null">
+	<h4 class="mt-4 mb-1"><span class="badge badge-warning">Add Form</span></h4>
+
+	<EditForm Model="vm"
+						OnValidSubmit="HandleValidSubmit"
+						class="card card-body bg-light mt-5">
+		<DataAnnotationsValidator />
+		<ValidationSummary />
+
+		<div class="form-group row">
+
+			@if (ShabbatWeekList.Any())
+			{
+				<label for="shabbatWeekId" class="col-md-3 col-form-label">Shabbat Week Id:</label>
+				<div class="col-md-9">
+					<InputSelect id="shabbatWeekId" @bind-Value="vm.ShabbatWeekId" class="form-control">
+						@foreach (var item in ShabbatWeekList)
+						{
+						<option value="@item.Id">@item.ShabbatDate.ToShortDateString() [@item.Id]</option>
+						}
+				</InputSelect>
+			</div>
+			}
+			else
+			{
+				<p class="text-warning">ShabbatWeekList is empty</p>
+			}
+		</div>
+
+		<div class="form-group row">
+			<label for="youTubeId" class="col-md-3 col-form-label">YouTube Id:</label>
+			<div class="col-md-9">
+				<InputText id="youTubeId" class="form-control" @bind-Value="vm.YouTubeId" />
+				<ValidationMessage For="@(() => vm.YouTubeId)" />
+			</div>
+		</div>
+
+		<div class="form-group row">
+			<label for="title" class="col-md-3 col-form-label">Title:</label>
+			<div class="col-md-9">
+				<InputText id="title" class="form-control" @bind-Value="vm.Title" />
+				<ValidationMessage For="@(() => vm.Title)" />
+			</div>
+		</div>
+
+		<div class="form-group row">
+			<label for="type" class="col-md-3 col-form-label">Type</label>
+			<div class="col-md-9">
+				<InputSelect id="type" @bind-Value="vm.WeeklyVideoTypeId" class="form-control">
+					@foreach (var item in WeeklyVideoType.List.ToList())
+					{
+						<option value="@item.Value">@item.Name</option>
+					}
+				</InputSelect>
+			</div>
+
+		</div>
+
+
+		<div class="row">
+			<div class="col-sm-6">
+				<div class="form-group">
+					<button class="btn btn-success btn-md" type="submit">
+						<i class="fas fa-save"></i> Save
+					</button>
+				</div>
+
+			</div>
+		</div>
+
+	</EditForm>
+
+</LoadingComponent>
+
+
+<h4 class="mt-4 mb-1"><span class="badge badge-warning">Weekly Video Table</span></h4>
+
+<LoadingComponent IsLoading="WeeklyVideoTableList==null">
+	<TableTemplate Items="WeeklyVideoTableList">
+		<TableHeader>
+			<th>Id</th>
+			<th>Shabbat Week</th>
+			<th>WVT</th>
+			<th>YouTube Id</th>
+			<th>Title</th>
+		</TableHeader>
+		<RowTemplate>
+			<td>@context.Id</td>
+			<td><small><sup class="text-black-50">@context.ShabbatWeekId</sup></small> @context.ShabbatDate.ToShortDateString()</td>
+			<td><small><sup class="text-black-50">@context.WeeklyVideoTypeId</sup></small> @context.WeeklyVideoTypeDescr</td>
+			<td>
+				@if (context.YouTubeId != null)
+				{
+					<a href="@context.Url()" target="_blank"
+					 title="@context.Url()">
+						<u>@context.YouTubeId</u>
+						<i class="fas fa-external-link-square-alt"></i>
+					</a>
+				}
+				else
+				{
+					<p class="text-info"><i>Missing</i></p>
+				}
+			</td>
+
+			<td>@context.Title</td>
+			<td></td>
+		</RowTemplate>
+	</TableTemplate>
+</LoadingComponent>
+
+@if (DatabaseError)
+{
+	<p class="text-danger"><em>@DatabaseErrorMsg</em></p>
+}
+else
+{
+	if (DatabaseWarning)
+	{
+		<p class="text-warning">@DatabaseWarningMsg</p>
+	}
+}
+
+<div class="row d-print-none">
+	<div class="col-12">
+		<a href="@PageBack.Index"
+			 class="btn btn-info" title="Back to @PageBack.Title">
+			<i class="far fa-arrow-alt-circle-left"></i> Back to @PageBack.Title
+		</a>
+	</div>
+</div>

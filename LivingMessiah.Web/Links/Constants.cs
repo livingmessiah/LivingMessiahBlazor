@@ -60,8 +60,20 @@ public static class Admin
 		public const string Redirect = "/Admin/AudioVisual";
 		public const string Title = "Audio Visual";
 		public const string Icon = "fab fa-teamspeak";
-		//public const string Icon2 = "fas fa-theater-masks";
-		//public const string Icon3 = "fas fa-broadcast-tower";
+
+		public static class Add
+		{
+			public const string Index = "/Admin/AudioVisual/WeeklyVideoAddForm/";
+			public const string Title = "Weekly Video Add";
+			public const string Icon = "fas fa-plus";
+		}
+
+		public static class Update
+		{
+			public const string Index = "/Admin/AudioVisual/WeeklyVideoUpdateForm/";
+			public const string Title = "Weekly Video Update";
+			public const string Icon = "fas fa-pencil-alt";
+		}
 	}
 }
 
@@ -630,7 +642,7 @@ public static class UpcomingEvents
 	}
 }
 
-
+// Deprecated
 public static class WeeklyVideos
 {
 	public const string Index = "/Admin/WeeklyVideos";

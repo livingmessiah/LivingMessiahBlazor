@@ -19,7 +19,7 @@ using LivingMessiah.Web.Pages.KeyDates.Data;
 using LivingMessiah.Web.Pages.UpcomingEvents.Data;
 using LivingMessiah.Web.Pages.BlazorSyncFusion.Shared;
 using LivingMessiah.Web.Pages.Admin.AudioVisual;
-using LivingMessiah.Web.Pages.Admin.AudioVisual.Components;
+using LivingMessiah.Web.Pages.Admin.AudioVisual.Services;
 
 namespace LivingMessiah.Web;
 
@@ -46,8 +46,6 @@ public static class ServiceCollectionExtensions
 
 					.AddSingleton<IKeyDateRepository, KeyDateRepository>()
 
-					.AddTransient<IWeekCrudGridDA, WeekCrudGridDA>()
-					.AddTransient<IWeeklyVideosGridDataAdaptor, WeeklyVideosGridDataAdaptor>()
 					.AddTransient<IWeeklyVideosRepository, WeeklyVideosRepository>()
 
 					.AddTransient<ISecurityClaimsService, SecurityClaimsService>()
@@ -67,9 +65,10 @@ public static class ServiceCollectionExtensions
 
 					.AddTransient<ISukkotRepository, SukkotRepository>()
 					.AddTransient<ISukkotAdminRepository, SukkotAdminRepository>()
-					.AddSingleton<ISmartEnumServiceForSfDropDownList, SmartEnumServiceForSfDropDownList>();
+					.AddSingleton<ISmartEnumServiceForSfDropDownList, SmartEnumServiceForSfDropDownList>()
+					.AddSingleton<IYouTubeFeedService, YouTubeFeedService>();
 
-				return services;
+		return services;
 		}
 
 		public static IServiceCollection AddCustomAuthentication(
