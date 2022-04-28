@@ -742,6 +742,15 @@ public static class WindmillRanch
 		public const string Icon = "fas fa-tractor";
 	}
 
+	public static class Garden
+	{
+		public const string Page = "/Windmillranch/Garden";
+		public const string Title = "Garden";
+		public const string Icon = "fas fa-pepper-hot"; 
+	}
+
+
+
 	public static class Support
 	{
 		public const string Page = "/Windmillranch/Support";
