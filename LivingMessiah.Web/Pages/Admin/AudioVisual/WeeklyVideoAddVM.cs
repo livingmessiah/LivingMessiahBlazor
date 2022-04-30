@@ -1,6 +1,7 @@
 ﻿namespace LivingMessiah.Web.Pages.Admin.AudioVisual;
 using System.ComponentModel.DataAnnotations;
-public class WeeklyVideoClass
+
+public class WeeklyVideoAddVM
 {
 	[Required]
 	public int WeeklyVideoTypeId { get; set; }

@@ -1,6 +1,7 @@
-﻿@page "/Admin/AudioVisual/WeeklyVideoUpdateForm/"
-
+﻿@page "/Admin/AudioVisual/WeeklyVideoUpdateForm/{Id:int?}"
+@using LivingMessiah.Web.SmartEnums
 @using Page = LivingMessiah.Web.Links.Admin.AudioVisual.Update
+@using PageBackAdd = LivingMessiah.Web.Links.Admin.AudioVisual.Add
 @using PageBack = LivingMessiah.Web.Links.Admin.AudioVisual
 
 <PageTitle>@Page.Title</PageTitle>
@@ -8,16 +9,110 @@
 	<h2><i class="@Page.Icon"></i> @Page.Title</h2>
 </div>
 
+<LoadingComponent IsLoading="vm==null || ShabbatWeekList==null">
+	<h4 class="mt-4 mb-0"><span class="badge badge-warning">Update Form <sup>(@vm.Id)</sup></span></h4>
 
-<div class="p-5 mb-4 bg-light rounded-3">
-	<div class="container-fluid py-5">
-		<h1 class="display-5 fw-bold">Work in Progress</h1>
-		<p class="col-md-8 fs-4">for now use WeeklyVideos</p>
+	<EditForm Model="vm"
+						OnValidSubmit="HandleValidSubmit"
+						class="card card-body bg-light mt-1">
+		<DataAnnotationsValidator />
+		<ValidationSummary />
+
+		<div class="form-group row">
+
+			@if (ShabbatWeekList.Any())
+			{
+				<label for="shabbatWeekId" class="col-md-3 col-form-label">Shabbat Week Id:</label>
+				<div class="col-md-9">
+					<InputSelect id="shabbatWeekId" @bind-Value="vm.ShabbatWeekId" class="form-control">
+						@foreach (var item in ShabbatWeekList)
+						{
+						<option value="@item.Id">@item.ShabbatDate.ToShortDateString() [@item.Id]</option>
+						}
+				</InputSelect>
+			</div>
+			}
+			else
+			{
+				<p class="text-warning">ShabbatWeekList is empty</p>
+			}
+		</div>
+
+		<div class="form-group row">
+			<label for="youTubeId" class="col-md-3 col-form-label">YouTube Id:</label>
+			<div class="col-md-9">
+				<InputText id="youTubeId" class="form-control" @bind-Value="vm.YouTubeId" />
+				<ValidationMessage For="@(() => vm.YouTubeId)" />
+			</div>
+		</div>
+
+		<div class="form-group row">
+			<label for="title" class="col-md-3 col-form-label">Title:</label>
+			<div class="col-md-9">
+				<InputText id="title" class="form-control" @bind-Value="vm.Title" />
+				<ValidationMessage For="@(() => vm.Title)" />
+			</div>
+		</div>
+
+		<div class="form-group row">
+			<label for="type" class="col-md-3 col-form-label">Type</label>
+			<div class="col-md-9">
+				<InputSelect id="type" @bind-Value="vm.WeeklyVideoTypeId" class="form-control">
+					@foreach (var item in WeeklyVideoType.List.ToList())
+					{
+						<option value="@item.Value">@item.Name</option>
+					}
+				</InputSelect>
+			</div>
+
+		</div>
+
+
+		<div class="row">
+			<div class="col-sm-6">
+				<div class="form-group">
+					<button class="btn btn-success btn-md" type="submit">
+						<i class="fas fa-save"></i> Update
+					</button>
+				</div>
+
+			</div>
+		</div>
+
+	</EditForm>
+
+</LoadingComponent>
+
+@if (DatabaseError)
+{
+	<p class="text-danger"><em>@DatabaseErrorMsg</em></p>
+}
+else
+{
+	if (DatabaseWarning)
+	{
+		<p class="text-warning">@DatabaseWarningMsg</p>
+	}
+	else
+	{
+		if (DatabaseInformation)
+		{
+			<p class="text-info">@DatabaseInformationMsg</p>
+		}
+	}
+}
+
+<div class="row d-print-none mt-2">
+	<div class="col-12">
+		<a href="@PageBackAdd.Index"
+			 class="btn btn-info" title="Back to @PageBackAdd.Title">
+			<i class="far fa-arrow-alt-circle-left"></i> Back to @PageBackAdd.Title
+		</a>
 	</div>
 </div>
 
 
-<div class="row d-print-none">
+<div class="row d-print-none mt-2">
 	<div class="col-12">
 		<a href="@PageBack.Index"
 			 class="btn btn-info" title="Back to @PageBack.Title">

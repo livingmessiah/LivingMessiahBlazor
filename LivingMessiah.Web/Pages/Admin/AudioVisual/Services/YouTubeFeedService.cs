@@ -18,7 +18,7 @@ public class DropDownListVM
 public interface IYouTubeFeedService
 {
 	Task<List<YouTubeFeedModel>> GetModel(string url, int take);
-
+	
 	// THESE TWO NOT USED
 	Task<List<DropDownListVM>> GetDropDownList(string url, int take); 
 	Task<List<SyndicationItem>> GetXml(string url, int take);         
@@ -59,6 +59,7 @@ public class YouTubeFeedService : IYouTubeFeedService
 			{
 				l.Add(new YouTubeFeedModel()
 				{
+					Id = null,
 					YouTubeId = item.Id.Replace("yt:video:", ""),
 					Title = item.Title.Text,
 					PublishDate = item.PublishDate

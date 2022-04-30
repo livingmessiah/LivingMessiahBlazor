@@ -8,28 +8,56 @@
 	<h2><i class="@Page.Icon"></i> @Page.Title</h2>
 </div>
 
-<h4 class="mt-4 mb-1"><span class="badge badge-warning">YouTube Feed</span></h4>
 
 <LoadingComponent IsLoading="YouTubeList==null">
-	<TableTemplate Items="YouTubeList">
-		<TableHeader>
-			<th>Title</th>
-			<th>Id</th>
-			<th>Published Date</th>
-			<th>Add</th>
-		</TableHeader>
-		<RowTemplate>
-			<td>@context.Title</td>
-			<td>@context.YouTubeId</td>
-			<td>@context.PublishDate.Date.ToShortDateString()</td>
-			<td>
-				<button class="btn-sm btn-primary" @onclick="() => Add(context)">
-					<i class="fas fa-level-down-alt"></i>
-				</button>
-			</td>
-		</RowTemplate>
-	</TableTemplate>
+	<h4 class="mt-4 mb-2"><span class="badge badge-warning">YouTube Feed</span></h4>
+
+	@foreach (var item in YouTubeList.Where(w => w.Id is null))
+	{
+		<!-- IsXsOrSm="true" -->
+		<div class="d-md-none mb-3">
+
+			<div class="card bg-light" style="width: 32rem;">
+				<img src='https://img.youtube.com/vi/@item.YouTubeId/mqdefault.jpg' class="card-img-top" alt="@item.Title">
+				<div class="card-body">
+					<h5 class="card-title">@item.Title</h5>
+					<p class="card-text">Publish Date: @item.PublishDate.Date.ToShortDateString()</p>
+					<button class="btn-sm btn-outline-success" @onclick="() => Add(item)">
+						<i class="fas fa-plus"></i>
+					</button>
+				</div>
+			</div>
+
+		</div>
+
+		<!-- IsXsOrSm="false" -->
+		<div class="d-none d-md-block mt-3">
+
+			<div class="row mb-2">
+				<div class="col-4">
+					<a href="https://www.youtube.com/watch?v=@item.YouTubeId" target="_blank" title="@item.YouTubeId">
+						<img src='https://img.youtube.com/vi/@item.YouTubeId/mqdefault.jpg' class='img-thumbnail' />
+					</a>
+				</div>
+
+				<div class="col-8">
+					<div class="card">
+						<div class="card-body">
+							<p class="mb-1">Title: @item.Title</p>
+							<p class="mb-1">Publish Date: @item.PublishDate.Date.ToShortDateString()</p>
+							<button class="btn-sm btn-outline-success" @onclick="() => Add(item)">
+								<i class="fas fa-plus"></i>
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+	}
 </LoadingComponent>
+
 
 
 <LoadingComponent IsLoading="vm==null || ShabbatWeekList==null">
@@ -37,7 +65,7 @@
 
 	<EditForm Model="vm"
 						OnValidSubmit="HandleValidSubmit"
-						class="card card-body bg-light mt-5">
+						class="card card-body bg-light mt-1">
 		<DataAnnotationsValidator />
 		<ValidationSummary />
 
@@ -119,7 +147,14 @@
 			<th>Title</th>
 		</TableHeader>
 		<RowTemplate>
-			<td>@context.Id</td>
+			<td>
+				<button @onclick="@(e => Edit_ButtonClick(context.Id))"
+								title="Weekly Video Edit" class="btn btn-outline-default btn-sm">
+								@context.Id <i class="fas fa-pencil-alt"></i>
+				</button>
+			</td>
+
+
 			<td><small><sup class="text-black-50">@context.ShabbatWeekId</sup></small> @context.ShabbatDate.ToShortDateString()</td>
 			<td><small><sup class="text-black-50">@context.WeeklyVideoTypeId</sup></small> @context.WeeklyVideoTypeDescr</td>
 			<td>
@@ -152,6 +187,13 @@ else
 	if (DatabaseWarning)
 	{
 		<p class="text-warning">@DatabaseWarningMsg</p>
+	}
+	else
+	{
+		if (DatabaseInformation)
+		{
+			<p class="text-info">@DatabaseInformationMsg</p>
+		}
 	}
 }
 
