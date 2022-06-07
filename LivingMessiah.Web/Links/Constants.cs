@@ -68,6 +68,14 @@ public static class Admin
 			public const string Icon = "fas fa-plus";
 		}
 
+		public static class AddMultiForms
+		{
+			public const string Index = "/Admin/AudioVisual/WeeklyVideoAddMultiForms/";
+			public const string Title = "Weekly Video Add Multi Forms";
+			public const string Icon = "fas fa-plus";
+		}
+
+
 		public static class Update
 		{
 			public const string Index = "/Admin/AudioVisual/WeeklyVideoUpdateForm/";

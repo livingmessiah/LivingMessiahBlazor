@@ -12,12 +12,14 @@
 <LoadingComponent IsLoading="YouTubeList==null">
 	<h4 class="mt-4 mb-2"><span class="badge badge-warning">YouTube Feed</span></h4>
 
-	@foreach (var item in YouTubeList.Where(w => w.Id is null))
+
+	<!-- foreach (var item in YouTubeList.Where(w => w.Id is null)) -->
+	@foreach (var item in YouTubeList)
 	{
 		<!-- IsXsOrSm="true" -->
 		<div class="d-md-none mb-3">
 
-			<div class="card bg-light" style="width: 32rem;">
+			<div class="card bg-light" >
 				<img src='https://img.youtube.com/vi/@item.YouTubeId/mqdefault.jpg' class="card-img-top" alt="@item.Title">
 				<div class="card-body">
 					<h5 class="card-title">@item.Title</h5>
