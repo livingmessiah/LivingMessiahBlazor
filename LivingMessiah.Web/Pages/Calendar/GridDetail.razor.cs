@@ -18,8 +18,8 @@ public partial class GridDetail
 		public DateTime Date { get; set; }
 
 		// ToDo: is FDD is converted, to this BaseLunarMonthSmartEnum.List.OrderBy(o => o.Value).ToList()">
-		protected List<FDD> PassoverDetails => FDD.All.Where(w => w.Id <= 4).OrderBy(o => o.Id).ToList();
-		protected List<FDD> SukkotDetails => FDD.All.Where(w => w.Id > 4).OrderBy(o => o.Id).ToList();
+		protected List<FDD> PassoverDetails => FDD.All.Where(w => w.ParentId == BaseFeastDaySmartEnum.Passover).OrderBy(o => o.Id).ToList();
+		protected List<FDD> SukkotDetails => FDD.All.Where(w => w.ParentId == BaseFeastDaySmartEnum.Tabernacles).OrderBy(o => o.Id).ToList();
 
 
 		protected string Notes(string addedDaysDescr, int? addedDays)

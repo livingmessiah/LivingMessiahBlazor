@@ -8,11 +8,6 @@
 </div>
 <hr class="warning" />
 
-<p class="lead">
-	Barry interviews fellow BYNA Elder Mark Webb on the upcoming Solar Eclipse on December 14th, 2020.
-	Check out these two awesome youtube videos (or podcast, scroll to the bottom.)
-</p>
-
 
 <h3 class="mt-5 mb-3">
 	<span class="text-danger"><i class="fab fa-youtube"></i></span> Videos
@@ -20,8 +15,10 @@
 
 @foreach (var item in Videos)
 	{
-	<YouTubeHeavensDeclare UrlId="@item.UrlId"
-	Title="@item.Title">
+	<YouTubeHeavensDeclare 
+		UrlId="@item.UrlId"
+		Title="@item.Title"
+		Description=@item.Description>
 	</YouTubeHeavensDeclare>
 	}
 

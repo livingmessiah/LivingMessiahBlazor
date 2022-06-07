@@ -4,20 +4,23 @@ namespace LivingMessiah.Web.Pages.HeavensDeclare;
 
 public partial class YouTubeHeavensDeclare
 {
-		[Parameter]
-		public string UrlId { get; set; }
+	[Parameter]
+	public string UrlId { get; set; }
 
-		[Parameter]
-		public string Title { get; set; }
+	[Parameter]
+	public string Title { get; set; }
 
-		const string BaseUrl = "https://www.youtube.com/embed/";
-		protected string Url
+	[Parameter]
+	public string Description { get; set; }
+
+	const string BaseUrl = "https://www.youtube.com/embed/";
+	protected string Url
+	{
+		get
 		{
-				get
-				{
-						return BaseUrl + UrlId + "?rel=0";
-				}
+			return BaseUrl + UrlId + "?rel=0";
 		}
+	}
 
 }
 

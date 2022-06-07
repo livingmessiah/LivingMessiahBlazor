@@ -5,72 +5,74 @@ namespace LivingMessiah.Web.Pages.KeyDates.Enums;
 
 public enum FeastDayDetailEnum
 {
-		//                          Id-FeastDayId-Detail
-		SederMeal = 1,            // 1-3-1
-		UnleavenedBreadDay1 = 2,  // 1-3-2
-		OmerStart = 3,            // 1-3-3
-		UnleavenedBreadDay7 = 4,  // 1-3-4
-		SukkotDay0 = 5,           // 5-7-2
-		SukkotDay1 = 6,           // 6-7-2
-		SukkotLastGreatDay = 7,   // 7-7-3
-		SukkotEndsAtSundown = 8,  // 8-7-4
-		HanukkahLastDay = 9,      // not using
-		YomKippurBegins = 10      // not using
+	//                          Id-FeastDayId-Detail
+	SederMeal = 1,            // 1-3-1
+	UnleavenedBreadDay1 = 2,  // 1-3-2
+	OmerStart = 3,            // 1-3-3
+	UnleavenedBreadDay7 = 4,  // 1-3-4
+	SukkotDay0 = 5,           // 5-7-2
+	SukkotDay1 = 6,           // 6-7-2
+	SukkotLastGreatDay = 7,   // 7-7-3
+	SukkotEndsAtSundown = 8,  // 8-7-4
+	HanukkahLastDay = 9,      // not using
+	YomKippurBegins = 10      // not using
 }
 
 public class FDD
 {
-		public static List<FDD> All { get; } = new List<FDD>();
+	public static List<FDD> All { get; } = new List<FDD>();
 
-		public static FDD SederMeal { get; } = new FDD(FeastDayDetailEnum.SederMeal, 1, 0, "Seder Meal", false);
-		public static FDD UnleavenedBreadDay1 { get; } = new FDD(FeastDayDetailEnum.UnleavenedBreadDay1, 2, 1, "First day of Unleavened Bread", true);
-		public static FDD OmerStart { get; } = new FDD(FeastDayDetailEnum.OmerStart, 3, 2, "Omer Start", false);  // This is more dynamic
-		public static FDD UnleavenedBreadDay7 { get; } = new FDD(FeastDayDetailEnum.UnleavenedBreadDay7, 4, 7, "Last day of Unleavened Bread", true);
+	public static FDD SederMeal { get; } = new FDD(FeastDayDetailEnum.SederMeal, 1, BaseFeastDaySmartEnum.Passover, 0, "Seder Meal", false);
+	public static FDD UnleavenedBreadDay1 { get; } = new FDD(FeastDayDetailEnum.UnleavenedBreadDay1, 2, BaseFeastDaySmartEnum.Passover, 1, "First day of Unleavened Bread", true);
+	public static FDD OmerStart { get; } = new FDD(FeastDayDetailEnum.OmerStart, 3, BaseFeastDaySmartEnum.Passover, 2, "Omer Start", false);  // This is more dynamic
+	public static FDD UnleavenedBreadDay7 { get; } = new FDD(FeastDayDetailEnum.UnleavenedBreadDay7, 4, BaseFeastDaySmartEnum.Passover, 7, "Last day of Unleavened Bread", true);
 
-		public static FDD SukkotDay0 { get; } =
-			new FDD(FeastDayDetailEnum.SukkotDay0, 5, -1, "Sukkot Day: Preparation Day, High Sabbath begins at sunset", true);
-		public static FDD SukkotDay1 { get; } =
-			new FDD(FeastDayDetailEnum.SukkotDay1, 6, 0, "Sukkot Day: First Day", false);
-		public static FDD SukkotLastGreatDay { get; } =
-			new FDD(FeastDayDetailEnum.SukkotLastGreatDay, 7, 7, "Sukkot Last Day (Great Day)", true);
-		public static FDD SukkotEndsAtSundown { get; } =
-			new FDD(FeastDayDetailEnum.SukkotEndsAtSundown, 8, 8, "Sukkot ended previoius night; tear down camp", false);
+	public static FDD SukkotDay0 { get; } =
+		new FDD(FeastDayDetailEnum.SukkotDay0, 5, BaseFeastDaySmartEnum.Tabernacles, -1, "Sukkot Day: Preparation Day, High Sabbath begins at sunset", true);
+	public static FDD SukkotDay1 { get; } =
+		new FDD(FeastDayDetailEnum.SukkotDay1, 6, BaseFeastDaySmartEnum.Tabernacles, 0, "Sukkot Day: First Day", false);
+	public static FDD SukkotLastGreatDay { get; } =
+		new FDD(FeastDayDetailEnum.SukkotLastGreatDay, 7, BaseFeastDaySmartEnum.Tabernacles, 7, "Sukkot Last Day (Great Day)", true);
+	public static FDD SukkotEndsAtSundown { get; } =
+		new FDD(FeastDayDetailEnum.SukkotEndsAtSundown, 8, BaseFeastDaySmartEnum.Tabernacles, 8, "Sukkot ended previous night; tear down camp", false);
 
-		public static FDD HanukkahLastDay { get; } = new FDD(FeastDayDetailEnum.HanukkahLastDay, 9, 8, "Hanukkah Last Day", false);
-		public static FDD YomKippurBegins { get; } = new FDD(FeastDayDetailEnum.YomKippurBegins, 10, -1, "Yom Kippur Begins", true);
+	public static FDD HanukkahLastDay { get; } = new FDD(FeastDayDetailEnum.HanukkahLastDay, 9, BaseFeastDaySmartEnum.Hanukkah, 8, "Hanukkah Last Day", false);
+	public static FDD YomKippurBegins { get; } = new FDD(FeastDayDetailEnum.YomKippurBegins, 10, BaseFeastDaySmartEnum.YomKippur, -1, "Yom Kippur Begins", true);
 
-		public FeastDayDetailEnum FeastDayDetailEnum { get; private set; }
-		public int Id { get; private set; }
-		public int AddDays { get; set; }
-		public string Description { get; private set; }
-		public bool IsHighSabbath { get; set; }
+	public FeastDayDetailEnum FeastDayDetailEnum { get; private set; }
+	public int Id { get; private set; }
+	public BaseFeastDaySmartEnum ParentId { get; private set; }
+	public int AddDays { get; set; }
+	public string Description { get; private set; }
+	public bool IsHighSabbath { get; set; }
 
-		private FDD(FeastDayDetailEnum fddEnum, int id, int addDays, string description, bool isHighSabbath)
-		{
-				FeastDayDetailEnum = fddEnum;
-				Id = id;
-				AddDays = addDays;
-				Description = description;
-				IsHighSabbath = isHighSabbath;
-				All.Add(this);
-		}
+	private FDD(FeastDayDetailEnum fddEnum, int id, BaseFeastDaySmartEnum parentId, int addDays, string description, bool isHighSabbath)
+	{
+		FeastDayDetailEnum = fddEnum;
+		Id = id;
+		ParentId = parentId;
+		AddDays = addDays;
+		Description = description;
+		IsHighSabbath = isHighSabbath;
+		All.Add(this);
+	}
 
-		public static FDD FromEnum(FeastDayDetailEnum enumValue)
-		{
-				return All.SingleOrDefault(r => r.FeastDayDetailEnum == enumValue);
-		}
+	public static FDD FromEnum(FeastDayDetailEnum enumValue)
+	{
+		return All.SingleOrDefault(r => r.FeastDayDetailEnum == enumValue);
+	}
 
-		public static FDD FromInt(int intValue)
-		{
-				return All.SingleOrDefault(r => r.Id == intValue);
-		}
+	public static FDD FromInt(int intValue)
+	{
+		return All.SingleOrDefault(r => r.Id == intValue);
+	}
 
-		/*
-		public static FDD FromString(string formatString)
-		{
-			return All.SingleOrDefault(r => String.Equals(r.Name, formatString, StringComparison.OrdinalIgnoreCase));
-		}
-		*/
+	/*
+	public static FDD FromString(string formatString)
+	{
+		return All.SingleOrDefault(r => String.Equals(r.Name, formatString, StringComparison.OrdinalIgnoreCase));
+	}
+	*/
 
 }  // class FDD
 
