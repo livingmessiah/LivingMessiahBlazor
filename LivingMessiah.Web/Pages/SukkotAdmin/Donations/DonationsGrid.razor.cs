@@ -57,15 +57,6 @@ public partial class DonationsGrid
 
 		}
 
-		public void CustomizeCell(QueryCellInfoEventArgs<DonationReport> args)
-		{
-				if (args.Column.Field == nameof(DonationReport.LocationName))
-				{
-						BaseLocationSmartEnum e = BaseLocationSmartEnum.FromName(args.Data.LocationName, false);
-						//Logger.LogDebug($"Inside {nameof(CustomizeCell)}; args.Column.Field:{args.Column.Field}; textColor:{textColor}");
-						args.Cell.AddClass(new string[] { e.TextColor });
-				}
-		}
 
 		private async Task GetDataWithParms(BaseDonationStatusFilterSmartEnum filter)
 		{

@@ -136,7 +136,6 @@ WHERE Id=@Id
 				base.Sql = $@"
 SELECT Id, EMail, FamilyName, FirstName, StatusId, StatusDescr, MealTotalCost, RegistrationFee
 , CampCost, TotalDonation, AmountDue
-, LocationEnum AS LocationInt
 FROM Sukkot.tvfDonationReport(@DonationStatus)
 ORDER BY {sortAndOrder}
 ";

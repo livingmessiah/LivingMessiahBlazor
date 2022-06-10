@@ -46,7 +46,6 @@
 					</GridSortColumns>
 				</GridSortSettings>
 				<GridEvents OnToolbarClick="ToolbarClickHandler"
-										QueryCellInfo="CustomizeCell"
 										TValue="DonationReport">
 				</GridEvents>
 				<GridColumns>
@@ -55,7 +54,6 @@
 					<GridColumn Field=@nameof(DonationReport.FamilyName) HeaderText="Last Name" Width="70" AllowSorting="true"></GridColumn>
 					<GridColumn Field=@nameof(DonationReport.EMail) HeaderText="Email" Width="80" AllowSorting="false"></GridColumn>
 					<GridColumn Field=@nameof(DonationReport.StatusId) HeaderText="SID" Width="40" AllowSorting="false"></GridColumn>
-					<GridColumn Field=@nameof(DonationReport.LocationName) HeaderText="Location" Width="60" AllowSorting="true"></GridColumn>
 					<GridColumn Field=@nameof(DonationReport.RegistrationFee) HeaderText="Reg. Fee" Width="60" Format="c0" TextAlign="TextAlign.Right" AllowSorting="false"></GridColumn>
 					<GridColumn Field=@nameof(DonationReport.CampCost) HeaderText="Lodging" Width="60" Format="c0" TextAlign="TextAlign.Right" AllowSorting="false"></GridColumn>
 					<GridColumn Field=@nameof(DonationReport.TotalDonation) HeaderText="Ttl Don" Width="60" Format="c0" TextAlign="TextAlign.Right" AllowSorting="false"></GridColumn>

@@ -17,7 +17,7 @@
 					</GridSortColumns>
 				</GridSortSettings>
 
-				<GridEvents TValue="Domain.Registration" QueryCellInfo="CustomizeCell"></GridEvents>
+				<GridEvents TValue="Domain.Registration"></GridEvents>
 				@* ... RowSelected="RowSelectHandler" RowDeselected="RowDeSelectHandler" />*@
 
 			<GridColumns>
@@ -38,10 +38,6 @@
 				</GridColumn>
 
 				<GridColumn Field=@nameof(Domain.Registration.Phone) HeaderText="Phone" Width="50" AllowSorting="false" AllowFiltering="false">
-				</GridColumn>
-
-				<GridColumn Field=@nameof(Domain.Registration.LocationName) HeaderText="Location" Width="70"
-										FilterSettings="@(new FilterSettings { Type = Syncfusion.Blazor.Grids.FilterType.CheckBox })">
 				</GridColumn>
 
 				<GridColumn Field=@nameof(Domain.Registration.StatusName) HeaderText="Status" Width="100"

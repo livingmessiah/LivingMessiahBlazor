@@ -1,7 +1,7 @@
 ﻿@page "/SukkotAdmin/LodgingDetails/"
-@using LivingMessiah.Web.Pages.SukkotAdmin.Constants
 @using static LivingMessiah.Web.Services.Auth0
 @using LivingMessiah.Web.Shared.Sukkot
+@using LivingMessiah.Web.Pages.Sukkot.Constants
 
 <AuthorizeView Roles="@Roles.SukkotMenuBar">
 	<SukkotAdminMenubar></SukkotAdminMenubar>
@@ -21,7 +21,9 @@
 
 <h3><i class="fa fa-table mb-3"></i> Lodging Details</h3>
 
-<LoadingComponent IsLoading="LodgingDetails == null">
+@if (Features.IsTrackingLodging)
+{
+	<LoadingComponent IsLoading="LodgingDetails == null">
 
 	@if (!LodgingDetails.Any())
 	{
@@ -120,3 +122,10 @@
 
 	}
 </LoadingComponent>
+}
+else
+{
+	<h1 class="text-warning text-center">Lodging Has Not Been Implemented</h1>
+}
+
+

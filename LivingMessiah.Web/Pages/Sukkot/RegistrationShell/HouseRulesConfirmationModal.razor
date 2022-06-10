@@ -1,6 +1,6 @@
 ﻿@using LivingMessiah.Web.Pages.Sukkot.Constants
 @using LivingMessiah.Web.Pages.Sukkot.RegistrationEnums
-
+@using Page = LivingMessiah.Web.Links.Sukkot
 
 <p class="lead">
 	Click this
@@ -45,12 +45,12 @@
 
 					<ul class="@FormatSize">
 						<li>
-							<i>Living Messiah Sukkot @Year </i> is an event wholly sponsored by Living Messiah and is a private event <u>not open to the public</u>.
+							<i>Living Messiah Sukkot @Year.String </i> is an event wholly sponsored by Living Messiah and is a private event <u>not open to the public</u>.
 						</li>
 
-						<li>If you have not been preapproved by an invitation email <sup><i class="far fa-envelope"></i></sup> the approval process will be initiated upon completion of the registration application form.</li>
+						<li>If you have not been pre-approved by an invitation email <sup><i class="far fa-envelope"></i></sup> the approval process will be initiated upon completion of the registration application form.</li>
 						<li>
-							Regardless of pre approval to attend this event you <b><u>must</u></b> fill out the registration application form and sign the <b><u>liability waiver form</u></b>.
+							Regardless of pre-approval to attend this event you <b><u>must</u></b> fill out the registration application form and sign the <b><u>liability waiver form</u></b>.
 							<ul class="@FormatSize">
 								<li>
 									<a class="btn btn-sm btn-info" href="@LivingMessiah.Web.Pages.Sukkot.Constants.Blobs.UrlPDF(PDFs.LiabilityWaiver)"
@@ -76,7 +76,7 @@
 
 				<div class="modal-footer">
 
-					<button type="button" @onclick="DoNotAgree_ButtonClick"
+					<button @onclick="@(() => DoNotAgree_ButtonClick(Page.HouseRulesDoNotAcceptRedirect))"
 									class="btn btn-danger" data-dismiss="modal">
 						<i class="far fa-hand-paper"></i> No, I Do NOT Agree
 					</button>

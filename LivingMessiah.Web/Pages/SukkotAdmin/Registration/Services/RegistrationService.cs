@@ -135,8 +135,7 @@ public class RegistrationService : IRegistrationService
 						Adults = registration.Adults,
 						ChildBig = registration.ChildBig,
 						ChildSmall = registration.ChildSmall,
-						LocationEnum = SukkotApi.Domain.Enums.Location.FromEnum(registration.LocationEnum).Id,
-						CampId = (int)registration.CampTypeEnum,  // This doesn't have a FromEnum method like Location does
+						CampId = (int)registration.CampTypeEnum,  
 						StatusId = registration.StatusSmartEnum.Value,
 						AttendanceBitwise = registration.AttendanceBitwise,
 						LodgingDaysBitwise = registration.LodgingDaysBitwise,
@@ -211,10 +210,6 @@ public class RegistrationService : IRegistrationService
 						ChildBig = poco.ChildBig,
 						ChildSmall = poco.ChildSmall,
 						CampTypeSmartEnum = BaseCampTypeSmartEnum.FromValue(poco.CampId),
-						LocationSmartEnum = BaseLocationSmartEnum.FromValue(poco.LocationEnum),
-
-						LocationEnum = SukkotApi.Domain.Enums.Location.FromInt(poco.LocationEnum).LocationEnum,
-
 						StatusSmartEnum = BaseStatusSmartEnum.FromValue(poco.StatusId),
 						AttendanceBitwise = poco.AttendanceBitwise,
 						AttendanceDateList = poco.AttendanceDateList,
@@ -230,7 +225,6 @@ public class RegistrationService : IRegistrationService
 				//Logger.LogDebug($"...registration.StatusEnum: {registration.StatusEnum}, registration.CampTypeEnum: {registration.CampTypeEnum}");
 				//Logger.LogDebug($"...AttendanceDateList: {registration.AttendanceDateList}; LodgingDateList: {registration.LodgingDateList}");
 				//Logger.LogDebug($"...AttendanceBitwise: {registration.AttendanceBitwise}; LodgingDaysBitwise: {registration.LodgingDaysBitwise}");
-				//Logger.LogDebug($"...LocationEnum: {registration.LocationEnum}");
 				return registration;
 		}
 

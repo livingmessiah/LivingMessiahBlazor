@@ -57,25 +57,12 @@ ORDER BY FirstName
 				});
 		}
 
-		//BaseDonationStatusFilterSmartEnum filter, string sortAndOrder
 		public async Task<List<Domain.Registration>> GetAll()
 		{
-				//base.Parms = new DynamicParameters(new { DonationStatus = filter.Value });
-
-				//string sortField = sort switch
-				//{
-				//	BaseRegistrationSortSmartEnum.ById => "LocationEnum, Id",
-				//	BaseRegistrationSortSmartEnum.ByLastName => "LocationEnum, FamilyName",
-				//	BaseRegistrationSortSmartEnum.ByFirstName => "LocationEnum, FirstName",
-				//	_ => "Id",
-				//};
-
-
 				base.Sql = $@"
 SELECT Id, FamilyName, FirstName, SpouseName, OtherNames, EMail, Phone
 , Adults, ChildBig, ChildSmall
 , CampId -- Offsite, Tent, RV Hookup, Cabin/BH, RV DryCamp
-, LocationEnum AS LocationInt
 , StatusId
 , AttendanceBitwise, LodgingDaysBitwise
 , Notes
@@ -92,38 +79,12 @@ ORDER BY FirstName
 				});
 		}
 
-		// ById NOT USED
-		/*
-		public async Task<Domain.Registration> ById(int id)
-		{
-			base.Parms = new DynamicParameters(new { Id = id });
-			base.Sql = $@"
-SELECT Id, FamilyName, FirstName, SpouseName, OtherNames, EMail, Phone
-, Adults, ChildBig, ChildSmall
-, CampId 
-, LocationEnum AS LocationInt
-, StatusId
-, AttendanceBitwise, LodgingDaysBitwise
-, Notes
-FROM Sukkot.Registration
-WHERE Id = @id
-";
-
-			return await WithConnectionAsync(async connection =>
-			{
-				var rows = await connection.QueryAsync<Domain.Registration>(sql: base.Sql, param: base.Parms);
-				return rows.SingleOrDefault();
-			});
-		}
-		*/
-
-
 		public async Task<RegistrationPOCO> GetPocoById(int id)
 		{
 				base.Sql = $@"
 SELECT TOP 1 
 Id, FamilyName, FirstName, SpouseName, OtherNames, EMail, Phone, Adults, ChildBig, ChildSmall
-, LocationEnum, CampId AS CampTypeEnum, StatusId AS StatusEnum
+, CampId AS CampTypeEnum, StatusId AS StatusEnum
 , AttendanceBitwise, LodgingDaysBitwise, AssignedLodging, LmmDonation, WillHelpWithMeals, Notes, Avitar
 , Sukkot.udfLodgingDatesConcat(Id) AS LodgingDatesCSV
 , Sukkot.udfAttendanceDatesConcat(Id) AS AttendanceDatesCSV
@@ -149,13 +110,6 @@ FROM Sukkot.Registration WHERE Id = {id}";
 						Adults = registration.Adults,
 						ChildBig = registration.ChildBig,
 						ChildSmall = registration.ChildSmall,
-
-						/*
-						LocationEnum = registration.LocationSmartEnum,
-						CampId = registration.CampTypeSmartEnum, 
-						StatusId = registration.StatusSmartEnum, 
-						*/
-						LocationEnum = registration.LocationEnum,
 						CampId = registration.CampId,
 						StatusId = registration.StatusId,
 
@@ -224,7 +178,6 @@ FROM Sukkot.Registration WHERE Id = {id}";
 						ChildSmall = registration.ChildSmall,
 						AttendanceBitwise = registration.AttendanceBitwise,
 						LodgingDaysBitwise = registration.LodgingDaysBitwise,
-						LocationEnum = registration.LocationEnum,
 						CampId = registration.CampId,
 						StatusId = registration.StatusId,
 						WillHelpWithMeals = registration.WillHelpWithMealsToInt,

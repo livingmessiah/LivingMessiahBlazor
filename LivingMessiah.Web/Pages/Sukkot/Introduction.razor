@@ -1,71 +1,17 @@
-﻿
-<br />
-<p class="lead">
-	We will be celebrating Sukkot this year from <b>sundown </b>
-	<span class="far fa-calendar"></span>&nbsp; @((MarkupString)Dates),
-	at three different places (you choose).
-	<ol>
-		<li><span class="text-success"><b>Greenhouse Trolley Hobby Farm</b></span> near <b>Sierra Vista, AZ</b>.</li>
-		<li><span class="text-danger"><b>Wilderness Ranch</b></span> near <b>Show Low, AZ</b>.</li>
-		<li><span class="text-warning"><b>Windmill Ranch</b></span> near <b>Bisbee, AZ</b>.</li>
-	</ol>
+﻿@using LivingMessiah.Web.Pages.Sukkot.Constants
+<p class="lead mt-3">
+	We will be celebrating Sukkot this year from @((MarkupString)RegistrationMeta.IntroductionDates),
+	at <b>Greenhouse Trolley Hobby Farm</b> near <b>Sierra Vista, AZ</b>
 </p>
 
-<div class="card text-white bg-success">
+<div class="card bg-light my-3">
 	<div class="card-header">
-		<h3><b>Green House Trolley</b></h3>
+		<h3><b>Green House Trolley Hobby Farm</b></h3>
 	</div>
 	<div class="card-body">
 		<p class="lead">
-			Go to this Hip Camp <a href="https://www.hipcamp.com/en-US/discover/arizona/the-greenhouse-trolley-hobby-fa">link</a> to have a look.
-			Here is a <a href="https://goo.gl/maps/jx2z6vD4n58STAqq9">Google Map</a>&nbsp;<i class="fa fa-map-pin"></i>.
+			Go to this Hip Camp <a href="https://www.hipcamp.com/en-US/discover/arizona/the-greenhouse-trolley-hobby-fa" target="_blank">link</a> to have a look.
+			Here is a <a href="https://goo.gl/maps/jx2z6vD4n58STAqq9" target="_blank">Google Map</a>&nbsp;<i class="fa fa-map-pin"></i>.
 		</p>
 	</div>
 </div>
-
-<div class="card text-white bg-danger my-3">
-	<div class="card-header">
-		<h3><b>Wilderness Ranch</b></h3>
-	</div>
-	<div class="card-body">
-		<p class="lead">
-			Go to <a href="http://www.wildernessranch.org/"><u>www.wildernessranch.org</u></a> to have a look.
-			Also, here is an informative <i class="fab fa-youtube"></i> <a href="https://youtu.be/FrLjByPhJGg"><u>video</u></a> showing the Wilderness Ranch facilities.
-			Here are directions to <a href="http://www.wildernessranch.org/maps.html" target="_blank"><u>Wilderness Ranch</u></a>
-			or <a href="https://goo.gl/maps/ky76HExS7HN2"><u>Google Map</u></a>&nbsp;<i class="fa fa-map-pin"></i>.
-		</p>
-	</div>
-	<div class="card-body">
-		<div class="card-title">
-			<h5>Camping</h5>
-		</div>
-		<p class="lead">
-			The facility has many different camping arrangements.
-			There are several fully equipped RV sites as well as numerous tent camping sites.
-			There are various cabins and "bunk houses" available to suit both families and singles. The cost to camp is minimal.
-			The rates are @LodgingRate per night for the RV or tent camp sites, regardless of how many people are in the group.
-			The individual cabins and bunkhouses are @LodgingRate per night per person.
-		</p>
-	</div>
-</div>
-
-<div class="card ext-white bg-warning">
-	<div class="card-header">
-		<h3><b>Windmill Ranch</b> <i class="@LivingMessiah.Web.Links.WindmillRanch.Icon"></i> </h3>
-	</div>
-	<div class="card-body">
-		<p class="lead">
-			Have a look <a href="https://livingmessiah.com/windmillranch/"><u>here</u></a> on our website for more information.
-			Also, check out the <a href="https://goo.gl/maps/uYyVHisDgExpQLXL7"><u>Google Map</u></a>&nbsp;<i class="fa fa-map-pin"></i>.
-		</p>
-	</div>
-</div>
-
-
-@code {
-	[Parameter]
-	public string Dates { get; set; }
-
-	[Parameter]
-	public string LodgingRate { get; set; }
-}

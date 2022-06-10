@@ -61,15 +61,6 @@ public partial class List
 				StateHasChanged();
 		}
 
-		public void CustomizeCell(QueryCellInfoEventArgs<Domain.Registration> args)
-		{
-				if (args.Column.Field == nameof(Domain.Registration.LocationName))
-				{
-						BaseLocationSmartEnum e = BaseLocationSmartEnum.FromName(args.Data.LocationName, false);
-						args.Cell.AddClass(new string[] { e.TextColor });
-				}
-		}
-
 		#region ErrorHandling
 
 		private void InitializeErrorHandling()

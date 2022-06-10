@@ -28,16 +28,6 @@ public class DonationReport
 		[DataType(DataType.Currency)]
 		public decimal AmountDue { get; set; }
 
-		public int LocationInt { get; set; }
-
-		public string LocationName
-		{
-				get
-				{
-						return BaseLocationSmartEnum.FromValue(LocationInt).Name;
-				}
-		}
-
 		public string FullyPaidIcon
 		{
 				get

@@ -514,6 +514,8 @@ public static class Sukkot
 	public const string DeleteConfirmationTitle = "Delete Sukkot Registration?";
 	public const string DeleteConfirmationSubTitle = "Delete Registration? | ";
 
+	public const string HouseRulesDoNotAcceptRedirect = RegistrationShell;
+
 	public const string AdminIndex = "/SukkotAdmin";
 	public const string AdminIndexTitle = "Sukkot Admin";
 
@@ -562,6 +564,7 @@ public static class Sukkot
 		public const string ErrorLogEmpty = "/SukkotAdmin/ErrorLogEmpty";
 	}
 
+	// These pages don't exist
 	public static class Meals
 	{
 		public const string Index = "/SukkotAdmin/Meals/Index";  // MealTickets = "/SukkotAdmin/Meals/Tickets";
@@ -570,6 +573,7 @@ public static class Sukkot
 		public const string ListMealPlanMenu = "/SukkotAdmin/Meals/ListMealPlanMenu";
 	}
 
+	// These pages don't exist
 	public static class KitchenWork
 	{
 		public const string Index = "/SukkotAdmin/KitchenWork/Index";

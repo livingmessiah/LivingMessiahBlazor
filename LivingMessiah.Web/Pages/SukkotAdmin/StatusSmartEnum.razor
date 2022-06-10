@@ -1,12 +1,12 @@
 ﻿@using LivingMessiah.Web.Pages.SukkotAdmin.Enums
 
-<h1>Registration Steps</h1>
-<p class="text-muted"><small>Test <i>SmartEnum</i> to map <b>state</b></small></p>
+<h5>Registration Steps</h5>
+@*<p class="text-muted"><small>Test <i>SmartEnum</i> to map <b>state</b></small></p>*@
 <div class="card mb-3 border-warning">
-	<div class="card-header">
+@*	<div class="card-header">
 		<h4 class="card-title text-center"><code>item.Dump</code></h4>
 	</div>
-
+*@
 	<div class="card-body">
 		<TableTemplate Items="BaseStatusSmartEnum.List.OrderBy(o => o.Value).ToList()">
 			<TableHeader>
@@ -23,17 +23,4 @@
 			</RowTemplate>
 		</TableTemplate>
 	</div>
-
-
 </div>
-
-@*
-	<p class="text-muted"><small>Test <i>SmartEnum</i></small></p>
-
-	<ul>
-		@foreach (var item in BaseStatusSmartEnum.List)
-		{
-			<li><b>@item.Name</b>: item.CanTransitionTo(RegistrationStep.FormCompletion)</li>
-		}
-	</ul>
-*@

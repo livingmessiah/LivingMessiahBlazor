@@ -48,21 +48,6 @@
 	</div>
 }
 
-@if(RegistrationSummary.IncludeCampCost)
-{
-<div class="row">
-	<div class="col-sm-6">
-		<dl class="row">
-			<dt class="col-6">Camp Cost:</dt>
-			<dd class="col-6"><span class="float-right">@RegistrationSummary.CampCost.ToString("C0")</span></dd>
-		</dl>
-	</div>
-	<div class="col-sm-6">
-		@RegistrationSummary.CampDescr<br /><br />
-		@*@RegistrationSummary.CampDescr<br />Days: @RegistrationSummary.CampDays<br /><br />*@
-	</div>
-</div>
-}
 
 <div class="row">
 	<div class="col-sm-6">

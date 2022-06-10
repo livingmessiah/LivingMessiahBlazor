@@ -9,7 +9,6 @@ SELECT COUNT(*) AS RowCnt, @RC AS RC FROM Sukkot.Registration WHERE Email = @Ema
 /*
 514	1028
 
-  SELECT * FROM Sukkot.Location
   SELECT * FROM dbo.ErrorLog
 	SELECT * FROM zvwErrorLog
 --	WHERE ErrorProcedure LIKE '%stpRegistrationDelete' 

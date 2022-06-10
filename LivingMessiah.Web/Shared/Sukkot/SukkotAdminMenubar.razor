@@ -1,5 +1,5 @@
 ﻿@using static LivingMessiah.Web.Links.Sukkot
-
+@using LivingMessiah.Web.Pages.Sukkot.Constants;
 @using LivingMessiah.Web.Settings
 @using Microsoft.Extensions.Options
 @inject IOptions<SukkotSettings> SukkotSettings
@@ -40,11 +40,15 @@
 			</a>&nbsp;&nbsp;
 		</li>
 
-		<li class="@classActive">
-			<a class="badge badge-info" href="@LodgingDays.PivotOnCampCode">
-				<i class="fa fa-truck"></i>&nbsp;<sup>Lodge</sup>
-			</a>&nbsp;&nbsp;
-		</li>
+
+		@if (Features.IsTrackingLodging)
+		{
+			<li class="@classActive">
+				<a class="badge badge-info" href="@LodgingDays.PivotOnCampCode">
+					<i class="fa fa-truck"></i>&nbsp;<sup>Lodge</sup>
+				</a>&nbsp;&nbsp;
+			</li>
+		}
 
 
 		<li class="@classActive">
@@ -60,6 +64,10 @@
 		</li>
 
 	</ol>
+
+	<!-- 
+		@if (Features.IsTrackingMeals) 	{ 	}
+	-->
 
 	@if (SukkotSettings.Value.IsMealsAvailable)
 	{

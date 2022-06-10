@@ -18,7 +18,6 @@ public class RegistrationPOCO
 		public int ChildSmall { get; set; }
 
 		/*
-		public BaseLocationSmartEnum LocationSmartEnum { get; set; }
 		public BaseCampTypeSmartEnum  CampTypeSmartEnum { get; set; }
 		public BaseStatusSmartEnum StatusSmartEnum { get; set; }
 		*/
@@ -26,11 +25,9 @@ public class RegistrationPOCO
 
 		/*
 		Why are these enums? why not just ints
-		public SukkotApi.Domain.Enums.LocationEnum LocationEnum { get; set; }
 		public SukkotApi.Domain.Enums.CampType CampTypeEnum { get; set; }
 		public SukkotApi.Domain.Enums.StatusEnum StatusEnum { get; set; }
 		*/
-		public int LocationEnum { get; set; }
 		public int CampId { get; set; }
 		public int StatusId { get; set; }
 

@@ -49,7 +49,7 @@
 	@if (SukkotSettings.Value.IsRegistrationClosed)
 	{
 		<div class="jumbotron">
-			<h1>
+			<h1 class="display-4">
 				<span class="text-danger">Registration is CLOSED</span>
 			</h1>
 			<h3>
@@ -61,24 +61,15 @@
 		</div>
 	}
 
-	<Introduction Dates="Sundown Wednesday, October 20, through sundown Thursday, October 28th"
-								LodgingRate="@LodgingRate.ToString("C0")">
-	</Introduction>
-
+	<Introduction/>
 	<Meals IsMealsAvailable="SukkotSettings.Value.IsMealsAvailable"></Meals>
 
 	@if (!SukkotSettings.Value.IsRegistrationClosed)
 	{
-		<RegistrationInfo EarlyRegistrationLastDay="@RegistrationMeta.EarlyRegistrationLastDay.ToString("MMMM dd")"
-											EarlyRegistrationFee="@RegistrationMeta.EarlyRegistrationFee.ToString("C0")"
-											RegistrationLastDay="@RegistrationMeta.RegistrationLastDay.ToString("MMMM dd")"
-											RegistrationFee="@RegistrationMeta.RegistrationFee.ToString("C0")">
-		</RegistrationInfo>
-
-		<PaymentInfo></PaymentInfo>
+		<RegistrationInfo />
+		<PaymentInfo/>
 	}
-
-	<Documents></Documents>
+	<Documents/>
 
 	@if (!SukkotSettings.Value.IsRegistrationClosed)
 	{

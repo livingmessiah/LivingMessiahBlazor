@@ -1,4 +1,6 @@
-﻿<div class="card bg-light my-3">
+﻿@using LivingMessiah.Web.Pages.Sukkot.Constants
+
+<div class="card bg-light my-3">
 	<div class="card-header">
 		<h3><b>Registration</b></h3>
 	</div>
@@ -11,35 +13,24 @@
 	<div class="card-body">
 		<h5 class="card-title mb-1">Registration Fee</h5>
 
-		<dl class="row ml-1">
-			<dt class="col-8">Early Registration Fee:</dt>
-			<dd class="col-4"><span class="float-right">@EarlyRegistrationFee</span></dd>
-			<dt class="col-8">Early Registration Last Day:</dt>
-			<dd class="col-4"><span class="float-right">@EarlyRegistrationLastDay</span></dd>
-		</dl>
+		@if (RegistrationMeta.IsThereEarlyRegistration)
+		{
+			<dl class="row ml-1">
+				<dt class="col-8">Early Registration Fee:</dt>
+				<dd class="col-4"><span class="float-right">@RegistrationMeta.EarlyRegistrationFee.ToString("C0")</span></dd>
+				<dt class="col-8">Early Registration Last Day:</dt>
+				<dd class="col-4"><span class="float-right">@RegistrationMeta.EarlyRegistrationLastDay</span></dd>
+			</dl>
+		}
+
 		<dl class="row ml-1">
 			<dt class="col-8">Regular Registration Fee:</dt>
-			<dd class="col-4"><span class="float-right">@RegistrationFee</span></dd>
+			<dd class="col-4"><span class="float-right">@RegistrationMeta.RegistrationFee.ToString("C0")</span></dd>
 			<dt class="col-8">Registration Last Day:</dt>
-			<dd class="col-4"><span class="float-right">@RegistrationLastDay</span></dd>
+			<dd class="col-4"><span class="float-right">@RegistrationMeta.RegistrationLastDay.ToShortDateString()</span></dd>
 		</dl>
-
-		<p>Note, there is no lodging cost for <b>Greenhouse Trolley Hobby Farm</b> or the <b>Windmill Ranch</b></p>
 
 	</div>
 </div>
 
-@code {
 
-	[Parameter]
-	public string EarlyRegistrationLastDay { get; set; }
-
-	[Parameter]
-	public string EarlyRegistrationFee { get; set; }
-
-	[Parameter]
-	public string RegistrationLastDay { get; set; }
-
-	[Parameter]
-	public string RegistrationFee { get; set; }
-}

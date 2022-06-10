@@ -107,33 +107,6 @@
 
 		</fieldset>
 
-
-		<fieldset class="mt-3">
-			<legend class="text-primary">Location</legend>
-			<div class="row mt-n2">
-
-				<div class="col-sm-4">
-					<div class="card bg-light mb-3">
-						@*<div class="card-header"></div>*@
-						<div class="card-body">
-							@*<h4 class="card-title">Attendance</h4>*@
-							<p class="card-text">Sukkot 2021 is a unique year in that we have <b>three</b> locations which to select from.</p>
-						</div>
-					</div>
-				</div>
-
-				@* Required ValidationMessage doesn't work *@
-				<div class="col-sm-8">
-					<label for="locationEnum" class="control-label">Location</label>
-					<InputSelectEnum @bind-Value="Registration.LocationEnum"
-													 class="form-control" id="locationEnum" />
-					<ValidationMessage For="@(() => Registration.LocationEnum)" />
-				</div>
-
-			</div>
-		</fieldset>
-
-
 		<fieldset class="mt-3">
 			<legend class="text-primary">Attendance</legend>
 			<div class="row mt-n2">

@@ -263,7 +263,6 @@ public class SukkotService : ISukkotService
 			Adults = registration.Adults,
 			ChildBig = registration.ChildBig,
 			ChildSmall = registration.ChildSmall,
-			LocationEnum = registration.LocationEnum,
 			CampTypeEnum = registration.CampTypeEnum,  //CampId = registration.CampTypeEnum,
 			StatusEnum = registration.StatusEnum,  //StatusId = registration.StatusEnum,
 			AttendanceBitwise = registration.AttendanceBitwise,
@@ -292,7 +291,6 @@ public class SukkotService : ISukkotService
 			ChildBig = poco.ChildBig,
 			ChildSmall = poco.ChildSmall,
 			CampTypeEnum = poco.CampTypeEnum,
-			LocationEnum = poco.LocationEnum,
 			StatusEnum = poco.StatusEnum, // poco.StatusId,
 			AttendanceBitwise = poco.AttendanceBitwise,
 			AttendanceDateList = poco.AttendanceDateList,
@@ -309,7 +307,6 @@ public class SukkotService : ISukkotService
 		//Logger.LogDebug($"...registration.StatusEnum: {registration.StatusEnum}, registration.CampTypeEnum: {registration.CampTypeEnum}");
 		//Logger.LogDebug($"...AttendanceDateList: {registration.AttendanceDateList}; LodgingDateList: {registration.LodgingDateList}");
 		//Logger.LogDebug($"...AttendanceBitwise: {registration.AttendanceBitwise}; LodgingDaysBitwise: {registration.LodgingDaysBitwise}");
-		//Logger.LogDebug($"...LocationEnum: {registration.LocationEnum}");
 		return registration;
 	}
 

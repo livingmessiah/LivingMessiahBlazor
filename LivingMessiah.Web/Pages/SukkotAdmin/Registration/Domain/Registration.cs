@@ -39,14 +39,6 @@ public class Registration
 
 		public string Notes { get; set; }
 
-		public int LocationInt { get; set; }
-		public string LocationName
-		{
-				get
-				{
-						return BaseLocationSmartEnum.FromValue(LocationInt).Name;
-				}
-		}
 
 		//public string Avitar { get; set; }
 		//public string AssignedLodging { get; set; }

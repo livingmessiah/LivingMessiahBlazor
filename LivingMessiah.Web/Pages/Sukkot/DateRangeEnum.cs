@@ -81,16 +81,16 @@ public static class DateFactory
 
 		static Dictionary<DateTime, int> _AttendanceDictionary = new Dictionary<DateTime, int>
 		{
-			{ Convert.ToDateTime("2021-10-19"), 1 },
-			{ Convert.ToDateTime("2021-10-20"), 2 },
-			{ Convert.ToDateTime("2021-10-21"), 4 },
-			{ Convert.ToDateTime("2021-10-22"), 8 },
-			{ Convert.ToDateTime("2021-10-23"), 16 },
-			{ Convert.ToDateTime("2021-10-24"), 32 },
-			{ Convert.ToDateTime("2021-10-25"), 64 },
-			{ Convert.ToDateTime("2021-10-26"), 128 },
-			{ Convert.ToDateTime("2021-10-27"), 256 },
-			{ Convert.ToDateTime("2021-10-28"), 512 },
+			{ Convert.ToDateTime("2021-10-09"), 1 },
+			{ Convert.ToDateTime("2021-10-10"), 2 },
+			{ Convert.ToDateTime("2021-10-11"), 4 },
+			{ Convert.ToDateTime("2021-10-12"), 8 },
+			{ Convert.ToDateTime("2021-10-13"), 16 },
+			{ Convert.ToDateTime("2021-10-14"), 32 },
+			{ Convert.ToDateTime("2021-10-15"), 64 },
+			{ Convert.ToDateTime("2021-10-16"), 128 },
+			{ Convert.ToDateTime("2021-10-17"), 256 },
+			{ Convert.ToDateTime("2021-10-18"), 512 },
 		};
 
 		public static int GetLodgingBitwise(DateTime dateTime)
