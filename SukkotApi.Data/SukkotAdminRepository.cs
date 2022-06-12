@@ -20,6 +20,8 @@ public class SukkotAdminRepository : BaseRepositoryAsync, ISukkotAdminRepository
 
 	public async Task<List<vwRegistration>> GetAll(RegistrationSortEnum sort)
 	{
+		base.log.LogDebug(string.Format("Inside {0} , sort:{1}"
+				, nameof(SukkotAdminRepository) + "!" + nameof(GetAll), sort));
 		string sortField = sort switch
 		{
 			RegistrationSortEnum.Id => "Id",
@@ -32,9 +34,8 @@ public class SukkotAdminRepository : BaseRepositoryAsync, ISukkotAdminRepository
 		base.Sql = $@"
 SELECT TOP 500 Id, FamilyName, FirstName, SpouseName, OtherNames
 , EMail, Phone, Adults, ChildBig, ChildSmall, WillHelpWithMeals
-, CampId, StatusId, CampCD, StatusCD, Camp, Status, Notes, AssignedLodging
-, RegistrationFee, CampCost, LmmDonation
-, LodgingDaysBitWise, LodgingDaysTotal
+, CampId, StatusId, CampCD, StatusCD, Camp, Status, Notes
+, RegistrationFee, LmmDonation
 , AttendanceBitwise, AttendanceTotal
 ,	TotalAdultLun, TotalAdultDin, TotalChildBigLun, TotalChildBigDin, TotalChildSmallLun, TotalChildSmallDin
 ,	TotalAdultLunVeg, TotalAdultDinVeg, TotalChildBigLunVeg, TotalChildBigDinVeg, TotalChildSmallLunVeg, TotalChildSmallDinVeg
@@ -61,7 +62,7 @@ ORDER BY {sortField}
 		string sortField = (sort == RegistrationSortEnum.LastName) ? "FamilyName" : "Id";
 
 		base.Sql = $@"
-SELECT TOP 500 Id, FirstName, FamilyName, Notes AS UserNotes, AssignedLodging, CampCD, Phone, EMail
+SELECT TOP 500 Id, FirstName, FamilyName, Notes AS UserNotes, CampCD, Phone, EMail
 FROM Sukkot.vwRegistration
 WHERE Notes IS NOT NULL AND TRIM(Notes) <> ''
 ORDER BY {sortField}
@@ -279,37 +280,6 @@ ORDER BY KitchenWorkTypeId
 		});
 	}
 
-	//ToDo: Not being used
-	public async Task<List<vwLodgingDaysAll>> GetLodgingDaysAll()
-	{
-		base.Sql = $@"
-SELECT LodgingDay2, Sort, v.CampId, LodgingDays, c.Code AS CampCode
-FROM Sukkot.vwLodgingDaysAll v
-	JOIN Sukkot.Camp c ON v.CampId = c.Id
-ORDER BY Sort
-				";
-		return await WithConnectionAsync(async connection =>
-		{
-			var rows = await connection.QueryAsync<vwLodgingDaysAll>(sql: base.Sql);
-			return rows.ToList();
-		});
-	}
-
-	public async Task<List<vwLodgingDaysPivotOnCampCode>> GetvwLodgingDaysPivotOnCampCode()
-	{
-		base.Sql = $@"
-SELECT LodgingDay2, Sort
-, Tent, [RV Hookup] AS RVHookup, [Cabin/BH] AS CabinBH, c.CabinPeople, [RV DryCamp] AS RVDryCamp
-FROM Sukkot.vwLodgingDaysPivotOnCampCode
-JOIN Sukkot.vwLodgingDaysCabinsByDaySum AS c ON Sukkot.vwLodgingDaysPivotOnCampCode.Sort = c.LodgeDateId
-ORDER BY Sort
-				";
-		return await WithConnectionAsync(async connection =>
-		{
-			var rows = await connection.QueryAsync<vwLodgingDaysPivotOnCampCode>(sql: base.Sql);
-			return rows.ToList();
-		});
-	}
 
 	public async Task<int> GetOffsiteCount()
 	{
@@ -320,35 +290,6 @@ ORDER BY Sort
 			return rows.SingleOrDefault();
 		});
 	}
-
-	public async Task<List<vwLodgingDetail>> GetvwLodgingDetail()
-	{
-		base.Sql = $@"
-SELECT Id, FamilyName, CampCost, CampDays, CampCD, Status, PeopleCount, LodgingDays, StatusId
-FROM Sukkot.vwLodgingDetail
-ORDER BY Id
-";
-		return await WithConnectionAsync(async connection =>
-		{
-			var rows = await connection.QueryAsync<vwLodgingDetail>(sql: base.Sql);
-			return rows.ToList();
-		});
-	}
-
-	//ToDo: combine this with previous call 
-	// https://stackoverflow.com/questions/19337468/multiple-sql-statements-in-one-roundtrip-using-dapper-net
-	//public async Task<List<vwLodgingDaysPivotOnCampCode>> GetvwLodgingDaysPivotOnCampCodeAndOffsetCount()
-	//{
-	//	base.Sql = "";
-	//	//using (var multi = connection.QueryMultiple(sql, new {id=selectedId}))
-	//	return await WithConnectionAsync(async connection =>
-	//	{
-	//		var rows = await connection.QueryMultipleAsync<int>(sql: base.Sql);
-	//		var customer = multi.Read<Customer>().Single();
-	//		var orders = multi.Read<Order>().ToList();
-	//		var returns = multi.Read<Return>().ToList();
-	//	});
-	//}
 
 	//public async Task<int> UpdateContactSukkotInviteDate(int id)
 	//{

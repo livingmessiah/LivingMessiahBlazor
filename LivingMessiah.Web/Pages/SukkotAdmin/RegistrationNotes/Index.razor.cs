@@ -13,36 +13,52 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.RegistrationNotes;
 [Authorize(Roles = Roles.AdminOrSukkot)]
 public partial class Index
 {
-		[Inject]
-		protected ILogger<Index> Logger { get; set; }
+	[Inject]
+	protected ILogger<Index> Logger { get; set; }
 
-		[Inject]
-		protected ISukkotAdminService svc { get; set; }
+	[Inject]
+	protected ISukkotAdminService svc { get; set; }
 
-		[Inject]
-		protected NavigationManager NavManager { get; set; }
+	protected int rowCount { get; set; } = 0;
 
-		protected int rowCount { get; set; } = 0;
+	protected RegistrationSort MySort { get; set; } = RegistrationSort.FromEnum(RegistrationSortEnum.LastName);
 
-		protected RegistrationSort MySort { get; set; } = RegistrationSort.FromEnum(RegistrationSortEnum.LastName);
+	protected List<SukkotApi.Domain.Notes> NotesList { get; set; }
 
-		protected string ExceptionMessage { get; set; }
-
-		protected List<SukkotApi.Domain.Notes> NotesList { get; set; }
-
-		protected override async Task OnInitializedAsync()
+	protected override async Task OnInitializedAsync()
+	{
+		Logger.LogDebug(string.Format("Inside {0}", nameof(Index) + "!" + nameof(OnInitializedAsync)));
+		try
 		{
-				//MySort= RegistrationSort.FromEnum(RegistrationSortEnum.LastName);
-				//Logger.LogDebug($"Inside: {nameof(Index)}!{nameof(OnInitializedAsync)}, Sort:{MySort.Id}, calling {nameof(svc.GetNotes)}");
-				Logger.LogDebug($"Inside: {nameof(Index)}!{nameof(OnInitializedAsync)}, calling {nameof(svc.GetNotes)}");
-				try
-				{
-						NotesList = await svc.GetNotes(MySort.RegistrationSortEnum);
-				}
-				catch (Exception)
-				{
-						ExceptionMessage = svc.ExceptionMessage;
-						NavManager.NavigateTo(LivingMessiah.Web.Links.Home.Error);
-				}
+			NotesList = await svc.GetNotes(MySort.RegistrationSortEnum);
 		}
+
+		catch (InvalidOperationException invalidOperationException)
+		{
+			DatabaseError = true;
+			DatabaseErrorMsg = invalidOperationException.Message;
+		}
+	}
+
+
+	#region ErrorHandling
+
+	private void InitializeErrorHandling()
+	{
+		DatabaseInformationMsg = "";
+		DatabaseInformation = false;
+		DatabaseWarningMsg = "";
+		DatabaseWarning = false;
+		DatabaseErrorMsg = "";
+		DatabaseError = false;
+	}
+
+	protected bool DatabaseInformation = false;
+	protected string DatabaseInformationMsg { get; set; }
+	protected bool DatabaseWarning = false;
+	protected string DatabaseWarningMsg { get; set; }
+	protected bool DatabaseError { get; set; } // = false; handled by InitializeErrorHandling
+	protected string DatabaseErrorMsg { get; set; }
+	#endregion
+
 }

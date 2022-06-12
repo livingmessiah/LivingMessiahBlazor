@@ -11,47 +11,69 @@ namespace LivingMessiah.Web.Pages.Sukkot.Payment;
 
 public partial class Payment
 {
-		[Inject]
-		public ILogger<Payment> Logger { get; set; }
+	[Inject]
+	public ILogger<Payment> Logger { get; set; }
 
-		[Inject]
-		public ISukkotService svc { get; set; }
+	[Inject]
+	public ISukkotService svc { get; set; }
 
-		[Inject]
-		NavigationManager NavManager { get; set; }
+	[Inject]
+	public AuthenticationStateProvider AuthenticationStateProvider { get; set; }
 
-		[Inject]
-		public AuthenticationStateProvider AuthenticationStateProvider { get; set; }
+	[Parameter]
+	public int Id { get; set; }
 
-		[Parameter]
-		public int Id { get; set; }
+	public RegistrationSummary RegistrationSummary { get; set; }
 
-		public RegistrationSummary RegistrationSummary { get; set; }
+	public ClaimsPrincipal User { get; set; }
 
-		public ClaimsPrincipal User { get; set; }
-
-		protected string AlertMsg = "";
-		protected string ExceptionMessage = "";
-		protected bool LoadFailed;
-
-		protected override async Task OnInitializedAsync()
+	protected override async Task OnInitializedAsync()
+	{
+		Logger.LogDebug(string.Format("Inside {0} Id:{1}"
+			, nameof(Payment) + "!" + nameof(OnInitializedAsync), Id));
+		InitializeErrorHandling();
+		RegistrationSummary = new RegistrationSummary();
+		try
 		{
-				Logger.LogDebug($"Inside {nameof(Payment)}!{nameof(OnInitializedAsync)}; Id={Id}");
-				RegistrationSummary = new RegistrationSummary();
-				try
-				{
-						var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-						User = authState.User;
-						RegistrationSummary = await svc.Summary(Id, User);
-						LoadFailed = false;
-				}
-				catch (Exception)
-				{
-						LoadFailed = true;
-						ExceptionMessage = svc.ExceptionMessage;
-						NavManager.NavigateTo(LivingMessiah.Web.Links.Home.Error);
-				}
-
+			var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+			User = authState.User;
+			RegistrationSummary = await svc.Summary(Id, User);
 		}
+		catch (PaymentSummaryRecordNotFoundException paymentSummaryRecordNotFoundException)
+		{
+			DatabaseInformation = true;
+			DatabaseInformationMsg = paymentSummaryRecordNotFoundException.Message;
+		}
+		catch (UserNotAuthoirizedException userNotAuthoirizedException)
+		{
+			DatabaseWarning = true;
+			DatabaseWarningMsg = userNotAuthoirizedException.Message;
+		}
+		catch (InvalidOperationException invalidOperationException)
+		{
+			DatabaseError = true;
+			DatabaseErrorMsg = invalidOperationException.Message;
+		}
+
+	}
+
+	#region ErrorHandling
+	private void InitializeErrorHandling()
+	{
+		DatabaseInformationMsg = "";
+		DatabaseInformation = false;
+		DatabaseWarningMsg = "";
+		DatabaseWarning = false;
+		DatabaseErrorMsg = "";
+		DatabaseError = false;
+	}
+
+	protected bool DatabaseInformation = false;
+	protected string DatabaseInformationMsg { get; set; }
+	protected bool DatabaseWarning = false;
+	protected string DatabaseWarningMsg { get; set; }
+	protected bool DatabaseError { get; set; } // = false; handled by InitializeErrorHandling
+	protected string DatabaseErrorMsg { get; set; }
+	#endregion
 
 }

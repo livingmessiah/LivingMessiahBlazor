@@ -33,7 +33,6 @@ public partial class AddForm
 
 	//ToDo this should come from the Sukkot.Constants and saved in cache		
 	public Sukkot.DateRangeLocal DateRangeAttendance { get; set; } = Sukkot.DateRangeLocal.FromEnum(Sukkot.DateRangeEnum.AttendanceDays);
-	public Sukkot.DateRangeLocal DateRangeLodging { get; set; } = Sukkot.DateRangeLocal.FromEnum(Sukkot.DateRangeEnum.LodgingDays);
 
 	protected bool LoadFailed;
 	//protected bool CanEditCampType => Registration.LocationEnum == LocationEnum.WildernessRanch;

@@ -40,12 +40,6 @@ public class vwRegistration
 
 	public int StatusId { get; set; }
 
-	[DisplayName("Lodging Days Total")]
-	public int LodgingDaysTotal { get; set; }
-
-	public int LodgingDaysBitwise { get; set; }
-	public string LodgingDatesCSV { get; set; }
-
 	[DisplayName("Attendance Total")]
 	public int AttendanceTotal { get; set; }
 	public string AttendanceDatesCSV { get; set; }
@@ -58,16 +52,11 @@ public class vwRegistration
 	[DataType(DataType.Currency)]
 	public decimal RegistrationFee { get; set; }
 
-	[DataType(DataType.Currency)]
-	[DisplayName("Camp Cost")]
-	public decimal CampCost { get; set; }
-
 	[DisplayName("Paid")]
 	[DataType(DataType.Currency)]
 	public decimal LmmDonation { get; set; }
 
 	public string Notes { get; set; }
-	public string AssignedLodging { get; set; }
 
 	//Regular
 	public int TotalAdultLun { get; set; }
@@ -129,32 +118,6 @@ public class vwRegistration
 			}
 		}
 	}
-
-	public DateTime[] LodgingDateList
-	{
-		get
-		{
-			if (!String.IsNullOrEmpty(LodgingDatesCSV))
-			{
-				int length = LodgingDatesCSV.Split(",").Length;
-				DateTime[] list = new DateTime[length];
-				string[] array = LodgingDatesCSV.Split(",");
-				int i = 0;
-				foreach (string value in array)
-				{
-					list[i] = (DateTime.Parse(value));
-					i += 1;
-				}
-				return list;
-			}
-			else
-			{
-				return null;
-			}
-		}
-	}
-
-
 
 	[DataType(DataType.Currency)]
 	public decimal AdultMealCost

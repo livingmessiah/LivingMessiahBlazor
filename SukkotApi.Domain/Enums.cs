@@ -72,24 +72,6 @@ public enum KitchenWorkType
 		Cleaner2 = 6
 }
 
-public enum PreferredLodging
-{
-		[Display(Name = "No Preference")]
-		NoPreference = 0,
-		[Display(Name = "Full RV Hookup Near Playground")]
-		FullRvHookupNearPlayground = 1,
-		[Display(Name = "Big House")]
-		BigHouse = 2,
-		[Display(Name = "Bunk House")]
-		BunkHouse = 3,
-		[Display(Name = "Stage Coach Inn [Womans Cabin]")]
-		StageCoachInnWomansCabin = 4,
-		[Display(Name = "Waystop Inn or Jail")]
-		WaystopInnOrJail = 5,
-		[Display(Name = "Hitchin Post")]
-		HitchinPost = 6
-}
-
 // ToDo, Task 512: Merge AgeEnum with MealAges I don't need both 
 public enum MealAges
 {

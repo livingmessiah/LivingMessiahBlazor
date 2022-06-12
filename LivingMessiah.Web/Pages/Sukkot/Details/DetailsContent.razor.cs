@@ -11,6 +11,4 @@ public partial class DetailsContent
 		public vwRegistration vwRegistration { get; set; }
 
 		public DateRangeLocal DateRangeAttendance { get; set; } = DateRangeLocal.FromEnum(DateRangeEnum.AttendanceDays);
-		public DateRangeLocal DateRangeLodging { get; set; } = DateRangeLocal.FromEnum(DateRangeEnum.LodgingDays);
-
 }

@@ -34,13 +34,8 @@ public class RegistrationPOCO
 		public int AttendanceBitwise { get; set; }
 		public string AttendanceDatesCSV { get; set; }
 
-		public int LodgingDaysBitwise { get; set; }
-		public string LodgingDatesCSV { get; set; }
-
-
 		public string Notes { get; set; }
 		public string Avitar { get; set; }
-		public string AssignedLodging { get; set; }
 		public Decimal LmmDonation { get; set; }
 		public bool WillHelpWithMeals { get; set; }
 		#endregion
@@ -71,31 +66,6 @@ public class RegistrationPOCO
 						}
 				}
 		}
-
-		public DateTime[] LodgingDateList
-		{
-				get
-				{
-						if (!String.IsNullOrEmpty(LodgingDatesCSV))
-						{
-								int length = LodgingDatesCSV.Split(",").Length;
-								DateTime[] list = new DateTime[length];
-								string[] array = LodgingDatesCSV.Split(',');
-								int i = 0;
-								foreach (string value in array)
-								{
-										list[i] = (DateTime.Parse(value));
-										i += 1;
-								}
-								return list;
-						}
-						else
-						{
-								return null;
-						}
-				}
-		}
-
 
 
 		public int WillHelpWithMealsToInt

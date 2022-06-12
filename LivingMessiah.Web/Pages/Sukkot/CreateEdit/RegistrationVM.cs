@@ -65,11 +65,6 @@ public class RegistrationVM
 	public int AttendanceBitwise { get; set; }
 	public DateTime[] AttendanceDateList { get; set; }
 
-	[DisplayName("Lodging Days Bitwise")]
-	public int LodgingDaysBitwise { get; set; }
-	public DateTime[] LodgingDateList { get; set; }
-
-
 	[DisplayName("Comments or Special Requests")]
 	[DataType(DataType.MultilineText)]
 	[StringLength(800)]
@@ -78,11 +73,6 @@ public class RegistrationVM
 	[DisplayName("Picture (optional)")]
 	[StringLength(255)]
 	public string Avitar { get; set; }
-
-	[DisplayName("Assigned Lodging")]
-	[DataType(DataType.MultilineText)]
-	[StringLength(800)]
-	public string AssignedLodging { get; set; }
 
 	[DisplayName("LMM Donation")]
 	[DataType(DataType.Currency)]

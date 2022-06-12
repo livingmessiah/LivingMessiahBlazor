@@ -33,15 +33,10 @@ public class Registration
 		public DateTime[] AttendanceDateList { get; set; }  // NOT NULL
 		public string AttendanceDatesCSV { get; set; }
 
-		public int LodgingDaysBitwise { get; set; }
-		public DateTime[] LodgingDateList { get; set; }     // NOT NULL
-		public string LodgingDatesCSV { get; set; }
-
 		public string Notes { get; set; }
 
 
 		//public string Avitar { get; set; }
-		//public string AssignedLodging { get; set; }
 		//public decimal LmmDonation { get; set; }		// NOT NULL
 		public bool WillHelpWithMeals { get; set; }  // NOT NULL
 

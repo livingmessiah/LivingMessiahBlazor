@@ -532,15 +532,6 @@ public static class Sukkot
 	public const string AttendanceChart = "/SukkotAdmin/AttendanceChart";
 	public const string ReturnUrlSukkotRegistration = "/Sukkot/Registration";
 
-	public const string LodgingDaysAll = "/SukkotAdmin/LodgingDaysAll";
-
-	public const string LodgingDaysChart = "/SukkotAdmin/LodgingDaysChart";
-	public const string LodgingDaysPivotOnCampCode = "/SukkotAdmin/LodgingDaysPivotOnCampCode";
-	public const string LodgingDaysPivotOnCampCodeTitle = "Sukkot Admin Lodging Days Pivot on Camp";
-
-	public const string LodgingDetails = "/SukkotAdmin/LodgingDetails";
-	public const string LodgingDetailsTitle = "Sukkot Admin Lodging Details";
-
 	public static class Donations
 	{
 		public const string Grid = "/SukkotAdmin/DonationsGrid";
@@ -548,13 +539,6 @@ public static class Sukkot
 		public const string CreateDonation = "/SukkotAdmin/CreateDonation";
 	}
 
-	public static class LodgingDays
-	{
-		public const string All = "/SukkotAdmin/LodgingDaysAll";
-		public const string Chart = "/SukkotAdmin/LodgingDaysChart";
-		public const string PivotOnCampCode = "/SukkotAdmin/LodgingDaysPivotOnCampCode";
-		public const string Details = "/SukkotAdmin/LodgingDetails";
-	}
 
 	public static class Errors
 	{

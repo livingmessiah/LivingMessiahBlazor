@@ -40,7 +40,6 @@ public static class TShirts
 
 public static class Features
 {
-	public static bool IsTrackingLodging { get; set; } = false;
 	public static bool IsTrackingMeals { get; set; } = false;
 	public static bool IsTrackingPassports { get; set; } = false; 
 }

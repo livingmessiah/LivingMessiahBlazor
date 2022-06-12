@@ -532,7 +532,6 @@ WHERE dbo.udfGetNextShabbatDate() = ShabbatDate
 
 		public async Task<List<Download>> GetDownloads(bool selectAll, bool testEmails)
 		{
-				//, EMail, StatusId, TotalDonation, MealCount, RegistrationFee, MealCost, CampCost
 				const string TOP = "TOP 250 ";
 				string Selected = selectAll ? " 1 AS Selected" : " 0 AS Selected";
 				//string Where = testEmails? " WHERE FamilyName LIKE 'Marsing%' OR (FirstName = 'Mark' AND FamilyName = 'Webb') OR (FirstName = 'Ralphie' AND FamilyName = 'Cratty')" : "";

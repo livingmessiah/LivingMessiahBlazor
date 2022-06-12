@@ -21,11 +21,6 @@
 	<div class="d-print-none">
 		<h5 class="text-muted">
 			Sorted by @MySort.Name
-
-			@*<a asp-page="@RegistrationList" class="btn btn-primary btn-sm float-right">
-					<i class="fa fa-table"></i> Registration List <i class="fas fa-caret-right"></i>
-				</a>*@
-
 		</h5>
 	</div>
 
@@ -166,3 +161,23 @@
 	}
 
 </LoadingComponent>
+
+
+@if (DatabaseError)
+{
+	<p class="text-danger"><em>@DatabaseErrorMsg</em></p>
+}
+else
+{
+	if (DatabaseWarning)
+	{
+		<p class="text-warning">@DatabaseWarningMsg</p>
+	}
+	else
+	{
+		if (DatabaseInformation)
+		{
+			<p class="text-info">@DatabaseInformationMsg</p>
+		}
+	}
+}

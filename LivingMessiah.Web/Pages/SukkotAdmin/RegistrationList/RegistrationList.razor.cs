@@ -25,12 +25,8 @@ public partial class RegistrationList
 	[Inject]
 	NavigationManager NavManager { get; set; }
 
-	public string ExceptionMessage { get; set; }
-
 	public RegistrationSortEnum Sort { get; private set; }
 	public List<vwRegistration> Registrations { get; set; }
-
-	public List<vwRegistration> RegistrationsGHTHF { get; set; }
 
 	public RegistrationSortEnum RegistrationSort { get; set; } = RegistrationSortEnum.LastName;
 
@@ -40,37 +36,53 @@ public partial class RegistrationList
 	{
 		try
 		{
-			Logger.LogDebug($"Inside: {nameof(RegistrationList)}!{nameof(OnInitializedAsync)}, RegistrationSort:{RegistrationSort}, calling {nameof(svc.GetAll)}");
-			//Seasons = CalendarYear.Seasons.Where(w => w.YearId == CalendarYear.Year).ToList();
+			Logger.LogDebug(string.Format("Inside {0} , RegistrationSort:{1}"
+					, nameof(RegistrationList) + "!" + nameof(OnInitializedAsync), RegistrationSort));
 			Registrations = await svc.GetAll(RegistrationSort);
-			if (Registrations != null)
+			if (Registrations is not null)
 			{
 				RecordCount = Registrations.Count;
 			}
+			else
+			{
+				DatabaseWarning = true;
+				DatabaseWarningMsg = $"{nameof(Registrations)} is null";
+			}
 
 		}
-		catch (Exception)
+		catch (Exception ex)
 		{
-			ExceptionMessage = svc.ExceptionMessage;
-			NavManager.NavigateTo(LivingMessiah.Web.Links.Home.Error);
+			DatabaseError = true;
+			DatabaseErrorMsg = $"Error reading database";
+			Logger.LogError(ex, $"...{DatabaseErrorMsg}");
 		}
 	}
 
 	async Task Sort_ButtonClick(RegistrationSortEnum sort)
 	{
-		Logger.LogDebug($"Inside: {nameof(RegistrationList)}!{nameof(Sort_ButtonClick)}, sort:{sort}");
+		Logger.LogDebug(string.Format("Inside {0} , sort:{1}"
+		, nameof(RegistrationList) + "!" + nameof(Sort_ButtonClick), sort));
 
 		RegistrationSort = sort;
 		RecordCount = 0;
 		try
 		{
 			Registrations = await svc.GetAll(RegistrationSort);
-			if (Registrations != null) { RecordCount = Registrations.Count; }
+			if (Registrations is not null)
+			{
+				RecordCount = Registrations.Count;
+			}
+			else
+			{
+				DatabaseWarning = true;
+				DatabaseWarningMsg = $"{nameof(Registrations)} is null";
+			}
 		}
-		catch (Exception)
+		catch (Exception ex)
 		{
-			ExceptionMessage = svc.ExceptionMessage;
-			NavManager.NavigateTo(LivingMessiah.Web.Links.Home.Error);
+			DatabaseError = true;
+			DatabaseErrorMsg = $"Error reading database";
+			Logger.LogError(ex, $"...{DatabaseErrorMsg}");
 		}
 		StateHasChanged();
 	}
@@ -109,4 +121,24 @@ public partial class RegistrationList
 	{
 		NavManager.NavigateTo(Links.Sukkot.Meals.Index + "/" + id);
 	}
+
+	#region ErrorHandling
+
+	private void InitializeErrorHandling()
+	{
+		DatabaseInformationMsg = "";
+		DatabaseInformation = false;
+		DatabaseWarningMsg = "";
+		DatabaseWarning = false;
+		DatabaseErrorMsg = "";
+		DatabaseError = false;
+	}
+
+	protected bool DatabaseInformation = false;
+	protected string DatabaseInformationMsg { get; set; }
+	protected bool DatabaseWarning = false;
+	protected string DatabaseWarningMsg { get; set; }
+	protected bool DatabaseError { get; set; } // = false; handled by InitializeErrorHandling
+	protected string DatabaseErrorMsg { get; set; }
+	#endregion
 }

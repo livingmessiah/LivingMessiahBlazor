@@ -8,78 +8,90 @@ using SukkotApi.Domain;
 using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
-//using static LivingMessiah.Web.Links.Sukkot;
 
 namespace LivingMessiah.Web.Pages.Sukkot.Details;
 
 public partial class Details
 {
-		[Inject]
-		public ISukkotService svc { get; set; }
+	[Inject]
+	public ISukkotService svc { get; set; }
 
-		[Inject]
-		public ILogger<Details> Logger { get; set; }
+	[Inject]
+	public ILogger<Details> Logger { get; set; }
 
-		[Inject]
-		public AuthenticationStateProvider AuthenticationStateProvider { get; set; }
+	[Inject]
+	public AuthenticationStateProvider AuthenticationStateProvider { get; set; }
 
-		[Inject]
-		NavigationManager NavManager { get; set; }
+	[Inject]
+	NavigationManager NavManager { get; set; }
 
-		[Parameter]
-		public int Id { get; set; }
+	[Parameter]
+	public int Id { get; set; }
 
-		[Parameter]
-		public bool showPrintInstructionMessage { get; set; } = true;
+	[Parameter]
+	public bool showPrintInstructionMessage { get; set; } = true;
 
-		public vwRegistration vwRegistration { get; set; }
-		public ClaimsPrincipal User { get; set; }
+	public vwRegistration vwRegistration { get; set; }
+	public ClaimsPrincipal User { get; set; }
 
-		protected string ExceptionMessage = "";
-		//protected bool LoadFailed;  // using <LoadingComponent>
+	protected override async Task OnInitializedAsync()
+	{
+		Logger.LogDebug(string.Format("Inside {0} Id:{1}"
+			, nameof(Details) + "!" + nameof(OnInitializedAsync), Id));
 
-		protected override async Task OnInitializedAsync()
+		var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+		User = authState.User;
+
+		try
 		{
-				Logger.LogDebug($"Inside {nameof(Details)}!{nameof(OnInitializedAsync)}, Id: {Id}");
-
-				var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-				User = authState.User;
-
-				try
-				{
-						Logger.LogDebug($"Calling {nameof(svc.Details)}");
-						vwRegistration = await svc.Details(Id, User, showPrintInstructionMessage);
-				}
-				catch (Exception)
-				{
-						//LoadFailed = true;
-						ExceptionMessage = svc.ExceptionMessage;
-						NavManager.NavigateTo(LivingMessiah.Web.Links.Home.Error);
-				}
-
-
+			vwRegistration = await svc.Details(Id, User, showPrintInstructionMessage);
 		}
-
-		protected bool MakeModalVisible = false;
-
-		void PaymentInstructions_ButtonClick()
+		catch (InvalidOperationException invalidOperationException)
 		{
-				Logger.LogDebug($"Event: {nameof(PaymentInstructions_ButtonClick)} clicked");
-				MakeModalVisible = true;
-				StateHasChanged();
-
+			DatabaseError = true;
+			DatabaseErrorMsg = invalidOperationException.Message;
 		}
-		void CancelModal_ButtonClick()
-		{
-				Logger.LogDebug($"Event: {nameof(CancelModal_ButtonClick)} clicked");
-				MakeModalVisible = false;
-				StateHasChanged();
-		}
+	}
 
-		void Edit_ButtonClick(MouseEventArgs e, int id)
-		{
-				NavManager.NavigateTo(Links.Sukkot.CreateEdit + "/" + id);
-		}
+	protected bool MakeModalVisible = false;
 
+	void PaymentInstructions_ButtonClick()
+	{
+		Logger.LogDebug($"Event: {nameof(PaymentInstructions_ButtonClick)} clicked");
+		MakeModalVisible = true;
+		StateHasChanged();
+
+	}
+	void CancelModal_ButtonClick()
+	{
+		Logger.LogDebug($"Event: {nameof(CancelModal_ButtonClick)} clicked");
+		MakeModalVisible = false;
+		StateHasChanged();
+	}
+
+	void Edit_ButtonClick(MouseEventArgs e, int id)
+	{
+		NavManager.NavigateTo(Links.Sukkot.CreateEdit + "/" + id);
+	}
+
+	#region ErrorHandling
+
+	private void InitializeErrorHandling()
+	{
+		DatabaseInformationMsg = "";
+		DatabaseInformation = false;
+		DatabaseWarningMsg = "";
+		DatabaseWarning = false;
+		DatabaseErrorMsg = "";
+		DatabaseError = false;
+	}
+
+	protected bool DatabaseInformation = false;
+	protected string DatabaseInformationMsg { get; set; }
+	protected bool DatabaseWarning = false;
+	protected string DatabaseWarningMsg { get; set; }
+	protected bool DatabaseError { get; set; } // = false; handled by InitializeErrorHandling
+	protected string DatabaseErrorMsg { get; set; }
+	#endregion
 
 }

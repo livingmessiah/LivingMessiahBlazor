@@ -16,8 +16,7 @@ namespace Sukkot.Web.Service;
 
 public interface ISukkotService
 {
-
-	string ExceptionMessage { get; set; }
+	string UserInterfaceMessage { get; set; }
 	Task<vwRegistration> Details(int id, ClaimsPrincipal user, bool showPrintInstructionMessage = false);
 	Task<vwRegistration> DeleteConfirmation(int id, ClaimsPrincipal user);
 	Task<RegistrationVM> Update(int id, ClaimsPrincipal user);
@@ -49,29 +48,47 @@ public class SukkotService : ISukkotService
 
 
 
-	public string ExceptionMessage { get; set; } = "";
+	private string LogExceptionMessage { get; set; } = "";  
+	public string UserInterfaceMessage { get; set; } = "";
 
 	public async Task<RegistrationSummary> Summary(int id, ClaimsPrincipal user)
 	{
+		UserInterfaceMessage = "";
+		Logger.LogDebug(string.Format("Inside {0} id:{1}"
+			, nameof(SukkotService) + "!" + nameof(Summary), id));
 		var vm = new RegistrationSummary();
 		try
 		{
 			vm = await db.GetRegistrationSummary(id);
+			if (vm is null)
+			{
+				UserInterfaceMessage = "Payment Summary Record NOT Found";
+				Logger.LogWarning(string.Format("Inside {0} id:{1}"
+					, nameof(SukkotService) + "!" + nameof(Summary), UserInterfaceMessage));
+				throw new PaymentSummaryRecordNotFoundException(UserInterfaceMessage);
+			}
 		}
 		catch (Exception ex)
 		{
-			ExceptionMessage = $"Inside {nameof(Summary)}, {nameof(db.GetRegistrationSummary)}";
-			Logger.LogError(ex, ExceptionMessage);
-			ExceptionMessage += ex.Message ?? "-- ex.Message was null --";
-			throw new InvalidOperationException(ExceptionMessage);
+			LogExceptionMessage = $"Inside {nameof(Summary)}, db.{nameof(db.GetRegistrationSummary)}";
+			Logger.LogError(ex, LogExceptionMessage);
+
+			/*
+			ToDo: figure this out
+			I would think that if a PaymentSummaryRecordNotFoundException is thrown, that would be the end of it.
+			But this catchall exception IS ALSO CALLED??? 
+			I don't want this, but this will do for now so I concatenated UserInterfaceMessage with a +=
+			*/
+			UserInterfaceMessage += "An invalid operation occurred, contact your administrator";
+			throw new InvalidOperationException(UserInterfaceMessage);
 		}
 
-		//ToDo: id is not used
 		if (!IsUserAuthoirized(vm.EMail, id, user))
 		{
-			ExceptionMessage = $"Inside {nameof(Summary)}, logged in user:{vm.EMail} lacks authority for id={id}";
-			Logger.LogWarning(ExceptionMessage);
-			throw new UserNotAuthoirizedException(ExceptionMessage);
+			LogExceptionMessage = $"Inside {nameof(Summary)}, logged in user:{vm.EMail} lacks authority for id={id}";
+			Logger.LogWarning(LogExceptionMessage);
+			UserInterfaceMessage += "User not authorized";
+			throw new UserNotAuthoirizedException(UserInterfaceMessage);
 		}
 
 		return vm;
@@ -88,19 +105,21 @@ public class SukkotService : ISukkotService
 				vm.PayWithCheckMessage = Other.PayWithCheckModalMessage;
 			}
 		}
+
 		catch (Exception ex)
 		{
-			ExceptionMessage = $"Inside {nameof(Details)}, {nameof(db.ById)}";
-			Logger.LogError(ex, ExceptionMessage, id, showPrintInstructionMessage);
-			ExceptionMessage += ex.Message ?? "-- ex.Message was null --";
-			throw new InvalidOperationException(ExceptionMessage);
+			LogExceptionMessage = $"Inside {nameof(Details)}, {nameof(db.ById)}";
+			Logger.LogError(ex, LogExceptionMessage, id, showPrintInstructionMessage);
+			UserInterfaceMessage += "An invalid operation occurred getting registration details, contact your administrator";
+			throw new InvalidOperationException(UserInterfaceMessage);
 		}
 
 		if (!IsUserAuthoirized(vm.EMail, id, user))
 		{
-			ExceptionMessage = $"Inside {nameof(Details)}, logged in user:{vm.EMail} lacks authority for id={id}";
-			Logger.LogWarning(ExceptionMessage);
-			throw new UserNotAuthoirizedException(ExceptionMessage);
+			LogExceptionMessage = $"Inside {nameof(Details)}, logged in user:{vm.EMail} lacks authority for id={id}";
+			Logger.LogWarning(LogExceptionMessage);
+			UserInterfaceMessage += "User not authorized";
+			throw new UserNotAuthoirizedException(UserInterfaceMessage);
 		}
 
 		return vm;
@@ -115,17 +134,18 @@ public class SukkotService : ISukkotService
 		}
 		catch (Exception ex)
 		{
-			ExceptionMessage = $"Inside {nameof(DeleteConfirmation)}, {nameof(db.ById)}";
-			Logger.LogError(ex, ExceptionMessage, id);
-			ExceptionMessage += ex.Message ?? "-- ex.Message was null --";
-			throw new InvalidOperationException(ExceptionMessage);
+			LogExceptionMessage = $"Inside {nameof(DeleteConfirmation)}, {nameof(db.ById)}";
+			Logger.LogError(ex, LogExceptionMessage, id);
+			UserInterfaceMessage += "An invalid operation occurred getting registration details, contact your administrator";
+			throw new InvalidOperationException(UserInterfaceMessage);
 		}
 
 		if (!IsUserAuthoirized(vm.EMail, id, user))
 		{
-			ExceptionMessage = $"Inside {nameof(DeleteConfirmation)}, logged in user:{vm.EMail} lacks authority for id={id}";
-			Logger.LogWarning(ExceptionMessage);
-			throw new UserNotAuthoirizedException(ExceptionMessage);
+			LogExceptionMessage = $"Inside {nameof(DeleteConfirmation)}, logged in user:{vm.EMail} lacks authority for id={id}";
+			Logger.LogWarning(LogExceptionMessage);
+			UserInterfaceMessage += "User not authorized";
+			throw new UserNotAuthoirizedException(LogExceptionMessage);
 		}
 
 		return vm;
@@ -134,18 +154,21 @@ public class SukkotService : ISukkotService
 	//
 	public async Task<RegistrationVM> Update(int id, ClaimsPrincipal user)
 	{
-		Logger.LogInformation($"Inside {nameof(SukkotService)}!{nameof(Update)}, id={id}");
+		Logger.LogInformation(string.Format("Inside {0} id:{1}"
+			, nameof(SukkotService) + "!" + nameof(Update), id));
+		
 		RegistrationPOCO registrationPOCO = new RegistrationPOCO();
+
 		try
 		{
 			registrationPOCO = await db.ById2(id);
 			if (!IsUserAuthoirized(registrationPOCO.EMail, id, user))
 			{
-				ExceptionMessage = $"Inside {nameof(Update)}, logged in user:{registrationPOCO.EMail} lacks authority for id={id}";
-				Logger.LogWarning(ExceptionMessage);
-				throw new UserNotAuthoirizedException(ExceptionMessage);
+				LogExceptionMessage = $"Inside {nameof(Update)}, logged in user:{registrationPOCO.EMail} lacks authority for id={id}";
+				Logger.LogWarning(LogExceptionMessage);
+				UserInterfaceMessage += "User not authorized";
+				throw new UserNotAuthoirizedException(UserInterfaceMessage);
 			}
-			//if (registrationPOCO.StatusId == (int)Status.FullyPaid & !AdminOrSukkotOverride(user))
 			if (registrationPOCO.StatusEnum == StatusEnum.FullyPaid & !AdminOrSukkotOverride(user))
 			{
 				throw new RegistratationException("Can not edit registration that has been fully paid.");
@@ -153,16 +176,11 @@ public class SukkotService : ISukkotService
 		}
 		catch (Exception ex)
 		{
-			ExceptionMessage = $"Inside {nameof(Update)}";
-			Logger.LogError(ex, ExceptionMessage, id);
-			ExceptionMessage += ex.Message ?? "-- ex.Message was null --";
-			throw new InvalidOperationException(ExceptionMessage);
+			LogExceptionMessage = $"Inside {nameof(Update)}, {nameof(db.ById2)}";
+			Logger.LogError(ex, LogExceptionMessage, id);
+			UserInterfaceMessage += "An invalid operation occurred updating registration, contact your administrator";
+			throw new InvalidOperationException(UserInterfaceMessage);
 		}
-
-		//Logger.LogDebug($"...Calling {nameof(UpdateDTO)}");
-		//Logger.LogDebug($".....AttendanceDateList: {DumpDateRange(registrationPOCO.AttendanceDateList)}");
-		//Logger.LogDebug($".....LodgingDateList: {DumpDateRange(registrationPOCO.LodgingDateList)}");
-
 		return UpdateDTO(registrationPOCO);
 	}
 
@@ -172,11 +190,10 @@ public class SukkotService : ISukkotService
 
 		try
 		{
-			Logger.LogInformation($"Calling {nameof(db.Create)}");
-
+			Logger.LogInformation(string.Format("Inside {0}", nameof(SukkotService) + "!" + nameof(Create)));
 			if (user.GetRoles() == Auth0.Roles.Admin | user.GetRoles() == Auth0.Roles.Sukkot)
 			{
-				// This is nonsensical and superfalous 
+				// This is nonsensical and superfluous 
 				// I think it's here because making the if a Not makes it hard to understand
 				registration.StatusEnum = registration.StatusEnum;
 			}
@@ -186,17 +203,16 @@ public class SukkotService : ISukkotService
 			}
 
 			registration.AttendanceBitwise = GetDaysBitwise(registration.AttendanceDateList, DateRangeEnum.AttendanceDays);
-			registration.LodgingDaysBitwise = GetDaysBitwise(registration.LodgingDateList, DateRangeEnum.LodgingDays);
 
 			newId = await db.Create(DTO(registration));
 			Logger.LogInformation($"Registration created for {registration.FamilyName}/{registration.EMail}; newId={newId}, registration.StatusId={registration.StatusEnum}");
 		}
 		catch (Exception ex)
 		{
-			ExceptionMessage = $"Inside {nameof(Create)}, {nameof(db.Create)}";
-			Logger.LogError(ex, ExceptionMessage);
-			ExceptionMessage += ex.Message ?? "-- ex.Message was null --";
-			throw new InvalidOperationException(ExceptionMessage);
+			LogExceptionMessage = $"Inside {nameof(Create)}, db.{nameof(db.Create)}";
+			Logger.LogError(ex, LogExceptionMessage);
+			UserInterfaceMessage += "An invalid operation occurred creating the registration, contact your administrator";
+			throw new InvalidOperationException(UserInterfaceMessage);
 		}
 		return newId;
 	}
@@ -224,26 +240,12 @@ public class SukkotService : ISukkotService
 		DateRangeLocal DateRangeLocal = DateRangeLocal.FromEnum(dateRangeEnum);
 
 		int bitwise = 0;
-
-		if (dateRangeEnum == DateRangeEnum.AttendanceDays)
+		int a = 0;
+		foreach (DateTime day in dateList)
 		{
-			int a = 0;
-			foreach (DateTime day in dateList)
-			{
-				a = DateFactory.GetAttendanceBitwise(day);
-				//Logger.LogDebug($"......a:{a} for day:{day}");
-				bitwise = bitwise + a;
-			}
-		}
-		else
-		{
-			foreach (DateTime day in dateList)
-			{
-				int l = 0;
-				l = DateFactory.GetLodgingBitwise(day);
-				//Logger.LogDebug($"......l:{l} for day:{day}");
-				bitwise = bitwise + l;
-			}
+			a = DateFactory.GetAttendanceBitwise(day);
+			//Logger.LogDebug($"......a:{a} for day:{day}");
+			bitwise = bitwise + a;
 		}
 		//Logger.LogDebug($"...bitwise: {bitwise}");
 		return bitwise;
@@ -266,8 +268,6 @@ public class SukkotService : ISukkotService
 			CampTypeEnum = registration.CampTypeEnum,  //CampId = registration.CampTypeEnum,
 			StatusEnum = registration.StatusEnum,  //StatusId = registration.StatusEnum,
 			AttendanceBitwise = registration.AttendanceBitwise,
-			LodgingDaysBitwise = registration.LodgingDaysBitwise,
-			AssignedLodging = registration.AssignedLodging,
 			LmmDonation = registration.LmmDonation,
 			WillHelpWithMeals = registration.WillHelpWithMeals,
 			Avitar = registration.Avitar,
@@ -294,9 +294,6 @@ public class SukkotService : ISukkotService
 			StatusEnum = poco.StatusEnum, // poco.StatusId,
 			AttendanceBitwise = poco.AttendanceBitwise,
 			AttendanceDateList = poco.AttendanceDateList,
-			LodgingDaysBitwise = poco.LodgingDaysBitwise,
-			LodgingDateList = poco.LodgingDateList,
-			AssignedLodging = poco.AssignedLodging,
 			LmmDonation = poco.LmmDonation,
 			WillHelpWithMeals = poco.WillHelpWithMeals,
 			Avitar = poco.Avitar,
@@ -305,14 +302,14 @@ public class SukkotService : ISukkotService
 
 		Logger.LogDebug($"Inside {nameof(SukkotService)}!{nameof(UpdateDTO)}");
 		//Logger.LogDebug($"...registration.StatusEnum: {registration.StatusEnum}, registration.CampTypeEnum: {registration.CampTypeEnum}");
-		//Logger.LogDebug($"...AttendanceDateList: {registration.AttendanceDateList}; LodgingDateList: {registration.LodgingDateList}");
-		//Logger.LogDebug($"...AttendanceBitwise: {registration.AttendanceBitwise}; LodgingDaysBitwise: {registration.LodgingDaysBitwise}");
+		//Logger.LogDebug($"...AttendanceDateList: {registration.AttendanceDateList}");
+		//Logger.LogDebug($"...AttendanceBitwise: {registration.AttendanceBitwise}");
 		return registration;
 	}
 
 	public async Task<int> Edit(RegistrationVM registration, ClaimsPrincipal user)
 	{
-		Logger.LogInformation($"Inside {nameof(SukkotService)}!{nameof(Edit)}");
+		Logger.LogInformation(string.Format("Inside {0}", nameof(SukkotService) + "!" + nameof(Edit)));
 		int count = 0;
 		try
 		{
@@ -327,25 +324,18 @@ public class SukkotService : ISukkotService
 			}
 
 			registration.AttendanceBitwise = GetDaysBitwise(registration.AttendanceDateList, DateRangeEnum.AttendanceDays);
-			registration.LodgingDaysBitwise = GetDaysBitwise(registration.LodgingDateList, DateRangeEnum.LodgingDays);
 
-			Logger.LogInformation($"Calling {nameof(db.Update)}");
+			Logger.LogInformation(string.Format("Calling db.{0}", nameof(db.Update)));
 			count = await db.Update(DTO(registration));
-			Logger.LogInformation($"Registration updated for {registration.FamilyName}/{registration.EMail}; count={count}");
-
-			/*
-			if (registration.ChildBig == 0 | registration.ChildSmall == 0)
-			{
-				count = await db.UpdateMealTicketReset(registration.Id, registration.ChildBig, registration.ChildSmall);
-			}
-			*/
+			Logger.LogInformation(string.Format("Registration updated for {0} count:{1}"
+				, nameof(registration.FamilyName) + "/" + nameof(registration.EMail), count));
 		}
 		catch (Exception ex)
 		{
-			ExceptionMessage = $"Inside {nameof(Edit)}, {nameof(db.Update)}";
-			Logger.LogError(ex, ExceptionMessage);
-			ExceptionMessage += ex.Message ?? "-- ex.Message was null --";
-			throw new InvalidOperationException(ExceptionMessage);
+			LogExceptionMessage = $"Inside {nameof(Edit)}, db.{nameof(db.Update)}";
+			Logger.LogError(ex, LogExceptionMessage);
+			UserInterfaceMessage += "An invalid operation occurred editing the registration, contact your administrator";
+			throw new InvalidOperationException(UserInterfaceMessage);
 		}
 		return count;
 	}
@@ -361,10 +351,10 @@ public class SukkotService : ISukkotService
 		}
 		catch (Exception ex)
 		{
-			ExceptionMessage = $"Inside {nameof(DeleteConfirmed)}, {nameof(db.Delete)}, id={id}";
-			Logger.LogError(ex, ExceptionMessage);
-			ExceptionMessage += ex.Message ?? "-- ex.Message was null --";
-			throw new InvalidOperationException(ExceptionMessage);
+			LogExceptionMessage = $"Inside {nameof(DeleteConfirmed)}, {nameof(db.Delete)}, id={id}";
+			Logger.LogError(ex, LogExceptionMessage);
+			UserInterfaceMessage += "An invalid operation occurred during registration deletion, contact your administrator";
+			throw new InvalidOperationException(UserInterfaceMessage);
 		}
 		return count;
 	}
@@ -388,17 +378,18 @@ public class SukkotService : ISukkotService
 		}
 		catch (Exception ex)
 		{
-			ExceptionMessage = $"Inside {nameof(GetRegistrationDataAndCheckAuthority)}, {nameof(db.MealsRelatedRegistrationData)}, registrationId={registrationId}";
-			Logger.LogError(ex, ExceptionMessage);
-			ExceptionMessage += ex.Message ?? "-- ex.Message was null --";
-			throw new InvalidOperationException(ExceptionMessage);
+			LogExceptionMessage = $"Inside {nameof(GetRegistrationDataAndCheckAuthority)}, {nameof(db.MealsRelatedRegistrationData)}, registrationId={registrationId}";
+			Logger.LogError(ex, LogExceptionMessage);
+			UserInterfaceMessage += "An invalid operation occurred during getting meals related registration data, contact your administrator";
+			throw new InvalidOperationException(UserInterfaceMessage);
 		}
 
 		if (!IsUserAuthoirized(RegistrationData.EMail, registrationId, user))
 		{
-			ExceptionMessage = $"Inside {nameof(GetRegistrationDataAndCheckAuthority)}, logged in user:{RegistrationData.EMail} lacks authority for registrationId={registrationId}";
-			Logger.LogWarning(ExceptionMessage);
-			throw new UserNotAuthoirizedException(ExceptionMessage);
+			LogExceptionMessage = $"Inside {nameof(GetRegistrationDataAndCheckAuthority)}, logged in user:{RegistrationData.EMail} lacks authority for registrationId={registrationId}";
+			Logger.LogWarning(LogExceptionMessage);
+			UserInterfaceMessage += "User not authorized";
+			throw new UserNotAuthoirizedException(UserInterfaceMessage);
 		}
 
 		return RegistrationData;
@@ -438,58 +429,13 @@ public class SukkotService : ISukkotService
 		}
 		catch (Exception ex)
 		{
-			ExceptionMessage = $"Inside {nameof(GetMeals)}, registrationData.Id={registrationData.Id}";
-			Logger.LogError(ex, ExceptionMessage);
-			ExceptionMessage += ex.Message ?? "-- ex.Message was null --";
-			throw new InvalidOperationException(ExceptionMessage);
+			LogExceptionMessage = $"Inside {nameof(GetMeals)}, registrationData.Id={registrationData.Id}";
+			Logger.LogError(ex, LogExceptionMessage);
+			UserInterfaceMessage += "An invalid operation occurred getting meals related registration data, contact your administrator";
+			throw new InvalidOperationException(UserInterfaceMessage);
 		}
 		return vm;
 	}
-
-	/*
-	NOTE IMPLMENTED YET, COMMENTED OUT BECAUSE OF WARNING
-
-	public async Task<KitchenWorkVM> KitchenJobs(int registrationId, ClaimsPrincipal user)
-	{
-		log.LogInformation($"Inside {nameof(KitchenJobs)}, registrationId={registrationId}");
-		MealsRelatedRegistrationData RegistrationData = new MealsRelatedRegistrationData();
-		RegistrationData = await GetRegistrationDataAndCheckAuthority(registrationId, user);
-		var vm = new KitchenWorkVM();
-		vm = await GetKitchenJobs(RegistrationData);
-		return vm;
-	}
-
-	private async Task<KitchenWorkVM> GetKitchenJobs(MealsRelatedRegistrationData registrationData)
-	{
-		var vm = new KitchenWorkVM();
-		log.LogInformation("Get Kitchen Jobs");
-
-		vm.RegistrationId = registrationData.Id;
-		vm.Title = Other.MealTicketTitle;
-		vm.FamilyName = registrationData.FamilyName;
-		//vm.StatusId = registrationData.StatusId;
-
-		//vm.AdultCount = registrationData.Adults;
-		//vm.ChildBigCount = registrationData.ChildBig;
-		//vm.ChildSmallCount = registrationData.ChildSmall;
-
-		try
-		{
-			//vm.MealAdult = await GetMealAdultAsync(registrationData.Id, registrationData.Adults, MealAges.Adults);
-			//vm.MealChildBig = await GetMealChildBigAsync(registrationData.Id, registrationData.ChildBig, MealAges.ChildBig);
-			//vm.MealChildSmall = await GetMealChildSmallAsync(registrationData.Id, registrationData.ChildSmall, MealAges.ChildSmall);
-		}
-		catch (Exception ex)
-		{
-			ExceptionMessage = $"Inside {nameof(GetKitchenJobs)}, registrationData.Id={registrationData.Id}";
-			log.LogError(ex, ExceptionMessage);
-			ExceptionMessage += ex.Message ?? "-- ex.Message was null --";
-			throw new InvalidOperationException(ExceptionMessage);
-		}
-
-		return vm;
-	}
-	*/
 
 	private async Task<Meal> GetMealAdultAsync(int id, int count, MealAges mealAges)
 	{
@@ -611,14 +557,13 @@ public class SukkotService : ISukkotService
 			}
 
 			count += await db.RegistrationUpdateMealsCompleted(vm.RegistrationId);
-			//log.LogDebug($"Meal Ticket(s) updated for {nameof(Registration)}; count={count}");
 		}
 		catch (Exception ex)
 		{
-			ExceptionMessage = $"Inside {nameof(UpdateMeals)}";
-			Logger.LogError(ex, ExceptionMessage);
-			ExceptionMessage += ex.Message ?? "-- ex.Message was null --";
-			throw new InvalidOperationException(ExceptionMessage);
+			LogExceptionMessage = $"Inside {nameof(UpdateMeals)}";
+			Logger.LogError(ex, LogExceptionMessage);
+			UserInterfaceMessage += "An invalid operation occurred updating meals, contact your administrator";
+			throw new InvalidOperationException(UserInterfaceMessage);
 		}
 		return count;
 	}
@@ -666,6 +611,22 @@ public class UserNotAuthoirizedException : Exception
 	}
 
 	public UserNotAuthoirizedException(string message, Exception inner)
+			: base(message, inner)
+	{
+	}
+}
+
+public class PaymentSummaryRecordNotFoundException : Exception
+{
+	public PaymentSummaryRecordNotFoundException()
+	{
+	}
+	public PaymentSummaryRecordNotFoundException(string message)
+			: base(message)
+	{
+	}
+
+	public PaymentSummaryRecordNotFoundException(string message, Exception inner)
 			: base(message, inner)
 	{
 	}

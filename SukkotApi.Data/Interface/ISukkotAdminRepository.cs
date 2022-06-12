@@ -28,11 +28,6 @@ public interface ISukkotAdminRepository
 		Task<vwAttendancePeopleSummary> GetAttendancePeopleSummary();
 		Task<List<vwAttendanceChart>> GetAttendanceChart();
 
-		Task<List<vwLodgingDaysAll>> GetLodgingDaysAll();
-		Task<List<vwLodgingDaysPivotOnCampCode>> GetvwLodgingDaysPivotOnCampCode();
-		Task<int> GetOffsiteCount();
-		Task<List<vwLodgingDetail>> GetvwLodgingDetail();
-
 		Task<List<vwMealPlanMenu>> ListMealPlans();
 		Task<MealPlan> GetMealPlan(int Id);
 		Task<int> EditMealPlan(MealPlan mealPlan);

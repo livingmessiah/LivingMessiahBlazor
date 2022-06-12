@@ -35,27 +35,26 @@ public partial class CreateEdit
 	public ClaimsPrincipal User { get; set; }
 
 
-	//ToDo this shoud come from the Sukkot.Constants and saved in cache		
+	//ToDo this should come from the Sukkot.Constants and saved in cache		
 	public DateRangeLocal DateRangeAttendance { get; set; } = DateRangeLocal.FromEnum(DateRangeEnum.AttendanceDays);
-	public DateRangeLocal DateRangeLodging { get; set; } = DateRangeLocal.FromEnum(DateRangeEnum.LodgingDays);
 
 	[Parameter]
 	public int? id { get; set; }
 
-	protected bool LoadFailed;
 	//protected bool CanEditCampType => Registration.LocationEnum == LocationEnum.WildernessRanch;
 	protected bool CanEditCampType = false;
 
 	protected override async Task OnInitializedAsync()
 	{
-		//Logger.LogDebug($"Inside {nameof(CreateEdit)}!{nameof(OnInitializedAsync)}, id: {id}");
+		// I want to elevate the logging from Debug to Information because this is the main point of the application
+		Logger.LogInformation(string.Format("Inside {0}", nameof(CreateEdit) + "!" + nameof(OnInitializedAsync)));
+
 		var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
 		User = authState.User;
 
 		int Id2 = id.HasValue ? id.Value : 0; // if id? is null, Id2 is set to 0 and...
 		UI = (Id2 == 0) ? new UI(SukkotEnums.CRUD.Add) : new UI(SukkotEnums.CRUD.Edit); // ...  an Add is assumed (i.e. SukkotEnums.CRUD.Add)
-
-		//Logger.LogDebug($"..., id2={Id2}, UI.CRUD={UI.CRUD}");
+		Logger.LogInformation(string.Format("...id2={0} UI.CRUD={1}", nameof(Id2), nameof(UI.CRUD)));
 
 		try
 		{
@@ -77,20 +76,18 @@ public partial class CreateEdit
 			SetTitle();
 
 		}
-		catch (RegistratationException e)
+		catch (RegistratationException registratationException)
 		{
-			LoadFailed = true;
-			Logger.LogWarning(e, $"Failed to load page {nameof(CreateEdit)}");
+			DatabaseWarning = true;
+			DatabaseWarningMsg = registratationException.Message; 
 		}
-
-		catch (Exception)
+		
+		catch (InvalidOperationException invalidOperationException)
 		{
-			LoadFailed = true;
-			ExceptionMessage = svc.ExceptionMessage;
-			NavManager.NavigateTo(LivingMessiah.Web.Links.Home.Error);
+			DatabaseError = true;
+			DatabaseErrorMsg = invalidOperationException.Message;
 		}
-
-		Logger.LogInformation($"Finished {nameof(CreateEdit)}!{nameof(OnInitializedAsync)}");
+		Logger.LogInformation(string.Format("Finished {0}", nameof(CreateEdit) + "!" + nameof(OnInitializedAsync)));
 	}
 
 	protected string Title = "";
@@ -117,14 +114,10 @@ public partial class CreateEdit
 		}
 	}
 
-
-	protected string AlertMsg = "";
-	protected string ExceptionMessage = "";
-
 	protected async Task HandleValidSubmit()
 	{
-		//Logger.LogDebug($"Inside {nameof(HandleValidSubmit)}, UI.EditMode: {UI.EditMode} ");
-
+		Logger.LogDebug(string.Format("Inside {0} UI.EditMode::{1}"
+			, nameof(CreateEdit) + "!" + nameof(HandleValidSubmit), nameof(UI.EditMode) ));
 		if (UI.EditMode)
 		{
 			UI = new UI(SukkotEnums.CRUD.Edit);
@@ -133,14 +126,14 @@ public partial class CreateEdit
 			{
 				count = await svc.Edit(Registration, User);
 			}
-			catch (Exception)
+
+			catch (InvalidOperationException invalidOperationException)
 			{
-				ExceptionMessage = svc.ExceptionMessage; // Log is handled in the service
-				NavManager.NavigateTo(LivingMessiah.Web.Links.Home.Error);
+				DatabaseError = true;
+				DatabaseErrorMsg = invalidOperationException.Message;
 			}
 
-			AlertMsg = $"Registration Updated!";
-			Logger.LogInformation(AlertMsg);
+			Logger.LogInformation("Registration Updated!");
 			NavManager.NavigateTo(LivingMessiah.Web.Links.Sukkot.RegistrationShell);
 
 		}
@@ -151,17 +144,37 @@ public partial class CreateEdit
 			{
 				newId = await svc.Create(Registration, User);
 			}
-			catch (Exception)
+			catch (InvalidOperationException invalidOperationException)
 			{
-				ExceptionMessage = svc.ExceptionMessage; // Log is handled in the service
-				NavManager.NavigateTo(LivingMessiah.Web.Links.Home.Error);
+				DatabaseError = true;
+				DatabaseErrorMsg = invalidOperationException.Message;
 			}
-			AlertMsg = $"Registration created! Id={newId}";
-			Logger.LogInformation(AlertMsg);
+			Logger.LogInformation(string.Format("Registration created! Id={0}", nameof(newId) ));
 			NavManager.NavigateTo(LivingMessiah.Web.Links.Sukkot.RegistrationShell);
 
 		}
 	}
 
 
-} // class 
+	#region ErrorHandling
+
+	private void InitializeErrorHandling()
+	{
+		DatabaseInformationMsg = "";
+		DatabaseInformation = false;
+		DatabaseWarningMsg = "";
+		DatabaseWarning = false;
+		DatabaseErrorMsg = "";
+		DatabaseError = false;
+	}
+
+	protected bool DatabaseInformation = false;
+	protected string DatabaseInformationMsg { get; set; }
+	protected bool DatabaseWarning = false;
+	protected string DatabaseWarningMsg { get; set; }
+	protected bool DatabaseError { get; set; } // = false; handled by InitializeErrorHandling
+	protected string DatabaseErrorMsg { get; set; }
+	#endregion
+
+
+} 
