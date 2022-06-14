@@ -7,9 +7,6 @@ using LivingMessiah.Web.Pages.SukkotAdmin.Registration.Services; // using servic
 using LivingMessiah.Web.Pages.SukkotAdmin.Registration.Domain;
 using LivingMessiah.Web.Pages.SukkotAdmin.Registration.Data;
 using LivingMessiah.Web.Pages.SukkotAdmin.Enums;
-
-using static LivingMessiah.Web.Services.Auth0;
-using Microsoft.AspNetCore.Authorization;
 using static LivingMessiah.Web.Pages.Sukkot.Constants.SqlServer;
 
 using Syncfusion.Blazor.DropDowns;
@@ -17,7 +14,6 @@ using System.Collections.Generic;
 
 namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration;
 
-//[Authorize(Roles = Roles.AdminOrSukkot)]
 public partial class AddForm
 {
 	[Inject]

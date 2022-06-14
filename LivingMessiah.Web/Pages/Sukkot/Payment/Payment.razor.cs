@@ -39,7 +39,7 @@ public partial class Payment
 			User = authState.User;
 			RegistrationSummary = await svc.Summary(Id, User);
 		}
-		catch (PaymentSummaryRecordNotFoundException paymentSummaryRecordNotFoundException)
+		catch (PaymentSummaryException paymentSummaryRecordNotFoundException)
 		{
 			DatabaseInformation = true;
 			DatabaseInformationMsg = paymentSummaryRecordNotFoundException.Message;

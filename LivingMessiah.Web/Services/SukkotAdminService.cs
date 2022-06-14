@@ -12,7 +12,7 @@ public interface ISukkotAdminService
 {
 	string UserInterfaceMessage { get; set; }
 
-	Task<List<vwRegistration>> GetAll(RegistrationSortEnum sort);
+	Task<List<vwRegistration>> GetAll(RegistrationSortEnum sort, bool isAscending);
 	Task<List<Notes>> GetNotes(RegistrationSortEnum sort);
 
 	Task<int> LogErrorTest();
@@ -41,7 +41,7 @@ public class SukkotAdminService : ISukkotAdminService
 	public string UserInterfaceMessage { get; set; } = "";
 	private string LogExceptionMessage { get; set; } = "";
 
-	public async Task<List<vwRegistration>> GetAll(RegistrationSortEnum sort)
+	public async Task<List<vwRegistration>> GetAll(RegistrationSortEnum registrationSortEnum, bool isAscending)
 	{
 		var vm = new List<vwRegistration>();
 		//var profiler = MiniProfiler.Current;
@@ -49,15 +49,15 @@ public class SukkotAdminService : ISukkotAdminService
 		{
 			//using (profiler.Step($"profiling {nameof(db.GetAll)}"))
 			//{
-			vm = await db.GetAll(sort);
+			vm = await db.GetAll(registrationSortEnum, isAscending);
 			//}
 		}
 		catch (Exception ex)
 		{
 			LogExceptionMessage = $"Inside {nameof(SukkotAdminService)}!{nameof(GetAll)}, db.{nameof(db.GetAll)}";
-			Logger.LogError(ex, LogExceptionMessage, sort);
-			LogExceptionMessage += ex.Message ?? "-- ex.Message was null --";
-			throw new InvalidOperationException(LogExceptionMessage);
+			Logger.LogError(ex, LogExceptionMessage, registrationSortEnum);
+			UserInterfaceMessage += "An invalid operation occurred getting list of registrations, contact your administrator";
+			throw new InvalidOperationException(UserInterfaceMessage);
 		}
 		return vm;
 	}

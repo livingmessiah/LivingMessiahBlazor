@@ -500,7 +500,6 @@ public static class Sukkot
 	public const LivingMessiah.Web.Pages.KeyDates.Enums.FeastDayEnum FeastDay = LivingMessiah.Web.Pages.KeyDates.Enums.FeastDayEnum.Tabernacles;
 	public const string Index = "/Sukkot";
 	public const string Title = "Sukkot";
-	public const string Title2 = "Sukkot 2021";
 	public const string Icon = "fas fa-campground";
 	public const string RegistrationShell = "/Sukkot/RegistrationShell"; // See Startup.cs options.Conventions.AddPageRoute("/Sukkot/RegistrationShell", "/Sukkot/Registration");
 

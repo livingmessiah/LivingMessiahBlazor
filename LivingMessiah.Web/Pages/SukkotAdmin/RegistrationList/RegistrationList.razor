@@ -9,11 +9,6 @@
 @using Microsoft.Extensions.Options
 @inject IOptions<SukkotSettings> SukkotSettings
 
-@{
-	string sortField = (RegistrationSort == RegistrationSortEnum.LastName) ? "Name" : "Id";
-	int rowCount = 0;
-}
-
 <AuthorizeView Roles="@Roles.SukkotMenuBar">
 	<SukkotAdminMenubar></SukkotAdminMenubar>
 </AuthorizeView>
@@ -23,14 +18,6 @@
 
 <div class="pb-2 mt-4 mb-4 border-bottom">
 	<h3><i class="fas fa-table"></i> @Page.RegistrationListTitle</h3>
-	<h5 class="text-muted">
-		Sorted by @sortField
-
-		@*<a href="@LivingMessiah.Web.Pages.SukkotAdmin.Constants.Anchors.Notes" class="btn btn-primary btn-sm float-right">
-				<i class="far fa-sticky-note"></i> Notes <i class="fas fa-caret-right"></i>
-			</a>*@
-
-	</h5>
 </div>
 
 <AuthorizeView Roles="@Roles.AdminOrSukkot">
@@ -52,26 +39,22 @@
 	}
 	else
 	{
+		<p class="text-muted mb-1 float-right"><small>@GetTitle()</small></p>
 		<div class="table-responsive">
 			<table class="table table-bordered table-striped">
 				<thead>
 					<tr>
 						<th>
-							<button @onclick="@(e => Sort_ButtonClick(RegistrationSortEnum.Id))"
-											title="Sort by id">
-								<i class="fas fa-sort"></i>Id
-							</button>
+							<span class="sort-link" @onclick=@(() => SortClicked(RegistrationSortEnum.Id))>Id</span>
+							<span>@(GetSortStyle(RegistrationSortEnum.Id))</span>
 						</th>
 						<th>
-							<button @onclick="@(e => Sort_ButtonClick(RegistrationSortEnum.LastName))"
-											title="Sort by family name">
-								<i class="fas fa-sort"></i> Last Name
-							</button>
-							<button @onclick="@(e => Sort_ButtonClick(RegistrationSortEnum.FirstName))"
-											title="Sort by family name">
-								<i class="fas fa-sort"></i> First Name
-							</button>
-							<br />Name EMail Phone
+							<span class="sort-link" @onclick=@(() => SortClicked(RegistrationSortEnum.LastName))>Last Name</span>
+							<span>@(GetSortStyle(RegistrationSortEnum.LastName))</span>
+							&nbsp;|&nbsp;
+							<span class="sort-link" @onclick=@(() => SortClicked(RegistrationSortEnum.FirstName))>First Name</span>
+							<span>@(GetSortStyle(RegistrationSortEnum.FirstName))</span>
+							<br />Name/EMail/Phone
 						</th>
 						<th>Donation Status</th>
 						<th>Registration</th>
@@ -86,7 +69,6 @@
 				<tbody>
 					@foreach (var item in Registrations)
 					{
-						rowCount += 1;
 						<tr>
 							<td>@item.Id</td>
 							<td>@StringExtensions.Truncate(item.FullName(false), 30)<br />@item.EMail<br />@item.Phone</td>
@@ -184,7 +166,7 @@
 					}
 
 					<tr>
-						<td><h2><span class="badge badge-success"><b>@rowCount</b></span></h2></td>
+						<td><h2><span class="badge badge-success"><b>@RecordCount</b></span></h2></td>
 						<td><h2><span class="badge badge-success">Total</span></h2></td>
 						<td colspan="4">&nbsp;</td>
 					</tr>

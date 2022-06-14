@@ -5,8 +5,8 @@
 	<AuthorizeView>
 		<Authorized>
 			<div class="row py-2 d-print-none">
-
 				<div class="col-8">
+					<!-- https://community.auth0.com/t/my-blazor-server-app-wont-display-the-user-name/85054 -->
 					<a href="@Profile"  title="Role: @Role; IsAdmin:@IsAdmin; Email:@EmailAddress">
 						<span class="text-success"><small><b>Shalom @Name!</b></small></span> @((MarkupString)BlueCheck)
 					</a>

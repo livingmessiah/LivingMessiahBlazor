@@ -30,18 +30,15 @@
 	}
 
 	<h3>@Title<br /><small><i>@Title2</i></small></h3>
-	<h5></h5>
+
 	<hr class="warning" />
 
 	<EditForm Model="Registration"
-						OnValidSubmit="HandleValidSubmit"
-						class="card card-body bg-light mt-5">
+					OnValidSubmit="HandleValidSubmit"
+					class="card card-body bg-light mt-5">
 		<DataAnnotationsValidator />
 		<ValidationSummary />
 
-		<input type="hidden" asp-for="Registration.StatusId" />
-		<input type="hidden" asp-for="Registration.EMail" />
-		<input type="hidden" asp-for="UI.EditMode" />
 
 		@*<Administrative>*@
 
@@ -96,11 +93,11 @@
 				</div>
 
 				@*<div class="col-sm-4">
-						<div class="form-group">
-							<label for="avitar" class="control-label">Avitar</label>
-							<InputText id="avitar" class="form-control" @bind-Value="Registration.Avitar" placeholder="picture (optional)" />
-							<ValidationMessage For="@(() => Registration.Avitar)" />
-						</div>
+					<div class="form-group">
+					<label for="avitar" class="control-label">Avitar</label>
+					<InputText id="avitar" class="form-control" @bind-Value="Registration.Avitar" placeholder="picture (optional)" />
+					<ValidationMessage For="@(() => Registration.Avitar)" />
+					</div>
 					</div>*@
 
 			</div>
@@ -126,10 +123,10 @@
 						@*<label for="attendanceDays" class="control-label">Select Dates</label>*@
 
 						<SfCalendar TValue="DateTime?"
-												IsMultiSelection="true" ShowTodayButton="false"
-												@bind-Values="@Registration.AttendanceDateList"
-												Min="@DateRangeAttendance.DateRange.MinDate"
-												Max="@DateRangeAttendance.DateRange.MaxDate">
+											IsMultiSelection="true" ShowTodayButton="false"
+											@bind-Values="@Registration.AttendanceDateList"
+											Min="@DateRangeAttendance.DateRange.MinDate"
+											Max="@DateRangeAttendance.DateRange.MaxDate">
 						</SfCalendar>
 
 					</div>
@@ -171,7 +168,6 @@
 				</div>
 
 				<div class="col-sm-3">
-
 				</div>
 
 			</div>
@@ -194,17 +190,6 @@
 			</div>
 
 
-			@if (CanEditCampType)
-			{
-				<div class="row mt-n1 mb-4">
-					<div class="col-12">
-						<p class="float-right">
-							If you are interested in volunteering to help with <b>music</b> or <b>praise and worship</b>, please note that here.
-						</p>
-					</div>
-				</div>
-			}
-
 		</fieldset>
 
 		<div class="row">
@@ -220,10 +205,9 @@
 					}
 					else
 					{
-						<button class="btn btn-success btn-lg">
+						<button type="submit" class="btn btn-success btn-lg">
 							<i class="fas fa-save"></i> Save
 						</button>
-
 					}
 
 				</div>

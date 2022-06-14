@@ -9,67 +9,67 @@ namespace LivingMessiah.Web.Shared;
 
 public partial class LoginDisplay
 {
-		[Inject]
-		public AuthenticationStateProvider AuthenticationStateProvider { get; set; }
+	[Inject]
+	public AuthenticationStateProvider AuthenticationStateProvider { get; set; }
 
-		public string Name { get; set; }
-		public string EmailAddress { get; set; }
-		public bool Verified { get; set; }
-		public string Role { get; set; }
+	public string Name { get; set; }
+	public string EmailAddress { get; set; }
+	public bool Verified { get; set; }
+	public string Role { get; set; }
 
-		private IEnumerable<Claim> _claims = Enumerable.Empty<Claim>();
+	private IEnumerable<Claim> _claims = Enumerable.Empty<Claim>();
 
-		protected override async Task OnInitializedAsync()
+	protected override async Task OnInitializedAsync()
+	{
+		base.OnInitialized();
+		var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+		var user = authState.User;
+
+		if (user.Identity.IsAuthenticated)
 		{
-				base.OnInitialized();
-				var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-				var user = authState.User;
-
-				if (user.Identity.IsAuthenticated)
-				{
-						Verified = true;
-						_claims = user.Claims;
-				}
-				else
-				{
-						Verified = false;
-				}
-
-				Name = user.Identity.Name;
-				EmailAddress = user.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
-				Role = user.Claims.FirstOrDefault(c => c.Type == "https://schemas.livingmessiah.com/roles")?.Value;
-
+			Verified = true;
+			_claims = user.Claims;
+		}
+		else
+		{
+			Verified = false;
 		}
 
-		public bool IsAdmin
-		{
-				get
-				{
-						if (Verified && Role.Contains("admin", System.StringComparison.InvariantCultureIgnoreCase))
-						{
-								return true;
-						}
-						else
-						{
-								return false;
-						}
-				}
-		}
+		Name = user.Identity.Name;
+		EmailAddress = user.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+		Role = user.Claims.FirstOrDefault(c => c.Type == "https://schemas.livingmessiah.com/roles")?.Value;
 
-		public string BlueCheck
+	}
+
+	public bool IsAdmin
+	{
+		get
 		{
-				get
-				{
-						if (Verified)
-						{
-								return "<span class='text-primary'><i class='fas fa-check'></i></span>";
-						}
-						else
-						{
-								return "<span class='text-danger'>Unverified<i class='fas fa-question'></i></span>";
-						}
-				}
+			if (Verified && Role.Contains("admin", System.StringComparison.InvariantCultureIgnoreCase))
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
 		}
+	}
+
+	public string BlueCheck
+	{
+		get
+		{
+			if (Verified)
+			{
+				return "<span class='text-primary'><i class='fas fa-check'></i></span>";
+			}
+			else
+			{
+				return "<span class='text-danger'>Unverified<i class='fas fa-question'></i></span>";
+			}
+		}
+	}
 
 }
 

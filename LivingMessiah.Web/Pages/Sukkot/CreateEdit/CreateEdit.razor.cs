@@ -41,9 +41,6 @@ public partial class CreateEdit
 	[Parameter]
 	public int? id { get; set; }
 
-	//protected bool CanEditCampType => Registration.LocationEnum == LocationEnum.WildernessRanch;
-	protected bool CanEditCampType = false;
-
 	protected override async Task OnInitializedAsync()
 	{
 		// I want to elevate the logging from Debug to Information because this is the main point of the application
@@ -149,7 +146,7 @@ public partial class CreateEdit
 				DatabaseError = true;
 				DatabaseErrorMsg = invalidOperationException.Message;
 			}
-			Logger.LogInformation(string.Format("Registration created! Id={0}", nameof(newId) ));
+			Logger.LogInformation(string.Format("Registration created! newId={0}", newId ));
 			NavManager.NavigateTo(LivingMessiah.Web.Links.Sukkot.RegistrationShell);
 
 		}

@@ -25,49 +25,45 @@ public partial class RegistrationList
 	[Inject]
 	NavigationManager NavManager { get; set; }
 
-	public RegistrationSortEnum Sort { get; private set; }
 	public List<vwRegistration> Registrations { get; set; }
 
-	public RegistrationSortEnum RegistrationSort { get; set; } = RegistrationSortEnum.LastName;
+	private bool IsCurrentSortAscending = true;
+	private RegistrationSortEnum CurrentRegistrationSortEnum = RegistrationSortEnum.LastName;
+
 
 	public int RecordCount { get; set; } = 0;
 
 	protected override async Task OnInitializedAsync()
 	{
-		try
-		{
-			Logger.LogDebug(string.Format("Inside {0} , RegistrationSort:{1}"
-					, nameof(RegistrationList) + "!" + nameof(OnInitializedAsync), RegistrationSort));
-			Registrations = await svc.GetAll(RegistrationSort);
-			if (Registrations is not null)
-			{
-				RecordCount = Registrations.Count;
-			}
-			else
-			{
-				DatabaseWarning = true;
-				DatabaseWarningMsg = $"{nameof(Registrations)} is null";
-			}
-
-		}
-		catch (Exception ex)
-		{
-			DatabaseError = true;
-			DatabaseErrorMsg = $"Error reading database";
-			Logger.LogError(ex, $"...{DatabaseErrorMsg}");
-		}
+		await PopulateRegistrationList(RegistrationSortEnum.LastName, isAscending: IsCurrentSortAscending);
 	}
 
-	async Task Sort_ButtonClick(RegistrationSortEnum sort)
+	async Task SortClicked(RegistrationSortEnum registrationSortEnum)
 	{
-		Logger.LogDebug(string.Format("Inside {0} , sort:{1}"
-		, nameof(RegistrationList) + "!" + nameof(Sort_ButtonClick), sort));
+		Logger.LogDebug(string.Format("...{0} registrationSortEnum:{1}"
+			, nameof(RegistrationList) + "!" + nameof(SortClicked), registrationSortEnum));
 
-		RegistrationSort = sort;
-		RecordCount = 0;
+		if (registrationSortEnum != CurrentRegistrationSortEnum)
+		{
+			CurrentRegistrationSortEnum = registrationSortEnum;
+			IsCurrentSortAscending = true;
+		}
+		else  
+		{
+			IsCurrentSortAscending = !IsCurrentSortAscending;
+		}
+		await PopulateRegistrationList(CurrentRegistrationSortEnum, isAscending: IsCurrentSortAscending);
+	}
+
+	private async Task PopulateRegistrationList(RegistrationSortEnum registrationSortEnum, bool isAscending)
+	{
 		try
 		{
-			Registrations = await svc.GetAll(RegistrationSort);
+			Logger.LogDebug(string.Format("Inside {0} , registrationSortEnum: {1}, isAscending: {2}"
+					, nameof(RegistrationList) + "!" + nameof(PopulateRegistrationList), registrationSortEnum, isAscending));
+			
+			Registrations = await svc.GetAll(registrationSortEnum, isAscending);
+			
 			if (Registrations is not null)
 			{
 				RecordCount = Registrations.Count;
@@ -78,15 +74,35 @@ public partial class RegistrationList
 				DatabaseWarningMsg = $"{nameof(Registrations)} is null";
 			}
 		}
-		catch (Exception ex)
+		catch (InvalidOperationException invalidOperationException)
 		{
 			DatabaseError = true;
-			DatabaseErrorMsg = $"Error reading database";
-			Logger.LogError(ex, $"...{DatabaseErrorMsg}");
+			DatabaseErrorMsg = invalidOperationException.Message;
 		}
-		StateHasChanged();
 	}
 
+	private string GetSortStyle(RegistrationSortEnum registrationSortEnum)
+	{
+		if (CurrentRegistrationSortEnum != registrationSortEnum)
+		{
+			return string.Empty;
+		}
+		if (IsCurrentSortAscending)
+		{
+			return "▲";
+		}
+		else
+		{
+			return "▼";
+		}
+	}
+
+	private string GetTitle()
+	{
+		return $"Sorted by {CurrentRegistrationSortEnum.ToString()} {(IsCurrentSortAscending ? "" : "(descending)")}";
+	}
+
+	#region Navigation Button Clicks
 	void Add_ButtonClick()
 	{
 		NavManager.NavigateTo(Links.Sukkot.CreateEdit + "/");
@@ -121,9 +137,10 @@ public partial class RegistrationList
 	{
 		NavManager.NavigateTo(Links.Sukkot.Meals.Index + "/" + id);
 	}
+	#endregion
+
 
 	#region ErrorHandling
-
 	private void InitializeErrorHandling()
 	{
 		DatabaseInformationMsg = "";

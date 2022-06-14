@@ -65,7 +65,7 @@ public class SukkotService : ISukkotService
 				UserInterfaceMessage = "Payment Summary Record NOT Found";
 				Logger.LogWarning(string.Format("Inside {0} id:{1}"
 					, nameof(SukkotService) + "!" + nameof(Summary), UserInterfaceMessage));
-				throw new PaymentSummaryRecordNotFoundException(UserInterfaceMessage);
+				throw new PaymentSummaryException(UserInterfaceMessage);
 			}
 		}
 		catch (Exception ex)
@@ -616,17 +616,16 @@ public class UserNotAuthoirizedException : Exception
 	}
 }
 
-public class PaymentSummaryRecordNotFoundException : Exception
+public class PaymentSummaryException : Exception
 {
-	public PaymentSummaryRecordNotFoundException()
+	public PaymentSummaryException()
 	{
 	}
-	public PaymentSummaryRecordNotFoundException(string message)
+	public PaymentSummaryException(string message)
 			: base(message)
 	{
 	}
-
-	public PaymentSummaryRecordNotFoundException(string message, Exception inner)
+	public PaymentSummaryException(string message, Exception inner)
 			: base(message, inner)
 	{
 	}

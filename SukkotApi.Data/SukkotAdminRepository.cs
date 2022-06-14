@@ -11,6 +11,36 @@ using SukkotApi.Domain.Registrations.Enums;
 
 namespace SukkotApi.Data;
 
+
+public interface ISukkotAdminRepository
+{
+	Task<List<vwRegistration>> GetAll(RegistrationSortEnum sort, bool isAscending);
+	Task<List<Notes>> GetNotes(RegistrationSortEnum sort);
+
+	//ToDo: 
+	Task<int> LogErrorTest();
+	Task<List<zvwErrorLog>> GetzvwErrorLog();
+	Task<int> EmptyErrorLog();
+
+	Task<List<vwMealTicket>> GetMealTickets(int mealDateTimeId, bool selectAll);
+	Task<List<vwMealTicketPunchLogPivot>> GetMealTicketPunchLogPivots(int mealDateTimeId);
+	Task<int> MealTicketPunchInsert(MealTicketPunchLog mealTicketPunchLog);
+	Task<MealDateTime> GetMealDateTime(MealTicketEnum mealTicketEnum);
+	Task<List<vwKitchenWork>> GetKitchenWorkList(int mealDateTimeId);
+	Task<KitchenWork> GetKitchenWork(int id);
+
+	Task<List<vwMealPlannerReport>> GetMealPlanner();
+
+	Task<List<vwAttendanceAllFeastDays>> GetAttendanceAllFeastDays();
+	Task<vwAttendancePeopleSummary> GetAttendancePeopleSummary();
+	Task<List<vwAttendanceChart>> GetAttendanceChart();
+
+	Task<List<vwMealPlanMenu>> ListMealPlans();
+	Task<MealPlan> GetMealPlan(int Id);
+	Task<int> EditMealPlan(MealPlan mealPlan);
+	Task<int> UpdateKitchenWork(KitchenWork kitchenWork);
+}
+
 public class SukkotAdminRepository : BaseRepositoryAsync, ISukkotAdminRepository
 {
 
@@ -18,10 +48,10 @@ public class SukkotAdminRepository : BaseRepositoryAsync, ISukkotAdminRepository
 	{
 	}
 
-	public async Task<List<vwRegistration>> GetAll(RegistrationSortEnum sort)
+	public async Task<List<vwRegistration>> GetAll(RegistrationSortEnum sort, bool isAscending)
 	{
-		base.log.LogDebug(string.Format("Inside {0} , sort:{1}"
-				, nameof(SukkotAdminRepository) + "!" + nameof(GetAll), sort));
+		base.log.LogDebug(string.Format("Inside {0} , sort:{1}, isAscending: {2}"
+				, nameof(SukkotAdminRepository) + "!" + nameof(GetAll), sort, isAscending));
 		string sortField = sort switch
 		{
 			RegistrationSortEnum.Id => "Id",
@@ -30,6 +60,7 @@ public class SukkotAdminRepository : BaseRepositoryAsync, ISukkotAdminRepository
 			_ => "Id",
 		};
 
+		sortField += isAscending ? "" : " DESC";
 
 		base.Sql = $@"
 SELECT TOP 500 Id, FamilyName, FirstName, SpouseName, OtherNames
