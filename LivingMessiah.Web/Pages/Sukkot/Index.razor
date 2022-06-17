@@ -1,6 +1,5 @@
 ﻿@page "/sukkot"
 @using LivingMessiah.Web.Pages.Sukkot.Constants
-@using static SukkotApi.Domain.Constants
 @using static LivingMessiah.Web.Services.Auth0
 @using LivingMessiah.Web.Shared.Sukkot
 
@@ -62,7 +61,6 @@
 	}
 
 	<Introduction/>
-	<Meals IsMealsAvailable="SukkotSettings.Value.IsMealsAvailable"></Meals>
 
 	@if (!SukkotSettings.Value.IsRegistrationClosed)
 	{

@@ -18,8 +18,6 @@ public interface ISukkotAdminService
 	Task<int> LogErrorTest();
 	Task<List<zvwErrorLog>> GetzvwErrorLog();
 	Task<int> EmptyErrorLog();
-
-	Task<int> MealTicketPunchInsert(MealTicketPunchLog mealTicketPunchLog);
 }
 
 public class SukkotAdminService : ISukkotAdminService
@@ -127,24 +125,6 @@ public class SukkotAdminService : ISukkotAdminService
 		{
 			LogExceptionMessage = $"Inside {nameof(SukkotAdminService)}!{nameof(EmptyErrorLog)}, db.{nameof(db.EmptyErrorLog)}";
 			Logger.LogError(ex, LogExceptionMessage);
-			LogExceptionMessage += ex.Message ?? "-- ex.Message was null --";
-			throw new InvalidOperationException(LogExceptionMessage);
-		}
-		return count;
-	}
-
-
-	public async Task<int> MealTicketPunchInsert(MealTicketPunchLog mealTicketPunchLog)
-	{
-		int count = 0;
-		try
-		{
-			count = await db.MealTicketPunchInsert(mealTicketPunchLog);
-		}
-		catch (Exception ex)
-		{
-			LogExceptionMessage = $"Inside {nameof(SukkotAdminService)}!{nameof(MealTicketPunchInsert)}, db.{nameof(db.MealTicketPunchInsert)}";
-			Logger.LogError(ex, LogExceptionMessage); // , donation.ToString()
 			LogExceptionMessage += ex.Message ?? "-- ex.Message was null --";
 			throw new InvalidOperationException(LogExceptionMessage);
 		}

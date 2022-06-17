@@ -7,7 +7,6 @@
 @using LivingMessiah.Web.Infrastructure
 @using LivingMessiah.Web.Settings
 @using Microsoft.Extensions.Options
-@inject IOptions<SukkotSettings> SukkotSettings
 
 <AuthorizeView Roles="@Roles.SukkotMenuBar">
 	<SukkotAdminMenubar></SukkotAdminMenubar>
@@ -56,14 +55,8 @@
 							<span>@(GetSortStyle(RegistrationSortEnum.FirstName))</span>
 							<br />Name/EMail/Phone
 						</th>
-						<th>Donation Status</th>
 						<th>Registration</th>
-
-						@if (SukkotSettings.Value.IsMealsAvailable)
-						{
-							<th>Meals</th>
-						}
-						<th>Other</th>
+						<th>Donation Status</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -73,8 +66,6 @@
 							<td>@item.Id</td>
 							<td>@StringExtensions.Truncate(item.FullName(false), 30)<br />@item.EMail<br />@item.Phone</td>
 
-							@* @Html.Truncate(item.Status, 15) *@
-							<td>@item.CampCD <br /> @item.Status</td>
 
 							<AuthorizeView Roles="@Roles.AdminOrSukkot">
 								<Authorized>
@@ -89,25 +80,12 @@
 												<i class="fas fa-pencil-alt text-success"></i> Edit
 											</button>
 
+											<button @onclick="@(e => DeleteConfirmation_ButtonClick(item.Id))"
+															class="btn-default btn-sm" title="Delete">
+												<i class="fas fa-times text-danger"></i> Del
+											</button>
 										</div>
 									</td>
-
-									@if (SukkotSettings.Value.IsMealsAvailable)
-									{
-										<td>
-											<div class="btn-group">
-												<button @onclick="@(e => DetailsMealTicket_ButtonClick(item.Id))"
-																class="btn-default btn-sm" title="Meal View">
-													<i class="fas fa-info text-info"></i> View
-												</button>
-												<button @onclick="@(e => EditMeals_ButtonClick(item.Id))"
-																class="btn-default btn-sm" title="Meal Edit">
-													<i class="fas fa-pencil-alt text-warning"></i> Edit
-												</button>
-
-											</div>
-										</td>
-									}
 
 									<td>
 
@@ -117,10 +95,6 @@
 												<i class="fas fa-dollar-sign text-success"></i> Pay
 											</button>
 
-											<button @onclick="@(e => DeleteConfirmation_ButtonClick(item.Id))"
-															class="btn-default btn-sm" title="Delete">
-												<i class="fas fa-times text-danger"></i> Del
-											</button>
 
 											@*<AuthorizeView Roles="@Roles.Admin">
 													<Authorized>
@@ -148,16 +122,6 @@
 											</button>
 										</div>
 									</td>
-									<td>
-										<div class="btn-group">
-
-											<button @onclick="@(e => DetailsMealTicket_ButtonClick(item.Id))"
-															class="btn-default btn-sm" title="Meal View">
-												<i class="fas fa-info text-info"></i> Meals
-											</button>
-
-										</div>
-									</td>
 									<td></td>
 								</NotAuthorized>
 							</AuthorizeView>
@@ -168,7 +132,7 @@
 					<tr>
 						<td><h2><span class="badge badge-success"><b>@RecordCount</b></span></h2></td>
 						<td><h2><span class="badge badge-success">Total</span></h2></td>
-						<td colspan="4">&nbsp;</td>
+						<td colspan="3">&nbsp;</td>
 					</tr>
 
 				</tbody>

@@ -6,11 +6,11 @@ public abstract class BaseDonationStatusFilterSmartEnum : SmartEnum<BaseDonation
 {
 		#region Id's
 		private static class Id
-		{                                         // Sukkot.Status
-				internal const int FullList = 0;        // 
-				internal const int NoPayments = 1;      // 2 RFC Registration Form Completed; 3 MFC	Meal Form Completed						
-				internal const int PartiallyPaid = 2;   // 4 pp  PartiallPaid
-				internal const int FullyPaid = 3;       // 5 FP	 Fully Paid
+		{                                       // Sukkot.Status
+				internal const int FullList = 0;    // 
+				internal const int NoPayments = 1;  // 2 AHRA	Accepted House Rules Agreement 3 RFC Registration Form Completed
+		internal const int PartiallyPaid = 2;   // 4 pp  PartiallPaid
+				internal const int FullyPaid = 3;   // 5 FP	 Fully Paid
 		}
 		#endregion
 

@@ -15,22 +15,6 @@
 		<dl class="row">
 			<dt class="col-6">Registration Cost:</dt>
 			<dd class="col-6"><span class="float-right">@vwRegistration.RegistrationFee.ToString("C0")</span></dd>
-
-			@if (SukkotSettings.Value.IsMealsAvailable)
-				{
-					<dt class="col-6">Adult Meals:</dt>
-					<dd class="col-6"><span class="float-right">@vwRegistration.TotalAdultMeals</span></dd>
-					<dt class="col-6">Adult Meal Cost:</dt>
-					<dd class="col-6"><span class="float-right">@vwRegistration.AdultMealCost.ToString("C0")</span></dd>
-
-					<dt class="col-6">Big Child Meals:</dt>
-					<dd class="col-6"><span class="float-right">@vwRegistration.TotalChildBigMeals.ToString("C0")</span></dd>
-					<dt class="col-6">Big Child Meal Cost:</dt>
-					<dd class="col-6"><span class="float-right">@vwRegistration.ChildBigMealCost.ToString("C0")</span></dd>
-				}
-
-			<dt class="col-6">Total:</dt>
-			<dd class="col-6"><span class="float-right"><b>@vwRegistration.TotalCost.ToString("C0")</b></span></dd>
 		</dl>
 	</div>
 

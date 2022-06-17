@@ -58,7 +58,7 @@
 			if (MySort.RegistrationSortEnum == RegistrationSortEnum.LastName)
 			{
 				<div class="row">
-					<div class="col-5">
+					<div class="col-6">
 						<p class="size14">
 							<b>@item.FirstName @item.FamilyName</b>
 
@@ -70,7 +70,7 @@
 						</p>
 					</div>
 
-					<div class="col-5">
+					<div class="col-6">
 
 						<div class="d-block d-sm-none">
 							<a href="mailto:@item.EMail" title="@item.EMail"><i class="far fa-envelope"></i></a>
@@ -95,16 +95,13 @@
 
 					</div>
 
-					<div class="col-2">
-						@item.CampCD
-					</div>
 				</div>
 
 			}
 			else
 			{
 				<div class="row">
-					<div class="col-5">
+					<div class="col-6">
 						<p class="size14">
 
 							@*<a title="Registration View"
@@ -117,7 +114,7 @@
 						</p>
 					</div>
 
-					<div class="col-5">
+					<div class="col-6">
 
 						<div class="d-block d-sm-none">
 							<a href="mailto:@item.EMail" title="@item.EMail"><i class="far fa-envelope"></i></a>
@@ -140,9 +137,6 @@
 
 						</div>
 
-					</div>
-					<div class="col-2">
-						@item.CampCD
 					</div>
 				</div>
 			}

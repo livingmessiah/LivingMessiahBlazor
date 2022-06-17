@@ -32,43 +32,16 @@
 	</div>
 </div>
 
-@if (IsMealsAvailable)
-{
-
-	<div class="row row-striped">
-		<div class="col-4">
-			Adult Meal Cost:
-		</div>
-		<div class="col-2">
-			<span class="float-right">@RegistrationSummary.MealTotalCostAdult.ToString("C0")</span>
-		</div>
-		<div class="col-6">
-			@RegistrationSummary.Adults adult(s) at $@RegistrationSummary.AdultRate.ToString("C0") / meal
-		</div>
-	</div>
-
-	<div class="row row-striped">
-		<div class="col-4">
-			Child Meal Cost:
-		</div>
-		<div class="col-2">
-			<span class="float-right">@RegistrationSummary.MealTotalCostChildBig.ToString("C0")</span>
-		</div>
-		<div class="col-6">
-			@RegistrationSummary.ChildBig child(ren) (big) at $@RegistrationSummary.ChildRate.ToString("C0") / meal
-		</div>
-	</div>
-}
 
 <div class="row row-striped">
 	<div class="col-4">
-		Camp Cost:
+		Total Cost:
 	</div>
 	<div class="col-2">
-		<span class="float-right">@RegistrationSummary.CampCost.ToString("C0")</span>
+		<span class="float-right">@RegistrationSummary.TotalCost.ToString("C0")</span>
 	</div>
 	<div class="col-6">
-		@RegistrationSummary.CampDescr<br />Days: @RegistrationSummary.CampDays
+		@RegistrationSummary.RegistrationFee.ToString("C0")
 	</div>
 </div>
 
@@ -80,9 +53,13 @@
 		<span class="float-right">@RegistrationSummary.TotalCost.ToString("C0")</span>
 	</div>
 	<div class="col-6">
-		@RegistrationSummary.RegistrationFee.ToString("C0") + @RegistrationSummary.MealTotalCostAdult.ToString("C0") + @RegistrationSummary.MealTotalCostChildBig.ToString("C0") + @RegistrationSummary.CampCost.ToString("C0")  <small>(Reg Fee + Adult + Child + Camp)</small>
+		@RegistrationSummary.RegistrationFee.ToString("C0") 
 	</div>
 </div>
+
+
+
+
 
 
 <div class="row row-striped">
@@ -108,4 +85,3 @@
 		@RegistrationSummary.TotalCost.ToString("C0") - @RegistrationSummary.TotalDonation.ToString("C0") <small>(Cost - Donation)</small>
 	</div>
 </div>
-

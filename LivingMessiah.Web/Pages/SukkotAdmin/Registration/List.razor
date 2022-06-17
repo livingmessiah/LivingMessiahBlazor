@@ -20,33 +20,64 @@
 				<GridEvents TValue="Domain.Registration"></GridEvents>
 				@* ... RowSelected="RowSelectHandler" RowDeselected="RowDeSelectHandler" />*@
 
-			<GridColumns>
+				<GridColumns>
 
-				<GridColumn Field=@nameof(Domain.Registration.Id) HeaderText="Id" IsPrimaryKey="true" Width="30" AllowSorting="true" AllowFiltering="false">
-				</GridColumn>
+					<GridColumn Field=@nameof(Domain.Registration.Id) HeaderText="Id" IsPrimaryKey="true" Width="30" AllowSorting="true" AllowFiltering="false">
+					</GridColumn>
 
-				<GridColumn Field=@nameof(Domain.Registration.FirstName) HeaderText="First" Width="50" AllowSorting="true">
-				</GridColumn>
+					<GridColumn Field=@nameof(Domain.Registration.FirstName) HeaderText="First" Width="50" AllowSorting="true">
+					</GridColumn>
 
-				<GridColumn Field=@nameof(Domain.Registration.FamilyName) HeaderText="Last" Width="50" AllowSorting="true">
-				</GridColumn>
+					<GridColumn Field=@nameof(Domain.Registration.FamilyName) HeaderText="Last" Width="50" AllowSorting="true">
+					</GridColumn>
 
-				<GridColumn Field=@nameof(Domain.Registration.SpouseName) HeaderText="Spouse" Width="50" AllowSorting="false" AllowFiltering="false">
-				</GridColumn>
+					<GridColumn Field=@nameof(Domain.Registration.SpouseName) HeaderText="Spouse" Width="50" AllowSorting="false" AllowFiltering="false">
+					</GridColumn>
 
-				<GridColumn Field=@nameof(Domain.Registration.EMail) HeaderText="Email" Width="80" AllowSorting="false" AllowFiltering="true">
-				</GridColumn>
+					<GridColumn Field=@nameof(Domain.Registration.EMail) HeaderText="Email" Width="80" AllowSorting="false" AllowFiltering="true">
+					</GridColumn>
 
-				<GridColumn Field=@nameof(Domain.Registration.Phone) HeaderText="Phone" Width="50" AllowSorting="false" AllowFiltering="false">
-				</GridColumn>
+					<GridColumn Field=@nameof(Domain.Registration.Phone) HeaderText="Phone" Width="50" AllowSorting="false" AllowFiltering="false">
+					</GridColumn>
 
-				<GridColumn Field=@nameof(Domain.Registration.StatusName) HeaderText="Status" Width="100"
-										FilterSettings="@(new FilterSettings { Type = Syncfusion.Blazor.Grids.FilterType.CheckBox })">
-				</GridColumn>
+					<GridColumn Field=@nameof(Domain.Registration.StatusName) HeaderText="Status" Width="100"
+											FilterSettings="@(new FilterSettings { Type = Syncfusion.Blazor.Grids.FilterType.CheckBox })">
+					</GridColumn>
 
-			</GridColumns>
+				</GridColumns>
 
 			</SfGrid>
 		</div>
 	</div>
 </div>
+
+@*
+
+Note:
+  BaseStatusSmartEnum was throwing an circut error, but it was not showing up here even with OnActionFailure
+
+ToDo:
+  figure out the best way to handle exception handling with syncfusion components
+
+	<GridEvents TValue="@Domain.Registration" OnActionFailure="Failure"></GridEvents>
+
+	@if (DatabaseError)
+	{
+	<p class="text-danger"><em>@DatabaseErrorMsg</em></p>
+	}
+	else
+	{
+	if (DatabaseWarning)
+	{
+	<p class="text-warning">@DatabaseWarningMsg</p>
+	}
+	}
+
+	void Failure(FailureEventArgs e)
+	{
+		DatabaseErrorMsg = $"Error inside {nameof(Failure)}";  //; e.Error: {e.Error}
+		Logger.LogError(string.Format("Inside {0}; e.Error: {1}", nameof(List) + "!" + nameof(Failure), e.Error));
+		DatabaseError = true;
+	}
+
+*@

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using System.Security.Claims;
 using Microsoft.Extensions.Logging;
 
 using LivingMessiah.Web.Pages.SukkotAdmin.Registration.Domain;
@@ -12,18 +11,6 @@ using LivingMessiah.Web.Services;
 using LivingMessiah.Web.Pages.Sukkot;  // Needed for DateRangeEnum.cs
 
 
-/*
-using LivingMessiah.Web.Pages.Sukkot.CreateEdit;
-using SukkotApi.Domain.Enums;
-using LivingMessiah.Web.Pages.Sukkot.Constants;
-using LivingMessiah.Web.Infrastructure;
-
-using SukkotApi.Data;
-
-		//[Inject]
-		//public ISecurityClaimsService SvcClaims { get; set; }
-*/
-
 namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration.Services;
 
 public interface IRegistrationService
@@ -33,14 +20,6 @@ public interface IRegistrationService
 	Task<RegistrationVM> GetById(int id);
 	Task<Tuple<int, int, string>> Create(RegistrationVM registration);
 	Task<Tuple<int, int, string>> Update(RegistrationVM registration);
-
-	/*
-			Task<vwRegistration> Details(int id, ClaimsPrincipal user, bool showPrintInstructionMessage = false);
-			Task<vwRegistration> DeleteConfirmation(int id, ClaimsPrincipal user);
-			Task<int> Edit(RegistrationVM registration, ClaimsPrincipal user);
-			Task<int> DeleteConfirmed(int id);
-			Task<RegistrationSummary> Summary(int id, ClaimsPrincipal user);
-	*/
 }
 
 public class RegistrationService : IRegistrationService
@@ -59,6 +38,7 @@ public class RegistrationService : IRegistrationService
 	}
 	#endregion
 
+	//ToDo: make this private
 	public string ExceptionMessage { get; set; } = "";
 	//public string InformationMessage { get; set; } = "";
 
@@ -122,12 +102,10 @@ public class RegistrationService : IRegistrationService
 			Adults = registration.Adults,
 			ChildBig = registration.ChildBig,
 			ChildSmall = registration.ChildSmall,
-			CampId = (int)registration.CampTypeEnum,
 			StatusId = registration.StatusSmartEnum.Value,
 			AttendanceBitwise = registration.AttendanceBitwise,
 			LmmDonation = registration.LmmDonation,
-			WillHelpWithMeals = registration.WillHelpWithMeals,
-			Avitar = registration.Avitar,
+			Avatar = registration.Avatar,
 			Notes = registration.Notes
 		};
 		return poco;
@@ -193,17 +171,15 @@ public class RegistrationService : IRegistrationService
 			Adults = poco.Adults,
 			ChildBig = poco.ChildBig,
 			ChildSmall = poco.ChildSmall,
-			CampTypeSmartEnum = BaseCampTypeSmartEnum.FromValue(poco.CampId),
 			StatusSmartEnum = BaseStatusSmartEnum.FromValue(poco.StatusId),
 			AttendanceBitwise = poco.AttendanceBitwise,
 			AttendanceDateList = poco.AttendanceDateList,
 			LmmDonation = poco.LmmDonation,
-			WillHelpWithMeals = poco.WillHelpWithMeals,
-			Avitar = poco.Avitar,
+			Avatar = poco.Avatar,
 			Notes = poco.Notes
 		};
 
-		//Logger.LogDebug($"...registration.StatusEnum: {registration.StatusEnum}, registration.CampTypeEnum: {registration.CampTypeEnum}");
+		//Logger.LogDebug($"...registration.StatusEnum: {registration.StatusEnum}");
 		//Logger.LogDebug($"...AttendanceDateList: {registration.AttendanceDateList}");
 		//Logger.LogDebug($"...AttendanceBitwise: {registration.AttendanceBitwise}");
 		return registration;

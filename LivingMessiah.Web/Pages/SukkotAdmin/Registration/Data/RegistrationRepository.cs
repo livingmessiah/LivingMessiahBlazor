@@ -6,9 +6,7 @@ using System.Threading.Tasks;
 using Dapper;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using SukkotApi.Data;  // ToDo: Move this to LivingMessiah.Web.Data
-using LivingMessiah.Web.Pages.SukkotAdmin.Registration;
-using LivingMessiah.Web.Pages.SukkotAdmin.Enums;
+using SukkotApi.Data;  
 using LivingMessiah.Web.Pages.SukkotAdmin.Registration.Domain;
 using static LivingMessiah.Web.Pages.Sukkot.Constants.SqlServer;
 
@@ -23,13 +21,6 @@ public interface IRegistrationRepository
 	Task<Tuple<int, int, string>> Update(RegistrationPOCO registration);
 
 	Task<List<RegistrationLookup>> PopulateRegistrationLookup();  // copied from DonationRepository
-	/*
-	Task<Domain.Registration> ById(int id);
-	Task<vwRegistrationShell> ByEmail(string email);
-
-	Task<int> Delete(int id);
-	Task<List<Domain.Notes>> GetNotes(BaseRegistrationSortSmartEnum sort);
-	*/
 }
 
 public class RegistrationRepository : BaseRepositoryAsync, IRegistrationRepository
@@ -62,12 +53,11 @@ ORDER BY FirstName
 		base.Sql = $@"
 SELECT Id, FamilyName, FirstName, SpouseName, OtherNames, EMail, Phone
 , Adults, ChildBig, ChildSmall
-, CampId -- Offsite, Tent, RV Hookup, Cabin/BH, RV DryCamp
 , StatusId
 , AttendanceBitwise
 , Notes
 , Sukkot.udfAttendanceDatesConcat(Id) AS AttendanceDatesCSV
---, LmmDonation, WillHelpWithMeals, Avitar
+--, LmmDonation, Avatar
 FROM Sukkot.Registration
 ORDER BY FirstName
 ";
@@ -83,8 +73,8 @@ ORDER BY FirstName
 		base.Sql = $@"
 SELECT TOP 1 
 Id, FamilyName, FirstName, SpouseName, OtherNames, EMail, Phone, Adults, ChildBig, ChildSmall
-, CampId AS CampTypeEnum, StatusId AS StatusEnum
-, AttendanceBitwise, LmmDonation, WillHelpWithMeals, Notes, Avitar
+, StatusId AS StatusEnum
+, AttendanceBitwise, LmmDonation, Notes, Avatar
 , Sukkot.udfAttendanceDatesConcat(Id) AS AttendanceDatesCSV
 FROM Sukkot.Registration WHERE Id = {id}";
 		return await WithConnectionAsync(async connection =>
@@ -108,12 +98,10 @@ FROM Sukkot.Registration WHERE Id = {id}";
 			Adults = registration.Adults,
 			ChildBig = registration.ChildBig,
 			ChildSmall = registration.ChildSmall,
-			CampId = registration.CampId,
 			StatusId = registration.StatusId,
 			AttendanceBitwise = registration.AttendanceBitwise,
 			LmmDonation = 0,
-			WillHelpWithMeals = 0,
-			Avitar = registration.Avitar,
+			Avatar = registration.Avatar,
 			Notes = registration.Notes,
 		});
 
@@ -139,7 +127,7 @@ FROM Sukkot.Registration WHERE Id = {id}";
 				}
 				else
 				{
-					ReturnMsg = $"Database call falied; registration.EMail: {@registration.EMail}; SprocReturnValue: {SprocReturnValue}";
+					ReturnMsg = $"Database call failed; registration.EMail: {@registration.EMail}; SprocReturnValue: {SprocReturnValue}";
 					base.log.LogWarning($"...ReturnMsg: {ReturnMsg}; {Environment.NewLine} {base.Sql}");
 				}
 			}
@@ -171,12 +159,10 @@ FROM Sukkot.Registration WHERE Id = {id}";
 			ChildBig = registration.ChildBig,
 			ChildSmall = registration.ChildSmall,
 			AttendanceBitwise = registration.AttendanceBitwise,
-			CampId = registration.CampId,
 			StatusId = registration.StatusId,
-			WillHelpWithMeals = registration.WillHelpWithMealsToInt,
 			LmmDonation = registration.LmmDonation,
 			Notes = registration.NotesScrubbed,
-			Avitar = registration.Avitar
+			Avatar = registration.Avatar
 		});
 
 		base.Parms.Add(ReturnValueParm, dbType: DbType.Int32, direction: ParameterDirection.ReturnValue);

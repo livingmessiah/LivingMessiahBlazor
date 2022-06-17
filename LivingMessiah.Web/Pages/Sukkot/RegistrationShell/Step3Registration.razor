@@ -21,7 +21,8 @@
 			<p class="lead"><b>Task completed</b></p>
 			<p>Registration Id: <b>@RegistrationId</b></p>
 
-			if (StatusFlagEnum.HasFlag(StatusFlagEnum.MealsFormCompleted) == false)
+			//ToDo 070-refactor-StatusEnum-with-SmartEnum
+			if (StatusFlagEnum.HasFlag(StatusFlagEnum.AcceptedHouseRulesAgreement) == false)
 			{
 				<p class="lead">
 					The first step of the registration process is complete.

@@ -1,6 +1,5 @@
 ﻿using System;
 
-
 namespace LivingMessiah.Domain;
 
 public class Download
@@ -16,8 +15,4 @@ public class Download
 		public int StatusId { get; set; }
 		public Decimal TotalDonation { get; set; }
 		public Decimal RegistrationFee { get; set; }
-		public Decimal MealCost { get; set; }
-		public Decimal CampCost { get; set; }
-		public int MealCount { get; set; }
-
 }

@@ -6,9 +6,7 @@ using static LivingMessiah.Web.Services.Auth0;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Logging;
 using SukkotApi.Domain;
-using SukkotApi.Domain.Enums;
 using Microsoft.AspNetCore.Components;
-using System.Linq;
 using SukkotApi.Domain.Registrations.Enums;
 
 namespace LivingMessiah.Web.Pages.SukkotAdmin.RegistrationList;
@@ -126,16 +124,6 @@ public partial class RegistrationList
 	void Edit_ButtonClick(int id)
 	{
 		NavManager.NavigateTo(Links.Sukkot.CreateEdit + "/" + id);
-	}
-
-	void DetailsMealTicket_ButtonClick(int id)
-	{
-		NavManager.NavigateTo(Links.Sukkot.Meals.Index + "/" + id);
-	}
-
-	void EditMeals_ButtonClick(int id)
-	{
-		NavManager.NavigateTo(Links.Sukkot.Meals.Index + "/" + id);
 	}
 	#endregion
 

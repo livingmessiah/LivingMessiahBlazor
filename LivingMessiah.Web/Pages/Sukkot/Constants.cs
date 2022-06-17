@@ -47,7 +47,6 @@ public static class TShirts
 
 public static class Features
 {
-	public static bool IsTrackingMeals { get; set; } = false;
 	public static bool IsTrackingPassports { get; set; } = false; 
 }
 
@@ -55,8 +54,6 @@ public static class PostActions
 {
 	public const string Create = "Create";
 	public const string Edit = "Edit";
-	public const string EditMeals = "EditMeals";
-	public const string KitchenWork = "KitchenWork";
 }
 
 public static class PDFs
@@ -117,7 +114,6 @@ public static class Other
 	public const string Banner = "2022-sukkot-banner-1024-385-3d.jpg"; 
 	public const string BannerAlt = $"{Year.String} Sukkot Registration Banner";
 	public static string DetailsTitle { get; set; } = $"Living Messiah Sukkot Registration {Year.String}";
-	public static string MealTicketTitle { get; set; } = $"LMM Sukkot {Year.String} Meal Ticket";
 	 
 	public const bool IsRvHookupsAvailable = true;
 	public const string ModalIdHouseRulesXs = "houserulesxs";

@@ -56,10 +56,6 @@ public class RegistrationVM
 
 	public SukkotApi.Domain.Enums.StatusEnum StatusEnum { get; set; }
 
-	[Required]
-	[DisplayName("Camp")]
-	public SukkotApi.Domain.Enums.CampType CampTypeEnum { get; set; }
-
 
 	[DisplayName("Attendance Bitwise")]
 	public int AttendanceBitwise { get; set; }
@@ -72,14 +68,10 @@ public class RegistrationVM
 
 	[DisplayName("Picture (optional)")]
 	[StringLength(255)]
-	public string Avitar { get; set; }
+	public string Avatar { get; set; }
 
 	[DisplayName("LMM Donation")]
 	[DataType(DataType.Currency)]
 	public Decimal LmmDonation { get; set; }
-
-	[Required]
-	[DisplayName("I want some Kitchen Duties?")]
-	public bool WillHelpWithMeals { get; set; }
 
 }

@@ -17,25 +17,6 @@
 	</div>
 </div>
 
-<!--
-@if (Features.IsTrackingMeals) 	{ 	}
--->
-@if (SukkotSettings.Value.IsMealsAvailable)
-{
-	<div class="row">
-		<div class="col-12">
-			<h2 class="mt-4">Meals</h2>
-			<div class="@BtnGroupCss" role="group">
-				<a href="@Meals.PlannerReport" class="btn btn-info mr-2">	<i class="fas fa-list-ol fa-lg"></i> Meal Planner</a>
-				<a href="@Meals.Index" class="btn btn-info mr-2"><i class="fas fa-ticket-alt fa-lg"></i> Meals Tickets</a>
-				<a href="@Meals.ListMealPlanMenu" class="btn btn-info mr-2"><i class="fas fa-utensils fa-lg"></i> List Meal Plan Menu</a>
-				<a href="@KitchenWork.Index" class="btn btn-info"><i class="fas fa-utensils fa-lg"></i> Kitchen Work</a>
-			</div>
-
-		</div>
-	</div>
-}
-
 <div class="row">
 	<div class="col-12">
 		<h2 class="mt-4">Attendance</h2>

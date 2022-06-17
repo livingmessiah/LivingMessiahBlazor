@@ -39,11 +39,7 @@ public partial class RegistrationShell
 		{
 			StatusId = (int)StatusFlagEnum.EmailConfirmation,
 			Id = 0,
-			CampCost = 0,
-			FamilyName = "",
-			MealCost = 0,
-			MealCount = 0,
-			TotalDonation = 0
+			FamilyName = ""
 		};
 	}
 
@@ -69,7 +65,7 @@ public partial class RegistrationShell
 		}
 	}
 
-	private async Task GetRegistrationByEmail() 
+	private async Task GetRegistrationByEmail()
 	{
 		Logger.LogDebug(string.Format("Inside {0}; EmailAddress:{1}"
 		, nameof(RegistrationShell) + "!" + nameof(GetRegistrationByEmail), EmailAddress));
@@ -119,20 +115,21 @@ public partial class RegistrationShell
 	{
 		StatusFlagEnum = StatusFlagEnum | StatusFlagEnum.RegistrationFormCompleted;
 
-		if (vwRegistrationShell.MealCount > 0)
-		{
-			StatusFlagEnum = StatusFlagEnum | StatusFlagEnum.MealsFormCompleted;
-		}
+		//ToDo 070-refactor-StatusEnum-with-SmartEnum
+		//if (vwRegistrationShell.MealCount > 0)
+		//{
+		//	StatusFlagEnum = StatusFlagEnum | StatusFlagEnum.AcceptedHouseRulesAgreement;
+		//}
 
 		if (statusId == (int)StatusEnum.FullyPaid)
 		{
-			StatusFlagEnum = StatusFlagEnum | StatusFlagEnum.MealsFormCompleted | StatusFlagEnum.FullyPaid;
+			StatusFlagEnum = StatusFlagEnum | StatusFlagEnum.AcceptedHouseRulesAgreement | StatusFlagEnum.FullyPaid;
 		}
 		else
 		{
 			if (statusId == (int)StatusEnum.PartiallyPaid)
 			{
-				StatusFlagEnum = StatusFlagEnum | StatusFlagEnum.MealsFormCompleted | StatusFlagEnum.PartiallyPaid;
+				StatusFlagEnum = StatusFlagEnum | StatusFlagEnum.AcceptedHouseRulesAgreement | StatusFlagEnum.PartiallyPaid;
 			}
 		}
 

@@ -5,36 +5,19 @@ namespace SukkotApi.Domain;
 
 public class vwRegistrationShell
 {
-		public int Id { get; set; }
-		public String FamilyName { get; set; }
-		public int StatusId { get; set; }
+	public int Id { get; set; }
+	public String FamilyName { get; set; }
+	public int StatusId { get; set; }
 
-		[DataType(DataType.Currency)]
-		public Decimal TotalDonation { get; set; }
-		public int MealCount { get; set; }
+	[DataType(DataType.Currency)]
+	public Decimal TotalDonation { get; set; }
 
-		[DataType(DataType.Currency)]
-		public Decimal MealCost { get; set; }
-		[DataType(DataType.Currency)]
-
-		public Decimal CampCost { get; set; }
-
-		[DataType(DataType.Currency)]
-		public decimal TotalCost
+	[DataType(DataType.Currency)]
+	public decimal RemainingCost
+	{
+		get
 		{
-				get
-				{
-						return MealCost + CampCost;
-				}
+			return 0 - TotalDonation; // previously this had other costs that are no longer tracked
 		}
-
-		[DataType(DataType.Currency)]
-		public decimal RemainingCost
-		{
-				get
-				{
-						return MealCost + CampCost - TotalDonation;
-				}
-		}
-
+	}
 }

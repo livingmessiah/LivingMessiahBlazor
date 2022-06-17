@@ -32,12 +32,14 @@ public partial class Payment
 		Logger.LogDebug(string.Format("Inside {0} Id:{1}"
 			, nameof(Payment) + "!" + nameof(OnInitializedAsync), Id));
 		InitializeErrorHandling();
+		InitializeAlertHandlingling();
 		RegistrationSummary = new RegistrationSummary();
 		try
 		{
 			var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
 			User = authState.User;
 			RegistrationSummary = await svc.Summary(Id, User);
+			GotRecord = true;
 		}
 		catch (PaymentSummaryException paymentSummaryRecordNotFoundException)
 		{
@@ -54,8 +56,25 @@ public partial class Payment
 			DatabaseError = true;
 			DatabaseErrorMsg = invalidOperationException.Message;
 		}
+		AttemptingToGetRecord = false;
+		if (!GotRecord)
+		{
+			AttemptingToGetRecordMsg = "Failed to get registration";
+		}
 
 	}
+
+	#region AlertHandling
+	private void InitializeAlertHandlingling()
+	{
+		AttemptingToGetRecord = true;
+		GotRecord = false;
+		AttemptingToGetRecordMsg = "";
+	}
+	protected bool GotRecord;
+	protected bool AttemptingToGetRecord;
+	protected string AttemptingToGetRecordMsg;
+	#endregion
 
 	#region ErrorHandling
 	private void InitializeErrorHandling()

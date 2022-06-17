@@ -547,32 +547,12 @@ public static class Sukkot
 		public const string ErrorLogEmpty = "/SukkotAdmin/ErrorLogEmpty";
 	}
 
-	// These pages don't exist
-	public static class Meals
-	{
-		public const string Index = "/SukkotAdmin/Meals/Index";  // MealTickets = "/SukkotAdmin/Meals/Tickets";
-		public const string TicketsPunched = "/SukkotAdmin/Meals/TicketsPunched";
-		public const string PlannerReport = "/SukkotAdmin/Meals/PlannerReport";
-		public const string ListMealPlanMenu = "/SukkotAdmin/Meals/ListMealPlanMenu";
-	}
-
-	// These pages don't exist
-	public static class KitchenWork
-	{
-		public const string Index = "/SukkotAdmin/KitchenWork/Index";
-		public const string Edit = "/SukkotAdmin/KitchenWork/Edit";
-	}
-
 	public static class Links2
 	{
-		public const string EditMeals = "/Sukkot/EditMeals";
-		public const string DetailsMealTicket = "/Sukkot/DetailsMealTicket";
 		public const string Details = "/Sukkot/Details";
 		public const string Payment = "/Sukkot/Payment";
 		public const string PaymentTitle = "Donations Earmarked for Sukkot";
-		public const string KitchenWork = "/Sukkot/KitchenWork";
 	}
-	//public const string TitleMealPlanner = "Sukkot Meal Planner";
 }
 
 

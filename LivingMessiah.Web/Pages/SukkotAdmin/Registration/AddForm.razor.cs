@@ -30,9 +30,6 @@ public partial class AddForm
 	//ToDo this should come from the Sukkot.Constants and saved in cache		
 	public Sukkot.DateRangeLocal DateRangeAttendance { get; set; } = Sukkot.DateRangeLocal.FromEnum(Sukkot.DateRangeEnum.AttendanceDays);
 
-	protected bool LoadFailed;
-	//protected bool CanEditCampType => Registration.LocationEnum == LocationEnum.WildernessRanch;
-	protected bool CanEditCampType = false;
 
 	[Parameter]
 	public bool IsEdit { get; set; } = false;
@@ -140,9 +137,7 @@ public partial class AddForm
 
 	private async Task Create()
 	{
-		//RegistrationVM.StatusSmartEnum = BaseStatusSmartEnum.EmailConfirmation;
-
-		try
+			try
 		{
 			RegistrationVM.Id = 0;
 			RegistrationVM.StatusSmartEnum = BaseStatusSmartEnum.EmailConfirmation;
@@ -179,7 +174,6 @@ public partial class AddForm
 
 	private async Task Update()
 	{
-		//RegistrationVM.StatusSmartEnum = BaseStatusSmartEnum.EmailConfirmation;
 
 		try
 		{

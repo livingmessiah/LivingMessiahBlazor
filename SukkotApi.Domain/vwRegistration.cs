@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using static SukkotApi.Domain.Constants;
 
 namespace SukkotApi.Domain;
 
@@ -35,17 +33,11 @@ public class vwRegistration
 	[DisplayName("Children under 6")]
 	public int ChildSmall { get; set; }
 
-	[DisplayName("WHWM?")]
-	public bool WillHelpWithMeals { get; set; }
-
 	public int StatusId { get; set; }
 
 	[DisplayName("Attendance Total")]
 	public int AttendanceTotal { get; set; }
 	public string AttendanceDatesCSV { get; set; }
-
-	public string Camp { get; set; }
-	public string CampCD { get; set; }
 	public string Status { get; set; }
 	public string StatusCD { get; set; }
 
@@ -58,22 +50,6 @@ public class vwRegistration
 
 	public string Notes { get; set; }
 
-	//Regular
-	public int TotalAdultLun { get; set; }
-	public int TotalAdultDin { get; set; }
-	public int TotalChildBigLun { get; set; }
-	public int TotalChildBigDin { get; set; }
-	public int TotalChildSmallLun { get; set; }
-	public int TotalChildSmallDin { get; set; }
-
-	//Vegetarian
-	public int TotalAdultLunVeg { get; set; }
-	public int TotalAdultDinVeg { get; set; }
-	public int TotalChildBigLunVeg { get; set; }
-	public int TotalChildBigDinVeg { get; set; }
-	public int TotalChildSmallLunVeg { get; set; }
-	public int TotalChildSmallDinVeg { get; set; }
-
 	public int AttendanceBitwise { get; set; }
 
 	public string PayWithCheckMessage { get; set; }
@@ -85,14 +61,6 @@ public class vwRegistration
 		s += " " + FamilyName;
 		if (includeOthers) { s += " and " + OtherNames; }
 		return s;
-	}
-
-	public int TotalAdultMeals
-	{
-		get
-		{
-			return TotalAdultLun + TotalAdultDin + TotalAdultLunVeg + TotalAdultDinVeg;
-		}
 	}
 
 	public DateTime[] AttendanceDateList
@@ -116,43 +84,6 @@ public class vwRegistration
 			{
 				return null;
 			}
-		}
-	}
-
-	[DataType(DataType.Currency)]
-	public decimal AdultMealCost
-	{
-		get
-		{
-			return TotalAdultMeals * AdultMeals;
-		}
-	}
-
-
-	public int TotalChildBigMeals
-	{
-		get
-		{
-			return TotalChildBigLun + TotalChildBigDin + TotalChildBigLunVeg + TotalChildBigDinVeg;
-		}
-	}
-
-
-	[DataType(DataType.Currency)]
-	public decimal ChildBigMealCost
-	{
-		get
-		{
-			return TotalChildBigMeals * ChildMeals; // 2.5m
-		}
-	}
-
-	[DataType(DataType.Currency)]
-	public decimal TotalCost
-	{
-		get
-		{
-			return AdultMealCost + ChildBigMealCost + RegistrationFee;
 		}
 	}
 

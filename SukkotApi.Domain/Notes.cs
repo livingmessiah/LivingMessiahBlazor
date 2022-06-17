@@ -9,5 +9,4 @@ public class Notes
 		public string EMail { get; set; }
 		public string UserNotes { get; set; }
 		public string AdminNotes { get; set; }
-		public string CampCD { get; set; }
 }

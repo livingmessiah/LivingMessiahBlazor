@@ -9,7 +9,6 @@ using LivingMessiah.Web.Infrastructure;
 using LivingMessiah.Web.Services;
 using Microsoft.Extensions.Logging;
 using SukkotApi.Data;
-using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
 namespace Sukkot.Web.Service;
@@ -23,20 +22,14 @@ public interface ISukkotService
 	Task<int> Create(RegistrationVM registration, ClaimsPrincipal user);
 	Task<int> Edit(RegistrationVM registration, ClaimsPrincipal user);
 	Task<int> DeleteConfirmed(int id);
-	Task<EditMealsVM> Meals(int registrationId, ClaimsPrincipal user);
-	Task<int> UpdateMeals(EditMealsVM vm);
 	Task<RegistrationSummary> Summary(int id, ClaimsPrincipal user);
-	//Task<KitchenWorkVM> KitchenJobs(int registrationId, ClaimsPrincipal user); NOT YET IMPLEMENTED
 }
 
-//ToDo: Where does SukkotService use  ControllerBase
-//public class SukkotService : ControllerBase, ISukkotService
 public class SukkotService : ISukkotService
 {
 	#region Constructor and DI
 	private readonly ISukkotRepository db;
 	private readonly ILogger Logger;
-	//private readonly SukkotSettings SukkotSettings;
 
 	public SukkotService(
 		ISukkotRepository sukkotRepository, ILogger<SukkotService> logger)
@@ -45,8 +38,6 @@ public class SukkotService : ISukkotService
 		Logger = logger;
 	}
 	#endregion
-
-
 
 	private string LogExceptionMessage { get; set; } = "";  
 	public string UserInterfaceMessage { get; set; } = "";
@@ -265,12 +256,10 @@ public class SukkotService : ISukkotService
 			Adults = registration.Adults,
 			ChildBig = registration.ChildBig,
 			ChildSmall = registration.ChildSmall,
-			CampTypeEnum = registration.CampTypeEnum,  //CampId = registration.CampTypeEnum,
 			StatusEnum = registration.StatusEnum,  //StatusId = registration.StatusEnum,
 			AttendanceBitwise = registration.AttendanceBitwise,
 			LmmDonation = registration.LmmDonation,
-			WillHelpWithMeals = registration.WillHelpWithMeals,
-			Avitar = registration.Avitar,
+			Avatar = registration.Avatar,
 			Notes = registration.Notes
 		};
 		return poco;
@@ -290,18 +279,16 @@ public class SukkotService : ISukkotService
 			Adults = poco.Adults,
 			ChildBig = poco.ChildBig,
 			ChildSmall = poco.ChildSmall,
-			CampTypeEnum = poco.CampTypeEnum,
 			StatusEnum = poco.StatusEnum, // poco.StatusId,
 			AttendanceBitwise = poco.AttendanceBitwise,
 			AttendanceDateList = poco.AttendanceDateList,
 			LmmDonation = poco.LmmDonation,
-			WillHelpWithMeals = poco.WillHelpWithMeals,
-			Avitar = poco.Avitar,
+			Avatar = poco.Avatar,
 			Notes = poco.Notes
 		};
 
 		Logger.LogDebug($"Inside {nameof(SukkotService)}!{nameof(UpdateDTO)}");
-		//Logger.LogDebug($"...registration.StatusEnum: {registration.StatusEnum}, registration.CampTypeEnum: {registration.CampTypeEnum}");
+		//Logger.LogDebug($"...registration.StatusEnum: {registration.StatusEnum}");
 		//Logger.LogDebug($"...AttendanceDateList: {registration.AttendanceDateList}");
 		//Logger.LogDebug($"...AttendanceBitwise: {registration.AttendanceBitwise}");
 		return registration;
@@ -345,9 +332,9 @@ public class SukkotService : ISukkotService
 		int count = 0;
 		try
 		{
-			Logger.LogInformation($"Delete meals and registration in one call");
+			Logger.LogInformation($"Delete registration in one call");
 			count = await db.Delete(id);
-			Logger.LogInformation($"Registration and meals deleted for id={id}; affected rows={count}");
+			Logger.LogInformation($"Registration deleted for id={id}; affected rows={count}");
 		}
 		catch (Exception ex)
 		{
@@ -358,216 +345,6 @@ public class SukkotService : ISukkotService
 		}
 		return count;
 	}
-
-	public async Task<EditMealsVM> Meals(int registrationId, ClaimsPrincipal user)
-	{
-		Logger.LogInformation($"Inside {nameof(Meals)}, registrationId={registrationId}");
-		MealsRelatedRegistrationData RegistrationData = new MealsRelatedRegistrationData();
-		RegistrationData = await GetRegistrationDataAndCheckAuthority(registrationId, user);
-		var vm = new EditMealsVM();
-		vm = await GetMeals(RegistrationData);
-		return vm;
-	}
-
-	private async Task<MealsRelatedRegistrationData> GetRegistrationDataAndCheckAuthority(int registrationId, ClaimsPrincipal user)
-	{
-		MealsRelatedRegistrationData RegistrationData;
-		try
-		{
-			RegistrationData = await db.MealsRelatedRegistrationData(registrationId);
-		}
-		catch (Exception ex)
-		{
-			LogExceptionMessage = $"Inside {nameof(GetRegistrationDataAndCheckAuthority)}, {nameof(db.MealsRelatedRegistrationData)}, registrationId={registrationId}";
-			Logger.LogError(ex, LogExceptionMessage);
-			UserInterfaceMessage += "An invalid operation occurred during getting meals related registration data, contact your administrator";
-			throw new InvalidOperationException(UserInterfaceMessage);
-		}
-
-		if (!IsUserAuthoirized(RegistrationData.EMail, registrationId, user))
-		{
-			LogExceptionMessage = $"Inside {nameof(GetRegistrationDataAndCheckAuthority)}, logged in user:{RegistrationData.EMail} lacks authority for registrationId={registrationId}";
-			Logger.LogWarning(LogExceptionMessage);
-			UserInterfaceMessage += "User not authorized";
-			throw new UserNotAuthoirizedException(UserInterfaceMessage);
-		}
-
-		return RegistrationData;
-	}
-
-	private async Task<EditMealsVM> GetMeals(MealsRelatedRegistrationData registrationData)
-	{
-		var vm = new EditMealsVM();
-		Logger.LogInformation("Get Meals");
-
-		vm.RegistrationId = registrationData.Id;
-		vm.Title = Other.MealTicketTitle;
-		vm.FamilyName = registrationData.FamilyName;
-		vm.StatusId = registrationData.StatusId;
-
-		vm.AdultCount = registrationData.Adults;
-		vm.ChildBigCount = registrationData.ChildBig;
-		vm.ChildSmallCount = registrationData.ChildSmall;
-
-		// Used only by DetailsMealTicket.cshtml
-		vm.MealTotalCostAdult = registrationData.MealTotalCostAdult;
-		vm.MealTotalCostChildBig = registrationData.MealTotalCostChildBig;
-		vm.MealRateAdult = registrationData.MealRateAdult;
-		vm.MealRateChildBig = registrationData.MealRateChildBig;
-
-		try
-		{
-			//Regular
-			vm.MealAdult = await GetMealAdultAsync(registrationData.Id, registrationData.Adults, MealAges.Adults);
-			vm.MealChildBig = await GetMealChildBigAsync(registrationData.Id, registrationData.ChildBig, MealAges.ChildBig);
-			vm.MealChildSmall = await GetMealChildSmallAsync(registrationData.Id, registrationData.ChildSmall, MealAges.ChildSmall);
-
-			//Vegetarian
-			vm.MealAdultVeg = await GetMealAdultVegAsync(registrationData.Id, registrationData.Adults, MealAges.Adults);
-			vm.MealChildBigVeg = await GetMealChildBigVegAsync(registrationData.Id, registrationData.ChildBig, MealAges.ChildBig);
-			vm.MealChildSmallVeg = await GetMealChildSmallVegAsync(registrationData.Id, registrationData.ChildSmall, MealAges.ChildSmall);
-		}
-		catch (Exception ex)
-		{
-			LogExceptionMessage = $"Inside {nameof(GetMeals)}, registrationData.Id={registrationData.Id}";
-			Logger.LogError(ex, LogExceptionMessage);
-			UserInterfaceMessage += "An invalid operation occurred getting meals related registration data, contact your administrator";
-			throw new InvalidOperationException(UserInterfaceMessage);
-		}
-		return vm;
-	}
-
-	private async Task<Meal> GetMealAdultAsync(int id, int count, MealAges mealAges)
-	{
-		Meal meal = null;
-		if (count > 0)
-		{
-			meal = new Meal
-			{
-				Lunch = new Lunch(),
-				Dinner = new Dinner()
-			};
-			meal.Lunch = await db.GetLunch(id, MealEnum.AdultLunch);
-			meal.Dinner = await db.GetDinner(id, MealEnum.AdultDinner);
-		}
-		return meal;
-	}
-
-	private async Task<Meal> GetMealChildBigAsync(int id, int count, MealAges mealAges)
-	{
-		Meal meal = null;
-		if (count > 0)
-		{
-			meal = new Meal
-			{
-				Lunch = new Lunch(),
-				Dinner = new Dinner()
-			};
-			meal.Lunch = await db.GetLunch(id, MealEnum.ChildBigLunch);
-			meal.Dinner = await db.GetDinner(id, MealEnum.ChildBigDinner);
-		}
-		return meal;
-	}
-
-	private async Task<Meal> GetMealChildSmallAsync(int id, int count, MealAges mealAges)
-	{
-		Meal meal = null;
-		if (count > 0)
-		{
-			meal = new Meal
-			{
-				Lunch = new Lunch(),
-				Dinner = new Dinner()
-			};
-			meal.Lunch = await db.GetLunch(id, MealEnum.ChildSmallLunch);
-			meal.Dinner = await db.GetDinner(id, MealEnum.ChildSmallDinner);
-		}
-		return meal;
-	}
-
-	private async Task<Meal> GetMealAdultVegAsync(int id, int count, MealAges mealAges)
-	{
-		Meal meal = null;
-		if (count > 0)
-		{
-			meal = new Meal
-			{
-				Lunch = new Lunch(),
-				Dinner = new Dinner()
-			};
-			meal.Lunch = await db.GetLunch(id, MealEnum.AdultLunchVeg);
-			meal.Dinner = await db.GetDinner(id, MealEnum.AdultDinnerVeg);
-		}
-		return meal;
-	}
-
-	private async Task<Meal> GetMealChildBigVegAsync(int id, int count, MealAges mealAges)
-	{
-		Meal meal = null;
-		if (count > 0)
-		{
-			meal = new Meal
-			{
-				Lunch = new Lunch(),
-				Dinner = new Dinner()
-			};
-			meal.Lunch = await db.GetLunch(id, MealEnum.ChildBigLunchVeg);
-			meal.Dinner = await db.GetDinner(id, MealEnum.ChildBigDinnerVeg);
-		}
-		return meal;
-	}
-
-	private async Task<Meal> GetMealChildSmallVegAsync(int id, int count, MealAges mealAges)
-	{
-		Meal meal = null;
-		if (count > 0)
-		{
-			meal = new Meal
-			{
-				Lunch = new Lunch(),
-				Dinner = new Dinner()
-			};
-			meal.Lunch = await db.GetLunch(id, MealEnum.ChildSmallLunchVeg);
-			meal.Dinner = await db.GetDinner(id, MealEnum.ChildSmallDinnerVeg);
-		}
-		return meal;
-	}
-
-	public async Task<int> UpdateMeals(EditMealsVM vm)
-	{
-		int count = 0;
-		Logger.LogInformation($"Calling {nameof(db.UpdateMeal)}");
-
-		try
-		{
-			if (vm.AdultCount > 0)
-			{
-				count = await db.UpdateMeal(vm.RegistrationId, vm.MealAdult, AgeEnum.Adult);
-				count = await db.UpdateMealVeg(vm.RegistrationId, vm.MealAdultVeg, AgeEnum.Adult);
-			}
-			if (vm.ChildBigCount > 0)
-			{
-				count = await db.UpdateMeal(vm.RegistrationId, vm.MealChildBig, AgeEnum.ChildBig);
-				count = await db.UpdateMealVeg(vm.RegistrationId, vm.MealChildBigVeg, AgeEnum.ChildBig);
-			}
-			if (vm.ChildSmallCount > 0)
-			{
-				count = await db.UpdateMeal(vm.RegistrationId, vm.MealChildSmall, AgeEnum.ChildSmall);
-				count = await db.UpdateMealVeg(vm.RegistrationId, vm.MealChildSmallVeg, AgeEnum.ChildSmall);
-			}
-
-			count += await db.RegistrationUpdateMealsCompleted(vm.RegistrationId);
-		}
-		catch (Exception ex)
-		{
-			LogExceptionMessage = $"Inside {nameof(UpdateMeals)}";
-			Logger.LogError(ex, LogExceptionMessage);
-			UserInterfaceMessage += "An invalid operation occurred updating meals, contact your administrator";
-			throw new InvalidOperationException(UserInterfaceMessage);
-		}
-		return count;
-	}
-
 
 	private bool AdminOrSukkotOverride(ClaimsPrincipal user)
 	{

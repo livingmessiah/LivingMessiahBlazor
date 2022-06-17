@@ -3,7 +3,6 @@
 @using Microsoft.AspNetCore.Hosting
 @using Microsoft.Extensions.Hosting
 
-@using static SukkotApi.Domain.Constants
 @using static LivingMessiah.Web.Services.Auth0
 @using LivingMessiah.Web.Shared.Sukkot
 
@@ -94,9 +93,9 @@
 
 				@*<div class="col-sm-4">
 					<div class="form-group">
-					<label for="avitar" class="control-label">Avitar</label>
-					<InputText id="avitar" class="form-control" @bind-Value="Registration.Avitar" placeholder="picture (optional)" />
-					<ValidationMessage For="@(() => Registration.Avitar)" />
+					<label for="avatar" class="control-label">Avatar</label>
+					<InputText id="avatar" class="form-control" @bind-Value="Registration.Avatar" placeholder="picture (optional)" />
+					<ValidationMessage For="@(() => Registration.Avatar)" />
 					</div>
 					</div>*@
 
