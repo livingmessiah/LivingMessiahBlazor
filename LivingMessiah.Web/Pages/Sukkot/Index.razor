@@ -21,7 +21,7 @@
 
 <AuthorizeView>
 	<Authorized>
-		<h3>Hello, @context.User.Identity.Name!</h3>
+		<h3>Hello, @Salutation !</h3>
 		<ul>
 			@*<li>IsAuthenticated: @context.User.Identity.IsAuthenticated</li>
 				<li>IsInRole admin: @context.User.IsInRole("admin")</li>*@
@@ -53,8 +53,8 @@
 			</h1>
 			<h3>
 				<span class="text-warning">
-					If you would like to join us for Sukkot, please	contact @ContactName at
-					<a href="mailto:@ContactEmail?Subject=@Title1" target="_top">@ContactEmail</a> &nbsp;<i class="far fa-envelope"></i>.
+					If you would like to join us for Sukkot, please	contact @RegistrationClosedEmail.Name at
+					<a href="mailto:@RegistrationClosedEmail.Email?Subject=@RegistrationClosedEmail.Subject" target="_top">@RegistrationClosedEmail.Email</a> &nbsp;<i class="far fa-envelope"></i>.
 				</span>
 			</h3>
 		</div>

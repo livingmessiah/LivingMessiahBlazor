@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 using LivingMessiah.Web.Pages.SukkotAdmin.Registration.Services; // using service, don't need .Data;
 using LivingMessiah.Web.Pages.SukkotAdmin.Registration.Domain;
 using LivingMessiah.Web.Pages.SukkotAdmin.Registration.Data;
-using LivingMessiah.Web.Pages.SukkotAdmin.Enums;
+using SukkotApi.Domain.Enums;
 using static LivingMessiah.Web.Pages.Sukkot.Constants.SqlServer;
 
 using Syncfusion.Blazor.DropDowns;
@@ -140,7 +140,7 @@ public partial class AddForm
 			try
 		{
 			RegistrationVM.Id = 0;
-			RegistrationVM.StatusSmartEnum = BaseStatusSmartEnum.EmailConfirmation;
+			RegistrationVM.Status = Status.EmailConfirmation;
 
 			var sprocTuple = await svc.Create(RegistrationVM);
 			if (sprocTuple.Item1 != 0)

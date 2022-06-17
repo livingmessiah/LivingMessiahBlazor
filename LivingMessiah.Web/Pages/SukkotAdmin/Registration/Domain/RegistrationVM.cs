@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using LivingMessiah.Web.Pages.SukkotAdmin.Enums;
+using SukkotApi.Domain.Enums;
 
 namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration.Domain;
 
@@ -55,7 +55,7 @@ public class RegistrationVM
 	[Range(0, 12, ErrorMessage = "{0} must be between {1} and {2}")]
 	public int ChildSmall { get; set; }
 
-	public BaseStatusSmartEnum StatusSmartEnum { get; set; }
+	public Status Status { get; set; }
 
 	[DisplayName("Attendance Bitwise")]
 	public int AttendanceBitwise { get; set; }

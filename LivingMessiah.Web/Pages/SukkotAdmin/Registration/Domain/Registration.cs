@@ -1,4 +1,4 @@
-﻿using LivingMessiah.Web.Pages.SukkotAdmin.Enums;
+﻿using SukkotApi.Domain.Enums;
 using System;
 
 namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration.Domain;
@@ -17,12 +17,11 @@ public class Registration
 	public int ChildSmall { get; set; }
 
 	public int StatusId { get; set; }
-	public BaseStatusSmartEnum BaseStatusSmartEnum { get; set; }
 	public string StatusName
 	{
 		get
 		{
-			return BaseStatusSmartEnum.FromValue(StatusId).Name;
+			return Status.FromValue(StatusId).Name;
 		}
 	}
 

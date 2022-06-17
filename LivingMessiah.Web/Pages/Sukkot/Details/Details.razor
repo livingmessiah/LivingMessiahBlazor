@@ -98,18 +98,13 @@
 		<div class="col-12">
 
 			@if (!String.IsNullOrEmpty(vwRegistration.PayWithCheckMessage))
-
-				if (vwRegistration.StatusId != (int)SukkotApi.Domain.Enums.StatusEnum.FullyPaid)
+				if (vwRegistration.StatusValue != SukkotApi.Domain.Enums.Status.FullyPaid)
 				{
-
 					<button @onclick="@(e => Edit_ButtonClick(e, vwRegistration.Id))"
 									class="btn-primary btn-sm">
 						<i class="fas fa-edit"></i> Edit
 					</button>
 				}
-
-
-
 
 		</div>
 	</div>

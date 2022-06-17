@@ -17,7 +17,7 @@ public class RegistrationPOCO
 	public int ChildBig { get; set; }
 	public int ChildSmall { get; set; }
 
-	public StatusEnum StatusEnum { get; set; }
+	public Status Status { get; set; }
 
 	public int AttendanceBitwise { get; set; }
 	public string AttendanceDatesCSV { get; set; }

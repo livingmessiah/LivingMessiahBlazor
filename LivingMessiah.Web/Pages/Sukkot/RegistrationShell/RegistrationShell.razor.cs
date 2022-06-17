@@ -6,6 +6,7 @@ using LivingMessiah.Web.Infrastructure;
 using SukkotApi.Data;
 using SukkotApi.Domain;
 using SukkotApi.Domain.Enums;
+
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components;
 using System.Security.Claims;
@@ -37,7 +38,7 @@ public partial class RegistrationShell
 	{
 		return new vwRegistrationShell
 		{
-			StatusId = (int)StatusFlagEnum.EmailConfirmation,
+			Status = Status.EmailConfirmation,
 			Id = 0,
 			FamilyName = ""
 		};
@@ -74,7 +75,7 @@ public partial class RegistrationShell
 			vwRegistrationShell = await db.ByEmail(EmailAddress);
 			if (vwRegistrationShell != null)
 			{
-				FinalizeStatusFlag(vwRegistrationShell.StatusId);
+				FinalizeStatusFlag(vwRegistrationShell.Status);
 			}
 			else
 			{
@@ -98,7 +99,7 @@ public partial class RegistrationShell
 			StatusFlagEnum = StatusFlagEnum | StatusFlagEnum.EmailConfirmation;
 		}
 
-		UserName = User.GetUserName();
+		UserName = User.GetUserNameSoapVersion();
 		EmailAddress = User.GetUserEmail();
 
 		if (string.IsNullOrEmpty(UserName) | string.IsNullOrEmpty(EmailAddress))
@@ -111,28 +112,21 @@ public partial class RegistrationShell
 		}
 	}
 
-	private void FinalizeStatusFlag(int statusId)
+	private void FinalizeStatusFlag(Status status)
 	{
 		StatusFlagEnum = StatusFlagEnum | StatusFlagEnum.RegistrationFormCompleted;
 
-		//ToDo 070-refactor-StatusEnum-with-SmartEnum
-		//if (vwRegistrationShell.MealCount > 0)
-		//{
-		//	StatusFlagEnum = StatusFlagEnum | StatusFlagEnum.AcceptedHouseRulesAgreement;
-		//}
-
-		if (statusId == (int)StatusEnum.FullyPaid)
+		if (status == Status.FullyPaid)
 		{
 			StatusFlagEnum = StatusFlagEnum | StatusFlagEnum.AcceptedHouseRulesAgreement | StatusFlagEnum.FullyPaid;
 		}
 		else
 		{
-			if (statusId == (int)StatusEnum.PartiallyPaid)
+			if (status == Status.PartiallyPaid)
 			{
 				StatusFlagEnum = StatusFlagEnum | StatusFlagEnum.AcceptedHouseRulesAgreement | StatusFlagEnum.PartiallyPaid;
 			}
 		}
-
 	}
 
 

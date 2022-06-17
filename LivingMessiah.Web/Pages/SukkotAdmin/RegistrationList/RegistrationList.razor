@@ -46,17 +46,24 @@
 						<th>
 							<span class="sort-link" @onclick=@(() => SortClicked(RegistrationSortEnum.Id))>Id</span>
 							<span>@(GetSortStyle(RegistrationSortEnum.Id))</span>
+							<br />&nbsp;
 						</th>
 						<th>
-							<span class="sort-link" @onclick=@(() => SortClicked(RegistrationSortEnum.LastName))>Last Name</span>
-							<span>@(GetSortStyle(RegistrationSortEnum.LastName))</span>
-							&nbsp;|&nbsp;
 							<span class="sort-link" @onclick=@(() => SortClicked(RegistrationSortEnum.FirstName))>First Name</span>
 							<span>@(GetSortStyle(RegistrationSortEnum.FirstName))</span>
-							<br />Name/EMail/Phone
+							&nbsp;|&nbsp;
+							<span class="sort-link" @onclick=@(() => SortClicked(RegistrationSortEnum.LastName))>Last Name</span>
+							<span>@(GetSortStyle(RegistrationSortEnum.LastName))</span>
+							<br />Name / EMail / Phone
 						</th>
-						<th>Registration</th>
-						<th>Donation Status</th>
+						<th>
+							Registration
+							<br />&nbsp;
+						</th>
+						<th>
+							Donation / Status
+							<br />&nbsp;
+						</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -72,16 +79,16 @@
 									<td>
 										<div class="btn-group">
 											<button @onclick="@(e => Details_ButtonClick(item.Id))"
-															class="btn-default btn-sm" title="Registration View">
+													class="btn-default btn-sm" title="Registration View">
 												<i class="fas fa-info text-info"></i> View
 											</button>
 											<button @onclick="@(e => Edit_ButtonClick(item.Id))"
-															class="btn-default btn-sm" title="Registration Edit">
+													class="btn-default btn-sm" title="Registration Edit">
 												<i class="fas fa-pencil-alt text-success"></i> Edit
 											</button>
 
 											<button @onclick="@(e => DeleteConfirmation_ButtonClick(item.Id))"
-															class="btn-default btn-sm" title="Delete">
+													class="btn-default btn-sm" title="Delete">
 												<i class="fas fa-times text-danger"></i> Del
 											</button>
 										</div>
@@ -91,24 +98,15 @@
 
 										<div class="btn-group">
 											<button @onclick="@(e => Payment_ButtonClick(item.Id))"
-															class="btn-default btn-sm" title="Payment">
+													class="btn-default btn-sm" title="Payment">
 												<i class="fas fa-dollar-sign text-success"></i> Pay
 											</button>
-
-
-											@*<AuthorizeView Roles="@Roles.Admin">
-													<Authorized>
-													ToDo: It look like you can not have nested authorize views, to put
-													SEE BUTTON ABOVE
-													</Authorized>
-
-													<NotAuthorized>
-														<i class="fa fa-times text-danger"></i>
-													</NotAuthorized>
-												</AuthorizeView>*@
-
-
 										</div>
+
+										<div class=mt-2>
+											<sup>@item.StatusId</sup>  @StringExtensions.Truncate(item.StatusName, 30)
+										</div>
+
 									</td>
 
 								</Authorized>
@@ -117,7 +115,7 @@
 									<td>
 										<div class="btn-group">
 											<button @onclick="@(e => Details_ButtonClick(item.Id))"
-															class="btn-default btn-sm" title="Registration">
+													class="btn-default btn-sm" title="Registration">
 												<i class="fas fa-info text-info"></i>
 											</button>
 										</div>

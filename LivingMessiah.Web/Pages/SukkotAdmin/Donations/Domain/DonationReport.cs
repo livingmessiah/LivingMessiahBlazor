@@ -1,4 +1,4 @@
-﻿using LivingMessiah.Web.Pages.SukkotAdmin.Enums;
+﻿using SukkotApi.Domain.Enums;
 using System.ComponentModel.DataAnnotations;
 
 namespace LivingMessiah.Web.Pages.SukkotAdmin.Donations.Domain;
@@ -26,7 +26,7 @@ public class DonationReport
 	{
 		get
 		{
-			return BaseStatusSmartEnum.FromValue(StatusId) == BaseStatusSmartEnum.FullyPaid ? "X" : "";
+			return Status.FromValue(StatusId) == Status.FullyPaid ? "X" : "";
 		}
 	}
 

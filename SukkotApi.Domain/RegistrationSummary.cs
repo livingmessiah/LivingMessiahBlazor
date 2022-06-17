@@ -12,6 +12,14 @@ public class RegistrationSummary
 	public int ChildSmall { get; set; }
 
 	public int StatusId { get; set; }
+	public string StatusName
+	{
+		get
+		{
+			return Enums.Status.FromValue(StatusId).Name;
+		}
+	}
+
 	public int AttendanceBitwise { get; set; }
 
 	[DisplayFormat(DataFormatString = "{0:C0}")]

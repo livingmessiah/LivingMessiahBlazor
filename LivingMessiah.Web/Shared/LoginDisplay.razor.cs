@@ -4,6 +4,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Components.Authorization;
 using System.Linq;
 using System.Threading.Tasks;
+using LivingMessiah.Web.Infrastructure;
 
 namespace LivingMessiah.Web.Shared;
 
@@ -35,7 +36,7 @@ public partial class LoginDisplay
 			Verified = false;
 		}
 
-		Name = user.Identity.Name;
+		Name = user.GetUserNameSoapVersion();
 		EmailAddress = user.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
 		Role = user.Claims.FirstOrDefault(c => c.Type == "https://schemas.livingmessiah.com/roles")?.Value;
 

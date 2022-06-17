@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
 using SukkotApi.Domain;
-using SukkotApi.Domain.Enums;
-using System;
 
 namespace LivingMessiah.Web.Pages.Sukkot.Details;
 

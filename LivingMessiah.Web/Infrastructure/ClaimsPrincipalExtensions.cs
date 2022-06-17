@@ -7,103 +7,108 @@ namespace LivingMessiah.Web.Infrastructure;
 
 public static class ClaimsPrincipalExtensions
 {
-		public static string GetRoleLMM(this ClaimsPrincipal user)
+	public static string GetRoleLMM(this ClaimsPrincipal user)
+	{
+		return user.Claims?.FirstOrDefault(c => c.Type == "https://schemas.livingmessiah.com/roles")?.Value;
+	}
+
+	public static string GetUserId(this ClaimsPrincipal user)
+	{
+		return user.Claims?.FirstOrDefault(c => c.Type == "sub")?.Value;
+	}
+
+	public static string GetUserName(this ClaimsPrincipal user)
+	{
+		return user.Claims?.FirstOrDefault(c => c.Type == "name")?.Value;
+	}
+
+	public static string GetUserNameSoapVersion(this ClaimsPrincipal user)
+	{
+		return user.Claims?.FirstOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.Name)?.Value;
+	}
+
+	public static string GetUserEmail(this ClaimsPrincipal user)
+	{
+		return user.Claims?.FirstOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.Email)?.Value;
+	}
+
+	public static string GetRoles(this ClaimsPrincipal user)
+	{
+		string roles = "";
+		foreach (var claim in user.Claims)
 		{
-				return user.Claims?.FirstOrDefault(c => c.Type == "https://schemas.livingmessiah.com/roles")?.Value;
+			if (claim.Type == SchemaNameSpace)
+			{
+				roles += claim.Value;
+			}
 		}
 
-		public static string GetUserId(this ClaimsPrincipal user)
+		if (roles.Length > 0 && roles.IndexOf(',') > 0)
 		{
-				return user.Claims?.FirstOrDefault(c => c.Type == "sub")?.Value;
+			roles.Remove(roles.IndexOf(','));
 		}
 
-		public static string GetUserName(this ClaimsPrincipal user)
-		{
-				return user.Claims?.FirstOrDefault(c => c.Type == "name")?.Value;
-		}
+		return roles;
+	}
 
-		public static string GetUserEmail(this ClaimsPrincipal user)
+	public static bool RoleHasAdminOrSukkot(this ClaimsPrincipal user)
+	{
+		foreach (var claim in user.Claims)
 		{
-				return user.Claims?.FirstOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.Email)?.Value;
-		}
+			//ToDo: I wish this would work
+			//if (claim.Type == SchemaNameSpace && claim.Value == Roles.AdminOrSukkot) { return true; }
 
-		public static string GetRoles(this ClaimsPrincipal user)
-		{
-				string roles = "";
-				foreach (var claim in user.Claims)
+			if (claim.Type == SchemaNameSpace && claim.Value == Roles.Admin)
+			{
+				return true;
+			}
+			else
+			{
+				if (claim.Type == SchemaNameSpace && claim.Value == Roles.Sukkot)
 				{
-						if (claim.Type == SchemaNameSpace)
-						{
-								roles += claim.Value;
-						}
+					return true;
 				}
-
-				if (roles.Length > 0 && roles.IndexOf(',') > 0)
-				{
-						roles.Remove(roles.IndexOf(','));
-				}
-
-				return roles;
+			}
 		}
+		return false;
+	}
 
-		public static bool RoleHasAdminOrSukkot(this ClaimsPrincipal user)
+	public static bool RoleHasAdmin(this ClaimsPrincipal user)
+	{
+		foreach (var claim in user.Claims)
 		{
-				foreach (var claim in user.Claims)
-				{
-						//ToDo: I wish this would work
-						//if (claim.Type == SchemaNameSpace && claim.Value == Roles.AdminOrSukkot) { return true; }
+			if (claim.Type == SchemaNameSpace && claim.Value == Roles.Admin)
+			{
+				return true;
+			}
+		}
+		return false;
+	}
 
-						if (claim.Type == SchemaNameSpace && claim.Value == Roles.Admin)
-						{
-								return true;
-						}
-						else
-						{
-								if (claim.Type == SchemaNameSpace && claim.Value == Roles.Sukkot)
-								{
-										return true;
-								}
-						}
-				}
+	public static bool Verified(this ClaimsPrincipal user)
+	{
+		//return user.Claims?.FirstOrDefault(c => c.Type == "email_verified")?.Value;
+		if (user.Claims != null)
+		{
+			var x = user.Claims?.FirstOrDefault(c => c.Type == "email_verified")?.Value;
+			if (!string.IsNullOrEmpty(x))
+			{
+				bool b;
+				bool.TryParse(x, out b);
+				return b;
+			}
+			else
+			{
 				return false;
-		}
+			}
 
-		public static bool RoleHasAdmin(this ClaimsPrincipal user)
+		}
+		else
 		{
-				foreach (var claim in user.Claims)
-				{
-						if (claim.Type == SchemaNameSpace && claim.Value == Roles.Admin)
-						{
-								return true;
-						}
-				}
-				return false;
+			return false;
 		}
 
-		public static bool Verified(this ClaimsPrincipal user)
-		{
-				//return user.Claims?.FirstOrDefault(c => c.Type == "email_verified")?.Value;
-				if (user.Claims != null)
-				{
-						var x = user.Claims?.FirstOrDefault(c => c.Type == "email_verified")?.Value;
-						if (!string.IsNullOrEmpty(x))
-						{
-								bool b;
-								bool.TryParse(x, out b);
-								return b;
-						}
-						else
-						{
-								return false;
-						}
-
-				}
-				else
-				{
-						return false;
-				}
-
-		}
+	}
 
 
 }

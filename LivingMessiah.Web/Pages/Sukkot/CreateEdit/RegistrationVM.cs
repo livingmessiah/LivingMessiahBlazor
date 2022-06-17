@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using SukkotApi.Domain.Enums;
 
 namespace LivingMessiah.Web.Pages.Sukkot.CreateEdit;
 
@@ -54,8 +55,7 @@ public class RegistrationVM
 	[Range(0, 12, ErrorMessage = "{0} must be between {1} and {2}")]
 	public int ChildSmall { get; set; }
 
-	public SukkotApi.Domain.Enums.StatusEnum StatusEnum { get; set; }
-
+	public Status Status { get; set; }
 
 	[DisplayName("Attendance Bitwise")]
 	public int AttendanceBitwise { get; set; }

@@ -1,23 +1,30 @@
 ﻿using Microsoft.AspNetCore.Components;
+using LivingMessiah.Web.Infrastructure;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Components.Authorization;
+using System.Threading.Tasks;
 
 namespace LivingMessiah.Web.Pages.Sukkot;
 
 public partial class Index
 {
-		//ToDo: fix this
-		public const string ContactName = "Ralphie";
-		public const string ContactEmail = "ralphie@livingmessiah.com";
-		public const string Title1 = "Late Sukkot Registration Question";
+	[Inject]
+	public AuthenticationStateProvider AuthenticationStateProvider { get; set; }
 
-		//ToDo: fix this
-		//public const string ArrivalDate = "Wednesday September 30th";
-		//public const string CleanupDate = "Saturday, October 10th";
-		//public const string ShabbatServiceDate = "October 3rd";
+	public string Salutation { get; set; }
+	public ClaimsPrincipal User { get; set; }
 
-
-		//public RenderFragment DynamicContent = builder =>
-		//{
-		//	builder.AddContent(1, "<b>Windmill Ranch</b> near <b>Bisbee, AZ</b>");
-		//};
+	/*
+	Because of this unanswered question https://community.auth0.com/t/my-blazor-server-app-wont-display-the-user-name/85054
+	I cant just do this ==> @context.User.Identity.Name
+	*/
+	protected override async Task OnInitializedAsync()
+	{
+		base.OnInitialized();
+		var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+		User = authState.User;
+		Salutation = User.GetUserNameSoapVersion();
+	}
+	
 
 }

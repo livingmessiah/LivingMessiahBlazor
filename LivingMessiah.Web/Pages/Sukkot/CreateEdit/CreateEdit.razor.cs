@@ -3,13 +3,11 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Sukkot.Web.Service;
 using LivingMessiah.Web.Infrastructure;
-using SukkotApi.Domain.Enums;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
-using System.Collections.Generic;
-using Syncfusion.Blazor.DropDowns;
+using SukkotApi.Domain.Enums;
 
 namespace LivingMessiah.Web.Pages.Sukkot.CreateEdit;
 
@@ -60,8 +58,7 @@ public partial class CreateEdit
 				Registration = new RegistrationVM
 				{
 					Id = 0,
-					StatusEnum = StatusEnum.EmailConfirmation,
-					//HouseRulesAgreement = DateTime.UtcNow, // Task 687: Persist the moment House Rules were agreed to database
+					Status = Status.EmailConfirmation,
 					EMail = User.GetUserEmail()
 				};
 			}

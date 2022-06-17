@@ -50,7 +50,7 @@ public class SukkotRepository : BaseRepositoryAsync, ISukkotRepository
 		base.Sql = $@"
 SELECT TOP 1 
 Id, FamilyName, FirstName, SpouseName, OtherNames, EMail, Phone, Adults, ChildBig, ChildSmall
-, StatusId AS StatusEnum
+, StatusId
 , AttendanceBitwise, LmmDonation, Notes, Avatar
 , Sukkot.udfAttendanceDatesConcat(Id) AS AttendanceDatesCSV
 FROM Sukkot.Registration WHERE Id = {id}";
@@ -90,7 +90,7 @@ WHERE EMail = @EMail
 			Adults = registration.Adults,
 			ChildBig = registration.ChildBig,
 			ChildSmall = registration.ChildSmall,
-			StatusId = registration.StatusEnum, // registration.StatusId,
+			StatusId = registration.Status.Value,
 			AttendanceBitwise = registration.AttendanceBitwise,
 			LmmDonation = 0,
 			Avatar = registration.Avatar,
@@ -133,7 +133,7 @@ UPDATE Sukkot.Registration SET
 	ChildBig = {registration.ChildBig},
 	ChildSmall = {registration.ChildSmall},
 	AttendanceBitwise = {registration.AttendanceBitwise},
-	StatusId = {(int)registration.StatusEnum},  
+	StatusId = {registration.Status.Value},  
 	LmmDonation = {registration.LmmDonation},
 	Notes = N'{registration.NotesScrubbed}',
 	Avatar = N'{registration.Avatar}'

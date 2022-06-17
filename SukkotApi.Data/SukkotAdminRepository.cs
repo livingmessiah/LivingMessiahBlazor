@@ -11,7 +11,6 @@ using SukkotApi.Domain.Registrations.Enums;
 
 namespace SukkotApi.Data;
 
-
 public interface ISukkotAdminRepository
 {
 	Task<List<vwRegistration>> GetAll(RegistrationSortEnum sort, bool isAscending);
@@ -51,7 +50,8 @@ public class SukkotAdminRepository : BaseRepositoryAsync, ISukkotAdminRepository
 		base.Sql = $@"
 SELECT TOP 500 Id, FamilyName, FirstName, SpouseName, OtherNames
 , EMail, Phone, Adults, ChildBig, ChildSmall
-, StatusId, StatusCD, Status, Notes
+, StatusId
+, Notes
 , RegistrationFee, LmmDonation
 , AttendanceBitwise, AttendanceTotal
 FROM Sukkot.vwRegistration

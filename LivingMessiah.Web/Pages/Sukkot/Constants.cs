@@ -14,6 +14,13 @@ public static class Year
 	public const string String = "2022";
 }
 
+public static class RegistrationClosedEmail
+{
+	public static string Subject { get; set; } = $"Late Sukkot {Year.String} Registration Question";
+	public const string Name = "Ralphie";
+	public const string Email = "ralphie@livingmessiah.com";
+}
+
 public static class PayPal
 {
 	public const string HostedButton = "7S848U88V95UA";

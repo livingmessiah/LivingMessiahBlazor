@@ -1,7 +1,6 @@
 ﻿@using LivingMessiah.Web.Pages.Sukkot.Constants
 @using SukkotApi.Domain
 @using SukkotApi.Domain.Enums
-@*@using LivingMessiah.Web.Pages.Shared.Constants*@
 
 @{
 	string Phone2 = !String.IsNullOrEmpty(@vwRegistration.Phone) ? $"Phone: {@vwRegistration.Phone}, " : "";
@@ -14,7 +13,7 @@
 		<div class="row">
 			<div class="col-sm-12">
 				@* @Html.DisplayFor(model => vwRegistration.EMail) ...  @Html.DisplayFor(model => vwRegistration.Status) *@
-				<small class="float-right">EMail: @vwRegistration.EMail, @Phone2 Status: @vwRegistration.Status</small>
+				<small class="float-right">EMail: @vwRegistration.EMail, @Phone2 Status: @vwRegistration.StatusName</small>
 				<h4>General</h4>
 			</div>
 		</div>
@@ -32,7 +31,7 @@
 					<li>Registration#: @vwRegistration.Id</li>
 					<li>EMail: @vwRegistration.EMail</li>
 					<li>Phone: @vwRegistration.Phone</li>
-					<li>Status: @vwRegistration.Status</li>
+					<li>Status: @vwRegistration.StatusName</li>
 				</ul>
 			</div>
 		</div>
@@ -49,7 +48,7 @@
 			<li>Registration#: @vwRegistration.Id</li>
 			<li>EMail: @vwRegistration.EMail</li>
 			<li>Phone: @vwRegistration.Phone</li>
-			<li>Status: @vwRegistration.Status</li>
+			<li>Status: @vwRegistration.StatusName</li>
 		</ul>
 	</div>
 </div>

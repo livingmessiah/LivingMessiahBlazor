@@ -160,7 +160,7 @@ public class SukkotService : ISukkotService
 				UserInterfaceMessage += "User not authorized";
 				throw new UserNotAuthoirizedException(UserInterfaceMessage);
 			}
-			if (registrationPOCO.StatusEnum == StatusEnum.FullyPaid & !AdminOrSukkotOverride(user))
+			if (registrationPOCO.Status == Status.FullyPaid & !AdminOrSukkotOverride(user))
 			{
 				throw new RegistratationException("Can not edit registration that has been fully paid.");
 			}
@@ -184,19 +184,17 @@ public class SukkotService : ISukkotService
 			Logger.LogInformation(string.Format("Inside {0}", nameof(SukkotService) + "!" + nameof(Create)));
 			if (user.GetRoles() == Auth0.Roles.Admin | user.GetRoles() == Auth0.Roles.Sukkot)
 			{
-				// This is nonsensical and superfluous 
-				// I think it's here because making the if a Not makes it hard to understand
-				registration.StatusEnum = registration.StatusEnum;
 			}
 			else
 			{
-				registration.StatusEnum = StatusEnum.RegistrationFormCompleted;
+				registration.Status = Status.RegistrationFormCompleted;
 			}
 
 			registration.AttendanceBitwise = GetDaysBitwise(registration.AttendanceDateList, DateRangeEnum.AttendanceDays);
 
 			newId = await db.Create(DTO(registration));
-			Logger.LogInformation($"Registration created for {registration.FamilyName}/{registration.EMail}; newId={newId}, registration.StatusId={registration.StatusEnum}");
+			Logger.LogInformation(string.Format("Registration created for {0}; newId={1}, registration.Status.Value={2}"
+				, registration.FamilyName + "/" + registration.EMail, newId, registration.Status.Value ));
 		}
 		catch (Exception ex)
 		{
@@ -256,7 +254,7 @@ public class SukkotService : ISukkotService
 			Adults = registration.Adults,
 			ChildBig = registration.ChildBig,
 			ChildSmall = registration.ChildSmall,
-			StatusEnum = registration.StatusEnum,  //StatusId = registration.StatusEnum,
+			Status = registration.Status, 
 			AttendanceBitwise = registration.AttendanceBitwise,
 			LmmDonation = registration.LmmDonation,
 			Avatar = registration.Avatar,
@@ -279,7 +277,7 @@ public class SukkotService : ISukkotService
 			Adults = poco.Adults,
 			ChildBig = poco.ChildBig,
 			ChildSmall = poco.ChildSmall,
-			StatusEnum = poco.StatusEnum, // poco.StatusId,
+			Status = poco.Status, 
 			AttendanceBitwise = poco.AttendanceBitwise,
 			AttendanceDateList = poco.AttendanceDateList,
 			LmmDonation = poco.LmmDonation,
@@ -302,12 +300,10 @@ public class SukkotService : ISukkotService
 		{
 			if (user.GetRoles() == Auth0.Roles.Admin | user.GetRoles() == Auth0.Roles.Sukkot)
 			{
-				registration.StatusEnum = registration.StatusEnum;
 			}
 			else
 			{
-				//registration.StatusEnum = (int)Status.RegistrationFormCompleted;
-				registration.StatusEnum = StatusEnum.RegistrationFormCompleted;
+				registration.Status = Status.RegistrationFormCompleted;
 			}
 
 			registration.AttendanceBitwise = GetDaysBitwise(registration.AttendanceDateList, DateRangeEnum.AttendanceDays);

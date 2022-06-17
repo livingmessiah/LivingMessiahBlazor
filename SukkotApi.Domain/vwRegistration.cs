@@ -33,13 +33,26 @@ public class vwRegistration
 	[DisplayName("Children under 6")]
 	public int ChildSmall { get; set; }
 
-	public int StatusId { get; set; }
-
 	[DisplayName("Attendance Total")]
 	public int AttendanceTotal { get; set; }
 	public string AttendanceDatesCSV { get; set; }
-	public string Status { get; set; }
-	public string StatusCD { get; set; }
+
+	public int StatusId { get; set; }
+	public string StatusName
+	{
+		get
+		{
+			return Enums.Status.FromValue(StatusId).Name;
+		}
+	}
+
+	public int StatusValue
+	{
+		get
+		{
+			return Enums.Status.FromValue(StatusId);
+		}
+	}
 
 	[DataType(DataType.Currency)]
 	public decimal RegistrationFee { get; set; }
@@ -62,6 +75,7 @@ public class vwRegistration
 		if (includeOthers) { s += " and " + OtherNames; }
 		return s;
 	}
+
 
 	public DateTime[] AttendanceDateList
 	{

@@ -4,7 +4,7 @@ using Microsoft.Extensions.Logging;
 
 using LivingMessiah.Web.Pages.SukkotAdmin.Registration.Domain;
 using LivingMessiah.Web.Pages.SukkotAdmin.Registration.Data;
-using LivingMessiah.Web.Pages.SukkotAdmin.Enums;
+using SukkotApi.Domain.Enums;
 using LivingMessiah.Web.Services;
 
 // ToDo: should this get converted to BaseSmartEnumDateRange
@@ -48,7 +48,7 @@ public class RegistrationService : IRegistrationService
 		try
 		{
 			//string email = await SvcClaims.GetEmail();	if (await SvcClaims.IsUserAuthoirized(email))	{	}
-			registrationVM.StatusSmartEnum = BaseStatusSmartEnum.RegistrationFormCompleted;
+			registrationVM.Status = Status.RegistrationFormCompleted;
 			registrationVM.AttendanceBitwise = GetDaysBitwise(registrationVM.AttendanceDateList, DateRangeEnum.AttendanceDays);
 
 			var sprocTuple = await db.Create(DTO_From_VM_To_DB(registrationVM));
@@ -102,7 +102,7 @@ public class RegistrationService : IRegistrationService
 			Adults = registration.Adults,
 			ChildBig = registration.ChildBig,
 			ChildSmall = registration.ChildSmall,
-			StatusId = registration.StatusSmartEnum.Value,
+			StatusId = registration.Status.Value,
 			AttendanceBitwise = registration.AttendanceBitwise,
 			LmmDonation = registration.LmmDonation,
 			Avatar = registration.Avatar,
@@ -171,7 +171,7 @@ public class RegistrationService : IRegistrationService
 			Adults = poco.Adults,
 			ChildBig = poco.ChildBig,
 			ChildSmall = poco.ChildSmall,
-			StatusSmartEnum = BaseStatusSmartEnum.FromValue(poco.StatusId),
+			Status = Status.FromValue(poco.StatusId),
 			AttendanceBitwise = poco.AttendanceBitwise,
 			AttendanceDateList = poco.AttendanceDateList,
 			LmmDonation = poco.LmmDonation,
@@ -179,7 +179,7 @@ public class RegistrationService : IRegistrationService
 			Notes = poco.Notes
 		};
 
-		//Logger.LogDebug($"...registration.StatusEnum: {registration.StatusEnum}");
+		//Logger.LogDebug($"...registration.StatusEnum: {registration.Status}");
 		//Logger.LogDebug($"...AttendanceDateList: {registration.AttendanceDateList}");
 		//Logger.LogDebug($"...AttendanceBitwise: {registration.AttendanceBitwise}");
 		return registration;
