@@ -1,0 +1,43 @@
+﻿<div class="card bg-light">
+
+	<div class="card-header text-center">
+		<h5>@CurrentStatus.Title</h5>
+	</div>
+
+	<div class="card-body">
+
+		<div class="row">
+			<div class="col-12">
+				<dl class="row">
+					<dt class="col-6">Status:</dt>
+					<dd class="col-6">@CurrentStatus.Status</dd>
+				</dl>
+				<dl class="row">
+					<dt class="col-6">StatusFlagEnum:</dt>
+					<dd class="col-6">@CurrentStatus.StatusFlagEnum</dd>
+				</dl>
+				<dl class="row">
+					<dt class="col-6">FamilyName:</dt>
+					<dd class="col-6">@CurrentStatus.FamilyName</dd>
+				</dl>
+				<dl class="row">
+					<dt class="col-6">UserName:</dt>
+					<dd class="col-6">@CurrentStatus.UserName</dd>
+				</dl>
+				<dl class="row">
+					<dt class="col-6">EmailAddress:</dt>
+					<dd class="col-6">@CurrentStatus.EmailAddress</dd>
+				</dl>
+				<dl class="row">
+					<dt class="col-6">TotalDonation:</dt>
+					<dd class="col-6"><span class="float-right">@CurrentStatus.TotalDonation.ToString("C0")</span></dd>
+				</dl>
+				<dl class="row">
+					<dt class="col-6">RemainingCost:</dt>
+					<dd class="col-6"><span class="float-right">@CurrentStatus.RemainingCost.ToString("C0")</span></dd>
+				</dl>
+			</div>
+		</div>
+
+	</div>
+</div>

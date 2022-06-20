@@ -1,0 +1,46 @@
+﻿@using LivingMessiah.Web.Pages.Sukkot.Constants
+@using LivingMessiah.Web.Pages.Sukkot.RegistrationEnums
+@using Page = LivingMessiah.Web.Links.Sukkot.RegistrationSteps
+
+@if (StatusFlagEnum.HasFlag(StatusFlagEnum.EmailConfirmation) == false)
+{
+	<p class="lead">
+		Sign Up for an account or use one previously created.
+		<ol class="lead">
+			<li>
+				<button @onclick="@(() => RedirectToLoginClick(@Page.Index))"
+								type="button" class="btn-primary btn-sm">
+					Login <i class='fas fa-sign-in-alt'></i>
+				</button>
+				to create an account.
+			</li>
+			<li>Verify the account (an email with a link will be sent to you)</li>
+			<li>Once that is done, you will be returned to this page so you can continue with the Registration.</li>
+			<li>
+				<b>Note</b>, close the browser that you used to sign up for you Living Messiah account before you log back in.
+				The cache needs to be cleared otherwise it won't recognize the verification process.
+			</li>
+		</ol>
+	</p>
+
+	<div class="card border-danger my-5" style="max-width: 500px;">
+		<div class="card-header"><h3 class="badge-danger">EMAIL VERIFICATION PROBLEMS</h3></div>
+		<div class="card-body">
+			<p>If you are having problems locating your verification email, PLEASE CHECK YOUR SPAM FOLDER</p>
+			<p>
+				If you find it there, you MUST do these two things
+				<ol>
+					<li>Move it to your inbox</li>
+					<li>Then open the email and click the verification link</li>
+				</ol>
+			</p>
+			<p>If you don't move the email out of your spam folder into your inbox the verification link will probably be disabled</p>
+		</div>
+	</div>
+
+}
+else
+{
+	<p class="lead"><b>Task completed</b></p>
+}
+

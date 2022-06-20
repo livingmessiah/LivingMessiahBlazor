@@ -16,7 +16,7 @@ public interface IDonationRepository
 {
 	string BaseSqlDump { get; }
 	Task<int> InsertRegistrationDonation(Donation donation);
-	Task<List<DonationReport>> GetDonationReport(BaseDonationStatusFilterSmartEnum filter, string sortAndOrder);
+	Task<List<DonationReport>> GetDonationReport(DonationStatusFilter filter, string sortAndOrder);
 	Task<List<DonationDetail>> GetDonationDetails(int registrationId);
 	Task<List<DonationDetail>> GetDonationDetailsAll();
 	Task<DonationDetail> GetDonationDetail(int id);
@@ -128,7 +128,7 @@ WHERE Id=@Id
 		});
 	}
 
-	public async Task<List<DonationReport>> GetDonationReport(BaseDonationStatusFilterSmartEnum filter, string sortAndOrder)
+	public async Task<List<DonationReport>> GetDonationReport(DonationStatusFilter filter, string sortAndOrder)
 	{
 		base.Parms = new DynamicParameters(new { DonationStatus = filter.Value });
 		//base.Parms = new DynamicParameters(new { SortAndOrder = sortAndOrder });

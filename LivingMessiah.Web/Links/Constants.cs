@@ -497,11 +497,23 @@ public static class Store
 
 public static class Sukkot
 {
+
+	public static class RegistrationSteps
+	{
+		public const string Index = "/Sukkot/RegistrationSteps";
+		public const string StartButtonText = "Begin Registration Steps";
+		public const string Title = "Registration Steps";
+		public const string StartButtonIcon = "fas fa-caret-right";
+		public const string Icon = "fas fa-campground";
+	}
+
 	public const LivingMessiah.Web.Pages.KeyDates.Enums.FeastDayEnum FeastDay = LivingMessiah.Web.Pages.KeyDates.Enums.FeastDayEnum.Tabernacles;
 	public const string Index = "/Sukkot";
 	public const string Title = "Sukkot";
 	public const string Icon = "fas fa-campground";
+	
 	public const string RegistrationShell = "/Sukkot/RegistrationShell"; // See Startup.cs options.Conventions.AddPageRoute("/Sukkot/RegistrationShell", "/Sukkot/Registration");
+
 
 	public const string CreateEdit = "/Sukkot/CreateEdit";
 	public const string CreateEditTitle = "Sukkot Create/Edit";

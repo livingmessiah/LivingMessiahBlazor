@@ -21,7 +21,7 @@
 
 <hr class="warning my-4" />
 
-@foreach (var item in BaseDonationStatusFilterSmartEnum.List.OrderBy(o => o.Value))
+@foreach (var item in DonationStatusFilter.List.OrderBy(o => o.Value))
 {
 	<a @onclick="@(() => OnClickFilter(item))" title="Filter by @item.ButtonName"
 		 class="btn btn-outline-primary btn-sm @ActiveFilter(item)">

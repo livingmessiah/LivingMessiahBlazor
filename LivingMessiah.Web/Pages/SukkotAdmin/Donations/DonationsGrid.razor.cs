@@ -32,7 +32,7 @@ public partial class DonationsGrid
 	protected bool DatabaseWarning = false;
 	protected string DatabaseWarningMsg { get; set; }
 
-	public BaseDonationStatusFilterSmartEnum CurrentFilter { get; set; } = BaseDonationStatusFilterSmartEnum.FullList;
+	public DonationStatusFilter CurrentFilter { get; set; } = DonationStatusFilter.FullList;
 
 	protected override async Task OnInitializedAsync()
 	{
@@ -58,9 +58,9 @@ public partial class DonationsGrid
 	}
 
 
-	private async Task GetDataWithParms(BaseDonationStatusFilterSmartEnum filter)
+	private async Task GetDataWithParms(DonationStatusFilter filter)
 	{
-		BaseRegistrationSortSmartEnum sortAndDirection = BaseRegistrationSortSmartEnum.ByFirstName;
+		RegistrationSort sortAndDirection = RegistrationSort.ByFirstName;
 		string sort = sortAndDirection.SqlTableColumnName + sortAndDirection.Order;
 
 		Logger.LogDebug($"Inside {nameof(DonationsGrid)}!{nameof(GetDataWithParms)}; smartEnumFilter.Name:{filter.Name}; sort:{sort}");
@@ -83,14 +83,14 @@ public partial class DonationsGrid
 	}
 
 
-	protected async void OnClickFilter(BaseDonationStatusFilterSmartEnum newFilter)
+	protected async void OnClickFilter(DonationStatusFilter newFilter)
 	{
 		CurrentFilter = newFilter;
 		Logger.LogDebug($"Inside {nameof(OnClickFilter)}; {newFilter.Name} is now the current filter");
 		await GetDataWithParms(newFilter);
 	}
 
-	public string ActiveFilter(BaseDonationStatusFilterSmartEnum filter)
+	public string ActiveFilter(DonationStatusFilter filter)
 	{
 		if (filter == CurrentFilter)
 		{

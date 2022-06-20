@@ -9,6 +9,5 @@ public enum StatusFlagEnum
 	AcceptedHouseRulesAgreement = 2,
 	RegistrationFormCompleted = 4,
 	PartiallyPaid = 8,
-	FullyPaid = 16,
-	AcceptedHouseRules = 32
+	FullyPaid = 16
 }

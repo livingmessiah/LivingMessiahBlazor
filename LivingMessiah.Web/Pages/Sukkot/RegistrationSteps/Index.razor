@@ -1,0 +1,204 @@
+﻿@page "/Sukkot/RegistrationSteps"
+@using Microsoft.AspNetCore.Hosting;
+@using Microsoft.Extensions.Hosting;
+@using LivingMessiah.Web.Shared.Sukkot
+@using static LivingMessiah.Web.Services.Auth0
+
+@using SukkotApi.Domain.Enums
+@using LivingMessiah.Web.Pages.Sukkot.RegistrationEnums
+@using LivingMessiah.Web.Pages.Sukkot.Constants
+
+@*
+	@using PrettyBlazor
+	@inject IWebHostEnvironment Env
+*@
+
+@using PageHome = LivingMessiah.Web.Links.Sukkot
+@using Page = LivingMessiah.Web.Links.Sukkot.RegistrationSteps
+<PageTitle>@Page.Title</PageTitle>
+
+<div class="pb-2 mt-4 mb-2 border-bottom">
+	<h2><i class="@Page.Icon"></i> @Page.Title</h2>
+</div>
+
+@*<AuthorizeView Roles="@Roles.SukkotMenuBar">
+	<SukkotAdminMenubar></SukkotAdminMenubar>
+	</AuthorizeView>
+*@
+
+
+@if (AttemptingToGetRecord == true)
+{
+	<div class="spinner-border"></div>
+	<span style="display: inline-block; vertical-align: super">Loading...</span>
+}
+else
+	@if (!String.IsNullOrWhiteSpace(AttemptingToGetRecordMsg))
+{
+	<p class="text-danger"><em>@AttemptingToGetRecordMsg</em></p>
+}
+else
+{
+	@*<CurrentStatusDump CurrentStatus=@CurrentStatus />*@
+
+	<h4 class="mb-3">To register for Sukkot, you must complete these steps</h4>
+
+	<div class="row">
+		<div class="col-sm-1">
+			<h5><span class="badge badge-warning">Step</span></h5>
+		</div>
+		<div class="col-sm-1">
+			<h5><span class="badge badge-warning">Done</span></h5>
+		</div>
+		<div class="col-sm-10">
+			<h5><span class="badge badge-warning">Description</span></h5>
+		</div>
+	</div>
+
+
+	<div class="row">
+
+		<div class="col-sm-1">
+			<i class="fa-2x">@Status.EmailConfirmation.StepNumber</i>
+		</div>
+		<div class="col-sm-1">
+			@if (CurrentStatus.StatusFlagEnum.HasFlag(StatusFlagEnum.EmailConfirmation) == true)
+			{
+				<i class="fas fa-check fa-3x"></i>
+			}
+		</div>
+
+		<div class="col-sm-10">
+			<h4>Task - Getting Started</h4>
+			@if (CurrentStatus.StatusFlagEnum.HasFlag(StatusFlagEnum.EmailConfirmation) == true)
+			{
+				<p class="lead"><b>Task completed</b></p>
+			}
+			else
+			{
+				<p class="lead">
+					Print out this
+					<a href="@LivingMessiah.Web.Pages.Sukkot.Constants.Blobs.UrlPDF(PDFs.RegistrationWalkThrough)"
+				 class="btn btn-primary btn-sm" target="_blank">
+						<i class="fas fa-file-pdf"></i> PDF
+					</a> or leave it open in another window as it will be helpful with the next step.
+				</p>
+			}
+		</div>
+
+	</div>
+
+	<hr />
+
+	<div class="row">
+		<div class="col-sm-1">
+			<i class="fa-2x">@Status.EmailConfirmation.StepNumber</i>
+		</div>
+		<div class="col-sm-1">
+			@if (CurrentStatus.StatusFlagEnum.HasFlag(StatusFlagEnum.EmailConfirmation) == true)
+			{
+				<i class="fas fa-check fa-3x"></i>
+			}
+		</div>
+
+		<div class="col-sm-10">
+			<h4>Task - Living Messiah Account</h4>
+			<Step2EmailVerified StatusFlagEnum="@CurrentStatus.StatusFlagEnum"></Step2EmailVerified>
+		</div>
+	</div>
+
+	<hr />
+
+	<div class="row">
+		<div class="col-sm-1">
+			<i class="fa-2x">@Status.AcceptedHouseRulesAgreement.StepNumber</i>
+		</div>
+		<div class="col-sm-1">
+			@if (CurrentStatus.StatusFlagEnum.HasFlag(StatusFlagEnum.EmailConfirmation) == true)
+			{
+				<i class="fas fa-check fa-3x"></i>
+			}
+		</div>
+
+		<div class="col-sm-10">
+			<h4>Task - Living Messiah Account</h4>
+			<Step3AcceptedHouseRulesAgreement 
+				StatusFlagEnum="@CurrentStatus.StatusFlagEnum"
+				IsXs = "false">
+			</Step3AcceptedHouseRulesAgreement>
+		</div>
+	</div>
+
+
+	<hr />
+
+	<div class="row">
+		<div class="col-sm-1">
+			<i class="fa-2x">@Status.RegistrationFormCompleted.StepNumber</i>
+		</div>
+
+		<div class="col-sm-1">
+			@if (CurrentStatus.StatusFlagEnum.HasFlag(StatusFlagEnum.RegistrationFormCompleted) == true)
+			{
+				<i class="fas fa-check fa-3x"></i>
+			}
+		</div>
+
+		<div class="col-sm-10">
+			<h4>Task - Registration</h4>
+			@*<p class="text-black-50"><small><sup>IsXs: @IsXs</sup></small></p>*@
+			@*<p class="text-black-50"><small><sup>vwRegistrationShell.Id: @vwRegistrationShell.Id</sup></small></p>*@
+			<Step4Registration IsXs="false"
+											 RegistrationId="@CurrentStatus.Id"
+											 StatusFlagEnum="@CurrentStatus.StatusFlagEnum">
+			</Step4Registration>
+		</div>
+	</div>
+
+
+	<hr />
+
+	<div class="row">
+		<div class="col-sm-1">
+			<i class="fa-2x">@Status.PartiallyPaid.StepNumber</i>
+		</div>
+
+		<div class="col-sm-1">
+			@if (CurrentStatus.StatusFlagEnum.HasFlag(StatusFlagEnum.FullyPaid) == true)
+			{
+				<i class="fas fa-check fa-3x"></i>
+			}
+			else
+			{
+				@if (CurrentStatus.StatusFlagEnum.HasFlag(StatusFlagEnum.PartiallyPaid) == true)
+				{
+					<i class="fas fa-star-half fa-3x text-muted"></i>
+				}
+			}
+		</div>
+
+		<div class="col-sm-10">
+			@if (CurrentStatus.StatusFlagEnum.HasFlag(StatusFlagEnum.PartiallyPaid) == true)
+			{
+				<h4>Task - Payment (partial)</h4>
+			}
+			else
+			{
+				<h4>Task - Payment</h4>
+			}
+			<Step5Payment CurrentStatus="@CurrentStatus">
+			</Step5Payment>
+		</div>
+	</div>
+
+
+	<div class="row col-12">
+		<br />
+		<a href="@PageHome.Index"
+		 title="Sukkot Introduction" class="btn-info btn-sm">
+			<i class="far fa-arrow-alt-circle-left"></i> Back to Introduction
+		</a>
+	</div>
+
+}
+

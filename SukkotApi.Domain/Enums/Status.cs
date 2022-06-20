@@ -32,6 +32,7 @@ public abstract class Status : SmartEnum<Status>
 	private Status(string name, int value) : base(name, value) { } // Constructor
 
 	#region Extra Fields
+	public abstract int StepNumber { get; }
 	public abstract string Abrv { get; }
 	public abstract bool CanTransitionTo(Status next);
 	#endregion
@@ -41,6 +42,7 @@ public abstract class Status : SmartEnum<Status>
 	private sealed class EmailNotConfirmedSE : Status
 	{
 		public EmailNotConfirmedSE() : base($"{nameof(Id.EmailNotConfirmed)}", Id.EmailNotConfirmed) { }
+		public override int StepNumber => 1;
 		public override string Abrv => "NC";
 		public override bool CanTransitionTo(Status next) =>
 			next == Status.EmailConfirmation;
@@ -50,6 +52,7 @@ public abstract class Status : SmartEnum<Status>
 	private sealed class EmailConfirmationSE : Status
 	{
 		public EmailConfirmationSE() : base($"{nameof(Id.EmailConfirmation)}", Id.EmailConfirmation) { }
+		public override int StepNumber => 2;
 		public override string Abrv => "EC";
 		public override bool CanTransitionTo(Status next) =>
 			next == Status.AcceptedHouseRulesAgreement;
@@ -58,6 +61,7 @@ public abstract class Status : SmartEnum<Status>
 	private sealed class AcceptedHouseRulesAgreementSE : Status
 	{
 		public AcceptedHouseRulesAgreementSE() : base($"{nameof(Id.AcceptedHouseRulesAgreement)}", Id.AcceptedHouseRulesAgreement) { }
+		public override int StepNumber => 3;
 		public override string Abrv => "AH";
 		public override bool CanTransitionTo(Status next) =>
 			next == Status.RegistrationFormCompleted ||
@@ -67,6 +71,7 @@ public abstract class Status : SmartEnum<Status>
 	private sealed class RegistrationFormCompletedSE : Status
 	{
 		public RegistrationFormCompletedSE() : base($"{nameof(Id.RegistrationFormCompleted)}", Id.RegistrationFormCompleted) { }
+		public override int StepNumber => 4;
 		public override string Abrv => "FC";
 		public override bool CanTransitionTo(Status next) =>
 			next == Status.FullyPaid ||
@@ -77,6 +82,7 @@ public abstract class Status : SmartEnum<Status>
 	private sealed class PartiallyPaidSE : Status
 	{
 		public PartiallyPaidSE() : base($"{nameof(Id.PartiallyPaid)}", Id.PartiallyPaid) { }
+		public override int StepNumber => 5;
 		public override string Abrv => "PP";
 		public override bool CanTransitionTo(Status next) =>
 			next == Status.FullyPaid ||
@@ -86,6 +92,7 @@ public abstract class Status : SmartEnum<Status>
 	private sealed class FullyPaidSE : Status
 	{
 		public FullyPaidSE() : base($"{nameof(Id.FullyPaid)}", Id.FullyPaid) { }
+		public override int StepNumber => 6;
 		public override string Abrv => "FP";
 		public override bool CanTransitionTo(Status next) =>
 			next == Status.Canceled;
@@ -94,6 +101,7 @@ public abstract class Status : SmartEnum<Status>
 	private sealed class CanceledSE : Status
 	{
 		public CanceledSE() : base($"{nameof(Id.Canceled)}", Id.Canceled) { }
+		public override int StepNumber => 7;
 		public override string Abrv => "Ca";
 		public override bool CanTransitionTo(Status next) => false;
 	}

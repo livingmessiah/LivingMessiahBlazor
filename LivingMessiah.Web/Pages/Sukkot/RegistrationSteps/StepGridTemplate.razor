@@ -1,0 +1,50 @@
+﻿@typeparam TItem
+
+<div class="row">
+	<div class="col-sm-1">
+		<h5><span class="badge badge-warning">Step</span></h5>
+	</div>
+	<div class="col-sm-1">
+		<h5><span class="badge badge-warning">Done</span></h5>
+	</div>
+	<div class="col-sm-10">
+		<h5><span class="badge badge-warning">Description</span></h5>
+	</div>
+</div>
+
+@if (Items == null)
+{
+	<p><em>Loading...</em></p>
+}
+else
+{
+}
+
+@*	
+	<table class="table">
+		<thead>
+			<tr>@TableHeader</tr>
+		</thead>
+		<tbody>
+			@foreach (var item in Items)
+			{
+				<tr>@RowTemplate(item)</tr>
+			}
+		</tbody>
+	</table>
+	*@
+  
+
+
+@*	
+	<TableTemplate Items="Status.List.OrderBy(o => o.Value).ToList()">
+		<TableHeader>
+			<th>Id</th>
+			<th>Name</th>
+		</TableHeader>
+		<RowTemplate>
+			<td>@context.Value</td>
+			<td>@context.Name</td>
+		</RowTemplate>
+	</TableTemplate>
+*@

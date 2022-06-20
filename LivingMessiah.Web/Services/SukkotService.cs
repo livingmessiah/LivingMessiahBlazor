@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using LivingMessiah.Web.Pages.Sukkot.CreateEdit;
+using LivingMessiah.Web.Pages.Sukkot.RegistrationSteps;
 using SukkotApi.Domain;
 using SukkotApi.Domain.Enums;
 using LivingMessiah.Web.Pages.Sukkot;
@@ -10,6 +11,8 @@ using LivingMessiah.Web.Services;
 using Microsoft.Extensions.Logging;
 using SukkotApi.Data;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Components.Authorization;
+using LivingMessiah.Web.Pages.Sukkot.RegistrationEnums;
 
 namespace Sukkot.Web.Service;
 
@@ -23,6 +26,7 @@ public interface ISukkotService
 	Task<int> Edit(RegistrationVM registration, ClaimsPrincipal user);
 	Task<int> DeleteConfirmed(int id);
 	Task<RegistrationSummary> Summary(int id, ClaimsPrincipal user);
+	Task<CurrentStatus> GetCurrentStatus();
 }
 
 public class SukkotService : ISukkotService
@@ -30,16 +34,18 @@ public class SukkotService : ISukkotService
 	#region Constructor and DI
 	private readonly ISukkotRepository db;
 	private readonly ILogger Logger;
+	private readonly AuthenticationStateProvider AuthenticationStateProvider;
 
 	public SukkotService(
-		ISukkotRepository sukkotRepository, ILogger<SukkotService> logger)
+		ISukkotRepository sukkotRepository, ILogger<SukkotService> logger, AuthenticationStateProvider authenticationStateProvider)
 	{
 		db = sukkotRepository;
 		Logger = logger;
+		AuthenticationStateProvider = authenticationStateProvider;
 	}
 	#endregion
 
-	private string LogExceptionMessage { get; set; } = "";  
+	private string LogExceptionMessage { get; set; } = "";
 	public string UserInterfaceMessage { get; set; } = "";
 
 	public async Task<RegistrationSummary> Summary(int id, ClaimsPrincipal user)
@@ -84,6 +90,59 @@ public class SukkotService : ISukkotService
 
 		return vm;
 	}
+
+	public async Task<CurrentStatus> GetCurrentStatus()
+	{
+		UserInterfaceMessage = "";
+		Logger.LogDebug(string.Format("Inside {0}"
+			, nameof(SukkotService) + "!" + nameof(GetCurrentStatus)));
+
+		var vm = new CurrentStatus();
+
+		try
+		{
+			var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+			ClaimsPrincipal user = authState.User;
+			if (user.Verified())
+			{
+				vm.UserName = user.GetUserNameSoapVersion();
+				vm.EmailAddress = user.GetUserEmail();
+				vm.StatusFlagEnum = vm.StatusFlagEnum | StatusFlagEnum.EmailConfirmation;
+
+				var vw = new vwRegistrationShell();
+				vw = await db.ByEmail(vm.EmailAddress);
+				if (vw is not null)
+				{
+					vm.Id = vw.Id;
+					vm.FamilyName = vw.FamilyName;
+					vm.Status = vw.Status;
+					vm.StatusFlagEnum = vm.StatusFlagEnum | StatusFlagEnum.RegistrationFormCompleted;
+
+					if (vm.Status == Status.FullyPaid)
+					{
+						vm.StatusFlagEnum = vm.StatusFlagEnum | StatusFlagEnum.AcceptedHouseRulesAgreement | StatusFlagEnum.FullyPaid;
+					}
+					else
+					{
+						if (vm.Status == Status.PartiallyPaid)
+						{
+							vm.StatusFlagEnum = vm.StatusFlagEnum | StatusFlagEnum.AcceptedHouseRulesAgreement | StatusFlagEnum.PartiallyPaid;
+						}
+					}
+				} //vw is not null
+			}  // user.Verified
+		}
+		catch (Exception ex)
+		{
+			LogExceptionMessage = $"Inside {nameof(GetCurrentStatus)}, db.{nameof(db.ByEmail)}";
+			Logger.LogError(ex, LogExceptionMessage);
+			UserInterfaceMessage += "An invalid operation occurred, contact your administrator";
+			throw new InvalidOperationException(UserInterfaceMessage);
+		}
+		return vm;
+	}
+
+
 
 	public async Task<vwRegistration> Details(int id, ClaimsPrincipal user, bool showPrintInstructionMessage = false)
 	{
@@ -147,7 +206,7 @@ public class SukkotService : ISukkotService
 	{
 		Logger.LogInformation(string.Format("Inside {0} id:{1}"
 			, nameof(SukkotService) + "!" + nameof(Update), id));
-		
+
 		RegistrationPOCO registrationPOCO = new RegistrationPOCO();
 
 		try
@@ -194,7 +253,7 @@ public class SukkotService : ISukkotService
 
 			newId = await db.Create(DTO(registration));
 			Logger.LogInformation(string.Format("Registration created for {0}; newId={1}, registration.Status.Value={2}"
-				, registration.FamilyName + "/" + registration.EMail, newId, registration.Status.Value ));
+				, registration.FamilyName + "/" + registration.EMail, newId, registration.Status.Value));
 		}
 		catch (Exception ex)
 		{
@@ -254,7 +313,7 @@ public class SukkotService : ISukkotService
 			Adults = registration.Adults,
 			ChildBig = registration.ChildBig,
 			ChildSmall = registration.ChildSmall,
-			Status = registration.Status, 
+			Status = registration.Status,
 			AttendanceBitwise = registration.AttendanceBitwise,
 			LmmDonation = registration.LmmDonation,
 			Avatar = registration.Avatar,
@@ -277,7 +336,7 @@ public class SukkotService : ISukkotService
 			Adults = poco.Adults,
 			ChildBig = poco.ChildBig,
 			ChildSmall = poco.ChildSmall,
-			Status = poco.Status, 
+			Status = poco.Status,
 			AttendanceBitwise = poco.AttendanceBitwise,
 			AttendanceDateList = poco.AttendanceDateList,
 			LmmDonation = poco.LmmDonation,
@@ -413,12 +472,28 @@ public class RegistratationException : Exception
 			: base(message)
 	{
 	}
-
 	public RegistratationException(string message, Exception inner)
 			: base(message, inner)
 	{
 	}
 }
+
+
+public class StatusException : Exception
+{
+	public StatusException()
+	{
+	}
+	public StatusException(string message)
+			: base(message)
+	{
+	}
+	public StatusException(string message, Exception inner)
+			: base(message, inner)
+	{
+	}
+}
+
 
 /*
  # Notes on Exceptions

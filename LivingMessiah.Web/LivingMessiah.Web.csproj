@@ -6,6 +6,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Pages\SukkotAdmin\Donations\Services\**" />
+    <Compile Remove="Pages\SukkotAdmin\Registration\Enums\**" />
+    <Content Remove="Pages\SukkotAdmin\Donations\Services\**" />
+    <Content Remove="Pages\SukkotAdmin\Registration\Enums\**" />
+    <EmbeddedResource Remove="Pages\SukkotAdmin\Donations\Services\**" />
+    <EmbeddedResource Remove="Pages\SukkotAdmin\Registration\Enums\**" />
+    <None Remove="Pages\SukkotAdmin\Donations\Services\**" />
+    <None Remove="Pages\SukkotAdmin\Registration\Enums\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="Pages\BlazorExamples\SampleBaseComponent.cs" />
   </ItemGroup>
 
@@ -46,6 +57,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.1" />
     <PackageReference Include="Microsoft.DotNet.UpgradeAssistant.Extensions.Default.Analyzers" Version="0.3.261602" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="6.0.0" />
+    <PackageReference Include="PrettyBlazor" Version="1.2.0" />
     <PackageReference Include="Seq.Extensions.Logging" Version="6.0.0" />
     <PackageReference Include="Serilog.AspNetCore" Version="4.1.0" />
     <PackageReference Include="Serilog.Enrichers.Environment" Version="2.2.0" />
@@ -86,8 +98,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Pages\SukkotAdmin\Donations\Services\" />
-    <Folder Include="Pages\SukkotAdmin\Registration\Enums\" />
     <Folder Include="Pages\UpcomingEvents\Enums\" />
   </ItemGroup>
 

@@ -1,0 +1,60 @@
+﻿@using LivingMessiah.Web.Pages.Sukkot.RegistrationEnums
+
+@if (StatusFlagEnum.HasFlag(StatusFlagEnum.EmailConfirmation) == true)
+{
+
+	@if (StatusFlagEnum.HasFlag(StatusFlagEnum.RegistrationFormCompleted) == false)
+	{
+@*		
+	<HouseRulesConfirmationModal IsXs="@IsXs">
+
+		</HouseRulesConfirmationModal>*@
+	}
+	else
+	{
+
+		if (StatusFlagEnum.HasFlag(StatusFlagEnum.FullyPaid) == true)
+		{
+			<p class="lead"><b>Task completed</b></p>
+			<p>Registration Id: <b>@RegistrationId</b>; ToDo Add PDF Link</p>
+		}
+		else
+		{
+			<p class="lead"><b>Task completed</b></p>
+			<p>Registration Id: <b>@RegistrationId</b></p>
+
+			//ToDo 070-refactor-StatusEnum-with-SmartEnum
+			if (StatusFlagEnum.HasFlag(StatusFlagEnum.AcceptedHouseRulesAgreement) == false)
+			{
+				<p class="lead">
+					The first step of the registration process is complete.
+					You can continue on to the next step (editing you meal ticket) or View, Edit or even Delete you registration.
+				</p>
+			}
+
+			<button @onclick="@(e => Edit_ButtonClick(e, RegistrationId))"
+							class="btn-primary btn-sm">
+				<i class="fas fa-edit"></i> Edit
+			</button>
+
+			<text>&nbsp;</text>
+			<button @onclick="@(e => Details_ButtonClick(e, RegistrationId, false))"
+							class="btn-info btn-sm">
+				<i class="fas fa-info"></i> View
+			</button>
+
+			if (StatusFlagEnum.HasFlag(StatusFlagEnum.PartiallyPaid) == false)
+			{
+				<text>&nbsp;</text>
+				<button @onclick="@(e => DeleteConfirmation_ButtonClick(e, RegistrationId))"
+								class="btn-danger btn-sm">
+					<i class="fas fa-times"></i> Delete
+				</button>
+			}
+
+		}
+
+	}
+}
+
+

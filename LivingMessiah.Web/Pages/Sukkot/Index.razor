@@ -13,6 +13,8 @@
 </AuthorizeView>
 
 @using Page = LivingMessiah.Web.Links.Sukkot
+@using PageRegistrationSteps = LivingMessiah.Web.Links.Sukkot.RegistrationSteps
+
 <PageTitle>@Page.Title</PageTitle>
 
 <div class="pb-2 mt-4 mb-2 border-bottom">
@@ -84,6 +86,13 @@
 					Begin Registration
 					<i class="fas fa-caret-right"></i>
 				</a>
+
+				<a class="btn btn-warning btn-lg"
+					 href="@PageRegistrationSteps.Index">
+					@PageRegistrationSteps.StartButtonText
+					<i class="@PageRegistrationSteps.StartButtonIcon"></i>
+				</a>
+
 			</div>
 		</div>
 

@@ -2,7 +2,7 @@
 
 namespace LivingMessiah.Web.Pages.SukkotAdmin.Enums;
 
-public abstract class BaseRegistrationSortSmartEnum : SmartEnum<BaseRegistrationSortSmartEnum>
+public abstract class RegistrationSort : SmartEnum<RegistrationSort>
 {
 		#region Id's
 		private static class Id
@@ -17,16 +17,16 @@ public abstract class BaseRegistrationSortSmartEnum : SmartEnum<BaseRegistration
 		#endregion
 
 		#region Explicit ie Named Instances
-		public static readonly BaseRegistrationSortSmartEnum ById = new ByIdSE();
-		public static readonly BaseRegistrationSortSmartEnum ByLastName = new ByLastNameSE();
-		public static readonly BaseRegistrationSortSmartEnum ByFirstName = new ByFirstNameSE();
-		public static readonly BaseRegistrationSortSmartEnum ByIdDesc = new ByIdDescSE();
-		public static readonly BaseRegistrationSortSmartEnum ByLastNameDesc = new ByLastNameDescSE();
-		public static readonly BaseRegistrationSortSmartEnum ByFirstNameDesc = new ByFirstNameDescSE();
+		public static readonly RegistrationSort ById = new ByIdSE();
+		public static readonly RegistrationSort ByLastName = new ByLastNameSE();
+		public static readonly RegistrationSort ByFirstName = new ByFirstNameSE();
+		public static readonly RegistrationSort ByIdDesc = new ByIdDescSE();
+		public static readonly RegistrationSort ByLastNameDesc = new ByLastNameDescSE();
+		public static readonly RegistrationSort ByFirstNameDesc = new ByFirstNameDescSE();
 		// Note: SE=SmartEnum
 		#endregion
 
-		private BaseRegistrationSortSmartEnum(string name, int value) : base(name, value) { } // Constructor
+		private RegistrationSort(string name, int value) : base(name, value) { } // Constructor
 
 		#region Extra Fields
 		public abstract string ColumnName { get; }
@@ -35,37 +35,37 @@ public abstract class BaseRegistrationSortSmartEnum : SmartEnum<BaseRegistration
 		#endregion
 
 		#region Explicit ie Named Instances
-		private sealed class ByIdSE : BaseRegistrationSortSmartEnum
+		private sealed class ByIdSE : RegistrationSort
 		{
 				public ByIdSE() : base($"{nameof(Id.ById)}", Id.ById) { }
 				public override string ColumnName => "Id"; public override string SqlTableColumnName => "Id"; public override string Order => "";
 		}
 
-		private sealed class ByLastNameSE : BaseRegistrationSortSmartEnum
+		private sealed class ByLastNameSE : RegistrationSort
 		{
 				public ByLastNameSE() : base($"{nameof(Id.ByLastName)}", Id.ByLastName) { }
 				public override string ColumnName => "Last Name"; public override string SqlTableColumnName => "FamilyName"; public override string Order => "";
 		}
 
-		private sealed class ByFirstNameSE : BaseRegistrationSortSmartEnum
+		private sealed class ByFirstNameSE : RegistrationSort
 		{
 				public ByFirstNameSE() : base($"{nameof(Id.ByFirstName)}", Id.ByFirstName) { }
 				public override string ColumnName => "First Name"; public override string SqlTableColumnName => "FirstName"; public override string Order => "";
 		}
 
-		private sealed class ByIdDescSE : BaseRegistrationSortSmartEnum
+		private sealed class ByIdDescSE : RegistrationSort
 		{
 				public ByIdDescSE() : base($"{nameof(Id.ByIdDesc)}", Id.ByIdDesc) { }
 				public override string ColumnName => "Id"; public override string SqlTableColumnName => "Id"; public override string Order => " Desc";
 		}
 
-		private sealed class ByLastNameDescSE : BaseRegistrationSortSmartEnum
+		private sealed class ByLastNameDescSE : RegistrationSort
 		{
 				public ByLastNameDescSE() : base($"{nameof(Id.ByLastNameDesc)}", Id.ByLastNameDesc) { }
 				public override string ColumnName => "Last Name"; public override string SqlTableColumnName => "FamilyName"; public override string Order => " Desc";
 		}
 
-		private sealed class ByFirstNameDescSE : BaseRegistrationSortSmartEnum
+		private sealed class ByFirstNameDescSE : RegistrationSort
 		{
 				public ByFirstNameDescSE() : base($"{nameof(Id.ByFirstNameDesc)}", Id.ByFirstNameDesc) { }
 				public override string ColumnName => "First Name"; public override string SqlTableColumnName => "FirstName"; public override string Order => " Desc";
