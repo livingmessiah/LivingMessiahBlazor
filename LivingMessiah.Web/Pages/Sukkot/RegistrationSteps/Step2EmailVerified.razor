@@ -1,8 +1,9 @@
 ﻿@using LivingMessiah.Web.Pages.Sukkot.Constants
-@using LivingMessiah.Web.Pages.Sukkot.RegistrationEnums
 @using Page = LivingMessiah.Web.Links.Sukkot.RegistrationSteps
 
-@if (StatusFlagEnum.HasFlag(StatusFlagEnum.EmailConfirmation) == false)
+@*@if (Status != Status.EmailConfirmation)*@
+
+@if (StatusFlag.HasFlag(Enums.StatusFlag.EmailConfirmation) == false)
 {
 	<p class="lead">
 		Sign Up for an account or use one previously created.

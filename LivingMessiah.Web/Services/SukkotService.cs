@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using LivingMessiah.Web.Pages.Sukkot.CreateEdit;
 using LivingMessiah.Web.Pages.Sukkot.RegistrationSteps;
+using LivingMessiah.Web.Pages.Sukkot.RegistrationSteps.Enums;
 using SukkotApi.Domain;
 using SukkotApi.Domain.Enums;
 using LivingMessiah.Web.Pages.Sukkot;
@@ -26,7 +27,11 @@ public interface ISukkotService
 	Task<int> Edit(RegistrationVM registration, ClaimsPrincipal user);
 	Task<int> DeleteConfirmed(int id);
 	Task<RegistrationSummary> Summary(int id, ClaimsPrincipal user);
-	Task<CurrentStatus> GetCurrentStatus();
+
+	Task<CurrentStatus> GetCurrentStatus();   // ToDo Deprecate
+	Task<IndexVM> GetRegistrationStep();
+
+	Task<int> AddHouseRulesAgreementRecord(string email, string timeZone);
 }
 
 public class SukkotService : ISukkotService
@@ -91,6 +96,85 @@ public class SukkotService : ISukkotService
 		return vm;
 	}
 
+
+	public async Task<IndexVM> GetRegistrationStep()
+	{
+		UserInterfaceMessage = "";
+		Logger.LogDebug(string.Format("Inside {0}"
+			, nameof(SukkotService) + "!" + nameof(GetRegistrationStep)));
+
+		var vm = new IndexVM();
+		try
+		{
+			var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+			ClaimsPrincipal user = authState.User;
+			if (user.Verified())
+			{
+				vm.UserName = user.GetUserNameSoapVersion();
+				vm.EmailAddress = user.GetUserEmail();
+				vm.AddToFlag(StatusFlag.EmailConfirmation);
+
+				var vw = new vwRegistrationStep();
+				vw = await db.GetByEmail(vm.EmailAddress);
+
+				if (vw is not null)
+				{
+					vm.AddToFlag(StatusFlag.AcceptedHouseRulesAgreement);
+
+					vm.HouseRulesAgreement = new HouseRulesAgreement();
+					vm.HouseRulesAgreement.Id = vw.Id;
+					vm.HouseRulesAgreement.AcceptedDate = vw.HouseRulesAgreementAcceptedDate;
+					vm.HouseRulesAgreement.TimeZone = vw.HouseRulesAgreementTimeZone;
+
+					if (vw.RegistrationId is not null)
+					{
+						vm.AddToFlag(StatusFlag.RegistrationFormCompleted);
+						vm.RegistrationStep = new RegistrationStep();
+						vm.RegistrationStep.Id = (int)vw.RegistrationId;
+						vm.RegistrationStep.FirstName = vw.FirstName;
+						vm.RegistrationStep.FamilyName = vw.FamilyName;
+						vm.RegistrationStep.TotalDonation = vw.TotalDonation;
+						vm.RegistrationStep.RegistrationFee = vw.RegistrationFee;
+
+						vm.Status = Status.FromValue((int)vw.StatusId);
+						if (vm.Status == Status.PartiallyPaid)
+						{
+							vm.AddToFlag(StatusFlag.PartiallyPaid);
+						}
+						else 
+						{
+							if (vm.Status == Status.FullyPaid)
+							{
+								vm.AddToFlag(StatusFlag.FullyPaid);
+							}
+						}
+					}
+					else
+					{
+						vm.Status = Status.AcceptedHouseRulesAgreement;
+					}
+				}
+				else
+				{
+					vm.Status = Status.EmailConfirmation;
+				}
+			}
+			else
+			{
+				vm.Status = Status.EmailNotConfirmed;
+			}
+		}
+		catch (Exception ex)
+		{
+			LogExceptionMessage = $"Inside {nameof(GetCurrentStatus)}, db.{nameof(db.ByEmail)}";
+			Logger.LogError(ex, LogExceptionMessage);
+			UserInterfaceMessage += "An invalid operation occurred, contact your administrator";
+			throw new InvalidOperationException(UserInterfaceMessage);
+		}
+		return vm;
+	}
+
+	// ToDo Deprecate
 	public async Task<CurrentStatus> GetCurrentStatus()
 	{
 		UserInterfaceMessage = "";
@@ -115,7 +199,9 @@ public class SukkotService : ISukkotService
 				{
 					vm.Id = vw.Id;
 					vm.FamilyName = vw.FamilyName;
-					vm.Status = vw.Status;
+					//vm.AcceptedHouseRulesAgreementTZ = vw.AcceptedHouseRulesAgreementTZ;
+					//vm.AcceptedHouseRulesAgreement = vw.AcceptedHouseRulesAgreement;
+					vm.Status = Status.FromValue(vw.StatusId);
 					vm.StatusFlagEnum = vm.StatusFlagEnum | StatusFlagEnum.RegistrationFormCompleted;
 
 					if (vm.Status == Status.FullyPaid)
@@ -130,6 +216,10 @@ public class SukkotService : ISukkotService
 						}
 					}
 				} //vw is not null
+				else
+				{
+
+				}
 			}  // user.Verified
 		}
 		catch (Exception ex)
@@ -142,6 +232,24 @@ public class SukkotService : ISukkotService
 		return vm;
 	}
 
+	public async Task<int> AddHouseRulesAgreementRecord(string email, string timeZone)
+	{
+		Logger.LogInformation(string.Format("Inside {0}, email:{1}, timeZone:{2}"
+			, nameof(SukkotService) + "!" + nameof(AddHouseRulesAgreementRecord), email, timeZone));
+		int id = 0;
+		try
+		{
+			id = await db.InsertHouseRulesAgreement(email, timeZone);
+		}
+		catch (Exception ex)
+		{
+			LogExceptionMessage = $"Inside {nameof(AddHouseRulesAgreementRecord)}, db.{nameof(db.InsertHouseRulesAgreement)}";
+			Logger.LogError(ex, LogExceptionMessage, id);
+			UserInterfaceMessage += "An invalid operation occurred adding House Rules Agreement record, contact your administrator";
+			throw new InvalidOperationException(UserInterfaceMessage);
+		}
+		return id;
+	}
 
 
 	public async Task<vwRegistration> Details(int id, ClaimsPrincipal user, bool showPrintInstructionMessage = false)
@@ -226,7 +334,7 @@ public class SukkotService : ISukkotService
 		}
 		catch (Exception ex)
 		{
-			LogExceptionMessage = $"Inside {nameof(Update)}, {nameof(db.ById2)}";
+			LogExceptionMessage = $"Inside {nameof(Update)}, db.{nameof(db.ById2)}";
 			Logger.LogError(ex, LogExceptionMessage, id);
 			UserInterfaceMessage += "An invalid operation occurred updating registration, contact your administrator";
 			throw new InvalidOperationException(UserInterfaceMessage);

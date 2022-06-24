@@ -1,5 +1,4 @@
-﻿using LivingMessiah.Web.Pages.Sukkot.RegistrationEnums;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.Extensions.Logging;
 using static LivingMessiah.Web.Links.Sukkot;
@@ -14,13 +13,13 @@ public partial class Step4Registration
 	[Inject]
 	public ILogger<Step4Registration> Logger { get; set; }
 
-	[Parameter]
+	[Parameter, EditorRequired]
 	public bool IsXs { get; set; }
 
-	[Parameter]
-	public StatusFlagEnum StatusFlagEnum { get; set; }
+	[Parameter, EditorRequired]
+	public Enums.StatusFlag StatusFlag { get; set; }
 
-	[Parameter]
+	[Parameter, EditorRequired]
 	public int RegistrationId { get; set; }
 
 	void Details_ButtonClick(MouseEventArgs e, int id, bool showPrintMsg)
@@ -38,4 +37,5 @@ public partial class Step4Registration
 	{
 		NavManager.NavigateTo(Links.Sukkot.DeleteConfirmation + "/" + id);
 	}
+
 }

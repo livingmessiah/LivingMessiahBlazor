@@ -1,12 +1,20 @@
 ﻿using LivingMessiah.Web.Pages.Sukkot.RegistrationEnums;
 using SukkotApi.Domain.Enums;
+using System;
 
 namespace LivingMessiah.Web.Pages.Sukkot.RegistrationSteps;
 
+// ToDo Deprecate
 public class CurrentStatus
 {
 	public int Id { get; set; } = 0;
 	public string FamilyName { get; set; } = string.Empty;
+
+
+	// ToDo Delete
+	//public string AcceptedHouseRulesAgreementTZ { get; set; }
+	//public DateTimeOffset AcceptedHouseRulesAgreement { get; set; }
+
 	public Status Status { get; set; } = Status.EmailNotConfirmed;
 	public StatusFlagEnum StatusFlagEnum { get; set; }
 	public decimal TotalDonation { get; set; }
@@ -18,8 +26,8 @@ public class CurrentStatus
 		}
 	}
 
-	public string UserName { get; set; }     
-	public string EmailAddress { get; set; } 
+	public string UserName { get; set; }
+	public string EmailAddress { get; set; }
 
 	public string Title
 	{

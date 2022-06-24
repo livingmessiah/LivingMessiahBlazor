@@ -1,13 +1,12 @@
-﻿using LivingMessiah.Web.Pages.Sukkot.RegistrationEnums;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using Link = LivingMessiah.Web.Links.Account;
 
 namespace LivingMessiah.Web.Pages.Sukkot.RegistrationSteps;
 
 public partial class Step2EmailVerified
 {
-	[Parameter]
-	public StatusFlagEnum StatusFlagEnum { get; set; }
+	[Parameter, EditorRequired]
+	public Enums.StatusFlag StatusFlag { get; set; }
 
 	[Inject]
 	NavigationManager NavigationManager { get; set; }

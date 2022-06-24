@@ -1,6 +1,4 @@
-﻿using LivingMessiah.Web.Pages.Sukkot.RegistrationEnums;
-using Microsoft.AspNetCore.Components;
-using SukkotApi.Domain;
+﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using static LivingMessiah.Web.Links.Sukkot;
 
@@ -11,8 +9,11 @@ public partial class Step5Payment
 	[Inject]
 	NavigationManager NavManager { get; set; }
 
-	[Parameter]
-	public CurrentStatus CurrentStatus { get; set; }
+	[Parameter, EditorRequired]
+	public Enums.StatusFlag StatusFlag { get; set; }
+
+	[Parameter, EditorRequired]
+	public RegistrationStep RegistrationStep { get; set; }
 
 	void Payment_ButtonClick(MouseEventArgs e, int id)
 	{

@@ -1,19 +1,21 @@
-﻿@using LivingMessiah.Web.Pages.Sukkot.RegistrationEnums
+﻿@using SukkotApi.Domain.Enums
 
-@if (StatusFlagEnum.HasFlag(StatusFlagEnum.EmailConfirmation) == true)
-{
-
-	@if (StatusFlagEnum.HasFlag(StatusFlagEnum.RegistrationFormCompleted) == false)
+@*
+	@if (Status == Status.EmailConfirmation)
 	{
-@*		
-	<HouseRulesConfirmationModal IsXs="@IsXs">
 
-		</HouseRulesConfirmationModal>*@
+	@if (Status == Status.RegistrationFormCompleted)
+	{
 	}
-	else
-	{
 
-		if (StatusFlagEnum.HasFlag(StatusFlagEnum.FullyPaid) == true)
+*@
+
+@if (StatusFlag.HasFlag(Enums.StatusFlag.AcceptedHouseRulesAgreement) == true)
+{
+	@if (StatusFlag.HasFlag(Enums.StatusFlag.RegistrationFormCompleted) == false)
+	{
+		@*if (Status == Status.FullyPaid)  *@
+		if (StatusFlag.HasFlag(Enums.StatusFlag.FullyPaid) == true)
 		{
 			<p class="lead"><b>Task completed</b></p>
 			<p>Registration Id: <b>@RegistrationId</b>; ToDo Add PDF Link</p>
@@ -23,31 +25,39 @@
 			<p class="lead"><b>Task completed</b></p>
 			<p>Registration Id: <b>@RegistrationId</b></p>
 
-			//ToDo 070-refactor-StatusEnum-with-SmartEnum
-			if (StatusFlagEnum.HasFlag(StatusFlagEnum.AcceptedHouseRulesAgreement) == false)
+			@*
+				ToDo 070-refactor-StatusEnum-with-SmartEnum
+				if (StatusFlagEnum.HasFlag(StatusFlagEnum.AcceptedHouseRulesAgreement) == false)
+			*@
+
+			@*if (Status == Status.AcceptedHouseRulesAgreement)*@
+			if (StatusFlag.HasFlag(Enums.StatusFlag.AcceptedHouseRulesAgreement) == true)
 			{
 				<p class="lead">
 					The first step of the registration process is complete.
-					You can continue on to the next step (editing you meal ticket) or View, Edit or even Delete you registration.
+					You can continue on to the next step making a donation (payment)
 				</p>
 			}
 
 			<button @onclick="@(e => Edit_ButtonClick(e, RegistrationId))"
-							class="btn-primary btn-sm">
+				class="btn-primary btn-sm">
 				<i class="fas fa-edit"></i> Edit
 			</button>
 
 			<text>&nbsp;</text>
 			<button @onclick="@(e => Details_ButtonClick(e, RegistrationId, false))"
-							class="btn-info btn-sm">
+				class="btn-info btn-sm">
 				<i class="fas fa-info"></i> View
 			</button>
 
-			if (StatusFlagEnum.HasFlag(StatusFlagEnum.PartiallyPaid) == false)
+			@*if (Status == Status.PartiallyPaid | Status == Status.FullyPaid)*@
+			if (StatusFlag.HasFlag(Enums.StatusFlag.PartiallyPaid) | StatusFlag.HasFlag(Enums.StatusFlag.FullyPaid) == true)
+			{ }
+			else
 			{
 				<text>&nbsp;</text>
 				<button @onclick="@(e => DeleteConfirmation_ButtonClick(e, RegistrationId))"
-								class="btn-danger btn-sm">
+				class="btn-danger btn-sm">
 					<i class="fas fa-times"></i> Delete
 				</button>
 			}
@@ -56,5 +66,6 @@
 
 	}
 }
+
 
 

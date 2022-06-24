@@ -18,7 +18,8 @@ public partial class Index : ComponentBase
 	[Inject]
 	NavigationManager NavigationManager { get; set; }
 
-	protected CurrentStatus CurrentStatus { get; set; }
+	//protected CurrentStatus CurrentStatus { get; set; }
+	protected IndexVM IndexVM { get; set; }
 
 	protected override async Task OnInitializedAsync()
 	{
@@ -29,8 +30,12 @@ public partial class Index : ComponentBase
 
 		try
 		{
-			CurrentStatus = await svc.GetCurrentStatus();
+			//CurrentStatus = await svc.GetCurrentStatus();
+			IndexVM = await svc.GetRegistrationStep();
 			GotRecord = true;
+			Logger.LogDebug(string.Format("...just called svc.{0}; Status: {1}, EmailAddress: {2}"
+				, nameof(svc.GetRegistrationStep), IndexVM.Status, IndexVM.EmailAddress  ));
+
 		}
 		catch (InvalidOperationException invalidOperationException)
 		{

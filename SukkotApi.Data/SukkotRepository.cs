@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using SukkotApi.Domain;
+using SukkotApi.Domain.Enums;
 using System.Threading.Tasks;
 using System.Linq;
 using System.Data;
@@ -14,12 +15,14 @@ public interface ISukkotRepository
 	string BaseSqlDump { get; }
 	Task<vwRegistration> ById(int id);
 	Task<RegistrationPOCO> ById2(int id);
-	Task<vwRegistrationShell> ByEmail(string email);
+	Task<vwRegistrationShell> ByEmail(string email);   // ToDo Deprecate
+	Task<vwRegistrationStep> GetByEmail(string email);
 
 	Task<int> Create(RegistrationPOCO registration);
 	Task<int> Update(RegistrationPOCO registration);
 	Task<int> Delete(int id);
 	Task<RegistrationSummary> GetRegistrationSummary(int id);
+	Task<int> InsertHouseRulesAgreement(string email, string timeZone);
 }
 
 public class SukkotRepository : BaseRepositoryAsync, ISukkotRepository
@@ -32,7 +35,6 @@ public class SukkotRepository : BaseRepositoryAsync, ISukkotRepository
 	{
 		get { return base.SqlDump; }
 	}
-
 
 	public async Task<vwRegistration> ById(int id)
 	{
@@ -61,17 +63,36 @@ FROM Sukkot.Registration WHERE Id = {id}";
 		});
 	}
 
+	// ToDo Deprecate
 	public async Task<vwRegistrationShell> ByEmail(string email)
 	{
+		base.Parms = new DynamicParameters(new { EMail = email });
 		base.Sql = $@"
-SELECT Id, FamilyName, StatusId, TotalDonation, EMail, RegistrationFee
+SELECT Id, FamilyName, StatusId, TotalDonation, EMail, RegistrationFee, AcceptedHouseRulesAgreement, AcceptedHouseRulesAgreementTZ
 FROM Sukkot.vwRegistrationShell 
 WHERE EMail = @EMail
 ";
-		base.Parms = new DynamicParameters(new { EMail = email });
 		return await WithConnectionAsync(async connection =>
 		{
 			var rows = await connection.QueryAsync<vwRegistrationShell>(sql: base.Sql, param: base.Parms);
+			return rows.SingleOrDefault();
+		});
+	}
+
+	public async Task<vwRegistrationStep> GetByEmail(string email)
+	{
+		base.Parms = new DynamicParameters(new { EMail = email });
+		base.Sql = $@"
+SELECT Id, EMail
+, TimeZone AS HouseRulesAgreementTimeZone, AcceptedDate AS HouseRulesAgreementAcceptedDate
+, RegistrationId, FirstName, FamilyName, StatusId
+, TotalDonation, RegistrationFee
+FROM Sukkot.vwRegistrationStep 
+WHERE EMail = @EMail
+";
+		return await WithConnectionAsync(async connection =>
+		{
+			var rows = await connection.QueryAsync<vwRegistrationStep>(sql: base.Sql, param: base.Parms);
 			return rows.SingleOrDefault();
 		});
 	}
@@ -95,7 +116,7 @@ WHERE EMail = @EMail
 			LmmDonation = 0,
 			Avatar = registration.Avatar,
 			Notes = registration.Notes,
-		}); ;
+		});
 
 		base.Parms.Add("@NewId", dbType: DbType.Int32, direction: ParameterDirection.Output);
 
@@ -121,6 +142,7 @@ WHERE EMail = @EMail
 
 	public async Task<int> Update(RegistrationPOCO registration)
 	{
+		//ToDo: used this use base.Parm ?
 		base.Sql = $@"
 UPDATE Sukkot.Registration SET 
 	FamilyName = N'{registration.FamilyName}',
@@ -171,6 +193,34 @@ FROM Sukkot.tvfRegistrationSummary(@id)
 		{
 			var rows = await connection.QueryAsync<RegistrationSummary>(base.Sql, base.Parms);
 			return rows.SingleOrDefault();
+		});
+	}
+
+	public async Task<int> InsertHouseRulesAgreement(string email, string timeZone)
+	{
+		base.Sql = "Sukkot.stpHouseRulesAgreementInsert";
+		base.Parms = new DynamicParameters(new
+		{
+			EMail = email,
+			TimeZone = timeZone
+		});
+		base.Parms.Add("@NewId", dbType: DbType.Int32, direction: ParameterDirection.Output);
+		return await WithConnectionAsync(async connection =>
+		{
+			base.log.LogDebug($"Inside {nameof(SukkotRepository)}!{nameof(InsertHouseRulesAgreement)}; About to execute sql:{base.Sql}");
+			var affectedrows = await connection.ExecuteAsync(sql: base.Sql, param: base.Parms, commandType: System.Data.CommandType.StoredProcedure);
+			int? x = base.Parms.Get<int?>("NewId");
+			if (x == null)
+			{
+				base.log.LogWarning($"NewId is null; returning as 0; Check dbo.ErrorLog for IX_HouseRulesAgreement_Unique  duplication Error; email: {email}");
+				return 0;
+			}
+			else
+			{
+				int NewId = int.TryParse(x.ToString(), out NewId) ? NewId : 0;
+				base.log.LogDebug($"Return NewId:{NewId}");
+				return NewId;
+			}
 		});
 	}
 

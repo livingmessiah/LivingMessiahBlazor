@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Components;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using SukkotApi.Domain.Enums;
+using Page = LivingMessiah.Web.Links.Sukkot;
 
 namespace LivingMessiah.Web.Pages.Sukkot.CreateEdit;
 
@@ -128,8 +129,7 @@ public partial class CreateEdit
 			}
 
 			Logger.LogInformation("Registration Updated!");
-			NavManager.NavigateTo(LivingMessiah.Web.Links.Sukkot.RegistrationShell);
-
+			NavManager.NavigateTo(Page.RegistrationSteps.Index);
 		}
 		else
 		{
@@ -144,7 +144,7 @@ public partial class CreateEdit
 				DatabaseErrorMsg = invalidOperationException.Message;
 			}
 			Logger.LogInformation(string.Format("Registration created! newId={0}", newId ));
-			NavManager.NavigateTo(LivingMessiah.Web.Links.Sukkot.RegistrationShell);
+			NavManager.NavigateTo(Page.RegistrationSteps.Index);
 
 		}
 	}

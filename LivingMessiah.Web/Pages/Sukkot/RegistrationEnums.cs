@@ -11,3 +11,4 @@ public enum StatusFlagEnum
 	PartiallyPaid = 8,
 	FullyPaid = 16
 }
+

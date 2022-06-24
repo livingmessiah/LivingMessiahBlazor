@@ -8,18 +8,40 @@
 
 		<div class="row">
 			<div class="col-12">
+
 				<dl class="row">
-					<dt class="col-6">Status:</dt>
-					<dd class="col-6">@CurrentStatus.Status</dd>
+					<dt class="col-6">Status Value:</dt>
+					<dd class="col-6">@CurrentStatus.Status.Value</dd>
+				</dl>
+
+				<dl class="row">
+					<dt class="col-6">Status Name:</dt>
+					<dd class="col-6">@CurrentStatus.Status.Name</dd>
 				</dl>
 				<dl class="row">
 					<dt class="col-6">StatusFlagEnum:</dt>
 					<dd class="col-6">@CurrentStatus.StatusFlagEnum</dd>
 				</dl>
+
+				<dl class="row">
+					<dt class="col-6">Id:</dt>
+					<dd class="col-6">@CurrentStatus.Id</dd>
+				</dl>
+
 				<dl class="row">
 					<dt class="col-6">FamilyName:</dt>
 					<dd class="col-6">@CurrentStatus.FamilyName</dd>
 				</dl>
+
+@*				<dl class="row">
+					<dt class="col-6">AcceptedHouseRulesAgreement Date:</dt>
+					<dd class="col-6">@CurrentStatus.AcceptedHouseRulesAgreement</dd>
+				</dl>
+				<dl class="row">
+					<dt class="col-6">AcceptedHouseRulesAgreementTZ:</dt>
+					<dd class="col-6">@CurrentStatus.AcceptedHouseRulesAgreementTZ</dd>
+				</dl>*@
+
 				<dl class="row">
 					<dt class="col-6">UserName:</dt>
 					<dd class="col-6">@CurrentStatus.UserName</dd>

@@ -8,13 +8,13 @@ public abstract class Status : SmartEnum<Status>
 	#region Id's
 	private static class Id
 	{
-		internal const int EmailNotConfirmed = 0;
-		internal const int EmailConfirmation = 1;
-		internal const int AcceptedHouseRulesAgreement = 2;
-		internal const int RegistrationFormCompleted = 3;
-		internal const int PartiallyPaid = 4;
-		internal const int FullyPaid = 5;
-		internal const int Canceled = 6;
+		internal const int EmailNotConfirmed = 1;
+		internal const int EmailConfirmation = 2;
+		internal const int AcceptedHouseRulesAgreement = 3;
+		internal const int RegistrationFormCompleted = 4;
+		internal const int PartiallyPaid = 5;
+		internal const int FullyPaid = 6;
+		internal const int Canceled = 7;
 	}
 	#endregion
 
@@ -32,6 +32,8 @@ public abstract class Status : SmartEnum<Status>
 	private Status(string name, int value) : base(name, value) { } // Constructor
 
 	#region Extra Fields
+
+	//ToDo: Deprecated because I made the Id "1 based" i.e. not zero based.
 	public abstract int StepNumber { get; }
 	public abstract string Abrv { get; }
 	public abstract bool CanTransitionTo(Status next);

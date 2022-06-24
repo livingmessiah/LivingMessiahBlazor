@@ -1,17 +1,28 @@
 ﻿@using LivingMessiah.Web.Pages.Sukkot.Constants
-@using LivingMessiah.Web.Pages.Sukkot.RegistrationEnums
 @using static LivingMessiah.Web.Links.Sukkot
+@using SukkotApi.Domain.Enums
 
-@if (CurrentStatus.StatusFlagEnum.HasFlag(StatusFlagEnum.RegistrationFormCompleted) == true)
+@*
+
+@if (Status == Status.RegistrationFormCompleted)
 {
-	@if (CurrentStatus.StatusFlagEnum.HasFlag(StatusFlagEnum.FullyPaid) == false)
+	@if (Status != Status.FullyPaid)
 	{
-		if (CurrentStatus.StatusFlagEnum.HasFlag(StatusFlagEnum.PartiallyPaid) == true)
+		if (Status == Status.PartiallyPaid)
+
+
+*@
+
+@if (StatusFlag.HasFlag(Enums.StatusFlag.RegistrationFormCompleted) == true)
+{
+	@if (StatusFlag.HasFlag(Enums.StatusFlag.FullyPaid) == false)
+	{
+		if (StatusFlag.HasFlag(Enums.StatusFlag.PartiallyPaid) == true)
 		{
 			<text>
-				<p class="lead">Remainder: <b>@CurrentStatus.RemainingCost.ToString("C0"))</b></p>
+				<p class="lead">Remainder: <b>@RegistrationStep.RemainingCost.ToString("C0"))</b></p>
 				<p>
-					Previous donation(s)@CurrentStatus.TotalDonation)
+					Previous donation(s)@RegistrationStep.TotalDonation.ToString("C0"))
 				</p>
 			</text>
 		}
@@ -22,7 +33,7 @@
 				<li>
 					<b>Preferred Option</b>.  Pay with <u>Debit or Credit Card</u>.  Click the
 
-					<button @onclick="@(e => Payment_ButtonClick(e, CurrentStatus.Id))"
+					<button @onclick="@(e => Payment_ButtonClick(e, RegistrationStep.Id))"
 									class="btn-warning btn-sm">
 						<i class="fab fa-paypal"></i> Donation
 					</button>
@@ -46,7 +57,7 @@
 
 					Pay via <u>Check</u>.  Click
 
-					<button @onclick="@(e => Details_ButtonClick(e, CurrentStatus.Id, true))"
+					<button @onclick="@(e => Details_ButtonClick(e, RegistrationStep.Id, true))"
 									class="btn-info btn-sm">
 						<i class="fa fa-print"></i> Print
 					</button> and follow the instructions.
@@ -60,7 +71,7 @@
 	{
 		<p class="lead"><b>Task Completed</b></p>
 
-		<button @onclick="@(e => Details_ButtonClick(e, CurrentStatus.Id, false))"
+		<button @onclick="@(e => Details_ButtonClick(e, RegistrationStep.Id, false))"
 						class="btn-info btn-sm">
 			<i class="fas fa-info"></i> View Your Registration
 		</button>
