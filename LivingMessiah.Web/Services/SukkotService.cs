@@ -27,8 +27,6 @@ public interface ISukkotService
 	Task<int> Edit(RegistrationVM registration, ClaimsPrincipal user);
 	Task<int> DeleteConfirmed(int id);
 	Task<RegistrationSummary> Summary(int id, ClaimsPrincipal user);
-
-	Task<CurrentStatus> GetCurrentStatus();   // ToDo Deprecate
 	Task<IndexVM> GetRegistrationStep();
 
 	Task<int> AddHouseRulesAgreementRecord(string email, string timeZone);
@@ -166,65 +164,7 @@ public class SukkotService : ISukkotService
 		}
 		catch (Exception ex)
 		{
-			LogExceptionMessage = $"Inside {nameof(GetCurrentStatus)}, db.{nameof(db.ByEmail)}";
-			Logger.LogError(ex, LogExceptionMessage);
-			UserInterfaceMessage += "An invalid operation occurred, contact your administrator";
-			throw new InvalidOperationException(UserInterfaceMessage);
-		}
-		return vm;
-	}
-
-	// ToDo Deprecate
-	public async Task<CurrentStatus> GetCurrentStatus()
-	{
-		UserInterfaceMessage = "";
-		Logger.LogDebug(string.Format("Inside {0}"
-			, nameof(SukkotService) + "!" + nameof(GetCurrentStatus)));
-
-		var vm = new CurrentStatus();
-
-		try
-		{
-			var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-			ClaimsPrincipal user = authState.User;
-			if (user.Verified())
-			{
-				vm.UserName = user.GetUserNameSoapVersion();
-				vm.EmailAddress = user.GetUserEmail();
-				vm.StatusFlagEnum = vm.StatusFlagEnum | StatusFlagEnum.EmailConfirmation;
-
-				var vw = new vwRegistrationShell();
-				vw = await db.ByEmail(vm.EmailAddress);
-				if (vw is not null)
-				{
-					vm.Id = vw.Id;
-					vm.FamilyName = vw.FamilyName;
-					//vm.AcceptedHouseRulesAgreementTZ = vw.AcceptedHouseRulesAgreementTZ;
-					//vm.AcceptedHouseRulesAgreement = vw.AcceptedHouseRulesAgreement;
-					vm.Status = Status.FromValue(vw.StatusId);
-					vm.StatusFlagEnum = vm.StatusFlagEnum | StatusFlagEnum.RegistrationFormCompleted;
-
-					if (vm.Status == Status.FullyPaid)
-					{
-						vm.StatusFlagEnum = vm.StatusFlagEnum | StatusFlagEnum.AcceptedHouseRulesAgreement | StatusFlagEnum.FullyPaid;
-					}
-					else
-					{
-						if (vm.Status == Status.PartiallyPaid)
-						{
-							vm.StatusFlagEnum = vm.StatusFlagEnum | StatusFlagEnum.AcceptedHouseRulesAgreement | StatusFlagEnum.PartiallyPaid;
-						}
-					}
-				} //vw is not null
-				else
-				{
-
-				}
-			}  // user.Verified
-		}
-		catch (Exception ex)
-		{
-			LogExceptionMessage = $"Inside {nameof(GetCurrentStatus)}, db.{nameof(db.ByEmail)}";
+			LogExceptionMessage = $"Inside {nameof(GetRegistrationStep)}, db.{nameof(db.GetByEmail)}";
 			Logger.LogError(ex, LogExceptionMessage);
 			UserInterfaceMessage += "An invalid operation occurred, contact your administrator";
 			throw new InvalidOperationException(UserInterfaceMessage);

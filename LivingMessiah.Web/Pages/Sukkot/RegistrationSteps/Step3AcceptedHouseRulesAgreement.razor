@@ -1,8 +1,6 @@
 ﻿@using LivingMessiah.Web.Pages.Sukkot.Constants
 @using Page = LivingMessiah.Web.Links.Sukkot
 
-@* @if (Status != Status.AcceptedHouseRulesAgreement) *@
-
 @if (StatusFlag.HasFlag(Enums.StatusFlag.AcceptedHouseRulesAgreement) == false)
 {
 	<h2 class="modal-title text-primary">House Rules Confirmation</h2>
@@ -42,11 +40,6 @@
 				class="btn btn-danger">
 		<i class="far fa-hand-paper"></i> No, I Do NOT Agree
 	</button>
-
-	@*
-		<button type="button" @onclick="Agree_ButtonClick
-		<button type="button" @onclick="@(() => Agree_ButtonClick())"
-		"*@
 
 	<button type="button" @onclick="Agree_ButtonClick"
 				class="btn btn-success">

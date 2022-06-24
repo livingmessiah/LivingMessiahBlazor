@@ -1,20 +1,9 @@
 ﻿@using SukkotApi.Domain.Enums
 
-@*
-	@if (Status == Status.EmailConfirmation)
-	{
-
-	@if (Status == Status.RegistrationFormCompleted)
-	{
-	}
-
-*@
-
 @if (StatusFlag.HasFlag(Enums.StatusFlag.AcceptedHouseRulesAgreement) == true)
 {
 	@if (StatusFlag.HasFlag(Enums.StatusFlag.RegistrationFormCompleted) == false)
 	{
-		@*if (Status == Status.FullyPaid)  *@
 		if (StatusFlag.HasFlag(Enums.StatusFlag.FullyPaid) == true)
 		{
 			<p class="lead"><b>Task completed</b></p>
@@ -24,13 +13,6 @@
 		{
 			<p class="lead"><b>Task completed</b></p>
 			<p>Registration Id: <b>@RegistrationId</b></p>
-
-			@*
-				ToDo 070-refactor-StatusEnum-with-SmartEnum
-				if (StatusFlagEnum.HasFlag(StatusFlagEnum.AcceptedHouseRulesAgreement) == false)
-			*@
-
-			@*if (Status == Status.AcceptedHouseRulesAgreement)*@
 			if (StatusFlag.HasFlag(Enums.StatusFlag.AcceptedHouseRulesAgreement) == true)
 			{
 				<p class="lead">
@@ -50,7 +32,6 @@
 				<i class="fas fa-info"></i> View
 			</button>
 
-			@*if (Status == Status.PartiallyPaid | Status == Status.FullyPaid)*@
 			if (StatusFlag.HasFlag(Enums.StatusFlag.PartiallyPaid) | StatusFlag.HasFlag(Enums.StatusFlag.FullyPaid) == true)
 			{ }
 			else

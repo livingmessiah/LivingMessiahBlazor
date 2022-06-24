@@ -511,8 +511,6 @@ public static class Sukkot
 	public const string Index = "/Sukkot";
 	public const string Title = "Sukkot";
 	public const string Icon = "fas fa-campground";
-	
-	public const string RegistrationShell = "/Sukkot/RegistrationShell"; // See Startup.cs options.Conventions.AddPageRoute("/Sukkot/RegistrationShell", "/Sukkot/Registration");
 
 
 	public const string CreateEdit = "/Sukkot/CreateEdit";
@@ -524,8 +522,6 @@ public static class Sukkot
 	public const string DeleteConfirmation = "/Sukkot/DeleteConfirmation";
 	public const string DeleteConfirmationTitle = "Delete Sukkot Registration?";
 	public const string DeleteConfirmationSubTitle = "Delete Registration? | ";
-
-	public const string HouseRulesDoNotAcceptRedirect = RegistrationShell;
 
 	public const string AdminIndex = "/SukkotAdmin";
 	public const string AdminIndexTitle = "Sukkot Admin";

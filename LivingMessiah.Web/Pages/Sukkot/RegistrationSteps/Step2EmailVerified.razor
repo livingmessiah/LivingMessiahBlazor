@@ -1,8 +1,6 @@
 ﻿@using LivingMessiah.Web.Pages.Sukkot.Constants
 @using Page = LivingMessiah.Web.Links.Sukkot.RegistrationSteps
 
-@*@if (Status != Status.EmailConfirmation)*@
-
 @if (StatusFlag.HasFlag(Enums.StatusFlag.EmailConfirmation) == false)
 {
 	<p class="lead">

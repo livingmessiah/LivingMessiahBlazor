@@ -2,17 +2,6 @@
 @using static LivingMessiah.Web.Links.Sukkot
 @using SukkotApi.Domain.Enums
 
-@*
-
-@if (Status == Status.RegistrationFormCompleted)
-{
-	@if (Status != Status.FullyPaid)
-	{
-		if (Status == Status.PartiallyPaid)
-
-
-*@
-
 @if (StatusFlag.HasFlag(Enums.StatusFlag.RegistrationFormCompleted) == true)
 {
 	@if (StatusFlag.HasFlag(Enums.StatusFlag.FullyPaid) == false)

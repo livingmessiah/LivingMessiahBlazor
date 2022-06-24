@@ -15,7 +15,6 @@ public interface ISukkotRepository
 	string BaseSqlDump { get; }
 	Task<vwRegistration> ById(int id);
 	Task<RegistrationPOCO> ById2(int id);
-	Task<vwRegistrationShell> ByEmail(string email);   // ToDo Deprecate
 	Task<vwRegistrationStep> GetByEmail(string email);
 
 	Task<int> Create(RegistrationPOCO registration);
@@ -59,22 +58,6 @@ FROM Sukkot.Registration WHERE Id = {id}";
 		return await WithConnectionAsync(async connection =>
 		{
 			var rows = await connection.QueryAsync<RegistrationPOCO>(sql: base.Sql);
-			return rows.SingleOrDefault();
-		});
-	}
-
-	// ToDo Deprecate
-	public async Task<vwRegistrationShell> ByEmail(string email)
-	{
-		base.Parms = new DynamicParameters(new { EMail = email });
-		base.Sql = $@"
-SELECT Id, FamilyName, StatusId, TotalDonation, EMail, RegistrationFee, AcceptedHouseRulesAgreement, AcceptedHouseRulesAgreementTZ
-FROM Sukkot.vwRegistrationShell 
-WHERE EMail = @EMail
-";
-		return await WithConnectionAsync(async connection =>
-		{
-			var rows = await connection.QueryAsync<vwRegistrationShell>(sql: base.Sql, param: base.Parms);
 			return rows.SingleOrDefault();
 		});
 	}
