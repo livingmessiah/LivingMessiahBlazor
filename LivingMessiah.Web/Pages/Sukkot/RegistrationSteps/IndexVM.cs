@@ -8,7 +8,13 @@ public class IndexVM
 	public string EmailAddress { get; set; }  // user.GetUserEmail();
 	public string UserName { get; set; }      // user.GetUserNameSoapVersion();
 	public Status Status { get; set; } = Status.EmailNotConfirmed;
+	
 	public Enums.StatusFlag StatusFlag { get; set; } = Enums.StatusFlag.EmailNotConfirmed;
+	
+	public bool Has(Enums.StatusFlag statusFlag)
+	{
+		return StatusFlag.HasFlag(statusFlag);
+	}
 
 	public HouseRulesAgreement HouseRulesAgreement { get; set; }
 	public RegistrationStep RegistrationStep { get; set; }
@@ -46,12 +52,12 @@ public class RegistrationStep
 	public string FirstName { get; set; }
 	public string FamilyName { get; set; } = string.Empty;
 	public decimal TotalDonation { get; set; }
-	public decimal RegistrationFee { get; set; }
+	public decimal RegistrationFeeAdjusted { get; set; }
 	public decimal RemainingCost
 	{
 		get
 		{
-			return 0 - TotalDonation; // previously this had other costs that are no longer tracked
+			return RegistrationFeeAdjusted - TotalDonation; // previously this had other costs that are no longer tracked
 		}
 	}
 

@@ -36,35 +36,14 @@ public partial class Step3AcceptedHouseRulesAgreement
 
 	protected string FormatSize;
 
-	protected override async Task OnInitializedAsync()
+	protected override void OnInitialized()
 	{
-		base.OnInitialized();
-		await Task.Delay(0);
-		TimeZone = GetLocalTimeZone();
-		DateAndTime = GetDateAndTime();
-		DateAndTimeUtc = GetDateAndTimeUtc();
-		DateAndTimeOffset = GetDateAndTimeOffset();
 		FormatSize = IsXs ? "" : "lead"; // IsXs2 ?
 	}
 
 	private string GetLocalTimeZone() 
 	{
 		return $"Time Zone: {TimeZoneInfo.Local}.";
-	}
-
-	private string GetDateAndTime()
-	{
-		return $"Date and Time: {DateTime.Now.ToShortDateString()} {DateTime.Now.ToShortTimeString()}.";
-	}
-
-	private string GetDateAndTimeUtc()
-	{
-		return $"Date and Time [UTC]: {DateTime.UtcNow}.";
-	}
-
-	private string GetDateAndTimeOffset()
-	{
-		return $"Date and Time [Offset]: {DateTimeOffset.Now}";
 	}
 
 	void DoNotAgree_ButtonClick(string returnUrl)

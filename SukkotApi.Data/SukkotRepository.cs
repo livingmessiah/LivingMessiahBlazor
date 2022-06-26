@@ -69,7 +69,7 @@ FROM Sukkot.Registration WHERE Id = {id}";
 SELECT Id, EMail
 , TimeZone AS HouseRulesAgreementTimeZone, AcceptedDate AS HouseRulesAgreementAcceptedDate
 , RegistrationId, FirstName, FamilyName, StatusId
-, TotalDonation, RegistrationFee
+, TotalDonation, RegistrationFeeAdjusted
 FROM Sukkot.vwRegistrationStep 
 WHERE EMail = @EMail
 ";
@@ -169,7 +169,7 @@ WHERE Id = {registration.Id};
 		base.Sql = $@"
 --DECLARE @id int=2
 SELECT Id, EMail, FamilyName, Adults, ChildBig, ChildSmall, StatusId
-, AttendanceBitwise, RegistrationFee, TotalDonation
+, AttendanceBitwise, RegistrationFeeAdjusted, TotalDonation
 FROM Sukkot.tvfRegistrationSummary(@id)
 ";
 		return await WithConnectionAsync(async connection =>

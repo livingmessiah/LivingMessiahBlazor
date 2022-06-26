@@ -13,7 +13,6 @@ using Microsoft.Extensions.Logging;
 using SukkotApi.Data;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Components.Authorization;
-using LivingMessiah.Web.Pages.Sukkot.RegistrationEnums;
 
 namespace Sukkot.Web.Service;
 
@@ -132,7 +131,7 @@ public class SukkotService : ISukkotService
 						vm.RegistrationStep.FirstName = vw.FirstName;
 						vm.RegistrationStep.FamilyName = vw.FamilyName;
 						vm.RegistrationStep.TotalDonation = vw.TotalDonation;
-						vm.RegistrationStep.RegistrationFee = vw.RegistrationFee;
+						vm.RegistrationStep.RegistrationFeeAdjusted = vw.RegistrationFeeAdjusted;
 
 						vm.Status = Status.FromValue((int)vw.StatusId);
 						if (vm.Status == Status.PartiallyPaid)

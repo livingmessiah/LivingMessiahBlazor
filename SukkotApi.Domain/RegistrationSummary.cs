@@ -23,7 +23,7 @@ public class RegistrationSummary
 	public int AttendanceBitwise { get; set; }
 
 	[DisplayFormat(DataFormatString = "{0:C0}")]
-	public decimal RegistrationFee { get; set; }
+	public decimal RegistrationFeeAdjusted { get; set; }
 
 	[DisplayFormat(DataFormatString = "{0:C0}")]
 	public decimal TotalDonation { get; set; }
@@ -33,7 +33,7 @@ public class RegistrationSummary
 	{
 		get
 		{
-			return RegistrationFee;
+			return RegistrationFeeAdjusted;
 		}
 	}
 
@@ -42,7 +42,7 @@ public class RegistrationSummary
 	{
 		get
 		{
-			return RegistrationFee - TotalDonation;
+			return RegistrationFeeAdjusted - TotalDonation;
 		}
 	}
 }

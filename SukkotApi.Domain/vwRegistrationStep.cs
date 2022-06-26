@@ -14,7 +14,7 @@ public class vwRegistrationStep
 	public string FirstName { get; set; } = string.Empty;
 	public string FamilyName { get; set; } = string.Empty;
 	public decimal TotalDonation { get; set; } = 0;
-	public decimal RegistrationFee { get; set; } = 0;
+	public decimal RegistrationFeeAdjusted { get; set; } = 0;
 }
 
 /*

@@ -14,7 +14,7 @@ public class DonationReport
 
 	[DataType(DataType.Currency)]
 	[DisplayFormat(DataFormatString = "{0:C0}")]
-	public decimal RegistrationFee { get; set; }
+	public decimal RegistrationFeeAdjusted { get; set; }
 
 	[DataType(DataType.Currency)]
 	public decimal TotalDonation { get; set; }

@@ -6,8 +6,6 @@
 @using static LivingMessiah.Web.Services.Auth0
 @using LivingMessiah.Web.Shared.Sukkot
 
-@inject IWebHostEnvironment Env
-
 <AuthorizeView Roles="@Roles.SukkotMenuBar">
 	<SukkotAdminMenubar></SukkotAdminMenubar>
 </AuthorizeView>
@@ -20,13 +18,6 @@
 
 @if (Registration != null && UI != null)
 {
-	@if (Env.IsDevelopment())
-	{
-		<p class="float-right">
-			<sup> Registration.Status.Name: @Registration.Status.Name </sup>
-		</p>
-
-	}
 
 	<h3>@Title<br /><small><i>@Title2</i></small></h3>
 

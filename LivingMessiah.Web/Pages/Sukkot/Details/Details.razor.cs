@@ -1,5 +1,4 @@
-﻿using LivingMessiah.Web.Pages.Sukkot.RegistrationEnums;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.Extensions.Logging;

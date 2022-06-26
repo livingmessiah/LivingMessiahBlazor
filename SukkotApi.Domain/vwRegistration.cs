@@ -55,7 +55,7 @@ public class vwRegistration
 	}
 
 	[DataType(DataType.Currency)]
-	public decimal RegistrationFee { get; set; }
+	public decimal RegistrationFeeAdjusted { get; set; }
 
 	[DisplayName("Paid")]
 	[DataType(DataType.Currency)]
@@ -66,6 +66,8 @@ public class vwRegistration
 	public int AttendanceBitwise { get; set; }
 
 	public string PayWithCheckMessage { get; set; }
+
+	public string HouseRulesAgreementDate { get; set; }
 
 	public string FullName(bool includeOthers)
 	{

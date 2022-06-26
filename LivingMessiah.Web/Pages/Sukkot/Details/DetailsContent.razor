@@ -53,7 +53,18 @@
 	</div>
 </div>
 
-@* Attendance    *@
+
+@* House Rules Agreement *@
+<hr class="warning d-print-none" />
+<div class="row">
+	<div class="col-sm-12">
+		<small class="float-right">Agreed on: @vwRegistration.HouseRulesAgreementDate</small>
+		<h4>House Rules Agreement</h4>
+	</div>
+</div>
+
+
+@* Attendance *@
 <hr class="warning d-print-none" />
 
 <div class="d-print-none">
@@ -88,41 +99,41 @@
 	</div>
 
 	@* Non-Print (visible-xs) *@
-<div class="d-block d-sm-none">
+	<div class="d-block d-sm-none">
 
-	<div class="row">
-		<div class="col-12">
-			<h4>Attendance</h4>
+		<div class="row">
+			<div class="col-12">
+				<h4>Attendance</h4>
+			</div>
+
+			<div class="col-12">
+				<div class="card border-primary mb-3">
+					<div class="body">
+						<ul>
+							<li>Adults: <span class="">@vwRegistration.Adults</span></li>
+							<li>Child (Big):  <span class="">@vwRegistration.ChildBig</span></li>
+							<li>Child (Small):  <span class="">@vwRegistration.ChildSmall</span></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+
 		</div>
 
-		<div class="col-12">
-			<div class="card border-primary mb-3">
-				<div class="body">
-					<ul>
-						<li>Adults: <span class="">@vwRegistration.Adults</span></li>
-						<li>Child (Big):  <span class="">@vwRegistration.ChildBig</span></li>
-						<li>Child (Small):  <span class="">@vwRegistration.ChildSmall</span></li>
-					</ul>
-				</div>
+		<div class="row">
+			<div class="col-12">
+
+				<SfCalendar TValue="DateTime?"
+										IsMultiSelection="true" ShowTodayButton="false"
+										Values="@vwRegistration.AttendanceDateList"
+										Min="@DateRangeAttendance.DateRange.MinDate"
+										Max="@DateRangeAttendance.DateRange.MaxDate">
+				</SfCalendar>
+
 			</div>
 		</div>
 
 	</div>
-
-	<div class="row">
-		<div class="col-12">
-
-			<SfCalendar TValue="DateTime?"
-									IsMultiSelection="true" ShowTodayButton="false" 
-									Values="@vwRegistration.AttendanceDateList"
-									Min="@DateRangeAttendance.DateRange.MinDate"
-									Max="@DateRangeAttendance.DateRange.MaxDate">
-			</SfCalendar>
-
-		</div>
-	</div>
-
-</div>
 
 </div>
 
@@ -174,8 +185,8 @@
 			</div>
 			<div class="col-10">
 				<ul class="">
-					<li>Registration Cost: <span class="float-right">@vwRegistration.RegistrationFee</span></li>
-					<li>Total: <span class="float-right"><b>@vwRegistration.RegistrationFee</b></span></li>
+					<li>Registration Cost: <span class="float-right">@vwRegistration.RegistrationFeeAdjusted</span></li>
+					<li>Total: <span class="float-right"><b>@vwRegistration.RegistrationFeeAdjusted</b></span></li>
 				</ul>
 			</div>
 		</div>
@@ -199,8 +210,10 @@
 			@vwRegistration.Notes
 		</div>
 	</div>
-
 }
+
+
+
 
 <div class="row d-none d-print-block">
 	<br />

@@ -120,8 +120,8 @@ else
 		<div class="col-sm-10">
 			<h4>Task - Sign Agreement</h4>
 			<Step3AcceptedHouseRulesAgreement StatusFlag="@IndexVM.StatusFlag"
-																				EmailAddress = "@IndexVM.EmailAddress"
-																				IsXs="false">
+																			EmailAddress="@IndexVM.EmailAddress"
+																			IsXs="false">
 			</Step3AcceptedHouseRulesAgreement>
 
 		</div>
@@ -144,7 +144,9 @@ else
 
 		<div class="col-sm-10">
 			<h4>Task - Registration</h4>
-			@if (IndexVM.RegistrationStep is not null)
+
+			@*the AndAlso seems redundant*@
+			@if (IndexVM.RegistrationStep is not null && IndexVM.StatusFlag.HasFlag(Enums.StatusFlag.AcceptedHouseRulesAgreement) == true)
 			{
 				<Step4Registration IsXs="false"
 											 RegistrationId="@IndexVM.RegistrationStep.Id"
@@ -197,12 +199,13 @@ else
 	</div>
 
 
-	<div class="row col-12">
-		<br />
-		<a href="@PageHome.Index"
-		 title="Sukkot Introduction" class="btn-info btn-sm">
-			<i class="far fa-arrow-alt-circle-left"></i> Back to Introduction
-		</a>
+	<div class="row mt-4 pt-1 border-top">
+		<div class="col-12">
+			<a href="@PageHome.Index"
+			 title="Sukkot Introduction" class="btn-info btn-sm">
+				<i class="far fa-arrow-alt-circle-left"></i> Back to Introduction
+			</a>
+		</div>
 	</div>
 
 	@if (DatabaseError)

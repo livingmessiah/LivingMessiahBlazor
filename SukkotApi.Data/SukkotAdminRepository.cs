@@ -52,7 +52,7 @@ SELECT TOP 500 Id, FamilyName, FirstName, SpouseName, OtherNames
 , EMail, Phone, Adults, ChildBig, ChildSmall
 , StatusId
 , Notes
-, RegistrationFee, LmmDonation
+, RegistrationFeeAdjusted, LmmDonation
 , AttendanceBitwise, AttendanceTotal
 FROM Sukkot.vwRegistration
 ORDER BY {sortField}

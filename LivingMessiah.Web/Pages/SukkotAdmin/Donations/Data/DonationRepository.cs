@@ -134,7 +134,7 @@ WHERE Id=@Id
 		//base.Parms = new DynamicParameters(new { SortAndOrder = sortAndOrder });
 
 		base.Sql = $@"
-SELECT Id, EMail, FamilyName, FirstName, StatusId, StatusDescr, RegistrationFee
+SELECT Id, EMail, FamilyName, FirstName, StatusId, StatusDescr, RegistrationFeeAdjusted
 , TotalDonation, AmountDue
 FROM Sukkot.tvfDonationReport(@DonationStatus)
 ORDER BY {sortAndOrder}
