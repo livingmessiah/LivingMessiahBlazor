@@ -1,0 +1,52 @@
+﻿@using static LivingMessiah.Web.Links.Sukkot
+@using LivingMessiah.Web.Pages.Sukkot.Constants;
+@using LivingMessiah.Web.Settings
+
+@*border-top*@
+
+<div class="btn-toolbar mt-3 pt-2" role="toolbar">
+
+@*	
+	<div class="btn-group btn-group-sm  mr-2" role="group">
+		<button @onclick="@(e => Payment_ButtonClick(e, Id))" 
+			type="button" class="btn btn-outline-warning"> 
+		<i class="fab fa-paypal"></i>	Donation
+		</button>
+	</div>
+*@
+
+	<div class="btn-group btn-group-sm  mr-2" role="group">
+		<button @onclick="@(e => Details_ButtonClick(e, Id, true))" 
+			type="button" class="btn btn-outline-info">Print</button>
+	</div>
+
+	<div class="btn-group btn-group-sm  mr-2" role="group">
+		<button @onclick="@(e => Details_ButtonClick(e, Id, false))" 
+			type="button" class="btn btn-outline-info">
+				<i class="fas fa-info"></i> View
+			</button>
+	</div>
+
+	<div class="btn-group btn-group-sm  mr-2" role="group">
+		<button @onclick="@(e => Edit_ButtonClick(e, Id))" 
+			type="button" class="btn btn-outline-primary">
+			<i class="fas fa-edit"></i> Edit
+		</button>
+	</div>
+
+	@* IF NOT if (StatusFlag.HasFlag(Enums.StatusFlag.PartiallyPaid) | StatusFlag.HasFlag(Enums.StatusFlag.FullyPaid) == true)*@
+
+	<div class="btn-group btn-group-sm  mr-2" role="group">
+		<button @onclick="@(e => DeleteConfirmation_ButtonClick(e, Id))" 
+			type="button" class="btn btn-outline-danger" >
+			<i class="fas fa-times"></i> Delete
+		</button>
+	</div>
+
+	@*
+		To disable a button, just add disabled="" I guess
+		type="button" class="btn btn-outline-danger" disabled="">
+	*@
+
+</div>
+

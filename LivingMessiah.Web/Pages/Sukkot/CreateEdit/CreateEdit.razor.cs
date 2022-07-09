@@ -59,7 +59,7 @@ public partial class CreateEdit
 				Registration = new RegistrationVM
 				{
 					Id = 0,
-					Status = Status.EmailConfirmation,
+					Status = Status.StartRegistraion,
 					EMail = User.GetUserEmail()
 				};
 			}

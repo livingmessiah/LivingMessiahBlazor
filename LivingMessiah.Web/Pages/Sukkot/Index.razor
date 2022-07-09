@@ -25,13 +25,9 @@
 	<Authorized>
 		<h3>Hello, @Salutation !</h3>
 		<ul>
-			@*<li>IsAuthenticated: @context.User.Identity.IsAuthenticated</li>
-				<li>IsInRole admin: @context.User.IsInRole("admin")</li>*@
-			@*<li>Claims: @context.User.Claims.ToString</li>*@
 		</ul>
 	</Authorized>
 	<NotAuthorized>
-		@*<h1>NOT AUTHORIZED</h1>*@
 	</NotAuthorized>
 </AuthorizeView>
 
@@ -82,12 +78,6 @@
 			<div class="col-12">
 
 				<a class="btn btn-success btn-lg"
-					 href="@Page.RegistrationSteps.Index">
-					Begin Registration
-					<i class="fas fa-caret-right"></i>
-				</a>
-
-				<a class="btn btn-warning btn-lg"
 					 href="@PageRegistrationSteps.Index">
 					@PageRegistrationSteps.StartButtonText
 					<i class="@PageRegistrationSteps.StartButtonIcon"></i>

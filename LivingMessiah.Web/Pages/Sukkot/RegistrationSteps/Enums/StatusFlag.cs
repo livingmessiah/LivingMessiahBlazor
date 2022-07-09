@@ -5,10 +5,12 @@ namespace LivingMessiah.Web.Pages.Sukkot.RegistrationSteps.Enums;
 [Flags]
 public enum StatusFlag
 {
-	EmailNotConfirmed = 1,
-	EmailConfirmation = 2,
-	AcceptedHouseRulesAgreement = 4,
-	RegistrationFormCompleted = 8,
-	PartiallyPaid = 16,
-	FullyPaid = 32
+	NotAuthenticated = 1,
+	EmailNotConfirmed = 2,
+	AgreementNotSigned = 4,
+	StartRegistraion = 8,
+	RegistrationFormCompleted = 16,
+	PartiallyPaid = 32,
+	FullyPaid = 64
+	//, Canceled = 128
 }

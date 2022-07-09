@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using SukkotApi.Domain.Enums;
 
 namespace LivingMessiah.Web.Pages.Sukkot.RegistrationSteps;
@@ -7,14 +8,9 @@ public class IndexVM
 {
 	public string EmailAddress { get; set; }  // user.GetUserEmail();
 	public string UserName { get; set; }      // user.GetUserNameSoapVersion();
+	
 	public Status Status { get; set; } = Status.EmailNotConfirmed;
-	
-	public Enums.StatusFlag StatusFlag { get; set; } = Enums.StatusFlag.EmailNotConfirmed;
-	
-	public bool Has(Enums.StatusFlag statusFlag)
-	{
-		return StatusFlag.HasFlag(statusFlag);
-	}
+	public Enums.StatusFlag StatusFlag { get; set; } 
 
 	public HouseRulesAgreement HouseRulesAgreement { get; set; }
 	public RegistrationStep RegistrationStep { get; set; }
@@ -38,6 +34,7 @@ public class IndexVM
 
 }
 
+
 public class HouseRulesAgreement
 {
 	public int Id { get; set; }
@@ -60,6 +57,4 @@ public class RegistrationStep
 			return RegistrationFeeAdjusted - TotalDonation; // previously this had other costs that are no longer tracked
 		}
 	}
-
-
 }

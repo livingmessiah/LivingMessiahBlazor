@@ -140,7 +140,7 @@ public partial class AddForm
 			try
 		{
 			RegistrationVM.Id = 0;
-			RegistrationVM.Status = Status.EmailConfirmation;
+			RegistrationVM.Status = Status.StartRegistraion;
 
 			var sprocTuple = await svc.Create(RegistrationVM);
 			if (sprocTuple.Item1 != 0)

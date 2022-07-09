@@ -1,0 +1,61 @@
+﻿@using LivingMessiah.Web.Pages.Sukkot.Constants
+@using static LivingMessiah.Web.Links.Sukkot
+@using SukkotApi.Domain.Enums
+
+@*
+if(IndexVM.Status == Status.PartiallyPaid)
+{
+*@
+
+	@((MarkupString)Remainder(RegistrationStep.RemainingCost))
+
+	@((MarkupString)Total(RegistrationStep.TotalDonation))
+
+	<p class="lead">
+		Two Payment Options
+		<ol class="lead">
+			<li>
+				<b>Preferred Option</b>.  Pay with <u>Debit or Credit Card</u>.  Click the
+
+				<button @onclick="@(e => Payment_ButtonClick(e, RegistrationStep.Id))"
+								class="btn-warning btn-sm">
+					<i class="fab fa-paypal"></i> Donation
+				</button>
+
+				button and follow the instructions.
+				<br />See the
+
+				<a href="@LivingMessiah.Web.Pages.Sukkot.Constants.Blobs.UrlPDF(PDFs.PayPalWalkThrough)"
+					 target="_blank">
+					<i class="fas fa-file-pdf"></i> <u>PayPal walk through</u>
+				</a> if you need more details.
+				Note, a <em>PayPal</em> &reg; account is <u>not</u> necessary, Living Messiah just uses them to process financial transactions.
+				<br /><em>Or</em>...<br />
+			</li>
+			<li>
+
+				Pay via <u>Check</u>.  Click
+
+				<button @onclick="@(e => Details_ButtonClick(e, RegistrationStep.Id, true))"
+								class="btn-info btn-sm">
+					<i class="fa fa-print"></i> Print
+				</button> and follow the instructions.
+
+			</li>
+		</ol>
+	</p>
+
+@*
+}
+else
+{
+
+}
+
+*@
+
+
+
+
+
+

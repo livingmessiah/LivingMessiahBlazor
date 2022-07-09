@@ -22,17 +22,20 @@ public partial class Index : ComponentBase
 
 	protected override async Task OnInitializedAsync()
 	{
-		InitializeErrorHandling();
+		await PopulateVM();
+	}
+
+	private async Task PopulateVM()
+	{
 		InitializeAlertHandlingling();
 		Logger.LogDebug(string.Format("Inside {0}"
-			, nameof(RegistrationSteps) + "!" + nameof(Index) + "!" + nameof(OnInitialized)));
-
+			, nameof(Index) + "!" + nameof(PopulateVM)));
 		try
 		{
 			IndexVM = await svc.GetRegistrationStep();
 			GotRecord = true;
 			Logger.LogDebug(string.Format("...just called svc.{0}; Status: {1}, EmailAddress: {2}"
-				, nameof(svc.GetRegistrationStep), IndexVM.Status, IndexVM.EmailAddress  ));
+				, nameof(svc.GetRegistrationStep), IndexVM.Status, IndexVM.EmailAddress));
 
 		}
 		catch (InvalidOperationException invalidOperationException)
@@ -45,6 +48,31 @@ public partial class Index : ComponentBase
 		{
 			AttemptingToGetRecordMsg = "Failed to get current status";
 		}
+	}
+
+	private async Task AgreeButtonCallBackHandler()
+	{
+		string eMail = IndexVM.EmailAddress;
+		Logger.LogDebug(string.Format("Event: {0}"
+			, nameof(Index) + "!" + nameof(AgreeButtonCallBackHandler)));
+		int id = 0;
+		try
+		{
+			id = await svc.AddHouseRulesAgreementRecord(eMail, GetLocalTimeZone());
+			DatabaseInformationMsg = "Record updated";
+			DatabaseInformation = true;
+			await PopulateVM();
+		}
+		catch (InvalidOperationException invalidOperationException)
+		{
+			DatabaseError = true;
+			DatabaseErrorMsg = invalidOperationException.Message;
+		}
+	}
+
+	private string GetLocalTimeZone()
+	{
+		return $"Time Zone: {TimeZoneInfo.Local}.";
 	}
 
 	void RedirectToLoginClick(string returnUrl)
@@ -65,16 +93,6 @@ public partial class Index : ComponentBase
 	#endregion
 
 	#region ErrorHandling
-	private void InitializeErrorHandling()
-	{
-		DatabaseInformationMsg = "";
-		DatabaseInformation = false;
-		DatabaseWarningMsg = "";
-		DatabaseWarning = false;
-		DatabaseErrorMsg = "";
-		DatabaseError = false;
-	}
-
 	protected bool DatabaseInformation = false;
 	protected string DatabaseInformationMsg { get; set; }
 	protected bool DatabaseWarning = false;

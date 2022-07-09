@@ -40,8 +40,6 @@ public partial class NonKeyDateCRUD
 
 						//public async Task<Tuple<int, int, string>> Create(RegistrationVM registrationVM)
 
-						//RegistrationVM.StatusSmartEnum = BaseStatusSmartEnum.EmailConfirmation;
-
 						var sprocTuple = await db.Create(NonKeyDateCrudVM);
 						//var sprocTuple = await db.Create(DTO_From_VM_To_DB(registrationVM));
 						//return sprocTuple;

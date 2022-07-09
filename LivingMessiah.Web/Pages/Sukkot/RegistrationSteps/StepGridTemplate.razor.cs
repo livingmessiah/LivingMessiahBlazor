@@ -1,17 +1,19 @@
 ﻿using Microsoft.AspNetCore.Components;
 using System.Collections.Generic;
+using SukkotApi.Domain.Enums;
 
 namespace LivingMessiah.Web.Pages.Sukkot.RegistrationSteps;
 
-public partial class StepGridTemplate<TItem>
+public partial class StepGridTemplate
 {
-	[Parameter]
-	public RenderFragment GridHeader { get; set; }
+	[Parameter, EditorRequired]
+	public Status Status { get; set; }
+
+	[Parameter, EditorRequired]
+	public Status ComparisonStatus { get; set; }
 
 	[Parameter]
-	public RenderFragment<TItem> RowTemplate { get; set; }
-
-	[Parameter]
-	public IReadOnlyList<TItem> Items { get; set; }
+	public RenderFragment ChildContent { get; set; }
 
 }
+

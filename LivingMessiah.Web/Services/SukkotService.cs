@@ -105,61 +105,73 @@ public class SukkotService : ISukkotService
 		{
 			var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
 			ClaimsPrincipal user = authState.User;
-			if (user.Verified())
+
+			if (user.Identity.IsAuthenticated)
 			{
-				vm.UserName = user.GetUserNameSoapVersion();
-				vm.EmailAddress = user.GetUserEmail();
-				vm.AddToFlag(StatusFlag.EmailConfirmation);
-
-				var vw = new vwRegistrationStep();
-				vw = await db.GetByEmail(vm.EmailAddress);
-
-				if (vw is not null)
+				if (user.Verified())
 				{
-					vm.AddToFlag(StatusFlag.AcceptedHouseRulesAgreement);
+					vm.UserName = user.GetUserNameSoapVersion();
+					vm.EmailAddress = user.GetUserEmail();
+					vm.AddToFlag(StatusFlag.AgreementNotSigned);
 
-					vm.HouseRulesAgreement = new HouseRulesAgreement();
-					vm.HouseRulesAgreement.Id = vw.Id;
-					vm.HouseRulesAgreement.AcceptedDate = vw.HouseRulesAgreementAcceptedDate;
-					vm.HouseRulesAgreement.TimeZone = vw.HouseRulesAgreementTimeZone;
+					var vw = new vwRegistrationStep();
+					vw = await db.GetByEmail(vm.EmailAddress);
 
-					if (vw.RegistrationId is not null)
+					if (vw is not null)
 					{
-						vm.AddToFlag(StatusFlag.RegistrationFormCompleted);
-						vm.RegistrationStep = new RegistrationStep();
-						vm.RegistrationStep.Id = (int)vw.RegistrationId;
-						vm.RegistrationStep.FirstName = vw.FirstName;
-						vm.RegistrationStep.FamilyName = vw.FamilyName;
-						vm.RegistrationStep.TotalDonation = vw.TotalDonation;
-						vm.RegistrationStep.RegistrationFeeAdjusted = vw.RegistrationFeeAdjusted;
+						vm.AddToFlag(StatusFlag.StartRegistraion);
 
-						vm.Status = Status.FromValue((int)vw.StatusId);
-						if (vm.Status == Status.PartiallyPaid)
+						vm.HouseRulesAgreement = new HouseRulesAgreement();
+						vm.HouseRulesAgreement.Id = vw.Id;
+						vm.HouseRulesAgreement.AcceptedDate = vw.HouseRulesAgreementAcceptedDate;
+						vm.HouseRulesAgreement.TimeZone = vw.HouseRulesAgreementTimeZone;
+
+						if (vw.RegistrationId is not null)
 						{
-							vm.AddToFlag(StatusFlag.PartiallyPaid);
-						}
-						else 
-						{
-							if (vm.Status == Status.FullyPaid)
+							vm.AddToFlag(StatusFlag.RegistrationFormCompleted);
+							vm.RegistrationStep = new RegistrationStep();
+							vm.RegistrationStep.Id = (int)vw.RegistrationId;
+							vm.RegistrationStep.FirstName = vw.FirstName;
+							vm.RegistrationStep.FamilyName = vw.FamilyName;
+							vm.RegistrationStep.TotalDonation = vw.TotalDonation;
+							vm.RegistrationStep.RegistrationFeeAdjusted = vw.RegistrationFeeAdjusted;
+
+							vm.Status = Status.FromValue((int)vw.StatusId);
+							if (vm.Status == Status.PartiallyPaid)
 							{
-								vm.AddToFlag(StatusFlag.FullyPaid);
+								vm.AddToFlag(StatusFlag.PartiallyPaid);
 							}
+							else
+							{
+								if (vm.Status == Status.FullyPaid)
+								{
+									vm.AddToFlag(StatusFlag.FullyPaid);
+								}
+							}
+						}
+						else
+						{
+							vm.Status = Status.StartRegistraion;
 						}
 					}
 					else
 					{
-						vm.Status = Status.AcceptedHouseRulesAgreement;
+						vm.Status = Status.AgreementNotSigned;
 					}
 				}
 				else
 				{
-					vm.Status = Status.EmailConfirmation;
+					vm.Status = Status.EmailNotConfirmed;
+					vm.AddToFlag(StatusFlag.EmailNotConfirmed);
 				}
 			}
 			else
 			{
-				vm.Status = Status.EmailNotConfirmed;
+				vm.Status = Status.NotAuthenticated;
+				vm.AddToFlag(StatusFlag.NotAuthenticated);
 			}
+
+
 		}
 		catch (Exception ex)
 		{

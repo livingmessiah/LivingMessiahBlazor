@@ -25,6 +25,4 @@ public partial class Index
 		User = authState.User;
 		Salutation = User.GetUserNameSoapVersion();
 	}
-	
-
 }

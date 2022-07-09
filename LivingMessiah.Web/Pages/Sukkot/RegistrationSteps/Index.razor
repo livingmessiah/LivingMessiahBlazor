@@ -11,6 +11,8 @@
 
 @using PageHome = LivingMessiah.Web.Links.Sukkot
 @using Page = LivingMessiah.Web.Links.Sukkot.RegistrationSteps
+
+
 <PageTitle>@Page.Title</PageTitle>
 
 <div class="pb-2 mt-4 mb-2 border-bottom">
@@ -22,6 +24,8 @@
 	</AuthorizeView>
 *@
 
+
+<h4 class="mb-3">To register for Sukkot, you must complete these steps</h4>
 
 @if (AttemptingToGetRecord == true)
 {
@@ -35,197 +39,188 @@ else
 }
 else
 {
-	<IndexVMDump IndexVM=@IndexVM />
+	<StepGridHeader />
 
-	<h4 class="mb-3">To register for Sukkot, you must complete these steps</h4>
+	<StepGridTemplate Status="IndexVM.Status"
+									ComparisonStatus="Status.NotAuthenticated">
+		<p class="lead">
+			To begin registration, you need to be logged in with a Living Messiah confirmed account.
+			Click <LoginRedirectButton ReturnUrl="@Page.Index"></LoginRedirectButton>
+			to login with your existing Living Messiah account or, if you do not have one, you can create one.
+		</p>
 
-	<div class="row">
-		<div class="col-sm-1">
-			<h5><span class="badge badge-warning">Step</span></h5>
-		</div>
-		<div class="col-sm-1">
-			<h5><span class="badge badge-warning">Done</span></h5>
-		</div>
-		<div class="col-sm-10">
-			<h5><span class="badge badge-warning">Description</span></h5>
-		</div>
-	</div>
+		<HelpGuideTogleButton />
 
+	</StepGridTemplate>
 
-	<div class="row">
+	<StepGridTemplate Status="IndexVM.Status"
+									ComparisonStatus="Status.EmailNotConfirmed">
 
-		<div class="col-sm-1">
-			<i class="fa-2x">@Status.EmailNotConfirmed.StepNumber</i>
-		</div>
-		<div class="col-sm-1">
-			@if (IndexVM.StatusFlag.HasFlag(Enums.StatusFlag.EmailConfirmation) == true)
-			{
-				<i class="fas fa-check fa-3x"></i>
-			}
-		</div>
+		<p class="lead">
+			You are logged in but the this email has <u>NOT</u> been confirmed.
+		</p>
 
-		<div class="col-sm-10">
-			<h4>Task - Getting Started</h4>
-			@if (IndexVM.StatusFlag.HasFlag(Enums.StatusFlag.EmailConfirmation) == true)
-			{
-				<p class="lead"><b>Task completed</b></p>
-			}
-			else
-			{
-				<p class="lead">
-					Print out this
-					<a href="@LivingMessiah.Web.Pages.Sukkot.Constants.Blobs.UrlPDF(PDFs.RegistrationWalkThrough)"
-				 class="btn btn-primary btn-sm" target="_blank">
-						<i class="fas fa-file-pdf"></i> PDF
-					</a> or leave it open in another window as it will be helpful with the next step.
-				</p>
-			}
-		</div>
+		<CheckSpamFolderTogleButton />
 
-	</div>
-
-	<hr />
-
-	<div class="row">
-		<div class="col-sm-1">
-			<i class="fa-2x">@Status.EmailConfirmation.StepNumber</i>
-		</div>
-		<div class="col-sm-1">
-			@if (IndexVM.StatusFlag.HasFlag(Enums.StatusFlag.EmailConfirmation) == true)
-
-			{
-				<i class="fas fa-check fa-3x"></i>
-			}
-		</div>
-
-		<div class="col-sm-10">
-			<h4>Task - Living Messiah Account</h4>
-			<Step2EmailVerified StatusFlag="@IndexVM.StatusFlag"></Step2EmailVerified>
-		</div>
-	</div>
-
-	<hr />
-
-	<div class="row">
-		<div class="col-sm-1">
-			<i class="fa-2x">@Status.AcceptedHouseRulesAgreement.StepNumber</i>
-		</div>
-		<div class="col-sm-1">
-			@if (IndexVM.StatusFlag.HasFlag(Enums.StatusFlag.AcceptedHouseRulesAgreement) == true)
-			{
-				<i class="fas fa-check fa-3x"></i>
-			}
-		</div>
-
-		<div class="col-sm-10">
-			<h4>Task - Sign Agreement</h4>
-			<Step3AcceptedHouseRulesAgreement StatusFlag="@IndexVM.StatusFlag"
-																			EmailAddress="@IndexVM.EmailAddress"
-																			IsXs="false">
-			</Step3AcceptedHouseRulesAgreement>
-
-		</div>
-	</div>
+	</StepGridTemplate>
 
 
-	<hr />
-
-	<div class="row">
-		<div class="col-sm-1">
-			<i class="fa-2x">@Status.RegistrationFormCompleted.StepNumber</i>
-		</div>
-
-		<div class="col-sm-1">
-			@if (IndexVM.StatusFlag.HasFlag(Enums.StatusFlag.RegistrationFormCompleted) == true)
-			{
-				<i class="fas fa-check fa-3x"></i>
-			}
-		</div>
-
-		<div class="col-sm-10">
-			<h4>Task - Registration</h4>
-
-			@*the AndAlso seems redundant*@
-			@if (IndexVM.RegistrationStep is not null && IndexVM.StatusFlag.HasFlag(Enums.StatusFlag.AcceptedHouseRulesAgreement) == true)
-			{
-				<Step4Registration IsXs="false"
-											 RegistrationId="@IndexVM.RegistrationStep.Id"
-											 StatusFlag="@IndexVM.StatusFlag">
-				</Step4Registration>
-			}
-		</div>
-	</div>
+	<StepGridTemplate Status="IndexVM.Status"
+									ComparisonStatus="Status.AgreementNotSigned">
+		<Step3AgreementNotSigned StatusFlag="@IndexVM.StatusFlag"
+													 AgreeButtonCallBack="AgreeButtonCallBackHandler"
+													 IsXs="false">
+		</Step3AgreementNotSigned>
+	</StepGridTemplate>
 
 
-	<hr />
-
-	<div class="row">
-		<div class="col-sm-1">
-			<i class="fa-2x">@Status.PartiallyPaid.StepNumber</i>
-		</div>
-
-		<div class="col-sm-1">
-			@if (IndexVM.StatusFlag.HasFlag(Enums.StatusFlag.FullyPaid) == true)
-			{
-				<i class="fas fa-check fa-3x"></i>
-			}
-			else
-			{
-				@if (IndexVM.StatusFlag.HasFlag(Enums.StatusFlag.PartiallyPaid) == true)
-				{
-					<i class="fas fa-star-half fa-3x text-muted"></i>
-				}
-			}
-		</div>
-
-		<div class="col-sm-10">
-			@if (IndexVM.StatusFlag.HasFlag(Enums.StatusFlag.PartiallyPaid) == true)
-			{
-				<h4>Task - Payment (partial)</h4>
-			}
-			else
-			{
-				<h4>Task - Payment</h4>
-			}
-			@if (IndexVM.RegistrationStep is not null)
-			{
-				<Step5Payment StatusFlag="IndexVM.StatusFlag"
-									RegistrationStep="IndexVM.RegistrationStep">
-				</Step5Payment>
-			}
+	<StepGridTemplate Status="IndexVM.Status"
+									ComparisonStatus="Status.StartRegistraion">
+		<Step4StartRegistration StatusFlag="@IndexVM.StatusFlag"
+													IsXs="false" />
+	</StepGridTemplate>
 
 
-		</div>
-	</div>
+	@*Show Step 5*@
 
-
-	<div class="row mt-4 pt-1 border-top">
-		<div class="col-12">
-			<a href="@PageHome.Index"
-			 title="Sukkot Introduction" class="btn-info btn-sm">
-				<i class="far fa-arrow-alt-circle-left"></i> Back to Introduction
-			</a>
-		</div>
-	</div>
-
-	@if (DatabaseError)
+	@if (IndexVM.RegistrationStep is null)
 	{
-		<p class="text-danger"><em>@DatabaseErrorMsg</em></p>
+		<div class="row my-2 pt-2 border-top">
+			<div class="col-sm-1">
+				<i class="fa-2x">@Status.RegistrationFormCompleted.StepNumber</i>
+			</div>
+			<div class="col-sm-1">
+				&nbsp;
+			</div>
+			<div class="col-sm-10">
+				<h4>Task - @Status.RegistrationFormCompleted.Heading</h4>
+			</div>
+		</div>
 	}
 	else
 	{
-		if (DatabaseWarning)
+		@if (IndexVM.Status >= Status.RegistrationFormCompleted)
 		{
-			<p class="text-warning">@DatabaseWarningMsg</p>
+			<div class="row my-2 pt-2 border-top">
+				<div class="col-sm-1">
+					<i class="fa-2x">@Status.RegistrationFormCompleted.StepNumber</i>
+				</div>
+				<div class="col-sm-1">
+					<i class="fas fa-check fa-3x"></i>
+				</div>
+				<div class="col-sm-10">
+					<h4>Task - @Status.RegistrationFormCompleted.Heading</h4>
+					<p class="lead"><b>Task completed</b></p>
+					<p>Registration Id: <b>@IndexVM.RegistrationStep.Id</b></p>
+					<Toolbar Id="IndexVM.RegistrationStep.Id"
+						 StatusFlag="IndexVM.StatusFlag"
+						 Status="IndexVM.Status">
+					</Toolbar>
+
+				</div>
+			</div>
 		}
 		else
 		{
-			if (DatabaseInformation)
-			{
-				<p class="text-info">@DatabaseInformationMsg</p>
-			}
+			<div class="row my-2 pt-2 border-top">
+				<div class="col-sm-1">
+					<i class="fa-2x">@Status.RegistrationFormCompleted.StepNumber</i>
+				</div>
+				<div class="col-sm-1">
+					<i class="fas fa-check fa-3x"></i>
+				</div>
+				<div class="col-sm-10">
+					<h4>Task - @Status.RegistrationFormCompleted.Heading</h4>
+					<p class="lead"><b>Task completed</b></p>
+				</div>
+			</div>
 		}
 	}
 
+	@*Show Step 6*@
+
+	@if (IndexVM.RegistrationStep is null)
+	{
+		<div class="row my-2 pt-2 border-top">
+			<div class="col-sm-1">
+				<i class="fa-2x">@Status.PartiallyPaid.StepNumber</i>
+			</div>
+			<div class="col-sm-1">
+				&nbsp;
+			</div>
+			<div class="col-sm-10">
+				<h4>Task - @Status.PartiallyPaid.Heading</h4>
+			</div>
+		</div>
+	}
+	else
+	{
+		if (IndexVM.Status == Status.FullyPaid)
+		{
+			<div class="row my-2 pt-2 border-top">
+				<div class="col-sm-1">
+					<i class="fa-2x">@Status.PartiallyPaid.StepNumber</i>
+				</div>
+				<div class="col-sm-1">
+					<i class="fas fa-check fa-3x"></i>
+				</div>
+				<div class="col-sm-10">
+					<h4>Task - @Status.PartiallyPaid.Heading</h4>
+					<p class="lead"><b>Task completed</b></p>
+				</div>
+			</div>
+		}
+		else
+		{
+			<div class="row my-2 pt-2 border-top">
+				<div class="col-sm-1">
+					<i class="fa-2x">@Status.PartiallyPaid.StepNumber</i>
+				</div>
+				<div class="col-sm-1">
+					&nbsp;
+				</div>
+				<div class="col-sm-10">
+					<h4>Task - @Status.PartiallyPaid.Heading</h4>
+					<Step6Payment StatusFlag="IndexVM.StatusFlag"
+									RegistrationStep="IndexVM.RegistrationStep">
+					</Step6Payment>
+				</div>
+			</div>
+		}
+	}
+
+
+	<StatusFlagDump StatusFlag="@IndexVM.StatusFlag"
+								Status="@IndexVM.Status" />
 }
+
+
+<div class="row my-2 pt-2 border-top">
+	<div class="col-12">
+		<a href="@PageHome.Index"
+			 title="Sukkot Introduction" class="btn-info btn-sm">
+			<i class="far fa-arrow-alt-circle-left"></i> Back to Introduction
+		</a>
+	</div>
+</div>
+
+@if (DatabaseError)
+{
+	<p class="text-danger"><em>@DatabaseErrorMsg</em></p>
+}
+else
+{
+	if (DatabaseWarning)
+	{
+		<p class="text-warning">@DatabaseWarningMsg</p>
+	}
+	else
+	{
+		if (DatabaseInformation)
+		{
+			<p class="text-info">@DatabaseInformationMsg</p>
+		}
+	}
+}
+
 

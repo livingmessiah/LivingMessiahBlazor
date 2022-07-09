@@ -1,0 +1,39 @@
+﻿@using LivingMessiah.Web.Pages.Sukkot.Constants
+
+<div class="row mb-3">
+	<div class="col-12">
+		<Button @onclick="@(e => ToggleButtonClick(IsCollapsed))"
+						class="btn-info btn-lg">
+			Email Verification Help <i class='@Chevron'></i>
+		</Button>
+	</div>
+</div>
+
+@if (!IsCollapsed)
+{
+	<div class="card border-danger my-5" style="max-width: 500px;">
+		<div class="card-header"><h3 class="badge-danger">EMAIL VERIFICATION PROBLEMS</h3></div>
+		<div class="card-body">
+			<p>If you are having problems locating your verification email, PLEASE CHECK YOUR SPAM FOLDER</p>
+			<p>
+				If you find it there, you MUST do these two things
+				<ol>
+					<li>Move it to your inbox</li>
+					<li>Then open the email and click the verification link</li>
+				</ol>
+			</p>
+			<p>If you don't move the email out of your spam folder into your inbox the verification link will probably be disabled</p>
+		</div>
+	</div>
+}
+
+@code {
+	public bool IsCollapsed { get; set; } = true;
+	public string Chevron  { get; set; } = "fas fa-chevron-down";
+
+	protected void ToggleButtonClick(bool isCollapsed)
+	{
+		IsCollapsed = !isCollapsed;
+		Chevron = IsCollapsed ? "fas fa-chevron-down" : "fas fa-chevron-up"; 
+	}
+}
