@@ -11,7 +11,7 @@
 
 @using PageHome = LivingMessiah.Web.Links.Sukkot
 @using Page = LivingMessiah.Web.Links.Sukkot.RegistrationSteps
-
+@using NB = LivingMessiah.Web.Shared.Sukkot.Enums
 
 <PageTitle>@Page.Title</PageTitle>
 
@@ -57,7 +57,7 @@ else
 									ComparisonStatus="Status.EmailNotConfirmed">
 
 		<p class="lead">
-			You are logged in but the this email has <u>NOT</u> been confirmed.
+			You are logged in but the this email has <span class="text-warning"><u>NOT</u></span> been confirmed.
 		</p>
 
 		<CheckSpamFolderTogleButton />
@@ -67,8 +67,7 @@ else
 
 	<StepGridTemplate Status="IndexVM.Status"
 									ComparisonStatus="Status.AgreementNotSigned">
-		<Step3AgreementNotSigned StatusFlag="@IndexVM.StatusFlag"
-													 AgreeButtonCallBack="AgreeButtonCallBackHandler"
+		<Step3AgreementNotSigned AgreeButtonCallBack="AgreeButtonCallBackHandler"
 													 IsXs="false">
 		</Step3AgreementNotSigned>
 	</StepGridTemplate>
@@ -76,8 +75,7 @@ else
 
 	<StepGridTemplate Status="IndexVM.Status"
 									ComparisonStatus="Status.StartRegistraion">
-		<Step4StartRegistration StatusFlag="@IndexVM.StatusFlag"
-													IsXs="false" />
+		<Step4StartRegistration IsXs="false" />
 	</StepGridTemplate>
 
 
@@ -112,9 +110,7 @@ else
 					<h4>Task - @Status.RegistrationFormCompleted.Heading</h4>
 					<p class="lead"><b>Task completed</b></p>
 					<p>Registration Id: <b>@IndexVM.RegistrationStep.Id</b></p>
-					<Toolbar Id="IndexVM.RegistrationStep.Id"
-						 StatusFlag="IndexVM.StatusFlag"
-						 Status="IndexVM.Status">
+					<Toolbar Id="IndexVM.RegistrationStep.Id">
 					</Toolbar>
 
 				</div>
@@ -159,14 +155,18 @@ else
 		{
 			<div class="row my-2 pt-2 border-top">
 				<div class="col-sm-1">
-					<i class="fa-2x">@Status.PartiallyPaid.StepNumber</i>
+					<i class="fa-2x">@Status.FullyPaid.StepNumber</i>
 				</div>
 				<div class="col-sm-1">
 					<i class="fas fa-check fa-3x"></i>
 				</div>
 				<div class="col-sm-10">
-					<h4>Task - @Status.PartiallyPaid.Heading</h4>
+					<h4>Task - @Status.FullyPaid.Heading</h4>
 					<p class="lead"><b>Task completed</b></p>
+					<CommonButtons RegistrationStepId="IndexVM.RegistrationStep.Id"
+									 NavButton="NB.NavButton.Donation">
+					</CommonButtons>
+
 				</div>
 			</div>
 		}
@@ -181,7 +181,7 @@ else
 				</div>
 				<div class="col-sm-10">
 					<h4>Task - @Status.PartiallyPaid.Heading</h4>
-					<Step6Payment StatusFlag="IndexVM.StatusFlag"
+					<Step6Payment Status="IndexVM.Status"
 									RegistrationStep="IndexVM.RegistrationStep">
 					</Step6Payment>
 				</div>
@@ -190,8 +190,12 @@ else
 	}
 
 
-	<StatusFlagDump StatusFlag="@IndexVM.StatusFlag"
-								Status="@IndexVM.Status" />
+@*	<h5 class="mt-3 pt-2 border-top">
+		Status Flags <span class="float-right text-info">
+			<small> Status: @IndexVM.Status.Name <sup>(@IndexVM.Status.Value)</sup> </small>
+		</span>
+	</h5>*@
+
 }
 
 
@@ -203,6 +207,7 @@ else
 		</a>
 	</div>
 </div>
+
 
 @if (DatabaseError)
 {

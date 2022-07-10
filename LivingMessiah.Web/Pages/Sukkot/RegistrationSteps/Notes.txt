@@ -1,0 +1,4 @@
+﻿
+
+		To disable a button, just add disabled="" I guess
+		type="button" class="btn btn-outline-danger" disabled="">

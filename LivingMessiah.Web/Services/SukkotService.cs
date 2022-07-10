@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using LivingMessiah.Web.Pages.Sukkot.CreateEdit;
 using LivingMessiah.Web.Pages.Sukkot.RegistrationSteps;
-using LivingMessiah.Web.Pages.Sukkot.RegistrationSteps.Enums;
 using SukkotApi.Domain;
 using SukkotApi.Domain.Enums;
 using LivingMessiah.Web.Pages.Sukkot;
@@ -112,15 +111,12 @@ public class SukkotService : ISukkotService
 				{
 					vm.UserName = user.GetUserNameSoapVersion();
 					vm.EmailAddress = user.GetUserEmail();
-					vm.AddToFlag(StatusFlag.AgreementNotSigned);
 
 					var vw = new vwRegistrationStep();
 					vw = await db.GetByEmail(vm.EmailAddress);
 
 					if (vw is not null)
 					{
-						vm.AddToFlag(StatusFlag.StartRegistraion);
-
 						vm.HouseRulesAgreement = new HouseRulesAgreement();
 						vm.HouseRulesAgreement.Id = vw.Id;
 						vm.HouseRulesAgreement.AcceptedDate = vw.HouseRulesAgreementAcceptedDate;
@@ -128,7 +124,6 @@ public class SukkotService : ISukkotService
 
 						if (vw.RegistrationId is not null)
 						{
-							vm.AddToFlag(StatusFlag.RegistrationFormCompleted);
 							vm.RegistrationStep = new RegistrationStep();
 							vm.RegistrationStep.Id = (int)vw.RegistrationId;
 							vm.RegistrationStep.FirstName = vw.FirstName;
@@ -137,17 +132,6 @@ public class SukkotService : ISukkotService
 							vm.RegistrationStep.RegistrationFeeAdjusted = vw.RegistrationFeeAdjusted;
 
 							vm.Status = Status.FromValue((int)vw.StatusId);
-							if (vm.Status == Status.PartiallyPaid)
-							{
-								vm.AddToFlag(StatusFlag.PartiallyPaid);
-							}
-							else
-							{
-								if (vm.Status == Status.FullyPaid)
-								{
-									vm.AddToFlag(StatusFlag.FullyPaid);
-								}
-							}
 						}
 						else
 						{
@@ -162,15 +146,12 @@ public class SukkotService : ISukkotService
 				else
 				{
 					vm.Status = Status.EmailNotConfirmed;
-					vm.AddToFlag(StatusFlag.EmailNotConfirmed);
 				}
 			}
 			else
 			{
 				vm.Status = Status.NotAuthenticated;
-				vm.AddToFlag(StatusFlag.NotAuthenticated);
 			}
-
 
 		}
 		catch (Exception ex)

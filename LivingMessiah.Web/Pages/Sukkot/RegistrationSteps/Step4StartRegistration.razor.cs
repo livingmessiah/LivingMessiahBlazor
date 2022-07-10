@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 using Link = LivingMessiah.Web.Links.Sukkot;
-using SukkotApi.Domain.Enums;
 
 namespace LivingMessiah.Web.Pages.Sukkot.RegistrationSteps;
 
@@ -15,9 +14,6 @@ public partial class Step4StartRegistration
 	
 	[Parameter, EditorRequired]
 	public bool IsXs { get; set; } = false;
-
-	[Parameter, EditorRequired]
-	public Enums.StatusFlag StatusFlag { get; set; }
 
 	void Add_ButtonClick()
 	{

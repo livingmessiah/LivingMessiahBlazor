@@ -1,29 +1,16 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using Link = LivingMessiah.Web.Links.Sukkot;
+using SukkotApi.Domain.Enums;
 
 namespace LivingMessiah.Web.Pages.Sukkot.RegistrationSteps;
 
 public partial class Step6Payment
 {
-	[Inject]
-	NavigationManager NavManager { get; set; }
-
 	[Parameter, EditorRequired]
-	public Enums.StatusFlag StatusFlag { get; set; }
+	public Status Status { get; set; }
 
 	[Parameter, EditorRequired]
 	public RegistrationStep RegistrationStep { get; set; }
-
-	void Payment_ButtonClick(MouseEventArgs e, int id)
-	{
-		NavManager.NavigateTo(Link.Links2.Payment + "/" + id);
-	}
-
-	void Details_ButtonClick(MouseEventArgs e, int id, bool showPrintMsg)
-	{
-		NavManager.NavigateTo(Link.Details + "/" + id + "/" + showPrintMsg);
-	}
 
 	public static MarkupString Remainder(decimal remainingCost)
 	{

@@ -1,12 +1,12 @@
 ﻿@page "/SukkotAdmin/RegistrationList/"
 @using LivingMessiah.Web.Pages.Sukkot.CreateEdit
 @using SukkotApi.Domain.Registrations.Enums
-
 @using static LivingMessiah.Web.Services.Auth0
 @using LivingMessiah.Web.Shared.Sukkot
 @using LivingMessiah.Web.Infrastructure
 @using LivingMessiah.Web.Settings
 @using Microsoft.Extensions.Options
+@using NB = LivingMessiah.Web.Shared.Sukkot.Enums
 
 <AuthorizeView Roles="@Roles.SukkotMenuBar">
 	<SukkotAdminMenubar></SukkotAdminMenubar>
@@ -22,10 +22,9 @@
 <AuthorizeView Roles="@Roles.AdminOrSukkot">
 	<div class="row">
 		<div class="col-12">
-			<button @onclick="@(e => Add_ButtonClick())"
-							class="btn-success btn-lg mb-3">
-				<i class="fas fa-plus"></i> Add
-			</button>
+			<CommonButtons RegistrationStepId="null"
+										 NavButton="NB.NavButton.Add">
+			</CommonButtons>
 		</div>
 	</div>
 
@@ -78,29 +77,24 @@
 								<Authorized>
 									<td>
 										<div class="btn-group">
-											<button @onclick="@(e => Details_ButtonClick(item.Id))"
-													class="btn-default btn-sm" title="Registration View">
-												<i class="fas fa-info text-info"></i> View
-											</button>
-											<button @onclick="@(e => Edit_ButtonClick(item.Id))"
-													class="btn-default btn-sm" title="Registration Edit">
-												<i class="fas fa-pencil-alt text-success"></i> Edit
-											</button>
-
-											<button @onclick="@(e => DeleteConfirmation_ButtonClick(item.Id))"
-													class="btn-default btn-sm" title="Delete">
-												<i class="fas fa-times text-danger"></i> Del
-											</button>
+											<CommonButtons RegistrationStepId="item.Id"
+																 NavButton="NB.NavButton.Details">
+											</CommonButtons>
+											<CommonButtons RegistrationStepId="item.Id"
+																 NavButton="NB.NavButton.Edit">
+											</CommonButtons>
+											<CommonButtons RegistrationStepId="item.Id"
+																 NavButton="NB.NavButton.DeleteConfirmation">
+											</CommonButtons>
 										</div>
 									</td>
 
 									<td>
 
 										<div class="btn-group">
-											<button @onclick="@(e => Payment_ButtonClick(item.Id))"
-													class="btn-default btn-sm" title="Payment">
-												<i class="fas fa-dollar-sign text-success"></i> Pay
-											</button>
+											<CommonButtons RegistrationStepId="item.Id"
+																 NavButton="NB.NavButton.Donation">
+											</CommonButtons>
 										</div>
 
 										<div class=mt-2>
@@ -114,10 +108,9 @@
 								<NotAuthorized>
 									<td>
 										<div class="btn-group">
-											<button @onclick="@(e => Details_ButtonClick(item.Id))"
-													class="btn-default btn-sm" title="Registration">
-												<i class="fas fa-info text-info"></i>
-											</button>
+											<CommonButtons RegistrationStepId="item.Id"
+																 NavButton="NB.NavButton.Details">
+											</CommonButtons>
 										</div>
 									</td>
 									<td></td>

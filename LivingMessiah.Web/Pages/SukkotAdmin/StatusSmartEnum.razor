@@ -12,12 +12,14 @@
 			<TableHeader>
 				<th>Id</th>
 				<th>Name</th>
-				<th>CanTransitionTo</th>
+				<th>Used in DB Only</th>
+				@*<th>CanTransitionTo</th>*@
 			</TableHeader>
 			<RowTemplate>
 				<td>@context.Value</td>
 				<td>@context.Name</td>
-				<td>@context.Dump</td>
+				<td>@context.UsedInDbOnly</td>
+				@*<td>@context.Dump</td>*@
 			</RowTemplate>
 		</TableTemplate>
 	</div>

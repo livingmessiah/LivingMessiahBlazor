@@ -20,14 +20,10 @@ public partial class RegistrationList
 	[Inject]
 	public ISukkotAdminService svc { get; set; }
 
-	[Inject]
-	NavigationManager NavManager { get; set; }
-
 	public List<vwRegistration> Registrations { get; set; }
 
 	private bool IsCurrentSortAscending = true;
 	private RegistrationSortEnum CurrentRegistrationSortEnum = RegistrationSortEnum.LastName;
-
 
 	public int RecordCount { get; set; } = 0;
 
@@ -99,34 +95,6 @@ public partial class RegistrationList
 	{
 		return $"Sorted by {CurrentRegistrationSortEnum.ToString()} {(IsCurrentSortAscending ? "" : "(descending)")}";
 	}
-
-	#region Navigation Button Clicks
-	void Add_ButtonClick()
-	{
-		NavManager.NavigateTo(Links.Sukkot.CreateEdit + "/");
-	}
-
-	void DeleteConfirmation_ButtonClick(int id)
-	{
-		NavManager.NavigateTo(Links.Sukkot.DeleteConfirmation + "/" + id);
-	}
-
-	void Payment_ButtonClick(int id)
-	{
-		NavManager.NavigateTo(Links.Sukkot.Links2.Payment + "/" + id);
-	}
-
-	void Details_ButtonClick(int id)
-	{
-		NavManager.NavigateTo(Links.Sukkot.Details + "/" + id + "/False");
-	}
-
-	void Edit_ButtonClick(int id)
-	{
-		NavManager.NavigateTo(Links.Sukkot.CreateEdit + "/" + id);
-	}
-	#endregion
-
 
 	#region ErrorHandling
 	private void InitializeErrorHandling()

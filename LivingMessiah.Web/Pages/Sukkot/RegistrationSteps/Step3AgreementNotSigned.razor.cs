@@ -15,9 +15,6 @@ public partial class Step3AgreementNotSigned
 	[Parameter, EditorRequired]
 	public bool IsXs { get; set; } = false;
 
-	[Parameter, EditorRequired]
-	public Enums.StatusFlag StatusFlag { get; set; }
-
 	[Parameter] 
 	public EventCallback AgreeButtonCallBack { get; set; }
 

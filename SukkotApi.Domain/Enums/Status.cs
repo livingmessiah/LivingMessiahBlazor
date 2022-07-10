@@ -35,9 +35,8 @@ public abstract class Status : SmartEnum<Status>
 
 	#region Extra Fields
 
-	//ToDo: Deprecated because I made the Id "1 based" i.e. not zero based.
 	public abstract int StepNumber { get; }
-	public abstract int Flag { get; }
+	public abstract bool UsedInDbOnly { get; }
 	public abstract string Heading { get; }
 	public abstract bool CanTransitionTo(Status next);
 	#endregion
@@ -48,7 +47,7 @@ public abstract class Status : SmartEnum<Status>
 	{
 		public NotAuthenticatedSE() : base($"{nameof(Id.NotAuthenticated)}", Id.NotAuthenticated) { }
 		public override int StepNumber => 1;
-		public override int Flag => 1;
+		public override bool UsedInDbOnly => false;
 		public override string Heading => "Login";
 		public override bool CanTransitionTo(Status next) => false;
 	}
@@ -57,7 +56,7 @@ public abstract class Status : SmartEnum<Status>
 	{
 		public EmailNotConfirmedSE() : base($"{nameof(Id.EmailNotConfirmed)}", Id.EmailNotConfirmed) { }
 		public override int StepNumber => 2;
-		public override int Flag => 2;
+		public override bool UsedInDbOnly => false;
 		public override string Heading => "Email Confirmation";
 		public override bool CanTransitionTo(Status next) =>
 			next == Status.AgreementNotSigned;
@@ -68,7 +67,7 @@ public abstract class Status : SmartEnum<Status>
 	{
 		public AgreementNotSignedSE() : base($"{nameof(Id.AgreementNotSigned)}", Id.AgreementNotSigned) { }
 		public override int StepNumber => 3;
-		public override int Flag => 3;
+		public override bool UsedInDbOnly => false;
 		public override string Heading => "Sign Agreement";
 		public override bool CanTransitionTo(Status next) =>
 			next == Status.StartRegistraion;
@@ -78,7 +77,7 @@ public abstract class Status : SmartEnum<Status>
 	{
 		public StartRegistraionSE() : base($"{nameof(Id.StartRegistraion)}", Id.StartRegistraion) { }
 		public override int StepNumber => 4;
-		public override int Flag => 8;
+		public override bool UsedInDbOnly => true;
 		public override string Heading => "Start Registration";
 		public override bool CanTransitionTo(Status next) =>
 			next == Status.RegistrationFormCompleted ||
@@ -89,7 +88,7 @@ public abstract class Status : SmartEnum<Status>
 	{
 		public RegistrationFormCompletedSE() : base($"{nameof(Id.RegistrationFormCompleted)}", Id.RegistrationFormCompleted) { }
 		public override int StepNumber => 5;
-		public override int Flag => 16;
+		public override bool UsedInDbOnly => true;
 		public override string Heading => "Complete Registration";
 		public override bool CanTransitionTo(Status next) =>
 			next == Status.FullyPaid ||
@@ -101,7 +100,7 @@ public abstract class Status : SmartEnum<Status>
 	{
 		public PartiallyPaidSE() : base($"{nameof(Id.PartiallyPaid)}", Id.PartiallyPaid) { }
 		public override int StepNumber => 6;
-		public override int Flag => 32;
+		public override bool UsedInDbOnly => true;
 		public override string Heading => "Payment";
 		public override bool CanTransitionTo(Status next) =>
 			next == Status.FullyPaid ||
@@ -112,7 +111,7 @@ public abstract class Status : SmartEnum<Status>
 	{
 		public FullyPaidSE() : base($"{nameof(Id.FullyPaid)}", Id.FullyPaid) { }
 		public override int StepNumber => 6;
-		public override int Flag => 64;
+		public override bool UsedInDbOnly => true;
 		public override string Heading => "Payment";
 		public override bool CanTransitionTo(Status next) =>
 			next == Status.Canceled;
@@ -121,8 +120,8 @@ public abstract class Status : SmartEnum<Status>
 	private sealed class CanceledSE : Status
 	{
 		public CanceledSE() : base($"{nameof(Id.Canceled)}", Id.Canceled) { }
-		public override int StepNumber => 7;
-		public override int Flag => 128;
+		public override int StepNumber => 99;
+		public override bool UsedInDbOnly => false;
 		public override string Heading => "Canceled";
 		public override bool CanTransitionTo(Status next) => false;
 	}
@@ -151,15 +150,4 @@ public abstract class Status : SmartEnum<Status>
 
 /*
 SELECT * FROM Sukkot.Status
-
-Id	Code		Descr
---	-------	-----------------------------
-0		0. NoEC	Email Not Confirmed
-1		1. EC		Email Confirmation
-2		2. AHRA	Accepted House Rules Agreement -- This is new
-3		3. RFC	Registration Form Completed    -- This was 2
-4		4. PP		Partially Paid
-5		5. FP		Fully Paid
-6		6. Can	Cancel
-
 */
