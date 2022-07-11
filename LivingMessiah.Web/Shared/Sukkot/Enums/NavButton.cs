@@ -13,7 +13,8 @@ public abstract class NavButton : SmartEnum<NavButton>
 		internal const int Edit = 3;
 		internal const int DeleteConfirmation = 4;
 		internal const int Donation = 5;
-		internal const int Add = 6;
+		internal const int CreateRegistrationForm = 6;
+		internal const int Add = 7;
 	}
 	#endregion
 
@@ -25,6 +26,7 @@ public abstract class NavButton : SmartEnum<NavButton>
 	public static readonly NavButton Edit = new EditSE();
 	public static readonly NavButton DeleteConfirmation = new DeleteConfirmationSE();
 	public static readonly NavButton Donation = new DonationSE();
+	public static readonly NavButton CreateRegistrationForm = new CreateRegistrationFormSE();
 	public static readonly NavButton Add = new AddSE();
 	// SE=SmartEnum
 	#endregion
@@ -95,12 +97,23 @@ public abstract class NavButton : SmartEnum<NavButton>
 		public override string RouteSuffix => "";
 	}
 
+	private sealed class CreateRegistrationFormSE : NavButton
+	{
+		public CreateRegistrationFormSE() : base($"{nameof(Id.CreateRegistrationForm)}", Id.CreateRegistrationForm) { }
+		public override string Label => "Create Registration";
+		public override string Title => "Create Registration";
+		public override string Icon => "fas fa-plus";  //fas fa-chevron-right I want this to be on the right, not the left (default)
+		public override string Css => "btn-success btn-lg mb-3";  // btn-success btn-lg mb-3
+		public override string Route => Link.CreateEdit;
+		public override string RouteSuffix => "";
+	}
+
 	private sealed class AddSE : NavButton
 	{
 		public AddSE() : base($"{nameof(Id.Add)}", Id.Add) { }
 		public override string Label => "Add";
 		public override string Title => "Add";
-		public override string Icon => "fas fa-plus";  // 
+		public override string Icon => "fas fa-plus";  
 		public override string Css => "btn btn-success";  // btn-success btn-lg mb-3
 		public override string Route => Link.CreateEdit;
 		public override string RouteSuffix => "";

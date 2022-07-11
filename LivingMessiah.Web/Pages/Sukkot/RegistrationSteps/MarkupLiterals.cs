@@ -6,12 +6,20 @@ namespace LivingMessiah.Web.Pages.Sukkot.RegistrationSteps;
 public class MarkupLiterals
 {
 
-	public static MarkupString Col_2nd_CheckIcon(Status currentStatus, Status comparisonStatus)
+	public static MarkupString Col_2nd_CheckIcon(Status currentStatus, Status comparisonStatus, bool bigCheck)
 	{
-		// "<p><small>not yet completed</small></p>"
-		return currentStatus.Value <= comparisonStatus.Value ?
-						(MarkupString)(string.Empty) :
-						(MarkupString)"<i class='fas fa-check fa-3x'></i>"; 
+		if (bigCheck)
+		{
+			return currentStatus.Value <= comparisonStatus.Value ?
+							(MarkupString)(string.Empty) :
+							(MarkupString)"<i class='fas fa-check fa-3x'></i>";
+		}
+		else
+		{
+			return currentStatus.Value <= comparisonStatus.Value ?
+				(MarkupString)(string.Empty) :
+				(MarkupString)"<p class='text-center'><i class='fas fa-check fa-2x'></i></p>";
+		}
 	}
 
 	public static MarkupString Col_3rd_Heading(Status comparisonStatus, string appendix)
