@@ -4,62 +4,58 @@ using Link = LivingMessiah.Web.Links.Account;
 using Sukkot.Web.Service;
 using System.Threading.Tasks;
 using System;
+using SukkotApi.Domain.Enums;
 
 namespace LivingMessiah.Web.Pages.Sukkot.RegistrationSteps;
 
-public partial class Index : ComponentBase
+public partial class GridContent
 {
-	[Inject]
-	public ILogger<Index> Logger { get; set; }
 
+	[Inject]
+	public ILogger<GridContent> Logger { get; set; }
 	[Inject]
 	public ISukkotService svc { get; set; }
-
-	[Inject]
-	NavigationManager NavigationManager { get; set; }
-
 	protected IndexVM IndexVM { get; set; }
-
-	protected override async Task OnInitializedAsync()
+	private string GetLocalTimeZone()
 	{
-		await PopulateVM();
+		return $"Time Zone: {TimeZoneInfo.Local}.";
 	}
 
-	private async Task PopulateVM()
+
+	[Parameter]
+	public EventCallback AgreeButtonCallBack { get; set; }
+
+	[Parameter, EditorRequired]
+	public bool IsXs { get; set; }
+
+	[Parameter, EditorRequired]
+	public Status UsersCurrentStatus { get; set; }
+
+	[Parameter, EditorRequired]
+	public Status ComparisonStatus { get; set; }
+
+	[Parameter, EditorRequired]
+	public RegistrationStep RegistrationStep { get; set; }
+
+	/*	*/
+		private async Task AgreeButtonCallBackHandler()
 	{
-		InitializeAlertHandlingling();
-		Logger.LogDebug(string.Format("Inside {0}"
-			, nameof(Index) + "!" + nameof(PopulateVM)));
+		string eMail = IndexVM.EmailAddress;
+		Logger.LogDebug(string.Format("Event: {0}"
+			, nameof(Index) + "!" + nameof(AgreeButtonCallBackHandler)));
+		int id = 0;
 		try
 		{
-			IndexVM = await svc.GetRegistrationStep();
-			GotRecord = true;
-			Logger.LogDebug(string.Format("...just called svc.{0}; Status: {1}, EmailAddress: {2}"
-				, nameof(svc.GetRegistrationStep), IndexVM.Status, IndexVM.EmailAddress));
-
+			id = await svc.AddHouseRulesAgreementRecord(eMail, GetLocalTimeZone());
+			DatabaseInformationMsg = "Record updated";
+			DatabaseInformation = true;
+			//await PopulateVM();
 		}
 		catch (InvalidOperationException invalidOperationException)
 		{
 			DatabaseError = true;
 			DatabaseErrorMsg = invalidOperationException.Message;
 		}
-		AttemptingToGetRecord = false;
-		if (!GotRecord)
-		{
-			AttemptingToGetRecordMsg = "Failed to get current status";
-		}
-	}
-
-
-
-	private string GetLocalTimeZone()
-	{
-		return $"Time Zone: {TimeZoneInfo.Local}.";
-	}
-
-	void RedirectToLoginClick(string returnUrl)
-	{
-		NavigationManager.NavigateTo($"{Link.Login}?returnUrl={returnUrl}", true);
 	}
 
 	#region AlertHandling

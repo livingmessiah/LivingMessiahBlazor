@@ -1,31 +1,22 @@
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 using System;
 
 namespace LivingMessiah.Web.Pages.Sukkot.RegistrationSteps;
 
-public partial class Step3AgreementNotSigned
+public partial class AgreementButtons
 {
+
 	[Inject]
-	public ILogger<Step3AgreementNotSigned> Logger { get; set; }
+	public ILogger<AgreementButtons> Logger { get; set; }
 
 	[Inject]
 	NavigationManager navigationManager { get; set; }
 
-	[Parameter, EditorRequired]
-	public bool IsXs { get; set; } = false;
-
-	[Parameter] 
+	[Parameter]
 	public EventCallback AgreeButtonCallBack { get; set; }
 
-	protected string FormatSize;
-
-	protected override void OnInitialized()
-	{
-		FormatSize = IsXs ? "" : "lead"; // IsXs2 ?
-	}
-
-	private string GetLocalTimeZone() 
+	private string GetLocalTimeZone()
 	{
 		return $"Time Zone: {TimeZoneInfo.Local}.";
 	}
@@ -36,5 +27,4 @@ public partial class Step3AgreementNotSigned
 			, nameof(DoNotAgree_ButtonClick), goToPage));
 		navigationManager.NavigateTo($"{goToPage}", true);
 	}
-
 }

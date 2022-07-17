@@ -6,19 +6,36 @@ namespace LivingMessiah.Web.Pages.Sukkot.RegistrationSteps;
 public class MarkupLiterals
 {
 
-	public static MarkupString Col_2nd_CheckIcon(Status currentStatus, Status comparisonStatus, bool bigCheck)
+	public static MarkupString Col_2nd_CheckIcon(Status usersCurentStatus, Status comparisonStatus, bool isXs)
 	{
-		if (bigCheck)
+
+		if (usersCurentStatus == Status.PartiallyPaid && comparisonStatus == Status.FullyPaid)
 		{
-			return currentStatus.Value <= comparisonStatus.Value ?
-							(MarkupString)(string.Empty) :
-							(MarkupString)"<i class='fas fa-check fa-3x'></i>";
+			return isXs ?
+				(MarkupString)$"<p class='text-center'><i class='{usersCurentStatus.Icon} fa-2x'></i></p>" :
+				(MarkupString)$"<i class='{usersCurentStatus.Icon} fa-3x'></i>";
 		}
 		else
 		{
-			return currentStatus.Value <= comparisonStatus.Value ?
-				(MarkupString)(string.Empty) :
-				(MarkupString)"<p class='text-center'><i class='fas fa-check fa-2x'></i></p>";
+			if (usersCurentStatus == Status.FullyPaid && comparisonStatus == Status.FullyPaid)
+			{
+				return isXs ?
+					(MarkupString)$"<p class='text-center'><i class='{usersCurentStatus.Icon} fa-2x'></i></p>" :
+					(MarkupString)$"<i class='{usersCurentStatus.Icon} fa-3x'></i>";
+			}
+			else
+			{
+				if (usersCurentStatus.Value <= comparisonStatus.Value)
+				{
+					return (MarkupString)(string.Empty);
+				}
+				else
+				{
+					return isXs ?
+						(MarkupString)$"<p class='text-center'><i class='{comparisonStatus.Icon} fa-2x'></i></p>" :
+						(MarkupString)$"<i class='{comparisonStatus.Icon} fa-3x'></i>";
+				}
+			}
 		}
 	}
 
@@ -27,22 +44,28 @@ public class MarkupLiterals
 		return (MarkupString)$"<h4>Task - {comparisonStatus.Heading} {appendix}</h4>";
 	}
 
-	public static MarkupString Col_3rd_SubHeading(Status currentStatus, Status comparisonStatus)
+	public static MarkupString Col_3rd_SubHeading(Status usersCurentStatus, Status comparisonStatus)
 	{
-		return currentStatus.Value <= comparisonStatus.Value ?
-						(MarkupString)(string.Empty) :
-						(MarkupString)"<p class='lead'><b>Task completed</b></p>";  //
+		if (usersCurentStatus == Status.FullyPaid && comparisonStatus == Status.FullyPaid)
+		{
+			return (MarkupString)"<p class='lead'><b>Task completed</b></p>";
+		}
+		else
+		{
+			if (usersCurentStatus.Value <= comparisonStatus.Value)
+			{
+				return (MarkupString)(string.Empty);
+			}
+			else
+			{
+				return usersCurentStatus.Value <= comparisonStatus.Value ?
+								(MarkupString)(string.Empty) :
+								(MarkupString)"<p class='lead'><b>Task completed</b></p>";
+			}
+		}
+
+
+
 	}
 
 }
-
-/*
-
-	public bool IsXsOrSm { get; set; }
-	protected readonly MarkupString AnchorEmail =
-		new MarkupString($"<a href='mailto:{Emails.Info.Email()}{Emails.Info.Subject}'>{Emails.Info.Email()}</a>");
-
-	private string _WarningCaretRight = "";
-	public MarkupString GetWarningCaretRight() { return IsXsOrSm ? (MarkupString)string.Empty : (MarkupString)_WarningCaretRight; }
-
-*/

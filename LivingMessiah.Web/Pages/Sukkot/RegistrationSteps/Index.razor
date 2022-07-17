@@ -25,6 +25,8 @@
 *@
 
 
+
+
 <h4 class="mb-3">To register for Sukkot, you must complete these steps</h4>
 
 @if (AttemptingToGetRecord == true)
@@ -39,307 +41,36 @@ else
 }
 else
 {
-	<div class="d-block d-sm-none">
-		@*<RegistrationBodyXs IsXs="true"/>*@
 
-		<StepGridTemplateXs Status="IndexVM.Status"
-											ComparisonStatus="Status.NotAuthenticated">
-			<p class="lead">
-				To begin registration, you need to be logged in with a Living Messiah confirmed account.
-				Click <LoginRedirectButton ReturnUrl="@Page.Index"></LoginRedirectButton>
-				to login with your existing Living Messiah account or, if you do not have one, you can create one.
-			</p>
-			<HelpGuideTogleButton />
-		</StepGridTemplateXs>
-
-		<StepGridTemplateXs Status="IndexVM.Status"
-											ComparisonStatus="Status.EmailNotConfirmed">
-			<p class="lead">
-				You are logged in but the this email has <span class="text-warning"><u>NOT</u></span> been confirmed.
-			</p>
-			<CheckSpamFolderTogleButton />
-		</StepGridTemplateXs>
-
-		<StepGridTemplateXs Status="IndexVM.Status"
-											ComparisonStatus="Status.AgreementNotSigned">
-			<Step3AgreementNotSigned AgreeButtonCallBack="AgreeButtonCallBackHandler"
-														 IsXs="true">
-			</Step3AgreementNotSigned>
-		</StepGridTemplateXs>
-
-		<StepGridTemplateXs Status="IndexVM.Status"
-											ComparisonStatus="Status.StartRegistraion">
-			<CommonButtons RegistrationStepId="null"
-									 NavButton="NB.NavButton.CreateRegistrationForm">
-			</CommonButtons>
-		</StepGridTemplateXs>
-
-
-		@*Show Step 5*@
-
-		@if (IndexVM.RegistrationStep is null)
-		{
-			<div class="row my-2 pt-2 border-top">
-				<div class="col-3">
-					<p class="lead text-warning text-center"> Step @Status.RegistrationFormCompleted.StepNumber</p>
+	<div class="row">
+		<div class="col-12">
+			<div class="my-2 pt-2 float-right">
+				<p class="text-info">
+					<small> Status: @IndexVM.Status.Name [<b>@IndexVM.Status.Value</b>]</small>
+				</p>
 				</div>
-				<div class="col-9">
-					<h4>Task - @Status.RegistrationFormCompleted.Heading</h4>
-				</div>
-			</div>
-		}
-		else
-		{
-			@if (IndexVM.Status >= Status.RegistrationFormCompleted)
-			{
-				<div class="row my-2 pt-2 border-top">
-					<div class="col-3">
-						<p class="lead text-warning text-center"> Step @Status.RegistrationFormCompleted.StepNumber</p>
-						<p class="text-center"><i class="fas fa-check fa-2x"></i></p>
-					</div>
-					<div class="col-9">
-						<h4>Task - @Status.RegistrationFormCompleted.Heading</h4>
-						<p class="lead"><b>Task completed</b></p>
-						<p>Registration Id: <b>@IndexVM.RegistrationStep.Id</b></p>
-						<Toolbar Id="IndexVM.RegistrationStep.Id">
-						</Toolbar>
-					</div>
-				</div>
-			}
-			else
-			{
-				<div class="row my-2 pt-2 border-top">
-					<div class="col-3">
-						<p class="lead text-warning"> Step @Status.RegistrationFormCompleted.StepNumber</p>
-						<i class="fas fa-check fa-2x"></i>
-					</div>
-					<div class="col-10">
-						<h4>Task - @Status.RegistrationFormCompleted.Heading</h4>
-						<p class="lead"><b>Task completed</b></p>
-					</div>
-				</div>
-			}
-		}
-
-
-		@*Show Step 6*@
-
-		@if (IndexVM.RegistrationStep is null)
-		{
-			<div class="row my-2 pt-2 border-top">
-				<div class="col-3">
-					<p class="lead text-warning text-center"> Step @Status.PartiallyPaid.StepNumber</p>
-				</div>
-				<div class="col-9">
-					<h4>Task - @Status.PartiallyPaid.Heading</h4>
-				</div>
-			</div>
-		}
-		else
-		{
-			if (IndexVM.Status == Status.FullyPaid)
-			{
-				<div class="row my-2 pt-2 border-top">
-					<div class="col-3">
-						<p class="lead text-warning text-center"> <b>Step @Status.FullyPaid.StepNumber</b></p>
-						<i class="fas fa-check fa-2x"></i>
-					</div>
-					<div class="col-9">
-						<h4>Task - @Status.FullyPaid.Heading</h4>
-						<p class="lead"><b>Task completed</b></p>
-						<CommonButtons RegistrationStepId="IndexVM.RegistrationStep.Id"
-										 NavButton="NB.NavButton.Donation">
-						</CommonButtons>
-
-					</div>
-				</div>
-			}
-			else
-			{
-				<div class="row my-2 pt-2 border-top">
-					<div class="col-3">
-						<p class="lead text-warning text-center"> <b>Step @Status.PartiallyPaid.StepNumber</b></p>
-						<p class="text-center"><i class="fas fa-star-half fa-2x"></i></p>
-					</div>
-					<div class="col-9">
-						<h4>Task - @Status.PartiallyPaid.Heading</h4>
-						<Step6Payment Status="IndexVM.Status"
-										RegistrationStep="IndexVM.RegistrationStep">
-						</Step6Payment>
-					</div>
-				</div>
-			}
-		}
-
+		</div>
 	</div>
 
-	<div class="d-none d-sm-block">
-		@*<RegistrationBody IsXs="false"/>*@
+	<StepGridHeader />
+	@foreach (var item in Status.List.OrderBy(o => o.StepNumber).Where(w => w.UsedByUI).ToList())
+	{
+		<div class="d-block d-sm-none">
+			<Grid UsersCurrentStatus="IndexVM.Status"
+				ComparisonStatus="item"
+				RegistrationStep="IndexVM.RegistrationStep"
+				IsXs="true">
+			</Grid>
+		</div>
+		<div class="d-none d-sm-block">
+			<Grid UsersCurrentStatus="IndexVM.Status"
+				ComparisonStatus="item"
+				RegistrationStep="IndexVM.RegistrationStep"
+				IsXs="false">
+			</Grid>
+		</div>
+	}
 
-		<StepGridHeader />
-
-		<StepGridTemplate Status="IndexVM.Status"
-										ComparisonStatus="Status.NotAuthenticated">
-			<p class="lead">
-				To begin registration, you need to be logged in with a Living Messiah confirmed account.
-				Click <LoginRedirectButton ReturnUrl="@Page.Index"></LoginRedirectButton>
-				to login with your existing Living Messiah account or, if you do not have one, you can create one.
-			</p>
-
-			<HelpGuideTogleButton />
-
-		</StepGridTemplate>
-
-		<StepGridTemplate Status="IndexVM.Status"
-										ComparisonStatus="Status.EmailNotConfirmed">
-
-			<p class="lead">
-				You are logged in but the this email has <span class="text-warning"><u>NOT</u></span> been confirmed.
-			</p>
-
-			<CheckSpamFolderTogleButton />
-
-		</StepGridTemplate>
-
-
-		<StepGridTemplate Status="IndexVM.Status"
-										ComparisonStatus="Status.AgreementNotSigned">
-			<Step3AgreementNotSigned AgreeButtonCallBack="AgreeButtonCallBackHandler"
-														 IsXs="false">
-			</Step3AgreementNotSigned>
-		</StepGridTemplate>
-
-
-		<StepGridTemplate Status="IndexVM.Status"
-										ComparisonStatus="Status.StartRegistraion">
-			<CommonButtons RegistrationStepId="null"
-									 NavButton="NB.NavButton.CreateRegistrationForm">
-			</CommonButtons>
-		</StepGridTemplate>
-
-
-		@*Show Step 5*@
-
-		@if (IndexVM.RegistrationStep is null)
-		{
-			<div class="row my-2 pt-2 border-top">
-				<div class="col-sm-1">
-					<i class="fa-2x">@Status.RegistrationFormCompleted.StepNumber</i>
-				</div>
-				<div class="col-sm-1">
-					&nbsp;
-				</div>
-				<div class="col-sm-10">
-					<h4>Task - @Status.RegistrationFormCompleted.Heading</h4>
-				</div>
-			</div>
-		}
-		else
-		{
-			@if (IndexVM.Status >= Status.RegistrationFormCompleted)
-			{
-				<div class="row my-2 pt-2 border-top">
-					<div class="col-sm-1">
-						<i class="fa-2x">@Status.RegistrationFormCompleted.StepNumber</i>
-					</div>
-					<div class="col-sm-1">
-						<i class="fas fa-check fa-3x"></i>
-					</div>
-					<div class="col-sm-10">
-						<h4>Task - @Status.RegistrationFormCompleted.Heading</h4>
-						<p class="lead"><b>Task completed</b></p>
-						<p>Registration Id: <b>@IndexVM.RegistrationStep.Id</b></p>
-						<Toolbar Id="IndexVM.RegistrationStep.Id">
-						</Toolbar>
-
-					</div>
-				</div>
-			}
-			else
-			{
-				<div class="row my-2 pt-2 border-top">
-					<div class="col-sm-1">
-						<i class="fa-2x">@Status.RegistrationFormCompleted.StepNumber</i>
-					</div>
-					<div class="col-sm-1">
-						<i class="fas fa-check fa-3x"></i>
-					</div>
-					<div class="col-sm-10">
-						<h4>Task - @Status.RegistrationFormCompleted.Heading</h4>
-						<p class="lead"><b>Task completed</b></p>
-					</div>
-				</div>
-			}
-		}
-
-		@*Show Step 6*@
-
-		@if (IndexVM.RegistrationStep is null)
-		{
-			<div class="row my-2 pt-2 border-top">
-				<div class="col-sm-1">
-					<i class="fa-2x">@Status.PartiallyPaid.StepNumber</i>
-				</div>
-				<div class="col-sm-1">
-					&nbsp;
-				</div>
-				<div class="col-sm-10">
-					<h4>Task - @Status.PartiallyPaid.Heading</h4>
-				</div>
-			</div>
-		}
-		else
-		{
-			if (IndexVM.Status == Status.FullyPaid)
-			{
-				<div class="row my-2 pt-2 border-top">
-					<div class="col-sm-1">
-						<i class="fa-2x">@Status.FullyPaid.StepNumber</i>
-					</div>
-					<div class="col-sm-1">
-						<i class="fas fa-check fa-3x"></i>
-					</div>
-					<div class="col-sm-10">
-						<h4>Task - @Status.FullyPaid.Heading</h4>
-						<p class="lead"><b>Task completed</b></p>
-						<CommonButtons RegistrationStepId="IndexVM.RegistrationStep.Id"
-										 NavButton="NB.NavButton.Donation">
-						</CommonButtons>
-
-					</div>
-				</div>
-			}
-			else
-			{
-				<div class="row my-2 pt-2 border-top">
-					<div class="col-sm-1">
-						<i class="fa-2x">@Status.PartiallyPaid.StepNumber</i>
-					</div>
-					<div class="col-sm-1">
-						<i class="fas fa-star-half fa-3x"></i>
-					</div>
-					<div class="col-sm-10">
-						<h4>Task - @Status.PartiallyPaid.Heading</h4>
-						<Step6Payment Status="IndexVM.Status"
-										RegistrationStep="IndexVM.RegistrationStep">
-						</Step6Payment>
-					</div>
-				</div>
-			}
-		}
-
-	</div>
-
-
-
-
-	@*
-		<h5 class="mt-3 pt-2 border-top">
-		Status Flags <span class="float-right text-info">
-		<small> Status: @IndexVM.Status.Name <sup>(@IndexVM.Status.Value)</sup> </small>
-		</span>
-		</h5>
-	*@
 
 }
 

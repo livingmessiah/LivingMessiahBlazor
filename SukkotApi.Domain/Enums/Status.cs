@@ -38,6 +38,8 @@ public abstract class Status : SmartEnum<Status>
 	public abstract int StepNumber { get; }
 	public abstract bool UsedInDbOnly { get; }
 	public abstract string Heading { get; }
+	public abstract string Icon { get; }
+	public abstract bool UsedByUI { get; }
 	public abstract bool CanTransitionTo(Status next);
 	#endregion
 
@@ -49,6 +51,8 @@ public abstract class Status : SmartEnum<Status>
 		public override int StepNumber => 1;
 		public override bool UsedInDbOnly => false;
 		public override string Heading => "Login";
+		public override string Icon => "fas fa-check";
+		public override bool UsedByUI => true;
 		public override bool CanTransitionTo(Status next) => false;
 	}
 
@@ -58,6 +62,8 @@ public abstract class Status : SmartEnum<Status>
 		public override int StepNumber => 2;
 		public override bool UsedInDbOnly => false;
 		public override string Heading => "Email Confirmation";
+		public override string Icon => "fas fa-check";
+		public override bool UsedByUI => true;
 		public override bool CanTransitionTo(Status next) =>
 			next == Status.AgreementNotSigned;
 	}
@@ -69,6 +75,8 @@ public abstract class Status : SmartEnum<Status>
 		public override int StepNumber => 3;
 		public override bool UsedInDbOnly => false;
 		public override string Heading => "Sign Agreement";
+		public override string Icon => "fas fa-check";
+		public override bool UsedByUI => true;
 		public override bool CanTransitionTo(Status next) =>
 			next == Status.StartRegistraion;
 	}
@@ -79,6 +87,8 @@ public abstract class Status : SmartEnum<Status>
 		public override int StepNumber => 4;
 		public override bool UsedInDbOnly => true;
 		public override string Heading => "Start Registration";
+		public override string Icon => "fas fa-check";
+		public override bool UsedByUI => true;
 		public override bool CanTransitionTo(Status next) =>
 			next == Status.RegistrationFormCompleted ||
 			next == Status.Canceled;
@@ -90,6 +100,8 @@ public abstract class Status : SmartEnum<Status>
 		public override int StepNumber => 5;
 		public override bool UsedInDbOnly => true;
 		public override string Heading => "Complete Registration";
+		public override string Icon => "fas fa-check";
+		public override bool UsedByUI => true;
 		public override bool CanTransitionTo(Status next) =>
 			next == Status.FullyPaid ||
 			next == Status.PartiallyPaid ||
@@ -102,6 +114,8 @@ public abstract class Status : SmartEnum<Status>
 		public override int StepNumber => 6;
 		public override bool UsedInDbOnly => true;
 		public override string Heading => "Payment";
+		public override string Icon => "fas fa-star-half";
+		public override bool UsedByUI => false;
 		public override bool CanTransitionTo(Status next) =>
 			next == Status.FullyPaid ||
 			next == Status.Canceled;
@@ -110,9 +124,11 @@ public abstract class Status : SmartEnum<Status>
 	private sealed class FullyPaidSE : Status
 	{
 		public FullyPaidSE() : base($"{nameof(Id.FullyPaid)}", Id.FullyPaid) { }
-		public override int StepNumber => 6;
+		public override int StepNumber => 6; // 7
 		public override bool UsedInDbOnly => true;
 		public override string Heading => "Payment";
+		public override string Icon => "fas fa-check";
+		public override bool UsedByUI => true;
 		public override bool CanTransitionTo(Status next) =>
 			next == Status.Canceled;
 	}
@@ -123,6 +139,8 @@ public abstract class Status : SmartEnum<Status>
 		public override int StepNumber => 99;
 		public override bool UsedInDbOnly => false;
 		public override string Heading => "Canceled";
+		public override string Icon => "fas fa-check";
+		public override bool UsedByUI => false;
 		public override bool CanTransitionTo(Status next) => false;
 	}
 

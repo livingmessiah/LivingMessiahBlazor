@@ -1,0 +1,17 @@
+﻿@using PageHome = LivingMessiah.Web.Links.Home
+
+	<div class="row col-12 my-2">
+		<div class="form-group">
+			
+			<button @onclick="@(() => DoNotAgree_ButtonClick(@PageHome.Index))" 
+				class="btn btn-danger">
+				<i class="far fa-hand-paper"></i> No, I Do NOT Agree
+			</button>
+
+			<button @onclick="@(() => AgreeButtonCallBack.InvokeAsync())"
+			class="btn btn-success">
+				<i class="fas fa-check"></i> Yes, I Agree
+			</button>
+
+		</div>
+	</div>

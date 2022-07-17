@@ -1,0 +1,196 @@
+﻿@using SukkotApi.Domain.Enums
+@using LivingMessiah.Web.Shared.Sukkot
+@using NB = LivingMessiah.Web.Shared.Sukkot.Enums
+@using Page = LivingMessiah.Web.Links.Sukkot.RegistrationSteps
+
+
+@if (DatabaseError)
+{
+	<p class="text-danger"><em>@DatabaseErrorMsg</em></p>
+}
+else
+{
+	if (DatabaseWarning)
+	{
+		<p class="text-warning">@DatabaseWarningMsg</p>
+	}
+	else
+	{
+		if (DatabaseInformation)
+		{
+			<p class="text-info">@DatabaseInformationMsg</p>
+		}
+	}
+}
+
+@*Step 1*@
+@if (ComparisonStatus == Status.NotAuthenticated && ComparisonStatus == UsersCurrentStatus)
+{
+
+	if (IsXs)
+	{
+		<div class="card mt-0 mb-3">
+			<div class="card-body bg-light">
+				<p class="lead">
+					To begin registration, you need to be logged in with a Living Messiah confirmed account.
+					Click <LoginRedirectButton ReturnUrl="@Page.Index"></LoginRedirectButton>
+					to login with your existing Living Messiah account or, if you do not have one, you can create one.
+				</p>
+				<HelpGuideTogleButton />
+			</div>
+		</div>
+	}
+	else
+	{
+		<p class="lead">
+			To begin registration, you need to be logged in with a Living Messiah confirmed account.
+			Click <LoginRedirectButton ReturnUrl="@Page.Index"></LoginRedirectButton>
+			to login with your existing Living Messiah account or, if you do not have one, you can create one.
+		</p>
+		<HelpGuideTogleButton />
+	}
+
+}
+
+@*Step 2*@
+@if (ComparisonStatus == Status.EmailNotConfirmed &&
+		ComparisonStatus == UsersCurrentStatus)
+{
+	if (IsXs)
+	{
+		<div class="card mt-0 mb-3">
+			<div class="card-body bg-light">
+				<p class="lead">
+					You are logged in but the this email has <span class="text-warning"><u>NOT</u></span> been confirmed.
+				</p>
+				<CheckSpamFolderTogleButton />
+			</div>
+		</div>
+	}
+	else
+	{
+		<p class="lead">
+			You are logged in but the this email has <span class="text-warning"><u>NOT</u></span> been confirmed.
+		</p>
+		<CheckSpamFolderTogleButton />
+	}
+}
+
+@*Step 3*@
+
+@if (ComparisonStatus == Status.AgreementNotSigned
+&& ComparisonStatus == UsersCurrentStatus)
+{
+	if (IsXs)
+	{
+		<div class="card mt-0 mb-3">
+			<div class="card-body bg-light">
+				<AgreementParagraph IsXs="IsXs" />
+				<AgreementButtons />
+			</div>
+		</div>
+	}
+	else
+	{
+		<AgreementParagraph IsXs="IsXs" />
+		<AgreementButtons />
+	}
+}
+
+
+@*Step 4*@
+@if (ComparisonStatus == Status.StartRegistraion &&
+		ComparisonStatus == UsersCurrentStatus)
+{
+	if (IsXs)
+	{
+		<div class="card mt-0 mb-3">
+			<div class="card-body bg-light">
+				<CommonButtons RegistrationStepId="null"
+									 NavButton="NB.NavButton.CreateRegistrationForm">
+				</CommonButtons>
+
+			</div>
+		</div>
+	}
+	else
+	{
+		<CommonButtons RegistrationStepId="null"
+							 NavButton="NB.NavButton.CreateRegistrationForm">
+		</CommonButtons>
+	}
+
+
+}
+
+@*Step 5*@
+
+@if (ComparisonStatus == Status.RegistrationFormCompleted
+	&& UsersCurrentStatus >= Status.RegistrationFormCompleted
+	&& RegistrationStep is not null)
+{
+
+	if (IsXs)
+	{
+		<div class="card mt-0 mb-3">
+			<div class="card-body bg-light">
+				<p>Registration Id: <b>@RegistrationStep.Id</b></p>
+				<Toolbar Id="RegistrationStep.Id" />
+			</div>
+		</div>
+	}
+	else
+	{
+		<p>Registration Id: <b>@RegistrationStep.Id</b></p>
+		<Toolbar Id="RegistrationStep.Id" />
+	}
+
+
+}
+
+
+
+@*Step 7*@
+
+@if (ComparisonStatus == Status.FullyPaid && RegistrationStep is not null)
+{
+	if (UsersCurrentStatus == Status.PartiallyPaid)
+	{
+		if (IsXs)
+		{
+			<div class="card mt-0 mb-3">
+				<div class="card-body bg-light">
+					<PartlyPaidParagraph RegistrationStep="RegistrationStep" />
+				</div>
+			</div>
+		}
+		else
+		{
+			<PartlyPaidParagraph RegistrationStep="RegistrationStep" />
+		}
+	}
+	else
+	{
+		if (UsersCurrentStatus == Status.FullyPaid)
+		{
+			if (IsXs)
+			{
+				<div class="card mt-0 mb-3">
+					<div class="card-body bg-light">
+						<CommonButtons RegistrationStepId="RegistrationStep.Id"
+									 NavButton="NB.NavButton.Donation">
+						</CommonButtons>
+
+					</div>
+				</div>
+			}
+			else
+			{
+				<CommonButtons RegistrationStepId="RegistrationStep.Id"
+							 NavButton="NB.NavButton.Donation">
+				</CommonButtons>
+			}
+
+		}
+	}
+}

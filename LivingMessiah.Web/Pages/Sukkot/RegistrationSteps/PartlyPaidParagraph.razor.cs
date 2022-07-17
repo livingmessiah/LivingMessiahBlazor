@@ -4,11 +4,8 @@ using SukkotApi.Domain.Enums;
 
 namespace LivingMessiah.Web.Pages.Sukkot.RegistrationSteps;
 
-public partial class Step6Payment
+public partial class PartlyPaidParagraph
 {
-	[Parameter, EditorRequired]
-	public Status Status { get; set; }
-
 	[Parameter, EditorRequired]
 	public RegistrationStep RegistrationStep { get; set; }
 
@@ -17,7 +14,7 @@ public partial class Step6Payment
 		string remainingCostToString = remainingCost.ToString("C0");
 		return remainingCost == 0 ?
 				(MarkupString)(string.Empty) :
-				(MarkupString)$"<p class='lead'>Remainder: <b>{remainingCostToString}</b></p>";  
+				(MarkupString)$"<p class='lead'>Remainder: <b>{remainingCostToString}</b></p>";
 	}
 
 	public static MarkupString Total(decimal totalDonation)
