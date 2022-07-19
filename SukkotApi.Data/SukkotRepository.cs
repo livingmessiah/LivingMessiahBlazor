@@ -64,6 +64,8 @@ FROM Sukkot.Registration WHERE Id = {id}";
 
 	public async Task<vwRegistrationStep> GetByEmail(string email)
 	{
+		base.log.LogDebug(string.Format("Inside: {0} email:{1}"
+			, nameof(GetByEmail), email));
 		base.Parms = new DynamicParameters(new { EMail = email });
 		base.Sql = $@"
 SELECT Id, EMail

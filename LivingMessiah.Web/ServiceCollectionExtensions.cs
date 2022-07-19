@@ -66,7 +66,9 @@ public static class ServiceCollectionExtensions
 			.AddTransient<ISukkotRepository, SukkotRepository>()
 			.AddTransient<ISukkotAdminRepository, SukkotAdminRepository>()
 			.AddSingleton<ISmartEnumServiceForSfDropDownList, SmartEnumServiceForSfDropDownList>()
+			.AddScoped<AppState>()
 			.AddSingleton<IYouTubeFeedService, YouTubeFeedService>();
+			
 
 		return services;
 	}

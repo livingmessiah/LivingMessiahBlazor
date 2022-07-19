@@ -7,6 +7,9 @@ namespace LivingMessiah.Web.Pages.Sukkot.RegistrationSteps;
 public partial class Grid
 {
 	[Parameter, EditorRequired]
+	public string EmailParm { get; set; }
+
+	[Parameter, EditorRequired]
 	public bool IsXs { get; set; }
 
 	[Parameter, EditorRequired]

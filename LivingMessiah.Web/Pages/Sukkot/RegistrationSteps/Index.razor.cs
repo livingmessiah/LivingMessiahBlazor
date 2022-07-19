@@ -4,6 +4,7 @@ using Link = LivingMessiah.Web.Links.Account;
 using Sukkot.Web.Service;
 using System.Threading.Tasks;
 using System;
+using LivingMessiah.Web.Services;
 
 namespace LivingMessiah.Web.Pages.Sukkot.RegistrationSteps;
 
@@ -17,13 +18,19 @@ public partial class Index : ComponentBase
 
 	[Inject]
 	NavigationManager NavigationManager { get; set; }
+	
+	[Inject]
+	AppState AppState { get; set; }
 
-	protected IndexVM IndexVM { get; set; }
+protected IndexVM IndexVM { get; set; }
 
 	protected override async Task OnInitializedAsync()
 	{
+		// += operator allows you to subscribe to an event
+		AppState.StateChanged += async (Source, Property) => await AppState_StateChanged(Source, Property);
 		await PopulateVM();
 	}
+
 
 	private async Task PopulateVM()
 	{
@@ -36,25 +43,32 @@ public partial class Index : ComponentBase
 			GotRecord = true;
 			Logger.LogDebug(string.Format("...just called svc.{0}; Status: {1}, EmailAddress: {2}"
 				, nameof(svc.GetRegistrationStep), IndexVM.Status, IndexVM.EmailAddress));
-
 		}
 		catch (InvalidOperationException invalidOperationException)
 		{
-			DatabaseError = true;
-			DatabaseErrorMsg = invalidOperationException.Message;
+			AppState.UpdateMessage(this, invalidOperationException.Message);
 		}
+
 		AttemptingToGetRecord = false;
 		if (!GotRecord)
 		{
-			AttemptingToGetRecordMsg = "Failed to get current status";
+			AppState.UpdateMessage(this, "Failed to get current status");
 		}
 	}
 
-
-
-	private string GetLocalTimeZone()
+	private async Task AppState_StateChanged(ComponentBase Source, string Property)
 	{
-		return $"Time Zone: {TimeZoneInfo.Local}.";
+		if (Source != this)
+		{
+			await PopulateVM();
+			await InvokeAsync(StateHasChanged);
+		}
+	}
+	
+	void IDisposable.Dispose()
+	{
+		// -= operator detaches you from an event
+		AppState.StateChanged -= async (Source, Property) => await AppState_StateChanged(Source, Property);
 	}
 
 	void RedirectToLoginClick(string returnUrl)
@@ -63,7 +77,7 @@ public partial class Index : ComponentBase
 	}
 
 	#region AlertHandling
-	private void InitializeAlertHandlingling()
+	private void InitializeAlertHandlingling()  
 	{
 		AttemptingToGetRecord = true;
 		GotRecord = false;
@@ -74,14 +88,6 @@ public partial class Index : ComponentBase
 	protected string AttemptingToGetRecordMsg;
 	#endregion
 
-	#region ErrorHandling
-	protected bool DatabaseInformation = false;
-	protected string DatabaseInformationMsg { get; set; }
-	protected bool DatabaseWarning = false;
-	protected string DatabaseWarningMsg { get; set; }
-	protected bool DatabaseError { get; set; } // = false; handled by InitializeErrorHandling
-	protected string DatabaseErrorMsg { get; set; }
-	#endregion
 
 
 }

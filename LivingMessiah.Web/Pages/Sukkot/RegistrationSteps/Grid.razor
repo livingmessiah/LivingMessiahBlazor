@@ -18,9 +18,10 @@
 	<div class="row my-1 pl-3">
 		<div class="col-12">
 			<GridContent IsXs="IsXs"
-								 ComparisonStatus="ComparisonStatus"
-								 UsersCurrentStatus="UsersCurrentStatus"
-								 RegistrationStep="RegistrationStep">
+								 ComparisonStatus="@ComparisonStatus"
+								 UsersCurrentStatus="@UsersCurrentStatus"
+								 EmailParm="@EmailParm"
+								 RegistrationStep="@RegistrationStep">
 			</GridContent>
 		</div>
 	</div>
@@ -44,9 +45,10 @@ else
 			@((MarkupString)MarkupLiterals.Col_3rd_SubHeading(UsersCurrentStatus, ComparisonStatus))
 
 			<GridContent IsXs="IsXs"
-								 ComparisonStatus="ComparisonStatus"
-								 UsersCurrentStatus="UsersCurrentStatus"
-								 RegistrationStep="RegistrationStep">
+								 ComparisonStatus="@ComparisonStatus"
+								 UsersCurrentStatus="@UsersCurrentStatus"
+								 EmailParm="@EmailParm"
+								 RegistrationStep="@RegistrationStep">
 			</GridContent>
 
 		</div>
