@@ -32,7 +32,6 @@ public static class ServiceCollectionExtensions
 			.AddSingleton<SampleBaseComponent>()
 			.AddSingleton<SampleService>()
 
-			.AddSingleton<ILeadershipService, LeadershipService>()
 			.AddSingleton<IAddressService, AddressService>()
 			.AddSingleton<ILinkService, LinkService>()
 

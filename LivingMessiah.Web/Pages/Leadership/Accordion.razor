@@ -1,0 +1,32 @@
+﻿@using LivingMessiah.Web.Pages.Leadership.Enums
+@using Syncfusion.Blazor.Navigations
+
+<SfAccordion ExpandMode="ExpandMode.Single">
+	<AccordionItems>
+		@foreach (var item in LivingMessiah.Web.Pages.Leadership.Enums.Office.List.OrderBy(o => o.Value).Where(w => w.IsFilled == true).ToList())
+		{
+			<AccordionItem>
+				<HeaderTemplate>
+					<div class="my-1">
+						<img src="@Blobs.Leadership(item.IconFile)" class="mr-3 rounded-circle" />  @item.OfficeHolderName <i>@item.Title</i>
+					</div>
+				</HeaderTemplate>
+				<ContentTemplate>
+					<OfficeContent Office="@item"></OfficeContent>
+				</ContentTemplate>
+			</AccordionItem>
+		}
+	</AccordionItems>
+</SfAccordion>
+
+<style>
+
+	.e-accordion {
+			border: 5px solid rgb(255, 193, 7);
+	}
+
+	.e-accordion .e-acrdn-item.e-select > .e-acrdn-header {
+			background: #ffc107 !important;
+	}
+
+</style>
