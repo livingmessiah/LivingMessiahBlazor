@@ -1,11 +1,11 @@
 ﻿@using LivingMessiah.Web.Pages.Leadership.Enums
 
 <div class="card border-0">
-	<div class="w-50 p-3">
-		<img src="@Blobs.Leadership(Office.ImageFile)" class="card-img-top" alt="@Office.OfficeHolderName" />
-	</div>
-	<div class="card-body">
 
+	<img src="@Blobs.Leadership(Office.ImageFile)" class="@ImgClass" alt="@Office.OfficeHolderName" />
+	
+	<div class="card-body">
+	
 		<h4 class="card-title">@Office.OfficeHolderName<br /></h4>
 		<p class="card-subtitle mb-2 text-muted">
 			<i>@Office.Title</i><br />
@@ -128,14 +128,14 @@
 					they discovered the value of the Torah in 2012 and began their continued search for a deeper understanding of the Father’s instructions.
 				</p>
 
-				@*<p class="card-text">lorem ipsum</p>*@
+				<img src="@Blobs.Leadership("wanda-hebron-memorial-400-519.jpg")" 
+					class = "img-fluid"
+					alt="@Office.OfficeHolderName" />
 
-				<div class="card my-2" style="width: 25rem;">
-					<img src='@Blobs.Leadership("wanda-hebron-memorial-400-519.jpg")' class="card-img-top" alt="Wanda Hebron Memorial Picture">
-					<div class="card-body border-primary">
-						<h5 class="card-title">Wanda Hebron</h5>
+				<div class="row">
+					<div class="col-12">
 						<a href="@Blobs.Leadership("wanda-hebron-memorial.jpg")"
-						 target="_blank" class="btn btn-primary">
+						 target="_blank" class="btn btn-primary mt-1 mb-2">
 							<i class="fas fa-portrait"></i> Full Size Picture <i class="fas fa-external-link-square-alt"></i>
 						</a>
 					</div>

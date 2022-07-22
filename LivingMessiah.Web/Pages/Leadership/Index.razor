@@ -4,17 +4,17 @@
 @using Page = LivingMessiah.Web.Links.Leadership
 <PageTitle>@Page.Title</PageTitle>
 
-<Header></Header>
+<Header/>
 
 <div class="d-block d-sm-none">
-	<Accordion></Accordion>
+	<Accordion/>
 </div>
 
 <div class="d-none d-sm-block">
 	@foreach (var item in LivingMessiah.Web.Pages.Leadership.Enums.Office.List.OrderBy(o => o.Value).Where(w => w.IsFilled == true).ToList())
 	{
 		<hr class="warning" />
-		<OfficeContent Office="@item"></OfficeContent>
+		<OfficeContent Office="@item" IsXs="false"></OfficeContent>
 	}
 </div>
 
