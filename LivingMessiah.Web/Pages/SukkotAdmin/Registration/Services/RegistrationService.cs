@@ -4,7 +4,7 @@ using Microsoft.Extensions.Logging;
 
 using LivingMessiah.Web.Pages.SukkotAdmin.Registration.Domain;
 using LivingMessiah.Web.Pages.SukkotAdmin.Registration.Data;
-using SukkotApi.Domain.Enums;
+using LivingMessiah.Web.Pages.Sukkot.RegistrationSteps.Enums;
 using LivingMessiah.Web.Services;
 
 // ToDo: should this get converted to BaseSmartEnumDateRange

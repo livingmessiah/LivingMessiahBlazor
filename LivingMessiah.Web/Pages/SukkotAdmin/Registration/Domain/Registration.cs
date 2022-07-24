@@ -1,4 +1,4 @@
-﻿using SukkotApi.Domain.Enums;
+﻿using LivingMessiah.Web.Pages.Sukkot.RegistrationSteps.Enums;
 using System;
 
 namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration.Domain;

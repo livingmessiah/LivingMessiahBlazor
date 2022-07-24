@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
-using SukkotApi.Domain.Enums;
+using LivingMessiah.Web.Pages.Sukkot.RegistrationSteps.Enums;
 
 namespace LivingMessiah.Web.Pages.Sukkot.RegistrationSteps;
 
@@ -8,7 +8,6 @@ public class MarkupLiterals
 
 	public static MarkupString Col_2nd_CheckIcon(Status usersCurentStatus, Status comparisonStatus, bool isXs)
 	{
-
 		if (usersCurentStatus == Status.PartiallyPaid && comparisonStatus == Status.FullyPaid)
 		{
 			return isXs ?
@@ -25,15 +24,24 @@ public class MarkupLiterals
 			}
 			else
 			{
-				if (usersCurentStatus.Value <= comparisonStatus.Value)
-				{
-					return (MarkupString)(string.Empty);
-				}
-				else
+				if (usersCurentStatus == Status.RegistrationFormCompleted && comparisonStatus == Status.RegistrationFormCompleted)
 				{
 					return isXs ?
 						(MarkupString)$"<p class='text-center'><i class='{comparisonStatus.Icon} fa-2x'></i></p>" :
 						(MarkupString)$"<i class='{comparisonStatus.Icon} fa-3x'></i>";
+				}
+				else
+				{
+					if (usersCurentStatus.Value <= comparisonStatus.Value)
+					{
+						return (MarkupString)(string.Empty);
+					}
+					else
+					{
+						return isXs ?
+							(MarkupString)$"<p class='text-center'><i class='{comparisonStatus.Icon} fa-2x'></i></p>" :
+							(MarkupString)$"<i class='{comparisonStatus.Icon} fa-3x'></i>";
+					}
 				}
 			}
 		}
@@ -46,25 +54,31 @@ public class MarkupLiterals
 
 	public static MarkupString Col_3rd_SubHeading(Status usersCurentStatus, Status comparisonStatus)
 	{
+
 		if (usersCurentStatus == Status.FullyPaid && comparisonStatus == Status.FullyPaid)
 		{
 			return (MarkupString)"<p class='lead'><b>Task completed</b></p>";
 		}
 		else
 		{
-			if (usersCurentStatus.Value <= comparisonStatus.Value)
+			if (usersCurentStatus == Status.RegistrationFormCompleted && comparisonStatus == Status.RegistrationFormCompleted)
 			{
-				return (MarkupString)(string.Empty);
+				return (MarkupString)"<p class='lead'><b>Task completed</b></p>";
 			}
 			else
 			{
-				return usersCurentStatus.Value <= comparisonStatus.Value ?
-								(MarkupString)(string.Empty) :
-								(MarkupString)"<p class='lead'><b>Task completed</b></p>";
+				if (usersCurentStatus.Value <= comparisonStatus.Value)
+				{
+					return (MarkupString)(string.Empty);
+				}
+				else
+				{
+					return usersCurentStatus.Value <= comparisonStatus.Value ?
+									(MarkupString)(string.Empty) :
+									(MarkupString)"<p class='lead'><b>Task completed</b></p>";
+				}
 			}
 		}
-
-
 
 	}
 

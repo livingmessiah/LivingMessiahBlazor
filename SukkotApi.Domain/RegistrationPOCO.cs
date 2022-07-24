@@ -17,6 +17,8 @@ public class RegistrationPOCO
 	public int ChildBig { get; set; }
 	public int ChildSmall { get; set; }
 
+	public int StatusId { get; set; }
+
 	public Status Status { get; set; }
 
 	public int AttendanceBitwise { get; set; }

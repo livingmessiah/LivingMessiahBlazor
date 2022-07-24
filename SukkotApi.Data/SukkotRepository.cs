@@ -48,16 +48,20 @@ public class SukkotRepository : BaseRepositoryAsync, ISukkotRepository
 
 	public async Task<RegistrationPOCO> ById2(int id)
 	{
+		base.Parms = new DynamicParameters(new { Id = id });
 		base.Sql = $@"
+--DECLARE @Id int = 32
 SELECT TOP 1 
 Id, FamilyName, FirstName, SpouseName, OtherNames, EMail, Phone, Adults, ChildBig, ChildSmall
 , StatusId
 , AttendanceBitwise, LmmDonation, Notes, Avatar
 , Sukkot.udfAttendanceDatesConcat(Id) AS AttendanceDatesCSV
-FROM Sukkot.Registration WHERE Id = {id}";
+FROM Sukkot.Registration 
+WHERE Id = @Id
+";
 		return await WithConnectionAsync(async connection =>
 		{
-			var rows = await connection.QueryAsync<RegistrationPOCO>(sql: base.Sql);
+			var rows = await connection.QueryAsync<RegistrationPOCO>(sql: base.Sql, param: base.Parms);
 			return rows.SingleOrDefault();
 		});
 	}
@@ -167,13 +171,15 @@ WHERE Id = {registration.Id};
 
 	public async Task<RegistrationSummary> GetRegistrationSummary(int id)
 	{
-		base.Parms = new DynamicParameters(new { id = id });
+		base.Parms = new DynamicParameters(new { id = id });  // This should be { Id = id })
 		base.Sql = $@"
 --DECLARE @id int=2
 SELECT Id, EMail, FamilyName, Adults, ChildBig, ChildSmall, StatusId
 , AttendanceBitwise, RegistrationFeeAdjusted, TotalDonation
 FROM Sukkot.tvfRegistrationSummary(@id)
 ";
+		// FROM Sukkot.tvfRegistrationSummary(@id) should be FROM Sukkot.tvfRegistrationSummary(@Id)
+
 		return await WithConnectionAsync(async connection =>
 		{
 			var rows = await connection.QueryAsync<RegistrationSummary>(base.Sql, base.Parms);

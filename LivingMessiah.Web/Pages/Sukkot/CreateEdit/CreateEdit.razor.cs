@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
-using SukkotApi.Domain.Enums;
+using LivingMessiah.Web.Pages.Sukkot.RegistrationSteps.Enums;
 using Page = LivingMessiah.Web.Links.Sukkot;
 
 namespace LivingMessiah.Web.Pages.Sukkot.CreateEdit;

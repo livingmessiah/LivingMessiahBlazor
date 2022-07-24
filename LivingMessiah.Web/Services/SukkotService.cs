@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using LivingMessiah.Web.Pages.Sukkot.CreateEdit;
 using LivingMessiah.Web.Pages.Sukkot.RegistrationSteps;
 using SukkotApi.Domain;
-using SukkotApi.Domain.Enums;
+using LivingMessiah.Web.Pages.Sukkot.RegistrationSteps.Enums;
 using LivingMessiah.Web.Pages.Sukkot;
 using LivingMessiah.Web.Pages.Sukkot.Constants;
 using LivingMessiah.Web.Infrastructure;
@@ -252,6 +252,18 @@ public class SukkotService : ISukkotService
 		try
 		{
 			registrationPOCO = await db.ById2(id);
+
+			if (registrationPOCO is null)
+			{
+				Logger.LogWarning("registrationPOCO is null");
+				UserInterfaceMessage += "Registration record not found";
+				throw new RegistrationNotFoundException(UserInterfaceMessage);
+			}
+			else
+			{
+				registrationPOCO.Status = SukkotApi.Domain.Enums.Status.FromValue(registrationPOCO.StatusId);
+			}
+
 			if (!IsUserAuthoirized(registrationPOCO.EMail, id, user))
 			{
 				LogExceptionMessage = $"Inside {nameof(Update)}, logged in user:{registrationPOCO.EMail} lacks authority for id={id}";
@@ -259,6 +271,9 @@ public class SukkotService : ISukkotService
 				UserInterfaceMessage += "User not authorized";
 				throw new UserNotAuthoirizedException(UserInterfaceMessage);
 			}
+
+			Logger.LogDebug(string.Format("..registrationPOCO.Status: {0}, (-1 is null)", registrationPOCO.Status ?? -1));
+
 			if (registrationPOCO.Status == Status.FullyPaid & !AdminOrSukkotOverride(user))
 			{
 				throw new RegistratationException("Can not edit registration that has been fully paid.");
@@ -353,7 +368,7 @@ public class SukkotService : ISukkotService
 			Adults = registration.Adults,
 			ChildBig = registration.ChildBig,
 			ChildSmall = registration.ChildSmall,
-			Status = registration.Status,
+			Status = SukkotApi.Domain.Enums.Status.FromValue(registration.Status.Value),  //Status = registration.Status,
 			AttendanceBitwise = registration.AttendanceBitwise,
 			LmmDonation = registration.LmmDonation,
 			Avatar = registration.Avatar,
@@ -376,7 +391,7 @@ public class SukkotService : ISukkotService
 			Adults = poco.Adults,
 			ChildBig = poco.ChildBig,
 			ChildSmall = poco.ChildSmall,
-			Status = poco.Status,
+			Status = LivingMessiah.Web.Pages.Sukkot.RegistrationSteps.Enums.Status.FromValue(poco.Status.Value),  //Status = registration.Status, // poco.Status,
 			AttendanceBitwise = poco.AttendanceBitwise,
 			AttendanceDateList = poco.AttendanceDateList,
 			LmmDonation = poco.LmmDonation,
@@ -471,6 +486,24 @@ public class SukkotService : ISukkotService
 }
 
 #region CustomExceptions Classes
+
+
+public class RegistrationNotFoundException : Exception
+{
+	public RegistrationNotFoundException()
+	{
+	}
+	public RegistrationNotFoundException(string message)
+			: base(message)
+	{
+	}
+
+	public RegistrationNotFoundException(string message, Exception inner)
+			: base(message, inner)
+	{
+	}
+}
+
 
 public class UserNotAuthoirizedException : Exception
 {

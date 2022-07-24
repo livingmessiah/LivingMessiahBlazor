@@ -1,4 +1,4 @@
-﻿@using SukkotApi.Domain.Enums
+﻿@using LivingMessiah.Web.Pages.Sukkot.RegistrationSteps.Enums
 @using LivingMessiah.Web.Shared.Sukkot
 @using NB = LivingMessiah.Web.Shared.Sukkot.Enums
 @using Page = LivingMessiah.Web.Links.Sukkot.RegistrationSteps
@@ -131,7 +131,7 @@
 
 @if (ComparisonStatus == Status.FullyPaid && RegistrationStep is not null)
 {
-	if (UsersCurrentStatus == Status.PartiallyPaid)
+	if (UsersCurrentStatus == Status.PartiallyPaid || UsersCurrentStatus == Status.RegistrationFormCompleted)
 	{
 		if (IsXs)
 		{

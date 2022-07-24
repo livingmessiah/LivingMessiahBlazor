@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 using LivingMessiah.Web.Pages.SukkotAdmin.Registration.Services; // using service, don't need .Data;
 using LivingMessiah.Web.Pages.SukkotAdmin.Registration.Domain;
 using LivingMessiah.Web.Pages.SukkotAdmin.Registration.Data;
-using SukkotApi.Domain.Enums;
+using LivingMessiah.Web.Pages.Sukkot.RegistrationSteps.Enums;
 using static LivingMessiah.Web.Pages.Sukkot.Constants.SqlServer;
 
 using Syncfusion.Blazor.DropDowns;
