@@ -118,7 +118,7 @@ public partial class IndexTable
 				if (readDate >= compareDate & readDate <= compareDate.AddDays(6))
 				{
 						return "text-danger";
-						//<span class='badge-danger'>@Title</span>
+						//<span class='bg-danger'>@Title</span>
 				}
 				else
 				{

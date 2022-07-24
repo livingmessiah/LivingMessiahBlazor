@@ -27,7 +27,7 @@
 					<ValidationSummary />
 					<div class="modal-body">
 
-						<div class="form-group row">
+						<div class="mb-3 row">
 							<label for="youTubeId" class="col-md-3 col-form-label">YouTube Id:</label>
 							<div class="col-md-9">
 								<InputText id="youTubeId" class="form-control" @bind-Value="WeeklyVideoModel.YouTubeId" />
@@ -35,7 +35,7 @@
 							</div>
 						</div>
 
-						<div class="form-group row">
+						<div class="mb-3 row">
 							<label for="title" class="col-md-3 col-form-label">Title:</label>
 							<div class="col-md-9">
 								<InputText id="title" class="form-control" @bind-Value="WeeklyVideoModel.Title" />
@@ -43,7 +43,7 @@
 							</div>
 						</div>
 
-						<div class="form-group row">
+						<div class="mb-3 row">
 							<label for="graphicFileRoot" class="col-md-3 col-form-label">Graphic File:</label>
 							<div class="col-md-9">
 								<InputText id="graphicFileRoot" class="form-control" @bind-Value="WeeklyVideoModel.GraphicFileRoot" />
@@ -51,7 +51,7 @@
 							</div>
 						</div>
 
-						<div class="form-group row">
+						<div class="mb-3 row">
 							<label for="notesFileRoot" class="col-md-3 col-form-label">Notes File:</label>
 							<div class="col-md-9">
 								<InputText id="notesFileRoot" class="form-control" @bind-Value="WeeklyVideoModel.NotesFileRoot" />
@@ -62,7 +62,7 @@
 						@if (WeeklyVideoModel.WeeklyVideoTypeId > 2)
 						{
 
-							<div class="form-group row">
+							<div class="mb-3 row">
 								<label for="book" class="col-md-3 col-form-label">Book:</label>
 								<div class="col-md-9">
 									<InputNumber id="book" class="form-control" @bind-Value="WeeklyVideoModel.Book" />
@@ -70,7 +70,7 @@
 								</div>
 							</div>
 
-							<div class="form-group row">
+							<div class="mb-3 row">
 								<label for="chapter" class="col-md-3 col-form-label">Chapter:</label>
 								<div class="col-md-9">
 									<InputNumber id="chapter" class="form-control" @bind-Value="WeeklyVideoModel.Chapter" />
@@ -223,7 +223,7 @@
 		</tbody>
 	</table>
 
-	<p class="text-right mt-5 bg-light">
+	<p class="text-end mt-5 bg-light">
 		<Anchor Href="https://www.youtube.com/results?search_query=living+messiah"
 						Descr="YouTube Search=living+messiah" UsePrefixIcon="false">
 		</Anchor>

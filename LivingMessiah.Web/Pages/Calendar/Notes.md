@@ -53,7 +53,7 @@
 
 C:\Source\LivingMessiahBlazor\src\LivingMessiah.Web\Pages\Calendar\ShowHideGridButton.razor
 @*<Button @onclick="@(e => ToggleButtonClick(IsCollapsed))"
-					class="btn-primary btn-sm float-right">
+					class="btn-primary btn-sm float-end">
 		@ButtonText
 
 	</Button>*@
@@ -301,18 +301,18 @@ C:\Source\LivingMessiahBlazor\src\LivingMessiah.Web\Pages\Calendar\ShowHideGridB
 					{
 						if (AddDaysDescr == "" || AddDays == 0)
 						{
-							return "<span class='float-right'>" + Date.ToString("ddd, MM/dd") + "</span>";
+							return "<span class='float-end'>" + Date.ToString("ddd, MM/dd") + "</span>";
 						}
 						else
 						{
 							if (AddDays < 0)
 							{
 								return $@"
-		 <span class='float-right'> 
+		 <span class='float-end'> 
 		{AddDaysDescr} {Date.AddDays(AddDays):ddd, MM/dd} 
 		</span>
 		<br /> 
-		<span class='float-right'> 
+		<span class='float-end'> 
 		{Date:ddd, MM/dd}
 		</span>
 		";
@@ -320,11 +320,11 @@ C:\Source\LivingMessiahBlazor\src\LivingMessiah.Web\Pages\Calendar\ShowHideGridB
 							else
 							{
 								return $@"
-		 <span class='float-right'>
+		 <span class='float-end'>
 		{Date:ddd, MM/dd}
 		</span>
 		<br /> 
-		<span class='float-right'> 
+		<span class='float-end'> 
 		{AddDaysDescr} {Date.AddDays(AddDays):ddd, MM/dd} 
 		</span>
 		";

@@ -98,7 +98,7 @@
 		{
 			file.Stream.Position = 0;
 			StreamReader reader = new StreamReader(file.Stream);
-			await ScheduleRef.ImportICalendar(reader.ReadToEnd());
+			await ScheduleRef.ImportICalendarAsync(reader.ReadToEnd());
 		}
 	}
 }

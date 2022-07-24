@@ -47,7 +47,7 @@ public abstract class Windmill : SmartEnum<Windmill>
 	private Windmill(string name, int value) : base(name, value) { } // Constructor
 
 	#region Extra Fields
-	public abstract string Color { get; }  // badge badge-dark
+	public abstract string Color { get; }  // badge bg-dark
 	public abstract string Page { get; }
 	public abstract string Title { get; }
 	#endregion

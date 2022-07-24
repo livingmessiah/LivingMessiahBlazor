@@ -11,7 +11,7 @@ public partial class ButtonShowHide
 		public string CardCss { get; set; } = "border-primary my-3";
 
 		[Parameter]
-		public string HeaderBadgeColor { get; set; } = "badge-warning";
+		public string HeaderBadgeColor { get; set; } = "bg-warning";
 
 		[Parameter]
 		public string Title { get; set; }

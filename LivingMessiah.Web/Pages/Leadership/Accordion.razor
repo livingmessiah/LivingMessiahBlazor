@@ -8,7 +8,7 @@
 			<AccordionItem>
 				<HeaderTemplate>
 					<div class="my-1">
-						<img src="@Blobs.Leadership(item.IconFile)" class="mr-3 rounded-circle" />  @item.OfficeHolderName <i>@item.Title</i>
+						<img src="@Blobs.Leadership(item.IconFile)" class="mr-3 rounded-circle" /> <img src="@Blobs.Leadership(item.IconFile2)" class="mr-3 rounded-circle" /> <br /> @item.OfficeHolderName  <i>@item.Title</i>
 					</div>
 				</HeaderTemplate>
 				<ContentTemplate>
@@ -19,3 +19,15 @@
 	</AccordionItems>
 </SfAccordion>
 
+<style>
+.e-accordion .e-acrdn-item.e-select > .e-acrdn-header {
+	background: #ffc107 !important;
+}
+
+</style>
+
+@*
+	.e-accordion {
+	border: 5px solid rgb(255, 193, 7);
+}
+*@

@@ -17,7 +17,7 @@
 	<div class="col-6">
 		@if (SelectedRegistrantId != 0)
 		{
-			<div class="e-statustext badge badge-info mt-2 mb-1 float-right">Registrant: <b>@SelectedRegistrantName</b> <sup>(@SelectedRegistrantId)</sup></div>
+			<div class="e-statustext badge bg-info mt-2 mb-1 float-end">Registrant: <b>@SelectedRegistrantName</b> <sup>(@SelectedRegistrantId)</sup></div>
 		}
 		else
 		{
@@ -53,7 +53,7 @@
 						</GridColumn>
 
 						<GridColumn Field=@nameof(DonationDetail.Amount) HeaderText="Amount"
-												ValidationRules="@(new Grid.ValidationRules{ Required=true, Range = new double[]{1, 1000}})"
+												ValidationRules="@(new Grid.ValidationRules{ Required=true})"
 												Width="70" Format="c0" TextAlign="TextAlign.Right">
 						</GridColumn>
 
@@ -91,6 +91,12 @@
 
 }
 
+
+@*
+Amount
+error CS0029: Cannot implicitly convert type 'double[]' to 'object[]'
+ValidationRules="@(new Grid.ValidationRules{ Required=true, Range = new double[]{1, 1000}})"
+*@
 
 
 <style>

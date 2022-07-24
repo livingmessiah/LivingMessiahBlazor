@@ -8,7 +8,7 @@
 			@if (IsCollapsed)
 			{
 				<Button @onclick="@(e => ToggleButtonClick(IsCollapsed))"
-								class="btn-primary btn-sm float-right">
+								class="btn-primary btn-sm float-end">
 					Details <i class='fas fa-chevron-down'></i>
 				</Button>
 
@@ -16,13 +16,13 @@
 			else
 			{
 				<Button @onclick="@(e => ToggleButtonClick(IsCollapsed))"
-								class="btn-primary btn-sm float-right">
+								class="btn-primary btn-sm float-end">
 					Hide <i class='fas fa-chevron-up'></i>
 				</Button>
 			}
 
 			<div class="lead">
-				<span class="badge badge-warning mt-1 ml-2 p-3">Key Dates Grid</span>
+				<span class="badge bg-warning mt-1 ml-2 p-3">Key Dates Grid</span>
 			</div>
 
 
@@ -71,14 +71,14 @@
 									@if (IsXsOrSm)
 									{
 										<h5>
-											<span class="badge badge-dark"><i class="far fa-moon"></i> <b>@row.Descr</b></span>
+											<span class="badge bg-dark"><i class="far fa-moon"></i> <b>@row.Descr</b></span>
 										</h5>
 
 									}
 									else
 									{
 										<h3>
-											<span class="badge badge-dark"><i class="far fa-moon"></i> <b>@row.Descr</b></span>
+											<span class="badge bg-dark"><i class="far fa-moon"></i> <b>@row.Descr</b></span>
 										</h3>
 									}
 								}
@@ -90,14 +90,14 @@
 									@if (IsXsOrSm)
 									{
 										<h5>
-											<span class="badge badge-info"><i class="fas fa-glass-cheers"></i> <b>@row.Descr</b></span>
+											<span class="badge bg-info"><i class="fas fa-glass-cheers"></i> <b>@row.Descr</b></span>
 										</h5>
 
 									}
 									else
 									{
 										<h3>
-											<span class="badge badge-info"><i class="fas fa-glass-cheers"></i> <b>@row.Descr</b></span>
+											<span class="badge bg-info"><i class="fas fa-glass-cheers"></i> <b>@row.Descr</b></span>
 										</h3>
 									}
 								}
@@ -152,7 +152,7 @@
 
 	@if (!String.IsNullOrEmpty(CachedMsg))
 	{
-		<p class="text-muted float-right mt-1"><small><sup>@CachedMsg</sup></small></p>
+		<p class="text-muted float-end mt-1"><small><sup>@CachedMsg</sup></small></p>
 	}
 }
 

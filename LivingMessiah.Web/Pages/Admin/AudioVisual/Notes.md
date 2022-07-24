@@ -62,13 +62,13 @@ Task<Tuple<int, int, string>> Create(NonKeyDateCrudVM nonKeyDateCrudVM);
 				var Order = (context as EditGridVM);
 			}
 			<div>
-				<div class="form-row">
-					<div class="form-group col-md-6">
+				<div class="row">
+					<div class="mb-3 col-md-6">
 						<SfNumericTextBox ID="Id" @bind-Value="@(EditGridVM.Id)" Enabled="@Check"
 															FloatLabelType="FloatLabelType.Always" Placeholder="Id">
 						</SfNumericTextBox>
 					</div>
-					<div class="form-group col-md-6">
+					<div class="mb-3 col-md-6">
 						<SfAutoComplete TItem="EditGridVM" ID="CustomerID" @bind-Value="@(EditGridVM.CustomerID)"
 														TValue="string" DataSource="@GridData"
 														FloatLabelType="FloatLabelType.Always" Placeholder="Customer Name">
@@ -77,25 +77,25 @@ Task<Tuple<int, int, string>> Create(NonKeyDateCrudVM nonKeyDateCrudVM);
 					</div>
 				</div>
 
-				<div class="form-row">
-					<div class="form-group col-md-6">
+				<div class="row">
+					<div class="mb-3 col-md-6">
 						<SfNumericTextBox ID="Freight" @bind-Value="@(EditGridVM.Freight)" TValue="double?"
 															FloatLabelType="FloatLabelType.Always" Placeholder="Freight"></SfNumericTextBox>
 					</div>
-					<div class="form-group col-md-6">
+					<div class="mb-3 col-md-6">
 						<SfDatePicker ID="OrderDate" @bind-Value="@(EditGridVM.OrderDate)" FloatLabelType="FloatLabelType.Always" Placeholder="Order Date">
 						</SfDatePicker>
 					</div>
 				</div>
 
-				<div class="form-row">
-					<div class="form-group col-md-6">
+				<div class="row">
+					<div class="mb-3 col-md-6">
 						<SfDropDownList ID="ShipCountry" TItem="EditGridVM" @bind-Value="@(EditGridVM.ShipCountry)"
 														TValue="string" DataSource="@GridData" FloatLabelType="FloatLabelType.Always" Placeholder="Ship Country">
 							<DropDownListFieldSettings Value="ShipCountry" Text="ShipCountry"></DropDownListFieldSettings>
 						</SfDropDownList>
 					</div>
-					<div class="form-group col-md-6">
+					<div class="mb-3 col-md-6">
 						<SfDropDownList ID="ShipCity" TItem="EditGridVM" @bind-Value="@(EditGridVM.ShipCity)"
 														TValue="string" DataSource="@GridData" FloatLabelType="FloatLabelType.Always" Placeholder="Ship City">
 							<DropDownListFieldSettings Value="ShipCity" Text="ShipCity"></DropDownListFieldSettings>
@@ -103,8 +103,8 @@ Task<Tuple<int, int, string>> Create(NonKeyDateCrudVM nonKeyDateCrudVM);
 					</div>
 				</div>
 
-				<div class="form-row">
-					<div class="form-group col-md-12">
+				<div class="row">
+					<div class="mb-3 col-md-12">
 						<SfTextBox ID="ShipAddress" @bind-Value="@(EditGridVM.ShipAddress)" FloatLabelType="FloatLabelType.Always"
 											 Placeholder="Ship Address"></SfTextBox>
 					</div>
@@ -340,8 +340,8 @@ namespace LivingMessiah.Web.Pages.Admin.AudioVisual
 			Logger.LogDebug(string.Format("...Inside {0} End, Check :{1}", nameof(ActionCompleteHandler), Check));
 		}
 
-				<div class="form-row">
-					<div class="form-group col-md-12">
+				<div class="row">
+					<div class="mb-3 col-md-12">
 						<p class="text-info">@HeaderMsg</p>
 					</div>
 				</div>

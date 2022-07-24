@@ -42,7 +42,7 @@ public abstract class BaseSeasonSmartEnum : SmartEnum<BaseSeasonSmartEnum>
 		{
 				public FallSE() : base($"{nameof(Id.Fall)}", Id.Fall) { }
 				public override string Type => "Equinox";
-				public override string BadgeColor => "badge-warning";
+				public override string BadgeColor => "bg-warning";
 				public override string Icon => "fab fa-canadian-maple-leaf";
 				public override string CalendarColor => CalendarColors.Warning;
 		}
@@ -50,7 +50,7 @@ public abstract class BaseSeasonSmartEnum : SmartEnum<BaseSeasonSmartEnum>
 		{
 				public WinterSE() : base($"{nameof(Id.Winter)}", Id.Winter) { }
 				public override string Type => "Solstice";
-				public override string BadgeColor => "badge-primary";
+				public override string BadgeColor => "bg-primary";
 				public override string Icon => "fas fa-snowflake";
 				public override string CalendarColor => CalendarColors.Primary;
 		}
@@ -58,7 +58,7 @@ public abstract class BaseSeasonSmartEnum : SmartEnum<BaseSeasonSmartEnum>
 		{
 				public SpringSE() : base($"{nameof(Id.Spring)}", Id.Spring) { }
 				public override string Type => "Equinox";
-				public override string BadgeColor => "badge-success";
+				public override string BadgeColor => "bg-success";
 				public override string Icon => "fas fa-cloud-sun-rain";
 				public override string CalendarColor => CalendarColors.Success;
 		}
@@ -66,7 +66,7 @@ public abstract class BaseSeasonSmartEnum : SmartEnum<BaseSeasonSmartEnum>
 		{
 				public SummerSE() : base($"{nameof(Id.Summer)}", Id.Summer) { }
 				public override string Type => "Solstice";
-				public override string BadgeColor => "badge-danger";
+				public override string BadgeColor => "bg-danger";
 				public override string Icon => "far fa-sun";
 				public override string CalendarColor => CalendarColors.Danger;
 		}
@@ -74,7 +74,7 @@ public abstract class BaseSeasonSmartEnum : SmartEnum<BaseSeasonSmartEnum>
 		{
 				public FallEOYSE() : base("Fall (EOY)", Id.FallEOY) { }
 				public override string Type => "Equinox";
-				public override string BadgeColor => "badge-warning";
+				public override string BadgeColor => "bg-warning";
 				public override string Icon => "fab fa-canadian-maple-leaf";
 				public override string CalendarColor => CalendarColors.Warning;
 		}

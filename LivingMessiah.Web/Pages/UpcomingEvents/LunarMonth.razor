@@ -9,7 +9,7 @@
 			<div class="row">
 
 				<div class="col-12">
-					<h1 class="text-center"><span class="badge badge-info"><i class="@Icon"></i> New Moon</span></h1>
+					<h1 class="text-center"><span class="badge bg-info"><i class="@Icon"></i> New Moon</span></h1>
 				</div>
 
 			</div>
@@ -21,12 +21,12 @@
 						<i class="far fa-calendar"></i>
 						<strong class="calendar-text">@EventDate.Day</strong>
 					</span>
-					<h3><span class='badge badge-primary'>@EventDate.Date.ToString(DateFormat.ddd_mm_dd)</span></h3>
+					<h3><span class='badge bg-primary'>@EventDate.Date.ToString(DateFormat.ddd_mm_dd)</span></h3>
 					@*<p class="mt-0"><small>@DaysAhead</small></p>*@
 				</div>
 
 				<div class="col-6">
-					<img src='@Blobs.UrlOther("new-moon-175-174.jpg")' alt="@BaseLunarMonthSmartEnum.Name" class="float-right img-fluid rounded mt-4" />
+					<img src='@Blobs.UrlOther("new-moon-175-174.jpg")' alt="@BaseLunarMonthSmartEnum.Name" class="float-end img-fluid rounded mt-4" />
 				</div>
 
 			</div>
@@ -56,12 +56,12 @@
 						<i class="far fa-calendar"></i>
 						<strong class="calendar-text">@EventDate.Day</strong>
 					</span>
-					<h3><span class='badge badge-primary'>@EventDate.Date.ToString(DateFormat.ddd_mm_dd)</span></h3>
+					<h3><span class='badge bg-primary'>@EventDate.Date.ToString(DateFormat.ddd_mm_dd)</span></h3>
 					<p class="mt-0"><small>@DaysAhead</small></p>
 				</div>
 
 				<div class="col-6">
-					<h3 class="text-center"><span class="badge badge-info"><i class="@Icon"></i> New Moon</span></h3>
+					<h3 class="text-center"><span class="badge bg-info"><i class="@Icon"></i> New Moon</span></h3>
 					<h1 class="text-center mt-4"><i>@BaseLunarMonthSmartEnum.FullName</i> <span class="hebrew44">@BaseLunarMonthSmartEnum.Hebrew</span></h1>
 
 					@if (!String.IsNullOrEmpty(@BaseLunarMonthSmartEnum.BiblicalHebrew))
@@ -73,7 +73,7 @@
 				</div>
 
 				<div class="col-3">
-					<img src='@Blobs.UrlOther("new-moon-175-174.jpg")' alt="@BaseLunarMonthSmartEnum.Name" class="float-right img-fluid rounded mt-4" />
+					<img src='@Blobs.UrlOther("new-moon-175-174.jpg")' alt="@BaseLunarMonthSmartEnum.Name" class="float-end img-fluid rounded mt-4" />
 				</div>
 
 			</div>

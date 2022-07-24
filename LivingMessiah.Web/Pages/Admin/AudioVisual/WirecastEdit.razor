@@ -20,7 +20,7 @@
 			<div class="row mt-n2">
 
 				<div class="col-sm-4">
-					<div class="form-group">
+					<div class="mb-3">
 						<label for="wirecast" class="control-label">Wirecast Link</label>
 						<InputText id="wirecast" class="form-control" @bind-Value="Wirecast.WirecastLink" />
 						<ValidationMessage For="@(() => Wirecast.WirecastLink)" />
@@ -32,7 +32,7 @@
 
 		<div class="row">
 			<div class="col-sm-6">
-				<div class="form-group">
+				<div class="mb-3">
 					<button type="submit" class="btn btn-primary btn-lg">
 						<i class="fas fa-save"></i> Update
 					</button>
@@ -58,7 +58,7 @@
 			<div class="row mt-n2">
 
 				<div class="col-12">
-					<div class="form-group">
+					<div class="mb-3">
 						@*<label for="scratchPad" class="control-label">Scratch Pad</label>*@
 						<InputTextArea id="scratchPad" rows="20" class="form-control" @bind-Value="ScratchPad.WireCast" />
 						<ValidationMessage For="@(() => ScratchPad.WireCast)" />
@@ -70,7 +70,7 @@
 
 		<div class="row">
 			<div class="col-sm-6">
-				<div class="form-group">
+				<div class="mb-3">
 					<button type="submit" class="btn btn-primary btn-lg">
 						<i class="fas fa-save"></i> Update
 					</button>

@@ -12,7 +12,7 @@
 @using Page = LivingMessiah.Web.Links.Sukkot
 <PageTitle>@Page.DetailsTitle</PageTitle>
 
-<div class="d-print-none float-right">
+<div class="d-print-none float-end">
 	<a class="btn btn-sm btn-default" href="javascript:window.print()">
 		<span class="fas fa-print"></span> Print
 	</a>
@@ -36,7 +36,7 @@
 						<div class="modal-header">
 							<h2 class="modal-title text-primary">Check Payment Instructions</h2>
 							<button type="button" @onclick="CancelModal_ButtonClick"
-											class="close" data-dismiss="modal" aria-hidden="true">
+											class="btn-close" data-dismiss="modal" aria-hidden="true">
 								&times;
 							</button>
 						</div>

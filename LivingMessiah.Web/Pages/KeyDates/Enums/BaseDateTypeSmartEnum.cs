@@ -36,7 +36,7 @@ public abstract class BaseDateTypeSmartEnum : SmartEnum<BaseDateTypeSmartEnum>
 		private sealed class MonthSE : BaseDateTypeSmartEnum
 		{
 				public MonthSE() : base($"{nameof(Id.Month)}", Id.Month) { }
-				public override string BadgeColor => "badge-info";
+				public override string BadgeColor => "bg-info";
 				public override string Icon => "far fa-moon";
 				public override string TextColor => "text-info";
 				public override string CalendarColor => CalendarColors.Dark;
@@ -46,7 +46,7 @@ public abstract class BaseDateTypeSmartEnum : SmartEnum<BaseDateTypeSmartEnum>
 		private sealed class FeastSE : BaseDateTypeSmartEnum
 		{
 				public FeastSE() : base($"{nameof(Id.Feast)}", Id.Feast) { }
-				public override string BadgeColor => "badge-primary";
+				public override string BadgeColor => "bg-primary";
 				public override string Icon => "fas fa-glass-cheers";
 				public override string TextColor => "text-primary";
 				public override string CalendarColor => CalendarColors.Blue;
@@ -56,7 +56,7 @@ public abstract class BaseDateTypeSmartEnum : SmartEnum<BaseDateTypeSmartEnum>
 		private sealed class SeasonSE : BaseDateTypeSmartEnum
 		{
 				public SeasonSE() : base($"{nameof(Id.Season)}", Id.Season) { }
-				public override string BadgeColor => "badge-success";
+				public override string BadgeColor => "bg-success";
 				public override string Icon => "fas fa-calendar-alt";  // See BaseSeasonSmartEnum
 				public override string TextColor => "text-success";
 				public override string CalendarColor => CalendarColors.Olive;

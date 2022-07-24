@@ -37,20 +37,20 @@
 					@if (IsCollapsed)
 					{
 						<Button @onclick="@(e => ToggleButtonClick(IsCollapsed))"
-										class="btn-primary btn-sm  float-right">
+										class="btn-primary btn-sm  float-end">
 							Details <i class='fas fa-chevron-down'></i>
 						</Button>
 					}
 					else
 					{
 						<Button @onclick="@(e => ToggleButtonClick(IsCollapsed))"
-										class="btn-primary btn-sm float-right">
+										class="btn-primary btn-sm float-end">
 							Hide <i class='fas fa-chevron-up'></i>
 						</Button>
 					}
 
 					<div class="lead">
-						<span class="badge badge-warning mt-1 ml-2 p-3">Living Messiah Calendar <b><u>Get It Now!</u></b></span>
+						<span class="badge bg-warning mt-1 ml-2 p-3">Living Messiah Calendar <b><u>Get It Now!</u></b></span>
 					</div>
 
 				</div>

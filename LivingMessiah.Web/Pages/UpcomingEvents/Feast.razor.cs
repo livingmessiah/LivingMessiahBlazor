@@ -15,7 +15,7 @@ partial class Feast : BaseKeyDates
 				/*
 				if (AddDaysDescr == "" || AddDays == 0)
 				{
-					return "<span class='float-right'>" + Date.ToString("ddd, MM/dd") + "</span>";
+					return "<span class='float-end'>" + Date.ToString("ddd, MM/dd") + "</span>";
 				}
 				else
 				{
@@ -23,11 +23,11 @@ partial class Feast : BaseKeyDates
 					{
 						// return AddDaysDescr + " " + Date.AddDays(AddDays).ToString("ddd, MM/dd") + "<br />" + Date.ToString("ddd, MM/dd");
 						return $@"
-	 <span class='float-right'> 
+	 <span class='float-end'> 
 	{AddDaysDescr} {Date.AddDays(AddDays):ddd, MM/dd} 
 	</span>
 	<br /> 
-	<span class='float-right'> 
+	<span class='float-end'> 
 	{Date:ddd, MM/dd}
 	</span>
 	";
@@ -36,11 +36,11 @@ partial class Feast : BaseKeyDates
 					{
 						//return Date.ToString("ddd, MM/dd") + "<br />" + AddDaysDescr + Date.AddDays(AddDays).ToString("ddd, MM/dd");
 						return $@"
-	 <span class='float-right'>
+	 <span class='float-end'>
 	{Date:ddd, MM/dd}
 	</span>
 	<br /> 
-	<span class='float-right'> 
+	<span class='float-end'> 
 	{AddDaysDescr} {Date.AddDays(AddDays):ddd, MM/dd} 
 	</span>
 	";

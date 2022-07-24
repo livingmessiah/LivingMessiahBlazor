@@ -35,6 +35,7 @@ public abstract class Office : SmartEnum<Office>
 	public abstract string Title { get; }
 	public abstract string ImageFile { get; }
 	public abstract string IconFile { get; }
+	public abstract string IconFile2 { get; }
 	public abstract bool IsFilled { get; }
 	public abstract string OfficeHolderName { get; }
 	public abstract string Email { get; }
@@ -50,8 +51,9 @@ public abstract class Office : SmartEnum<Office>
 		public override string Title => "Congregation Leader";
 		public override string ImageFile => "leader.jpg";
 		public override string IconFile => "leader-icon.jpg";
+		public override string IconFile2 => "leader-icon-2.jpg";
 		public override bool IsFilled => true;
-		public override string OfficeHolderName => "Mark Webb";
+		public override string OfficeHolderName => "Mark Webb and wife Polly";
 		public override string Email => "Mark@livingmessiah.com";
 		public override string ImgClassSmMdLg => "w-50 p-3";
 	}
@@ -62,8 +64,9 @@ public abstract class Office : SmartEnum<Office>
 		public override string Title => "Bet Din";
 		public override string ImageFile => "beit-din-1.jpg";
 		public override string IconFile => "beit-din-1-icon.jpg";
+		public override string IconFile2 => "beit-din-icon-2.jpg";
 		public override bool IsFilled => true;
-		public override string OfficeHolderName => "Ralphie Cratty";
+		public override string OfficeHolderName => "Ralphie Cratty and wife Peribeth";
 		public override string Email => "Ralphie@livingmessiah.com";
 		public override string ImgClassSmMdLg => "w-75 p-3";
 	}
@@ -74,6 +77,7 @@ public abstract class Office : SmartEnum<Office>
 		public override string Title => "Bet Din";
 		public override string ImageFile => "beit-din-2.jpg";
 		public override string IconFile => "beit-din-2-icon.jpg";
+		public override string IconFile2 => "icon-2-blank.jpg";
 		public override bool IsFilled => false;
 		public override string OfficeHolderName => "Vacant";
 		public override string Email => "Info@livingmessiah.com";
@@ -86,6 +90,7 @@ public abstract class Office : SmartEnum<Office>
 		public override string Title => "Bet Din";
 		public override string ImageFile => "beit-din-3.jpg";
 		public override string IconFile => "beit-din-3-icon.jpg";
+		public override string IconFile2 => "icon-2-blank.jpg";
 		public override bool IsFilled => true;
 		public override string OfficeHolderName => "John Marsing";
 		public override string Email => "John@livingmessiah.com";
@@ -98,6 +103,7 @@ public abstract class Office : SmartEnum<Office>
 		public override string Title => "Elder";
 		public override string ImageFile => "elder-1.jpg";
 		public override string IconFile => "elder-1-icon.jpg";
+		public override string IconFile2 => "icon-2-blank.jpg";
 		public override bool IsFilled => true;
 		public override string OfficeHolderName => "Pat Shackleford";
 		public override string Email => "Pat@livingmessiah.com";
@@ -110,6 +116,7 @@ public abstract class Office : SmartEnum<Office>
 		public override string Title => "Elder";
 		public override string ImageFile => "elder-2.jpg";
 		public override string IconFile => "elder-2-icon.jpg";
+		public override string IconFile2 => "icon-2-blank.jpg";
 		public override bool IsFilled => false;
 		public override string OfficeHolderName => "Vacant";
 		public override string Email => "Info@livingmessiah.com";
@@ -122,6 +129,7 @@ public abstract class Office : SmartEnum<Office>
 		public override string Title => "Elder";
 		public override string ImageFile => "elder-3.jpg";
 		public override string IconFile => "elder-3-icon.jpg";
+		public override string IconFile2 => "icon-2-blank.jpg";
 		public override bool IsFilled => true;
 		public override string OfficeHolderName => "Paul Hebron";
 		public override string Email => "Paul@livingmessiah.com";

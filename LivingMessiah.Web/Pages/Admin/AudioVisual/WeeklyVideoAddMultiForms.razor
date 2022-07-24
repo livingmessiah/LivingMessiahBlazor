@@ -8,7 +8,7 @@
 	<h2><i class="@Page.Icon"></i> @Page.Title</h2>
 </div>
 
-<h4 class="mt-4 mb-2"><span class="badge badge-warning">YouTube Feed</span></h4>
+<h4 class="mt-4 mb-2"><span class="badge bg-warning">YouTube Feed</span></h4>
 
 <LoadingComponent IsLoading="WeeklyVideoAddVMList==null || ShabbatWeekList==null">
 	@foreach (var item in WeeklyVideoAddVMList)
@@ -25,7 +25,7 @@
 			<DataAnnotationsValidator />
 			<ValidationSummary />
 
-			<div class="form-group row">
+			<div class="mb-3 row">
 
 				@if (ShabbatWeekList.Any())
 				{
@@ -45,7 +45,7 @@
 				}
 			</div>
 
-			<div class="form-group row">
+			<div class="mb-3 row">
 				<label for="youTubeId" class="col-md-3 col-form-label">YouTube Id:</label>
 				<div class="col-md-9">
 					<InputText id="youTubeId" class="form-control" @bind-Value="item.YouTubeId" />
@@ -53,7 +53,7 @@
 				</div>
 			</div>
 
-			<div class="form-group row">
+			<div class="mb-3 row">
 				<label for="title" class="col-md-3 col-form-label">Title:</label>
 				<div class="col-md-9">
 					<InputText id="title" class="form-control" @bind-Value="item.Title" />
@@ -61,7 +61,7 @@
 				</div>
 			</div>
 
-			<div class="form-group row">
+			<div class="mb-3 row">
 				<label for="type" class="col-md-3 col-form-label">Type</label>
 				<div class="col-md-9">
 					<InputSelect id="type" @bind-Value="item.WeeklyVideoTypeId" class="form-control">
@@ -77,7 +77,7 @@
 
 		<div class="row">
 			<div class="col-sm-6">
-				<div class="form-group">
+				<div class="mb-3">
 					<button class="btn btn-success btn-md" type="submit">
 						<i class="fas fa-save"></i> Save
 					</button>

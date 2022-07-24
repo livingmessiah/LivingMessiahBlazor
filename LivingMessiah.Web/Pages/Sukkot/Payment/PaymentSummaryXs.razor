@@ -11,7 +11,7 @@
 		<u>Line Item</u>
 	</div>
 	<div class="col-2">
-		<span class="float-right"><u>Amount</u></span>
+		<span class="float-end"><u>Amount</u></span>
 	</div>
 	<div class="col-6">
 		<u>Calculation</u>
@@ -25,7 +25,7 @@
 		Registration Fee:
 	</div>
 	<div class="col-2">
-		<span class="float-right">@RegistrationSummary.RegistrationFeeAdjusted.ToString("C0")</span>
+		<span class="float-end">@RegistrationSummary.RegistrationFeeAdjusted.ToString("C0")</span>
 	</div>
 	<div class="col-6">
 		Early or Regular Fee
@@ -38,7 +38,7 @@
 		Total Cost:
 	</div>
 	<div class="col-2">
-		<span class="float-right">@RegistrationSummary.TotalCost.ToString("C0")</span>
+		<span class="float-end">@RegistrationSummary.TotalCost.ToString("C0")</span>
 	</div>
 	<div class="col-6">
 		@RegistrationSummary.RegistrationFeeAdjusted.ToString("C0")
@@ -50,7 +50,7 @@
 		Total Cost:
 	</div>
 	<div class="col-2">
-		<span class="float-right">@RegistrationSummary.TotalCost.ToString("C0")</span>
+		<span class="float-end">@RegistrationSummary.TotalCost.ToString("C0")</span>
 	</div>
 	<div class="col-6">
 		@RegistrationSummary.RegistrationFeeAdjusted.ToString("C0") 
@@ -67,7 +67,7 @@
 		Prior Donation(s):
 	</div>
 	<div class="col-2">
-		<span class="float-right">@RegistrationSummary.TotalDonation.ToString("C0")</span>
+		<span class="float-end">@RegistrationSummary.TotalDonation.ToString("C0")</span>
 	</div>
 	<div class="col-6">
 		Summation of prior donation(s) (if any).
@@ -79,7 +79,7 @@
 		Remaining Cost:
 	</div>
 	<div class="col-2">
-		<span class="text-success float-right"><u><b>@RegistrationSummary.RemainingCost.ToString("C0")</b></u></span>
+		<span class="text-success float-end"><u><b>@RegistrationSummary.RemainingCost.ToString("C0")</b></u></span>
 	</div>
 	<div class="col-6">
 		@RegistrationSummary.TotalCost.ToString("C0") - @RegistrationSummary.TotalDonation.ToString("C0") <small>(Cost - Donation)</small>

@@ -39,6 +39,34 @@
     <None Include="Pages\BlazorSyncFusion\Dialogs\SfDialogNestedDialogs.razor" />
     <!--<None Include="Pages\KeyDates\Obsolete\Index.razor" />-->
     <None Include="Shared\EnvComponent.razor" />
+    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.min.css.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.rtl.css.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.rtl.min.css.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.css.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.min.css.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.rtl.css.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.rtl.min.css.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.css.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.min.css.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.rtl.css.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.rtl.min.css.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap.css.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap.min.css.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap.rtl.css.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap.rtl.min.css.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.js" />
+    <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.js.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.min.js" />
+    <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.min.js.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.esm.js" />
+    <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.esm.js.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.esm.min.js" />
+    <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.esm.min.js.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.js" />
+    <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.js.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.min.js" />
+    <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.min.js.map" />
   </ItemGroup>
 
   <ItemGroup>
@@ -67,14 +95,15 @@
     <PackageReference Include="Serilog.Sinks.Console" Version="4.0.1" />
     <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
     <PackageReference Include="Serilog.Sinks.Seq" Version="5.1.1" />
-    <PackageReference Include="Syncfusion.Blazor.Calendars" Version="19.4.0.56" />
-		<PackageReference Include="Syncfusion.Blazor.Charts" Version="19.4.0.56" />
-    <PackageReference Include="Syncfusion.Blazor.DropDowns" Version="19.4.0.56" />
-    <PackageReference Include="Syncfusion.Blazor.Grid" Version="19.4.0.56" />
-    <PackageReference Include="Syncfusion.Blazor.Navigations" Version="19.4.0.56" />
-    <PackageReference Include="Syncfusion.Blazor.RichTextEditor" Version="19.4.0.56" />
-    <PackageReference Include="Syncfusion.Blazor.Schedule" Version="19.4.0.56" />
-    <PackageReference Include="Syncfusion.Blazor.TreeGrid" Version="19.4.0.56" />
+    <PackageReference Include="Syncfusion.Blazor.Calendars" Version="20.2.0.39" />
+		<PackageReference Include="Syncfusion.Blazor.Charts" Version="20.2.0.39" />
+    <PackageReference Include="Syncfusion.Blazor.DropDowns" Version="20.2.0.39" />
+    <PackageReference Include="Syncfusion.Blazor.Grid" Version="20.2.0.39" />
+    <PackageReference Include="Syncfusion.Blazor.Navigations" Version="20.2.0.39" />
+    <PackageReference Include="Syncfusion.Blazor.RichTextEditor" Version="20.2.0.39" />
+    <PackageReference Include="Syncfusion.Blazor.Schedule" Version="20.2.0.39" />
+    <PackageReference Include="Syncfusion.Blazor.Themes" Version="20.2.0.39" />
+    <PackageReference Include="Syncfusion.Blazor.TreeGrid" Version="20.2.0.39" />
     <PackageReference Include="System.ValueTuple" Version="4.5.0" />
 		<PackageReference Include="System.ServiceModel.Syndication" Version="6.0.0" />
 	</ItemGroup>

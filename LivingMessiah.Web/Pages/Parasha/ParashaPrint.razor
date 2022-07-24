@@ -13,11 +13,11 @@
 
 @if (!String.IsNullOrEmpty(CachedMsg))
 {
-	<p class="text-muted float-right mt-1"><small><sup>@CachedMsg</sup></small></p>
+	<p class="text-muted float-end mt-1"><small><sup>@CachedMsg</sup></small></p>
 }
 else
 {
-	<p class="text-muted float-right mt-1"><small><sup>Database Call</sup></small></p>
+	<p class="text-muted float-end mt-1"><small><sup>Database Call</sup></small></p>
 }
 
 
@@ -49,9 +49,9 @@ else
 								<tr>
 									<td colspan="6">
 										<a id="@BibleBook.EnglishTitle"></a>
-										<span class="badge badge-danger">@BibleBook.EnglishTitle</span> &nbsp;
+										<span class="badge bg-danger">@BibleBook.EnglishTitle</span> &nbsp;
 										<span class="text-muted"><i>@BibleBook.HebrewTitle</i></span>
-										<span class="float-right hebrewchart">@((MarkupString)BibleBook.HebrewName)</span>
+										<span class="float-end hebrewchart">@((MarkupString)BibleBook.HebrewName)</span>
 									</td>
 								</tr>
 							}

@@ -17,7 +17,7 @@ public abstract class BaseSection : ComponentBase
 		public string CardCss { get; set; } = "";
 
 		[Parameter]
-		public string HeaderBadgeColor { get; set; } = "badge-warning";
+		public string HeaderBadgeColor { get; set; } = "bg-warning";
 
 		[Parameter]
 		public Section Section { get; set; }

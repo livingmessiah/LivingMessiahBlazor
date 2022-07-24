@@ -37,35 +37,35 @@
 		<div class="row">
 			<div class="col-12">
 				<img src="@LivingMessiah.Web.Pages.Sukkot.Constants.Blobs.UrlEvents(Other.Banner)"
-						 alt="@LivingMessiah.Web.Pages.Sukkot.Constants.Blobs.Url(Other.BannerAlt)"
-						 class="img-fluid rounded" />
+					 alt="@LivingMessiah.Web.Pages.Sukkot.Constants.Blobs.Url(Other.BannerAlt)"
+					 class="img-fluid rounded" />
 			</div>
 		</div>
 	</div>
 
 	@if (SukkotSettings.Value.IsRegistrationClosed)
 	{
-		<div class="jumbotron">
-			<h1 class="display-4">
-				<span class="text-danger">Registration is CLOSED</span>
-			</h1>
-			<h3>
-				<span class="text-warning">
-					If you would like to join us for Sukkot, please	contact @RegistrationClosedEmail.Name at
-					<a href="mailto:@RegistrationClosedEmail.Email?Subject=@RegistrationClosedEmail.Subject" target="_top">@RegistrationClosedEmail.Email</a> &nbsp;<i class="far fa-envelope"></i>.
-				</span>
-			</h3>
+		<div class="p-5 mb-4 bg-danger rounded-3">
+			<div class="container-fluid py-5">
+				<h1 class="display-5 fw-bold">Registration is CLOSED</h1>
+				<h3>
+					<span class="text-warning">
+						If you would like to join us for Sukkot, please	contact @RegistrationClosedEmail.Name at
+						<a href="mailto:@RegistrationClosedEmail.Email?Subject=@RegistrationClosedEmail.Subject" target="_top">@RegistrationClosedEmail.Email</a> &nbsp;<i class="far fa-envelope"></i>.
+					</span>
+				</h3>
+			</div>
 		</div>
 	}
 
-	<Introduction/>
+	<Introduction />
 
 	@if (!SukkotSettings.Value.IsRegistrationClosed)
 	{
 		<RegistrationInfo />
-		<PaymentInfo/>
+		<PaymentInfo />
 	}
-	<Documents/>
+	<Documents />
 
 	@if (!SukkotSettings.Value.IsRegistrationClosed)
 	{
@@ -78,7 +78,7 @@
 			<div class="col-12">
 
 				<a class="btn btn-success btn-lg"
-					 href="@PageRegistrationSteps.Index">
+			 href="@PageRegistrationSteps.Index">
 					@PageRegistrationSteps.StartButtonText
 					<i class="@PageRegistrationSteps.StartButtonIcon"></i>
 				</a>
@@ -95,9 +95,10 @@
 }
 else
 {
-	<div class="jumbotron">
-		<h1>
-			<span class="text-danger">Registration is Over</span>
-		</h1>
-	</div>
+
+		<div class="p-5 mb-4 bg-danger rounded-3">
+			<div class="container-fluid py-5">
+				<h1 class="display-5 text-warning">Registration is Over</h1>
+			</div>
+		</div>
 }

@@ -72,7 +72,7 @@ public partial class ShabbatServiceYouTube
 
 				if (!IsPrinterFriendly)
 				{
-						Heading = $"<h2 id='@TopId'><span class='badge badge-danger'>{Icon} {Title}</span></h2>";
+						Heading = $"<h2 id='@TopId'><span class='badge bg-danger'>{Icon} {Title}</span></h2>";
 				}
 				else
 				{

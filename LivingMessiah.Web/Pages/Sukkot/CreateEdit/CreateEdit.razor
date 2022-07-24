@@ -38,25 +38,25 @@
 			<div class="row mt-n2">
 
 				<div class="col-sm-4">
-					<div class="form-group">
-						<label for="familyName" class="control-label">Family Name</label>
-						<InputText id="familyName" class="form-control" @bind-Value="Registration.FamilyName" />
+					<div class="form-floating mb-3">
+						<InputText id="familyName" class="form-control" @bind-Value="Registration.FamilyName" placeholder="Ben Levi" />
+						<label for="familyName" class="form-label">Family Name</label>
 						<ValidationMessage For="@(() => Registration.FamilyName)" />
 					</div>
 				</div>
 
 				<div class="col-sm-4">
-					<div class="form-group">
-						<label for="firstName" class="control-label">First Name</label>
-						<InputText id="firstName" class="form-control" @bind-Value="Registration.FirstName" />
+					<div class="form-floating mb-3">
+						<InputText id="firstName" class="form-control" @bind-Value="Registration.FirstName" placeholder="Moshe" />
+						<label for="firstName" class="form-label">First Name</label>
 						<ValidationMessage For="@(() => Registration.FirstName)" />
 					</div>
 				</div>
 
 				<div class="col-sm-4">
-					<div class="form-group">
-						<label for="spouseName" class="control-label">Spouses Name</label>
-						<InputText id="spouseName" class="form-control" @bind-Value="Registration.SpouseName" />
+					<div class="form-floating mb-3">
+						<InputText id="spouseName" class="form-control" @bind-Value="Registration.SpouseName" placeholder="Sousal Unit" />
+						<label for="spouseName" class="form-label">Spouses Name</label>
 						<ValidationMessage For="@(() => Registration.SpouseName)" />
 					</div>
 				</div>
@@ -67,24 +67,24 @@
 			<div class="row">
 
 				<div class="col-sm-6">
-					<div class="form-group">
-						<label for="otherNames" class="control-label">Other Names</label>
-						<InputText id="otherNames" class="form-control" @bind-Value="Registration.OtherNames" />
+					<div class="form-floating mb-3">
+						<InputText id="otherNames" class="form-control" @bind-Value="Registration.OtherNames" placeholder="other names" />
+						<label for="otherNames" class="form-label">Other Names</label>
 						<ValidationMessage For="@(() => Registration.OtherNames)" />
 					</div>
 				</div>
 
 				<div class="col-sm-6">
-					<div class="form-group">
-						<label for="phone" class="control-label">Phone</label>
+					<div class="form-floating mb-3">
 						<InputText id="phone" class="form-control" @bind-Value="Registration.Phone" placeholder="phone (optional)" />
+						<label for="phone" class="form-label">Phone (optional)</label>
 						<ValidationMessage For="@(() => Registration.Phone)" />
 					</div>
 				</div>
 
 				@*<div class="col-sm-4">
-					<div class="form-group">
-					<label for="avatar" class="control-label">Avatar</label>
+					<div class="form-floating mb-3">
+					<label for="avatar">Avatar</label>
 					<InputText id="avatar" class="form-control" @bind-Value="Registration.Avatar" placeholder="picture (optional)" />
 					<ValidationMessage For="@(() => Registration.Avatar)" />
 					</div>
@@ -109,8 +109,8 @@
 				</div>
 
 				<div class="col-sm-8">
-					<div class="form-group">
-						@*<label for="attendanceDays" class="control-label">Select Dates</label>*@
+					<div class="form-floating mb-3">
+						@*<label for="attendanceDays">Select Dates</label>*@
 
 						<SfCalendar TValue="DateTime?"
 											IsMultiSelection="true" ShowTodayButton="false"
@@ -132,27 +132,27 @@
 			<div class="row mt-n2">
 				<div class="col-sm-3">
 
-					<div class="form-group">
+					<div class="form-floating mb-3">
 
-						<label for="adults" class="control-label">Adults</label>
-						<InputNumber id="adults" class="form-control" @bind-Value="Registration.Adults" />
+						<InputNumber id="adults" class="form-control" @bind-Value="Registration.Adults" placeholder="Adult Count" />
+						<label for="adults" class="form-label">Adults</label>
 						<ValidationMessage For="@(() => Registration.Adults)" />
 
 					</div>
 				</div>
 
 				<div class="col-sm-3">
-					<div class="form-group">
-						<label for="childBig" class="control-label">Child <sup>big</sup></label>
-						<InputNumber id="childBig" class="form-control" @bind-Value="Registration.ChildBig" />
+					<div class="form-floating mb-3">
+						<InputNumber id="childBig" class="form-control" @bind-Value="Registration.ChildBig" placeholder="Child Count Big" />
+						<label for="childBig" class="form-label">Child <sup>big</sup></label>
 						<ValidationMessage For="@(() => Registration.ChildBig)" />
 					</div>
 				</div>
 
 				<div class="col-sm-3">
-					<div class="form-group">
-						<label for="childSmall" class="control-label">Child <sup>small</sup></label>
-						<InputNumber id="childSmall" class="form-control" @bind-Value="Registration.ChildSmall" />
+					<div class="form-floating mb-3">
+						<InputNumber id="childSmall" class="form-control" @bind-Value="Registration.ChildSmall" placeholder="Child Count Small" />
+						<label for="childSmall" class="form-label">Child <sup>small</sup></label>
 						<ValidationMessage For="@(() => Registration.ChildSmall)" />
 					</div>
 				</div>
@@ -167,12 +167,12 @@
 			<legend class="text-primary">Other</legend>
 			<div class="row mt-n2">
 				<div class="col-sm-12">
-					<div class="form-group">
-						<label for="notes" class="control-label"><small>Notes / Emergency Contact / Fellowship Attending</small></label>
+					<div class="form-floating mb-3">
+						<InputTextArea id="notes" class="form-control" @bind-Value="Registration.Notes"  placeholder="Notes" />
+						<label for="notes" class="form-label"><small>Notes / Emergency Contact / Fellowship Attending</small></label>
 						<p class="">
 							Please include emergency contact and name of fellowship or congregation currently attending, if none list a personal reference
 						</p>
-						<InputTextArea id="notes" class="form-control" @bind-Value="Registration.Notes" />
 						<ValidationMessage For="@(() => Registration.Notes)" />
 
 					</div>
@@ -184,7 +184,7 @@
 
 		<div class="row">
 			<div class="col-sm-6">
-				<div class="form-group">
+				<div class="form-floating mb-3">
 
 					@if (UI.EditMode)
 					{

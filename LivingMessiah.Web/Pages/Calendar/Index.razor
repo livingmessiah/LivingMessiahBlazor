@@ -48,7 +48,7 @@
 					<DropDownButtonEvents ItemSelected="OnExportClick"></DropDownButtonEvents>
 				</SfDropDownButton>
 
-				<span class="float-right">Jerusalem @SystemTime.ToString("hh:mm:ss tt")</span>
+				<span class="float-end">Jerusalem @SystemTime.ToString("hh:mm:ss tt")</span>
 
 			</div>
 		</div>
@@ -111,7 +111,7 @@
 
 @if (!String.IsNullOrEmpty(CachedMsg))
 {
-	<p class="text-muted float-right mt-1"><small><sup>@CachedMsg</sup></small></p>
+	<p class="text-muted float-end mt-1"><small><sup>@CachedMsg</sup></small></p>
 }
 
 <div class="d-md-none">

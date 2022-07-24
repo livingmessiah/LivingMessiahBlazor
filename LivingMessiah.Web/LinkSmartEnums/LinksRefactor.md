@@ -48,7 +48,7 @@ Link : BaseLink
 			 class="list-group-item list-group-item-warning ">
 				<i class="@item.Icon fa-fw fa-3x" aria-hidden="true"></i>
 				<span class="home-page-xs"><b>@item.Title</b></span>
-				<span class="float-right text-info">
+				<span class="float-end text-info">
 					<span class="hebrew">@item.Hebrew.FloatRightHebrew</span>
 				</span>
 			</a>

@@ -6,7 +6,7 @@
 		@foreach (var item in Windmill.List.OrderBy(o => o.Value))
 		{
 			<li class="list-inline-item bg-light">
-				<a class="badge badge-@item.Color" href="@item.Page">
+				<a class="badge bg-@item.Color" href="@item.Page">
 					<small>@item.Title</small>
 				</a>&nbsp;&nbsp;
 			</li>

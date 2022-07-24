@@ -14,10 +14,10 @@ public partial class ToggleVisibilityButton
 		[Parameter(CaptureUnmatchedValues = true)]
 		public IReadOnlyDictionary<string, object> AdditionalAttributes { get; set; }
 			= new Dictionary<string, object>() {
-				{ "badgecolor", "badge-warning" },
+				{ "badgecolor", "bg-warning" },
 				{ "buttoncolor", "btn-primary" },
 				{ "buttonsize", "btn-sm" },
-				{ "buttonfloat", "float-right" }
+				{ "buttonfloat", "float-end" }
 			};
 
 		string BadgeColor => AdditionalAttributes

@@ -47,7 +47,7 @@
 						@{
 							var webinarData = (context as ScheduleData.WebinarData);
 							<div class='template-wrap' style='background:@(webinarData.PrimaryColor)'>
-								<div class="subject" style='background:@(webinarData.SecondaryColor); border-left: 15px solid @(webinarData.PrimaryColor);border-right: 15px solid @(webinarData.PrimaryColor);'>@(webinarData.Subject)</div>
+								<div class="subject" style='background:@(webinarData.SecondaryColor); border-start: 15px solid @(webinarData.PrimaryColor);border-end: 15px solid @(webinarData.PrimaryColor);'>@(webinarData.Subject)</div>
 							</div>
 						}
 					</EventTemplate>

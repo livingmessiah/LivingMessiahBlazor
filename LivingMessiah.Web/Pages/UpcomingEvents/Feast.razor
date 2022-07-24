@@ -7,7 +7,7 @@
 		{
 			<div class="row">
 				<div class="col-12">
-					<h1 class="text-center"><span class="badge badge-info"> Feast</span></h1>
+					<h1 class="text-center"><span class="badge bg-info"> Feast</span></h1>
 				</div>
 			</div>
 
@@ -18,13 +18,13 @@
 						<i class="far fa-calendar"></i>
 						<strong class="calendar-text">@EventDate.Day</strong>
 					</span>
-					<h3><span class='badge badge-primary'>@EventDate.Date.ToString(DateFormat.ddd_mm_dd)</span></h3>
+					<h3><span class='badge bg-primary'>@EventDate.Date.ToString(DateFormat.ddd_mm_dd)</span></h3>
 					@*<p class="mt-0"><small>@DaysAhead</small></p>*@
 				</div>
 
 				<div class="col-6">
 					<img src='@Blobs.UrlOther("feasts-175-175.jpg")' alt="@FeastDayLocal.Name"
-							 class="float-right img-fluid rounded mt-4" />
+							 class="float-end img-fluid rounded mt-4" />
 				</div>
 			</div>
 
@@ -39,7 +39,7 @@
 			{
 				<div class="row col-12">
 					<img src='@Blobs.UrlEvents(ImgUrl)' alt="@FeastDayLocal.Name"
-							 class="img-fluid float-right rounded mt-4" />
+							 class="img-fluid float-end rounded mt-4" />
 				</div>
 			}
 
@@ -54,11 +54,11 @@
 						<i class="far fa-calendar"></i>
 						<strong class="calendar-text">@EventDate.Day</strong>
 					</span>
-					<h3><span class='badge badge-primary'>@EventDate.Date.ToString(DateFormat.ddd_mm_dd)</span></h3>
+					<h3><span class='badge bg-primary'>@EventDate.Date.ToString(DateFormat.ddd_mm_dd)</span></h3>
 				</div>
 
 				<div class="col-6">
-					<h3 class="text-center"><span class="badge badge-info">Feast</span></h3>
+					<h3 class="text-center"><span class="badge bg-info">Feast</span></h3>
 					<h1 class="text-center mt-4"><i class="@FeastDayLocal.Icon"></i> <i>@FeastDayLocal.Name</i></h1>
 					<h3 class="text-center card-text"><i>@FeastDayLocal.Transliteration</i> <span class="hebrew36">@FeastDayLocal.Hebrew</span> </h3>
 
@@ -66,7 +66,7 @@
 
 				<div class="col-3">
 					<img src='@Blobs.UrlOther("feasts-175-175.jpg")' alt="@FeastDayLocal.Name"
-							 class="float-right img-fluid rounded mt-4" />
+							 class="float-end img-fluid rounded mt-4" />
 				</div>
 			</div>
 
@@ -75,7 +75,7 @@
 			{
 				<div class="row col-12">
 					<img src='@Blobs.UrlEvents(ImgUrl)' alt="@FeastDayLocal.Name"
-							 class="float-right img-fluid rounded mt-4" />
+							 class="float-end img-fluid rounded mt-4" />
 				</div>
 			}
 
@@ -121,13 +121,13 @@
 
 						@if (IsXsOrSm)
 						{
-							<td><span class="float-right">@item.Date.AddDays(FDD.FromInt(fdd.Id).AddDays).ToString(@DateFormat.ddd_mm_dd)</span></td>
+							<td><span class="float-end">@item.Date.AddDays(FDD.FromInt(fdd.Id).AddDays).ToString(@DateFormat.ddd_mm_dd)</span></td>
 						}
 						else
 						{
 							<td><span class="hebrew16">@fdd.Hebrew</span></td>
 							<td><i>@fdd.Transliteration</i></td>
-							<td><span class="float-right">@item.Date.AddDays(FDD.FromInt(fdd.Id).AddDays).ToString(@DateFormat.ddd_mm_dd)</span></td>
+							<td><span class="float-end">@item.Date.AddDays(FDD.FromInt(fdd.Id).AddDays).ToString(@DateFormat.ddd_mm_dd)</span></td>
 						}
 
 					</tr>

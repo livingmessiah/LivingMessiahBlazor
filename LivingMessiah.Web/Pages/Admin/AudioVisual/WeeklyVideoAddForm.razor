@@ -10,7 +10,7 @@
 
 
 <LoadingComponent IsLoading="YouTubeList==null">
-	<h4 class="mt-4 mb-2"><span class="badge badge-warning">YouTube Feed</span></h4>
+	<h4 class="mt-4 mb-2"><span class="badge bg-warning">YouTube Feed</span></h4>
 
 
 	<!-- foreach (var item in YouTubeList.Where(w => w.Id is null)) -->
@@ -63,7 +63,7 @@
 
 
 <LoadingComponent IsLoading="vm==null || ShabbatWeekList==null">
-	<h4 class="mt-4 mb-1"><span class="badge badge-warning">Add Form</span></h4>
+	<h4 class="mt-4 mb-1"><span class="badge bg-warning">Add Form</span></h4>
 
 	<EditForm Model="vm"
 						OnValidSubmit="HandleValidSubmit"
@@ -71,7 +71,7 @@
 		<DataAnnotationsValidator />
 		<ValidationSummary />
 
-		<div class="form-group row">
+		<div class="mb-3 row">
 
 			@if (ShabbatWeekList.Any())
 			{
@@ -91,7 +91,7 @@
 			}
 		</div>
 
-		<div class="form-group row">
+		<div class="mb-3 row">
 			<label for="youTubeId" class="col-md-3 col-form-label">YouTube Id:</label>
 			<div class="col-md-9">
 				<InputText id="youTubeId" class="form-control" @bind-Value="vm.YouTubeId" />
@@ -99,7 +99,7 @@
 			</div>
 		</div>
 
-		<div class="form-group row">
+		<div class="mb-3 row">
 			<label for="title" class="col-md-3 col-form-label">Title:</label>
 			<div class="col-md-9">
 				<InputText id="title" class="form-control" @bind-Value="vm.Title" />
@@ -107,7 +107,7 @@
 			</div>
 		</div>
 
-		<div class="form-group row">
+		<div class="mb-3 row">
 			<label for="type" class="col-md-3 col-form-label">Type</label>
 			<div class="col-md-9">
 				<InputSelect id="type" @bind-Value="vm.WeeklyVideoTypeId" class="form-control">
@@ -123,7 +123,7 @@
 
 		<div class="row">
 			<div class="col-sm-6">
-				<div class="form-group">
+				<div class="mb-3">
 					<button class="btn btn-success btn-md" type="submit">
 						<i class="fas fa-save"></i> Save
 					</button>
@@ -137,7 +137,7 @@
 </LoadingComponent>
 
 
-<h4 class="mt-4 mb-1"><span class="badge badge-warning">Weekly Video Table</span></h4>
+<h4 class="mt-4 mb-1"><span class="badge bg-warning">Weekly Video Table</span></h4>
 
 <LoadingComponent IsLoading="WeeklyVideoTableList==null">
 	<TableTemplate Items="WeeklyVideoTableList">

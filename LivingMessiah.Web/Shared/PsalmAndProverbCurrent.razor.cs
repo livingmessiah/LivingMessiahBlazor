@@ -55,7 +55,7 @@ public partial class PsalmAndProverbCurrent
 
 		private string BuildHeading(string bookChapterVerse, string Title)
 		{
-				string s = $"{bookChapterVerse} <span class='float-right'><small><i>{ValidateHtml(Title)}</i></small></span>";
+				string s = $"{bookChapterVerse} <span class='float-end'><small><i>{ValidateHtml(Title)}</i></small></span>";
 				return ValidateHtml(s, hasNestedTags: true);
 		}
 

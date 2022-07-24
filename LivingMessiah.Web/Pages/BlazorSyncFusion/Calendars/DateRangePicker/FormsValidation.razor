@@ -45,7 +45,7 @@
 			{
 				<EditForm Model="@annotation" OnValidSubmit="@OnValidSubmit" OnInvalidSubmit="@OnInvalidSubmit">
 					<DataAnnotationsValidator />
-					<div class="form-group">
+					<div class="mb-3">
 						<SfDateRangePicker TValue="DateTime?" id='DateRangePick'
 															 Placeholder="Choose a Check-In and Check-Out Date"
 															 Min='@MinDate' Max='@MaxDate'

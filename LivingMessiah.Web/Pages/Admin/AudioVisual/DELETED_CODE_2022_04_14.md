@@ -13,11 +13,11 @@
 @using LivingMessiah.Web.Pages.Admin.AudioVisual.Components.YouTubeFeed
 @using LivingMessiah.Web.Pages.Admin.AudioVisual.Services
 
-<p class="text-right text-muted mt-5 mb-0">
+<p class="text-end text-muted mt-5 mb-0">
 	<sup>Shabbat Week Id: @ShabbatWeekId</sup>
 </p>
 
-<h4 class="mt-0 mb-1"><span class="badge badge-warning">Shabbat Week @ShabbatDate.ToShortDateString()</span></h4>
+<h4 class="mt-0 mb-1"><span class="badge bg-warning">Shabbat Week @ShabbatDate.ToShortDateString()</span></h4>
 
 <div class="col-lg-12 control-section">
 	<div class="content-wrapper">
@@ -38,22 +38,22 @@
 						}
 						<div>
 							<div class="form row">
-								<div class="form-group col-md-12">
+								<div class="mb-3 col-md-12">
 									<SfNumericTextBox ID="Id" @bind-Value="@(VM.Id)" FloatLabelType="FloatLabelType.Always" Enabled="@Check"
 																		Placeholder="Id" />
 								</div>
 							</div>
 
-							<div class="form-row">
-								<div class="form-group col-md-12">
+							<div class="row">
+								<div class="mb-3 col-md-12">
 									<label for="weeklyVideoTypeEnum" class="control-label">Event Type</label>
 									<InputSelectEnum @bind-Value="VM.WeeklyVideoTypeEnum" class="form-control" id="weeklyVideoTypeEnum" />
 								</div>
 							</div>
 
 
-@*							<div class="form-row">
-								<div class="form-group col-md-12">
+@*							<div class="row">
+								<div class="mb-3 col-md-12">
 									<SfDropDownList TItem="DropDownListVM" TValue="string" PopupHeight="230px"
 																	FloatLabelType="FloatLabelType.Always"
 																	Placeholder="Select YouTube Id..."
@@ -66,7 +66,7 @@
 							</div>
 *@
 							<div class="form row">
-								<div class="form-group col-md-12">
+								<div class="mb-3 col-md-12">
 									<SfTextBox ID="Title" @bind-Value="@(VM.Title)" FloatLabelType="FloatLabelType.Always"
 														 Placeholder="Title"></SfTextBox>
 								</div>
@@ -74,14 +74,14 @@
 @*
 							@if (VM.WeeklyVideoTypeEnum == WeeklyVideoTypeEnum.InDepthStudy | VM.WeeklyVideoTypeEnum == WeeklyVideoTypeEnum.TorahTuesday)
 							{
-								<div class="form-row">
-									<div class="form-group col-md-6">
+								<div class="row">
+									<div class="mb-3 col-md-6">
 										<SfNumericTextBox ID="Book" @bind-Value="@(VM.Book)" TValue="int"
 																		Min="1" Max="66"
 																		FloatLabelType="FloatLabelType.Always" Placeholder="Book"></SfNumericTextBox>
 									</div>
 
-									<div class="form-group col-md-6">
+									<div class="mb-3 col-md-6">
 										<SfNumericTextBox ID="Chapter" @bind-Value="@(VM.Chapter)" TValue="int"
 																		Min="1" Max="@CurrentLastChapter"
 																		FloatLabelType="FloatLabelType.Always" Placeholder="Chapter"></SfNumericTextBox>

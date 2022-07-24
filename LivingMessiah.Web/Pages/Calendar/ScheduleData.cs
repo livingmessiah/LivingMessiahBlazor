@@ -11,7 +11,7 @@ public class ScheduleData
 				Dictionary<string, object> attributes = new Dictionary<string, object>();
 				if (CurrentView == Syncfusion.Blazor.Schedule.View.Agenda)
 				{
-						attributes.Add("style", "border-left-color: " + CategoryColor);
+						attributes.Add("style", "border-start-color: " + CategoryColor);
 				}
 				else
 				{

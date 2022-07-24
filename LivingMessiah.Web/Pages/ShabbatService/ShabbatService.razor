@@ -5,7 +5,7 @@
 @using Page = LivingMessiah.Web.Links.ShabbatService
 <PageTitle>@Page.Title</PageTitle>
 
-<div class="d-print-none float-right">
+<div class="d-print-none float-end">
 	<a class="btn btn-sm btn-default" href="@LivingMessiah.Web.Links.ShabbatService.Index"
 		 @onclick="@PrintFriendly_Button_Click">
 		@((MarkupString)_oppositeIcon) @_oppositeToggleMsg
@@ -198,7 +198,7 @@ else
 	<div class="card-header"><h5 class="text-center">Ezekiel 9:4</h5></div>
 	<div class="card-body">
 		<p class="lead text-center">
-			<img src="@Blobs.UrlOther("ancient-tav.jpg")" alt="Ancient Tav" class="img-fluid rounded float-right" />
+			<img src="@Blobs.UrlOther("ancient-tav.jpg")" alt="Ancient Tav" class="img-fluid rounded float-end" />
 			<sup><b class="text-primary">4</b></sup> And YHVH said unto him,
 			Go through the midst of the city,
 			through the midst of Jerusalem,

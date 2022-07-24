@@ -15,10 +15,10 @@ public class SeasonLocal
 {
 		public static List<SeasonLocal> All { get; } = new List<SeasonLocal>();
 
-		public static SeasonLocal Fall { get; } = new SeasonLocal(SeasonEnum.Fall, 1, "Fall", "badge-warning", "fab fa-canadian-maple-leaf", "Equinox");
-		public static SeasonLocal Winter { get; } = new SeasonLocal(SeasonEnum.Winter, 2, "Winter", "badge-primary", "fas fa-snowflake", "Solstice");
-		public static SeasonLocal Spring { get; } = new SeasonLocal(SeasonEnum.Spring, 3, "Spring", "badge-success", "fas fa-cloud-sun-rain", "Equinox");
-		public static SeasonLocal Summer { get; } = new SeasonLocal(SeasonEnum.Summer, 4, "Summer", "badge-danger", "far fa-sun", "Solstice");
+		public static SeasonLocal Fall { get; } = new SeasonLocal(SeasonEnum.Fall, 1, "Fall", "bg-warning", "fab fa-canadian-maple-leaf", "Equinox");
+		public static SeasonLocal Winter { get; } = new SeasonLocal(SeasonEnum.Winter, 2, "Winter", "bg-primary", "fas fa-snowflake", "Solstice");
+		public static SeasonLocal Spring { get; } = new SeasonLocal(SeasonEnum.Spring, 3, "Spring", "bg-success", "fas fa-cloud-sun-rain", "Equinox");
+		public static SeasonLocal Summer { get; } = new SeasonLocal(SeasonEnum.Summer, 4, "Summer", "bg-danger", "far fa-sun", "Solstice");
 
 		public SeasonEnum SeasonEnum { get; private set; }
 		public int Id { get; private set; }

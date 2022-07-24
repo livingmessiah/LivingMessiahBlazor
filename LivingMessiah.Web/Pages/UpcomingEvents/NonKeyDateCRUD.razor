@@ -25,7 +25,7 @@
 			<div class="row mt-n2">
 
 				<div class="col-sm-6">
-					<div class="form-group">
+					<div class="mb-3">
 						<label for="yearId" class="control-label">Year Id</label>
 						<InputNumber id="yearId" class="form-control" @bind-Value="NonKeyDateCrudVM.YearId" />
 						<ValidationMessage For="@(() => NonKeyDateCrudVM.YearId)" />
@@ -33,7 +33,7 @@
 				</div>
 
 				<div class="col-sm-6">
-					<div class="form-group">
+					<div class="mb-3">
 						<label for="eventDate" class="control-label">Event Date</label>
 						<InputDate id="eventDate" class="form-control" @bind-Value="NonKeyDateCrudVM.EventDate" />
 						<ValidationMessage For="@(() => NonKeyDateCrudVM.EventDate)" />
@@ -45,7 +45,7 @@
 			<div class="row mt-n2">
 
 				<div class="col-sm-6">
-					<div class="form-group">
+					<div class="mb-3">
 						<label for="showBeginDate" class="control-label">Show Start Date</label>
 						<SfDatePicker TValue="DateTime?" id="showBeginDate"
 													@bind-Value="@NonKeyDateCrudVM.ShowBeginDate"
@@ -56,7 +56,7 @@
 				</div>
 
 				<div class="col-sm-6">
-					<div class="form-group">
+					<div class="mb-3">
 						<label for="showEndDate" class="control-label">Show End Date</label>
 						<SfDatePicker TValue="DateTime?" id="showEndDate"
 													@bind-Value="@NonKeyDateCrudVM.ShowEndDate"
@@ -82,7 +82,7 @@
 				</div>
 
 				<div class="col-sm-8">
-					<div class="form-group">
+					<div class="mb-3">
 						<label for="imageUrl" class="control-label">Image Url</label>
 						<InputText id="imageUrl" class="form-control" @bind-Value="NonKeyDateCrudVM.ImageUrl" />
 						<ValidationMessage For="@(() => NonKeyDateCrudVM.ImageUrl)" />
@@ -99,7 +99,7 @@
 			<div class="row mt-n2">
 
 				<div class="col-sm-4">
-					<div class="form-group">
+					<div class="mb-3">
 						<label for="title" class="control-label">Title</label>
 						<InputText id="title" class="form-control" @bind-Value="NonKeyDateCrudVM.Title" />
 						<ValidationMessage For="@(() => NonKeyDateCrudVM.Title)" />
@@ -107,7 +107,7 @@
 				</div>
 
 				<div class="col-sm-8">
-					<div class="form-group">
+					<div class="mb-3">
 						<label for="subTitle" class="control-label">Sub-Title</label>
 						<InputText id="subTitle" class="form-control" @bind-Value="NonKeyDateCrudVM.SubTitle" />
 						<ValidationMessage For="@(() => NonKeyDateCrudVM.SubTitle)" />
@@ -124,7 +124,7 @@
 			<div class="row mt-n2">
 
 				<div class="col-sm-4">
-					<div class="form-group">
+					<div class="mb-3">
 						<label for="websiteUrl" class="control-label">[Website Url]</label>
 						<InputText id="websiteUrl" class="form-control" @bind-Value="NonKeyDateCrudVM.WebsiteUrl" />
 						<ValidationMessage For="@(() => NonKeyDateCrudVM.WebsiteUrl)" />
@@ -132,7 +132,7 @@
 				</div>
 
 				<div class="col-sm-4">
-					<div class="form-group">
+					<div class="mb-3">
 						<label for="websiteDescr" class="control-label">[Website Description]</label>
 						<InputText id="websiteDescr" class="form-control" @bind-Value="NonKeyDateCrudVM.WebsiteDescr" />
 						<ValidationMessage For="@(() => NonKeyDateCrudVM.WebsiteDescr)" />
@@ -140,7 +140,7 @@
 				</div>
 
 				<div class="col-sm-4">
-					<div class="form-group">
+					<div class="mb-3">
 						<label for="youTubeId" class="control-label">[YouTubeId]</label>
 						<InputText id="youTubeId" class="form-control" @bind-Value="NonKeyDateCrudVM.YouTubeId" />
 						<ValidationMessage For="@(() => NonKeyDateCrudVM.YouTubeId)" />
@@ -154,7 +154,7 @@
 			<legend class="text-primary">Description</legend>
 			<div class="row mt-n2">
 				<div class="col-sm-12">
-					<div class="form-group">
+					<div class="mb-3">
 
 						@if (!IsPreview)
 						{
@@ -203,7 +203,7 @@
 
 		<div class="row">
 			<div class="col-sm-6">
-				<div class="form-group">
+				<div class="mb-3">
 					<button class="btn btn-success btn-lg">
 						<i class="fas fa-save"></i> Save
 					</button>
@@ -244,7 +244,7 @@ else
 		content: '\e790';
 	}
 
-	.bootstrap4 .e-icon-btn .e-md-preview::before {
+	.bootstrap5 .e-icon-btn .e-md-preview::before {
 		content: '\e787';
 	}
 
@@ -256,11 +256,11 @@ else
 		content: '\e345';
 	}
 
-	.bootstrap4 .e-icon-btn.e-active .e-view-side::before {
+	.bootstrap5 .e-icon-btn.e-active .e-view-side::before {
 		content: '\e350';
 	}
 
-	.bootstrap4 .e-icon-btn .e-view-side::before {
+	.bootstrap5 .e-icon-btn .e-view-side::before {
 		content: '\e350';
 	}
 

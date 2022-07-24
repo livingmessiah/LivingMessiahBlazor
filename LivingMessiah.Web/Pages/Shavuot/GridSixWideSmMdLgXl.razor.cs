@@ -55,11 +55,11 @@ public partial class GridSixWideSmMdLgXl
 		{
 				if (IsSundayOrMonday(omerCnt))
 				{
-						return $"<p class='float-right'><span class='badge badge-info'>{omerCnt - 1}</span>/<span class='badge badge-info'>{omerCnt}</span></p>";
+						return $"<p class='float-end'><span class='badge bg-info'>{omerCnt - 1}</span>/<span class='badge bg-info'>{omerCnt}</span></p>";
 				}
 				else
 				{
-						return $"<p class='ml-5'><span class='badge badge-info'>{omerCnt}</span></p>";
+						return $"<p class='ml-5'><span class='badge bg-info'>{omerCnt}</span></p>";
 				}
 		}
 }

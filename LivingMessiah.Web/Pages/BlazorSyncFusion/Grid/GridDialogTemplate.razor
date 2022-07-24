@@ -81,13 +81,13 @@
 							var Order = (context as OrdersDetails);
 						}
 						<div>
-							<div class="form-row">
-								<div class="form-group col-md-6">
+							<div class="row">
+								<div class="mb-3 col-md-6">
 									<SfNumericTextBox ID="OrderID" @bind-Value="@(Order.OrderID)" Enabled="@Check"
 																		FloatLabelType="FloatLabelType.Always" Placeholder="Order ID">
 									</SfNumericTextBox>
 								</div>
-								<div class="form-group col-md-6">
+								<div class="mb-3 col-md-6">
 									<SfAutoComplete TItem="OrdersDetails" ID="CustomerID" @bind-Value="@(Order.CustomerID)"
 																	TValue="string" DataSource="@GridData"
 																	FloatLabelType="FloatLabelType.Always" Placeholder="Customer Name">
@@ -95,24 +95,24 @@
 									</SfAutoComplete>
 								</div>
 							</div>
-							<div class="form-row">
-								<div class="form-group col-md-6">
+							<div class="row">
+								<div class="mb-3 col-md-6">
 									<SfNumericTextBox ID="Freight" @bind-Value="@(Order.Freight)" TValue="double?" 
 																		FloatLabelType="FloatLabelType.Always" Placeholder="Freight"></SfNumericTextBox>
 								</div>
-								<div class="form-group col-md-6">
+								<div class="mb-3 col-md-6">
 									<SfDatePicker ID="OrderDate" @bind-Value="@(Order.OrderDate)" FloatLabelType="FloatLabelType.Always" Placeholder="Order Date">
 									</SfDatePicker>
 								</div>
 							</div>
-							<div class="form-row">
-								<div class="form-group col-md-6">
+							<div class="row">
+								<div class="mb-3 col-md-6">
 									<SfDropDownList ID="ShipCountry" TItem="OrdersDetails" @bind-Value="@(Order.ShipCountry)" 
 																	TValue="string" DataSource="@GridData" FloatLabelType="FloatLabelType.Always" Placeholder="Ship Country">
 										<DropDownListFieldSettings Value="ShipCountry" Text="ShipCountry"></DropDownListFieldSettings>
 									</SfDropDownList>
 								</div>
-								<div class="form-group col-md-6">
+								<div class="mb-3 col-md-6">
 									<SfDropDownList ID="ShipCity" TItem="OrdersDetails"
 																	@bind-Value="@(Order.ShipCity)" 
 																	TValue="string" DataSource="@GridData" 
@@ -122,8 +122,8 @@
 									</SfDropDownList>
 								</div>
 							</div>
-							<div class="form-row">
-								<div class="form-group col-md-12">
+							<div class="row">
+								<div class="mb-3 col-md-12">
 									<SfTextBox ID="ShipAddress" @bind-Value="@(Order.ShipAddress)" FloatLabelType="FloatLabelType.Always" 
 														 Placeholder="Ship Address"></SfTextBox>
 								</div>
@@ -138,7 +138,7 @@
 					<GridColumn Field=@nameof(OrdersDetails.CustomerID) HeaderText="Customer Name" 
 											ValidationRules="@(new Syncfusion.Blazor.Grids.ValidationRules{ Required=true})" Width="150"></GridColumn>
 					<GridColumn Field=@nameof(OrdersDetails.Freight) HeaderText="Freight" Format="C2" Width="140" 
-											ValidationRules="@(new Syncfusion.Blazor.Grids.ValidationRules{ Required=true, Range = new double[]{1, 1000}})" 
+											ValidationRules="@(new Syncfusion.Blazor.Grids.ValidationRules{ Required=true})" 
 											TextAlign="@TextAlign.Right" HeaderTextAlign="@TextAlign.Right"></GridColumn>
 					<GridColumn Field=@nameof(OrdersDetails.OrderDate) HeaderText="Order Date" Format="d" 
 											TextAlign="TextAlign.Right" Type="ColumnType.Date" Width="160"></GridColumn>
@@ -149,3 +149,7 @@
 	</div>
 </div>
 
+@*
+Freight
+ValidationRules="@(new Syncfusion.Blazor.Grids.ValidationRules{ Required=true, Range = new double[]{1, 1000}})" 
+*@
