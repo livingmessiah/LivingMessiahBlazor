@@ -72,8 +72,6 @@
   <ItemGroup>
     <ProjectReference Include="..\LivingMessiah.Data\LivingMessiah.Data.csproj" />
     <ProjectReference Include="..\LivingMessiah.Domain\LivingMessiah.Domain.csproj" />
-    <ProjectReference Include="..\SukkotApi.Data\SukkotApi.Data.csproj" />
-    <ProjectReference Include="..\SukkotApi.Domain\SukkotApi.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>

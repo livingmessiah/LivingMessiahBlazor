@@ -6,21 +6,21 @@ using System.Threading.Tasks;
 using Dapper;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using SukkotApi.Data;  
+
 using LivingMessiah.Web.Pages.SukkotAdmin.Registration.Domain;
 using static LivingMessiah.Web.Pages.Sukkot.Constants.SqlServer;
+using LivingMessiah.Web.Pages.SukkotAdmin.Data;
 
 namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration.Data;
 
 public interface IRegistrationRepository
 {
 	string BaseSqlDump { get; }
-	Task<List<Domain.Registration>> GetAll();  //BaseRegistrationSortSmartEnum sort
+	Task<List<Domain.Registration>> GetAll();  
 	Task<RegistrationPOCO> GetPocoById(int id);
 	Task<Tuple<int, int, string>> Create(RegistrationPOCO registration);
 	Task<Tuple<int, int, string>> Update(RegistrationPOCO registration);
-
-	Task<List<RegistrationLookup>> PopulateRegistrationLookup();  // copied from DonationRepository
+	Task<List<RegistrationLookup>> PopulateRegistrationLookup(); 
 }
 
 public class RegistrationRepository : BaseRepositoryAsync, IRegistrationRepository
@@ -196,9 +196,6 @@ FROM Sukkot.Registration WHERE Id = {id}";
 			}
 
 			return new Tuple<int, int, string>(RowsAffected, SprocReturnValue, ReturnMsg);
-
-
-
 		});
 	}
 

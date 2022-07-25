@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.Extensions.Logging;
-using Sukkot.Web.Service;
-using SukkotApi.Domain;
 using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
+
+using LivingMessiah.Web.Pages.Sukkot.Services;
+using LivingMessiah.Web.Pages.Sukkot.Domain;
 
 namespace LivingMessiah.Web.Pages.Sukkot.Payment;
 

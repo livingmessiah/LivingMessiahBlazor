@@ -1,14 +1,14 @@
 ﻿using Dapper;
-using SukkotApi.Domain;
-using SukkotApi.Domain.Enums;
 using System.Threading.Tasks;
 using System.Linq;
 using System.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
 
-namespace SukkotApi.Data;
+using LivingMessiah.Web.Pages.Sukkot.Domain;
+using LivingMessiah.Web.Pages.SukkotAdmin.Data;
+
+namespace LivingMessiah.Web.Pages.Sukkot.Data;
 
 public interface ISukkotRepository
 {

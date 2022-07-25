@@ -3,7 +3,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
 using LivingMessiah.Web.Services;
-using Sukkot.Web.Service;
+using LivingMessiah.Web.Pages.Sukkot.Services;
 
 namespace LivingMessiah.Web.Pages.Sukkot.RegistrationSteps;
 

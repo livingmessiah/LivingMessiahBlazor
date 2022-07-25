@@ -1,5 +1,5 @@
 ﻿@page "/SukkotAdmin/Notes/"
-@using SukkotApi.Domain.Registrations.Enums
+
 @using static LivingMessiah.Web.Services.Auth0
 @using LivingMessiah.Web.Shared.Sukkot
 
@@ -30,7 +30,7 @@
 <div class="d-print-none">
 	<div class="row">
 
-		@if (MySort.RegistrationSortEnum == RegistrationSortEnum.LastName)
+		@if (MySort.RegistrationSortEnum == EnumsOld.RegistrationSortEnum.LastName)
 		{
 			<div class="col-12">
 			</div>
@@ -55,7 +55,7 @@
 		{
 			rowCount += 1;
 
-			if (MySort.RegistrationSortEnum == RegistrationSortEnum.LastName)
+			if (MySort.RegistrationSortEnum == EnumsOld.RegistrationSortEnum.LastName)
 			{
 				<div class="row">
 					<div class="col-6">

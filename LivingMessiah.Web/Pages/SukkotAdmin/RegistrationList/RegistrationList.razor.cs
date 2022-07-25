@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using LivingMessiah.Web.Services;
 using static LivingMessiah.Web.Services.Auth0;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Logging;
-using SukkotApi.Domain;
 using Microsoft.AspNetCore.Components;
-using SukkotApi.Domain.Registrations.Enums;
+
+using LivingMessiah.Web.Pages.Sukkot.Domain;
+using LivingMessiah.Web.Pages.SukkotAdmin.Services;
 
 namespace LivingMessiah.Web.Pages.SukkotAdmin.RegistrationList;
 
@@ -23,16 +23,16 @@ public partial class RegistrationList
 	public List<vwRegistration> Registrations { get; set; }
 
 	private bool IsCurrentSortAscending = true;
-	private RegistrationSortEnum CurrentRegistrationSortEnum = RegistrationSortEnum.LastName;
+	private EnumsOld.RegistrationSortEnum CurrentRegistrationSortEnum = EnumsOld.RegistrationSortEnum.LastName;
 
 	public int RecordCount { get; set; } = 0;
 
 	protected override async Task OnInitializedAsync()
 	{
-		await PopulateRegistrationList(RegistrationSortEnum.LastName, isAscending: IsCurrentSortAscending);
+		await PopulateRegistrationList(EnumsOld.RegistrationSortEnum.LastName, isAscending: IsCurrentSortAscending);
 	}
 
-	async Task SortClicked(RegistrationSortEnum registrationSortEnum)
+	async Task SortClicked(EnumsOld.RegistrationSortEnum registrationSortEnum)
 	{
 		Logger.LogDebug(string.Format("...{0} registrationSortEnum:{1}"
 			, nameof(RegistrationList) + "!" + nameof(SortClicked), registrationSortEnum));
@@ -49,7 +49,7 @@ public partial class RegistrationList
 		await PopulateRegistrationList(CurrentRegistrationSortEnum, isAscending: IsCurrentSortAscending);
 	}
 
-	private async Task PopulateRegistrationList(RegistrationSortEnum registrationSortEnum, bool isAscending)
+	private async Task PopulateRegistrationList(EnumsOld.RegistrationSortEnum registrationSortEnum, bool isAscending)
 	{
 		try
 		{
@@ -75,7 +75,7 @@ public partial class RegistrationList
 		}
 	}
 
-	private string GetSortStyle(RegistrationSortEnum registrationSortEnum)
+	private string GetSortStyle(EnumsOld.RegistrationSortEnum registrationSortEnum)
 	{
 		if (CurrentRegistrationSortEnum != registrationSortEnum)
 		{

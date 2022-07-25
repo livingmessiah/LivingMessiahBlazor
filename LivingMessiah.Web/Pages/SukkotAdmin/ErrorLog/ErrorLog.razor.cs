@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Authorization;
 using static LivingMessiah.Web.Services.Auth0;
-using SukkotApi.Data;
-using SukkotApi.Domain;
+using LivingMessiah.Web.Pages.SukkotAdmin.Data;
+using LivingMessiah.Web.Pages.SukkotAdmin.ErrorLog.Domain;
 
 namespace LivingMessiah.Web.Pages.SukkotAdmin.ErrorLog;
 

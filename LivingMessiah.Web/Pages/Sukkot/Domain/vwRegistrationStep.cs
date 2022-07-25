@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SukkotApi.Domain;
+namespace LivingMessiah.Web.Pages.Sukkot.Domain;
 
 public class vwRegistrationStep
 {

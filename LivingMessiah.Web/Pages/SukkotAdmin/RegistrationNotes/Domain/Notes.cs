@@ -1,4 +1,4 @@
-﻿namespace SukkotApi.Domain;
+﻿namespace LivingMessiah.Web.Pages.SukkotAdmin.RegistrationNotes.Domain;
 
 public class Notes
 {

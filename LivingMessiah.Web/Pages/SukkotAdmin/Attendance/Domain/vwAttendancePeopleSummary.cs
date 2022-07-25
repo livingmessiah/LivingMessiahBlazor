@@ -1,4 +1,4 @@
-﻿namespace SukkotApi.Domain;
+﻿namespace LivingMessiah.Web.Pages.SukkotAdmin.Attendance.Domain;
 
 public class vwAttendancePeopleSummary
 {

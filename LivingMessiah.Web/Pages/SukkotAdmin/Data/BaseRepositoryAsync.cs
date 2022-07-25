@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Data;
 using System.Data.SqlClient;
-using System.Text;
 using System.Threading.Tasks;
 using Dapper;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
-namespace SukkotApi.Data;
+namespace LivingMessiah.Web.Pages.SukkotAdmin.Data;
 
 public abstract class BaseRepositoryAsync
 {

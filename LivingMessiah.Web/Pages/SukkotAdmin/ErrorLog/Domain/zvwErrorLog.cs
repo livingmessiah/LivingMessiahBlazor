@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SukkotApi.Domain;
+namespace LivingMessiah.Web.Pages.SukkotAdmin.ErrorLog.Domain;
 
 public class zvwErrorLog
 {

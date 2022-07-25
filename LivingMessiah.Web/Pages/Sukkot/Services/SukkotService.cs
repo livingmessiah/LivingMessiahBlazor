@@ -1,19 +1,19 @@
 ﻿using System;
 using System.Threading.Tasks;
-using LivingMessiah.Web.Pages.Sukkot.CreateEdit;
-using LivingMessiah.Web.Pages.Sukkot.RegistrationSteps;
-using SukkotApi.Domain;
-using LivingMessiah.Web.Pages.Sukkot.RegistrationSteps.Enums;
-using LivingMessiah.Web.Pages.Sukkot;
-using LivingMessiah.Web.Pages.Sukkot.Constants;
-using LivingMessiah.Web.Infrastructure;
-using LivingMessiah.Web.Services;
 using Microsoft.Extensions.Logging;
-using SukkotApi.Data;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Components.Authorization;
 
-namespace Sukkot.Web.Service;
+using LivingMessiah.Web.Pages.Sukkot.CreateEdit;
+using LivingMessiah.Web.Pages.Sukkot.RegistrationSteps;
+using LivingMessiah.Web.Pages.Sukkot.Domain;
+using LivingMessiah.Web.Pages.Sukkot.Data;
+using LivingMessiah.Web.Pages.Sukkot.RegistrationSteps.Enums;
+using LivingMessiah.Web.Pages.Sukkot.Constants;
+using LivingMessiah.Web.Infrastructure;
+using LivingMessiah.Web.Services;
+
+namespace LivingMessiah.Web.Pages.Sukkot.Services;
 
 public interface ISukkotService
 {
@@ -261,7 +261,7 @@ public class SukkotService : ISukkotService
 			}
 			else
 			{
-				registrationPOCO.Status = SukkotApi.Domain.Enums.Status.FromValue(registrationPOCO.StatusId);
+				registrationPOCO.Status = Status.FromValue(registrationPOCO.StatusId);  
 			}
 
 			if (!IsUserAuthoirized(registrationPOCO.EMail, id, user))
@@ -368,7 +368,7 @@ public class SukkotService : ISukkotService
 			Adults = registration.Adults,
 			ChildBig = registration.ChildBig,
 			ChildSmall = registration.ChildSmall,
-			Status = SukkotApi.Domain.Enums.Status.FromValue(registration.Status.Value),  //Status = registration.Status,
+			Status = registration.Status, 
 			AttendanceBitwise = registration.AttendanceBitwise,
 			LmmDonation = registration.LmmDonation,
 			Avatar = registration.Avatar,
@@ -391,7 +391,7 @@ public class SukkotService : ISukkotService
 			Adults = poco.Adults,
 			ChildBig = poco.ChildBig,
 			ChildSmall = poco.ChildSmall,
-			Status = LivingMessiah.Web.Pages.Sukkot.RegistrationSteps.Enums.Status.FromValue(poco.Status.Value),  //Status = registration.Status, // poco.Status,
+			Status = poco.Status, 
 			AttendanceBitwise = poco.AttendanceBitwise,
 			AttendanceDateList = poco.AttendanceDateList,
 			LmmDonation = poco.LmmDonation,

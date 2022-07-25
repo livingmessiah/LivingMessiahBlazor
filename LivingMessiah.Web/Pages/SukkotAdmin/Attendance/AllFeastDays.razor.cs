@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Logging;
-using SukkotApi.Data;
-using SukkotApi.Domain;
+using LivingMessiah.Web.Pages.SukkotAdmin.Data; 
+using LivingMessiah.Web.Pages.SukkotAdmin.Attendance.Domain;
 using static LivingMessiah.Web.Services.Auth0;
 using Microsoft.AspNetCore.Components;
 

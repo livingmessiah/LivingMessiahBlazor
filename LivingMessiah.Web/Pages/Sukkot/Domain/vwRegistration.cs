@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace SukkotApi.Domain;
+namespace LivingMessiah.Web.Pages.Sukkot.Domain;
 
 public class vwRegistration
 {
@@ -42,7 +42,7 @@ public class vwRegistration
 	{
 		get
 		{
-			return Enums.Status.FromValue(StatusId).Name;
+			return RegistrationSteps.Enums.Status.FromValue(StatusId).Name;
 		}
 	}
 
@@ -50,7 +50,8 @@ public class vwRegistration
 	{
 		get
 		{
-			return Enums.Status.FromValue(StatusId);
+			
+			return RegistrationSteps.Enums.Status.FromValue(StatusId);
 		}
 	}
 

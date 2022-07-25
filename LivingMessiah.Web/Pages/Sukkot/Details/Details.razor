@@ -4,6 +4,7 @@
 @using static LivingMessiah.Web.Links.Sukkot
 @using static LivingMessiah.Web.Services.Auth0
 @using LivingMessiah.Web.Shared.Sukkot
+@using LivingMessiah.Web.Pages.Sukkot.Domain
 
 <AuthorizeView Roles="@Roles.SukkotMenuBar">
 	<SukkotAdminMenubar></SukkotAdminMenubar>
@@ -98,7 +99,7 @@
 		<div class="col-12">
 
 			@if (!String.IsNullOrEmpty(vwRegistration.PayWithCheckMessage))
-				if (vwRegistration.StatusValue != SukkotApi.Domain.Enums.Status.FullyPaid)
+				if (vwRegistration.StatusValue != LivingMessiah.Web.Pages.Sukkot.RegistrationSteps.Enums.Status.FullyPaid)
 				{
 					<button @onclick="@(e => Edit_ButtonClick(e, vwRegistration.Id))"
 									class="btn-primary btn-sm">

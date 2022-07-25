@@ -1,20 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using SukkotApi.Data;
 using Microsoft.Extensions.Logging;
-using SukkotApi.Domain;
-using SukkotApi.Domain.Registrations.Enums;
 
-namespace LivingMessiah.Web.Services;
+using LivingMessiah.Web.Pages.Sukkot.Domain;
+using LivingMessiah.Web.Pages.SukkotAdmin.Data;
+using LivingMessiah.Web.Pages.SukkotAdmin.RegistrationNotes.Domain;
+using LivingMessiah.Web.Pages.SukkotAdmin.ErrorLog.Domain;
+using LivingMessiah.Web.Services;
+
+namespace LivingMessiah.Web.Pages.SukkotAdmin.Services;
 
 public interface ISukkotAdminService
 {
 	string UserInterfaceMessage { get; set; }
 
-	Task<List<vwRegistration>> GetAll(RegistrationSortEnum sort, bool isAscending);
-	Task<List<Notes>> GetNotes(RegistrationSortEnum sort);
-
+	Task<List<vwRegistration>> GetAll(EnumsOld.RegistrationSortEnum sort, bool isAscending);
+	Task<List<Notes>> GetNotes(EnumsOld.RegistrationSortEnum sort);
 	Task<int> LogErrorTest();
 	Task<List<zvwErrorLog>> GetzvwErrorLog();
 	Task<int> EmptyErrorLog();
@@ -39,7 +41,7 @@ public class SukkotAdminService : ISukkotAdminService
 	public string UserInterfaceMessage { get; set; } = "";
 	private string LogExceptionMessage { get; set; } = "";
 
-	public async Task<List<vwRegistration>> GetAll(RegistrationSortEnum registrationSortEnum, bool isAscending)
+	public async Task<List<vwRegistration>> GetAll(EnumsOld.RegistrationSortEnum registrationSortEnum, bool isAscending)
 	{
 		var vm = new List<vwRegistration>();
 		//var profiler = MiniProfiler.Current;
@@ -60,7 +62,7 @@ public class SukkotAdminService : ISukkotAdminService
 		return vm;
 	}
 
-	public async Task<List<Notes>> GetNotes(RegistrationSortEnum registrationSortEnum)
+	public async Task<List<Notes>> GetNotes(EnumsOld.RegistrationSortEnum registrationSortEnum)
 	{
 		Logger.LogDebug(string.Format("Inside {0} registrationSortEnum:{1}"
 			, nameof(SukkotAdminService) + "!" + nameof(GetNotes), registrationSortEnum));

@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Components;
-using Sukkot.Web.Service;
+using LivingMessiah.Web.Pages.Sukkot.Services;
 using LivingMessiah.Web.Pages.Sukkot.RegistrationSteps.Enums;
 
 namespace LivingMessiah.Web.Pages.Sukkot.RegistrationSteps;

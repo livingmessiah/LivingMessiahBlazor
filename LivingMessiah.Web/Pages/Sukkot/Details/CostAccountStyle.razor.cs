@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
-using SukkotApi.Domain;
+﻿using LivingMessiah.Web.Pages.Sukkot.Domain;
+using Microsoft.AspNetCore.Components;
 
 namespace LivingMessiah.Web.Pages.Sukkot.Details;
 

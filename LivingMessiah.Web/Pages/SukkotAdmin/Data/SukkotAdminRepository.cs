@@ -1,22 +1,23 @@
 ﻿using Dapper;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
-using System.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using SukkotApi.Domain;
-using SukkotApi.Domain.Registrations.Enums;
 
-namespace SukkotApi.Data;
+using LivingMessiah.Web.Pages.SukkotAdmin.Attendance.Domain;
+using LivingMessiah.Web.Pages.SukkotAdmin.ErrorLog.Domain;
+using LivingMessiah.Web.Pages.SukkotAdmin.RegistrationNotes.Domain;
+using LivingMessiah.Web.Pages.Sukkot.Domain;
+//using LivingMessiah.Web.Pages.SukkotAdmin.Enums;
+
+namespace LivingMessiah.Web.Pages.SukkotAdmin.Data;
 
 public interface ISukkotAdminRepository
 {
-	Task<List<vwRegistration>> GetAll(RegistrationSortEnum sort, bool isAscending);
-	Task<List<Notes>> GetNotes(RegistrationSortEnum sort);
+	Task<List<vwRegistration>> GetAll(EnumsOld.RegistrationSortEnum sort, bool isAscending);
+	Task<List<Notes>> GetNotes(EnumsOld.RegistrationSortEnum sort);
 
-	//ToDo: 
 	Task<int> LogErrorTest();
 	Task<List<zvwErrorLog>> GetzvwErrorLog();
 	Task<int> EmptyErrorLog();
@@ -33,15 +34,15 @@ public class SukkotAdminRepository : BaseRepositoryAsync, ISukkotAdminRepository
 	{
 	}
 
-	public async Task<List<vwRegistration>> GetAll(RegistrationSortEnum sort, bool isAscending)
+	public async Task<List<vwRegistration>> GetAll(EnumsOld.RegistrationSortEnum sort, bool isAscending)
 	{
 		base.log.LogDebug(string.Format("Inside {0} , sort:{1}, isAscending: {2}"
 				, nameof(SukkotAdminRepository) + "!" + nameof(GetAll), sort, isAscending));
 		string sortField = sort switch
 		{
-			RegistrationSortEnum.Id => "Id",
-			RegistrationSortEnum.LastName => "FamilyName",
-			RegistrationSortEnum.FirstName => "FirstName",
+			EnumsOld.RegistrationSortEnum.Id => "Id",
+			EnumsOld.RegistrationSortEnum.LastName => "FamilyName",
+			EnumsOld.RegistrationSortEnum.FirstName => "FirstName",
 			_ => "Id",
 		};
 
@@ -72,9 +73,9 @@ ORDER BY {sortField}
 	}
 
 
-	public async Task<List<Notes>> GetNotes(RegistrationSortEnum sort)
+	public async Task<List<Notes>> GetNotes(EnumsOld.RegistrationSortEnum sort)
 	{
-		string sortField = (sort == RegistrationSortEnum.LastName) ? "FamilyName" : "Id";
+		string sortField = (sort == EnumsOld.RegistrationSortEnum.LastName) ? "FamilyName" : "Id";
 
 		base.Sql = $@"
 SELECT TOP 500 Id, FirstName, FamilyName, Notes AS UserNotes, Phone, EMail

@@ -1,7 +1,7 @@
 ﻿using System;
-using SukkotApi.Domain.Enums;
+using LivingMessiah.Web.Pages.Sukkot.RegistrationSteps.Enums;
 
-namespace SukkotApi.Domain;
+namespace LivingMessiah.Web.Pages.Sukkot.Domain;
 
 public class RegistrationPOCO
 {

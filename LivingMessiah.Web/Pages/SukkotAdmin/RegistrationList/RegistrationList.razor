@@ -1,6 +1,5 @@
 ﻿@page "/SukkotAdmin/RegistrationList/"
 @using LivingMessiah.Web.Pages.Sukkot.CreateEdit
-@using SukkotApi.Domain.Registrations.Enums
 @using static LivingMessiah.Web.Services.Auth0
 @using LivingMessiah.Web.Shared.Sukkot
 @using LivingMessiah.Web.Infrastructure
@@ -37,22 +36,27 @@
 	}
 	else
 	{
-		<p class="text-muted mb-1 float-end"><small>@GetTitle()</small></p>
+		<div class="row">
+			<div class="col-12">
+				<p class="text-muted mb-1 float-end"><small>@GetTitle()</small></p>
+			</div>
+		</div>
+
 		<div class="table-responsive">
 			<table class="table table-bordered table-striped">
 				<thead>
 					<tr>
 						<th>
-							<span class="sort-link" @onclick=@(() => SortClicked(RegistrationSortEnum.Id))>Id</span>
-							<span>@(GetSortStyle(RegistrationSortEnum.Id))</span>
+							<span class="sort-link" @onclick=@(() => SortClicked(EnumsOld.RegistrationSortEnum.Id))>Id</span>
+							<span>@(GetSortStyle(EnumsOld.RegistrationSortEnum.Id))</span>
 							<br />&nbsp;
 						</th>
 						<th>
-							<span class="sort-link" @onclick=@(() => SortClicked(RegistrationSortEnum.FirstName))>First Name</span>
-							<span>@(GetSortStyle(RegistrationSortEnum.FirstName))</span>
+							<span class="sort-link" @onclick=@(() => SortClicked(EnumsOld.RegistrationSortEnum.FirstName))>First Name</span>
+							<span>@(GetSortStyle(EnumsOld.RegistrationSortEnum.FirstName))</span>
 							&nbsp;|&nbsp;
-							<span class="sort-link" @onclick=@(() => SortClicked(RegistrationSortEnum.LastName))>Last Name</span>
-							<span>@(GetSortStyle(RegistrationSortEnum.LastName))</span>
+							<span class="sort-link" @onclick=@(() => SortClicked(EnumsOld.RegistrationSortEnum.LastName))>Last Name</span>
+							<span>@(GetSortStyle(EnumsOld.RegistrationSortEnum.LastName))</span>
 							<br />Name / EMail / Phone
 						</th>
 						<th>

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace SukkotApi.Domain;
+namespace LivingMessiah.Web.Pages.Sukkot.Domain;
 
 public class RegistrationSummary
 {

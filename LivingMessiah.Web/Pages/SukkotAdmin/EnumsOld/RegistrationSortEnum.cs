@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SukkotApi.Domain.Registrations.Enums;
+namespace LivingMessiah.Web.Pages.SukkotAdmin.EnumsOld;
 
 //ToDo: Replace with BaseRegistrationSortSmartEnum
 public enum RegistrationSortEnum

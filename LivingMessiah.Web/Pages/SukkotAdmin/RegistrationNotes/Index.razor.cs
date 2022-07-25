@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using LivingMessiah.Web.Services;
+using LivingMessiah.Web.Pages.SukkotAdmin.Services;
 using static LivingMessiah.Web.Services.Auth0;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Components;
-using SukkotApi.Domain.Registrations.Enums;
+
+using LivingMessiah.Web.Pages.SukkotAdmin.RegistrationNotes.Domain;
 
 namespace LivingMessiah.Web.Pages.SukkotAdmin.RegistrationNotes;
 
@@ -21,9 +22,9 @@ public partial class Index
 
 	protected int rowCount { get; set; } = 0;
 
-	protected RegistrationSort MySort { get; set; } = RegistrationSort.FromEnum(RegistrationSortEnum.LastName);
-
-	protected List<SukkotApi.Domain.Notes> NotesList { get; set; }
+	protected EnumsOld.RegistrationSort MySort { get; set; } =	EnumsOld.RegistrationSort.FromEnum(EnumsOld.RegistrationSortEnum.LastName);
+	
+	protected List<Notes> NotesList { get; set; }
 
 	protected override async Task OnInitializedAsync()
 	{

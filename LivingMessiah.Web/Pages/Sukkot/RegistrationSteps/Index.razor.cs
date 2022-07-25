@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Components;
 using Link = LivingMessiah.Web.Links.Account;
-using Sukkot.Web.Service;
+using LivingMessiah.Web.Pages.Sukkot.Services;
 using System.Threading.Tasks;
 using System;
 using LivingMessiah.Web.Services;
@@ -18,12 +18,13 @@ public partial class Index : ComponentBase
 
 	[Inject]
 	NavigationManager NavigationManager { get; set; }
-	
+
 	[Inject]
 	AppState AppState { get; set; }
 
-protected IndexVM IndexVM { get; set; }
+	protected IndexVM IndexVM { get; set; }
 
+	protected bool AttemptingToGetRecord;
 	protected override async Task OnInitializedAsync()
 	{
 		// += operator allows you to subscribe to an event
@@ -31,28 +32,20 @@ protected IndexVM IndexVM { get; set; }
 		await PopulateVM();
 	}
 
-
 	private async Task PopulateVM()
 	{
-		InitializeAlertHandlingling();
-		Logger.LogDebug(string.Format("Inside {0}"
-			, nameof(Index) + "!" + nameof(PopulateVM)));
+		Logger.LogDebug(string.Format("Inside {0}", nameof(Index) + "!" + nameof(PopulateVM)));
+		AttemptingToGetRecord = true;
 		try
 		{
 			IndexVM = await svc.GetRegistrationStep();
-			GotRecord = true;
+			AttemptingToGetRecord = false;
 			Logger.LogDebug(string.Format("...just called svc.{0}; Status: {1}, EmailAddress: {2}"
 				, nameof(svc.GetRegistrationStep), IndexVM.Status, IndexVM.EmailAddress));
 		}
 		catch (InvalidOperationException invalidOperationException)
 		{
 			AppState.UpdateMessage(this, invalidOperationException.Message);
-		}
-
-		AttemptingToGetRecord = false;
-		if (!GotRecord)
-		{
-			AppState.UpdateMessage(this, "Failed to get current status");
 		}
 	}
 
@@ -64,7 +57,7 @@ protected IndexVM IndexVM { get; set; }
 			await InvokeAsync(StateHasChanged);
 		}
 	}
-	
+
 	void IDisposable.Dispose()
 	{
 		// -= operator detaches you from an event
@@ -75,19 +68,5 @@ protected IndexVM IndexVM { get; set; }
 	{
 		NavigationManager.NavigateTo($"{Link.Login}?returnUrl={returnUrl}", true);
 	}
-
-	#region AlertHandling
-	private void InitializeAlertHandlingling()  
-	{
-		AttemptingToGetRecord = true;
-		GotRecord = false;
-		AttemptingToGetRecordMsg = "";
-	}
-	protected bool GotRecord;
-	protected bool AttemptingToGetRecord;
-	protected string AttemptingToGetRecordMsg;
-	#endregion
-
-
 
 }
