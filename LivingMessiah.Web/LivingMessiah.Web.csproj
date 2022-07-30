@@ -17,12 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="Pages\BlazorExamples\SampleBaseComponent.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Remove="Pages\BlazorExamples\Wizard.razor" />
-    <Content Remove="Pages\BlazorSyncFusion\Dialogs\SfDialogNestedDialogs.razor" />
     <Content Remove="Pages\Parasha\AlephBetFooter.razor" />
     <!--<Content Remove="Pages\KeyDates\Obsolete\Index.razor" />-->
     <Content Remove="Shared\EnvComponent.razor" />
@@ -30,13 +24,6 @@
 
   <ItemGroup>
     <None Include="..\.editorconfig" Link=".editorconfig" />
-    <None Include="Pages\BlazorSyncFusion\Calendars\Calendar\DateRange.razor" />
-    <None Include="Pages\BlazorSyncFusion\Calendars\Calendar\DefaultFunctionalities.razor" />
-    <None Include="Pages\BlazorSyncFusion\Calendars\Calendar\DisabledDates.razor" />
-    <None Include="Pages\BlazorSyncFusion\Calendars\Calendar\MonthPicker.razor" />
-    <None Include="Pages\BlazorSyncFusion\Calendars\Calendar\MultiSelection.razor" />
-    <None Include="Pages\BlazorSyncFusion\Calendars\Calendar\WeekNumber.razor" />
-    <None Include="Pages\BlazorSyncFusion\Dialogs\SfDialogNestedDialogs.razor" />
     <!--<None Include="Pages\KeyDates\Obsolete\Index.razor" />-->
     <None Include="Shared\EnvComponent.razor" />
     <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css.map" />
@@ -111,17 +98,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <_ContentIncludedByDefault Remove="Pages\BlazorSyncFusion\Dialogs\SfDialogNestedDialogs.razor" />
     <_ContentIncludedByDefault Remove="Shared\EnvComponent.razor" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Update="Pages\BlazorExamples\EventCallbackChild - Copy - Copy.razor.cs">
-      <DependentUpon>EventCallbackChild - Copy.razor.cs</DependentUpon>
-    </Compile>
-    <Compile Update="Pages\BlazorExamples\EventCallbackChild - Copy.razor.cs">
-      <DependentUpon>EventCallbackChild.razor.cs</DependentUpon>
-    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -133,10 +110,6 @@
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-  </ItemGroup>
-
-  <ItemGroup>
-    <UpToDateCheckInput Remove="Pages\BlazorSyncFusion\Dialogs\SfDialogNestedDialogs.razor" />
   </ItemGroup>
 
 

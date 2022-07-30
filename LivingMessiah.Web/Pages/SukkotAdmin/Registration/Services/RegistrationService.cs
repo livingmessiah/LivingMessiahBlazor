@@ -201,7 +201,6 @@ public class RegistrationService : IRegistrationService
 				//registration.StatusEnum = (int)Status.RegistrationFormCompleted;
 				registration.StatusEnum = StatusEnum.RegistrationFormCompleted;
 			}				
-			??? registrationVM.StatusSmartEnum = BaseStatusSmartEnum.RegistrationFormCompleted;
 			*/
 
 			registrationVM.AttendanceBitwise = GetDaysBitwise(registrationVM.AttendanceDateList, DateRangeEnum.AttendanceDays);

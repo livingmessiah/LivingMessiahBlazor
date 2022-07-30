@@ -10,7 +10,6 @@ using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using LivingMessiah.Data;
 using LivingMessiah.Web.Pages.Admin.AudioVisual;
 using LivingMessiah.Web.Pages.Admin.AudioVisual.Services;
-using LivingMessiah.Web.Pages.BlazorSyncFusion.Shared;
 using LivingMessiah.Web.Pages.Contacts.Data;
 using LivingMessiah.Web.Pages.KeyDates.Data;
 using LivingMessiah.Web.Pages.Sukkot.Data;
@@ -30,10 +29,6 @@ public static class ServiceCollectionExtensions
 	public static IServiceCollection AddDataStores(this IServiceCollection services)
 	{
 		services
-
-			.AddSingleton<SampleBaseComponent>()
-			.AddSingleton<SampleService>()
-
 			.AddSingleton<IAddressService, AddressService>()
 			.AddSingleton<ILinkService, LinkService>()
 
@@ -59,10 +54,6 @@ public static class ServiceCollectionExtensions
 			.AddTransient<IDonationRepository, DonationRepository>()
 			.AddTransient<ISukkotAdminService, SukkotAdminService>()
 			.AddTransient<IContactRepository, ContactRepository>()
-
-			//ToDo Remove before publishing 
-			.AddTransient<Pages.BlazorExamples.ToDoSort.IFileService, Pages.BlazorExamples.ToDoSort.FileService>()
-			.AddScoped<Pages.BlazorExamples.ToDoSort.IToDoService, Pages.BlazorExamples.ToDoSort.ToDoService>()
 
 			.AddTransient<ISukkotRepository, SukkotRepository>()
 			.AddTransient<ISukkotAdminRepository, SukkotAdminRepository>()

@@ -16,9 +16,6 @@ public class RegistrationPOCO
 	public int ChildBig { get; set; }
 	public int ChildSmall { get; set; }
 
-	/*
-	public BaseStatusSmartEnum StatusSmartEnum { get; set; }
-	*/
 	public int StatusId { get; set; }
 
 	public int AttendanceBitwise { get; set; }
