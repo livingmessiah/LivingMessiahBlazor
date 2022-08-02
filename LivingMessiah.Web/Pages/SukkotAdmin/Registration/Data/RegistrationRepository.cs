@@ -20,8 +20,10 @@ public interface IRegistrationRepository
 	Task<RegistrationPOCO> GetPocoById(int id);
 	Task<Tuple<int, int, string>> Create(RegistrationPOCO registration);
 	Task<Tuple<int, int, string>> Update(RegistrationPOCO registration);
-	Task<List<RegistrationLookup>> PopulateRegistrationLookup(); 
+	Task<List<RegistrationLookup>> PopulateRegistrationLookup();
+	Task<Sukkot.Components.RegistrationVM> GetByIdVer2(int id);
 }
+
 
 public class RegistrationRepository : BaseRepositoryAsync, IRegistrationRepository
 {
@@ -32,6 +34,27 @@ public class RegistrationRepository : BaseRepositoryAsync, IRegistrationReposito
 	public string BaseSqlDump
 	{
 		get { return base.SqlDump; }
+	}
+
+
+	public async Task<Sukkot.Components.RegistrationVM> GetByIdVer2(int id)
+	{
+		base.Parms = new DynamicParameters(new { Id = id });
+		base.Sql = $@"
+--DECLARE @Id int = 32
+SELECT TOP 1 
+Id, FamilyName, FirstName, SpouseName, OtherNames, EMail, Phone, Adults, ChildBig, ChildSmall
+, StatusId
+, AttendanceBitwise, LmmDonation, Notes, Avatar
+, Sukkot.udfAttendanceDatesConcat(Id) AS AttendanceDatesCSV
+FROM Sukkot.Registration 
+WHERE Id = @Id
+";
+		return await WithConnectionAsync(async connection =>
+		{
+			var rows = await connection.QueryAsync<Sukkot.Components.RegistrationVM>(sql: base.Sql, param: base.Parms);
+			return rows.SingleOrDefault();
+		});
 	}
 
 	public async Task<List<RegistrationLookup>> PopulateRegistrationLookup()
@@ -198,5 +221,4 @@ FROM Sukkot.Registration WHERE Id = {id}";
 			return new Tuple<int, int, string>(RowsAffected, SprocReturnValue, ReturnMsg);
 		});
 	}
-
 }

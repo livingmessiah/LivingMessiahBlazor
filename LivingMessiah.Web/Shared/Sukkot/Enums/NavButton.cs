@@ -26,8 +26,11 @@ public abstract class NavButton : SmartEnum<NavButton>
 	public static readonly NavButton Edit = new EditSE();
 	public static readonly NavButton DeleteConfirmation = new DeleteConfirmationSE();
 	public static readonly NavButton Donation = new DonationSE();
+
+	// 086-add-BlazoredFluidValidation | ToDo: Delete
 	public static readonly NavButton CreateRegistrationForm = new CreateRegistrationFormSE();
 	public static readonly NavButton Add = new AddSE();
+
 	// SE=SmartEnum
 	#endregion
 
@@ -97,6 +100,7 @@ public abstract class NavButton : SmartEnum<NavButton>
 		public override string RouteSuffix => "";
 	}
 
+	// 086-add-BlazoredFluidValidation | ToDo: Delete
 	private sealed class CreateRegistrationFormSE : NavButton
 	{
 		public CreateRegistrationFormSE() : base($"{nameof(Id.CreateRegistrationForm)}", Id.CreateRegistrationForm) { }
@@ -108,6 +112,7 @@ public abstract class NavButton : SmartEnum<NavButton>
 		public override string RouteSuffix => "";
 	}
 
+	// 086-add-BlazoredFluidValidation | ToDo: Delete
 	private sealed class AddSE : NavButton
 	{
 		public AddSE() : base($"{nameof(Id.Add)}", Id.Add) { }

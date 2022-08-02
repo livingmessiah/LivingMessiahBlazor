@@ -45,8 +45,7 @@ public partial class CreateEdit
 		// I want to elevate the logging from Debug to Information because this is the main point of the application
 		Logger.LogInformation(string.Format("Inside {0}", nameof(CreateEdit) + "!" + nameof(OnInitializedAsync)));
 
-		var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-		User = authState.User;
+		await GetUserAndClaims();
 
 		int Id2 = id.HasValue ? id.Value : 0; // if id? is null, Id2 is set to 0 and...
 		UI = (Id2 == 0) ? new UI(SukkotEnums.CRUD.Add) : new UI(SukkotEnums.CRUD.Edit); // ...  an Add is assumed (i.e. SukkotEnums.CRUD.Add)
@@ -74,15 +73,21 @@ public partial class CreateEdit
 		catch (RegistratationException registratationException)
 		{
 			DatabaseWarning = true;
-			DatabaseWarningMsg = registratationException.Message; 
+			DatabaseWarningMsg = registratationException.Message;
 		}
-		
+
 		catch (InvalidOperationException invalidOperationException)
 		{
 			DatabaseError = true;
 			DatabaseErrorMsg = invalidOperationException.Message;
 		}
 		Logger.LogInformation(string.Format("Finished {0}", nameof(CreateEdit) + "!" + nameof(OnInitializedAsync)));
+	}
+
+	private async Task GetUserAndClaims()
+	{
+		var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+		User = authState.User;
 	}
 
 	protected string Title = "";

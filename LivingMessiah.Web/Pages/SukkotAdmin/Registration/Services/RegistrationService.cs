@@ -18,8 +18,11 @@ public interface IRegistrationService
 	string ExceptionMessage { get; set; }
 	//string InformationMessage { get; set; }
 	Task<RegistrationVM> GetById(int id);
+	Task<Sukkot.Components.RegistrationVM> GetByIdVer2(int id);
 	Task<Tuple<int, int, string>> Create(RegistrationVM registration);
 	Task<Tuple<int, int, string>> Update(RegistrationVM registration);
+	Task<Tuple<int, int, string>> CreateVer2(Sukkot.Components.RegistrationVM registration);
+	Task<Tuple<int, int, string>> UpdateVer2(Sukkot.Components.RegistrationVM registration);
 }
 
 public class RegistrationService : IRegistrationService
@@ -111,6 +114,59 @@ public class RegistrationService : IRegistrationService
 		return poco;
 	}
 
+	private RegistrationPOCO DTO_From_VM_To_DB_Ver2(Sukkot.Components.RegistrationVM registration)
+	{
+		RegistrationPOCO poco = new RegistrationPOCO
+		{
+			Id = registration.Id,
+			FamilyName = registration.FamilyName,
+			FirstName = registration.FirstName,
+			SpouseName = registration.SpouseName,
+			OtherNames = registration.OtherNames,
+			EMail = registration.EMail,
+			Phone = registration.Phone,
+			Adults = registration.Adults,
+			ChildBig = registration.ChildBig,
+			ChildSmall = registration.ChildSmall,
+			StatusId = registration.Status.Value,
+			//StatusId = registration.StatusId,
+			AttendanceBitwise = registration.AttendanceBitwise,
+			LmmDonation = registration.LmmDonation,
+			Avatar = registration.Avatar,
+			Notes = registration.Notes
+		};
+		return poco;
+	}
+
+
+	public async Task<Sukkot.Components.RegistrationVM> GetByIdVer2(int id)
+	{
+		Logger.LogInformation($"Inside {nameof(RegistrationService)}!{nameof(GetByIdVer2)}, id={id}");
+		Sukkot.Components.RegistrationVM VM = new();
+		try
+		{
+			VM = await db.GetByIdVer2(id);
+			string email = await SvcClaims.GetEmail();
+
+			if (await SvcClaims.IsUserAuthoirized(email) == false)
+			{
+				ExceptionMessage = $"...logged in user:{email} lacks authority for to see content of id={id}";  // /EMail:{registrationPOCO.EMail}
+				Logger.LogWarning(ExceptionMessage);
+				throw new UserNotAuthoirizedException(ExceptionMessage);
+			}
+			else
+			{
+				return VM;
+			}
+		}
+		catch (Exception ex)
+		{
+			ExceptionMessage = $"Inside {nameof(GetByIdVer2)}";
+			Logger.LogError(ex, ExceptionMessage, id);
+			ExceptionMessage += ex.Message ?? "-- ex.Message was null --";
+			throw new InvalidOperationException(ExceptionMessage);
+		}
+	}
 
 	public async Task<RegistrationVM> GetById(int id)
 	{
@@ -191,18 +247,6 @@ public class RegistrationService : IRegistrationService
 
 		try
 		{
-			/*
-			if (user.GetRoles() == Auth0.Roles.Admin | user.GetRoles() == Auth0.Roles.Sukkot)
-			{
-				registration.StatusEnum = registration.StatusEnum;
-			}
-			else
-			{
-				//registration.StatusEnum = (int)Status.RegistrationFormCompleted;
-				registration.StatusEnum = StatusEnum.RegistrationFormCompleted;
-			}				
-			*/
-
 			registrationVM.AttendanceBitwise = GetDaysBitwise(registrationVM.AttendanceDateList, DateRangeEnum.AttendanceDays);
 			var sprocTuple = await db.Update(DTO_From_VM_To_DB(registrationVM));
 			Logger.LogInformation($"Registration updated for {registrationVM.FamilyName}/{registrationVM.EMail}");
@@ -217,6 +261,55 @@ public class RegistrationService : IRegistrationService
 		}
 
 	}
+
+	#region Ver2
+
+	public async Task<Tuple<int, int, string>> CreateVer2(Sukkot.Components.RegistrationVM registrationVM)
+	{
+		Logger.LogInformation($"Inside {nameof(RegistrationService)}!{nameof(CreateVer2)}; calling {nameof(db.Create)}");
+		try
+		{
+			registrationVM.Status = Status.RegistrationFormCompleted;
+			registrationVM.AttendanceBitwise = GetDaysBitwise(registrationVM.AttendanceDateList, DateRangeEnum.AttendanceDays);
+
+			var sprocTuple = await db.Create(DTO_From_VM_To_DB_Ver2(registrationVM));
+			
+			return sprocTuple;
+
+		}
+		catch (Exception ex)
+		{
+			ExceptionMessage = $"...Error calling {nameof(db.Create)} (presumably)";
+			Logger.LogError(ex, ExceptionMessage);
+
+			// Note, the UI should NOT display this detailed Exception Message, unless maybe if Env.IsDevelopment
+			ExceptionMessage += ex.Message ?? "-- ex.Message was null --";
+			throw new InvalidOperationException(ExceptionMessage);
+		}
+	}
+
+	public async Task<Tuple<int, int, string>> UpdateVer2(Sukkot.Components.RegistrationVM registrationVM)
+	{
+		Logger.LogInformation($"Inside {nameof(RegistrationService)}!{nameof(UpdateVer2)}; calling {nameof(db.Update)}");
+
+		try
+		{
+			registrationVM.AttendanceBitwise = GetDaysBitwise(registrationVM.AttendanceDateList, DateRangeEnum.AttendanceDays);
+			var sprocTuple = await db.Update(DTO_From_VM_To_DB_Ver2(registrationVM));
+			Logger.LogInformation($"Registration updated for {registrationVM.FamilyName}/{registrationVM.EMail}");
+			return sprocTuple;
+		}
+		catch (Exception ex)
+		{
+			ExceptionMessage = $"...Error calling {nameof(db.Update)} (presumably)";
+			Logger.LogError(ex, ExceptionMessage);
+			ExceptionMessage += ex.Message ?? "-- ex.Message was null --";
+			throw new InvalidOperationException(ExceptionMessage);
+		}
+
+	}
+
+	#endregion
 
 	private static string DumpDateRange(DateTime[] dateList)
 	{

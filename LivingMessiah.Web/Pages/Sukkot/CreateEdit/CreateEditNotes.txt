@@ -1,0 +1,101 @@
+﻿
+# `RegistrationVM`
+
+### CreateEditit.razor
+
+**`CreateEditit.razor`**
+  @page "/Sukkot/CreateEdit/{Id:int?}"
+
+**`CreateEditit.razor.cs`**
+```csharp
+	[Parameter] public int? id { get; set; }
+	public UI UI { get; set; }
+
+	protected override async Task OnInitializedAsync()
+	{
+		var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();	User = authState.User;
+		int Id2 = id.HasValue ? id.Value : 0; // if id? is null, Id2 is set to 0 and...
+		UI = (Id2 == 0) ? new UI(SukkotEnums.CRUD.Add) : new UI(SukkotEnums.CRUD.Edit); // ...  an Add is assumed (i.e. SukkotEnums.CRUD.Add)
+		try
+		{
+			if (UI.CRUD == SukkotEnums.CRUD.Add)
+			{
+				Registration = new RegistrationVM
+				{
+					Id = 0,
+					Status = Status.StartRegistraion,
+					EMail = User.GetUserEmail()
+				};
+			}
+			else
+			{
+				Registration = await svc.Update(Id2, User);  // Change to GetById
+			}
+			SetTitle();
+		}
+		catch (RegistratationException registratationException)
+		catch (InvalidOperationException invalidOperationException)
+
+	protected async Task HandleValidSubmit()
+	{
+		if (UI.EditMode)
+		{
+			count = await svc.Edit(Registration, User);
+		}
+		{	
+		else
+		{
+			newId = await svc.Create(Registration, User);
+		}
+
+```
+
+---
+
+### SukkotService
+
+#### Edit
+```csharp
+
+		Task<int> Edit(RegistrationVM registration, ClaimsPrincipal user);
+
+
+```
+
+
+#### Create
+```csharp
+
+	Task<int> Create(RegistrationVM registration, ClaimsPrincipal user);
+
+```
+
+#### Update
+```csharp
+
+		Task<RegistrationVM> Update(int id, ClaimsPrincipal user);
+
+
+```
+
+
+ 
+
+```csharp
+```
+
+## UI.cs
+```csharp UI
+		case SukkotEnums.CRUD.Add:
+				EditMode = false;
+				Title = "Add";
+				Handler = "Create";
+				DatabaseCommand = "Create Registration";
+				break;
+
+		case SukkotEnums.CRUD.Edit:
+				EditMode = true;
+				Title = "Edit";
+				Handler = "Edit";
+				DatabaseCommand = "Update";
+```

@@ -1,0 +1,165 @@
+﻿@using LivingMessiah.Web.Pages.Sukkot;
+@using LivingMessiah.Web.Shared.Sukkot
+@using Blazored.FluentValidation
+
+<h4>@Title<br /><span class="float-end"><sup><i>@Title2</i></sup></span></h4>
+
+<EditForm Model="@VM" OnValidSubmit="@SubmitValidForm">
+	<FluentValidationValidator @ref="_fluentValidationValidator" DisableAssemblyScanning="@true" />
+	<ValidationSummary />
+
+	@*<Administrative>*@
+
+	<fieldset class="mt-3">
+		<legend class="text-primary">Contact Information</legend>
+
+		<div class="row mt-n2">
+
+			<div class="col-sm-4">
+				<div class="form-floating mb-3">
+					<InputText id="familyName" class="form-control" @bind-Value="VM.FamilyName" placeholder="Ben Levi" />
+					<label for="familyName" class="form-label">Family Name</label>
+					<ValidationMessage For="@(() => VM.FamilyName)" />
+				</div>
+			</div>
+
+			<div class="col-sm-4">
+				<div class="form-floating mb-3">
+					<InputText id="firstName" class="form-control" @bind-Value="VM.FirstName" placeholder="Moshe" />
+					<label for="firstName" class="form-label">First Name</label>
+					<ValidationMessage For="@(() => VM.FirstName)" />
+				</div>
+			</div>
+
+			<div class="col-sm-4">
+				<div class="form-floating mb-3">
+					<InputText id="spouseName" class="form-control" @bind-Value="VM.SpouseName" placeholder="Sousal Unit" />
+					<label for="spouseName" class="form-label">Spouses Name</label>
+					<ValidationMessage For="@(() => VM.SpouseName)" />
+				</div>
+			</div>
+
+		</div>
+
+
+		<div class="row">
+
+			<div class="col-sm-6">
+				<div class="form-floating mb-3">
+					<InputText id="otherNames" class="form-control" @bind-Value="VM.OtherNames" placeholder="other names" />
+					<label for="otherNames" class="form-label">Other Names</label>
+					<ValidationMessage For="@(() => VM.OtherNames)" />
+				</div>
+			</div>
+
+			<div class="col-sm-6">
+				<div class="form-floating mb-3">
+					<InputText id="phone" class="form-control" @bind-Value="VM.Phone" placeholder="phone (optional)" />
+					<label for="phone" class="form-label">Phone (optional)</label>
+					<ValidationMessage For="@(() => VM.Phone)" />
+				</div>
+			</div>
+
+			@*<div class="col-sm-4">
+				<div class="form-floating mb-3">
+				<label for="avatar">Avatar</label>
+				<InputText id="avatar" class="form-control" @bind-Value="VM.Avatar" placeholder="picture (optional)" />
+				<ValidationMessage For="@(() => VM.Avatar)" />
+				</div>
+				</div>*@
+
+		</div>
+	</fieldset>
+
+	<fieldset class="mt-3">
+		<legend class="text-primary">Attendance</legend>
+		<div class="row mt-n2">
+
+			<div class="col-sm-4">
+				<div class="card bg-light mb-3">
+					@*<div class="card-header"></div>*@
+					<div class="card-body">
+						@*<h4 class="card-title">Attendance</h4>*@
+						<p class="card-text">To help us with planning, what days will you be attending?  Please select <u>ALL</u> the dates, not just the beginning and ending.</p>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-sm-8">
+				<div class="form-floating mb-3">
+					@*<label for="attendanceDays">Select Dates</label>*@
+
+					<SfCalendar TValue="DateTime?"
+											IsMultiSelection="true" ShowTodayButton="false"
+											@bind-Values="@VM.AttendanceDateList"
+											Min="@DateRangeAttendance.DateRange.MinDate"
+											Max="@DateRangeAttendance.DateRange.MaxDate">
+					</SfCalendar>
+
+				</div>
+			</div>
+
+		</div>
+	</fieldset>
+
+
+	<fieldset class="mt-3">
+		<legend class="text-primary">People Count</legend>
+
+		<div class="row mt-n2">
+			<div class="col-sm-3">
+
+				<div class="form-floating mb-3">
+
+					<InputNumber id="adults" class="form-control" @bind-Value="VM.Adults" placeholder="Adult Count" />
+					<label for="adults" class="form-label">Adults</label>
+					<ValidationMessage For="@(() => VM.Adults)" />
+
+				</div>
+			</div>
+
+			<div class="col-sm-3">
+				<div class="form-floating mb-3">
+					<InputNumber id="childBig" class="form-control" @bind-Value="VM.ChildBig" placeholder="Child Count Big" />
+					<label for="childBig" class="form-label">Child <sup>big</sup></label>
+					<ValidationMessage For="@(() => VM.ChildBig)" />
+				</div>
+			</div>
+
+			<div class="col-sm-3">
+				<div class="form-floating mb-3">
+					<InputNumber id="childSmall" class="form-control" @bind-Value="VM.ChildSmall" placeholder="Child Count Small" />
+					<label for="childSmall" class="form-label">Child <sup>small</sup></label>
+					<ValidationMessage For="@(() => VM.ChildSmall)" />
+				</div>
+			</div>
+
+			<div class="col-sm-3">
+			</div>
+
+		</div>
+	</fieldset>
+
+	<fieldset class="mt-3">
+		<legend class="text-primary">Other (optional)</legend>
+		<div class="row mt-n2">
+			<div class="col-sm-12">
+				<div class="form-floating mb-3">
+					<InputTextArea id="notes" class="form-control" @bind-Value="VM.Notes" placeholder="Notes" />
+					<label for="notes" class="form-label"><small>Notes / Emergency Contact / Fellowship Attending</small></label>
+					<p class="">
+						Please include emergency contact.  If not attending Living Messiah, please include name of fellowship or congregation currently attending, if none list a personal reference.
+					</p>
+					<ValidationMessage For="@(() => VM.Notes)" />
+
+				</div>
+			</div>
+		</div>
+	</fieldset>
+
+	<button type="submit"	class="btn btn-primary btn-lg">
+		<i class="fas fa-save"></i> @SubmitButtonText
+	</button>
+
+</EditForm>
+

@@ -2,7 +2,7 @@
 @using LivingMessiah.Web.Shared.Sukkot
 @using NB = LivingMessiah.Web.Shared.Sukkot.Enums
 @using Page = LivingMessiah.Web.Links.Sukkot.RegistrationSteps
-
+@using LivingMessiah.Web.Pages.Sukkot.Components
 
 @*Step 1*@
 @if (ComparisonStatus == Status.NotAuthenticated && ComparisonStatus == UsersCurrentStatus)
@@ -85,22 +85,12 @@
 @if (ComparisonStatus == Status.StartRegistraion &&
 		ComparisonStatus == UsersCurrentStatus)
 {
-	if (IsXs)
-	{
-		<div class="card mt-0 mb-3">
-			<div class="card-body bg-light">
-				<CommonButtons RegistrationStepId="null"
-									 NavButton="NB.NavButton.CreateRegistrationForm">
-				</CommonButtons>
-			</div>
+	<div class="card mt-0 mb-3">
+		<div class="card-body bg-light">
+			<RegistrationEditForm Email="@EmailParm" Id="null" />
 		</div>
-	}
-	else
-	{
-		<CommonButtons RegistrationStepId="null"
-							 NavButton="NB.NavButton.CreateRegistrationForm">
-		</CommonButtons>
-	}
+	</div>
+
 }
 
 
@@ -110,20 +100,12 @@
 	&& UsersCurrentStatus >= Status.RegistrationFormCompleted
 	&& RegistrationStep is not null)
 {
-	if (IsXs)
-	{
-		<div class="card mt-0 mb-3">
-			<div class="card-body bg-light">
-				<p>Registration Id: <b>@RegistrationStep.Id</b></p>
-				<Toolbar Id="RegistrationStep.Id" />
-			</div>
+	<div class="card mt-0 mb-3">
+		<div class="card-body bg-light">
+			<RegistrationEditForm Email="@EmailParm" Id="@RegistrationStep.Id" />
 		</div>
-	}
-	else
-	{
-		<p>Registration Id: <b>@RegistrationStep.Id</b></p>
-		<Toolbar Id="RegistrationStep.Id" />
-	}
+	</div>
+
 }
 
 

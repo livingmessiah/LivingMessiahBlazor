@@ -512,7 +512,7 @@ public static class Sukkot
 	public const string Title = "Sukkot";
 	public const string Icon = "fas fa-campground";
 
-
+	// 086-add-BlazoredFluidValidation | ToDo: Delete
 	public const string CreateEdit = "/Sukkot/CreateEdit";
 	public const string CreateEditTitle = "Sukkot Create/Edit";
 

@@ -101,13 +101,11 @@ public static class ClaimsPrincipalExtensions
 			{
 				return false;
 			}
-
 		}
 		else
 		{
 			return false;
 		}
-
 	}
 
 

@@ -21,6 +21,8 @@ using LivingMessiah.Web.Pages.SukkotAdmin.Registration.Services;
 using LivingMessiah.Web.Pages.SukkotAdmin.Services;
 using LivingMessiah.Web.Pages.UpcomingEvents.Data;
 using LivingMessiah.Web.Services;
+using FluentValidation;
+using LivingMessiah.Web.Pages.Sukkot.Components;
 
 namespace LivingMessiah.Web;
 
@@ -41,9 +43,7 @@ public static class ServiceCollectionExtensions
 			.AddTransient<IUpcomingEventsGridDataAdaptor, UpcomingEventsGridDataAdaptor>()
 
 			.AddSingleton<IKeyDateRepository, KeyDateRepository>()
-
 			.AddTransient<IWeeklyVideosRepository, WeeklyVideosRepository>()
-
 			.AddTransient<ISecurityClaimsService, SecurityClaimsService>()
 
 			//.AddSingleton<ISukkotSettings, SukkotSettings>()
@@ -59,8 +59,9 @@ public static class ServiceCollectionExtensions
 			.AddTransient<ISukkotAdminRepository, SukkotAdminRepository>()
 			.AddSingleton<ISmartEnumServiceForSfDropDownList, SmartEnumServiceForSfDropDownList>()
 			.AddScoped<AppState>()
-			.AddSingleton<IYouTubeFeedService, YouTubeFeedService>();
-			
+			.AddSingleton<IYouTubeFeedService, YouTubeFeedService>()
+			.AddTransient<IValidator<RegistrationVM>, RegistrationVMValidator>();
+		
 
 		return services;
 	}

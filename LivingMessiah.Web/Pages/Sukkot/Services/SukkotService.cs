@@ -20,10 +20,15 @@ public interface ISukkotService
 	string UserInterfaceMessage { get; set; }
 	Task<vwRegistration> Details(int id, ClaimsPrincipal user, bool showPrintInstructionMessage = false);
 	Task<vwRegistration> DeleteConfirmation(int id, ClaimsPrincipal user);
+
+	// 086-add-BlazoredFluidValidation |
+	// - ToDo: Rename Update to GetById
+	// - ToDo: Maybe remove `ClaimsPrincipal user` parameter model it after ????
 	Task<RegistrationVM> Update(int id, ClaimsPrincipal user);
 	Task<int> Create(RegistrationVM registration, ClaimsPrincipal user);
 	Task<int> Edit(RegistrationVM registration, ClaimsPrincipal user);
 	Task<int> DeleteConfirmed(int id);
+	
 	Task<RegistrationSummary> Summary(int id, ClaimsPrincipal user);
 	Task<IndexVM> GetRegistrationStep();
 
