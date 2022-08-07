@@ -13,43 +13,6 @@ public class IndexVM
 
 	public HouseRulesAgreement HouseRulesAgreement { get; set; }
 	public RegistrationStep RegistrationStep { get; set; }
-
-	public bool IsRegistrationFormCompleted()
-	{
-		if (this.HouseRulesAgreement is not null && this.Status >= Status.RegistrationFormCompleted)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
-
-	public bool IsPartiallyPaid()
-	{
-		if (this.HouseRulesAgreement is not null && this.Status == Status.PartiallyPaid)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
-
-	public bool IsFullyPaid()
-	{
-		if (this.HouseRulesAgreement is not null && this.Status == Status.FullyPaid)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
-
 }
 
 public class HouseRulesAgreement

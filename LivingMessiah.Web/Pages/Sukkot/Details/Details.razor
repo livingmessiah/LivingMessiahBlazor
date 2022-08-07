@@ -5,6 +5,7 @@
 @using static LivingMessiah.Web.Services.Auth0
 @using LivingMessiah.Web.Shared.Sukkot
 @using LivingMessiah.Web.Pages.Sukkot.Domain
+@using LivingMessiah.Web.Pages.Sukkot.Components
 
 <AuthorizeView Roles="@Roles.SukkotMenuBar">
 	<SukkotAdminMenubar></SukkotAdminMenubar>
@@ -93,33 +94,9 @@
 
 	<DetailsContent vwRegistration="@vwRegistration"/>
 
-	<hr class="warning d-print-none" />
-
-	<div class="row d-print-none">
-		<div class="col-12">
-
-			@if (!String.IsNullOrEmpty(vwRegistration.PayWithCheckMessage))
-				if (vwRegistration.StatusValue != LivingMessiah.Web.Pages.Sukkot.RegistrationSteps.Enums.Status.FullyPaid)
-				{
-					<button @onclick="@(e => Edit_ButtonClick(e, vwRegistration.Id))"
-									class="btn-primary btn-sm">
-						<i class="fas fa-edit"></i> Edit
-					</button>
-				}
-
-		</div>
-	</div>
 </LoadingComponent>
 
-<div class="row d-print-none">
-	<div class="col-12">
-		<a href="@Page.RegistrationSteps.Index"
-			 class="btn btn-info" title="Back to Registration Shell">
-			<i class="far fa-arrow-alt-circle-left"></i> Back to Registration
-		</a>
-	</div>
-</div>
-
+<RegistrationStepsLink BackwardDirection="true"/>
 
 @if (DatabaseError)
 {

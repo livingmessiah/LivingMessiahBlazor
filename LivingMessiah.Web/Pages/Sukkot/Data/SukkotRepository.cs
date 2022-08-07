@@ -72,6 +72,7 @@ WHERE Id = @Id
 			, nameof(GetByEmail), email));
 		base.Parms = new DynamicParameters(new { EMail = email });
 		base.Sql = $@"
+--DECLARE @EMail varchar(100) = 'info@test.com'
 SELECT Id, EMail
 , TimeZone AS HouseRulesAgreementTimeZone, AcceptedDate AS HouseRulesAgreementAcceptedDate
 , RegistrationId, FirstName, FamilyName, StatusId

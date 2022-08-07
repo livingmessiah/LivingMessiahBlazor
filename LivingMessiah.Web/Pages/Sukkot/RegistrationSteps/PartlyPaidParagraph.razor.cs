@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
-using LivingMessiah.Web.Pages.Sukkot.RegistrationSteps.Enums;
 
 namespace LivingMessiah.Web.Pages.Sukkot.RegistrationSteps;
 
@@ -9,19 +7,13 @@ public partial class PartlyPaidParagraph
 	[Parameter, EditorRequired]
 	public RegistrationStep RegistrationStep { get; set; }
 
-	public static MarkupString Remainder(decimal remainingCost)
+	public static MarkupString RemainderAndTotal(decimal remainingCost, decimal totalDonation)
 	{
 		string remainingCostToString = remainingCost.ToString("C0");
-		return remainingCost == 0 ?
+		string totalDonationToString = totalDonation.ToString("C0");
+		return totalDonation == 0 && remainingCost==00 ?
 				(MarkupString)(string.Empty) :
-				(MarkupString)$"<p class='lead'>Remainder: <b>{remainingCostToString}</b></p>";
+				(MarkupString)$"<p class='lead'>Remainder: <b>{remainingCostToString}</b>; Previous donation(s): <b>{totalDonationToString}</b></p>";
 	}
 
-	public static MarkupString Total(decimal totalDonation)
-	{
-		string remainingCostToString = totalDonation.ToString("C0");
-		return totalDonation == 0 ?
-				(MarkupString)(string.Empty) :
-				(MarkupString)$"<p class='lead'>Previous donation(s): <b>{remainingCostToString}</b></p>";
-	}
 }

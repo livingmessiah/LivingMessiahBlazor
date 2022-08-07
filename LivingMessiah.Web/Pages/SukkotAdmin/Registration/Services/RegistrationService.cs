@@ -16,7 +16,6 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration.Services;
 public interface IRegistrationService
 {
 	string ExceptionMessage { get; set; }
-	//string InformationMessage { get; set; }
 	Task<RegistrationVM> GetById(int id);
 	Task<Sukkot.Components.RegistrationVM> GetByIdVer2(int id);
 	Task<Tuple<int, int, string>> Create(RegistrationVM registration);
@@ -43,7 +42,6 @@ public class RegistrationService : IRegistrationService
 
 	//ToDo: make this private
 	public string ExceptionMessage { get; set; } = "";
-	//public string InformationMessage { get; set; } = "";
 
 	public async Task<Tuple<int, int, string>> Create(RegistrationVM registrationVM)
 	{
@@ -51,7 +49,7 @@ public class RegistrationService : IRegistrationService
 		try
 		{
 			//string email = await SvcClaims.GetEmail();	if (await SvcClaims.IsUserAuthoirized(email))	{	}
-			registrationVM.Status = Status.RegistrationFormCompleted;
+			registrationVM.Status = Status.Payment;
 			registrationVM.AttendanceBitwise = GetDaysBitwise(registrationVM.AttendanceDateList, DateRangeEnum.AttendanceDays);
 
 			var sprocTuple = await db.Create(DTO_From_VM_To_DB(registrationVM));
@@ -129,11 +127,10 @@ public class RegistrationService : IRegistrationService
 			ChildBig = registration.ChildBig,
 			ChildSmall = registration.ChildSmall,
 			StatusId = registration.Status.Value,
-			//StatusId = registration.StatusId,
-			AttendanceBitwise = registration.AttendanceBitwise,
+			AttendanceBitwise = GetDaysBitwise(registration.AttendanceDateList, DateRangeEnum.AttendanceDays),
 			LmmDonation = registration.LmmDonation,
 			Avatar = registration.Avatar,
-			Notes = registration.Notes
+			Notes = GetNotesScrubbed(registration.Notes)
 		};
 		return poco;
 	}
@@ -147,7 +144,8 @@ public class RegistrationService : IRegistrationService
 		{
 			VM = await db.GetByIdVer2(id);
 			string email = await SvcClaims.GetEmail();
-
+			VM.Status = Status.FromValue(VM.StatusId);
+			VM.AttendanceDateList = GetAttendanceDateList(VM.AttendanceDatesCSV);
 			if (await SvcClaims.IsUserAuthoirized(email) == false)
 			{
 				ExceptionMessage = $"...logged in user:{email} lacks authority for to see content of id={id}";  // /EMail:{registrationPOCO.EMail}
@@ -167,6 +165,28 @@ public class RegistrationService : IRegistrationService
 			throw new InvalidOperationException(ExceptionMessage);
 		}
 	}
+
+	private DateTime[] GetAttendanceDateList(string csv)
+	{
+		if (!String.IsNullOrEmpty(csv))
+		{
+			int length = csv.Split(",").Length;
+			DateTime[] list = new DateTime[length];
+			string[] array = csv.Split(',');
+			int i = 0;
+			foreach (string value in array)
+			{
+				list[i] = (DateTime.Parse(value));
+				i += 1;
+			}
+			return list;
+		}
+		else
+		{
+			return null;
+		}
+	}
+
 
 	public async Task<RegistrationVM> GetById(int id)
 	{
@@ -234,10 +254,6 @@ public class RegistrationService : IRegistrationService
 			Avatar = poco.Avatar,
 			Notes = poco.Notes
 		};
-
-		//Logger.LogDebug($"...registration.StatusEnum: {registration.Status}");
-		//Logger.LogDebug($"...AttendanceDateList: {registration.AttendanceDateList}");
-		//Logger.LogDebug($"...AttendanceBitwise: {registration.AttendanceBitwise}");
 		return registration;
 	}
 
@@ -269,11 +285,11 @@ public class RegistrationService : IRegistrationService
 		Logger.LogInformation($"Inside {nameof(RegistrationService)}!{nameof(CreateVer2)}; calling {nameof(db.Create)}");
 		try
 		{
-			registrationVM.Status = Status.RegistrationFormCompleted;
+			registrationVM.Status = Status.Payment;
 			registrationVM.AttendanceBitwise = GetDaysBitwise(registrationVM.AttendanceDateList, DateRangeEnum.AttendanceDays);
 
 			var sprocTuple = await db.Create(DTO_From_VM_To_DB_Ver2(registrationVM));
-			
+
 			return sprocTuple;
 
 		}
@@ -291,10 +307,8 @@ public class RegistrationService : IRegistrationService
 	public async Task<Tuple<int, int, string>> UpdateVer2(Sukkot.Components.RegistrationVM registrationVM)
 	{
 		Logger.LogInformation($"Inside {nameof(RegistrationService)}!{nameof(UpdateVer2)}; calling {nameof(db.Update)}");
-
 		try
 		{
-			registrationVM.AttendanceBitwise = GetDaysBitwise(registrationVM.AttendanceDateList, DateRangeEnum.AttendanceDays);
 			var sprocTuple = await db.Update(DTO_From_VM_To_DB_Ver2(registrationVM));
 			Logger.LogInformation($"Registration updated for {registrationVM.FamilyName}/{registrationVM.EMail}");
 			return sprocTuple;
@@ -306,7 +320,18 @@ public class RegistrationService : IRegistrationService
 			ExceptionMessage += ex.Message ?? "-- ex.Message was null --";
 			throw new InvalidOperationException(ExceptionMessage);
 		}
+	}
 
+	public string GetNotesScrubbed(string notes)
+	{
+		if (!string.IsNullOrEmpty(notes))
+		{
+			return notes.Replace("\"", string.Empty).Replace("'", string.Empty);
+		}
+		else
+		{
+			return notes;
+		}
 	}
 
 	#endregion

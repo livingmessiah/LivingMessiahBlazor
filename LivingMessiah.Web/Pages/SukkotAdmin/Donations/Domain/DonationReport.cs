@@ -26,7 +26,7 @@ public class DonationReport
 	{
 		get
 		{
-			return Status.FromValue(StatusId) == Status.FullyPaid ? "X" : "";
+			return Status.FromValue(StatusId) == Status.Complete ? "X" : "";
 		}
 	}
 

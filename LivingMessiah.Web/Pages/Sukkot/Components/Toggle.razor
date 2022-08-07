@@ -1,0 +1,30 @@
+﻿
+<div class="row mb-3">
+	<div class="col-12">
+		@if (IsCollapsed)
+		{
+			<Button @onclick="@(e => ToggleButtonClick(IsCollapsed))"
+						class="btn-primary btn-sm float-end">
+				Form Details <i class='fas fa-chevron-down'></i>
+			</Button>
+		}
+		else
+		{
+			<Button @onclick="@(e => ToggleButtonClick(IsCollapsed))"
+						class="btn-primary btn-sm float-end">
+				Hide <i class='fas fa-chevron-up'></i>
+			</Button>
+		}
+	</div>
+</div>
+
+@if (!IsCollapsed)
+{
+	<div class="card mt-0 mb-3">
+		<div class="card-body bg-light">
+			<RegistrationEditForm Email="@Email" Id="@Id" />
+		</div>
+	</div>
+}
+
+

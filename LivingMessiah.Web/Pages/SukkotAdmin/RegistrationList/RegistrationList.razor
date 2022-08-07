@@ -1,5 +1,4 @@
 ﻿@page "/SukkotAdmin/RegistrationList/"
-@using LivingMessiah.Web.Pages.Sukkot.CreateEdit
 @using static LivingMessiah.Web.Services.Auth0
 @using LivingMessiah.Web.Shared.Sukkot
 @using LivingMessiah.Web.Infrastructure
@@ -21,9 +20,9 @@
 <AuthorizeView Roles="@Roles.AdminOrSukkot">
 	<div class="row">
 		<div class="col-12">
-			<CommonButtons RegistrationStepId="null"
-										 NavButton="NB.NavButton.Add">
-			</CommonButtons>
+			<button class="btn btn-success" title="Add" disabled>
+				<i class="fas fa-plus"></i> Add
+			</button>
 		</div>
 	</div>
 
@@ -84,9 +83,12 @@
 											<CommonButtons RegistrationStepId="item.Id"
 																 NavButton="NB.NavButton.Details">
 											</CommonButtons>
-											<CommonButtons RegistrationStepId="item.Id"
-																 NavButton="NB.NavButton.Edit">
-											</CommonButtons>
+
+
+											<button class="btn btn-outline-success" title="Edit" disabled>
+												<i class="fas fa-edit"></i> Edit
+											</button>
+
 											<CommonButtons RegistrationStepId="item.Id"
 																 NavButton="NB.NavButton.DeleteConfirmation">
 											</CommonButtons>

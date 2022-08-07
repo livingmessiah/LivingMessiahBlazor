@@ -501,20 +501,18 @@ public static class Sukkot
 	public static class RegistrationSteps
 	{
 		public const string Index = "/Sukkot/RegistrationSteps";
-		public const string StartButtonText = "Begin Registration Steps";
 		public const string Title = "Registration Steps";
-		public const string StartButtonIcon = "fas fa-caret-right";
 		public const string Icon = "fas fa-campground";
+		public const string StartButtonText = "Begin Registration Steps";
+		public const string StartButtonIcon = "fas fa-caret-right";
+		public const string BackToButtonText = "Back to Registration Steps";
+		public const string BackToButtonIcon = "fas fa-campground";
 	}
 
 	public const LivingMessiah.Web.Pages.KeyDates.Enums.FeastDayEnum FeastDay = LivingMessiah.Web.Pages.KeyDates.Enums.FeastDayEnum.Tabernacles;
 	public const string Index = "/Sukkot";
 	public const string Title = "Sukkot";
 	public const string Icon = "fas fa-campground";
-
-	// 086-add-BlazoredFluidValidation | ToDo: Delete
-	public const string CreateEdit = "/Sukkot/CreateEdit";
-	public const string CreateEditTitle = "Sukkot Create/Edit";
 
 	public const string Details = "/Sukkot/Details";
 	public const string DetailsTitle = "Sukkot Details";

@@ -4,35 +4,39 @@
 @using LivingMessiah.Web.Shared.Sukkot
 @using NB = LivingMessiah.Web.Shared.Sukkot.Enums
 
-@((MarkupString)Remainder(RegistrationStep.RemainingCost))
+<div class="card mt-0 mb-3">
+	<div class="card-body bg-light">
+		
+		@((MarkupString)RemainderAndTotal(RegistrationStep.RemainingCost, RegistrationStep.TotalDonation))
 
-@((MarkupString)Total(RegistrationStep.TotalDonation))
+		<p class="lead">
+			Two Payment Options
+			<ol class="lead">
+				<li>
+					<b>Preferred Option</b>.  Pay with <u>Debit or Credit Card</u>.  Click the
+					<CommonButtons RegistrationStepId="RegistrationStep.Id"
+												 NavButton="NB.NavButton.Donation">
+					</CommonButtons>
+					button and follow the instructions.
+					<br />See the
 
-<p class="lead">
-	Two Payment Options
-	<ol class="lead">
-		<li>
-			<b>Preferred Option</b>.  Pay with <u>Debit or Credit Card</u>.  Click the
-			<CommonButtons RegistrationStepId="RegistrationStep.Id"
-										 NavButton="NB.NavButton.Donation">
-			</CommonButtons>
-			button and follow the instructions.
-			<br />See the
+					<a href="@LivingMessiah.Web.Pages.Sukkot.Constants.Blobs.UrlPDF(PDFs.PayPalWalkThrough)"
+						 target="_blank">
+						<i class="fas fa-file-pdf"></i> <u>PayPal walk through</u>
+					</a> if you need more details.
+					Note, a <em>PayPal</em> &reg; account is <u>not</u> necessary, Living Messiah just uses them to process financial transactions.
+					<br /><em>Or</em>...<br />
+				</li>
+				<li>
 
-			<a href="@LivingMessiah.Web.Pages.Sukkot.Constants.Blobs.UrlPDF(PDFs.PayPalWalkThrough)"
-				 target="_blank">
-				<i class="fas fa-file-pdf"></i> <u>PayPal walk through</u>
-			</a> if you need more details.
-			Note, a <em>PayPal</em> &reg; account is <u>not</u> necessary, Living Messiah just uses them to process financial transactions.
-			<br /><em>Or</em>...<br />
-		</li>
-		<li>
+					Pay via <u>Check</u>.  Click
 
-			Pay via <u>Check</u>.  Click
+					<CommonButtons RegistrationStepId="RegistrationStep.Id"
+												 NavButton="NB.NavButton.DetailsPrint">
+					</CommonButtons>  and follow the instructions.
+				</li>
+			</ol>
+		</p>
 
-			<CommonButtons RegistrationStepId="RegistrationStep.Id"
-										 NavButton="NB.NavButton.DetailsPrint">
-			</CommonButtons>  and follow the instructions.
-		</li>
-	</ol>
-</p>
+	</div>
+</div>

@@ -4,7 +4,6 @@ using Microsoft.Extensions.Logging;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Components.Authorization;
 
-using LivingMessiah.Web.Pages.Sukkot.CreateEdit;
 using LivingMessiah.Web.Pages.Sukkot.RegistrationSteps;
 using LivingMessiah.Web.Pages.Sukkot.Domain;
 using LivingMessiah.Web.Pages.Sukkot.Data;
@@ -21,17 +20,9 @@ public interface ISukkotService
 	Task<vwRegistration> Details(int id, ClaimsPrincipal user, bool showPrintInstructionMessage = false);
 	Task<vwRegistration> DeleteConfirmation(int id, ClaimsPrincipal user);
 
-	// 086-add-BlazoredFluidValidation |
-	// - ToDo: Rename Update to GetById
-	// - ToDo: Maybe remove `ClaimsPrincipal user` parameter model it after ????
-	Task<RegistrationVM> Update(int id, ClaimsPrincipal user);
-	Task<int> Create(RegistrationVM registration, ClaimsPrincipal user);
-	Task<int> Edit(RegistrationVM registration, ClaimsPrincipal user);
 	Task<int> DeleteConfirmed(int id);
-	
 	Task<RegistrationSummary> Summary(int id, ClaimsPrincipal user);
 	Task<IndexVM> GetRegistrationStep();
-
 	Task<int> AddHouseRulesAgreementRecord(string email, string timeZone);
 }
 
@@ -246,85 +237,6 @@ public class SukkotService : ISukkotService
 		return vm;
 	}
 
-	//
-	public async Task<RegistrationVM> Update(int id, ClaimsPrincipal user)
-	{
-		Logger.LogInformation(string.Format("Inside {0} id:{1}"
-			, nameof(SukkotService) + "!" + nameof(Update), id));
-
-		RegistrationPOCO registrationPOCO = new RegistrationPOCO();
-
-		try
-		{
-			registrationPOCO = await db.ById2(id);
-
-			if (registrationPOCO is null)
-			{
-				Logger.LogWarning("registrationPOCO is null");
-				UserInterfaceMessage += "Registration record not found";
-				throw new RegistrationNotFoundException(UserInterfaceMessage);
-			}
-			else
-			{
-				registrationPOCO.Status = Status.FromValue(registrationPOCO.StatusId);  
-			}
-
-			if (!IsUserAuthoirized(registrationPOCO.EMail, id, user))
-			{
-				LogExceptionMessage = $"Inside {nameof(Update)}, logged in user:{registrationPOCO.EMail} lacks authority for id={id}";
-				Logger.LogWarning(LogExceptionMessage);
-				UserInterfaceMessage += "User not authorized";
-				throw new UserNotAuthoirizedException(UserInterfaceMessage);
-			}
-
-			Logger.LogDebug(string.Format("..registrationPOCO.Status: {0}, (-1 is null)", registrationPOCO.Status ?? -1));
-
-			if (registrationPOCO.Status == Status.FullyPaid & !AdminOrSukkotOverride(user))
-			{
-				throw new RegistratationException("Can not edit registration that has been fully paid.");
-			}
-		}
-		catch (Exception ex)
-		{
-			LogExceptionMessage = $"Inside {nameof(Update)}, db.{nameof(db.ById2)}";
-			Logger.LogError(ex, LogExceptionMessage, id);
-			UserInterfaceMessage += "An invalid operation occurred updating registration, contact your administrator";
-			throw new InvalidOperationException(UserInterfaceMessage);
-		}
-		return UpdateDTO(registrationPOCO);
-	}
-
-	public async Task<int> Create(RegistrationVM registration, ClaimsPrincipal user)
-	{
-		int newId = 0;
-
-		try
-		{
-			Logger.LogInformation(string.Format("Inside {0}", nameof(SukkotService) + "!" + nameof(Create)));
-			if (user.GetRoles() == Auth0.Roles.Admin | user.GetRoles() == Auth0.Roles.Sukkot)
-			{
-			}
-			else
-			{
-				registration.Status = Status.RegistrationFormCompleted;
-			}
-
-			registration.AttendanceBitwise = GetDaysBitwise(registration.AttendanceDateList, DateRangeEnum.AttendanceDays);
-
-			newId = await db.Create(DTO(registration));
-			Logger.LogInformation(string.Format("Registration created for {0}; newId={1}, registration.Status.Value={2}"
-				, registration.FamilyName + "/" + registration.EMail, newId, registration.Status.Value));
-		}
-		catch (Exception ex)
-		{
-			LogExceptionMessage = $"Inside {nameof(Create)}, db.{nameof(db.Create)}";
-			Logger.LogError(ex, LogExceptionMessage);
-			UserInterfaceMessage += "An invalid operation occurred creating the registration, contact your administrator";
-			throw new InvalidOperationException(UserInterfaceMessage);
-		}
-		return newId;
-	}
-
 	public static string DumpDateRange(DateTime[] dateList)
 	{
 		if (dateList == null) { return ""; }
@@ -333,10 +245,6 @@ public class SukkotService : ISukkotService
 		{
 			s += day.ToString("MM/dd") + ", ";
 		}
-		//s = s.TrimEnd(",");
-		//s.TrimEnd("");
-
-		//s += "; Length: " + s.Length;
 		return s;
 	}
 
@@ -359,88 +267,6 @@ public class SukkotService : ISukkotService
 		return bitwise;
 	}
 
-	private RegistrationPOCO DTO(RegistrationVM registration)
-	{
-		RegistrationPOCO poco = new RegistrationPOCO
-		{
-			Id = registration.Id,
-			FamilyName = registration.FamilyName,
-			FirstName = registration.FirstName,
-			SpouseName = registration.SpouseName,
-			OtherNames = registration.OtherNames,
-			EMail = registration.EMail,
-			Phone = registration.Phone,
-			Adults = registration.Adults,
-			ChildBig = registration.ChildBig,
-			ChildSmall = registration.ChildSmall,
-			Status = registration.Status, 
-			AttendanceBitwise = registration.AttendanceBitwise,
-			LmmDonation = registration.LmmDonation,
-			Avatar = registration.Avatar,
-			Notes = registration.Notes
-		};
-		return poco;
-	}
-
-	private RegistrationVM UpdateDTO(RegistrationPOCO poco)
-	{
-		RegistrationVM registration = new RegistrationVM
-		{
-			Id = poco.Id,
-			FamilyName = poco.FamilyName,
-			FirstName = poco.FirstName,
-			SpouseName = poco.SpouseName,
-			OtherNames = poco.OtherNames,
-			EMail = poco.EMail,
-			Phone = poco.Phone,
-			Adults = poco.Adults,
-			ChildBig = poco.ChildBig,
-			ChildSmall = poco.ChildSmall,
-			Status = poco.Status, 
-			AttendanceBitwise = poco.AttendanceBitwise,
-			AttendanceDateList = poco.AttendanceDateList,
-			LmmDonation = poco.LmmDonation,
-			Avatar = poco.Avatar,
-			Notes = poco.Notes
-		};
-
-		Logger.LogDebug($"Inside {nameof(SukkotService)}!{nameof(UpdateDTO)}");
-		//Logger.LogDebug($"...registration.StatusEnum: {registration.StatusEnum}");
-		//Logger.LogDebug($"...AttendanceDateList: {registration.AttendanceDateList}");
-		//Logger.LogDebug($"...AttendanceBitwise: {registration.AttendanceBitwise}");
-		return registration;
-	}
-
-	public async Task<int> Edit(RegistrationVM registration, ClaimsPrincipal user)
-	{
-		Logger.LogInformation(string.Format("Inside {0}", nameof(SukkotService) + "!" + nameof(Edit)));
-		int count = 0;
-		try
-		{
-			if (user.GetRoles() == Auth0.Roles.Admin | user.GetRoles() == Auth0.Roles.Sukkot)
-			{
-			}
-			else
-			{
-				registration.Status = Status.RegistrationFormCompleted;
-			}
-
-			registration.AttendanceBitwise = GetDaysBitwise(registration.AttendanceDateList, DateRangeEnum.AttendanceDays);
-
-			Logger.LogInformation(string.Format("Calling db.{0}", nameof(db.Update)));
-			count = await db.Update(DTO(registration));
-			Logger.LogInformation(string.Format("Registration updated for {0} count:{1}"
-				, nameof(registration.FamilyName) + "/" + nameof(registration.EMail), count));
-		}
-		catch (Exception ex)
-		{
-			LogExceptionMessage = $"Inside {nameof(Edit)}, db.{nameof(db.Update)}";
-			Logger.LogError(ex, LogExceptionMessage);
-			UserInterfaceMessage += "An invalid operation occurred editing the registration, contact your administrator";
-			throw new InvalidOperationException(UserInterfaceMessage);
-		}
-		return count;
-	}
 
 	public async Task<int> DeleteConfirmed(int id)
 	{

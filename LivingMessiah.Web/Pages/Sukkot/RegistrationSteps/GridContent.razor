@@ -34,8 +34,7 @@
 }
 
 @*Step 2*@
-@if (ComparisonStatus == Status.EmailNotConfirmed &&
-		ComparisonStatus == UsersCurrentStatus)
+@if (ComparisonStatus == Status.EmailNotConfirmed && ComparisonStatus == UsersCurrentStatus)
 {
 	if (IsXs)
 	{
@@ -59,10 +58,7 @@
 
 @*Step 3*@
 
-
-
-@if (ComparisonStatus == Status.AgreementNotSigned
-&& ComparisonStatus == UsersCurrentStatus)
+@if (ComparisonStatus == Status.AgreementNotSigned && ComparisonStatus == UsersCurrentStatus)
 {
 	if (IsXs)
 	{
@@ -81,39 +77,29 @@
 }
 
 
-@*Step 4*@
-@if (ComparisonStatus == Status.StartRegistraion &&
-		ComparisonStatus == UsersCurrentStatus)
+@*Step 4 *@
+@if (ComparisonStatus == Status.StartRegistraion)
 {
-	<div class="card mt-0 mb-3">
-		<div class="card-body bg-light">
-			<RegistrationEditForm Email="@EmailParm" Id="null" />
+	if (ComparisonStatus == UsersCurrentStatus)
+	{
+		<div class="card mt-0 mb-3">
+			<div class="card-body bg-light">
+				<RegistrationEditForm Email="@EmailParm" Id="null" />
+			</div>
 		</div>
-	</div>
-
+	}
+	
+	@if (UsersCurrentStatus.DisplayRegistrationToggleButton && RegistrationStep is not null)
+	{
+		<Toggle Email="@EmailParm" Id="@RegistrationStep.Id"></Toggle>
+	}
 }
 
+@* Step 5 *@
 
-@*Step 5*@
-
-@if (ComparisonStatus == Status.RegistrationFormCompleted
-	&& UsersCurrentStatus >= Status.RegistrationFormCompleted
-	&& RegistrationStep is not null)
+@if (ComparisonStatus == Status.Payment && RegistrationStep is not null)
 {
-	<div class="card mt-0 mb-3">
-		<div class="card-body bg-light">
-			<RegistrationEditForm Email="@EmailParm" Id="@RegistrationStep.Id" />
-		</div>
-	</div>
-
-}
-
-
-@*Step 7*@
-
-@if (ComparisonStatus == Status.FullyPaid && RegistrationStep is not null)
-{
-	if (UsersCurrentStatus == Status.PartiallyPaid || UsersCurrentStatus == Status.RegistrationFormCompleted)
+	if (UsersCurrentStatus == Status.Payment)
 	{
 		if (IsXs)
 		{
@@ -128,28 +114,16 @@
 			<PartlyPaidParagraph RegistrationStep="RegistrationStep" />
 		}
 	}
-	else
+}
+
+
+@*Step 6 *@
+
+@if (ComparisonStatus == Status.Complete && RegistrationStep is not null)
+{
+	if (UsersCurrentStatus == Status.Complete)
 	{
-		if (UsersCurrentStatus == Status.FullyPaid)
-		{
-			if (IsXs)
-			{
-				<div class="card mt-0 mb-3">
-					<div class="card-body bg-light">
-						<CommonButtons RegistrationStepId="RegistrationStep.Id"
-									 NavButton="NB.NavButton.Donation">
-						</CommonButtons>
-
-					</div>
-				</div>
-			}
-			else
-			{
-				<CommonButtons RegistrationStepId="RegistrationStep.Id"
-							 NavButton="NB.NavButton.Donation">
-				</CommonButtons>
-			}
-
-		}
+		<CompleteParagraph RegistrationStepId="@RegistrationStep.Id" />
 	}
+
 }

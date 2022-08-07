@@ -26,19 +26,11 @@ public partial class RegistrationEditForm
 	[Parameter, EditorRequired]
 	public string Email { get; set; }
 
-	//public RegistrationVM VM { get; set; }
 	public RegistrationVM VM { get; set; } = new RegistrationVM();
 
 	public DateRangeLocal DateRangeAttendance { get; set; } = DateRangeLocal.FromEnum(DateRangeEnum.AttendanceDays);
 
 	private FluentValidationValidator? _fluentValidationValidator;
-
-
-	//private async Task GetUserAndClaims()
-	//{
-	//	var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-	//	User = authState.User;
-	//}
 
 	private int Id2;
 	protected override async Task OnInitializedAsync()
@@ -50,7 +42,6 @@ public partial class RegistrationEditForm
 		{
 			if (Id2 == 0)
 			{
-				//VM = new RegistrationVM { Id = 0, EMail = Email };
 				VM.EMail = Email;
 			}
 			else
@@ -106,7 +97,6 @@ public partial class RegistrationEditForm
 			return String.Empty; // shouldn't happen
 		}
 	}
-
 
 	protected async Task SubmitValidForm()
 	{

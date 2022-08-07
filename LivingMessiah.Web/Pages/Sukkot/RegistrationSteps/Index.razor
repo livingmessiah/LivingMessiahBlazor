@@ -58,7 +58,7 @@ else
 
 	@foreach (var item in Status.List.OrderBy(o => o.StepNumber).Where(w => w.UsedByUI).ToList())
 	{
-		<div class="d-block d-sm-none">
+		<div class="d-block d-md-none">
 			<Grid UsersCurrentStatus="@IndexVM.Status"
 			ComparisonStatus="@item"
 			RegistrationStep="@IndexVM.RegistrationStep"
@@ -66,7 +66,8 @@ else
 			IsXs="true">
 			</Grid>
 		</div>
-		<div class="d-none d-sm-block">
+
+		<div class="d-none d-md-block">
 			<Grid UsersCurrentStatus="@IndexVM.Status"
 			ComparisonStatus="@item"
 			RegistrationStep="@IndexVM.RegistrationStep"

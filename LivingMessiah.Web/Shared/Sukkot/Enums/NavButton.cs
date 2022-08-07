@@ -10,11 +10,11 @@ public abstract class NavButton : SmartEnum<NavButton>
 	{
 		internal const int Details = 1;
 		internal const int DetailsPrint = 2;
-		internal const int Edit = 3;
-		internal const int DeleteConfirmation = 4;
-		internal const int Donation = 5;
-		internal const int CreateRegistrationForm = 6;
-		internal const int Add = 7;
+		internal const int DeleteConfirmation = 3;
+		internal const int Donation = 4;
+		internal const int RegistrationSteps = 5;
+		internal const int RegistrationStepsBack = 6;
+
 	}
 	#endregion
 
@@ -23,14 +23,10 @@ public abstract class NavButton : SmartEnum<NavButton>
 	#region  Declared Public Instances
 	public static readonly NavButton Details = new DetailsSE();
 	public static readonly NavButton DetailsPrint = new DetailsPrintSE();
-	public static readonly NavButton Edit = new EditSE();
 	public static readonly NavButton DeleteConfirmation = new DeleteConfirmationSE();
 	public static readonly NavButton Donation = new DonationSE();
-
-	// 086-add-BlazoredFluidValidation | ToDo: Delete
-	public static readonly NavButton CreateRegistrationForm = new CreateRegistrationFormSE();
-	public static readonly NavButton Add = new AddSE();
-
+	public static readonly NavButton RegistrationSteps = new RegistrationStepsSE();
+	public static readonly NavButton RegistrationStepsBack = new RegistrationStepsBackSE();
 	// SE=SmartEnum
 	#endregion
 
@@ -67,17 +63,6 @@ public abstract class NavButton : SmartEnum<NavButton>
 		public override string RouteSuffix => "/true";
 	}
 
-	private sealed class EditSE : NavButton
-	{
-		public EditSE() : base($"{nameof(Id.Edit)}", Id.Edit) { }
-		public override string Label => "Edit";
-		public override string Title => "Registration Edit";
-		public override string Icon => "fas fa-edit";
-		public override string Css => "btn btn-outline-success";
-		public override string Route => Link.CreateEdit;
-		public override string RouteSuffix => "";
-	}
-
 	private sealed class DeleteConfirmationSE : NavButton
 	{
 		public DeleteConfirmationSE() : base($"{nameof(Id.DeleteConfirmation)}", Id.DeleteConfirmation) { }
@@ -100,30 +85,28 @@ public abstract class NavButton : SmartEnum<NavButton>
 		public override string RouteSuffix => "";
 	}
 
-	// 086-add-BlazoredFluidValidation | ToDo: Delete
-	private sealed class CreateRegistrationFormSE : NavButton
+	//Todo: Incorporate these two or delete them
+	private sealed class RegistrationStepsSE : NavButton
 	{
-		public CreateRegistrationFormSE() : base($"{nameof(Id.CreateRegistrationForm)}", Id.CreateRegistrationForm) { }
-		public override string Label => "Create Registration";
-		public override string Title => "Create Registration";
-		public override string Icon => "fas fa-plus";  //fas fa-chevron-right I want this to be on the right, not the left (default)
-		public override string Css => "btn-success btn-lg mb-3";  // btn-success btn-lg mb-3
-		public override string Route => Link.CreateEdit;
+		public RegistrationStepsSE() : base($"{nameof(Id.RegistrationSteps)}", Id.RegistrationSteps) { }
+		public override string Label => Link.RegistrationSteps.StartButtonText;
+		public override string Title => Link.RegistrationSteps.StartButtonText;
+		public override string Icon => Link.RegistrationSteps.StartButtonIcon;
+		public override string Css => "btn btn-success btn-lg";  
+		public override string Route => Link.RegistrationSteps.Index;
 		public override string RouteSuffix => "";
 	}
 
-	// 086-add-BlazoredFluidValidation | ToDo: Delete
-	private sealed class AddSE : NavButton
+	private sealed class RegistrationStepsBackSE : NavButton
 	{
-		public AddSE() : base($"{nameof(Id.Add)}", Id.Add) { }
-		public override string Label => "Add";
-		public override string Title => "Add";
-		public override string Icon => "fas fa-plus";  
-		public override string Css => "btn btn-success";  // btn-success btn-lg mb-3
-		public override string Route => Link.CreateEdit;
+		public RegistrationStepsBackSE() : base($"{nameof(Id.RegistrationSteps)}", Id.RegistrationSteps) { }
+		public override string Label => Link.RegistrationSteps.BackToButtonText;
+		public override string Title => Link.RegistrationSteps.BackToButtonText;
+		public override string Icon => Link.RegistrationSteps.BackToButtonIcon;
+		public override string Css => "btn btn-success btn-lg";  
+		public override string Route => Link.RegistrationSteps.Index;
 		public override string RouteSuffix => "";
 	}
-
 	#endregion
 
 }

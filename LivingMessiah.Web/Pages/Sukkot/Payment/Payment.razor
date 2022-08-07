@@ -1,5 +1,6 @@
 ﻿@page "/Sukkot/Payment/{Id:int}"
 @using LivingMessiah.Web.Shared.Sukkot
+@using LivingMessiah.Web.Pages.Sukkot.Components
 @using Page = LivingMessiah.Web.Links.Sukkot
 
 <PageTitle>@Page.Links2.PaymentTitle</PageTitle>
@@ -88,11 +89,4 @@ else
 	}
 }
 
-<div class="row d-print-none mt-5">
-	<div class="col-12">
-		<a href="@Page.RegistrationSteps.Index"
-			 class="btn btn-info" title="Back to Registration Steps">
-			<i class="far fa-arrow-alt-circle-left"></i> Back to Registration
-		</a>
-	</div>
-</div>
+<RegistrationStepsLink BackwardDirection="true"/>

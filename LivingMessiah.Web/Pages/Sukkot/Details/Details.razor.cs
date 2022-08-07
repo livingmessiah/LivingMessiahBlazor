@@ -69,11 +69,6 @@ public partial class Details
 		StateHasChanged();
 	}
 
-	void Edit_ButtonClick(MouseEventArgs e, int id)
-	{
-		NavManager.NavigateTo(Links.Sukkot.CreateEdit + "/" + id);
-	}
-
 	#region ErrorHandling
 
 	private void InitializeErrorHandling()

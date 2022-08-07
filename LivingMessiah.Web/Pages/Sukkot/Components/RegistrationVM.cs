@@ -20,22 +20,8 @@ public class RegistrationVM
 	public int StatusId { get; set; }
 	public Status Status { get; set; }
 
-	/*
-
-	public string StatusName
-	{
-		get
-		{
-			return Status.FromValue(StatusId).Name;
-		}
-	}
-	
-	Status = Status.FromValue(poco.StatusId),
-	StatusId = registration.Status.Value,
-	
-	 */
-
 	public int AttendanceBitwise { get; set; }
+	public string AttendanceDatesCSV { get; set; }
 	public DateTime[] AttendanceDateList { get; set; }
 	public string Notes { get; set; }
 	public string Avatar { get; set; }
@@ -71,39 +57,5 @@ public class RegistrationVMValidator : AbstractValidator<RegistrationVM>
 				.GreaterThanOrEqualTo(0).WithMessage("Number of adults must be greater than 0")
 				.LessThan(20).WithMessage("Number of adults cannot be greater than 20");
 
-		// They can't enter an email, so why do I have this here?
-		//RuleFor(p => p.EMail).EmailAddress().NotEmpty().WithMessage("You must enter a email address");
-
-		//RuleFor(p => p.EMail)
-		//		.NotEmpty().WithMessage("You must enter a email address")
-		//		.EmailAddress().WithMessage("You must provide a valid email address");
 	}
-	/*
-		//				.MustAsync(async (email, _) => await IsUniqueAsync(email))
-
-		.WithMessage("Email address must be unique").When(p => !string.IsNullOrEmpty(p.EMail));
-
-
-         1                   2
-123456789012345678901234567890
-1+ (555) 555-1212 ext. 1234
-RuleFor(p => p.Phone)
-
-
-	RuleFor(p => p.Address).SetValidator(new AddressValidator());
-
-	[Required][Key]	public int Id { get; set; }
-
-	.NotEmpty(): Checks if a property value is null, or is the default value for the type. 
-	.NotNull(): Checks if a property value is null
-	
-		private static async Task<bool> IsUniqueAsync(string email)
-		{
-			await Task.Delay(300);
-			return email.ToLower() != "mail@my.com";
-		}
-
-RuleSet("Names", () =>		});		
-	{
-	*/
 }
