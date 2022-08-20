@@ -1,4 +1,4 @@
-﻿namespace LivingMessiah.Web.SmartEnums;
+﻿namespace LivingMessiah.Web.Enums;
 using Ardalis.SmartEnum;
 
 public enum BookGroupEnum
@@ -114,6 +114,13 @@ public abstract class BibleBook : SmartEnum<BibleBook>
 	public abstract int LastChapter { get; }
 	public abstract string TransliterationInHebrew { get; }
 	public abstract string NameInHebrew { get; }
+	public string Dump
+	{
+		get
+		{
+			return $" {this.Value}-{this.Abrv}-{this.Name}-{this.BookGroupEnum}";
+		}
+	}
 
 	#endregion
 

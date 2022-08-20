@@ -1,13 +1,10 @@
-﻿@page "/SmartEnums/BibleBooks"
-@using LivingMessiah.Domain.Bible
+﻿@page "/BibleBooks"
+@page "/SmartEnums/BibleBooks"
+@using LivingMessiah.Web.Enums
 
 <PageTitle>SmartEnums | BibleBooks</PageTitle>
 
 <h1>Bible Books</h1>
-<ul>
-		<li><a href="/SmartEnums">Smart Enums Index</a></li>
-</ul>
-
 
 <p class="text-muted"><small>Test <i>SmartEnum</i></small></p>
 
@@ -19,12 +16,12 @@
 	<div class="card-body">
 
 		<dl class="row">
-			<dt class="col-6"><span class="float-end"><code>Book.Deuteronomy</code>:</span></dt>
-			<dd class="col-6">@Book.Deuteronomy</dd>
+			<dt class="col-6"><span class="float-end"><code>BibleBook.Deuteronomy</code>:</span></dt>
+			<dd class="col-6">@BibleBook.Deuteronomy</dd>
 		</dl>
 		<dl class="row">
-			<dt class="col-6"><span class="float-end"><code>Book.Proverbs</code> | <code>Book.Proverbs.BookGroupEnum</code>:</span></dt>
-			<dd class="col-6">@Book.Proverbs | @Book.Proverbs.BookGroupEnum</dd>
+			<dt class="col-6"><span class="float-end"><code>BibleBook.Proverbs</code> | <code>BibleBook.Proverbs.BookGroupEnum</code>:</span></dt>
+			<dd class="col-6">@BibleBook.Proverbs | @BibleBook.Proverbs.BookGroupEnum</dd>
 		</dl>
 
 	</div>
@@ -37,12 +34,12 @@
 
 	<div class="card-body">
 		<dl class="row">
-			<dt class="col-6"><span class="float-end"><code>Book.FromValue(3)</code>:</span></dt>
-			<dd class="col-6">@Book.FromValue(3)</dd>
+			<dt class="col-6"><span class="float-end"><code>BibleBook.FromValue(3)</code>:</span></dt>
+			<dd class="col-6">@BibleBook.FromValue(3)</dd>
 		</dl>
 		<dl class="row">
-			<dt class="col-6"><span class="float-end"><code>Book.FromName('Genesis')</code>:</span></dt>
-			<dd class="col-6">@Book.FromName("Genesis")</dd>
+			<dt class="col-6"><span class="float-end"><code>BibleBook.FromName('Genesis')</code>:</span></dt>
+			<dd class="col-6">@BibleBook.FromName("Genesis")</dd>
 		</dl>
 
 	</div>
@@ -50,10 +47,10 @@
 
 <div class="card mb-3 border-warning">
 	<div class="card-header">
-		<h4 class="card-title text-center"><code>Book.List.ToList()</code></h4>
+		<h4 class="card-title text-center"><code>BibleBook.List.ToList()</code></h4>
 	</div>
 	<div class="card-body">
-		<TableTemplate Items="Book.List.ToList()">
+		<TableTemplate Items="BibleBook.List.ToList()">
 			<TableHeader>
 				<th class="text-info">Id</th>
 				<th class="text-primary">Name</th>
@@ -68,17 +65,17 @@
 			</RowTemplate>
 		</TableTemplate>
 	</div>
-	<p class="card-footer text-center"><code><small>Book.List.Count</small></code>: @Book.List.Count</p>
+	<p class="card-footer text-center"><code><small>BibleBook.List.Count</small></code>: @BibleBook.List.Count</p>
 </div>
 
 <div class="card mb-3 border-warning">
 	<div class="card-header">
-		<h4 class="card-title text-center"><code>item.Dump of Book.List.OrderBy(o => o.Value)</code></h4>
+		<h4 class="card-title text-center"><code>item.Dump of BibleBook.List.OrderBy(o => o.Value)</code></h4>
 	</div>
 
 	<div class="card-body">
 
-		@foreach (var item in Book.List.OrderBy(o => o.Value))
+		@foreach (var item in BibleBook.List.OrderBy(o => o.Value))
 		{
 			<ul class="list-inline">
 				<li class="list-inline-item">@item.Dump</li>
@@ -88,14 +85,12 @@
 	</div>
 </div>
 
-
-
 <div class="card mb-3 border-warning">
 	<div class="card-header">
-		<h4 class="card-title text-center"><code>Book.List.ToList() Where BookGroupEnum == Poetry</code></h4>
+		<h4 class="card-title text-center"><code>BibleBook.List.ToList() Where BookGroupEnum == Poetry</code></h4>
 	</div>
 	<div class="card-body">
-		<TableTemplate Items="Book.List.Where(x => x.BookGroupEnum == BookGroupEnum.Poetry).ToList()">
+		<TableTemplate Items="BibleBook.List.Where(x => x.BookGroupEnum == Enums.BookGroupEnum.Poetry).ToList()">
 			<TableHeader>
 				<th class="text-info">Id</th>
 				<th class="text-primary">Name</th>
@@ -110,7 +105,7 @@
 			</RowTemplate>
 		</TableTemplate>
 	</div>
-	<p class="card-footer text-center"><code><small>Book.List.Count</small></code>: @Book.List.Count</p>
+	<p class="card-footer text-center"><code><small>BibleBook.List.Count</small></code>: @BibleBook.List.Count</p>
 </div>
 
 
@@ -119,30 +114,14 @@
 		<h4 class="card-title text-center">Fluent Interface</h4>
 	</div>
 	<div class="card-body">
-		<p class="mx-5 my-1"><code><small>Book myNumbersSmartEnum = Book.FromName("Numbers");</small></code></p>
+		<p class="mx-5 my-1"><code><small>Book myNumbersSmartEnum = BibleBook.FromName("Numbers");</small></code></p>
 		<p class="mx-5 my-1"><code><small>string FluentResult = "";</small></code></p>
 		<p class="mx-5 my-1"><code><small>myNumbersSmartEnum</small></code></p>
-		<p class="mx-5 my-1"><code><small>&nbsp;&nbsp;.When(Book.Genesis).Then(() => FluentResult = "Book.Genesis")</small></code></p>
-		<p class="mx-5 my-1"><code><small>&nbsp;&nbsp;.When(Book.Numbers).Then(() => FluentResult = "Book.Numbers");</small></code></p>
+		<p class="mx-5 my-1"><code><small>&nbsp;&nbsp;.When(BibleBook.Genesis).Then(() => FluentResult = "BibleBook.Genesis")</small></code></p>
+		<p class="mx-5 my-1"><code><small>&nbsp;&nbsp;.When(BibleBook.Numbers).Then(() => FluentResult = "BibleBook.Numbers");</small></code></p>
 	</div>
 
 	<div class="card-body">
 		<p>FluentResult: <b>@FluentResult</b></p>
 	</div>
 </div>
-
-
-@code {
-	Book myNumbersSmartEnum = Book.FromName("Numbers");
-
-	string FluentResult = "";
-
-	protected override void OnInitialized()
-	{
-		myNumbersSmartEnum
-			.When(Book.Genesis).Then(() => FluentResult = "Book.Genesis")
-			.When(Book.Numbers).Then(() => FluentResult = "Book.Numbers");
-
-	}
-
-}
