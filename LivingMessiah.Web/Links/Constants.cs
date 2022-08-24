@@ -720,7 +720,6 @@ public static class WindmillRanch
 	{
 		public const string Page = "/Windmillranch/Backhoe";
 		public const string Title = "Backhoe";
-		public const string SubTitle = "Operator Instructions";
 		public const string Icon = "fas fa-tractor";  // fab fa-digg
 	}
 

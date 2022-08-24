@@ -66,7 +66,7 @@ public abstract class Windmill : SmartEnum<Windmill>
 	private sealed class PermacultureSE : Windmill
 	{
 		public PermacultureSE() : base($"{nameof(Id.Permaculture)}", Id.Permaculture) { }
-		public override string Color => "light";
+		public override string Color => "success";
 		public override string Page => WindmillRanch.Permaculture.Page;
 		public override string Title => WindmillRanch.Permaculture.Title;
 	}
@@ -130,7 +130,7 @@ public abstract class Windmill : SmartEnum<Windmill>
 	private sealed class GardenSE : Windmill
 	{
 		public GardenSE() : base($"{nameof(Id.Garden)}", Id.Garden) { }
-		public override string Color => "light";
+		public override string Color => "warning";
 		public override string Page => WindmillRanch.Garden.Page;
 		public override string Title => WindmillRanch.Garden.Title;
 	}
