@@ -1,0 +1,48 @@
+﻿@page "/WindmillRanch/Backhoe"
+
+@using LivingMessiah.Web.Pages.WindmillRanch.Components
+@using Page = LivingMessiah.Web.Links.WindmillRanch.Backhoe
+
+<PageTitle>@Page.Title</PageTitle>
+
+<Menubar></Menubar>
+
+<div class="d-print-none pb-2 mt-4 mb-2 border-bottom">
+	<h2><i class="@Page.Icon"></i> @Page.Title</h2>
+</div>
+
+<h4><span class="badge bg-success"><b>@Page.SubTitle</b></span></h4>
+
+<div class="card my-2">
+
+	<div class="card-body">
+		<ol>
+			<li>Use the arm and scoop out the dirt to create a berm which will be on the down hill side of the ditch</li>
+			<li>After dumping out the dirt, smooth out the berm and try to make the whole thing look consistent, especially the height</li>
+			<li>When completed make a pass with the front loader and make the bottom flat</li>
+			<li>Make a final third pass to shape the back cut such that it's smooth and has a 3:1 slope.</li>
+		</ol>
+	</div>
+
+	<img src='@Blobs.UrlWindmillRanchBulldozer("swale-cross-view.jpg")'
+			 class="card-img-top" alt="Swale cross view">
+</div>
+
+
+<h3 class="mt-4">
+	Tiny Shine Home Video
+</h3>
+
+<div class="embed-responsive embed-responsive-16by9">
+	<iframe class="embed-responsive-item" src="https://www.youtube.com/embed/Z_pZSMs8vjs?rel=0"
+					allowfullscreen></iframe>
+</div>
+
+
+<a href="https://www.youtube.com/watch?v=Z_pZSMs8vjs&t=5m10s" target="_blank"
+	 title="Tiny Shine Home Video">
+	<i class="fab fa-youtube"></i>
+	<u>Z_pZSMs8vjs</u> Skip to <b>5:10</b>
+	<i class="fas fa-external-link-square-alt"></i>
+</a>
+
