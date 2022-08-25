@@ -739,8 +739,8 @@ public static class WindmillRanch
 		public static class ProjectGroundCover
 		{
 			public const string Id = "project-ground-cover";
-			public const string Project = "Proj. 3: Grand Cover";
-			public const string Descr = "Grand Cover for the Swales";
+			public const string Project = "Proj. 3: Ground Cover";
+			public const string Descr = "Ground Cover for the Swales";
 		}
 
 		public static class ProjectPlantTrees
