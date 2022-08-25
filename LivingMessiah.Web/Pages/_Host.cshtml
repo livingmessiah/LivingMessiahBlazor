@@ -14,8 +14,8 @@
 	<base href="~/" />
 
 	<link href="_content/Syncfusion.Blazor.Themes/bootstrap5.css" rel="stylesheet" />
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" 
-				integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" 
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+				integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
 				crossorigin="anonymous">
 	<link href="css/site.css" rel="stylesheet" />
 	<link href="LivingMessiah.Web.styles.css" rel="stylesheet" />
@@ -41,6 +41,26 @@
 	</div>
 
 	<script src="_framework/blazor.server.js"></script>
+
+	<!-- 
+		This js is needed for Shared/AnchorNavigation  
+		ToDo: can this be changed leverage JavaScript isolation?
+		https://www.meziantou.net/javascript-isolation-in-blazor-components.htm
+	-->
+	<script>
+		function BlazorScrollToId(id) {
+				const element = document.getElementById(id);
+				if (element instanceof HTMLElement) {
+						element.scrollIntoView({
+								behavior: "smooth",
+								block: "start",
+								inline: "nearest"
+						});
+				}
+		}
+	</script>
+
+
 
 </body>
 </html>

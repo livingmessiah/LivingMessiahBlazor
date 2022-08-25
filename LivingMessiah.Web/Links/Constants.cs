@@ -721,6 +721,42 @@ public static class WindmillRanch
 		public const string Page = "/Windmillranch/Backhoe";
 		public const string Title = "Backhoe";
 		public const string Icon = "fas fa-tractor";  // fab fa-digg
+		
+		public static class ProjectWashCrossing
+		{
+			public const string Id = "project-wash-crossing";
+			public const string Project = "Proj. 1: Cross wash";
+			public const string Descr = "Make a Crossing Over a Wash";
+		}
+
+		public static class ProjectBuildSwale
+		{
+			public const string Id = "project-build-swale";
+			public const string Project = "Proj. 2: Build swale";
+			public const string Descr = "Build a 1,200 ft. Swale";
+		}
+
+		public static class ProjectGroundCover
+		{
+			public const string Id = "project-ground-cover";
+			public const string Project = "Proj. 3: Grand Cover";
+			public const string Descr = "Grand Cover for the Swales";
+		}
+
+		public static class ProjectPlantTrees
+		{
+			public const string Id = "project-plant-trees";
+			public const string Project = "Proj. 4: Trees";
+			public const string Descr = "Acquire and Plant Trees";
+		}
+
+		public static class ProjectFencing
+		{
+			public const string Id = "project-fencing";
+			public const string Project = "Proj. 5: Fencing";
+			public const string Descr = "Fence the area around the swales";
+		}
+
 	}
 
 	public static class Bulldozer

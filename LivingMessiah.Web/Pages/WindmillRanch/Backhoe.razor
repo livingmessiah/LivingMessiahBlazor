@@ -11,8 +11,16 @@
 	<h1><i class="@Page.Icon"></i> @Page.Title</h1>
 </div>
 
-<h2><span class="badge bg-warning mt-4"><b>Project 1</b></span></h2>
-<h4><span class=""><b>Make a Crossing Over a Wash</b></span></h4>
+<ul>
+   <li><a href="@Page.Page/#@Page.ProjectWashCrossing.Id">@Page.ProjectWashCrossing.Project</a></li>
+	 <li><a href="@Page.Page/#@Page.ProjectBuildSwale.Id">@Page.ProjectBuildSwale.Project</a></li>
+	 <li><a href="@Page.Page/#@Page.ProjectGroundCover.Id">@Page.ProjectGroundCover.Project</a></li>
+	 <li><a href="@Page.Page/#@Page.ProjectPlantTrees.Id">@Page.ProjectPlantTrees.Project</a></li>
+	 <li><a href="@Page.Page/#@Page.ProjectFencing.Id">@Page.ProjectFencing.Project</a></li>
+</ul>
+
+<h2 id="@Page.ProjectWashCrossing.Id"><span class="badge bg-warning mt-4"><b>@Page.ProjectWashCrossing.Project</b></span></h2>
+<h4><span class=""><b>@Page.ProjectWashCrossing.Descr</b></span></h4>
 
 <div class="card my-2">
 
@@ -58,8 +66,8 @@
 </div>
 
 
-<h2><span class="badge bg-warning mt-4"><b>Project 2</b></span></h2>
-<h4><span class=""><b>Build a 1,200 ft. Swale</b></span></h4>
+<h2 id="@Page.ProjectBuildSwale.Id"><span class="badge bg-warning mt-4"><b>@Page.ProjectBuildSwale.Project</b></span></h2>
+<h4><span class=""><b>@Page.ProjectBuildSwale.Descr</b></span></h4>
 
 <div class="card my-2">
 
@@ -95,11 +103,9 @@
 			Skip to <b>5:10</b>
 			<i class="fas fa-external-link-square-alt"></i>
 		</a>
-
 	</div>
 
 </div>
-
 
 <div class="card mt-5 mb-2">
 	<div class="card-body">
@@ -107,7 +113,7 @@
 		<p class="fs-4 ">
 			<a href="https://maps.app.goo.gl/RiJpT9yf4yNZjzcu8" target="_blank"
 				 title="Google Maps Current Access">
-				 Google Maps
+				Google Maps
 				<i class="fas fa-map-signs"></i>
 			</a>
 			to current round about way to access the property.
@@ -118,3 +124,109 @@
 		<p class="fs-5 mt-1 mb-4 text-end">Current Property Access</p>
 	</div>
 </div>
+
+
+<h2 id="@Page.ProjectGroundCover.Id"><span class="badge bg-warning mt-4"><b>@Page.ProjectGroundCover.Project</b></span></h2>
+<h4><span class=""><b>@Page.ProjectGroundCover.Descr</b></span></h4>
+
+<div class="card my-2">
+
+	<div class="card-body">
+		<p class="fs-4">To Do: Add content for sourcing and buying ground cover to protect the swales</p>
+
+	</div>
+</div>
+
+<h2 id="@Page.ProjectPlantTrees.Id"><span class="badge bg-warning mt-4"><b>@Page.ProjectPlantTrees.Project</b></span></h2>
+<h4><span class=""><b>@Page.ProjectPlantTrees.Descr</b></span></h4>
+
+<div class="card my-2">
+
+	<div class="card-body">
+		<p class="fs-4">Acquiring Trees</p>
+
+		<p class="fs-5">
+			I talked to Sharon from
+			<a href="http://www.parklandtrees.com/" target="_blank">Parkland Tree Farm & Nursery</a>
+			(a tree farm / nursery located northwest of Douglas) and she gave me a list of trees that are available and fit our context.
+		</p>
+
+		<p class="fs-5">
+			<b>Context</b>: What is our context...well that's a good question.
+			When I initially asked Sharon for trees I asked her if she had any Mesquite trees but she did not.
+			I asked for Mesquite per the recommendation of permaculture designer Rudy Poe.
+		</p>
+
+		<table class="table table-striped table-sm">
+			<thead>
+				<tr>
+					<th>Tree</th>
+					<th align="center">Qty on hand</th>
+					<th>Prices</th>
+				</tr>
+			</thead>
+
+			<tbody>
+
+				<tr>
+					<td><b>White Thorn Acacia</b></td>
+					<td align="center">3+1</td>
+					<td>in 25-gallon containers for $80.00, 1 in a 15-gallon container for $55.00.</td>
+				</tr>
+
+				<tr>
+					<td><b>Robina (Black Locust)</b></td>
+					<td align="center">Plenty</td>
+					<td>in 15-gallon container for $55.00 also in 25-gallon container for $80.00.</td>
+				</tr>
+
+				<tr>
+					<td><b>Honey Locusts</b></td>
+					<td align="center">plenty</td>
+					<td> are in 5-gallon containers for $35.00, 15-gallons for $55.00, 25-gallons for $80.00 and 25-gallons for $80.00.</td>
+				</tr>
+
+			</tbody>
+		</table>
+
+		<p class="fs-5">
+			See their
+			<a href="http://www.parklandtrees.com/price_sheet.pdf" target="_blank"
+				 title="Parkland Trees PDF Spreadsheet">
+				<i class="far fa-file-pdf"></i>
+				pricing spreadsheet
+				<i class="fas fa-file-download"></i>
+			</a>
+			 to see all items available to purchase
+		</p>
+
+
+		<p class="fs-4">Other To Do Items</p>
+		<ol class="fs-5">
+			<li>Determine what type of protection is needed</li>
+			<li>Find other sources for trees</li>
+			<li>...</li>
+		</ol>
+
+
+	</div>
+</div>
+
+
+
+<h2 id="@Page.ProjectFencing.Id"><span class="badge bg-warning mt-4"><b>@Page.ProjectFencing.Project</b></span></h2>
+<h4><span class=""><b>@Page.ProjectFencing.Descr</b></span></h4>
+
+<div class="card my-2">
+
+	<div class="card-body">
+		<p class="fs-4">
+			The swales and the trees need to be projected from, among other things, the open range cattle.
+			Where that is exactly going to be located, who is going to do it, how the funds will be raised to do it, what type of fencing material(s) will be used is at this time undetermined.
+		</p>
+
+	</div>
+</div>
+
+
+<AnchorNavigation />
