@@ -38,7 +38,7 @@ public static class Routing
 
 public static class TShirts
 {
-	public static bool IsAvailableForSale { get; set; } = false;
+	public static bool IsAvailableForSale { get; set; } = true;
 	public static string ForSaleMessage { get; set; } = "T-Shirts are available for sale, click the image below.";
 	public static string ComingSoonMessage { get; set; } = "T-Shirts not yet available, check back later. ";
 
@@ -46,10 +46,11 @@ public static class TShirts
 	{
 		get
 		{
-			return  Blobs.UrlRoot("2021-sukkot-tshirt-1024-385.jpg");
+			return  Blobs.UrlRoot("sukkot-2022-tee-shirts.jpg");
 		}
 	}
 	public static string Href { get; set; } = "https://aboveallimages.net/shop/ols/categories/sukkot";
+	public static string Title { get; set; } = "Sukkot T-Shirts for sale";
 }
 
 public static class Features
