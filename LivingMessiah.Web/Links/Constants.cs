@@ -721,7 +721,14 @@ public static class WindmillRanch
 		public const string Page = "/Windmillranch/Backhoe";
 		public const string Title = "Backhoe";
 		public const string Icon = "fas fa-tractor";  // fab fa-digg
-		
+
+		public static class RudyPoe20220908
+		{
+			public const string Id = "rudy-poe-20220908";
+			public const string Project = "Rudy Poe Consultation";
+			public const string Descr = "Notes taken from Rudy Poe conversation on Sep 8, 2022";
+		}
+
 		public static class ProjectWashCrossing
 		{
 			public const string Id = "project-wash-crossing";
