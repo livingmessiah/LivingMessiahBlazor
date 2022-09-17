@@ -26,6 +26,7 @@ public abstract class Windmill : SmartEnum<Windmill>
 		internal const int Swales = 8;  // really part of Permaculture, but such a big thing, it get's its on URL
 		internal const int Bulldozer = 9;
 		internal const int Garden = 10;
+		internal const int Backhoe = 11;
 	}
 	#endregion
 
@@ -40,6 +41,7 @@ public abstract class Windmill : SmartEnum<Windmill>
 	public static readonly Windmill Swales = new SwalesSE();
 	public static readonly Windmill Bulldozer = new BulldozerSE();
 	public static readonly Windmill Garden = new GardenSE();
+	public static readonly Windmill Backhoe = new BackhoeSE();
 
 	// SE=SmartEnum
 	#endregion
@@ -64,7 +66,7 @@ public abstract class Windmill : SmartEnum<Windmill>
 	private sealed class PermacultureSE : Windmill
 	{
 		public PermacultureSE() : base($"{nameof(Id.Permaculture)}", Id.Permaculture) { }
-		public override string Color => "light";
+		public override string Color => "success";
 		public override string Page => WindmillRanch.Permaculture.Page;
 		public override string Title => WindmillRanch.Permaculture.Title;
 	}
@@ -128,9 +130,17 @@ public abstract class Windmill : SmartEnum<Windmill>
 	private sealed class GardenSE : Windmill
 	{
 		public GardenSE() : base($"{nameof(Id.Garden)}", Id.Garden) { }
-		public override string Color => "light";
+		public override string Color => "warning";
 		public override string Page => WindmillRanch.Garden.Page;
 		public override string Title => WindmillRanch.Garden.Title;
+	}
+
+	private sealed class BackhoeSE : Windmill
+	{
+		public BackhoeSE() : base($"{nameof(Id.Backhoe)}", Id.Backhoe) { }
+		public override string Color => "success";
+		public override string Page => WindmillRanch.Backhoe.Page;
+		public override string Title => WindmillRanch.Backhoe.Title;
 	}
 
 	#endregion

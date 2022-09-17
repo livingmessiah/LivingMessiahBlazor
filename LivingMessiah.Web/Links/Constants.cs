@@ -716,6 +716,56 @@ public static class WindmillRanch
 		//public const string Icon = "fa-solid fa-1";
 	}
 
+	public static class Backhoe
+	{
+		public const string Page = "/Windmillranch/Backhoe";
+		public const string Title = "Backhoe";
+		public const string Icon = "fas fa-tractor";  // fab fa-digg
+
+		public static class RudyPoe20220908
+		{
+			public const string Id = "rudy-poe-20220908";
+			public const string Project = "Rudy Poe Consultation";
+			public const string Descr = "Notes taken from Rudy Poe conversation on Sep 8, 2022";
+		}
+
+		public static class ProjectWashCrossing
+		{
+			public const string Id = "project-wash-crossing";
+			public const string Project = "Proj. 1: Cross wash";
+			public const string Descr = "Make a Crossing Over a Wash";
+		}
+
+		public static class ProjectBuildSwale
+		{
+			public const string Id = "project-build-swale";
+			public const string Project = "Proj. 2: Build swale";
+			public const string Descr = "Build a 1,200 ft. Swale";
+		}
+
+		public static class ProjectGroundCover
+		{
+			public const string Id = "project-ground-cover";
+			public const string Project = "Proj. 3: Ground Cover";
+			public const string Descr = "Ground Cover for the Swales";
+		}
+
+		public static class ProjectPlantTrees
+		{
+			public const string Id = "project-plant-trees";
+			public const string Project = "Proj. 4: Trees";
+			public const string Descr = "Acquire and Plant Trees";
+		}
+
+		public static class ProjectFencing
+		{
+			public const string Id = "project-fencing";
+			public const string Project = "Proj. 5: Fencing";
+			public const string Descr = "Fence the area around the swales";
+		}
+
+	}
+
 	public static class Bulldozer
 	{
 		public const string Page = "/Windmillranch/Bulldozer";
