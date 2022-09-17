@@ -1,0 +1,624 @@
+﻿# ParashaAppState_FAIL.txt
+
+
+## Index.razor
+```html
+@page "/Parasha"
+@using Page = LivingMessiah.Web.Links.Parasha
+@inherits BaseButtonToggleVisibility
+
+@* @implements IAsyncDisposable *@
+@implements IDisposable
+
+<PageTitle>@Page.Title</PageTitle>
+
+<!-- ToDo: figure out how to make <HebrewDate/> this work -->
+
+<div class="pb-1 mt-4 mb-5">
+	<h2><i class="@Page.Icon"></i> @Page.Title</h2>
+</div>
+
+
+@if (!String.IsNullOrEmpty(@AppState.DataNotLoaded))
+{
+	<div class=" mb-3 card @DataNotLoadedClass">
+		<div class="card-body">
+			@AppState.DataNotLoaded
+		</div>
+	</div>
+}
+else
+{
+	<LoadingComponent IsLoading="Parasha==null">
+		<div class="d-md-none">
+			<div class="card bg-light text-center">
+				<div class="card-header">
+					<h3> <i class="@Page.Icon"></i> Current Parasha <sup><small># @Parasha.TriNum</small></sup></h3>
+				</div>
+
+				<div class="card-body">
+					<CurrentParasha Parasha="@Parasha"
+												CssUlClass="h5 mt-2"
+												CssUlStyle="list-style-type:none"
+												IsXsOrSm="true">
+					</CurrentParasha>
+				</div>
+
+			</div>
+		</div>
+
+		<div class="d-none d-md-block">
+			<div class="card bg-light">
+				<div class="card-header text-center">
+					<h3> <i class="@Page.Icon"></i> Current Parasha</h3>
+				</div>
+
+				<div class="card-body">
+					<CurrentParasha Parasha="@Parasha"
+												CssUlClass="fa-ul h5 mt-3"
+												CssUlStyle=""
+												IsXsOrSm="false">
+					</CurrentParasha>
+				</div>
+
+			</div>
+		</div>
+
+	</LoadingComponent>
+}
+
+@*
+Data gotten from CACHE or DATABASE
+@if (!String.IsNullOrEmpty(@AppState.Message))
+{
+	<div class=" mb-3 card border-info">
+		<div class="card-body">
+			@AppState.Message
+		</div>
+	</div>
+}
+*@
+
+
+<!-- IsXsOrSm="true" -->
+<div class="d-md-none">
+	<div class="row">
+		<div class="col-12">
+
+			<div class="card mt-2 border-primary my-3" style="width: 100%">
+				<div class="card-header h4 px-2">
+					<span class='badge bg-warning'>Parasha Table</span>
+
+					<span class="float-end">
+
+						<button @onclick="@(e => ToggleButtonClick(IsCollapsed))"
+										class="btn-primary btn-sm float-end">
+							@ButtonText <i class='@ButtonChevron'></i>
+						</button>
+					</span>
+
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<div class="row col-12">
+		@if (!IsCollapsed && Parasha != null)
+		{
+			<h6>We are currently studying the Torah on a three year cycle which allows us more time to delve deeper into His Word.</h6>
+			<IndexTable IsXsOrSm="true" BookId="@Parasha.BookId"></IndexTable>
+		}
+	</div>
+
+</div>
+
+<!-- IsXsOrSm="false" -->
+<div class="d-none d-md-block">
+
+	<ButtonToggleVisibility Title="Parasha Table">
+		<ChildContent>
+			<div class="card-body  m-0 px-4">
+
+				<h6>
+					We are currently studying the Torah on a three year cycle which allows us more time to delve deeper into His Word.
+				</h6>
+				<ul class="list-inline">
+					<li><a href="@Page.IndexPrint"><small><b>Print Version</b></small></a></li>
+				</ul>
+
+				@if (Parasha is not null)
+				{
+					<IndexTable IsXsOrSm="false" BookId="@Parasha.BookId"></IndexTable>
+				}
+
+			</div>
+		</ChildContent>
+	</ButtonToggleVisibility>
+
+</div>
+
+<div class="row">
+	<div class="col-12">
+		<a class="btn btn-outline-primary btn-sm float-end"
+			 href="@LivingMessiah.Web.Links.ParashaArchive.Index">
+			<small>Archive</small>
+		</a>
+	</div>
+</div>
+
+<TorahTuesdayButton />
+<AlephBetFooter />
+
+
+```
+
+
+## Index.razor.cs
+```csharp
+using System;
+using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Logging;
+using System.Threading.Tasks;
+
+using Page = LivingMessiah.Web.Links.Parasha;
+using CacheSettings = LivingMessiah.Web.Settings.Constants.ParashaCache;
+
+using Microsoft.Extensions.Caching.Memory;
+using LivingMessiah.Web.Services;
+
+namespace LivingMessiah.Web.Pages.Parasha;
+
+public partial class Index
+{
+	[Inject] 
+	private LivingMessiah.Data.IShabbatWeekRepository db { get; set; }
+	
+	[Inject] 
+	public IMemoryCache Cache { get; set; }
+
+	[Inject]
+	public ILogger<Index> Logger { get; set; }
+
+	[Inject]
+	AppState AppState { get; set; }
+
+	protected LivingMessiah.Domain.Parasha.Queries.Parasha Parasha;
+
+	protected string DataNotLoadedClass { get; set; } = " border-primary ";
+
+	protected override async Task OnInitializedAsync()
+	{
+		Logger.LogDebug(string.Format("Inside Page: {0}, Class!Method: {1}", Page.Index, nameof(Index) + "!" + nameof(OnInitializedAsync)));
+
+		// += operator allows you to subscribe to an event
+		AppState.StateChanged += async (Source, Property) => await AppState_StateChanged(Source, Property);
+
+		//Parasha = Cache.Get<LivingMessiah.Domain.Parasha.Queries.Parasha>(CacheSettings.Key);
+
+		if (Parasha is null)
+		{
+			try
+			{
+				Logger.LogDebug(string.Format("...Key NOT found in cache, calling {0}", nameof(db.GetCurrentParashaAndChildren)));
+				Parasha = await db.GetCurrentParashaAndChildren();
+				//AppState.UpdateMessage(this, "Data gotten from DATABASE");
+				Logger.LogDebug(string.Format("...After calling {0}; Parasha: {1}", nameof(db.GetCurrentParashaAndChildren), Parasha));
+
+				if (Parasha is not null)
+				{
+					Logger.LogDebug(string.Format("...Parasha gotten from DATABASE, Parasha: {0}", Parasha));
+					Cache.Set(CacheSettings.Key, Parasha, TimeSpan.FromMinutes(CacheSettings.FromMinutes));
+					Logger.LogDebug(string.Format("...Set Cache Key: {0}, TimeSpan.FromMinutes{1}"
+						, CacheSettings.Key, CacheSettings.FromMinutes));
+				}
+				else
+				{
+					SetAppStateMsg(isWarning: true, null);
+				}
+
+			}
+			catch (Exception ex)
+			{
+				SetAppStateMsg(isWarning: false, ex);
+			}
+		}
+		else
+		{
+			Logger.LogDebug(string.Format("... Data gotten from CACHE"));
+			//AppState.UpdateMessage(this, "Data gotten from CACHE");
+		}
+
+	}
+
+	protected bool MakeModalVisible = false;
+	void HebrewMonthsStatic_ButtonClick()
+	{
+		Logger.LogDebug($"Event: {nameof(HebrewMonthsStatic_ButtonClick)} clicked");
+		MakeModalVisible = true;
+		StateHasChanged();
+	}
+
+	#region AppStateChangedAndDispose
+
+	private void SetAppStateMsg(bool isWarning, Exception ex)
+	{
+		string msg = "";
+		if (isWarning)
+		{
+			msg = "Warning, could not load because Current Parasha Unknown";
+			DataNotLoadedClass = " border-warning ";
+			AppState.UpdateDataNotLoaded(this, msg);
+			Logger.LogDebug(string.Format("...Parasha NOT found, NotificationMsg: {0}", msg));
+		}
+		else
+		{
+			msg = $"Error reading database, inside {nameof(Index)}";
+			DataNotLoadedClass = " border-danger ";
+			AppState.UpdateDataNotLoaded(this, msg);
+			Logger.LogError(ex, string.Format("...Exception, NotificationMsg: {0}", msg));
+		}
+	}
+
+	private async Task AppState_StateChanged(ComponentBase Source, string Property)
+	{
+		if (Source != this)
+		{
+			// Note, you could do something like await PopulateVM(); // see Pages\Sukkot\RegistrationSteps\Index.razor.cs
+			await InvokeAsync(StateHasChanged);
+		}
+	}
+	void IDisposable.Dispose()
+	{
+		// -= operator detaches you from an event
+		AppState.StateChanged -= async (Source, Property) => await AppState_StateChanged(Source, Property);
+	}
+	#endregion
+
+}
+
+```
+
+
+## IndexTable.razor
+```html
+@implements IDisposable
+
+@if (!String.IsNullOrEmpty(@AppState.DataNotLoadedChild))
+{
+	<div class=" mb-3 card @DataNotLoadedClass">
+		<div class="card-body">
+			@AppState.DataNotLoadedChild
+		</div>
+	</div>
+}
+else
+{
+	<LoadingComponent IsLoading="ParashaListTuple==null || ParashaList==null || BibleBook==null">
+
+		<table class="table table-sm table-hover">
+			<thead>
+				<tr>
+					<th>#</th>
+
+					@if (!IsXsOrSm)
+					{
+						<th>Parasha</th>
+						<th>Meaning</th>
+					}
+
+					<th>Read Date</th>
+					<th>Torah</th>
+					<th>Haftorah</th>
+					<th>Brit Chadashah</th>
+					<th><i class="fas fa-external-link-square-alt"></i></th>
+				</tr>
+			</thead>
+			<tbody>
+
+				@foreach (var item in ParashaList)
+				{
+					if (item.RowCntByBookId == 1)
+					{
+						if (BibleBook != null)
+						{
+							<tr>
+								<td colspan="@Colspan">
+									<a id="@BibleBook.EnglishTitle"></a>
+									<span class="badge bg-danger">@BibleBook.EnglishTitle</span> &nbsp;
+									<span class="text-muted"><i>@BibleBook.HebrewTitle</i></span>
+									<span class="float-end hebrewchart">@((MarkupString)BibleBook.HebrewName)</span>
+								</td>
+							</tr>
+						}
+					}
+
+					<tr>
+						<td>@item.TriNum</td>
+
+						@if (!IsXsOrSm)
+						{
+							<td>
+								<a href="@MyHebrewBibleParashaUrl(@item.Id, @item.NameUrl)"><i>@item.ParashaName</i></a>
+							</td>
+							<td>@item.Meaning</td>
+						}
+
+						<td class="@CurrentReadDateTextFormat(item.ShabbatDate)">
+							@if (item.ShabbatDate.Year != prevGregorianYear)
+							{
+								prevGregorianYear = item.ShabbatDate.Year;
+								<span class="badge bg-danger">@item.ShabbatDate.Year</span>
+
+								<br />
+							}
+							@item.ShabbatDate.ToString("MMM d")
+						</td>
+
+
+						<td>@item.TorahLong</td>
+						<td>@item.Haftorah</td>
+						<td>@item.Brit</td>
+
+						<td>
+							<a href="@item.AhavtaURL"
+						 title="Ahavta URL [@item.Id]" target="_blank">
+								<i class="fas fa-external-link-alt"></i>
+							</a>
+						</td>
+					</tr>
+
+				}
+
+			</tbody>
+
+		</table>
+
+	</LoadingComponent>
+}
+
+@*
+Data gotten from CACHE or DATABASE
+@if (!String.IsNullOrEmpty(@AppState.Message))
+{
+	<div class=" mb-3 card border-info">
+		<div class="card-body">
+			@AppState.Message
+		</div>
+	</div>
+}
+*@
+```
+
+
+## IndexTable.cs
+```csharp
+using Microsoft.AspNetCore.Components;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using System;
+using Microsoft.Extensions.Logging;
+
+using ParashaDomain = LivingMessiah.Domain.Parasha.Queries;
+using Microsoft.Extensions.Caching.Memory;
+
+using CacheSettings = LivingMessiah.Web.Settings.Constants.ParashaIndexTableTupleCache;
+using Component = LivingMessiah.Web.Components.Names;
+using LivingMessiah.Web.Services;
+
+namespace LivingMessiah.Web.Pages.Parasha;
+
+public partial class IndexTable
+{
+	[Inject] public ILogger<IndexTable> Logger { get; set; }
+	[Inject] private LivingMessiah.Data.IShabbatWeekRepository db { get; set; }
+	[Inject] public IMemoryCache Cache { get; set; }
+	[Inject] AppState AppState { get; set; }
+
+	protected IReadOnlyList<ParashaDomain.ParashaList> ParashaList;
+	protected ParashaDomain.BibleBook BibleBook;
+	protected Tuple<ParashaDomain.BibleBook, List<ParashaDomain.ParashaList>> ParashaListTuple;
+
+	[Parameter]
+	public bool IsXsOrSm { get; set; }
+
+	[Parameter]
+	public bool IsNextTorahBook { get; set; } = false;
+
+	[Parameter]
+	public int BookId { get; set; } = 0;
+
+	protected string Colspan;
+	protected int prevGregorianYear = 0;
+
+	protected string DataNotLoadedClass { get; set; } = " border-primary ";
+
+	protected override async Task OnInitializedAsync()
+	{
+		AppState.StateChanged += async (Source, Property) => await AppState_StateChanged(Source, Property);
+		Logger.LogDebug(string.Format("Inside Component: {0}, Class!Method: {1}; BookId{2}; IsNextBook{3}"
+			, Component.ParashaIndexTable, nameof(IndexTable) + "!" + nameof(OnInitializedAsync), BookId, IsNextTorahBook));
+
+		Colspan = (!IsXsOrSm) ? "8" : "6";
+
+		ParashaListTuple = Cache.Get<Tuple<ParashaDomain.BibleBook, List<ParashaDomain.ParashaList>>>(CacheSettings.Key);
+
+		if (ParashaListTuple is null)
+		{
+			Logger.LogDebug(string.Format("...ParashaListTuple is null"));
+			try
+			{
+				ParashaListTuple = await db.GetParashotByBookId(GetNextBookId());
+
+				if (ParashaListTuple is not null)
+				{
+					Logger.LogDebug(string.Format("... Data gotten from DATABASE"));
+					BibleBook = ParashaListTuple.Item1;
+					ParashaList = ParashaListTuple.Item2;
+					Cache.Set(CacheSettings.Key, ParashaListTuple, TimeSpan.FromMinutes(CacheSettings.FromMinutes));
+				}
+				else
+				{
+					SetAppStateMsg(isWarning: true, null);
+				}
+			}
+			catch (Exception ex)
+			{
+				SetAppStateMsg(isWarning: false, ex);
+			}
+		}
+		else
+		{
+			Logger.LogDebug(string.Format("...Attempting to extract objects from cached tuple"));
+			try
+			{
+				BibleBook = ParashaListTuple.Item1;
+				ParashaList = ParashaListTuple.Item2;
+				//AppState.UpdateMessage(this, "Data gotten from CACHE");
+				Logger.LogDebug(string.Format("... Data gotten from CACHE"));
+			}
+			catch (Exception ex)
+			{
+				SetAppStateMsg(isWarning: false, ex);
+			}
+
+		}
+
+	}
+
+	private int GetNextBookId()
+	{
+		const int _firstBookOfTorah = 1;  // Genesis
+		const int _lastBookOfTorah = 5;   // Deuteronomy
+		int _torahBookId = BookId;
+
+		if (IsNextTorahBook)
+		{
+			_torahBookId = (_torahBookId != _lastBookOfTorah) ? _torahBookId + 1 : _firstBookOfTorah;
+		}
+		return _torahBookId;
+	}
+
+	public static string CurrentReadDateTextFormat(DateTime readDate)
+	{
+		DateTime compareDate = DateTime.Today;
+		if (readDate >= compareDate & readDate <= compareDate.AddDays(6))
+		{
+			return "text-danger";
+			//<span class='bg-danger'>@Title</span>
+		}
+		else
+		{
+			return "";
+		}
+	}
+
+	public static string MyHebrewBibleParashaUrl(int id, string url)
+	{
+		string url2 = !String.IsNullOrEmpty(url) ? url : "";
+		return "https://myhebrewbible.com/Parasha/Triennial/LivingMessiah/" + id.ToString() + "?slug=" + url2;
+	}
+
+	#region AppStateChangedAndDispose
+
+	private void SetAppStateMsg(bool isWarning, Exception ex)
+	{
+		string msg = "";
+		if (isWarning)
+		{
+			msg = $"{nameof(ParashaListTuple)} NOT FOUND";
+			DataNotLoadedClass = " border-warning ";
+			AppState.UpdateDataNotLoadedChild(this, msg);
+			Logger.LogDebug(string.Format("...Parasha List NOT found, msg: {0}", msg));
+		}
+		else
+		{
+			msg = $"Error reading database, inside {nameof(IndexTable)}";
+			DataNotLoadedClass = " border-danger ";
+			AppState.UpdateDataNotLoadedChild(this, msg);
+			Logger.LogError(ex, string.Format("...Exception, msg: {0}", msg));
+		}
+	}
+
+	private async Task AppState_StateChanged(ComponentBase Source, string Property)
+	{
+		if (Source != this)
+		{
+			// Note, you could do something like await PopulateVM(); // see Pages\Sukkot\RegistrationSteps\Index.razor.cs
+			await InvokeAsync(StateHasChanged);
+		}
+	}
+	void IDisposable.Dispose()
+	{
+		// -= operator detaches you from an event
+		AppState.StateChanged -= async (Source, Property) => await AppState_StateChanged(Source, Property);
+	}
+	#endregion
+
+}
+```
+
+
+## Services/AppState.cs
+
+```csharp
+using Microsoft.AspNetCore.Components;
+using System;
+using Microsoft.Extensions.Logging;
+
+namespace LivingMessiah.Web.Services;
+
+public class AppState
+{
+	#region Constructor and DI
+	private readonly ILogger Logger;
+	public AppState(ILogger<AppState> logger)
+	{
+		Logger = logger;
+	}
+	#endregion
+
+	#region All properties requiring state persistence
+
+	public string Message { get; private set; } = "";
+	public void UpdateMessage(ComponentBase Source, string Message)
+	{
+		Logger.LogDebug(string.Format("Inside {0}, Message: {1}"
+			, nameof(AppState) + "!" + nameof(UpdateMessage), Message));
+		this.Message = Message;
+		NotifyStateChanged(Source, "Message");
+	}
+
+	public string DataNotLoaded { get; private set; } = "";
+	public void UpdateDataNotLoaded(ComponentBase Source, string DataNotLoaded)
+	{
+		Logger.LogDebug(string.Format("Inside {0}, DataNotLoaded: {1}"
+			, nameof(AppState) + "!" + nameof(UpdateDataNotLoaded), DataNotLoaded));
+		this.DataNotLoaded = DataNotLoaded;
+		NotifyStateChanged(Source, "DataNotLoaded");
+	}
+
+	public string DataNotLoadedChild { get; private set; } = "";
+	public void UpdateDataNotLoadedChild(ComponentBase Source, string DataNotLoadedChild)
+	{
+		Logger.LogDebug(string.Format("Inside {0}, DataNotLoadedChild: {1}"
+			, nameof(AppState) + "!" + nameof(UpdateDataNotLoadedChild), DataNotLoadedChild));
+		this.DataNotLoadedChild = DataNotLoadedChild;
+		NotifyStateChanged(Source, "DataNotLoadedChild");
+	}
+
+	#endregion
+
+	public event Action<ComponentBase, string> StateChanged;
+
+	private void NotifyStateChanged(ComponentBase Source, string Property)
+			=> StateChanged?.Invoke(Source, Property);
+}
+
+```
+
+## LivingMessiah.Data\ShabbatWeekRepository.cs
+
+I had two places that had bad SQL so that I could test DataNotLoaded and DataNotLoadedChild
+1. GetCurrentParashaAndChildren
+2. 
