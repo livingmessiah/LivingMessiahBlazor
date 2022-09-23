@@ -175,9 +175,9 @@ public class LinksFactory : ILinksFactory
 				},
 				new Link
 				{
-					Index = ParashaArchive.Index,
-					Title = ParashaArchive.Title,
-					Icon = ParashaArchive.Icon,
+					Index = Parasha.Archive.Index,
+					Title = Parasha.Archive.Title,
+					Icon = Parasha.Archive.Icon,
 					HomeSidebarUsage=false,
 					HomeFloatRightHebrew="",
 					HomeTitleSuffix="",

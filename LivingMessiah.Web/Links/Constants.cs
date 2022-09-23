@@ -356,7 +356,7 @@ public static class Parasha
 	public const string IconCurrent = "far fa-bookmark";
 
 	public const string IndexPrint = "/Parasha/IndexPrint";
-	//public const string TitlePrint = "Parashot - Living Messiah"
+	public const string BackToButtonText = "Back to Parasha";
 
 	public static class MyHebrewBible
 	{
@@ -366,19 +366,12 @@ public static class Parasha
 			return $"{baseUrl}/{id}?slug={slug}/";
 		}
 	}
-}
 
-public static class ParashaArchive
-{
-	public const string Index = "/Parasha/Archive";
-	public const string Icon = "fas fa-archive";
-	public const string Title = "Parashot Archive";
-	public const string CurrentIndex = Parasha.Index;
-
-	public static class Fragments
+	public static class Archive
 	{
-		public const string Leviticus = "leviticus";
-		public const string Numbers = "numbers";
+		public const string Index = "/Parasha/Archive";
+		public const string Icon = "fas fa-archive";
+		public const string Title = "Parashot Archive";
 	}
 }
 

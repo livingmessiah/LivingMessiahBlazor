@@ -1,0 +1,18 @@
+﻿@using Page = LivingMessiah.Web.Links.Parasha
+
+<div class="row d-print-none mt-5">
+	<div class="col-12">
+		<a href="@Href"
+			 class="btn btn-info" title="@Text">
+			<i class="far fa-arrow-alt-circle-left"></i> @Text 
+		</a>
+	</div>
+</div>
+
+@code {
+	[Parameter, EditorRequired]
+	public string Href	{ get; set; }
+
+	[Parameter, EditorRequired]
+	public string Text	{ get; set; }
+}

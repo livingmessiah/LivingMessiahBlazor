@@ -1,88 +1,52 @@
-﻿using System;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Threading.Tasks;
 
+using Blazored.Toast.Services;
 using Page = LivingMessiah.Web.Links.Parasha;
-using CacheSettings = LivingMessiah.Web.Settings.Constants.ParashaCache;
 
 using Microsoft.Extensions.Caching.Memory;
+using LivingMessiah.Web.Pages.Parasha.Services;
 
 namespace LivingMessiah.Web.Pages.Parasha;
 
 public partial class Index
 {
 	[Inject]
-	private LivingMessiah.Data.IShabbatWeekRepository db { get; set; }
-	[Inject]
-	public IMemoryCache Cache { get; set; }
+	private IParashaService Service { get; set; }
 
 	[Inject]
 	public ILogger<Index> Logger { get; set; }
 
-	protected LivingMessiah.Domain.Parasha.Queries.Parasha Parasha;
+	[Inject]
+	public IToastService Toast { get; set; }
 
-	protected string CachedMsg { get; set; }
+	protected CurrentParasha? CurrentParasha;
+
+	protected bool TurnSpinnerOff = false;
+
 	protected override async Task OnInitializedAsync()
 	{
 		Logger.LogDebug(string.Format("Inside Page: {0}, Class!Method: {1}", Page.Index, nameof(Index) + "!" + nameof(OnInitializedAsync)));
-		CachedMsg = "";
-		Parasha = Cache.Get<LivingMessiah.Domain.Parasha.Queries.Parasha>(CacheSettings.Key);
 
-		if (Parasha is null)
+		try
 		{
-			try
-			{
-				Logger.LogDebug(string.Format("...Key NOT found in cache, calling {0}", nameof(db.GetCurrentParashaAndChildren)));
-				Parasha = await db.GetCurrentParashaAndChildren();
-				Logger.LogDebug(string.Format("...After calling {0}; Parasha: {1}", nameof(db.GetCurrentParashaAndChildren), Parasha));
+			CurrentParasha = await Service.GetCurrentParasha();
 
-				if (Parasha is not null)
-				{
-					//CachedMsg = "Data gotten from DATABASE";
-					Logger.LogDebug(string.Format("...Parasha gotten from DATABASE, Parasha: {0}", Parasha));
-					Cache.Set(CacheSettings.Key, Parasha, TimeSpan.FromMinutes(CacheSettings.FromMinutes));
-					Logger.LogDebug(string.Format("...Set Cache Key: {0}, TimeSpan.FromMinutes{1}"
-						, CacheSettings.Key, CacheSettings.FromMinutes));
-				}
-				else
-				{
-					DatabaseWarning = true;
-					DatabaseWarningMsg = "Could not load because Current Parasha Unknown";
-					Logger.LogDebug(string.Format("...Parasha NOT found, DatabaseWarningMsg: {0}", DatabaseWarningMsg));
-				}
-
-			}
-			catch (Exception ex)
+			if (CurrentParasha is null || !String.IsNullOrEmpty(Service.UserInterfaceMessage))
 			{
-				DatabaseError = true;
-				DatabaseErrorMsg = $"Error reading database";
-				Logger.LogError(ex, string.Format("...Exception, DatabaseErrorMsg: {0}", DatabaseErrorMsg));
+				Toast.ShowWarning(Service.UserInterfaceMessage);
 			}
 		}
-		else
+		catch (InvalidOperationException invalidOperationException)
 		{
-			//CachedMsg = "Data gotten from CACHE";
-			Logger.LogDebug(string.Format("... Data gotten from CACHE"));
+			Toast.ShowError(invalidOperationException.Message);
 		}
-
+		finally
+		{
+			TurnSpinnerOff = true;
+		}
 	}
-
-	protected bool MakeModalVisible = false;
-	void HebrewMonthsStatic_ButtonClick()
-	{
-		Logger.LogDebug($"Event: {nameof(HebrewMonthsStatic_ButtonClick)} clicked");
-		MakeModalVisible = true;
-		StateHasChanged();
-	}
-
-	#region ErrorHandling
-	protected bool DatabaseInformation = false;
-	protected string DatabaseInformationMsg { get; set; } = string.Empty;
-	protected bool DatabaseWarning = false;
-	protected string DatabaseWarningMsg { get; set; } = string.Empty;
-	protected bool DatabaseError { get; set; }
-	protected string DatabaseErrorMsg { get; set; } = string.Empty;
-	#endregion
 
 }

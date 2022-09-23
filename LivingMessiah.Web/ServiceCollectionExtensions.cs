@@ -23,6 +23,8 @@ using LivingMessiah.Web.Pages.UpcomingEvents.Data;
 using LivingMessiah.Web.Services;
 using FluentValidation;
 using LivingMessiah.Web.Pages.Sukkot.Components;
+using LivingMessiah.Web.Pages.Parasha.Services;
+using LivingMessiah.Web.Pages.Parasha.Data;
 
 namespace LivingMessiah.Web;
 
@@ -59,6 +61,8 @@ public static class ServiceCollectionExtensions
 			.AddTransient<ISukkotAdminRepository, SukkotAdminRepository>()
 			.AddSingleton<ISmartEnumServiceForSfDropDownList, SmartEnumServiceForSfDropDownList>()
 			.AddScoped<AppState>()
+			.AddSingleton<IParashaRepository, ParashaRepository>()
+			.AddSingleton<IParashaService, ParashaService>()
 			.AddSingleton<IYouTubeFeedService, YouTubeFeedService>()
 			.AddTransient<IValidator<RegistrationVM>, RegistrationVMValidator>();
 		

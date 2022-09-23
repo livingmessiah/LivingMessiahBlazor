@@ -1,0 +1,75 @@
+﻿
+<div class="@CardClass(IsXsOrSm)">
+	<div class="@CardHeaderClass(IsXsOrSm)">
+		<h3> Current Parasha</h3>
+	</div>
+
+	<div class="card-body">
+
+		<p class="@CardBodyParagraphClass(IsXsOrSm)">
+			<i class="far fa-calendar"></i> @CurrentParasha.ShabbatDate.ToString("MMMM dd-yyyy")
+		</p>
+
+		<a href='@CurrentParasha.ParashaHref'
+			 class='btn-primary btn-lg mt-3' title='The current weekly reading (CurrentParasha)' target='_blank'>
+			<i class='fas fa-external-link-alt'></i>
+			@CurrentParasha.TorahLong
+		</a>
+
+		<ul style="@CssUlStyle" class="@CssUlClass">
+
+			@if (!String.IsNullOrEmpty(CurrentParasha.Haftorah))
+			{
+				<li>
+					@GetWarningCaretRight()
+					Haftorah: @CurrentParasha.Haftorah
+				</li>
+			}
+			else
+			{
+				<li>
+					@GetWarningCaretRight()
+					<small>No Haftorah</small>
+				</li>
+			}
+
+			@if (!String.IsNullOrEmpty(CurrentParasha.Brit))
+			{
+				<li>
+					@GetWarningCaretRight()
+					Brit: @CurrentParasha.Brit
+				</li>
+			}
+			else
+			{
+				<li>
+					@GetWarningCaretRight()
+					<small>No Brit</small>
+				</li>
+			}
+
+			@if (!String.IsNullOrEmpty(CurrentParasha.AhavtaURL))
+			{
+				<li>
+					@GetWarningCaretRight()
+					<a href="@CurrentParasha.AhavtaURL"
+					 class='btn-primary btn-sm'
+					 title="Ahavta URL [@CurrentParasha.Id]" target="_blank">
+						<i class="fas fa-external-link-alt"></i>
+						Commentary by Ahavta
+					</a>
+				</li>
+			}
+			else
+			{
+				<li>
+					@GetWarningCaretRight()
+					<small>No Commentary</small>
+				</li>
+			}
+		</ul>
+
+	</div>
+
+</div>
+

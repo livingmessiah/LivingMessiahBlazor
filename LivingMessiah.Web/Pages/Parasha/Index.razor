@@ -1,141 +1,53 @@
 ﻿@page  "/Parasha"
 @using Page = LivingMessiah.Web.Links.Parasha
-@inherits BaseButtonToggleVisibility
+@using LivingMessiah.Web.SmartEnums
+
 <PageTitle>@Page.Title</PageTitle>
 @*
 	ToDo: figure out how to make this work
 	<HebrewDate></HebrewDate>
 *@
 
+
 <div class="pb-1 mt-4 mb-5">
-	<h2><i class="@Page.Icon"></i> @Page.Title</h2>
+	<h1><i class="@Page.Icon"></i> @Page.Title</h1>
 </div>
 
-
-<LoadingComponent IsLoading="Parasha==null && DatabaseWarning==false">
-	<div class="d-md-none">
-		<div class="card bg-light text-center">
-			<div class="card-header">
-				<h3> <i class="@Page.Icon"></i> Current Parasha <sup><small># @Parasha.TriNum</small></sup></h3>
-			</div>
-
-			<div class="card-body">
-				<CurrentParasha Parasha="@Parasha"
+<LoadingComponent IsLoading="CurrentParasha==null" TurnSpinnerOff="@TurnSpinnerOff">
+	<div class="@MediaQuery.XsOrSm.DivClass">
+		<CurrentParashaCard CurrentParasha="@CurrentParasha"
 												CssUlClass="h5 mt-2"
 												CssUlStyle="list-style-type:none"
 												IsXsOrSm="true">
-				</CurrentParasha>
-			</div>
-
-		</div>
+		</CurrentParashaCard>
 	</div>
 
-	<div class="d-none d-md-block">
-		<div class="card bg-light">
-			<div class="card-header text-center">
-				<h3> <i class="@Page.Icon"></i> Current Parasha</h3>
-			</div>
-
-			<div class="card-body">
-				<CurrentParasha Parasha="@Parasha"
+	<div class="@MediaQuery.MdOrLgOrXl.DivClass">
+		<CurrentParashaCard CurrentParasha="@CurrentParasha"
 												CssUlClass="fa-ul h5 mt-3"
 												CssUlStyle=""
 												IsXsOrSm="false">
-				</CurrentParasha>
-			</div>
-
-		</div>
+		</CurrentParashaCard>
 	</div>
-
-	@if (!String.IsNullOrEmpty(CachedMsg))
-	{
-		<p class="text-muted float-end mt-1"><small><sup>@CachedMsg</sup></small></p>
-	}
 
 </LoadingComponent>
 
-<!-- IsXsOrSm="true" -->
-<div class="d-md-none">
-	<div class="row">
-		<div class="col-12">
-
-			<div class="card mt-2 border-primary my-3" style="width: 100%">
-				<div class="card-header h4 px-2">
-					<span class='badge bg-warning'>Parasha Table</span>
-
-					<span class="float-end">
-
-						<button @onclick="@(e => ToggleButtonClick(IsCollapsed))"
-										class="btn-primary btn-sm float-end">
-							@ButtonText <i class='@ButtonChevron'></i>
-						</button>
-					</span>
-
-				</div>
-			</div>
-
-		</div>
-	</div>
-
-	<div class="row col-12">
-		@if (!IsCollapsed && Parasha != null)
-		{
-			<h6>We are currently studying the Torah on a three year cycle which allows us more time to delve deeper into His Word.</h6>
-			<IndexTable IsXsOrSm="true" BookId="@Parasha.BookId"></IndexTable>
-		}
-	</div>
-
-</div>
-
-<!-- IsXsOrSm="false" -->
-<div class="d-none d-md-block">
-
-	<ButtonToggleVisibility Title="Parasha Table">
-		<ChildContent>
-			<div class="card-body  m-0 px-4">
-
-				<h6>
-					We are currently studying the Torah on a three year cycle which allows us more time to delve deeper into His Word.
-				</h6>
-				<ul class="list-inline">
-					<li><a href="@Page.IndexPrint"><small><b>Print Version</b></small></a></li>
-				</ul>
-
-				@if (Parasha is not null)
-				{
-					<IndexTable IsXsOrSm="false" BookId="@Parasha.BookId"></IndexTable>
-				}
-
-
-
-			</div>
-		</ChildContent>
-	</ButtonToggleVisibility>
-
-</div>
-
-<div class="row">
-	<div class="col-12">
-		<a class="btn btn-outline-primary btn-sm float-end"
-			 href="@LivingMessiah.Web.Links.ParashaArchive.Index">
-			<small>Archive</small>
-		</a>
-	</div>
-</div>
-
-
-@if (DatabaseError)
+@if (CurrentParasha is not null)
 {
-	<p class="text-danger"><em>@DatabaseErrorMsg</em></p>
-}
-else
-{
-	if (DatabaseWarning)
-	{
-		<p class="text-warning">@DatabaseWarningMsg</p>
-	}
-}
+	<div class="d-md-none">
+		<ParashotTableToggle IsXsOrSm="true" BookId="@CurrentParasha.BookId"></ParashotTableToggle>
+	</div>
 
+	<div class="d-none d-md-block">
+		<ParashotTableToggle IsXsOrSm="false" BookId="@CurrentParasha.BookId"></ParashotTableToggle>
+	</div>
+}
+@*else
+{
+	<p>cannot show details because CurrentParasha is null</p>
+}*@
+
+<ArchiveButton/>
 <TorahTuesdayButton />
 <AlephBetFooter />
 

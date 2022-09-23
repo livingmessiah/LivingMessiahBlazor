@@ -2,13 +2,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using LivingMessiah.Web.Domain;
+using LivingMessiah.Web.Services;
 
 namespace LivingMessiah.Web.Pages.Parasha;
 
 public partial class TorahTuesdayButton
 {
 	[Inject]
-	public Services.ILinkService LinkService { get; set; }
+	public ILinkService LinkService { get; set; }
 
 	protected Link TorahTuesdayLink { get; set; } 
 

@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 using Syncfusion.Blazor;
+using Blazored.Toast;
 
 namespace LivingMessiah.Web;
 
@@ -33,6 +34,7 @@ public class Startup
 
 		services.AddDataStores();
 		services.AddSession();
+		services.AddBlazoredToast();
 		services.AddCustomAuthentication(Configuration);
 		services.Configure<AppSettings>(options => Configuration.GetSection("AppSettings").Bind(options));
 		services.Configure<SukkotSettings>(options => Configuration.GetSection("SukkotSettings").Bind(options));

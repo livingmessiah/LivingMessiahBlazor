@@ -1,5 +1,6 @@
-﻿
-<LoadingComponent IsLoading="ParashaListTuple==null || ParashaList==null || BibleBook==null ">
+﻿@using LivingMessiah.Web.Enums
+
+<LoadingComponent IsLoading="Parashot==null" TurnSpinnerOff="@TurnSpinnerOff">
 
 	<table class="table table-sm table-hover">
 		<thead>
@@ -21,21 +22,18 @@
 		</thead>
 		<tbody>
 
-			@foreach (var item in ParashaList)
+			@foreach (var item in Parashot!)
 			{
 				if (item.RowCntByBookId == 1)
 				{
-					if (BibleBook != null)
-					{
-						<tr>
-							<td colspan="@Colspan">
-								<a id="@BibleBook.EnglishTitle"></a>
-								<span class="badge bg-danger">@BibleBook.EnglishTitle</span> &nbsp;
-								<span class="text-muted"><i>@BibleBook.HebrewTitle</i></span>
-								<span class="float-end hebrewchart">@((MarkupString)BibleBook.HebrewName)</span>
-							</td>
-						</tr>
-					}
+					<tr>
+						<td colspan="@Colspan">
+							<a id="@item.BibleBook.Name"></a>
+							<span class="badge bg-danger">@item.BibleBook.Name</span> &nbsp;
+							<span class="text-muted"><i>@item.BibleBook.TransliterationInHebrew</i></span>
+							<span class="float-end hebrewchart">@((MarkupString)item.BibleBook.NameInHebrew)</span>
+						</td>
+					</tr>
 				}
 
 				<tr>
@@ -53,7 +51,9 @@
 						@if (item.ShabbatDate.Year != prevGregorianYear)
 						{
 							prevGregorianYear = item.ShabbatDate.Year;
-							<span class="badge bg-danger">@item.ShabbatDate.Year</span><br />
+							<span class="badge bg-danger">@item.ShabbatDate.Year</span>
+
+							<br />
 						}
 						@item.ShabbatDate.ToString("MMM d")
 					</td>
@@ -65,7 +65,7 @@
 
 					<td>
 						<a href="@item.AhavtaURL"
-							 title="Ahavta URL [@item.Id]" target="_blank">
+						 title="Ahavta URL [@item.Id]" target="_blank">
 							<i class="fas fa-external-link-alt"></i>
 						</a>
 					</td>
@@ -79,14 +79,4 @@
 
 </LoadingComponent>
 
-@if (DatabaseError)
-{
-	<p class="text-danger"><em>@DatabaseErrorMsg</em></p>
-}
-else
-{
-	if (DatabaseWarning)
-	{
-		<p class="text-warning">@DatabaseWarningMsg</p>
-	}
-}
+

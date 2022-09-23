@@ -14,15 +14,4 @@ public class Link
 	public LivingMessiah.Web.Pages.KeyDates.Enums.FeastDayEnum FeastDay { get; set; }
 	public int SortOrder { get; set; }
 
-	/*
-	public string Descr { get; set; }
-	public string FragmentId { get; set; }
-	public string Href { get; set; }
-	public string IndexPrint { get; set; }
-
-
-			ParashaArchive!CurrentIndex
-			Podcast.Title2
-			Pesach.Title //  = "** dynamically created **";
-	*/
 }
