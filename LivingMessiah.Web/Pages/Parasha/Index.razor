@@ -1,6 +1,7 @@
 ﻿@page  "/Parasha"
 @using Page = LivingMessiah.Web.Links.Parasha
 @using LivingMessiah.Web.SmartEnums
+@using LivingMessiah.Web.Pages.Parasha.ListByBook
 
 <PageTitle>@Page.Title</PageTitle>
 @*
@@ -8,10 +9,13 @@
 	<HebrewDate></HebrewDate>
 *@
 
+<SubNavBar UseDarkMode="false"></SubNavBar>
+@*<MenuBar ParashaEnum="@LivingMessiah.Web.LinkSmartEnums.ParashaLink.Current"/>*@
 
 <div class="pb-1 mt-4 mb-5">
 	<h1><i class="@Page.Icon"></i> @Page.Title</h1>
 </div>
+
 
 <LoadingComponent IsLoading="CurrentParasha==null" TurnSpinnerOff="@TurnSpinnerOff">
 	<div class="@MediaQuery.XsOrSm.DivClass">
@@ -31,23 +35,20 @@
 	</div>
 
 </LoadingComponent>
-
+@*
 @if (CurrentParasha is not null)
 {
 	<div class="d-md-none">
-		<ParashotTableToggle IsXsOrSm="true" BookId="@CurrentParasha.BookId"></ParashotTableToggle>
+		<Toggle IsXsOrSm="true" BookId="@CurrentParasha.BookId"></Toggle>
 	</div>
 
 	<div class="d-none d-md-block">
-		<ParashotTableToggle IsXsOrSm="false" BookId="@CurrentParasha.BookId"></ParashotTableToggle>
+		<Toggle IsXsOrSm="false" BookId="@CurrentParasha.BookId"></Toggle>
 	</div>
 }
-@*else
-{
-	<p>cannot show details because CurrentParasha is null</p>
-}*@
 
 <ArchiveButton/>
 <TorahTuesdayButton />
+*@
 <AlephBetFooter />
 

@@ -1,0 +1,31 @@
+﻿@page "/Parasha/ListByBook"
+@using Page = LivingMessiah.Web.Links.Parasha.ListByBook
+@using LivingMessiah.Web.SmartEnums
+@*@using LivingMessiah.Web.Pages.Parasha.ListByBook*@
+
+<PageTitle>@Page.Title</PageTitle>
+
+<SubNavBar UseDarkMode="false"></SubNavBar>
+@*<MenuBar ParashaEnum="@LivingMessiah.Web.LinkSmartEnums.ParashaLink.ListByBook"/>*@
+
+<div class="pb-1 mt-4 mb-5">
+	<h1><i class="@Page.Icon"></i> @Page.Title</h1>
+</div>
+
+<LoadingComponent IsLoading="CurrentParasha==null" TurnSpinnerOff="@TurnSpinnerOff">
+
+	<h6 class="m-2">
+		We are currently studying the Torah on a three year cycle which allows us more time to delve deeper into His Word.
+	</h6>
+
+	<PrintButton BookId="@CurrentParasha.BookId"/>
+
+	<div class="@MediaQuery.XsOrSm.DivClass">
+		<Table IsXsOrSm="true" BookId="@CurrentParasha.BookId"></Table>
+	</div>
+
+	<div class="@MediaQuery.MdOrLgOrXl.DivClass">
+		<Table IsXsOrSm="false" BookId="@CurrentParasha.BookId"></Table>
+	</div>
+</LoadingComponent>
+

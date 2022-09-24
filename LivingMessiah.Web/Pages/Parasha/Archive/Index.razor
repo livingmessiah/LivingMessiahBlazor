@@ -1,13 +1,16 @@
 ﻿@page "/parasha/Archive"
-
+@using LivingMessiah.Web.Pages.Parasha.Components
 @using Page = LivingMessiah.Web.Links.Parasha
 <PageTitle>@Page.Archive.Title</PageTitle>
 
+<SubNavBar UseDarkMode="false"></SubNavBar>
+@*<MenuBar ParashaEnum="@LivingMessiah.Web.LinkSmartEnums.ParashaLink.Archive"/>*@
+
 <div class="pb-2 mt-4 mb-2 border-bottom">
 
-	<h3><i class="@Page.Archive.Icon"></i> @Page.Archive.Title</h3>
+	<h1><i class="@Page.Archive.Icon"></i> @Page.Archive.Title</h1>
 
-	<BackButton Href="@Page.Index" Text="@Page.BackToButtonText"/>
+	@*<BackButton Href="@Page.Index" Text="@Page.BackToButtonText"/>*@
 
 	<div class="mt-3">
 		<SfTab CssClass="">
@@ -18,7 +21,7 @@
 						<TabHeader Text="Leviticus"></TabHeader>
 					</ChildContent>
 					<ContentTemplate>
-						<ArchiveTableStaticLev></ArchiveTableStaticLev>
+						<LeviticusStaticTable></LeviticusStaticTable>
 					</ContentTemplate>
 				</TabItem>
 
@@ -27,7 +30,7 @@
 						<TabHeader Text="Numbers"></TabHeader>
 					</ChildContent>
 					<ContentTemplate>
-						<ArchiveTableStaticNum></ArchiveTableStaticNum>
+						<NumbersStaticTable></NumbersStaticTable>
 					</ContentTemplate>
 				</TabItem>
 
@@ -36,7 +39,7 @@
 						<TabHeader Text="Deuteronomy"></TabHeader>
 					</ChildContent>
 					<ContentTemplate>
-						<ArchiveTableStaticDeu></ArchiveTableStaticDeu>
+						<DeuteronomyStaticTable></DeuteronomyStaticTable>
 					</ContentTemplate>
 				</TabItem>
 
@@ -45,7 +48,7 @@
 						<TabHeader Text="Genesis"></TabHeader>
 					</ChildContent>
 					<ContentTemplate>
-						<ArchiveTableStaticGen></ArchiveTableStaticGen>
+						<GenesisStaticTable></GenesisStaticTable>
 					</ContentTemplate>
 				</TabItem>
 

@@ -1,10 +1,9 @@
 using Microsoft.AspNetCore.Components;
 using Page = LivingMessiah.Web.Links.Parasha;
-//using LivingMessiah.Web.Enums;  // using LivingMessiah.Web.SmartEnums;
 
-namespace LivingMessiah.Web.Pages.Parasha;
+namespace LivingMessiah.Web.Pages.Parasha.ListByBook;
 
-public partial class ParashotTableToggle
+public partial class Toggle
 {
 	[Parameter]
 	public string CardCss { get; set; } = "border-primary my-3";
@@ -38,8 +37,6 @@ public partial class ParashotTableToggle
 
 	private void PrintButtonClick(int bookId)
 	{
-		//string name = BibleBook.FromValue(BookId).Name;
-		//NavManager.NavigateTo(Page.IndexPrint + "/" + bibleBookName);
-		NavManager.NavigateTo(Page.IndexPrint + "/" + bookId);  //  + "/" + name
+		NavManager.NavigateTo(Page.IndexPrint + "/" + bookId); 
 	}
 }

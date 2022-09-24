@@ -1,12 +1,12 @@
-﻿using LivingMessiah.Data;
-using LivingMessiah.Web.Pages.Parasha;
-using Dapper;
+﻿using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Configuration;
+using Dapper;
+using LivingMessiah.Data;
+using LivingMessiah.Web.Pages.Parasha.ListByBook;
 
 namespace LivingMessiah.Web.Pages.Parasha.Data;
 

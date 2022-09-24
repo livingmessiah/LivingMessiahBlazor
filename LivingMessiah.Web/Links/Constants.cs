@@ -355,8 +355,8 @@ public static class Parasha
 	public const string Icon = "fas fa-torah";
 	public const string IconCurrent = "far fa-bookmark";
 
-	public const string IndexPrint = "/Parasha/IndexPrint";
-	public const string BackToButtonText = "Back to Parasha";
+	public const string IndexPrint = "/Parasha/IndexPrint";  // Deprecate
+	public const string BackToButtonText = "Back to Parasha"; // Deprecate
 
 	public static class MyHebrewBible
 	{
@@ -367,6 +367,23 @@ public static class Parasha
 		}
 	}
 
+	public static class SeeAlsoSeeAlsoTorahTuesday
+	{
+		public const string Index = TorahTuesday.Index;
+		public const string Title = TorahTuesday.Title;
+	}
+	public static class ListByBook
+	{
+		public const string Index = "/Parasha/ListByBook";
+		public const string Title = "Current Parasha Table";
+		public const string Icon = "fas fa-table";
+	}
+	public static class ListByBookPrint
+	{
+		public const string Index = "/Parasha/IndexPrint";
+		public const string Title = "Current Parasha Table (Print)";
+		public const string Icon = "fas fa-table";
+	}
 	public static class Archive
 	{
 		public const string Index = "/Parasha/Archive";
@@ -553,7 +570,6 @@ public static class Sukkot
 		public const string PaymentTitle = "Donations Earmarked for Sukkot";
 	}
 }
-
 
 public static class ThankYou
 {

@@ -1,6 +1,6 @@
 ﻿using System;
 using LivingMessiah.Web.Enums;
-namespace LivingMessiah.Web.Pages.Parasha;
+namespace LivingMessiah.Web.Pages.Parasha.ListByBook;
 
 public class Parashot
 {

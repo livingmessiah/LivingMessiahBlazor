@@ -1,0 +1,31 @@
+﻿@using LivingMessiah.Web.LinkSmartEnums
+@using Page = LivingMessiah.Web.Links.Parasha
+
+<div class="d-print-none mt-n2">
+	<ul class="list-inline bg-light pl-2">
+		@foreach (var item in ParashaLink.List.OrderBy(o => o.Value))
+		{
+			<li class="list-inline-item bg-light @GetDisabled(item)">
+				<a class="badge bg-@item.Color" href="@item.Page">
+					<small>@item.Title</small>
+				</a>&nbsp;&nbsp;
+			</li>
+		}
+		<li class="list-inline-item bg-light disabled">
+			<a class="badge bg-warning" href="/">TEST</a>
+		</li>
+	</ul>
+</div>
+
+
+
+
+
+
+
+
+@*
+	<a class="nav-link active" aria-current="page" href="#">Home</a>
+	...
+	<a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+*@

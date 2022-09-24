@@ -7,15 +7,15 @@ using System.Threading.Tasks;
 using Blazored.Toast.Services;
 using LivingMessiah.Web.Pages.Parasha.Services;
 
-namespace LivingMessiah.Web.Pages.Parasha;
+namespace LivingMessiah.Web.Pages.Parasha.ListByBook;
 
-public partial class ParashotTable
+public partial class Table
 {
 	[Inject]
 	private IParashaService Service { get; set; }
 
 	[Inject] 
-	public ILogger<ParashotTable>? Logger { get; set; }
+	public ILogger<Table>? Logger { get; set; }
 	
 	[Inject]
 	public IToastService Toast { get; set; }
@@ -35,7 +35,7 @@ public partial class ParashotTable
 	protected override async Task OnInitializedAsync()
 	{
 		Logger!.LogDebug(string.Format("Inside: {0}, Class!Method: {1}; BookId: {2}"
-			, "Parasha", nameof(ParashotTable) + "!" + nameof(OnInitializedAsync), BookId));
+			, "Parasha", nameof(Table) + "!" + nameof(OnInitializedAsync), BookId));
 
 		Colspan = (!IsXsOrSm) ? "8" : "6";
 

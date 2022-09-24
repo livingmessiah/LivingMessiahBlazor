@@ -9,15 +9,15 @@ using Page = LivingMessiah.Web.Links.Parasha;
 using LivingMessiah.Web.Pages.Parasha.Services;
 using LivingMessiah.Web.Enums;
 
-namespace LivingMessiah.Web.Pages.Parasha;
+namespace LivingMessiah.Web.Pages.Parasha.ListByBook;
 
-public partial class ParashotTablePrint
+public partial class PrintTable
 {
 	[Inject]
 	private IParashaService Service { get; set; }
 
 	[Inject]
-	public ILogger<ParashotTablePrint>? Logger { get; set; }
+	public ILogger<PrintTable>? Logger { get; set; }
 
 	[Inject]
 	public IToastService Toast { get; set; }
@@ -25,18 +25,14 @@ public partial class ParashotTablePrint
 	[Parameter]
 	public int BookId { get; set; } = 0;
 
-	//[Parameter]
-	//public string BibleBookName { get; set; } = String.Empty;
 	protected string BibleBookName = String.Empty;
-
 	protected IReadOnlyList<Parashot> Parashot;
-
 	protected bool TurnSpinnerOff = false;
 
 	protected override async Task OnInitializedAsync()
 	{
 		Logger!.LogDebug(string.Format("Inside Page: {0}, Class!Method: {1}; BookId: {2}"
-			, Page.IndexPrint, nameof(ParashotTablePrint) + "!" + nameof(OnInitializedAsync), BookId));
+			, Page.IndexPrint, nameof(PrintTable) + "!" + nameof(OnInitializedAsync), BookId));
 
 		try
 		{
