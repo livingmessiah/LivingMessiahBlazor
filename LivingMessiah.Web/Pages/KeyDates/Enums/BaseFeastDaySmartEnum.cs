@@ -86,8 +86,8 @@ public abstract class BaseFeastDaySmartEnum : SmartEnum<BaseFeastDaySmartEnum>
 				public override string Transliteration => "Yom Teruah";
 				public override string Hebrew => "יוֹם תְּרוּעָה";
 				public override string Details => "";
-				public override string AddDaysDescr => "Trumpets Day";
-				public override int? AddDays => 1;
+				public override string AddDaysDescr => "Blow trumpets sundown";
+				public override int? AddDays => -1;
 		}
 		private sealed class YomKippurSE : BaseFeastDaySmartEnum
 		{
