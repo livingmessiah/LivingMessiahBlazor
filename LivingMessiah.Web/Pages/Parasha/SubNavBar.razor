@@ -1,22 +1,26 @@
 ﻿@using LivingMessiah.Web.LinkSmartEnums
 
-<nav class="navbar navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3 @NavBarColor">
+<nav id="subNavBar" class="navbar navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3 @NavBarColor">
 	<div class="container">
-		<a class="navbar-brand" href="@ParashaLink.Current.Page">Parasha</a>
-		<button class="navbar-toggler" @onclick="ToggleNavMenu" type="button"
+
+		<a class="navbar-brand nav-link" title="" href="@ParashaLink.Current.Page">
+			@ParashaLink.Current.Title
+		</a>
+
+		<button class="navbar-toggler" @onclick="ToggleSubNavBar" type="button"
 						data-bs-toggle="collapse" data-target=".navbar-collapse"
 						aria-controls="navbarSupportedContent"
 						aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
-		<div class="@NavMenuCssClass navbar-collapse d-sm-inline-flex flex-sm-row-reverse"
-				 @onclick="ToggleNavMenu">
+		<div class="@SubNavBarCssClass navbar-collapse d-sm-inline-flex flex-sm-row-reverse"
+				 @onclick="ToggleSubNavBar">
 
 			<ul class="navbar-nav flex-grow-1">
 				@foreach (var item in ParashaLink.List.OrderBy(o => o.Value).Where(w => w.Value != 1))
 				{
 					<li class="nav-item">
-						<a class="nav-link @TextColor" href="@item.Page">@item.Title</a>
+						<a class="nav-link @TextColor @GetActive(item)" href="@item.Page">@item.Title</a>
 					</li>
 				}
 			</ul>
@@ -24,3 +28,13 @@
 		</div>
 	</div>
 </nav>
+
+@*
+
+<ul class="navbar-nav flex-grow-1">
+
+	<a class="navbar-brand nav-link text-warning" title="Sub Home Anchor" href="@ParashaLink.Current.Page">
+		<i class="fas fa-home"></i> @ParashaLink.Current.Title
+	</a>
+
+*@

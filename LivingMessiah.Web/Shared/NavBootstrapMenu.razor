@@ -1,16 +1,16 @@
 ﻿@using LivingMessiah.Web.Links
 
-<nav class="navbar navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3 @NavBarColor">
+<nav id="navBootstrapMenu" class="navbar navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3 @NavBarColor">
 	<div class="container">
 		<NavbarHomeButton></NavbarHomeButton>
-		<button class="navbar-toggler" @onclick="ToggleNavMenu" type="button" 
+		<button class="navbar-toggler" @onclick="ToggleNavBootstrapMenu" type="button" 
 						data-bs-toggle="collapse" data-target=".navbar-collapse" 
 						aria-controls="navbarSupportedContent"
 						aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
 		<div class="@NavMenuCssClass navbar-collapse d-sm-inline-flex flex-sm-row-reverse" 
-				 @onclick="ToggleNavMenu">
+				 @onclick="ToggleNavBootstrapMenu">
 			<ul class="navbar-nav flex-grow-1">
 
 				<li class="nav-item">
@@ -28,12 +28,10 @@
 				</li>
 
 				<li class="nav-item">
-
 					<a class="nav-link @TextColor" href="@PayPal.Donate.Index ">
 						@*<i class="@PayPal.Donate.Icon" aria-hidden="true"></i>*@
 						@PayPal.Donate.Title
 					</a>
-
 				</li>
 
 				<li class="nav-item">

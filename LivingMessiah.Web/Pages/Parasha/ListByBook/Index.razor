@@ -5,12 +5,13 @@
 
 <PageTitle>@Page.Title</PageTitle>
 
-<SubNavBar UseDarkMode="false"></SubNavBar>
+
 @*<MenuBar ParashaEnum="@LivingMessiah.Web.LinkSmartEnums.ParashaLink.ListByBook"/>*@
 
 <div class="pb-1 mt-4 mb-5">
 	<h1><i class="@Page.Icon"></i> @Page.Title</h1>
 </div>
+<SubNavBar UseDarkMode="false"></SubNavBar>
 
 <LoadingComponent IsLoading="CurrentParasha==null" TurnSpinnerOff="@TurnSpinnerOff">
 

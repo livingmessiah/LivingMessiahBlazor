@@ -8,7 +8,7 @@ public partial class NavBootstrapMenu
 
 		bool collapseNavMenu = true;
 		string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
-		void ToggleNavMenu()
+		void ToggleNavBootstrapMenu()
 		{
 				collapseNavMenu = !collapseNavMenu;
 		}

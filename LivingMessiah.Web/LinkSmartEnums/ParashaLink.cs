@@ -36,6 +36,7 @@ public abstract class ParashaLink : SmartEnum<ParashaLink>
 	public abstract string Color { get; }  // badge bg-dark
 	public abstract string Page { get; }
 	public abstract string Title { get; }
+	//public abstract string Icon { get; }
 	#endregion
 
 	#region Private Instantiation
@@ -44,7 +45,8 @@ public abstract class ParashaLink : SmartEnum<ParashaLink>
 		public CurrentSE() : base($"{nameof(Id.Current)}", Id.Current) { }
 		public override string Color => "dark";
 		public override string Page => ParashaPage.Index;
-		public override string Title => ParashaPage.Title;
+		public override string Title => "Current Parasha"; // ParashaPage.Title;
+		//public override string Icon => ParashaPage.Icon;
 	}
 
 	private sealed class ListByBookSE : ParashaLink
