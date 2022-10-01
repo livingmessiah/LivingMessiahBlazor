@@ -1,7 +1,10 @@
 ﻿@page "/Parasha/IndexPrint/{BookId:int}"
-@using Page = LivingMessiah.Web.Links.Parasha
-@using LivingMessiah.Web.Pages.Parasha.Components
+@using Page = LivingMessiah.Web.Links.Parasha.PrintTable
 <PageTitle>@Page.Title</PageTitle>
+
+<div class="d-print-none">
+	<SubNavBar UseDarkMode="false"></SubNavBar>
+</div>
 
 <HebrewDate></HebrewDate>
 
@@ -14,9 +17,6 @@
 		<span class="fas fa-print"></span> Print
 	</a>
 </div>
-
-
-<BackButton Href="@Page.Index" Text="@Page.BackToButtonText"/>
 
 <LoadingComponent IsLoading="Parashot==null" TurnSpinnerOff="@TurnSpinnerOff">
 	<table class="table table-sm table-striped">

@@ -131,6 +131,7 @@ public static class AudioVisual
 	//public const string Icon3 = "fas fa-broadcast-tower";
 }
 
+
 //ToDo use the link in WindmillRanch
 public static class BiblicalPermaculture
 {
@@ -367,10 +368,11 @@ public static class Parasha
 		}
 	}
 
-	public static class SeeAlsoSeeAlsoTorahTuesday
+	public static class TorahTuesday
 	{
-		public const string Index = TorahTuesday.Index;
-		public const string Title = TorahTuesday.Title;
+		public const string Index = Links.TorahTuesday.Index;
+		public const string Title = Links.TorahTuesday.Title;
+		public const string Icon = Links.TorahTuesday.Icon;
 	}
 	public static class ListByBook
 	{
@@ -378,18 +380,20 @@ public static class Parasha
 		public const string Title = "Current Parasha Table";
 		public const string Icon = "fas fa-table";
 	}
-	public static class ListByBookPrint
-	{
-		public const string Index = "/Parasha/IndexPrint";
-		public const string Title = "Current Parasha Table (Print)";
-		public const string Icon = "fas fa-table";
-	}
+
 	public static class Archive
 	{
 		public const string Index = "/Parasha/Archive";
-		public const string Icon = "fas fa-archive";
 		public const string Title = "Parashot Archive";
+		public const string Icon = "fas fa-archive";
 	}
+
+	public static class PrintTable
+	{
+		public const string Title = "Parasha Table (Print)";
+		public const string Icon = "fas fa-print"; 
+	}
+
 }
 
 public static class PayPal
@@ -444,6 +448,7 @@ public static class Podcast
 	public const string Icon = "fas fa-podcast";
 }
 
+
 public static class ShabbatService
 {
 	public const string Index = "/ShabbatService";
@@ -462,8 +467,6 @@ public static class ShabbatService
 		public const string ShabbatServiceEspTitle = "Servicio principal de Shabat";
 	}
 }
-
-
 
 public static class Shavuot
 {

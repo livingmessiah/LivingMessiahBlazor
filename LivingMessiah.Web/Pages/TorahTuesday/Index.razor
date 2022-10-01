@@ -4,8 +4,10 @@
 @using Page = LivingMessiah.Web.Links.TorahTuesday
 <PageTitle>@Page.Title</PageTitle>
 
+<SubNavBar UseDarkMode="false" ActiveParashaEnum="@LivingMessiah.Web.LinkSmartEnums.ParashaLink.SeeAlsoTorahTuesday"></SubNavBar>
+
 <div class="pb-2 mt-4 mb-2 border-bottom">
-	<h2><i class="@Page.Icon"></i> @Page.Title</h2>
+	<h1><i class="@Page.Icon"></i> @Page.Title</h1>
 </div>
 
 <TuesdayTorahStudy></TuesdayTorahStudy>

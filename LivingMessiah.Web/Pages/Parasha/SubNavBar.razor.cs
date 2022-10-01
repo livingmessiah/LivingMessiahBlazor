@@ -14,24 +14,24 @@ public partial class SubNavBar
 		collapseNavMenu = !collapseNavMenu;
 	}
 
+	// Can't force EditorRequired because PrintTable is set to `Display=> false`
+	[Parameter]
+	public ParashaLink ActiveParashaEnum { get; set; }
+
 	[Parameter]
 	public bool UseDarkMode { get; set; } = false;
 
 	string NavBarColor;
-	string TextColor;
 
 	protected override async Task OnInitializedAsync()
 	{
 		await Task.Delay(0);
 		NavBarColor = UseDarkMode ? " navbar-dark bg-dark " : " navbar-light bg-light "; // bg-white 
-		TextColor = UseDarkMode ? " text-white " : " text-dark ";
 	}
 
-	[Parameter, EditorRequired]
-	public ParashaLink ParashaEnum { get; set; }
 
 	string GetActive(ParashaLink currentParashaEnum)
 	{
-		return ParashaEnum == currentParashaEnum ? " active" : "";
+		return ActiveParashaEnum == currentParashaEnum ? " active" : "";
 	}
 }

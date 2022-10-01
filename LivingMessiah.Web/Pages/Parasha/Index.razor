@@ -10,13 +10,15 @@
 *@
 
 
-@*<MenuBar ParashaEnum="@LivingMessiah.Web.LinkSmartEnums.ParashaLink.Current"/>*@
-
-<div class="pb-1 mt-4 mb-5">
+<SubNavBar UseDarkMode="false" ActiveParashaEnum="@LivingMessiah.Web.LinkSmartEnums.ParashaLink.Current"/>
+<div class="pb-1 mt-4 mb-2">
 	<h1><i class="@Page.Icon"></i> @Page.Title</h1>
 </div>
 
-<SubNavBar UseDarkMode="false"></SubNavBar>
+
+	<h6 class="m-2 bg-light">
+		We are currently studying the Torah on a three year cycle which allows us more time to delve deeper into His Word.
+	</h6>
 
 <LoadingComponent IsLoading="CurrentParasha==null" TurnSpinnerOff="@TurnSpinnerOff">
 	<div class="@MediaQuery.XsOrSm.DivClass">
@@ -36,20 +38,6 @@
 	</div>
 
 </LoadingComponent>
-@*
-@if (CurrentParasha is not null)
-{
-	<div class="d-md-none">
-		<Toggle IsXsOrSm="true" BookId="@CurrentParasha.BookId"></Toggle>
-	</div>
 
-	<div class="d-none d-md-block">
-		<Toggle IsXsOrSm="false" BookId="@CurrentParasha.BookId"></Toggle>
-	</div>
-}
-
-<ArchiveButton/>
-<TorahTuesdayButton />
-*@
 <AlephBetFooter />
 
