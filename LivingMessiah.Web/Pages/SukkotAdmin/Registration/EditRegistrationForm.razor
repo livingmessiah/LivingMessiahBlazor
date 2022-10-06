@@ -6,10 +6,8 @@
 
 <LoadingComponent IsLoading="RegistrationVM==null">
 
-	@if (IsEdit)
-	{
 	<div class="row mt-2">
-		
+
 		<div class="col-8">
 			<div class="card border-info">
 				<SfAutoComplete Placeholder="Select a Registrant to edit" @bind-Value="@SelectedRegistrantName"
@@ -28,13 +26,11 @@
 		</div>
 	</div>
 
-	}
-
-	@if (!IsEdit | (IsEdit & ShowEditForm))
+	@if (ShowEditForm)
 	{
 		<EditForm Model="RegistrationVM"
-							OnValidSubmit="HandleValidSubmit"
-							class="card card-body bg-light mt-5">
+						OnValidSubmit="HandleValidSubmit"
+						class="card card-body bg-light mt-5">
 			<DataAnnotationsValidator />
 			<ValidationSummary />
 
@@ -122,10 +118,10 @@
 							@*<label for="attendanceDays" class="control-label">Select Dates</label>*@
 
 							<SfCalendar TValue="DateTime?"
-													IsMultiSelection="true" ShowTodayButton="false"
-													@bind-Values="@RegistrationVM.AttendanceDateList"
-													Min="@DateRangeAttendance.DateRange.MinDate"
-													Max="@DateRangeAttendance.DateRange.MaxDate">
+												IsMultiSelection="true" ShowTodayButton="false"
+												@bind-Values="@RegistrationVM.AttendanceDateList"
+												Min="@DateRangeAttendance.DateRange.MinDate"
+												Max="@DateRangeAttendance.DateRange.MaxDate">
 							</SfCalendar>
 
 						</div>
@@ -166,7 +162,6 @@
 					</div>
 
 					<div class="col-sm-3">
-
 					</div>
 
 				</div>
@@ -207,22 +202,4 @@
 
 </LoadingComponent>
 
-@if (DatabaseError)
-{
-	<p class="text-danger"><em>@DatabaseErrorMsg</em></p>
-}
-else
-{
-	if (DatabaseWarning)
-	{
-		<p class="text-warning">@DatabaseWarningMsg</p>
-	}
-	else
-	{
-		if (DatabaseInformation)
-		{
-			<p class="text-success">@DatabaseInformationMsg</p>
-		}
 
-	}
-}

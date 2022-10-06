@@ -93,16 +93,18 @@ ORDER BY FirstName
 
 	public async Task<RegistrationPOCO> GetPocoById(int id)
 	{
+		base.Parms = new DynamicParameters(new { Id = id });
 		base.Sql = $@"
+--DECLARE @id int=4
 SELECT TOP 1 
 Id, FamilyName, FirstName, SpouseName, OtherNames, EMail, Phone, Adults, ChildBig, ChildSmall
-, StatusId AS StatusEnum
+, StatusId
 , AttendanceBitwise, LmmDonation, Notes, Avatar
 , Sukkot.udfAttendanceDatesConcat(Id) AS AttendanceDatesCSV
-FROM Sukkot.Registration WHERE Id = {id}";
+FROM Sukkot.Registration WHERE Id = @Id";
 		return await WithConnectionAsync(async connection =>
 		{
-			var rows = await connection.QueryAsync<RegistrationPOCO>(sql: base.Sql);
+			var rows = await connection.QueryAsync<RegistrationPOCO>(sql: base.Sql, param: base.Parms);
 			return rows.SingleOrDefault();
 		});
 	}

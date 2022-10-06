@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using System.Linq;
 using System.Data;
+using System.Collections.Generic;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
@@ -21,7 +22,10 @@ public interface ISukkotRepository
 	Task<int> Update(RegistrationPOCO registration);
 	Task<int> Delete(int id);
 	Task<RegistrationSummary> GetRegistrationSummary(int id);
+
 	Task<int> InsertHouseRulesAgreement(string email, string timeZone);
+	Task<List<vwHouseRulesAgreement>> NoRegistration();
+	Task<int> DeleteHouseRulesAgreementRecord(string email);
 }
 
 public class SukkotRepository : BaseRepositoryAsync, ISukkotRepository
@@ -188,6 +192,22 @@ FROM Sukkot.tvfRegistrationSummary(@id)
 		});
 	}
 
+	public async Task<List<vwHouseRulesAgreement>> NoRegistration() 
+	{
+		base.Sql = $@"
+SELECT hra.Id, hra.EMail, hra.AcceptedDate, hra.TimeZone
+FROM Sukkot.HouseRulesAgreement hra
+	LEFT JOIN Sukkot.Registration r 
+		ON hra.Id=r.HouseRulesAgreementId
+WHERE r.HouseRulesAgreementId IS NULL
+";
+		return await WithConnectionAsync(async connection =>
+		{
+			var rows = await connection.QueryAsync<vwHouseRulesAgreement>(base.Sql);
+			return rows.ToList();
+		});
+	}
+
 	public async Task<int> InsertHouseRulesAgreement(string email, string timeZone)
 	{
 		base.Sql = "Sukkot.stpHouseRulesAgreementInsert";
@@ -216,6 +236,17 @@ FROM Sukkot.tvfRegistrationSummary(@id)
 		});
 	}
 
+	public async Task<int> DeleteHouseRulesAgreementRecord(string email)
+	{
+		base.Sql = "Sukkot.stpHouseRulesAgreementDelete";
+		base.Parms = new DynamicParameters(new { EMail = email });
+		return await WithConnectionAsync(async connection =>
+		{
+			var affectedrows = await connection.ExecuteAsync(sql: base.Sql, param: base.Parms, commandType: System.Data.CommandType.StoredProcedure);
+			//if (affectedrows < 0) { throw new Exception($"Registration NOT Deleted"); }
+			return affectedrows;
+		});
+	}
 }
 
 

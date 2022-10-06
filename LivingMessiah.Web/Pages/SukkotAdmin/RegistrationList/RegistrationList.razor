@@ -20,9 +20,9 @@
 <AuthorizeView Roles="@Roles.AdminOrSukkot">
 	<div class="row">
 		<div class="col-12">
-			<button class="btn btn-success" title="Add" disabled>
-				<i class="fas fa-plus"></i> Add
-			</button>
+			<CommonButtons RegistrationStepId="null"
+										 NavButton="NB.NavButton.Add">
+			</CommonButtons>
 		</div>
 	</div>
 
@@ -89,9 +89,13 @@
 												<i class="fas fa-edit"></i> Edit
 											</button>
 
-											<CommonButtons RegistrationStepId="item.Id"
-																 NavButton="NB.NavButton.DeleteConfirmation">
-											</CommonButtons>
+											<button class="btn btn-outline-danger" title="ToDo: DELETE IS NOT IMPLEMENTED YET!!!" disabled>
+												<i class="fas fa-edit"></i> Delete
+											</button>
+											@*											<CommonButtons RegistrationStepId="item.Id"
+												NavButton="NB.NavButton.DeleteConfirmation">
+												</CommonButtons>
+											*@
 										</div>
 									</td>
 

@@ -1,0 +1,46 @@
+﻿
+@page "/SukkotAdmin/HouseRulesAgreement/"
+@using Page = LivingMessiah.Web.Links.Sukkot.HouseRulesAgreement
+@using static LivingMessiah.Web.Services.Auth0
+@using LivingMessiah.Web.Shared.Sukkot
+
+@* Hint: If the only reason you need a code behind is to implement Authorize, then just use the `@attrubue` this e.g.*@
+@attribute [Authorize(Roles = Roles.AdminOrSukkot)] 
+
+<AuthorizeView Roles="@Roles.SukkotMenuBar">
+	<SukkotAdminMenubar></SukkotAdminMenubar>
+</AuthorizeView>
+
+
+<PageTitle>@Page.Title</PageTitle>
+
+<div class="pb-2 mt-4 mb-4 border-bottom">
+	<h3><i class="@Page.Icon"></i> @Page.Title</h3>
+</div>
+
+<AddHraForm RecordAdded="@RecordAddedHandler" />
+
+@*<NoRegistrationTable RefreshHraList="@RefreshHraList" />*@
+<NoRegistrationTable />
+
+
+<p class="text-black-50 mt-3">&dagger; HRA: <b>H</b>ouse <b>R</b>ules <b>A</b>greement </p>
+
+
+
+@*<p class="text-black-50 mt-3">RefreshHraList: @RefreshHraList </p>*@
+
+<p>Chosen Email: @Email</p>
+
+@*<AddRegistrationForm onclick="@ClickHandler"></AddRegistrationForm>*@
+
+<AddRegistrationForm ChosenEmail="@Email"></AddRegistrationForm>
+
+@*@if (ShowAddRegistrationForm)
+{
+	
+}*@
+
+
+		
+

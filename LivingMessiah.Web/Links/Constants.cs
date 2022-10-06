@@ -510,6 +510,13 @@ public static class Store
 
 public static class Sukkot
 {
+	public static class HouseRulesAgreement
+	{
+		public const string Index = "/SukkotAdmin/HouseRulesAgreement";
+		public const string Title = "House Rules Agreement";
+		public const string TitleMenu = "Add";
+		public const string Icon = "fas fa-campground";
+	}
 
 	public static class RegistrationSteps
 	{
@@ -557,13 +564,19 @@ public static class Sukkot
 		public const string CreateDonation = "/SukkotAdmin/CreateDonation";
 	}
 
-
 	public static class Errors
 	{
 		public const string LogErrorTest = "/SukkotAdmin/LogErrorTest";
 		public const string ErrorLog = "/SukkotAdmin/ErrorLog";
 		public const string ErrorLogTitle = "Sukkot Admin ErrorLog";
 		public const string ErrorLogEmpty = "/SukkotAdmin/ErrorLogEmpty";
+	}
+
+	public static class LegalAgreementVerbiage
+	{
+		public const string Index = "/SukkotAdmin/LegalAgreementVerbiage";
+		public const string Title = "Legal Agreement Verbiage";
+		public const string Icon = "fas fa-balance-scale";  // "fas fa-handshake" "far fa-handshake"
 	}
 
 	public static class Links2

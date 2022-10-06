@@ -205,6 +205,7 @@ public class RegistrationService : IRegistrationService
 			}
 			else
 			{
+				//Logger.LogDebug(string.Format("...registrationPOCO.StatusId: {0}", registrationPOCO.StatusId));
 				return DTO_From_DB_To_VM(registrationPOCO);
 			}
 
@@ -233,7 +234,10 @@ public class RegistrationService : IRegistrationService
 
 	private RegistrationVM DTO_From_DB_To_VM(RegistrationPOCO poco)
 	{
-		Logger.LogDebug($"Inside {nameof(RegistrationService)}!{nameof(DTO_From_DB_To_VM)}");
+		Logger.LogDebug(string.Format("Inside {0}"
+		, nameof(RegistrationService) + "!" + nameof(DTO_From_DB_To_VM)));
+
+		//Logger.LogDebug(string.Format("...poco.StatusId: {0}", poco.StatusId));
 
 		RegistrationVM registration = new RegistrationVM
 		{

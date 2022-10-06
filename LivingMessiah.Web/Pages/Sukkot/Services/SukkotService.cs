@@ -24,6 +24,7 @@ public interface ISukkotService
 	Task<RegistrationSummary> Summary(int id, ClaimsPrincipal user);
 	Task<IndexVM> GetRegistrationStep();
 	Task<int> AddHouseRulesAgreementRecord(string email, string timeZone);
+	Task<int> DeleteHouseRulesAgreementRecord(string email);
 }
 
 public class SukkotService : ISukkotService
@@ -180,6 +181,25 @@ public class SukkotService : ISukkotService
 	}
 
 
+	public async Task<int> DeleteHouseRulesAgreementRecord(string email)
+	{
+		int count = 0;
+		try
+		{
+			Logger.LogInformation("Delete House Rules Agreement Record");
+			count = await db.DeleteHouseRulesAgreementRecord(email);
+			Logger.LogInformation(string.Format("House Rules Agreement Record deleted for email {0}; affected rows={1}", email, count));
+		}
+		catch (Exception ex)
+		{
+			LogExceptionMessage = $"Inside {nameof(DeleteHouseRulesAgreementRecord)}, {nameof(db.DeleteHouseRulesAgreementRecord)}, email={email}";
+			Logger.LogError(ex, LogExceptionMessage);
+			UserInterfaceMessage += "An invalid operation occurred during House Rules Agreement deletion, contact your administrator";
+			throw new InvalidOperationException(UserInterfaceMessage);
+		}
+		return count;
+	}
+		
 	public async Task<vwRegistration> Details(int id, ClaimsPrincipal user, bool showPrintInstructionMessage = false)
 	{
 		var vm = new vwRegistration();

@@ -24,6 +24,18 @@ public class AppState
 		this.Message = Message;
 		NotifyStateChanged(Source, "Message");
 	}
+
+	/*
+	public bool RefreshHraNotRegistered { get; private set; } = false;
+	public void UpdatRefreshHraNotRegistered(ComponentBase Source, bool refreshHraNotRegistered)
+	{
+		Logger.LogDebug(string.Format("Inside {0}, Message: {1}"
+			, nameof(AppState) + "!" + nameof(UpdatRefreshHraNotRegistered), refreshHraNotRegistered));
+		RefreshHraNotRegistered = refreshHraNotRegistered;
+		NotifyStateChanged(Source, "RefreshHraNotRegistered");
+	}
+	*/
+
 	#endregion
 
 	public event Action<ComponentBase, string> StateChanged;
