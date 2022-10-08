@@ -209,13 +209,24 @@ public class LinksFactory : ILinksFactory
 				},
 				new Link
 				{
+					Index = BibleSearch.Index,
+					Title = BibleSearch.Title,
+					Icon = BibleSearch.Icon,
+					HomeSidebarUsage=true,
+					HomeFloatRightHebrew="בָּקַר",
+					HomeTitleSuffix=" bāqar H1239",
+					SortOrder=15,
+					SitemapUsage=true
+				},
+				new Link
+				{
 					Index = Location.Index,
 					Title = Location.Title,
 					Icon = Location.Icon,
 					HomeSidebarUsage=true,
 					HomeFloatRightHebrew="דֶּרֶךְ",
 					HomeTitleSuffix=" derek H1870",
-					SortOrder=15,
+					SortOrder=16,
 					SitemapUsage=true
 				},
 				new Link
@@ -226,7 +237,7 @@ public class LinksFactory : ILinksFactory
 					HomeSidebarUsage=true,
 					HomeFloatRightHebrew="נָהַל",
 					HomeTitleSuffix=" nahal H5095",
-					SortOrder=16,
+					SortOrder=17,
 					SitemapUsage=false // Don't show sitemap link on sitemap page
 				},
 				new Link
@@ -237,7 +248,7 @@ public class LinksFactory : ILinksFactory
 					HomeSidebarUsage=true,
 					HomeFloatRightHebrew="כֻּתֹּנֶת",
 					HomeTitleSuffix=" Kuthoneth H3801",
-					SortOrder=17,
+					SortOrder=18,
 					SitemapUsage=true
 				},
 				new Link
@@ -248,7 +259,7 @@ public class LinksFactory : ILinksFactory
 					HomeSidebarUsage=true,
 					HomeFloatRightHebrew="יָרֵחַ",
 					HomeTitleSuffix=" yareach H3394",
-					SortOrder=18,
+					SortOrder=19,
 					SitemapUsage=true
 				},
 				new Link
@@ -259,7 +270,7 @@ public class LinksFactory : ILinksFactory
 					HomeSidebarUsage=true,
 					HomeFloatRightHebrew="כְּתֻבִים",
 					HomeTitleSuffix=" Ketuvim H3789",
-					SortOrder=19,
+					SortOrder=20,
 					SitemapUsage=true
 				},
 				new Link
@@ -270,7 +281,7 @@ public class LinksFactory : ILinksFactory
 					HomeSidebarUsage=true,
 					HomeFloatRightHebrew="סֵפֶר",
 					HomeTitleSuffix=" sepher H5612",
-					SortOrder=20,
+					SortOrder=21,
 					SitemapUsage=true
 				},
 				new Link
@@ -281,7 +292,7 @@ public class LinksFactory : ILinksFactory
 					HomeSidebarUsage=true,
 					HomeFloatRightHebrew="רָקַד",
 					HomeTitleSuffix=" rakad H7540",
-					SortOrder=21,
+					SortOrder=22,
 					SitemapUsage=true
 				},
 				new Link
@@ -292,7 +303,7 @@ public class LinksFactory : ILinksFactory
 					HomeSidebarUsage=true,
 					HomeFloatRightHebrew="מוֹעֵד",
 					HomeTitleSuffix=" moed H4150",
-					SortOrder=22,
+					SortOrder=23,
 					SitemapUsage=true
 				},
 				new Link
@@ -303,7 +314,7 @@ public class LinksFactory : ILinksFactory
 					HomeSidebarUsage=false,
 					HomeFloatRightHebrew="",
 					HomeTitleSuffix="",
-					SortOrder=23,
+					SortOrder=24,
 					SitemapUsage=true
 				},
 				new Link
@@ -312,7 +323,7 @@ public class LinksFactory : ILinksFactory
 					Title = BiblicalPermaculture.Title,
 					Icon = BiblicalPermaculture.Icon,
 					HomeSidebarUsage=false,
-					SortOrder=24,
+					SortOrder=25,
 					SitemapUsage=true
 				},
 				new Link
@@ -321,7 +332,7 @@ public class LinksFactory : ILinksFactory
 					Title = Links.ShowLow.Title,
 					Icon = Links.ShowLow.Icon,
 					HomeSidebarUsage=false,
-					SortOrder=25,
+					SortOrder=26,
 					SitemapUsage=true
 				},
 				new Link
@@ -330,7 +341,7 @@ public class LinksFactory : ILinksFactory
 					Title = Links.Mishpocha.Title,
 					Icon = Links.Mishpocha.Icon,
 					HomeSidebarUsage=false,
-					SortOrder=26,
+					SortOrder=27,
 					SitemapUsage=true
 				},
 				new Link
@@ -339,7 +350,7 @@ public class LinksFactory : ILinksFactory
 					Title = Links.Community.Title,
 					Icon = Links.Community.Icon,
 					HomeSidebarUsage=false,
-					SortOrder=27,
+					SortOrder=28,
 					SitemapUsage=true
 				},
 				new Link
@@ -348,10 +359,9 @@ public class LinksFactory : ILinksFactory
 					Title = Links.Gallery.Title,
 					Icon = Links.Gallery.Icon,
 					HomeSidebarUsage=false,
-					SortOrder=28,
+					SortOrder=29,
 					SitemapUsage=true
 				}
-
 
 			};
 		}

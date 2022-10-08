@@ -131,13 +131,20 @@ public static class AudioVisual
 	//public const string Icon3 = "fas fa-broadcast-tower";
 }
 
-
 //ToDo use the link in WindmillRanch
 public static class BiblicalPermaculture
 {
 	public const string Index = "/WindmillRanch/Permaculture";
 	public const string Title = "Biblical Permaculture";
 	public const string Icon = "fas fa-tractor";
+}
+
+
+public static class BibleSearch
+{
+	public const string Index = "/BibleSearch";
+	public const string Title = "Bible Search";
+	public const string Icon = "fas fa-search";  //fas fa-bible
 }
 
 public static class BloodMoons
@@ -347,6 +354,13 @@ public static class Mishpocha
 	// "fas fa-ellipsis-h"
 	public const string FragmentId = "Mishpocha";
 	public const string Descr = "Mishpocha means Family";
+}
+
+public static class NavigationSearch
+{
+	public const string Index = "/NavigationSearch";
+	public const string Title = "Navigation Search";
+	public const string Icon = "fas fa-compass"; //  fas fa-search
 }
 
 public static class Parasha

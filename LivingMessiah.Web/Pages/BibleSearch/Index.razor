@@ -1,0 +1,51 @@
+﻿@page "/BibleSearch"
+
+@using Page = LivingMessiah.Web.Links.BibleSearch
+
+<PageTitle>@Page.Title</PageTitle>
+
+<div class="pb-2 mt-4 mb-2 border-bottom">
+	<h1><i class="@Page.Icon"></i> @Page.Title</h1>
+</div>
+
+<div class="card mt-4 p-2 bg-light">
+
+	<EditForm Model="VM" OnValidSubmit="HandleFormSubmit">
+		<DataAnnotationsValidator />
+
+		<BlazoredTypeahead SearchMethod="SearchBibleBooks"
+											 @bind-Value="VM.SelectedBook"
+											 EnableDropDown="true"
+											 MaximumSuggestions="66"
+											 MinimumLength="2"
+											 placeholder="Search by bible name...">
+			<SelectedTemplate Context="mycontext">
+				@mycontext.Title &nbsp;&nbsp;&nbsp; <span class="hebrew">@mycontext.NameInHebrew</span>
+			</SelectedTemplate>
+			<HelpTemplate>
+				Please enter at least 2 characters to perform a search.
+			</HelpTemplate>
+			<ResultTemplate Context="mycontext">
+				@mycontext.Title <i class="text-black-50">@mycontext.TransliterationInHebrew</i>
+			</ResultTemplate>
+		</BlazoredTypeahead>
+		<ValidationMessage For="@(() => VM.SelectedBook)" />
+		@* btn-outline-primary float-end *@	
+		<button class="btn btn-primary btn-sm mt-1" type="submit">Submit</button>
+</EditForm>
+
+	@if (VM.SelectedBook != null)
+	{
+		<div class="card-body mb-2">
+			<ul class="list-inline">
+
+				@for (int i = 1; i <= VM.SelectedBook.LastChapter; i++)
+				{
+					<li class="list-inline-item">
+						<a href='@VM.MyHebrewBibleBookChapterUrl(i)' title="@VM.MyHebrewBibleBookChapterTitle(i)" target="_blank">@i</a>
+					</li>
+				}
+			</ul>
+		</div>
+	}
+</div>
