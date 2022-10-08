@@ -782,6 +782,13 @@ public static class WindmillRanch
 			public const string Descr = "Build a 1,200 ft. Swale";
 		}
 
+		public static class SwaleCarousel
+		{
+			public const string Id = "swale-carousel";
+			public const string Project = "Swale Rain Event";
+			public const string Descr = "Swale rain event on Oct 7, 2022";
+		}
+
 		public static class ProjectGroundCover
 		{
 			public const string Id = "project-ground-cover";
