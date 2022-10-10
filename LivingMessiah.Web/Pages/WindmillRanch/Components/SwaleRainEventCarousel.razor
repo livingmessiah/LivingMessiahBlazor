@@ -1,0 +1,21 @@
+﻿@using LivingMessiah.Web.Pages.WindmillRanch.Enums
+@using Syncfusion.Blazor
+@using Syncfusion.Blazor.Navigations
+
+<div class="carousel-section">
+	<SfCarousel AutoPlay="false" Width="@width" Height="@height" ID="carousel" ButtonsVisibility="CarouselButtonVisibility.Visible">
+
+		@foreach (var item in SwaleRainEvent.List.OrderBy(o => o.Value).ToList())
+		{
+			<CarouselItem>
+				<figure class="img-container">
+					<img src='@Blobs.UrlWindmillRanchSwaleRainEvent(item.Image)' alt="@item.Caption" style="height:100%;width:100%;" />
+					<a href='@Blobs.UrlWindmillRanchSwaleRainEvent(item.ImageFullSize)' class="img-caption text-center" target="_blank">
+						@item.Caption <i class="fas fa-external-link-square-alt"></i>
+					</a>
+				</figure>
+			</CarouselItem>
+		}
+
+	</SfCarousel>
+</div>

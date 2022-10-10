@@ -1,0 +1,22 @@
+﻿
+@using LivingMessiah.Web.Pages.WindmillRanch.Enums
+
+
+<h3>Swale Rain Event JUST PICTURES</h3>
+@foreach (var item in SwaleRainEvent.List)
+{
+	<div class="row">
+		<div class="col-12">
+			<a href='@Blobs.UrlWindmillRanchSwaleRainEvent(item.ImageFullSize)' target="_blank">
+				<span class="text-muted mt-3 mb-1 text-center">Click image to see full size</span>
+			</a>
+
+			<figure class="figure">
+				<img src='@Blobs.UrlWindmillRanchSwaleRainEvent(item.Image)' class="figure-img img-fluid" alt="@item.Caption">
+				<figcaption class="figure-caption">@item.Caption</figcaption>
+			</figure>
+
+
+		</div>
+	</div>
+}

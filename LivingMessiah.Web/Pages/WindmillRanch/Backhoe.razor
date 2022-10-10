@@ -1,6 +1,7 @@
 ﻿@page "/WindmillRanch/Backhoe"
 
 @using LivingMessiah.Web.Pages.WindmillRanch.Components
+@using LivingMessiah.Web.SmartEnums
 @using Page = LivingMessiah.Web.Links.WindmillRanch.Backhoe
 
 <PageTitle>@Page.Title</PageTitle>
@@ -219,7 +220,24 @@
 <h2 id="@Page.SwaleCarousel.Id"><span class="badge bg-warning mt-4"><b>@Page.SwaleCarousel.Project</b></span></h2>
 <h4><span class=""><b>@Page.SwaleCarousel.Descr</b></span></h4>
 
-<Carousel/>
+<div class="@MediaQuery.Xs.DivClass">
+	<SwaleRainEventCarousel mq="MediaQuery.Xs"/>
+</div>		
+<div class="@MediaQuery.Sm.DivClass">
+	<SwaleRainEventCarousel mq="MediaQuery.Sm"/>
+</div>	
+<div class="@MediaQuery.Md.DivClass">
+	<SwaleRainEventCarousel mq="MediaQuery.Md"/>
+</div>	
+<div class="@MediaQuery.Lg.DivClass">
+	<SwaleRainEventCarousel mq="MediaQuery.Lg"/>
+</div>	
+<div class="@MediaQuery.Xl.DivClass">
+	<SwaleRainEventCarousel mq="MediaQuery.Xl"/>
+</div>	
+
+
+@*<SwaleRainEventPictures/>*@
 
 <h2 id="@Page.ProjectGroundCover.Id"><span class="badge bg-warning mt-4"><b>@Page.ProjectGroundCover.Project</b></span></h2>
 <h4><span class=""><b>@Page.ProjectGroundCover.Descr</b></span></h4>
