@@ -1,36 +1,41 @@
 ﻿@using static LivingMessiah.Web.Links.Account
+@using LivingMessiah.Web.Shared
 
 <div class="container-fluid bg-light">
 
-	<AuthorizeView>
-		<Authorized>
-			<div class="row py-2 d-print-none">
-				<div class="col-8">
-					<!-- https://community.auth0.com/t/my-blazor-server-app-wont-display-the-user-name/85054 -->
-					<a href="@Profile"  title="Role: @Role; IsAdmin:@IsAdmin; Email:@EmailAddress">
-						<span class="text-success"><small><b>Shalom @Name!</b></small></span> @((MarkupString)BlueCheck)
-					</a>
-				</div>
-				<div class="col-4">
+	<div class="row py-2 d-print-none">
+		<div class="col-8">
+			<BibleSearchForm />
+		</div>
+		<div class="col-4">
+			<AuthorizeView>
+				<Authorized>
+
 					<form method="post" action="@LogoutAction">
 						<button type="submit" class="btn btn-xs btn-outline-info float-end text-black-50">
 							<u>Log out</u> <i class="fas fa-sign-out-alt"></i>
 						</button>
 					</form>
-				</div>
-			</div>
-		</Authorized>
+					<br />
 
-		<NotAuthorized>
-			<div class="row py-2  d-print-none">
-				<div class="col-12">
-					<a href="@Login" class="btn btn-xs btn-outline-info float-end text-black-50">
-						<u>Log in</u> <i class="fas fa-sign-in-alt"></i>
+					<a class="float-end mt-1" style="font-size:10px;"
+						href="@Profile" title="Role: @Role; IsAdmin:@IsAdmin; Email:@EmailAddress">
+						@((MarkupString)NameTiny) @((MarkupString)BlueCheck)
 					</a>
-				</div>
-			</div>
-		</NotAuthorized>
-	</AuthorizeView>
+				</Authorized>
+
+				<NotAuthorized>
+
+					<div class="col-12">
+						<a href="@Login" class="btn btn-xs btn-outline-info float-end text-black-50">
+							<u>Log in</u> <i class="fas fa-sign-in-alt"></i>
+						</a>
+					</div>
+
+				</NotAuthorized>
+			</AuthorizeView>
+
+		</div>
+	</div>
 
 </div>
-

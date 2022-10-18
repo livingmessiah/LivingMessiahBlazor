@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Components.Authorization;
 using System.Linq;
 using System.Threading.Tasks;
 using LivingMessiah.Web.Infrastructure;
+using System;
 
 namespace LivingMessiah.Web.Shared;
 
@@ -57,6 +58,14 @@ public partial class LoginDisplay
 		}
 	}
 
+	public string NameTiny
+	{
+		get
+		{
+			return !String.IsNullOrEmpty(Name) ? $"<span class='text-success'><b>{Name.Truncate(25)}</b></span>" : "";
+		}
+	}
+
 	public string BlueCheck
 	{
 		get
@@ -71,7 +80,6 @@ public partial class LoginDisplay
 			}
 		}
 	}
-
 }
 
 /*

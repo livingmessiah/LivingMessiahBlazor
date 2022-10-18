@@ -1,0 +1,40 @@
+﻿		<EditForm class="d-flex" Model="VM" OnValidSubmit="HandleFormSubmit">
+
+			<BlazoredTypeahead SearchMethod="SearchBibleBooks"
+												 @bind-Value="VM.SelectedBook"
+												 EnableDropDown="true"
+												 MaximumSuggestions="66"
+												 MinimumLength="2"
+												 placeholder="Search bible...">
+				<SelectedTemplate Context="mycontext">
+					@mycontext.Title &nbsp;&nbsp;&nbsp; <span class="hebrew.sm">@mycontext.NameInHebrew</span>
+				</SelectedTemplate>
+				<HelpTemplate>
+					Please enter at least 2 characters to perform a search.
+				</HelpTemplate>
+				<ResultTemplate Context="mycontext">
+					@mycontext.Title <i class="text-black-50">@mycontext.TransliterationInHebrew</i>
+				</ResultTemplate>
+			</BlazoredTypeahead>
+			<ValidationMessage For="@(() => VM.SelectedBook)" />
+			<button class="btn btn-outline-primary btn-sm ms-1 me-2" type="submit"><i class="fas fa-search"></i></button>
+		</EditForm>
+
+@if (VM.SelectedBook != null)
+{
+	<div class="card-body mb-2">
+		<ul class="list-inline">
+
+			@for (int i = 1; i <= VM.SelectedBook.LastChapter; i++)
+			{
+				<li class="list-inline-item">
+					<a href='@VM.MyHebrewBibleBookChapterUrl(i)' title="@VM.MyHebrewBibleBookChapterTitle(i)" target="_blank">@i</a>
+				</li>
+			}
+		</ul>
+	</div>
+}
+
+
+
+

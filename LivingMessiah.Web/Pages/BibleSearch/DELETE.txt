@@ -1,0 +1,167 @@
+﻿@page "/BibleSearch"
+
+@using Page = LivingMessiah.Web.Links.BibleSearch
+
+<PageTitle>@Page.Title</PageTitle>
+
+<nav class="navbar navbar-light bg-light">
+	<div class="container-fluid">
+
+		@*
+			<a class="navbar-brand">Navbar</a>
+			<form class="d-flex">
+				<input class="form-control me-2" @bind="item" type="search" aria-label="Search">
+				<button class="btn btn-outline-success" type="submit"  @onclick="() => SearchClicked()">
+					Search
+				</button>
+			</form>
+		*@
+
+		<EditForm class="d-flex" Model="VM" OnValidSubmit="HandleFormSubmit">
+			@*<DataAnnotationsValidator />*@
+
+			<BlazoredTypeahead SearchMethod="SearchBibleBooks"
+												 @bind-Value="VM.SelectedBook"
+												 EnableDropDown="true"
+												 MaximumSuggestions="66"
+												 MinimumLength="2"
+												 placeholder="Search by bible name...">
+				<SelectedTemplate Context="mycontext">
+					@mycontext.Title &nbsp;&nbsp;&nbsp; <span class="hebrew.sm">@mycontext.NameInHebrew</span>
+				</SelectedTemplate>
+				<HelpTemplate>
+					Please enter at least 2 characters to perform a search.
+				</HelpTemplate>
+				<ResultTemplate Context="mycontext">
+					@mycontext.Title <i class="text-black-50">@mycontext.TransliterationInHebrew</i>
+				</ResultTemplate>
+			</BlazoredTypeahead>
+			<ValidationMessage For="@(() => VM.SelectedBook)" />
+			<button class="btn btn-outline-primary btn-sm ms-1 me-2" type="submit">Submit</button>
+		</EditForm>
+
+	</div>
+</nav>
+
+
+<div class="pb-2 mt-4 mb-2 border-bottom">
+	<h1><i class="@Page.Icon"></i> @Page.Title</h1>
+</div>
+
+		@if (VM.SelectedBook != null)
+		{
+			<div class="card-body mb-2">
+				<ul class="list-inline">
+
+					@for (int i = 1; i <= VM.SelectedBook.LastChapter; i++)
+					{
+						<li class="list-inline-item">
+							<a href='@VM.MyHebrewBibleBookChapterUrl(i)' title="@VM.MyHebrewBibleBookChapterTitle(i)" target="_blank">@i</a>
+						</li>
+					}
+				</ul>
+			</div>
+		}
+
+@*
+
+class="hebrew.sm">
+
+<div class="card mt-4 p-2 bg-light">
+	<EditForm Model="VM" OnValidSubmit="HandleFormSubmit">
+		<DataAnnotationsValidator />
+
+		<BlazoredTypeahead SearchMethod="SearchBibleBooks"
+											 @bind-Value="VM.SelectedBook"
+											 EnableDropDown="true"
+											 MaximumSuggestions="66"
+											 MinimumLength="2"
+											 placeholder="Search by bible name...">
+			<SelectedTemplate Context="mycontext">
+				@mycontext.Title &nbsp;&nbsp;&nbsp; <span class="hebrew">@mycontext.NameInHebrew</span>
+			</SelectedTemplate>
+			<HelpTemplate>
+				Please enter at least 2 characters to perform a search.
+			</HelpTemplate>
+			<ResultTemplate Context="mycontext">
+				@mycontext.Title <i class="text-black-50">@mycontext.TransliterationInHebrew</i>
+			</ResultTemplate>
+		</BlazoredTypeahead>
+		<ValidationMessage For="@(() => VM.SelectedBook)" />
+		<button class="btn btn-primary btn-sm mt-1" type="submit">Submit</button>
+	</EditForm>
+
+	@if (VM.SelectedBook != null)
+	{
+		<div class="card-body mb-2">
+			<ul class="list-inline">
+
+				@for (int i = 1; i <= VM.SelectedBook.LastChapter; i++)
+				{
+					<li class="list-inline-item">
+						<a href='@VM.MyHebrewBibleBookChapterUrl(i)' title="@VM.MyHebrewBibleBookChapterTitle(i)" target="_blank">@i</a>
+					</li>
+				}
+			</ul>
+		</div>
+	}
+</div>
+
+*@
+
+@* btn-outline-primary float-end *@	
+
+
+
+
+using LivingMessiah.Web.Enums;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace LivingMessiah.Web.Pages.BibleSearch;
+
+public partial class Index
+{
+	private FormValidation VM = new FormValidation();
+
+
+	private async Task<IEnumerable<BibleBook>> SearchBibleBooks(string searchText)
+	{
+		return await Task.FromResult(BibleBook.List
+			.Where(x => x.Title.ToLower().Contains(searchText.ToLower()))
+			.OrderBy(o => o.Value));
+	}
+
+	private void HandleFormSubmit()  // Used only by Form
+	{
+		// ToDo: maybe log books search?
+	}
+
+}
+
+
+
+using System.ComponentModel.DataAnnotations;
+using LivingMessiah.Web.Enums;
+
+namespace LivingMessiah.Web.Pages.BibleSearch;
+
+public class FormValidation
+{
+	[Required]
+	[Display(Name = "Book")]
+	public BibleBook SelectedBook { get; set; }
+
+	public string MyHebrewBibleBookChapterUrl(int chapter)
+	{
+		return "https://myhebrewbible.com/BookChapter/" + SelectedBook.Title + "/" + chapter + "/slug";
+	}
+
+	public string MyHebrewBibleBookChapterTitle(int chapter)
+	{
+		return "MyHebrewBible.com/BookChapter/" + SelectedBook.Title + "/" + chapter;
+	}
+
+}
+
