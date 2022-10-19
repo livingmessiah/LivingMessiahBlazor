@@ -1,41 +1,86 @@
 ﻿@using static LivingMessiah.Web.Links.Account
 @using LivingMessiah.Web.Shared
+@using LivingMessiah.Web.SmartEnums
 
 <div class="container-fluid bg-light">
 
-	<div class="row py-2 d-print-none">
-		<div class="col-8">
-			<BibleSearchForm />
-		</div>
-		<div class="col-4">
-			<AuthorizeView>
-				<Authorized>
+	<div class="@MediaQuery.XsOrSm.DivClass">
 
-					<form method="post" action="@LogoutAction">
-						<button type="submit" class="btn btn-xs btn-outline-info float-end text-black-50">
-							<u>Log out</u> <i class="fas fa-sign-out-alt"></i>
-						</button>
-					</form>
-					<br />
+		<div class="row pt-2 pb-1 d-print-none">
+			<div class="col-12">
+				<AuthorizeView>
+					<Authorized>
 
-					<a class="float-end mt-1" style="font-size:10px;"
-						href="@Profile" title="Role: @Role; IsAdmin:@IsAdmin; Email:@EmailAddress">
-						@((MarkupString)NameTiny) @((MarkupString)BlueCheck)
-					</a>
-				</Authorized>
+						<form class="float-end" method="post" action="@LogoutAction">
+							<button type="submit" class="btn btn-xs btn-outline-info text-black-50">
+								<u>Log out</u> <i class="fas fa-sign-out-alt"></i>
+							</button>
+						</form>
 
-				<NotAuthorized>
-
-					<div class="col-12">
-						<a href="@Login" class="btn btn-xs btn-outline-info float-end text-black-50">
-							<u>Log in</u> <i class="fas fa-sign-in-alt"></i>
+						<a class="mt-1"
+							 href="@Profile" title="Role: @Role; IsAdmin:@IsAdmin; Email:@EmailAddress">
+							@((MarkupString)NameTiny) @((MarkupString)BlueCheck)
 						</a>
-					</div>
+					</Authorized>
 
-				</NotAuthorized>
-			</AuthorizeView>
+					<NotAuthorized>
 
+						<div class="col-12">
+							<a href="@Login" class="btn btn-xs btn-outline-info float-end text-black-50">
+								<u>Log in</u> <i class="fas fa-sign-in-alt"></i>
+							</a>
+						</div>
+
+					</NotAuthorized>
+				</AuthorizeView>
+			</div>
+		</div>
+
+		<div class="row pt-2 pb-1 d-print-none">
+			<div class="col-12">
+				<BibleSearchForm />
+			</div>
+		</div>
+
+	</div>
+
+	<div class="@MediaQuery.MdOrLgOrXl.DivClass">
+
+		<div class="row pt-2 pb-1 d-print-none">
+			<div class="col-6">
+				<BibleSearchForm />
+			</div>
+			<div class="col-6">
+				<AuthorizeView>
+					<Authorized>
+						<form class="float-end" method="post" action="@LogoutAction">
+							<button type="submit" class="btn btn-xs btn-outline-info text-black-50">
+								<u>Log out</u> <i class="fas fa-sign-out-alt"></i>
+							</button>
+						</form>
+						<p class="">
+						<a href="@Profile" title="Role: @Role; IsAdmin:@IsAdmin; Email:@EmailAddress">
+							@((MarkupString)NameTiny) @((MarkupString)BlueCheck)
+						</a>
+
+						</p>
+				
+					</Authorized>
+
+					<NotAuthorized>
+
+						<div class="col-12">
+							<a href="@Login" class="btn btn-xs btn-outline-info float-end text-black-50">
+								<u>Log in</u> <i class="fas fa-sign-in-alt"></i>
+							</a>
+						</div>
+
+					</NotAuthorized>
+				</AuthorizeView>
+
+			</div>
 		</div>
 	</div>
 
 </div>
+
