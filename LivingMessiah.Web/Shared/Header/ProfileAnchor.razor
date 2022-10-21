@@ -1,0 +1,11 @@
+﻿@using Page = LivingMessiah.Web.Links.Account
+
+<a href="@Page.Profile" class="@CssClass"
+	title="Role: @Role; IsAdmin:@IsAdmin; Email:@EmailAddress">
+	@((MarkupString)NameTiny) @((MarkupString)BlueCheck)
+</a>
+
+@*
+@using LivingMessiah.Web.Shared
+@using LivingMessiah.Web.SmartEnums
+*@

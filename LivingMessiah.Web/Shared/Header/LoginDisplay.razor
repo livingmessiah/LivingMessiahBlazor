@@ -1,0 +1,63 @@
+﻿@using static LivingMessiah.Web.Links.Account
+@using LivingMessiah.Web.Shared
+@using LivingMessiah.Web.SmartEnums
+
+<div class="container-fluid bg-light">
+
+	<div class="@MediaQuery.XsOrSm.DivClass">
+
+		<div class="row pt-2 pb-1 d-print-none">
+			<div class="col-12">
+				<AuthorizeView>
+					<Authorized>
+						<LogoutForm />
+						<ProfileAnchor IsXsOrSm="true" />
+					</Authorized>
+
+					<NotAuthorized>
+						<div class="col-12">
+							<LoginAnchor />
+						</div>
+					</NotAuthorized>
+				</AuthorizeView>
+			</div>
+		</div>
+
+		<div class="row pt-2 pb-1 d-print-none">
+			<div class="col-12">
+				<BibleSearchTypeahead />
+
+			</div>
+		</div>
+
+	</div>
+
+	<div class="@MediaQuery.MdOrLgOrXl.DivClass">
+
+		<div class="row pt-2 pb-1 d-print-none">
+			<div class="col-6">
+				<BibleSearchTypeahead />
+			</div>
+			<div class="col-6">
+				<AuthorizeView>
+					<Authorized>
+						<LogoutForm />
+						<ProfileAnchor IsXsOrSm="false" />
+					</Authorized>
+
+					<NotAuthorized>
+						<div class="col-12">
+							<LoginAnchor />
+						</div>
+					</NotAuthorized>
+				</AuthorizeView>
+
+			</div>
+		</div>
+	</div>
+
+	<h5 class="mt-3">Step Bible: @LivingMessiah.Web.Enums.BibleBook.Acts.Title </h5>
+	<BookChapterAnchorList BibleBook=Enums.BibleBook.Acts  BibleSource=BibleSource.StepBible/>
+
+</div>
+

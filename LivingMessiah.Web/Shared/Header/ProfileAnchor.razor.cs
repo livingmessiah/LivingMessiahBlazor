@@ -7,10 +7,13 @@ using System.Threading.Tasks;
 using LivingMessiah.Web.Infrastructure;
 using System;
 
-namespace LivingMessiah.Web.Shared;
+namespace LivingMessiah.Web.Shared.Header;
 
-public partial class LoginDisplay
+public partial class ProfileAnchor
 {
+	[Parameter, EditorRequired] public bool IsXsOrSm { get; set; }
+	protected string CssClass => IsXsOrSm ? "mt-1" : "";
+
 	[Inject]
 	public AuthenticationStateProvider AuthenticationStateProvider { get; set; }
 
@@ -18,7 +21,6 @@ public partial class LoginDisplay
 	public string EmailAddress { get; set; }
 	public bool Verified { get; set; }
 	public string Role { get; set; }
-
 	private IEnumerable<Claim> _claims = Enumerable.Empty<Claim>();
 
 	protected override async Task OnInitializedAsync()
@@ -80,41 +82,6 @@ public partial class LoginDisplay
 			}
 		}
 	}
+
 }
-
-/*
-https://visualstudiomagazine.com/articles/2019/11/01/authorization-claims.aspx
-
-using static LivingMessiah.Web.Services.Auth0;
-using LivingMessiah.Web.Infrastructure;
-
-[CascadingParameter]
-private Task<AuthenticationState> authState { get; set; }
-
-private System.Security.Claims.ClaimsPrincipal principal;
-protected async override void OnParametersSet()
-{
-	if (authState != null)
-	{
-		principal = (await authState).User;
-	}
-}
-
-public bool RoleHasAdmin
-{
-	get
-	{
-		if (principal.IsInRole("admin"))
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-
-	}
-}
-
- */
 

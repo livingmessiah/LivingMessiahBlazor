@@ -31,8 +31,8 @@ public static class Account
 	public const string Profile = "/Account/Profile";
 
 	public const string TitleAccessDenied = "Access Denied.";
-	public const string TitleLogin = "Login";
-	public const string TitleLogout = "Logout";
+	public const string TitleLogin = "Log in";
+	public const string TitleLogout = "Log out";
 	public const string TitleProfile = "Profile";
 
 	public const string IconClaims = "fab fa-superpowers";

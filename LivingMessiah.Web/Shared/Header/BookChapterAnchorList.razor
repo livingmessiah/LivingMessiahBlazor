@@ -1,0 +1,14 @@
+﻿@using LivingMessiah.Web.Enums;
+
+@if (BibleBook != null)
+{
+	<ul class="list-inline">
+
+		@for (int i = 1; i <= BibleBook.LastChapter; i++)
+		{
+			<li class="list-inline-item">
+				<a href='@AnchorBookChapterUrl(i)' title="@BookChapterTitle(i)" target="_blank">@i</a>
+			</li>
+		}
+	</ul>
+}
