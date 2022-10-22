@@ -1,0 +1,18 @@
+﻿@using LivingMessiah.Web.Shared.Header.Enums
+
+
+<select class="form-control" @onchange="ChangingBibleWebsite" style="margin-left: 1rem">
+	@foreach (var item in BibleWebsite.List.ToList())
+	{
+		<option selected="@IsSelectedBibleWebsite(item.Name)" value="@item">@item</option>
+	}
+</select>
+
+@if (!string.IsNullOrEmpty(selectedBibleWebsite))
+{
+	<p>Selected SmartEnum UtlTitle: @bw.UrlTitle</p>
+}
+else
+{
+	<p>No Selected Bible Website!</p>
+}

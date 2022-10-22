@@ -1,5 +1,6 @@
-﻿namespace LivingMessiah.Web.Enums;
-using Ardalis.SmartEnum;
+﻿using Ardalis.SmartEnum;
+
+namespace LivingMessiah.Web.Enums;
 
 public enum BookGroupEnum
 {
@@ -665,8 +666,8 @@ public abstract class BibleBook : SmartEnum<BibleBook>
 		public override BookGroupEnum BookGroupEnum => BookGroupEnum.Gospels;
 		public override BookEnum BookEnum => BookEnum.Acts;
 		public override int LastChapter => 28;
-		public override string TransliterationInHebrew => "Maaseh Shlichim";
-		public override string NameInHebrew => "???????? ?????????????";
+		public override string TransliterationInHebrew => "Maaseh Shlichim";  // Emissaries Acts
+		public override string NameInHebrew => "מַעֲשֶׂה שליחים";
 	}
 	private sealed class RomansSE : BibleBook
 	{
