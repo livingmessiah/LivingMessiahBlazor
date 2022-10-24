@@ -1,0 +1,9 @@
+﻿@page "/CounterSimple"
+@using LivingMessiah.Web.Store
+@using LivingMessiah.Web.Store.Counter
+
+@* inherits Fluxor.Blazor.Web.Components.FluxorComponent NOT NECESSARY *@
+
+<h1>Counter (Simple)</h1>
+<p>Current count: @CounterState.Value.ClickCount</p>
+<button class="btn btn-primary" @onclick=IncrementCount>Click me</button>

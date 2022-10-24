@@ -1,0 +1,12 @@
+﻿@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+@inject IState<LivingMessiah.Web.Store.Toolbar.ToolbarState> ToolbarState
+@inject IDispatcher Dispatcher
+
+
+<button class="btn btn-primary" @onclick="ToggleEnabledButtonClicked">
+	Toggle Enabled
+</button>
+
+<button class="btn btn-primary" @onclick="UpdateMessageButtonClicked">
+	Update Message
+</button>

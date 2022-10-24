@@ -242,9 +242,10 @@ public class LinksFactory : ILinksFactory
 				},
 				new Link
 				{
-					Index = Store.Index,
-					Title = Store.Title,
-					Icon = Store.Icon,
+					//Index = Store.Index, Title = Store.Title, Icon = Store.Icon, namespace clash with the Fluxor Store\ folder
+					Index = Links.Store.Index,
+					Title = Links.Store.Title,
+					Icon = Links.Store.Icon,
 					HomeSidebarUsage=true,
 					HomeFloatRightHebrew="כֻּתֹּנֶת",
 					HomeTitleSuffix=" Kuthoneth H3801",

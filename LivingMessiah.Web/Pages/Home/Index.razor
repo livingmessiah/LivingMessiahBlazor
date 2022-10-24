@@ -1,8 +1,9 @@
 @page "/"
 @using static LivingMessiah.Web.Services.Auth0
-
 @using Page = LivingMessiah.Web.Links.Home
 <PageTitle>@Page.PageTitle</PageTitle>
+
+@*<TopRowFluxor />*@
 
 <HomeImage></HomeImage>
 
@@ -48,8 +49,6 @@
 	</div>
 </div>
 
-
-
 <div class="d-none d-lg-block">
 	<div class="row">
 
@@ -72,7 +71,3 @@
 		</div>
 	</div>
 </div>
-
-@*<AuthorizeView Roles="@Roles.AdminOrElder"> </AuthorizeView>*@
-@* <ShabbatMeter IsMini="true" Format="MMMM dd"></ShabbatMeter> *@
-<!---->

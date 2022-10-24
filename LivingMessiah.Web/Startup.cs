@@ -1,4 +1,4 @@
-using LivingMessiah.Web.Settings;
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -7,6 +7,10 @@ using Microsoft.Extensions.Hosting;
 using Serilog;
 using Syncfusion.Blazor;
 using Blazored.Toast;
+
+using LivingMessiah.Web.Settings;
+using LivingMessiah.Web.Store;
+using LivingMessiah.Web.Store.Toolbar;
 
 namespace LivingMessiah.Web;
 
@@ -38,6 +42,16 @@ public class Startup
 		services.AddCustomAuthentication(Configuration);
 		services.Configure<AppSettings>(options => Configuration.GetSection("AppSettings").Bind(options));
 		services.Configure<SukkotSettings>(options => Configuration.GetSection("SukkotSettings").Bind(options));
+
+		/*
+		// Add the following for Fluxor
+		var currentAssembly = typeof(Program).Assembly;
+			services.AddFluxor(options =>
+				options.ScanAssemblies(currentAssembly));
+		*/
+		services.AddFluxor(x => x
+				.ScanAssemblies(typeof(Startup).Assembly)
+		);
 
 		services.AddSyncfusionBlazor();
 	}
