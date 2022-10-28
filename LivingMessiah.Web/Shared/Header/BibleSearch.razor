@@ -1,0 +1,23 @@
+﻿@using LivingMessiah.Web.Enums
+@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+
+<BlazoredTypeahead SearchMethod="SearchBibleBooks"
+                   TValue="BibleBook"
+                   TItem="BibleBook"
+                   Value="SelectedBook"
+                   ValueChanged="SelectedResultChanged" 
+                   ValueExpression="@(() => SelectedBook)"
+									 EnableDropDown="true"
+									 MaximumSuggestions="66"
+									 MinimumLength="2"
+									 placeholder="Search bible...">
+	<SelectedTemplate Context="mycontext">
+		@mycontext.Title &nbsp;&nbsp;&nbsp; <span class="hebrew.sm">@mycontext.NameInHebrew</span>
+	</SelectedTemplate>
+	<HelpTemplate>
+		Please enter at least 2 characters to perform a search.
+	</HelpTemplate>
+	<ResultTemplate Context="mycontext">
+		@mycontext.Title <i class="text-black-50">@mycontext.TransliterationInHebrew</i>
+	</ResultTemplate>
+</BlazoredTypeahead>
