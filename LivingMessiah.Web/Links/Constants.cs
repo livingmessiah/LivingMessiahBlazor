@@ -318,6 +318,7 @@ public static class IntroductionAndWelcome
 	public const string Index = "/IntroductionAndWelcome";
 	public const string Title = "Introduction and Welcome";
 	public const string Icon = "far fa-smile";
+	public const string Icon2 = "far fa-handshake";
 }
 
 public static class KeyDatesEdit
@@ -696,7 +697,6 @@ public static class WeeklyVideosEditGrid
 	public const string Title = "Weekly Videos Edit Grid";
 	public const string Icon = "fab fa-youtube";
 }
-
 
 public static class Wirecast
 {

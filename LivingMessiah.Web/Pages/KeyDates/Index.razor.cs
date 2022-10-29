@@ -24,16 +24,16 @@ public partial class Index
 		// ToDo: not referenced, wanted to convert the UI (Index.razor) to a modal
 		protected List<DropDownListVM> DataSource => svcDDL.GetKeyDateYearVM().ToList();
 
-		public string SelectedValue = BaseKeyDateYearSmartEnum.Current.Name;
-		public int SelectedId = BaseKeyDateYearSmartEnum.Current.Value;
-		public int SelectedYear = BaseKeyDateYearSmartEnum.Current.Year;
+		public string SelectedValue = KeyDateYear.Current.Name;
+		public int SelectedId = KeyDateYear.Current.Value;
+		public int SelectedYear = KeyDateYear.Current.Year;
 
 		// ToDo: not referenced, wanted to convert the UI (Index.razor) to a modal
 		public void OnChange(ChangeEventArgs<string, DropDownListVM> args)
 		{
 				int i = int.TryParse(args.ItemData.Value, out i) ? i : 0;
 				SelectedId = i;
-				SelectedYear = BaseKeyDateYearSmartEnum.FromValue(SelectedId).Year;
+				SelectedYear = KeyDateYear.FromValue(SelectedId).Year;
 		}
 		#endregion
 

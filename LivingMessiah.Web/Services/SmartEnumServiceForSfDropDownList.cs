@@ -36,7 +36,7 @@ public class SmartEnumServiceForSfDropDownList : ISmartEnumServiceForSfDropDownL
 	public List<DropDownListVM> GetKeyDateYearVM()
 	{
 		List<DropDownListVM> books = new List<DropDownListVM>();
-		var query = (from b in BaseKeyDateYearSmartEnum.List.ToList().OrderBy(o => o.Value)
+		var query = (from b in KeyDateYear.List.ToList().OrderBy(o => o.Value)
 								 select new { b.Value, b.Name }).ToList();
 
 		foreach (var item in query)

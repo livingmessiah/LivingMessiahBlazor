@@ -1,0 +1,33 @@
+﻿@using Page = LivingMessiah.Web.Links.IntroductionAndWelcome
+
+<div class="list-group mb-2">
+		<a href="@Page.Index" title="@Page.Title @HomeTitleSuffix"
+				class="list-group-item list-group-item-warning ">
+			<i class="@icon fa-fw fa-3x" aria-hidden="true"></i>
+			<span class="home-page-xs"><b>@Page.Title</b></span>
+			<span class="float-end text-info">
+				<span class="hebrew">@HomeFloatRightHebrew</span>
+			</span>
+		</a>
+</div>
+
+
+@code {
+	const string HomeFloatRightHebrew = "שָׁלוֹם";
+	const string HomeTitleSuffix = " Shalom  H7695";
+	private string icon = @Page.Icon;
+
+	[Parameter] public bool UseHappyFaceIcon { get; set; } = true;
+
+	protected override void OnInitialized()
+	{
+		if (UseHappyFaceIcon)
+		{
+			icon = Page.Icon;
+		}
+		else
+		{
+			icon = Page.Icon2;
+		}
+	}
+}

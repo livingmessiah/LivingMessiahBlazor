@@ -184,6 +184,11 @@ public static class SocialMedia
 			return _baseNormalUrl + _channelId;
 		}
 
+		public static string YouTubeFeatured()
+		{
+			return _baseNormalUrl + _channelId + "/featured";
+		}
+
 		public static string YouTubeSearch()
 		{
 			return _baseSearchUrl;
