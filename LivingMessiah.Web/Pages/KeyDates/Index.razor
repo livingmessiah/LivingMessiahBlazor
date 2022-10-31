@@ -4,16 +4,15 @@
 @using Page = LivingMessiah.Web.Links.KeyDatesEdit
 <PageTitle>@Page.Title</PageTitle>
 
-<p class="my-1 float-end text-black-50"><small>Year: @SelectedYear (@SelectedValue)</small></p>
-
-<div class="pb-1 mt-4 mb-5 border-bottom border-info">
+<div class="pb-1 mt-4 mb-1 border-bottom border-info">
 	<h2><i class="@Page.Icon"></i> @Page.Title</h2>
 </div>
 
 <AuthorizeView Roles="@Roles.AdminOrAnnouncements">
 
 	<Authorized>
-		<EditGrid YearId="@SelectedYear"></EditGrid>
+		<KeyDateSettingsList />
+		<EditGrid />
 	</Authorized>
 
 	<NotAuthorized>
@@ -33,35 +32,3 @@
 	</NotAuthorized>
 
 </AuthorizeView>
-
-
-
-@*
-
-	ToDo: Make this a modal
-
-	<hr />
-
-	<div class="row">
-		<div class="col-9">
-			<SfDropDownList TItem="DropDownListVM" TValue="string" PopupHeight="230px"
-											Placeholder="Select year..."
-											@bind-Value="@SelectedValue" DataSource="@DataSource">
-				<DropDownListEvents TItem="DropDownListVM" TValue="string" ValueChange="OnChange"></DropDownListEvents>
-				<DropDownListFieldSettings Text="Text" Value="Value"></DropDownListFieldSettings>
-			</SfDropDownList>
-		</div>
-		<div class="col-3">
-
-			@if (SelectedYear != 0)
-			{
-				<div class="card border-primary">
-					<h3 class="p-2 text-center">
-						@SelectedYear
-					</h3>
-				</div>
-			}
-
-		</div>
-	</div>*@
-

@@ -1,0 +1,12 @@
+﻿@using LivingMessiah.Web.Settings
+@using Microsoft.Extensions.Options
+
+@inject IOptions<AppSettings> AppSettings
+
+<div class="card border-white">
+	<div class="card-body my-1 pl-1 py-0">
+		<ul class="list-inline float-end">
+			<li class="list-inline-item"><small>AppSettings.YearId: @AppSettings.Value.YearId</small></li>
+		</ul>
+	</div>
+</div>

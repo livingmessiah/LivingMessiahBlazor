@@ -13,6 +13,7 @@ using LivingMessiah.Web.Pages.KeyDates.Queries;
 
 using Syncfusion.Blazor.Grids;
 using Blazored.Toast.Services;
+using LivingMessiah.Web.Pages.KeyDates.Enums;
 
 namespace LivingMessiah.Web.Pages.KeyDates;
 
@@ -28,12 +29,28 @@ public partial class EditGrid
 	[Inject]
 	public IToastService Toast { get; set; }
 
-	[Parameter]
-	public int YearId { get; set; }
-
 	protected List<CalendarEntry> CalendarEntries;
 
 	private SfGrid<CalendarEntry> Grid;
+
+	#region SelectYearUI
+	private string selectedYearName = KeyDateYear.Current.Name;
+	private int selectedYear = KeyDateYear.Current.Year;
+
+	private async Task ChangingYearAsync(ChangeEventArgs e)
+	{
+		selectedYearName = e.Value.ToString();
+		selectedYear = KeyDateYear.FromName(selectedYearName).Year;
+		Logger.LogDebug(string.Format("... {0}, new selectedYear: {1}"
+			, nameof(EditGrid) + "!" + nameof(ChangingYearAsync), selectedYear));
+		await PopulateGrid(selectedYear);
+	}
+	
+	private bool IsSelectedYear(string year)
+	{
+		return year == selectedYearName;
+	}
+	#endregion
 
 	private string UserInterfaceMessage  = "";
 	private string LogExceptionMessage = "";
@@ -41,12 +58,19 @@ public partial class EditGrid
 
 	protected override async Task OnInitializedAsync()
 	{
-		Logger.LogDebug(String.Format("Inside {0}, YearId: {1}"
-			, nameof(EditGrid) + "!" + nameof(OnInitializedAsync), YearId));
+		Logger.LogDebug(String.Format("Inside {0}, selectedYearValue: {1}"
+			, nameof(EditGrid) + "!" + nameof(OnInitializedAsync), selectedYear));
 
+		await PopulateGrid(selectedYear);
+	}
+
+	private async Task PopulateGrid(int year)
+	{
+		Logger.LogDebug(String.Format("... {0}, year: {1}"
+			, nameof(EditGrid) + "!" + nameof(PopulateGrid), year));
 		try
 		{
-			CalendarEntries = await db.GetCalendarEntries(YearId);
+			CalendarEntries = await db.GetCalendarEntries(year);
 			if (CalendarEntries == null)
 			{
 				UserInterfaceMessage = "CalendarEntries NOT FOUND";
@@ -65,6 +89,7 @@ public partial class EditGrid
 			Logger.LogError(ex, LogExceptionMessage);
 			Toast.ShowError(UserInterfaceMessage);
 		}
+
 	}
 
 	public async Task OnSave(BeforeBatchSaveArgs<CalendarEntry> Args)
@@ -79,7 +104,7 @@ public partial class EditGrid
 			{
 				foreach (var item in BatchChanges.ChangedRecords)
 				{
-					rows += await db.UpdateKeyDateCalendar(YearId, item.CalendarTemplateId, item.Date);
+					rows += await db.UpdateKeyDateCalendar(selectedYear, item.CalendarTemplateId, item.Date); // YearId
 				}
 				Toast.ShowInfo($"rows updated: {rows}");
 			}

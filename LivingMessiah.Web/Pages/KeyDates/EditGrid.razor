@@ -1,5 +1,21 @@
-﻿@using LivingMessiah.Web.Pages.KeyDates.Queries;
-@using Syncfusion.Blazor.Grids
+﻿@using Syncfusion.Blazor.Grids
+@using LivingMessiah.Web.Pages.KeyDates.Enums
+@using LivingMessiah.Web.Pages.KeyDates.Queries
+
+
+<div class="row mb-2 g-3 align-items-center">
+	<div class="col-auto">
+		<label for="keyDateYear" class="col-form-label">Year: </label>
+	</div>
+	<div class="col-auto">
+		<select class="form-select" @onchange="ChangingYearAsync" id="keyDateYear">
+			@foreach (var item in KeyDateYear.List.OrderBy(o => o.Value))
+			{
+				<option selected="@IsSelectedYear(item.Name)" value="@item">@item.Year (@item.Name)</option>
+			}
+		</select>
+	</div>
+</div>
 
 <SfGrid ID="Grid" @ref="Grid"
 				DataSource="@CalendarEntries"
