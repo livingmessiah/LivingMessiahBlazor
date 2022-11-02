@@ -12,121 +12,128 @@ using LivingMessiah.Web.Pages.UpcomingEvents.Data;
 using static LivingMessiah.Web.Pages.SqlServer;
 using Syncfusion.Blazor.RichTextEditor;
 using Markdig;
+using Blazored.Toast.Services;
 
 namespace LivingMessiah.Web.Pages.UpcomingEvents;
 
-//[Authorize(Roles = Roles.AdminOrSukkot)]
+[Authorize(Roles = Roles.AdminOrAnnouncements)]
 public partial class NonKeyDateCRUD
 {
-		[Inject]
-		public IUpcomingEventsRepository db { get; set; }
+	[Inject] public IUpcomingEventsRepository db { get; set; }
+	[Inject] public ILogger<NonKeyDateCRUD> Logger { get; set; }
+	[Inject] public IToastService Toast { get; set; }
 
-		[Inject]
-		public ILogger<NonKeyDateCRUD> Logger { get; set; }
+	public NonKeyDateCrudVM NonKeyDateCrudVM { get; set; } = new NonKeyDateCrudVM();
 
+	private string Title = "Add Upcoming Event";
 
-		public NonKeyDateCrudVM NonKeyDateCrudVM { get; set; } = new NonKeyDateCrudVM();
+	private string UserInterfaceMessage = "";
+	private string LogExceptionMessage = "";
 
-
-		private string Title = "Add Upcoming Event";
-
-
-		protected async Task HandleValidSubmit()
+	protected async Task HandleValidSubmit()
+	{
+		Logger.LogDebug(string.Format("Inside {0}"
+			, nameof(NonKeyDateCRUD) + "!" + nameof(HandleValidSubmit)));
+		try
 		{
-				Logger.LogDebug(string.Format("Inside {0}", nameof(NonKeyDateCRUD) + "!" + nameof(HandleValidSubmit)));
-				try
+			NonKeyDateCrudVM.Id = 0;
+
+			// Hack: EventTypeEnum doesn't match with KeyDate.EventType i.e. there is no None in the db table
+			if (NonKeyDateCrudVM.EventTypeEnum == KeyDates.Enums.EventTypeEnum.None)
+			{
+				NonKeyDateCrudVM.EventTypeEnum = KeyDates.Enums.EventTypeEnum.Other; 
+			}
+
+			//public async Task<Tuple<int, int, string>> Create(RegistrationVM registrationVM)
+
+			var sprocTuple = await db.Create(NonKeyDateCrudVM);
+			//var sprocTuple = await db.Create(DTO_From_VM_To_DB(registrationVM));
+			//return sprocTuple;
+
+			if (sprocTuple.Item1 != 0)
+			{
+				Toast.ShowInfo("sprocTuple.Item3");
+				NonKeyDateCrudVM = new NonKeyDateCrudVM();
+			}
+			else
+			{
+				if (sprocTuple.Item2 == ReturnValueViolationInUniqueIndex)
 				{
-						NonKeyDateCrudVM.Id = 0;
-
-						//public async Task<Tuple<int, int, string>> Create(RegistrationVM registrationVM)
-
-						var sprocTuple = await db.Create(NonKeyDateCrudVM);
-						//var sprocTuple = await db.Create(DTO_From_VM_To_DB(registrationVM));
-						//return sprocTuple;
-
-						if (sprocTuple.Item1 != 0)
-						{
-								DatabaseInformation = true;
-								DatabaseInformationMsg = $"{sprocTuple.Item3}";
-								NonKeyDateCrudVM = new NonKeyDateCrudVM();
-						}
-						else
-						{
-								if (sprocTuple.Item2 == ReturnValueViolationInUniqueIndex)
-								{
-										DatabaseWarning = true;
-										DatabaseWarningMsg = sprocTuple.Item3;
-								}
-								else
-								{
-										DatabaseError = true;
-										DatabaseErrorMsg = sprocTuple.Item3;
-								}
-						}
-
-				}
-				catch (Exception)
-				{
-						DatabaseError = true;
-						DatabaseErrorMsg = "Error adding to database";
-				}
-
-
-		}
-
-		private string Message = string.Empty;
-		private void OnInvalidSubmit()
-		{
-				Message = string.Empty;
-		}
-
-		private void InitializeVM()
-		{
-				NonKeyDateCrudVM.EventDate = DateTime.Now;
-				NonKeyDateCrudVM.YearId = DateTime.Now.Year;
-				NonKeyDateCrudVM.EventTypeEnum = KeyDates.Enums.EventTypeEnum.GuestSpeaker;
-		}
-
-
-		private void OnValueChange(Syncfusion.Blazor.RichTextEditor.ChangeEventArgs args)
-		{
-				if (args.Value == null)
-				{
-						this.HtmlValue = null;
+					Toast.ShowWarning(sprocTuple.Item3);
 				}
 				else
 				{
-						this.HtmlValue = Markdig.Markdown.ToHtml(args.Value, Pipeline);
+					Toast.ShowError(sprocTuple.Item3);
 				}
+			}
+
 		}
-
-		private bool IsPreview { get; set; }
-		private string HtmlValue { get; set; }
-		private MarkdownPipeline Pipeline { get; set; }
-		/*
-				private string MarkdownValue { get; set; } = @"The sample is added to showcase **markdown editing**.
-
-		Type or edit the content and apply formatting to view markdown formatted content.
-
-		We can add our own custom formation syntax for the Markdown formation, [sample link](https://blazor.syncfusion.com/demos/rich-text-editor/markdown-custom-format).
-
-		The third-party library **Marked** is used in this sample to convert markdown into HTML content.";
-		*/
-		private void PreviewClick()
+		catch (Exception)  // catch (Exception ex)
 		{
-				this.IsPreview = true;
+
+			UserInterfaceMessage = "An invalid operation occurred, contact your administrator";
+			LogExceptionMessage = string.Format("  Inside catch of {0}"
+				, nameof(NonKeyDateCRUD) + "!" + nameof(HandleValidSubmit));
+			Logger.LogError(LogExceptionMessage);  //ex, LogExceptionMessage
+			Toast.ShowError(UserInterfaceMessage);
 		}
 
-		private void CodeClick()
+
+	}
+
+	private string Message = string.Empty;
+	private void OnInvalidSubmit()
+	{
+		Message = string.Empty;
+	}
+
+	private void InitializeVM()
+	{
+		NonKeyDateCrudVM.EventDate = DateTime.Now;
+		NonKeyDateCrudVM.YearId = DateTime.Now.Year;
+		NonKeyDateCrudVM.EventTypeEnum = KeyDates.Enums.EventTypeEnum.GuestSpeaker;
+	}
+
+
+	private void OnValueChange(Syncfusion.Blazor.RichTextEditor.ChangeEventArgs args)
+	{
+		if (args.Value == null)
 		{
-				this.IsPreview = false;
+			this.HtmlValue = null;
 		}
+		else
+		{
+			this.HtmlValue = Markdig.Markdown.ToHtml(args.Value, Pipeline);
+		}
+	}
 
-		private List<ToolbarItemModel> Items = new List<ToolbarItemModel>() {
+	private bool IsPreview { get; set; }
+	private string HtmlValue { get; set; }
+	private MarkdownPipeline Pipeline { get; set; }
+	/*
+			private string MarkdownValue { get; set; } = @"The sample is added to showcase **markdown editing**.
+
+	Type or edit the content and apply formatting to view markdown formatted content.
+
+	We can add our own custom formation syntax for the Markdown formation, [sample link](https://blazor.syncfusion.com/demos/rich-text-editor/markdown-custom-format).
+
+	The third-party library **Marked** is used in this sample to convert markdown into HTML content.";
+	*/
+	private void PreviewClick()
+	{
+		this.IsPreview = true;
+	}
+
+	private void CodeClick()
+	{
+		this.IsPreview = false;
+	}
+
+	private List<ToolbarItemModel> Items = new List<ToolbarItemModel>() {
 				new ToolbarItemModel() { Name = "code", TooltipText = "Code View" },
 		};
 
-		private List<ToolbarItemModel> Tools = new List<ToolbarItemModel>()
+	private List<ToolbarItemModel> Tools = new List<ToolbarItemModel>()
 		{
 			new ToolbarItemModel() { Command = ToolbarCommand.Bold },
 			new ToolbarItemModel() { Command = ToolbarCommand.Italic },
@@ -145,29 +152,10 @@ public partial class NonKeyDateCRUD
 			new ToolbarItemModel() { Command = ToolbarCommand.Redo }
 		};
 
-		private Dictionary<string, string> ListSyntax { get; set; } = new Dictionary<string, string>(){
+	private Dictionary<string, string> ListSyntax { get; set; } = new Dictionary<string, string>(){
 				{ "OL", "1., 2., 3." }
 		};
 
-		#region ErrorHandling
-
-		private void InitializeErrorHandling()
-		{
-				DatabaseInformationMsg = "";
-				DatabaseInformation = false;
-				DatabaseWarningMsg = "";
-				DatabaseWarning = false;
-				DatabaseErrorMsg = "";
-				DatabaseError = false;
-		}
-
-		protected bool DatabaseInformation = false;
-		protected string DatabaseInformationMsg { get; set; }
-		protected bool DatabaseWarning = false;
-		protected string DatabaseWarningMsg { get; set; }
-		protected bool DatabaseError { get; set; } // = false; handled by InitializeErrorHandling
-		protected string DatabaseErrorMsg { get; set; }
-		#endregion
 
 
 } // class 

@@ -1,10 +1,7 @@
 ﻿@page "/UpcomingEventsCRUD"
 @using Syncfusion.Blazor.RichTextEditor
 
-
 <h3>Non-KeyDate CRUD</h3>
-
-@* *@
 
 <LoadingComponent IsLoading="NonKeyDateCrudVM==null">
 
@@ -215,28 +212,6 @@
 	</EditForm>
 
 </LoadingComponent>
-
-
-
-@if (DatabaseError)
-{
-	<p class="text-danger"><em>@DatabaseErrorMsg</em></p>
-}
-else
-{
-	if (DatabaseWarning)
-	{
-		<p class="text-warning">@DatabaseWarningMsg</p>
-	}
-	else
-	{
-		if (DatabaseInformation)
-		{
-			<p class="text-success">@DatabaseInformationMsg</p>
-		}
-
-	}
-}
 
 
 <style>

@@ -1,0 +1,25 @@
+﻿@page "/SidebarButton"
+@using LivingMessiah.Web.Links;
+
+<h3>Sidebar Button Test Page</h3>
+
+<div class="list-group">
+	<DataList Data="@HomeSidebarLinks"
+						Type="LinkTypeEnum.HomeSidebar">
+		<a href="@context.Index" 
+			title="@context.Title @context.HomeTitleSuffix"
+			class="list-group-item list-group-item-warning ">
+			<div class="d-flex w-100 justify-content-between">
+				<i class="@context.Icon fa-fw fa-3x" aria-hidden="true"></i>
+				<h3 class="">@context.Title</h3>
+				<span class="float-end text-info">
+					<span class="hebrew">@context.HomeFloatRightHebrew</span>
+				</span>
+			</div>
+		</a>
+	</DataList>
+</div>
+
+@*
+https://getbootstrap.com/docs/5.0/components/list-group/#custom-content
+*@

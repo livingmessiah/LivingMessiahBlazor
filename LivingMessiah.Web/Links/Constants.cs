@@ -629,7 +629,7 @@ public static class UpcomingEvents
 
 	public static class Edit
 	{
-		public const string Page = "/UpcomingEventsEdot";
+		public const string Page = "/UpcomingEventsEdit";
 		public const string Title = "Upcoming Events Edit";
 		public const string Icon = "fas fa-pencil-alt";
 	}

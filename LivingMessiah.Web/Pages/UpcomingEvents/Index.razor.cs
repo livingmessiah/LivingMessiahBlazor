@@ -7,51 +7,61 @@ using Microsoft.Extensions.Logging;
 using LivingMessiah.Web.Pages.UpcomingEvents.Queries;
 using LivingMessiah.Web.Pages.UpcomingEvents.Data;
 using Markdig;
+using Blazored.Toast.Services;
 
 namespace LivingMessiah.Web.Pages.UpcomingEvents;
 
 public partial class Index
 {
-		[Inject]
-		public IUpcomingEventsRepository db { get; set; }
+	[Inject] public IUpcomingEventsRepository db { get; set; }
+	[Inject] public ILogger<Index> Logger { get; set; }
+	[Inject] public IToastService Toast { get; set; }
 
-		[Inject]
-		public ILogger<Index> Logger { get; set; }
+	protected List<UpcomingEvent> UpcomingEventList;
 
-		protected List<UpcomingEvent> UpcomingEventList;
+	protected MarkdownPipeline pipeline { get; set; }
 
-		protected bool DatabaseError { get; set; } = false;
-		protected string DatabaseErrorMsg { get; set; }
-		protected bool DatabaseWarning = false;
-		protected string DatabaseWarningMsg { get; set; }
-		protected MarkdownPipeline pipeline { get; set; }
+	private const int DaysPast = -600;
+	private const int DaysAhead = 100;
+	private int RowCnt = 0;
 
-		protected override async Task OnInitializedAsync()
+	private string UserInterfaceMessage = "";
+	private string LogExceptionMessage = "";
+	protected bool TurnSpinnerOff = false;
+
+	protected override async Task OnInitializedAsync()
+	{
+		try
 		{
-				try
-				{
-						Logger.LogDebug(string.Format("Inside {0} i:{1}", nameof(Index) + "!" + nameof(OnInitializedAsync), 0));
+			Logger.LogDebug(string.Format("Inside {0} i:{1}"
+				, nameof(Index) + "!" + nameof(OnInitializedAsync), 0));
 
-						//ToDo: Instead of using a service, use LazyCache (https://github.com/alastairtree/LazyCache) to cache this content
-						UpcomingEventList = await db.GetEvents(daysAhead: 100, daysPast: -3);
-						if (UpcomingEventList is not null)
-						{
-								Logger.LogDebug($"...UpcomingEventList.Count:{UpcomingEventList.Count}");
-								pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().Build();
-						}
-						else
-						{
-								DatabaseWarning = true;
-								DatabaseWarningMsg = $"{nameof(UpcomingEventList)} NOT FOUND";
-						}
-				}
-				catch (Exception ex)
-				{
-						DatabaseError = true;
-						DatabaseErrorMsg = $"Error reading database";
-						Logger.LogError(ex, $"...{DatabaseErrorMsg}");
-				}
+			UpcomingEventList = await db.GetEvents(daysAhead: DaysAhead, daysPast: DaysPast);  //daysPast: -3
+			if (UpcomingEventList is not null)
+			{
+				RowCnt = UpcomingEventList.Count;
+				Logger.LogDebug(string.Format("...UpcomingEventList.Count:{0}", RowCnt));
+				pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().Build();
+			}
+			else
+			{
+				UserInterfaceMessage = $"{nameof(UpcomingEventList)} NOT FOUND";
+				Toast.ShowWarning(UserInterfaceMessage);
+			}
 		}
+		catch (Exception ex)
+		{
+			UserInterfaceMessage = "An invalid operation occurred, contact your administrator";
+			LogExceptionMessage = string.Format("  Inside catch of {0}"
+				, nameof(Index) + "!" + nameof(OnInitializedAsync));
+			Logger.LogError(ex, LogExceptionMessage);
+			Toast.ShowError(UserInterfaceMessage);
+		}
+		finally
+		{
+			TurnSpinnerOff = true;
+		}
+	}
 
 
 }

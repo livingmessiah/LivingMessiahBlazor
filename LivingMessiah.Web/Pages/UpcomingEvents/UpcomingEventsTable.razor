@@ -14,7 +14,6 @@
 	<TableTemplate Items="UpcomingEventList">
 		<TableHeader>
 			<th class="text-info">Event Date</th>
-			<th class="text-info">DT</th>
 			<th class="text-info">ET</th>
 			<th class="text-info">DA</th>
 			<th class="text-info">Title</th>
@@ -27,7 +26,6 @@
 
 		<RowTemplate>
 			<td>@context.EventDate.ToShortDateString()</td>
-			<td>@context.DateTypeEnum</td>
 			<td>@context.EventTypeEnum</td>
 			<td>@context.DaysAhead</td>
 			<td>@context.Title</td>

@@ -3,7 +3,6 @@
 @* Deprecated Use /Calendar instead *@
 
 @using LivingMessiah.Web.Pages.KeyDates.Enums
-@*@using static LivingMessiah.Web.Links.UpcomingEvents*@
 @using Markdig
 
 @using Page = LivingMessiah.Web.Links.UpcomingEvents
@@ -13,55 +12,33 @@
 	<h2><i class="@Page.Icon"></i> @Page.Title</h2>
 </div>
 
-<RegularVideoedEvents></RegularVideoedEvents>
+<RegularVideoedEvents />
 
-@*<hr class="warning mt-5" />
-<h3>Upcoming Events</h3>*@
 <hr class="warning mt-1 mb-5" />
 
-<LoadingComponent IsLoading="UpcomingEventList==null && DatabaseWarning==false">
+<div class="card bg-light text-muted ">
+	<div class="card-body my-1 pl-1 py-0">
+		<ul class="list-inline float-end">
+			<li class="list-inline-item"><small>Days Past: @DaysPast,</small></li>
+			<li class="list-inline-item"><small>Days Ahead: @DaysAhead,</small></li>
+			<li class="list-inline-item"><small>Row Cnt: @RowCnt</small></li>
+		</ul>
+	</div>
+</div>
+
+<LoadingComponent IsLoading="UpcomingEventList==null" TurnSpinnerOff="@TurnSpinnerOff">
 	@foreach (var item in UpcomingEventList)
 	{
-		if (item.EventTypeEnum == EventTypeEnum.KeyDate)
-		{
-			<div class="d-md-none">
-				<DetailKeyDate UpcomingEvent="@item" IsXsOrSm="true">
-				</DetailKeyDate>
-			</div>
-			<div class="d-none d-md-block">
-				<DetailKeyDate UpcomingEvent="@item" IsXsOrSm="false">
-				</DetailKeyDate>
-			</div>
-		}
-		else
-		{
-			<NonKeyDate Id ="@item.Id"
-									EventDate="@item.EventDate"
-									EventType="@EventType.FromEnum(item.EventTypeEnum)"
-									Title="@item.Title"
-									SubTitle="@item.SubTitle"
-									ImageUrl="@item.ImageUrl"
-									WebsiteUrl="@item.WebsiteUrl"
-									WebsiteDescr="@item.WebsiteDescr"
-									YouTubeId="@item.YouTubeId"
-									Description="@Markdig.Markdown.ToHtml(item.Description, pipeline)">
+		<NonKeyDate Id ="@item.Id"
+							EventDate="@item.EventDate"
+							EventType="@EventType.FromEnum(item.EventTypeEnum)"
+							Title="@item.Title"
+							SubTitle="@item.SubTitle"
+							ImageUrl="@item.ImageUrl"
+							WebsiteUrl="@item.WebsiteUrl"
+							WebsiteDescr="@item.WebsiteDescr"
+							YouTubeId="@item.YouTubeId"
+							Description="@Markdig.Markdown.ToHtml(item.Description, pipeline)">
 			</NonKeyDate>
-		}
 	}
 </LoadingComponent>
-
-@if (DatabaseError)
-{
-	<p class="text-danger"><em>@DatabaseErrorMsg</em></p>
-}
-else
-{
-	if (DatabaseWarning)
-	{
-		<p class="text-warning">@DatabaseWarningMsg</p>
-	}
-}
-
-
-
-

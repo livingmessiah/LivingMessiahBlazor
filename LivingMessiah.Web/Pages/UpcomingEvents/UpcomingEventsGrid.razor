@@ -8,6 +8,16 @@
 	<i class="@Page.Grid.Icon"></i> @Page.Grid.Title
 </h2>
 
+<div class="card bg-light text-muted ">
+	<div class="card-body my-1 pl-1 py-0">
+		<ul class="list-inline float-end">
+			<li class="list-inline-item"><small>Days Past: @DaysPast</small></li>
+			<li class="list-inline-item"><small>, Days Ahead: @DaysAhead</small></li>
+			<li class="list-inline-item"><small>, Row Cnt: @RowCnt</small></li>
+		</ul>
+	</div>
+</div>
+
 <div class="col-lg-12 control-section">
 	<div class="content-wrapper">
 		<div class="row mt-4">
@@ -38,9 +48,6 @@
 					<GridColumn Field=@nameof(UpcomingEvent.EventTypeEnum) HeaderText="Event Type" Width="40" AllowSorting="false" AllowFiltering="true">
 					</GridColumn>
 
-					<GridColumn Field=@nameof(UpcomingEvent.DateTypeEnum) HeaderText="Date Type" Width="30" AllowSorting="false" AllowFiltering="true">
-					</GridColumn>
-
 					<GridColumn Field=@nameof(UpcomingEvent.Title) HeaderText="Title" Width="90" AllowSorting="false" AllowFiltering="false">
 					</GridColumn>
 
@@ -61,24 +68,3 @@
 		</div>
 	</div>
 </div>
-
-
-@if (DatabaseError)
-{
-	<p class="text-danger"><em>@DatabaseErrorMsg</em></p>
-}
-else
-{
-	if (DatabaseWarning)
-	{
-		<p class="text-warning">@DatabaseWarningMsg</p>
-	}
-	else
-	{
-		if (DatabaseInformation)
-		{
-			<p class="text-success">@DatabaseInformationMsg</p>
-		}
-
-	}
-}

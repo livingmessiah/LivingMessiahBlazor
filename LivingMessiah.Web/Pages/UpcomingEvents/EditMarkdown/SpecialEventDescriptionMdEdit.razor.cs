@@ -4,89 +4,75 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 using LivingMessiah.Web.Pages.UpcomingEvents.Data;
 using Microsoft.AspNetCore.Components.Forms;
+using Blazored.Toast.Services;
 
 namespace LivingMessiah.Web.Pages.UpcomingEvents.EditMarkdown;
 
 public partial class SpecialEventDescriptionMdEdit
 {
-		[Parameter]
-		public int Id { get; set; }
+	[Parameter] public int Id { get; set; }
 
-		[Inject]
-		public ILogger<SpecialEventDescriptionMdEdit> Logger { get; set; }
+	[Inject] public ILogger<SpecialEventDescriptionMdEdit> Logger { get; set; }
+	[Inject] public IUpcomingEventsRepository db { get; set; }
+	[Inject] public IToastService Toast { get; set; }
 
-		[Inject]
-		public IUpcomingEventsRepository db { get; set; }
+	private EditMarkdownVM VM = new EditMarkdownVM();
 
+	private string UserInterfaceMessage = "";
+	private string LogExceptionMessage = "";
 
-		private EditMarkdownVM VM = new EditMarkdownVM();
-
-		protected override async Task OnInitializedAsync()
+	protected override async Task OnInitializedAsync()
+	{
+		try
 		{
-				try
-				{
-						Logger.LogDebug(string.Format("Inside {0} Id:{1}", nameof(SpecialEventDescriptionMdEdit) + "!" + nameof(OnInitializedAsync), Id));
+			Logger.LogDebug(string.Format("Inside {0} Id:{1}"
+				, nameof(SpecialEventDescriptionMdEdit) + "!" + nameof(OnInitializedAsync), Id));
 
-						VM = await db.GetDescription(Id);
-						if (VM is null)
-						{
-								DatabaseWarning = true;
-								DatabaseWarningMsg = $"{nameof(SpecialEventDescriptionMdEdit)} NOT FOUND";
-						}
-				}
-				catch (Exception ex)
-				{
-						DatabaseError = true;
-						DatabaseErrorMsg = $"Error reading database";
-						Logger.LogError(ex, $"...{DatabaseErrorMsg}");
-				}
+			VM = await db.GetDescription(Id);
+			if (VM is null)
+			{
+				UserInterfaceMessage = $"{nameof(VM)} NOT FOUND";
+				Toast.ShowWarning(UserInterfaceMessage);
+			}
 		}
-
-		private bool HasRowBeenUpdated { get; set; } = false;
-		private void CloseDialog()
+		catch (Exception ex)
 		{
-				this.HasRowBeenUpdated = false;
+			UserInterfaceMessage = "An invalid operation occurred, contact your administrator";
+			LogExceptionMessage = string.Format("  Inside catch of {0}"
+				, nameof(SpecialEventDescriptionMdEdit) + "!" + nameof(OnInitializedAsync));
+			Logger.LogError(ex, LogExceptionMessage);
+			Toast.ShowError(UserInterfaceMessage);
 		}
+	}
 
-		protected async Task ValidSubmit(EditContext context)
+	private bool HasRowBeenUpdated { get; set; } = false;
+	private void CloseDialog()
+	{
+		this.HasRowBeenUpdated = false;
+	}
+
+	protected async Task ValidSubmit(EditContext context)
+	{
+		Logger.LogDebug(string.Format("Inside {0}"
+			, nameof(SpecialEventDescriptionMdEdit) + "!" + nameof(ValidSubmit)));
+		int rows = 0;
+		EditMarkdownVM vm = (EditMarkdownVM)context.Model;
+		try
 		{
-				Logger.LogDebug(string.Format("Inside {0}", nameof(SpecialEventDescriptionMdEdit) + "!" + nameof(ValidSubmit)));
-				int rows = 0;
-				EditMarkdownVM vm = (EditMarkdownVM)context.Model;
-				try
-				{
-						rows = await db.UpdateDescription(vm.Id, vm.Description);
-						DatabaseInformation = true;
-						DatabaseInformationMsg = $"Description Updated";
-						HasRowBeenUpdated = true;
-				}
-				catch (Exception ex)
-				{
-						DatabaseError = true;
-						DatabaseErrorMsg = $"Error updating database";
-						Logger.LogError(ex, $"...{DatabaseErrorMsg}");
-				}
-				Logger.LogDebug(string.Format("...rows {0}", rows));
+			rows = await db.UpdateDescription(vm.Id, vm.Description);
+			HasRowBeenUpdated = true;
+			Toast.ShowInfo("Description Updated");
 		}
-
-		#region ErrorHandling
-
-		private void InitializeErrorHandling()
+		catch (Exception ex)
 		{
-				DatabaseInformationMsg = "";
-				DatabaseInformation = false;
-				DatabaseWarningMsg = "";
-				DatabaseWarning = false;
-				DatabaseErrorMsg = "";
-				DatabaseError = false;
+			UserInterfaceMessage = "An invalid operation occurred, contact your administrator";
+			LogExceptionMessage = string.Format("  Inside catch of {0}"
+				, nameof(SpecialEventDescriptionMdEdit) + "!" + nameof(ValidSubmit));
+			Logger.LogError(ex, LogExceptionMessage);
+			Toast.ShowError(UserInterfaceMessage);
 		}
+		Logger.LogDebug(string.Format("...rows {0}", rows));
+	}
 
-		protected bool DatabaseInformation = false;
-		protected string DatabaseInformationMsg { get; set; }
-		protected bool DatabaseWarning = false;
-		protected string DatabaseWarningMsg { get; set; }
-		protected bool DatabaseError { get; set; } // = false; handled by InitializeErrorHandling
-		protected string DatabaseErrorMsg { get; set; }
-		#endregion
 
 }
