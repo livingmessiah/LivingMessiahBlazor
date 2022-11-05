@@ -1,7 +1,7 @@
-﻿@page "/UpcomingEventsGrid"
+﻿@page "/UpcomingEventsAdminGrid"
 @using LivingMessiah.Web.Pages.UpcomingEvents.Queries
 
-@using Page = LivingMessiah.Web.Links.UpcomingEvents
+@using Page = LivingMessiah.Web.Links.UpcomingEventsAdmin
 <PageTitle>@Page.Grid.Title</PageTitle>
 
 <h2 class="mt-2">
@@ -25,7 +25,7 @@
 			@* @ref="sfGrid" *@
 
 			<SfGrid ID="Grid"
-							DataSource="@UpcomingEventList"
+							DataSource="@SpecialEvents"
 							AllowSelection="true" AllowFiltering="true" AllowSorting="true">
 				<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
 
@@ -33,7 +33,7 @@
 
 				<GridSortSettings>
 					<GridSortColumns>
-						<GridSortColumn Field="@nameof(UpcomingEvent.EventDate)" Direction="SortDirection.Descending" />
+						<GridSortColumn Field="@nameof(SpecialEvent.EventDate)" Direction="SortDirection.Descending" />
 					</GridSortColumns>
 				</GridSortSettings>
 
@@ -42,19 +42,19 @@
 
 				<GridColumns>
 
-					<GridColumn Field=@nameof(UpcomingEvent.EventDate) Format="yyyy/MM/dd" HeaderText="Date" Width="40" AllowSorting="true" AllowFiltering="false">
+					<GridColumn Field=@nameof(SpecialEvent.EventDate) Format="yyyy/MM/dd" HeaderText="Date" Width="40" AllowSorting="true" AllowFiltering="false">
 					</GridColumn>
 
-					<GridColumn Field=@nameof(UpcomingEvent.EventTypeEnum) HeaderText="Event Type" Width="40" AllowSorting="false" AllowFiltering="true">
+					<GridColumn Field=@nameof(SpecialEvent.SpecialEventTypeId) HeaderText="Event Type" Width="40" AllowSorting="false" AllowFiltering="true">
 					</GridColumn>
 
-					<GridColumn Field=@nameof(UpcomingEvent.Title) HeaderText="Title" Width="90" AllowSorting="false" AllowFiltering="false">
+					<GridColumn Field=@nameof(SpecialEvent.Title) HeaderText="Title" Width="90" AllowSorting="false" AllowFiltering="false">
 					</GridColumn>
 
-					<GridColumn Field=@nameof(UpcomingEvent.SubTitle) HeaderText="Sub Title" Width="90" AllowSorting="false" AllowFiltering="false">
+					<GridColumn Field=@nameof(SpecialEvent.SubTitle) HeaderText="Sub Title" Width="90" AllowSorting="false" AllowFiltering="false">
 					</GridColumn>
 
-					<GridColumn Field=@nameof(UpcomingEvent.DaysAhead) HeaderText="Days Ahead" Width="60" AllowSorting="false" AllowFiltering="false">
+					<GridColumn Field=@nameof(SpecialEvent.DaysAhead) HeaderText="Days Ahead" Width="60" AllowSorting="false" AllowFiltering="false">
 					</GridColumn>
 
 					@*

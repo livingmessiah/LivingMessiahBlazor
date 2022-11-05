@@ -1,99 +1,79 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 
-using static LivingMessiah.Web.Services.Auth0;
-using Microsoft.AspNetCore.Authorization;
+using LivingMessiah.Web.Pages.UpcomingEvents.Enums;
 using LivingMessiah.Web.Pages.UpcomingEvents.Data;
+
 using static LivingMessiah.Web.Pages.SqlServer;
 using Syncfusion.Blazor.RichTextEditor;
 using Markdig;
 using Blazored.Toast.Services;
 
-namespace LivingMessiah.Web.Pages.UpcomingEvents;
+namespace LivingMessiah.Web.Pages.UpcomingEventsAdmin.CRUD;
 
-[Authorize(Roles = Roles.AdminOrAnnouncements)]
-public partial class NonKeyDateCRUD
+public partial class Form
 {
 	[Inject] public IUpcomingEventsRepository db { get; set; }
-	[Inject] public ILogger<NonKeyDateCRUD> Logger { get; set; }
+	[Inject] public ILogger<Form> Logger { get; set; }
 	[Inject] public IToastService Toast { get; set; }
 
-	public NonKeyDateCrudVM NonKeyDateCrudVM { get; set; } = new NonKeyDateCrudVM();
+	public FormVM VM { get; set; } = new FormVM();
 
 	private string Title = "Add Upcoming Event";
 
 	private string UserInterfaceMessage = "";
 	private string LogExceptionMessage = "";
 
+	protected override void OnInitialized()
+	{
+		VM.SpecialEventTypeId = SpecialEventType.Other.Value;
+		VM.EventDate = DateTime.Now.AddDays(35);
+		VM.ShowBeginDate = DateTime.Now.AddMonths(1);
+		VM.ShowEndDate = DateTime.Now.AddDays(40);
+	}
+
 	protected async Task HandleValidSubmit()
 	{
-		Logger.LogDebug(string.Format("Inside {0}"
-			, nameof(NonKeyDateCRUD) + "!" + nameof(HandleValidSubmit)));
+		Logger.LogDebug(string.Format("Inside {0}, VM.ToString: {1}"
+			, nameof(Form) + "!" + nameof(HandleValidSubmit), VM.ToString()));
 		try
 		{
-			NonKeyDateCrudVM.Id = 0;
-
-			// Hack: EventTypeEnum doesn't match with KeyDate.EventType i.e. there is no None in the db table
-			if (NonKeyDateCrudVM.EventTypeEnum == KeyDates.Enums.EventTypeEnum.None)
+			VM.Id = 0;
+			var sprocTuple = await db.Create(VM);
+			if (sprocTuple.NewId != 0)
 			{
-				NonKeyDateCrudVM.EventTypeEnum = KeyDates.Enums.EventTypeEnum.Other; 
-			}
-
-			//public async Task<Tuple<int, int, string>> Create(RegistrationVM registrationVM)
-
-			var sprocTuple = await db.Create(NonKeyDateCrudVM);
-			//var sprocTuple = await db.Create(DTO_From_VM_To_DB(registrationVM));
-			//return sprocTuple;
-
-			if (sprocTuple.Item1 != 0)
-			{
-				Toast.ShowInfo("sprocTuple.Item3");
-				NonKeyDateCrudVM = new NonKeyDateCrudVM();
+				Toast.ShowInfo($"{sprocTuple.ReturnMsg}");
+				VM = new FormVM();
 			}
 			else
 			{
-				if (sprocTuple.Item2 == ReturnValueViolationInUniqueIndex)
+				if (sprocTuple.SprocReturnValue == ReturnValueViolationInUniqueIndex)
 				{
-					Toast.ShowWarning(sprocTuple.Item3);
+					Toast.ShowWarning($"{sprocTuple.ReturnMsg}");
 				}
 				else
 				{
-					Toast.ShowError(sprocTuple.Item3);
+					Toast.ShowError($"{sprocTuple.ReturnMsg}");
 				}
 			}
-
 		}
 		catch (Exception)  // catch (Exception ex)
 		{
-
 			UserInterfaceMessage = "An invalid operation occurred, contact your administrator";
 			LogExceptionMessage = string.Format("  Inside catch of {0}"
-				, nameof(NonKeyDateCRUD) + "!" + nameof(HandleValidSubmit));
+				, nameof(Form) + "!" + nameof(HandleValidSubmit));
 			Logger.LogError(LogExceptionMessage);  //ex, LogExceptionMessage
 			Toast.ShowError(UserInterfaceMessage);
 		}
-
-
 	}
 
-	private string Message = string.Empty;
 	private void OnInvalidSubmit()
 	{
-		Message = string.Empty;
+		//Toast.ShowWarning("Invalid Submit");
 	}
-
-	private void InitializeVM()
-	{
-		NonKeyDateCrudVM.EventDate = DateTime.Now;
-		NonKeyDateCrudVM.YearId = DateTime.Now.Year;
-		NonKeyDateCrudVM.EventTypeEnum = KeyDates.Enums.EventTypeEnum.GuestSpeaker;
-	}
-
 
 	private void OnValueChange(Syncfusion.Blazor.RichTextEditor.ChangeEventArgs args)
 	{
@@ -155,6 +135,7 @@ public partial class NonKeyDateCRUD
 	private Dictionary<string, string> ListSyntax { get; set; } = new Dictionary<string, string>(){
 				{ "OL", "1., 2., 3." }
 		};
+
 
 
 

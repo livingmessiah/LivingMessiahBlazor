@@ -25,6 +25,7 @@ using FluentValidation;
 using LivingMessiah.Web.Pages.Sukkot.Components;
 using LivingMessiah.Web.Pages.Parasha.Services;
 using LivingMessiah.Web.Pages.Parasha.Data;
+using LivingMessiah.Web.Pages.UpcomingEventsAdmin.Edit;
 
 namespace LivingMessiah.Web;
 
@@ -42,7 +43,7 @@ public static class ServiceCollectionExtensions
 
 			.AddTransient<IUpcomingEventsRepository, UpcomingEventsRepository>()
 			.AddTransient<IGridDataRepository, GridDataRepository>()
-			.AddTransient<IUpcomingEventsGridDataAdaptor, UpcomingEventsGridDataAdaptor>()
+			.AddTransient<ISpecialEventGridDataAdaptor, SpecialEventGridDataAdaptor>()
 
 			.AddSingleton<IKeyDateRepository, KeyDateRepository>()
 			.AddTransient<IWeeklyVideosRepository, WeeklyVideosRepository>()

@@ -1,20 +1,17 @@
-﻿@page "/UpcomingEventsTable"
-@using LivingMessiah.Web.Pages.UpcomingEvents.Data
-@using LivingMessiah.Web.Pages.UpcomingEvents.Queries
-@inject IUpcomingEventsRepository db
+﻿@page "/UpcomingEventsAdminTable"
 
-@using Page = LivingMessiah.Web.Links.UpcomingEvents
+@using Page = LivingMessiah.Web.Links.UpcomingEventsAdmin
 <PageTitle>@Page.Table.Title</PageTitle>
 
 <h2 class="mt-2">
 	<i class="@Page.Table.Icon"></i> @Page.Table.Title
 </h2>
 
-<LoadingComponent IsLoading="UpcomingEventList == null">
-	<TableTemplate Items="UpcomingEventList">
+<LoadingComponent IsLoading="SpecialEvents == null">
+	<TableTemplate Items="SpecialEvents">
 		<TableHeader>
 			<th class="text-info">Event Date</th>
-			<th class="text-info">ET</th>
+			<th class="text-info">Event Type</th>
 			<th class="text-info">DA</th>
 			<th class="text-info">Title</th>
 			<th class="text-info">Sub Title</th>
@@ -26,7 +23,7 @@
 
 		<RowTemplate>
 			<td>@context.EventDate.ToShortDateString()</td>
-			<td>@context.EventTypeEnum</td>
+			<td>@context.SpecialEventTypeId - @context.SpecialEventTypeName </td>
 			<td>@context.DaysAhead</td>
 			<td>@context.Title</td>
 			<td>@context.SubTitle</td>
@@ -61,11 +58,3 @@
 
 	</TableTemplate>
 </LoadingComponent>
-
-@code {
-	List<UpcomingEvent> UpcomingEventList;
-	protected override async Task OnInitializedAsync()
-	{
-		UpcomingEventList = await db.GetEvents(daysAhead: 100, daysPast: -100);
-	}
-}

@@ -6,15 +6,16 @@ using LivingMessiah.Web.Pages.UpcomingEvents.Data;
 using Microsoft.AspNetCore.Components.Forms;
 using Blazored.Toast.Services;
 
-namespace LivingMessiah.Web.Pages.UpcomingEvents.EditMarkdown;
+namespace LivingMessiah.Web.Pages.UpcomingEventsAdmin.EditMarkdown;
 
 public partial class SpecialEventDescriptionMdEdit
 {
-	[Parameter] public int Id { get; set; }
 
 	[Inject] public ILogger<SpecialEventDescriptionMdEdit> Logger { get; set; }
 	[Inject] public IUpcomingEventsRepository db { get; set; }
 	[Inject] public IToastService Toast { get; set; }
+
+	[Parameter] public int Id { get; set; }
 
 	private EditMarkdownVM VM = new EditMarkdownVM();
 

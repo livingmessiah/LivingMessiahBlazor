@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace LivingMessiah.Web.Pages.UpcomingEvents.EditMarkdown;
+namespace LivingMessiah.Web.Pages.UpcomingEventsAdmin.EditMarkdown;
 
 public class EditMarkdownVM
 {

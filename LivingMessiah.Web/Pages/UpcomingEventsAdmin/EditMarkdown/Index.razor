@@ -1,0 +1,36 @@
+﻿@page "/UpcomingEventsAdminEditMarkdown/{Id:int}"
+
+@using static LivingMessiah.Web.Services.Auth0;
+@using Page = LivingMessiah.Web.Links.UpcomingEventsAdmin.EditMarkdown
+<PageTitle>@Page.Title</PageTitle>
+
+<h2 class="mt-2">
+	<i class="@Page.Icon"></i> @Page.Title
+</h2>
+
+<AuthorizeView Roles="@Roles.AdminOrAnnouncements">
+
+	<Authorized>
+		<SpecialEventDescriptionMdEdit Id="@Id" />
+	</Authorized>
+
+	<NotAuthorized>
+
+		<div class="card border-warning my-5">
+			<div class="card-header">Not Authorized</div>
+
+			<div class="card-body">
+				<h5 class="">To edit <b>@Page.Title (Id:@Id)</b> you need to be logged in.</h5>
+				<button @onclick="@(() => RedirectToLoginClick(Page.Page))"
+								type="button" class="btn-primary btn-sm">
+					Login <i class='fas fa-sign-in-alt'></i>
+				</button>
+
+			</div>
+
+		</div>
+
+	</NotAuthorized>
+
+</AuthorizeView>
+

@@ -17,12 +17,12 @@ public partial class Index
 	[Inject] public ILogger<Index> Logger { get; set; }
 	[Inject] public IToastService Toast { get; set; }
 
-	protected List<UpcomingEvent> UpcomingEventList;
+	protected List<Queries.SpecialEvent> SpecialEvents;
 
 	protected MarkdownPipeline pipeline { get; set; }
 
-	private const int DaysPast = -600;
-	private const int DaysAhead = 100;
+	private const int DaysPast = -5;  //
+	private const int DaysAhead = 100;  //
 	private int RowCnt = 0;
 
 	private string UserInterfaceMessage = "";
@@ -36,16 +36,16 @@ public partial class Index
 			Logger.LogDebug(string.Format("Inside {0} i:{1}"
 				, nameof(Index) + "!" + nameof(OnInitializedAsync), 0));
 
-			UpcomingEventList = await db.GetEvents(daysAhead: DaysAhead, daysPast: DaysPast);  //daysPast: -3
-			if (UpcomingEventList is not null)
+			SpecialEvents = await db.GetEvents(daysAhead: DaysAhead, daysPast: DaysPast);  //daysPast: -3
+			if (SpecialEvents is not null)
 			{
-				RowCnt = UpcomingEventList.Count;
+				RowCnt = SpecialEvents.Count;
 				Logger.LogDebug(string.Format("...UpcomingEventList.Count:{0}", RowCnt));
 				pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().Build();
 			}
 			else
 			{
-				UserInterfaceMessage = $"{nameof(UpcomingEventList)} NOT FOUND";
+				UserInterfaceMessage = $"{nameof(SpecialEvents)} NOT FOUND";
 				Toast.ShowWarning(UserInterfaceMessage);
 			}
 		}

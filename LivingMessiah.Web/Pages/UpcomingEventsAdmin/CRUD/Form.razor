@@ -1,11 +1,9 @@
-﻿@page "/UpcomingEventsCRUD"
+﻿@using LivingMessiah.Web.Pages.UpcomingEvents.Enums;
 @using Syncfusion.Blazor.RichTextEditor
 
-<h3>Non-KeyDate CRUD</h3>
+<LoadingComponent IsLoading="VM==null">
 
-<LoadingComponent IsLoading="NonKeyDateCrudVM==null">
-
-	<EditForm Model="NonKeyDateCrudVM"
+	<EditForm Model="VM"
 						OnValidSubmit="HandleValidSubmit"
 						OnInvalidSubmit="@OnInvalidSubmit"
 						class="card card-body bg-light mt-5">
@@ -22,18 +20,21 @@
 			<div class="row mt-n2">
 
 				<div class="col-sm-6">
-					<div class="mb-3">
-						<label for="yearId" class="control-label">Year Id</label>
-						<InputNumber id="yearId" class="form-control" @bind-Value="NonKeyDateCrudVM.YearId" />
-						<ValidationMessage For="@(() => NonKeyDateCrudVM.YearId)" />
-					</div>
+					<label for="eventTypeEnum" class="control-label">Event Type</label>
+					<InputSelect id="type" @bind-Value="VM.SpecialEventTypeId" class="form-control">
+						@foreach (var item in SpecialEventType.List.ToList())
+						{
+							<option value="@item.Value">@item.Descr</option>
+						}
+					</InputSelect>
+					<ValidationMessage For="@(() => VM.SpecialEventTypeId)" />
 				</div>
 
 				<div class="col-sm-6">
 					<div class="mb-3">
 						<label for="eventDate" class="control-label">Event Date</label>
-						<InputDate id="eventDate" class="form-control" @bind-Value="NonKeyDateCrudVM.EventDate" />
-						<ValidationMessage For="@(() => NonKeyDateCrudVM.EventDate)" />
+						<InputDate id="eventDate" class="form-control" @bind-Value="VM.EventDate" />
+						<ValidationMessage For="@(() => VM.EventDate)" />
 					</div>
 				</div>
 
@@ -45,10 +46,10 @@
 					<div class="mb-3">
 						<label for="showBeginDate" class="control-label">Show Start Date</label>
 						<SfDatePicker TValue="DateTime?" id="showBeginDate"
-													@bind-Value="@NonKeyDateCrudVM.ShowBeginDate"
+													@bind-Value="@VM.ShowBeginDate"
 													Placeholder="Choose a Show Date">
 						</SfDatePicker>
-						<ValidationMessage For="@(() => NonKeyDateCrudVM.ShowBeginDate)" />
+						<ValidationMessage For="@(() => VM.ShowBeginDate)" />
 					</div>
 				</div>
 
@@ -56,10 +57,10 @@
 					<div class="mb-3">
 						<label for="showEndDate" class="control-label">Show End Date</label>
 						<SfDatePicker TValue="DateTime?" id="showEndDate"
-													@bind-Value="@NonKeyDateCrudVM.ShowEndDate"
+													@bind-Value="@VM.ShowEndDate"
 													Placeholder="Choose a Show Date">
 						</SfDatePicker>
-						<ValidationMessage For="@(() => NonKeyDateCrudVM.ShowEndDate)" />
+						<ValidationMessage For="@(() => VM.ShowEndDate)" />
 					</div>
 				</div>
 
@@ -68,25 +69,15 @@
 		</fieldset>
 
 		<fieldset class="mt-3">
-			<legend class="text-primary">Event Type / Image Url</legend>
+			<legend class="text-primary">Image Url</legend>
 			<div class="row mt-n2">
-
-				<div class="col-sm-4">
-					<label for="eventTypeEnum" class="control-label">Event Type</label>
-					<InputSelectEnum @bind-Value="NonKeyDateCrudVM.EventTypeEnum"
-													 class="form-control" id="eventTypeEnum" />
-					<ValidationMessage For="@(() => NonKeyDateCrudVM.EventTypeEnum)" />
-				</div>
-
-				<div class="col-sm-8">
+				<div class="col-sm-12">
 					<div class="mb-3">
 						<label for="imageUrl" class="control-label">Image Url</label>
-						<InputText id="imageUrl" class="form-control" @bind-Value="NonKeyDateCrudVM.ImageUrl" />
-						<ValidationMessage For="@(() => NonKeyDateCrudVM.ImageUrl)" />
+						<InputText id="imageUrl" class="form-control" @bind-Value="VM.ImageUrl" />
+						<ValidationMessage For="@(() => VM.ImageUrl)" />
 					</div>
 				</div>
-
-
 			</div>
 		</fieldset>
 
@@ -98,16 +89,16 @@
 				<div class="col-sm-4">
 					<div class="mb-3">
 						<label for="title" class="control-label">Title</label>
-						<InputText id="title" class="form-control" @bind-Value="NonKeyDateCrudVM.Title" />
-						<ValidationMessage For="@(() => NonKeyDateCrudVM.Title)" />
+						<InputText id="title" class="form-control" @bind-Value="VM.Title" />
+						<ValidationMessage For="@(() => VM.Title)" />
 					</div>
 				</div>
 
 				<div class="col-sm-8">
 					<div class="mb-3">
 						<label for="subTitle" class="control-label">Sub-Title</label>
-						<InputText id="subTitle" class="form-control" @bind-Value="NonKeyDateCrudVM.SubTitle" />
-						<ValidationMessage For="@(() => NonKeyDateCrudVM.SubTitle)" />
+						<InputText id="subTitle" class="form-control" @bind-Value="VM.SubTitle" />
+						<ValidationMessage For="@(() => VM.SubTitle)" />
 					</div>
 				</div>
 
@@ -123,24 +114,24 @@
 				<div class="col-sm-4">
 					<div class="mb-3">
 						<label for="websiteUrl" class="control-label">[Website Url]</label>
-						<InputText id="websiteUrl" class="form-control" @bind-Value="NonKeyDateCrudVM.WebsiteUrl" />
-						<ValidationMessage For="@(() => NonKeyDateCrudVM.WebsiteUrl)" />
+						<InputText id="websiteUrl" class="form-control" @bind-Value="VM.WebsiteUrl" />
+						<ValidationMessage For="@(() => VM.WebsiteUrl)" />
 					</div>
 				</div>
 
 				<div class="col-sm-4">
 					<div class="mb-3">
 						<label for="websiteDescr" class="control-label">[Website Description]</label>
-						<InputText id="websiteDescr" class="form-control" @bind-Value="NonKeyDateCrudVM.WebsiteDescr" />
-						<ValidationMessage For="@(() => NonKeyDateCrudVM.WebsiteDescr)" />
+						<InputText id="websiteDescr" class="form-control" @bind-Value="VM.WebsiteDescr" />
+						<ValidationMessage For="@(() => VM.WebsiteDescr)" />
 					</div>
 				</div>
 
 				<div class="col-sm-4">
 					<div class="mb-3">
 						<label for="youTubeId" class="control-label">[YouTubeId]</label>
-						<InputText id="youTubeId" class="form-control" @bind-Value="NonKeyDateCrudVM.YouTubeId" />
-						<ValidationMessage For="@(() => NonKeyDateCrudVM.YouTubeId)" />
+						<InputText id="youTubeId" class="form-control" @bind-Value="VM.YouTubeId" />
+						<ValidationMessage For="@(() => VM.YouTubeId)" />
 					</div>
 				</div>
 
@@ -156,7 +147,7 @@
 						@if (!IsPreview)
 						{
 							<SfRichTextEditor Height="250px" EditorMode="EditorMode.Markdown" SaveInterval="1"
-																@bind-Value="@NonKeyDateCrudVM.Description">
+															@bind-Value="@VM.Description">
 								<RichTextEditorToolbarSettings Items="@Tools">
 									<RichTextEditorCustomToolbarItems>
 										<RichTextEditorCustomToolbarItem Name="Preview">
@@ -180,7 +171,7 @@
 										<RichTextEditorCustomToolbarItem Name="code">
 											<Template>
 												<button id="MD_Preview" class="e-tbar-btn e-control e-btn e-icon-btn"
-																@onclick="CodeClick">
+															@onclick="CodeClick">
 													<span class="e-btn-icon e-preview e-icons"></span>
 												</button>
 											</Template>
@@ -216,42 +207,42 @@
 
 <style>
 	.e-icon-btn .e-preview::before {
-		content: '\e790';
+			content: '\e790';
 	}
 
 	.bootstrap5 .e-icon-btn .e-md-preview::before {
-		content: '\e787';
+			content: '\e787';
 	}
 
 	.e-icon-btn.e-active .e-md-preview::before {
-		content: '\e350';
+			content: '\e350';
 	}
 
 	.e-icon-btn .e-md-preview::before {
-		content: '\e345';
+			content: '\e345';
 	}
 
 	.bootstrap5 .e-icon-btn.e-active .e-view-side::before {
-		content: '\e350';
+			content: '\e350';
 	}
 
 	.bootstrap5 .e-icon-btn .e-view-side::before {
-		content: '\e350';
+			content: '\e350';
 	}
 
 	.tailwind .e-icon-btn .e-md-preview::before {
-		content: '\e7d0';
+			content: '\e7d0';
 	}
 
 	.tailwind .e-icon-btn .e-preview::before {
-		content: '\e748';
+			content: '\e748';
 	}
 
 	.e-icon-btn .e-active .e-view-side::before {
-		content: '\e350';
+			content: '\e350';
 	}
 
 	.e-icon-btn .e-view-side::before {
-		content: '\e350';
+			content: '\e350';
 	}
 </style>

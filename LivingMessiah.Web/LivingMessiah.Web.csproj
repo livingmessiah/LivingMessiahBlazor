@@ -8,16 +8,12 @@
   <ItemGroup>
     <Compile Remove="Pages\SukkotAdmin\Donations\Services\**" />
     <Compile Remove="Pages\SukkotAdmin\Registration\Enums\**" />
-    <Compile Remove="Pages\UpcomingEvents\Enums\**" />
     <Content Remove="Pages\SukkotAdmin\Donations\Services\**" />
     <Content Remove="Pages\SukkotAdmin\Registration\Enums\**" />
-    <Content Remove="Pages\UpcomingEvents\Enums\**" />
     <EmbeddedResource Remove="Pages\SukkotAdmin\Donations\Services\**" />
     <EmbeddedResource Remove="Pages\SukkotAdmin\Registration\Enums\**" />
-    <EmbeddedResource Remove="Pages\UpcomingEvents\Enums\**" />
     <None Remove="Pages\SukkotAdmin\Donations\Services\**" />
     <None Remove="Pages\SukkotAdmin\Registration\Enums\**" />
-    <None Remove="Pages\UpcomingEvents\Enums\**" />
   </ItemGroup>
 
   <ItemGroup>

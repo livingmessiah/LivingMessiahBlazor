@@ -2,7 +2,7 @@
 
 @* Deprecated Use /Calendar instead *@
 
-@using LivingMessiah.Web.Pages.KeyDates.Enums
+@using LivingMessiah.Web.Pages.UpcomingEvents.Enums
 @using Markdig
 
 @using Page = LivingMessiah.Web.Links.UpcomingEvents
@@ -15,7 +15,7 @@
 <RegularVideoedEvents />
 
 <hr class="warning mt-1 mb-5" />
-
+@*
 <div class="card bg-light text-muted ">
 	<div class="card-body my-1 pl-1 py-0">
 		<ul class="list-inline float-end">
@@ -24,14 +24,14 @@
 			<li class="list-inline-item"><small>Row Cnt: @RowCnt</small></li>
 		</ul>
 	</div>
-</div>
+</div>*@
 
-<LoadingComponent IsLoading="UpcomingEventList==null" TurnSpinnerOff="@TurnSpinnerOff">
-	@foreach (var item in UpcomingEventList)
+<LoadingComponent IsLoading="SpecialEvents==null" TurnSpinnerOff="@TurnSpinnerOff">
+	@foreach (var item in SpecialEvents)
 	{
-		<NonKeyDate Id ="@item.Id"
+		<SpecialEvent Id ="@item.Id"
 							EventDate="@item.EventDate"
-							EventType="@EventType.FromEnum(item.EventTypeEnum)"
+							SpecialEventType="@SpecialEventType.FromValue(item.SpecialEventTypeId)"
 							Title="@item.Title"
 							SubTitle="@item.SubTitle"
 							ImageUrl="@item.ImageUrl"
@@ -39,6 +39,15 @@
 							WebsiteDescr="@item.WebsiteDescr"
 							YouTubeId="@item.YouTubeId"
 							Description="@Markdig.Markdown.ToHtml(item.Description, pipeline)">
-			</NonKeyDate>
+			</SpecialEvent>
 	}
 </LoadingComponent>
+
+@*
+	
+SpecialEventType="@item.SpecialEventType"
+
+EventType.FromEnum(item.SpecialEventType)"
+
+
+*@

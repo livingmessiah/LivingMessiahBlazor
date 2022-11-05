@@ -12,15 +12,15 @@ using LivingMessiah.Web.Pages.UpcomingEvents.Queries;
 using Syncfusion.Blazor.Grids;
 using Blazored.Toast.Services;
 
-namespace LivingMessiah.Web.Pages.UpcomingEvents;
+namespace LivingMessiah.Web.Pages.UpcomingEventsAdmin;
 
-public partial class UpcomingEventsGrid
+public partial class SimpleGrid
 {
 	[Inject] public IUpcomingEventsRepository db { get; set; }
-	[Inject] public ILogger<UpcomingEventsGrid> Logger { get; set; }
+	[Inject] public ILogger<SimpleGrid> Logger { get; set; }
 	[Inject] public IToastService Toast { get; set; }
 
-	protected List<UpcomingEvent> UpcomingEventList;
+	protected List<SpecialEvent> SpecialEvents;
 
 	private const int DaysPast = -600; //daysPast: -3
 	private const int DaysAhead = 100;
@@ -31,22 +31,22 @@ public partial class UpcomingEventsGrid
 		try
 		{
 			Logger.LogDebug(string.Format("Inside {0}"
-				, nameof(UpcomingEventsGrid) + "!" + nameof(OnInitializedAsync)));
-			UpcomingEventList = await db.GetEvents(daysAhead: DaysAhead, daysPast: DaysPast);  
-			if (UpcomingEventList is not null)
+				, nameof(SimpleGrid) + "!" + nameof(OnInitializedAsync)));
+			SpecialEvents = await db.GetEvents(daysAhead: DaysAhead, daysPast: DaysPast);  
+			if (SpecialEvents is not null)
 			{
-				RowCnt = UpcomingEventList.Count;
-				Logger.LogDebug(string.Format("...UpcomingEventList.Count:{0}", UpcomingEventList.Count));
+				RowCnt = SpecialEvents.Count;
+				Logger.LogDebug(string.Format("...UpcomingEventList.Count:{0}", SpecialEvents.Count));
 			}
 			else
 			{
-				Toast.ShowWarning($"{nameof(UpcomingEventList)} NOT FOUND");
+				Toast.ShowWarning($"{nameof(SpecialEvents)} NOT FOUND");
 			}
 		}
 		catch (Exception ex)
 		{
 			Logger.LogError(ex, string.Format("  Inside catch of {0}"
-				, nameof(UpcomingEventsGrid) + "!" + nameof(OnInitializedAsync)));
+				, nameof(SimpleGrid) + "!" + nameof(OnInitializedAsync)));
 			Toast.ShowError("An invalid operation occurred, contact your administrator");
 		}
 	}

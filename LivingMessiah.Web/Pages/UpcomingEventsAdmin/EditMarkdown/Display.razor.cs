@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 
-namespace LivingMessiah.Web.Pages.UpcomingEvents.EditMarkdown;
+namespace LivingMessiah.Web.Pages.UpcomingEventsAdmin.EditMarkdown;
 
 public partial class Display
 {

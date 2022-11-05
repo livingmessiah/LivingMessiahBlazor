@@ -1,0 +1,27 @@
+﻿@using Syncfusion.Blazor.Inputs
+
+<div class="card my-2 bg-light text-muted ">
+	<div class="card-body pl-1 py-0">
+		<ul class="@UlClass">
+			<li class="@LiClass"><small>SaveUrl: @SaveUrl</small></li>
+			<li class="@LiClass"><small>RemoveUrl: @RemoveUrl</small></li>
+		</ul>
+	</div>
+
+</div>
+
+<div class="col-lg-12 control-section my-2">
+	<div class="control_wrapper">
+		<SfUploader ID="UploadFiles" DropArea=".control-fluid">
+			<UploaderEvents OnRemove="OnFileRemove"></UploaderEvents>
+			<UploaderAsyncSettings SaveUrl="@SaveUrl" RemoveUrl="@RemoveUrl" />
+		</SfUploader>
+	</div>
+</div>
+
+<style>
+	.control_wrapper {
+			width: 350px;
+			margin: 0 auto;
+	}
+</style>

@@ -5,13 +5,13 @@ using System.Threading.Tasks;
 using Syncfusion.Blazor;
 using Syncfusion.Blazor.Data;
 using LivingMessiah.Web.Pages.UpcomingEvents.Data;
-using LivingMessiah.Web.Pages.UpcomingEvents.Edit;
+using LivingMessiah.Web.Pages.UpcomingEventsAdmin.Edit;
 using Microsoft.Extensions.Logging;
 //using Microsoft.AspNetCore.Components;
 
-namespace LivingMessiah.Web.Pages.UpcomingEvents.Data;
+namespace LivingMessiah.Web.Pages.UpcomingEventsAdmin.Edit;
 
-public interface IUpcomingEventsGridDataAdaptor
+public interface ISpecialEventGridDataAdaptor
 {
 		Task<object> InsertAsync(DataManager dataManager, object data, string key);
 		Task<object> ReadAsync(DataManagerRequest dataManagerRequest, string key = null);
@@ -19,7 +19,7 @@ public interface IUpcomingEventsGridDataAdaptor
 		Task<object> UpdateAsync(DataManager dataManager, object data, string keyField, string key);
 }
 
-public class UpcomingEventsGridDataAdaptor : DataAdaptor, IUpcomingEventsGridDataAdaptor  //GridDataAdaptor : DataAdaptor
+public class SpecialEventGridDataAdaptor : DataAdaptor, ISpecialEventGridDataAdaptor  //GridDataAdaptor : DataAdaptor
 {
 		//https://blazor.syncfusion.com/documentation/datagrid/custom-binding
 		//https://www.syncfusion.com/forums/160311/is-there-any-other-way-of-injecting-a-service-into-a-blazor-component-other-than-the-inject
@@ -39,7 +39,7 @@ public class UpcomingEventsGridDataAdaptor : DataAdaptor, IUpcomingEventsGridDat
 		#region Constructor and DI
 		//protected readonly ILogger Logger;  // Unable to resolve service for type 'Microsoft.Extensions.Logging.ILogger' while attempting to activate 'LivingMessiah.Web.Data.GridDataAdaptor'.)
 		public IGridDataRepository db;
-		public UpcomingEventsGridDataAdaptor(IGridDataRepository gridDataRepository)  //, ILogger logger
+		public SpecialEventGridDataAdaptor(IGridDataRepository gridDataRepository)  //, ILogger logger
 		{
 				db = gridDataRepository;
 				//Logger = logger;
