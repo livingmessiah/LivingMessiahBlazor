@@ -1,5 +1,7 @@
 ﻿@page "/IntroductionAndWelcome"
 
+@using LivingMessiah.Web.SmartEnums;
+
 @using LivingMessiah.Web.Pages.Home
 @using Page = LivingMessiah.Web.Links.IntroductionAndWelcome
 
@@ -21,7 +23,7 @@
 		<VisionAndMission />
 	</div>
 		<div class="body p-2">
-		<Resolve MediaQueryEnum="@MediaQueryEnum.Lg"></Resolve>
+		<Resolve MediaQuery="@MediaQuery.Lg"></Resolve>
 	</div>
 
 </div>

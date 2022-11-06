@@ -1,42 +1,7 @@
-﻿
-@if (MediaQueryEnum == MediaQueryEnum.Xs | MediaQueryEnum == MediaQueryEnum.Sm)
-{
-<div class="card border-warning mb-4">
-	<div class="card-header">
-		<h2 class="card-title text-warning text-center"><b>Welcome</b></h2>
-	</div>
+﻿@using LivingMessiah.Web.SmartEnums;
 
-	<div class="body p-2">
-		<Welcome />
-	</div>
 
-	@if (IsCollapsed)
-	{
-		<div class="card-footer bg-transparent">
-			<Button @onclick="Collapsed_ButtonClick"
-							class="btn-primary btn-sm float-end">
-				Learn More... <i class="fas fa-chevron-down"></i>
-			</Button>
-
-		</div>
-	}
-	else
-	{
-		<div class="body p-2"> <VisionAndMission />	</div>
-		<div class="body p-2"> <Resolve MediaQueryEnum="@MediaQueryEnum"></Resolve>	</div>
-		<div class="card-footer  bg-transparent">
-			<Button @onclick="Collapsed_ButtonClick"
-							class="btn-primary btn-sm float-end">
-				Shrink <i class="fas fa-chevron-up"></i>
-			</Button>
-		</div>
-	}
-
-</div>
-
-}
-else
-{
+<div class="@MediaQuery.MdOrLgOrXl.DivClass">
 	<div class="card border-warning mr-0">
 		<div class="card-header">
 			<h2 class="text-warning text-center"><b>Welcome</b></h2>
@@ -49,22 +14,9 @@ else
 			<VisionAndMission />
 		</div>
 		<div class="body p-2">
-			<Resolve MediaQueryEnum="@MediaQueryEnum"></Resolve>
+			<Resolve MediaQuery="@MediaQuery"></Resolve>
 		</div>
 
 	</div>
-}
 
-@*
-
-	<div class="card-footer bg-transparent border-warning text-center">
-
-	<div class="@IsCollapsed">
-			<div class="card border-warning mb-3">
-
-				<div class="card-body">
-
-				</div>
-
-			</div>
-		</div>*@
+</div>

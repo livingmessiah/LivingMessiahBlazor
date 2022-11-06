@@ -31,6 +31,8 @@ public abstract class MediaQuery : SmartEnum<MediaQuery>
 		internal const int Xl = 6;
 		internal const int XsOrSm = 7;
 		internal const int MdOrLgOrXl = 8;
+		internal const int LgOrXl = 9;
+		//internal const int XsOrXl = 10;
 	}
 	#endregion
 
@@ -44,6 +46,8 @@ public abstract class MediaQuery : SmartEnum<MediaQuery>
 	// Combination
 	public static readonly MediaQuery XsOrSm = new XsOrSmSE();
 	public static readonly MediaQuery MdOrLgOrXl = new MdOrLgOrXlSE();
+	public static readonly MediaQuery LgOrXl = new LgOrXlSE();
+	//public static readonly MediaQuery XsOrXl = new XsOrXlSE(); 
 
 	// SE=SmartEnum
 	#endregion
@@ -107,12 +111,26 @@ public abstract class MediaQuery : SmartEnum<MediaQuery>
 		public override string DivClass => "d-md-none";
 	}
 
-
 	private sealed class MdOrLgOrXlSE : MediaQuery
 	{
 		public MdOrLgOrXlSE() : base($"{nameof(Id.MdOrLgOrXl)}", Id.MdOrLgOrXl) { }
 		public override string DivClass => "d-none d-md-block";
 	}
+
+	private sealed class LgOrXlSE : MediaQuery
+	{
+		public LgOrXlSE() : base($"{nameof(Id.LgOrXl)}", Id.LgOrXl) { }
+		public override string DivClass => "d-none d-lg-block";
+	}
+
+	/*	NOT WOWRKING
+		private sealed class XsOrXlSE : MediaQuery
+	{
+		public XsOrXlSE() : base($"{nameof(Id.XsOrXl)}", Id.XsOrXl) { } // ToDo: what combo goes here?
+		public override string DivClass => "d-sm-block d-md-block d-lg-block";
+	}
+	*/
+
 	#endregion
 
 }

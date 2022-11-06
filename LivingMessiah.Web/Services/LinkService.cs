@@ -10,7 +10,7 @@ namespace LivingMessiah.Web.Services;
 public interface ILinkService
 {
 	List<Link> GetSitemapLinks();
-	List<Link> GetHomeSidebarLinks();
+	List<Link> GetHomeSidebarLinks(bool isXsOrSm);
 	List<LinkBasic> GetAdminLinks();
 	List<LinkBasic> GetDashboardLinks();
 	List<Link> GetFeastLinks();
@@ -25,19 +25,41 @@ public class LinkService : ILinkService
 		SukkotSettings = sukkotSettings;
 	}
 
-	public List<Link> GetHomeSidebarLinks()
+	const int IntroductionAndWelcomeSortOder = 1;
+
+	public List<Link> GetHomeSidebarLinks(bool isXsOrSm)
 	{
 		LinksFactory links = new LinksFactory();
 		if (SukkotSettings.Value.SukkotIsOpen)
 		{
-			return links.GetLinks()
-				.Where(x => x.HomeSidebarUsage == true)
-				.Union(links.GetFeastLinks().Where(z => z.FeastDay == LivingMessiah.Web.Pages.KeyDates.Enums.FeastDayEnum.Tabernacles))
-				.OrderBy(x => x.SortOrder).ToList();
+			if (isXsOrSm)
+			{
+				return links.GetLinks()
+					.Where(x => x.HomeSidebarUsage == true)
+					.Union(links.GetFeastLinks().Where(z => z.FeastDay == LivingMessiah.Web.Pages.KeyDates.Enums.FeastDayEnum.Tabernacles))
+					.OrderBy(x => x.SortOrder).ToList();
+			}
+			else
+			{
+				return links.GetLinks()
+					.Where(x => x.HomeSidebarUsage == true & x.SortOrder != IntroductionAndWelcomeSortOder)
+					.Union(links.GetFeastLinks().Where(z => z.FeastDay == LivingMessiah.Web.Pages.KeyDates.Enums.FeastDayEnum.Tabernacles))
+					.OrderBy(x => x.SortOrder).ToList();
+			}
+
 		}
 		else
 		{
-			return links.GetLinks().Where(x => x.HomeSidebarUsage == true).ToList();
+			if (isXsOrSm)
+			{
+				return links.GetLinks()
+					.Where(x => x.HomeSidebarUsage == true).ToList();
+			}
+			else
+			{
+				return links.GetLinks().Where(x => x.HomeSidebarUsage == true & x.SortOrder != IntroductionAndWelcomeSortOder).ToList();
+			}
+			
 		}
 
 	}

@@ -315,12 +315,14 @@ public static class IndepthStudy
 
 public static class IntroductionAndWelcome
 {
-	//https://github.com/anton-bot/Full-Emoji-List/blob/master/Emoji.cs
+	
 	public const string Index = "/IntroductionAndWelcome";
-	public const string Title = "Introduction and Welcome";
+	public const string Title = "Welcome";
+	public const string Icon = "far fa-handshake";
+	/*
+	https://github.com/anton-bot/Full-Emoji-List/blob/master/Emoji.cs
 	public const string Title2 = "Welcome 😄";
-	public const string Icon = "far fa-smile";
-	public const string Icon2 = "far fa-handshake";
+	*/
 }
 
 public static class KeyDatesEdit

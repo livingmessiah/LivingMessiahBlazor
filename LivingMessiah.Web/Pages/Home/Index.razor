@@ -1,56 +1,39 @@
 @page "/"
 @using static LivingMessiah.Web.Services.Auth0
 @using Page = LivingMessiah.Web.Links.Home
+@using LivingMessiah.Web.SmartEnums
+
 <PageTitle>@Page.PageTitle</PageTitle>
 
 <HomeImage></HomeImage>
 
-<div class="d-md-none">
+
+<div class="@MediaQuery.XsOrSm.DivClass">
 	<SectionMain />
 	<br />
-	<AuthorizeView Roles="@Roles.AdminOrElder">
-		<NotAuthorized>
-			<div class="row">
-				<div class="col-12">
-					<WelcomeButton />
-				</div>
-			</div>
-		</NotAuthorized>
-	</AuthorizeView>
 
-	<SidebarButtons></SidebarButtons>
-	<ShabbatMeter></ShabbatMeter>
+	<SidebarButtons IsXsOrSm="true" />
+	<ShabbatMeter />
 	<div class="d-print-none">
 		<SocialMediaButtons></SocialMediaButtons>
 	</div>
 
-	@*ToDo: CHOSE AND ICON AND DELETE THIS*@
-	<AuthorizeView Roles="@Roles.AdminOrElder">
-		<NotAuthorized>
-			<div class="row mt-2">
-				<div class="col-12">
-					<WelcomeButton UseHappyFaceIcon="false" UseVersboseTitle="false" />
-				</div>
-			</div>
-		</NotAuthorized>
-	</AuthorizeView>
-
 </div>
 
-<div class="d-none d-md-block d-lg-none d-xl-none">
+<div class="@MediaQuery.Md.DivClass">
 	<div class="row">
 		<div class="col-7">
 			<SectionMain />
 			<AuthorizeView Roles="@Roles.AdminOrElder">
 				<NotAuthorized>
-					<IntroductionAndWelcome MediaQueryEnum="MediaQueryEnum.Md" />
+					<IntroductionAndWelcome MediaQuery="MediaQuery.Md" />
 				</NotAuthorized>
 			</AuthorizeView>
 		</div>
 
 		<div class="col-5">
-			<SidebarButtons></SidebarButtons>
-			<ShabbatMeter></ShabbatMeter>
+			<SidebarButtons IsXsOrSm="false" />
+			<ShabbatMeter />
 			<div class="d-print-none">
 				<SocialMediaButtons></SocialMediaButtons>
 			</div>
@@ -58,21 +41,21 @@
 	</div>
 </div>
 
-<div class="d-none d-lg-block">
+<div class="@MediaQuery.LgOrXl.DivClass">
 	<div class="row">
 
 		<div class="col-8">
 			<SectionMain />
 			<AuthorizeView Roles="@Roles.AdminOrElder">
 				<NotAuthorized>
-					<IntroductionAndWelcome MediaQueryEnum="MediaQueryEnum.Lg" />
+					<IntroductionAndWelcome MediaQuery="MediaQuery.Lg" />
 				</NotAuthorized>
 			</AuthorizeView>
 		</div>
 
 		<div class="col-4">
-			<SidebarButtons></SidebarButtons>
-			<ShabbatMeter></ShabbatMeter>
+			<SidebarButtons IsXsOrSm="false" />
+			<ShabbatMeter />
 			<div class="d-print-none">
 				<SocialMediaButtons></SocialMediaButtons>
 			</div>

@@ -6,37 +6,37 @@ namespace LivingMessiah.Web.Data;
 
 public interface ILinksFactory
 {
-		List<Link> GetLinks();
-		List<Link> GetFeastLinks();
-		List<LinkBasic> GetDashboardLinks();
-		List<LinkBasic> GetVideoProductionLinks();
-		List<LinkBasic> GetEldersLinks();
-		//List<LinkBasic> GetMarkdownLinks();
+	List<Link> GetLinks();
+	List<Link> GetFeastLinks();
+	List<LinkBasic> GetDashboardLinks();
+	List<LinkBasic> GetVideoProductionLinks();
+	List<LinkBasic> GetEldersLinks();
+	//List<LinkBasic> GetMarkdownLinks();
 }
 
 public class LinksFactory : ILinksFactory
 {
 
-		public List<LinkBasic> GetVideoProductionLinks()
-		{
-				return new List<LinkBasic>
+	public List<LinkBasic> GetVideoProductionLinks()
+	{
+		return new List<LinkBasic>
 			{
 				new LinkBasic {Index = WeeklyVideos.Index, Title = WeeklyVideos.Title, Icon = WeeklyVideos.Icon, },
  			};
-		}
+	}
 
-		public List<LinkBasic> GetEldersLinks()
-		{
-				return new List<LinkBasic>
+	public List<LinkBasic> GetEldersLinks()
+	{
+		return new List<LinkBasic>
 			{
 				new LinkBasic {Index = PsalmsAndProverbs.Index, Title = PsalmsAndProverbs.Title, Icon = PsalmsAndProverbs.Icon, },
 				new LinkBasic {Index = Contact.Index, Title = Contact.Title, Icon = Contact.Icon, },
  			};
-		}
+	}
 
-		public List<LinkBasic> GetDashboardLinks()
-		{
-				return new List<LinkBasic>
+	public List<LinkBasic> GetDashboardLinks()
+	{
+		return new List<LinkBasic>
 			{
 				new LinkBasic {Index = "/Admin/Dashboard/Index", Title = "Dashboard", Icon = "fas fa-tachometer-alt", },
 				new LinkBasic {Index = "/Admin/Dashboard/Dump", Title = "Dump", Icon = "fas fa-truck-monster", },
@@ -45,19 +45,21 @@ public class LinksFactory : ILinksFactory
 				new LinkBasic {Index = "/Admin/Dashboard/Routes", Title = "Routes", Icon = "fas fa-route", },
 				new LinkBasic {Index = "/Admin/Dashboard/ThrowException", Title = "Throw Exception", Icon = "fas fa-bomb", },
  			};
-		}
+	}
 
-		public List<Link> GetLinks()
-		{
-				return new List<Link>
+	public List<Link> GetLinks()
+	{
+		return new List<Link>
 			{
 				new Link
 				{
 					Index = IntroductionAndWelcome.Index,
 					Title = IntroductionAndWelcome.Title,
 					Icon = IntroductionAndWelcome.Icon,
-					HomeSidebarUsage=false,
-					SortOrder=1,
+					HomeSidebarUsage=true,  // if XsOrSm == true 
+					HomeFloatRightHebrew = "שָׁלוֹם",
+					HomeTitleSuffix = " Shalom  H7695",
+					SortOrder=1,  // Services!LinkService; const int IntroductionAndWelcomeSortOder=1; include only if isXsOrSm=true
 					SitemapUsage=true
 				},
 				new Link
@@ -212,7 +214,7 @@ public class LinksFactory : ILinksFactory
 					Index = BibleSearch.Index,
 					Title = BibleSearch.Title,
 					Icon = BibleSearch.Icon,
-					HomeSidebarUsage=true,
+					HomeSidebarUsage=false,
 					HomeFloatRightHebrew="בָּקַר",
 					HomeTitleSuffix=" bāqar H1239",
 					SortOrder=15,
@@ -363,12 +365,12 @@ public class LinksFactory : ILinksFactory
 				}
 
 			};
-		}
+	}
 
-		/**/
-		public List<Link> GetFeastLinks()
-		{
-				return new List<Link>
+	/**/
+	public List<Link> GetFeastLinks()
+	{
+		return new List<Link>
 			{
 				new Link
 				{
@@ -407,23 +409,23 @@ public class LinksFactory : ILinksFactory
 					SitemapUsage=false
 				},
 			};
-		}
+	}
 
 
-		/*
-		public List<LinkBasic> GetMarkdownLinks()
+	/*
+	public List<LinkBasic> GetMarkdownLinks()
+	{
+		return new List<LinkBasic>
 		{
-			return new List<LinkBasic>
-			{
-				new LinkBasic {Index = "/Admin/Markdown/Index", Title = "Markdown", Icon = "fas fa-tachometer-alt", },
-				new LinkBasic {Index = "/Admin/Markdown/BlogUrl", Title = "BlogUrl", Icon = "fas fa-globe-americas", },
-				new LinkBasic {Index = "/Admin/Markdown/EmbededStaticRazorView", Title = "Embeded Static Razor View", Icon = "fab fa-font-awesome-flag", },
-				new LinkBasic {Index = "/Admin/Markdown/LocalFilename", Title = "Local Filename", Icon = "fas fa-satellite", },
-				new LinkBasic {Index = "/Admin/Markdown/Parse", Title = "Parse", Icon = "fas fa-horse-head", },
-				new LinkBasic {Index = "/Admin/Markdown/Verse_Mat_5_17_to_20", Title = "Verse Mat:517-20", Icon = "fas fa-bible", },
- 			};
-		}
-		*/
+			new LinkBasic {Index = "/Admin/Markdown/Index", Title = "Markdown", Icon = "fas fa-tachometer-alt", },
+			new LinkBasic {Index = "/Admin/Markdown/BlogUrl", Title = "BlogUrl", Icon = "fas fa-globe-americas", },
+			new LinkBasic {Index = "/Admin/Markdown/EmbededStaticRazorView", Title = "Embeded Static Razor View", Icon = "fab fa-font-awesome-flag", },
+			new LinkBasic {Index = "/Admin/Markdown/LocalFilename", Title = "Local Filename", Icon = "fas fa-satellite", },
+			new LinkBasic {Index = "/Admin/Markdown/Parse", Title = "Parse", Icon = "fas fa-horse-head", },
+			new LinkBasic {Index = "/Admin/Markdown/Verse_Mat_5_17_to_20", Title = "Verse Mat:517-20", Icon = "fas fa-bible", },
+		};
+	}
+	*/
 
 
 }

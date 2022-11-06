@@ -3,7 +3,8 @@ using LivingMessiah.Web.SmartEnums;
 
 namespace LivingMessiah.Web.Pages.Home;
 
-public partial class IntroductionAndWelcome
+public partial class Resolve
 {
-	[Parameter] public MediaQuery MediaQuery { get; set; }
+	[Parameter, EditorRequired] public MediaQuery MediaQuery { get; set; }
 }
+

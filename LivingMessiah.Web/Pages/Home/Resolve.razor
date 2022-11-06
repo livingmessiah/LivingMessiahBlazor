@@ -1,32 +1,13 @@
-﻿@*@if (MediaQueryEnum == MediaQueryEnum.Md )
-	{
-		<h3><span class="badge bg-warning">Our Resolve</span></h3>
-		<h5><span class="badge bg-warning">Community Guidelines and Code of Conduct</span></h5>
-	}
-	else
-	{
-		<h3><span class="badge bg-warning">Our Resolve - Community Guidelines and Code of Conduct</span></h3>
-	}*@
+﻿@using LivingMessiah.Web.SmartEnums
 
-@switch (MediaQueryEnum)
+@if	(MediaQuery != MediaQuery.Xl)
 {
-	case MediaQueryEnum.Xs:
-	case MediaQueryEnum.Sm:
-		<h3><span class="badge bg-warning">Our Resolve</span></h3>
-		<h5><span class="badge bg-warning">Community Guidelines and Code of Conduct</span></h5>
-		break;
-
-	case MediaQueryEnum.Md:
-	case MediaQueryEnum.Lg:
-		<h3><span class="badge bg-warning">Our Resolve</span></h3>
-		<h5><span class="badge bg-warning">Community Guidelines and Code of Conduct</span></h5>
-		break;
-
-	case MediaQueryEnum.Xl:
-	default:
-		<h3><span class="badge bg-warning">Our Resolve - Community Guidelines and Code of Conduct</span></h3>
-		break;
-
+	<h3><span class="badge bg-warning">Our Resolve</span></h3>
+	<h5><span class="badge bg-warning">Community Guidelines and Code of Conduct</span></h5>
+}
+else
+{
+	<h3><span class="badge bg-warning">Our Resolve - Community Guidelines and Code of Conduct</span></h3>
 }
 
 <h4>We Resolve To</h4>
@@ -159,8 +140,3 @@
 	</blockquote>
 </p>
 
-
-@code {
-	[Parameter]
-	public MediaQueryEnum MediaQueryEnum { get; set; }
-}
