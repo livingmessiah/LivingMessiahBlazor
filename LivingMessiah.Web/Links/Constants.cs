@@ -159,6 +159,22 @@ public static class Calendar
 	public const string Index = "/Calendar";
 	public const string Title = "Calendar";
 	public const string Icon = "far fa-calendar-alt";
+
+	public static class FeastTable
+	{
+		public const string Index = "/FeastTable";
+		public const string Title = "Feast Table";
+		public const string Icon = "fas fa-glass-cheers";
+	}
+
+	public static class LunarMonthTable
+	{
+		public const string Index = "/LunarMonthTable";
+		public const string Title = "Lunar Month  Table";
+		public const string Icon = "far fa-moon";
+	}
+
+	
 }
 
 public static class Contact

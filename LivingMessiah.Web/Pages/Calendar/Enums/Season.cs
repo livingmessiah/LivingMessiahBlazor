@@ -1,9 +1,8 @@
 ﻿using Ardalis.SmartEnum;
-using LivingMessiah.Web.Pages.Calendar;
 
-namespace LivingMessiah.Web.Pages.KeyDates.Enums;
+namespace LivingMessiah.Web.Pages.Calendar.Enums;
 
-public abstract class BaseSeasonSmartEnum : SmartEnum<BaseSeasonSmartEnum>
+public abstract class Season : SmartEnum<Season>
 {
 
 		#region Id's
@@ -19,14 +18,14 @@ public abstract class BaseSeasonSmartEnum : SmartEnum<BaseSeasonSmartEnum>
 
 
 		#region Declared Public Instances
-		public static readonly BaseSeasonSmartEnum Fall = new FallSE();
-		public static readonly BaseSeasonSmartEnum Winter = new WinterSE();
-		public static readonly BaseSeasonSmartEnum Spring = new SpringSE();
-		public static readonly BaseSeasonSmartEnum Summer = new SummerSE();
-		public static readonly BaseSeasonSmartEnum FallEOY = new FallEOYSE();
+		public static readonly Season Fall = new FallSE();
+		public static readonly Season Winter = new WinterSE();
+		public static readonly Season Spring = new SpringSE();
+		public static readonly Season Summer = new SummerSE();
+		public static readonly Season FallEOY = new FallEOYSE();
 		#endregion
 
-		private BaseSeasonSmartEnum(string name, int value) : base(name, value) { } // Constructor
+		private Season(string name, int value) : base(name, value) { } // Constructor
 
 		#region Extra Fields
 		public abstract string Type { get; }
@@ -38,7 +37,7 @@ public abstract class BaseSeasonSmartEnum : SmartEnum<BaseSeasonSmartEnum>
 
 		#region Private Instantiation
 
-		private sealed class FallSE : BaseSeasonSmartEnum
+		private sealed class FallSE : Season
 		{
 				public FallSE() : base($"{nameof(Id.Fall)}", Id.Fall) { }
 				public override string Type => "Equinox";
@@ -46,7 +45,7 @@ public abstract class BaseSeasonSmartEnum : SmartEnum<BaseSeasonSmartEnum>
 				public override string Icon => "fab fa-canadian-maple-leaf";
 				public override string CalendarColor => CalendarColors.Warning;
 		}
-		private sealed class WinterSE : BaseSeasonSmartEnum
+		private sealed class WinterSE : Season
 		{
 				public WinterSE() : base($"{nameof(Id.Winter)}", Id.Winter) { }
 				public override string Type => "Solstice";
@@ -54,7 +53,7 @@ public abstract class BaseSeasonSmartEnum : SmartEnum<BaseSeasonSmartEnum>
 				public override string Icon => "fas fa-snowflake";
 				public override string CalendarColor => CalendarColors.Primary;
 		}
-		private sealed class SpringSE : BaseSeasonSmartEnum
+		private sealed class SpringSE : Season
 		{
 				public SpringSE() : base($"{nameof(Id.Spring)}", Id.Spring) { }
 				public override string Type => "Equinox";
@@ -62,7 +61,7 @@ public abstract class BaseSeasonSmartEnum : SmartEnum<BaseSeasonSmartEnum>
 				public override string Icon => "fas fa-cloud-sun-rain";
 				public override string CalendarColor => CalendarColors.Success;
 		}
-		private sealed class SummerSE : BaseSeasonSmartEnum
+		private sealed class SummerSE : Season
 		{
 				public SummerSE() : base($"{nameof(Id.Summer)}", Id.Summer) { }
 				public override string Type => "Solstice";
@@ -70,7 +69,7 @@ public abstract class BaseSeasonSmartEnum : SmartEnum<BaseSeasonSmartEnum>
 				public override string Icon => "far fa-sun";
 				public override string CalendarColor => CalendarColors.Danger;
 		}
-		private sealed class FallEOYSE : BaseSeasonSmartEnum
+		private sealed class FallEOYSE : Season
 		{
 				public FallEOYSE() : base("Fall (EOY)", Id.FallEOY) { }
 				public override string Type => "Equinox";

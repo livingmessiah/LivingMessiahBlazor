@@ -1,0 +1,69 @@
+﻿@page "/FeastTable"
+
+@using Page = LivingMessiah.Web.Links.Calendar.FeastTable
+<PageTitle>@Page.Title</PageTitle>
+
+<div class="pb-1 mt-4 mb-5 border-bottom border-info">
+	<h2><i class="@Page.Icon"></i> @Page.Title</h2>
+</div>
+
+
+<div class="card mb-3 border-warning">
+	<div class="card-header">
+		<h4 class="card-title text-center"><code>Calendar.Enums.FeastDay.List</code></h4>
+	</div>
+	<div class="card-body">
+		<TableTemplate Items="Calendar.Enums.FeastDay.List.OrderBy(o => o.Value).ToList()">
+			<TableHeader>
+				<th class="text-info">Id</th>
+				<th class="text-info">Name</th>
+				<th class="text-info">Details</th>
+				<th class="text-info">Add Days</th>
+				<th class="text-info">Add Days Descr</th>
+				<th class="text-info">Has Calendar Details</th>
+			</TableHeader>
+			<RowTemplate>
+				<td>@context.Value</td>
+				<td>@context.Name</td>
+				<td>@context.Details</td>
+				<td>@context.AddDays</td>
+				<td>@context.AddDaysDescr</td>
+				<td>@context.HasCalendarDetails</td>
+@*				<td>
+					@if (@context.HasCalendarDetails)
+					{
+						Calendar.Enums.FeastDayDetail.FromValue(context.Value).Name;
+					}
+				</td>*@
+			</RowTemplate>
+		</TableTemplate>
+	</div>
+</div>
+
+
+<div class="card mb-3 border-warning">
+	<div class="card-header">
+		<h4 class="card-title text-center"><code>Calendar.Enums.FeastDayDetail.List</code></h4>
+	</div>
+	<div class="card-body">
+		<TableTemplate Items="Calendar.Enums.FeastDayDetail.List.OrderBy(o => o.Value).ToList()">
+			<TableHeader>
+				<th class="text-info">Id</th>
+				<th class="text-info">Name</th>
+				<th class="text-info">ParentFeastDayId</th>
+				@*<th class="text-info">ParentFeastDayName</th>*@
+				<th class="text-info">Add Days</th>
+				<th class="text-info">Descr</th>
+			</TableHeader>
+			<RowTemplate>
+				<td>@context.Value</td>
+				<td>@context.Name</td>
+				<td>@context.ParentFeastDayId</td>
+				@*<td>@Calendar.Enums.FeastDay.From(context.ParentFeastDayId).Name</td>*@
+				<td>@context.AddDays</td>
+				<td>@context.Descr</td>
+			</RowTemplate>
+		</TableTemplate>
+	</div>
+</div>
+

@@ -7,7 +7,7 @@ public static class Site
 
 public static class CalendarCache
 {
-		public const string Key = "CalendarEntries";
+		public const string Key = "CalendarVM";
 		public const int FromMinutes = 30;
 }
 

@@ -1,0 +1,52 @@
+﻿@using LivingMessiah.Web.SmartEnums
+
+<div class="pb-1 mt-5 mb-0 border-bottom border-info">
+	<h2><i class="far fa-map"></i> Planner</h2>
+</div>
+
+<div class=" row mt-4">
+	<div class="col-12">
+		@foreach (var item in Enums.DateTypeFilter.List.OrderBy(o => o.Value))
+		{
+			<a @onclick="@(() => OnClickFilter(item))" title="Filter by @item.ButtonName"
+			 class="btn btn-outline-primary btn-sm @ActiveFilter(item)">
+				@item.ButtonName &nbsp;<i class="fas fa-filter"></i>
+			</a>
+		}
+	</div>
+</div>
+
+
+<LoadingComponent IsLoading="CalendarVMs==null">
+	@* border-light*@
+	<div class="card bg-light p-2">
+
+		@foreach (var row in CalendarVMs)
+		{
+			<div class=" row mb-3">
+				<div class="col-5">
+					<span class="@DateCSS">@row.Date.ToString(DateFormat)</span>
+				</div>
+
+				<div class="col-7">
+					<HeaderRow DateTypeId="@row.DateTypeId" Detail="@row.Detail" Descr="@row.Descr" />
+				</div>
+			</div>
+
+			@if (ShowLunarMonthDetails && row.LunarMonth is not null)
+			{
+				<LunarMonthDetail LunarMonth="@row.LunarMonth" />
+			}
+
+			@if (row.FeastDay is not null && row.FeastDay.HasCalendarDetails)
+			{
+				<FeastDayCalendarDetails FeastDay="row.FeastDay" Date="row.Date" />
+			}
+
+		}
+
+	</div>
+
+	
+
+</LoadingComponent>

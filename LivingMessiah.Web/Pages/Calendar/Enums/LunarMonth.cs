@@ -1,8 +1,8 @@
 ﻿using Ardalis.SmartEnum;
 
-namespace LivingMessiah.Web.Pages.KeyDates.Enums;
+namespace LivingMessiah.Web.Pages.Calendar.Enums;
 
-public abstract class BaseLunarMonthSmartEnum : SmartEnum<BaseLunarMonthSmartEnum>
+public abstract class LunarMonth : SmartEnum<LunarMonth>
 {
 		internal const string PGY = " Prev. Greg. Year";
 		internal const string Adar2Suffix = " II";
@@ -29,24 +29,24 @@ public abstract class BaseLunarMonthSmartEnum : SmartEnum<BaseLunarMonthSmartEnu
 		}
 		#endregion
 
-		public static readonly BaseLunarMonthSmartEnum Nissan = new NissanMonth();
-		public static readonly BaseLunarMonthSmartEnum Iyar = new IyarMonth();
-		public static readonly BaseLunarMonthSmartEnum Sivan = new SivanMonth();
-		public static readonly BaseLunarMonthSmartEnum Tammuz = new TammuzMonth();
-		public static readonly BaseLunarMonthSmartEnum Av = new AvMonth();
-		public static readonly BaseLunarMonthSmartEnum Elul = new ElulMonth();
-		public static readonly BaseLunarMonthSmartEnum Tishri = new TishriMonth();
-		public static readonly BaseLunarMonthSmartEnum HeshvanPrevGregYr = new HeshvanPrevGregYrMonth();
-		public static readonly BaseLunarMonthSmartEnum KislevPrevGregYr = new KislevPrevGregYrMonth();
-		public static readonly BaseLunarMonthSmartEnum TevetPrevGregYr = new TevetPrevGregYrMonth();
-		public static readonly BaseLunarMonthSmartEnum Shevat = new ShevatMonth();
-		public static readonly BaseLunarMonthSmartEnum Adar = new AdarMonth();
-		public static readonly BaseLunarMonthSmartEnum Heshvan = new HeshvanMonth();
-		public static readonly BaseLunarMonthSmartEnum Kislev = new KislevMonth();
-		public static readonly BaseLunarMonthSmartEnum Tevet = new TevetMonth();
-		public static readonly BaseLunarMonthSmartEnum Adar2 = new Adar2Month();
+		public static readonly LunarMonth Nissan = new NissanMonth();
+		public static readonly LunarMonth Iyar = new IyarMonth();
+		public static readonly LunarMonth Sivan = new SivanMonth();
+		public static readonly LunarMonth Tammuz = new TammuzMonth();
+		public static readonly LunarMonth Av = new AvMonth();
+		public static readonly LunarMonth Elul = new ElulMonth();
+		public static readonly LunarMonth Tishri = new TishriMonth();
+		public static readonly LunarMonth HeshvanPrevGregYr = new HeshvanPrevGregYrMonth();
+		public static readonly LunarMonth KislevPrevGregYr = new KislevPrevGregYrMonth();
+		public static readonly LunarMonth TevetPrevGregYr = new TevetPrevGregYrMonth();
+		public static readonly LunarMonth Shevat = new ShevatMonth();
+		public static readonly LunarMonth Adar = new AdarMonth();
+		public static readonly LunarMonth Heshvan = new HeshvanMonth();
+		public static readonly LunarMonth Kislev = new KislevMonth();
+		public static readonly LunarMonth Tevet = new TevetMonth();
+		public static readonly LunarMonth Adar2 = new Adar2Month();
 
-		private BaseLunarMonthSmartEnum(string name, int value) : base(name, value) { }
+		private LunarMonth(string name, int value) : base(name, value) { }
 
 		//public abstract string Icon { get; }  //"far fa-moon" 
 
@@ -59,49 +59,49 @@ public abstract class BaseLunarMonthSmartEnum : SmartEnum<BaseLunarMonthSmartEnu
 
 		#region Private Instantiation
 
-		private sealed class NissanMonth : BaseLunarMonthSmartEnum
+		private sealed class NissanMonth : LunarMonth
 		{
 				public NissanMonth() : base($"{nameof(Id.Nissan)}", Id.Nissan) { }
 				public override string Hebrew => "ניסן"; public override string BiblicalName => "Abib"; public override string BiblicalHebrew => "הָאָבִיב";
 				public override string FullName => nameof(Id.Nissan);
 		}
 
-		private sealed class IyarMonth : BaseLunarMonthSmartEnum
+		private sealed class IyarMonth : LunarMonth
 		{
 				public IyarMonth() : base($"{nameof(Id.Iyar)}", Id.Iyar) { }
 				public override string Hebrew => "אייר"; public override string BiblicalName => "Ziv"; public override string BiblicalHebrew => "זִו";
 				public override string FullName => nameof(Id.Iyar);
 		}
 
-		private sealed class SivanMonth : BaseLunarMonthSmartEnum
+		private sealed class SivanMonth : LunarMonth
 		{
 				public SivanMonth() : base($"{nameof(Id.Sivan)}", Id.Sivan) { }
 				public override string Hebrew => "סיון"; public override string BiblicalName => "3rd"; public override string BiblicalHebrew => "";
 				public override string FullName => nameof(Id.Sivan);
 		}
 
-		private sealed class TammuzMonth : BaseLunarMonthSmartEnum
+		private sealed class TammuzMonth : LunarMonth
 		{
 				public TammuzMonth() : base($"{nameof(Id.Tammuz)}", Id.Tammuz) { }
 				public override string Hebrew => "תמוז"; public override string BiblicalName => "4th"; public override string BiblicalHebrew => "";
 				public override string FullName => nameof(Id.Tammuz);
 		}
 
-		private sealed class AvMonth : BaseLunarMonthSmartEnum
+		private sealed class AvMonth : LunarMonth
 		{
 				public AvMonth() : base($"{nameof(Id.Av)}", Id.Av) { }
 				public override string Hebrew => "אב"; public override string BiblicalName => "5th"; public override string BiblicalHebrew => "";
 				public override string FullName => nameof(Id.Av);
 		}
 
-		private sealed class ElulMonth : BaseLunarMonthSmartEnum
+		private sealed class ElulMonth : LunarMonth
 		{
 				public ElulMonth() : base($"{nameof(Id.Elul)}", Id.Elul) { }
 				public override string Hebrew => "אלול"; public override string BiblicalName => "6th"; public override string BiblicalHebrew => "";
 				public override string FullName => nameof(Id.Elul);
 		}
 
-		private sealed class TishriMonth : BaseLunarMonthSmartEnum
+		private sealed class TishriMonth : LunarMonth
 		{
 				public TishriMonth() : base($"{nameof(Id.Tishri)}", Id.Tishri) { }
 				public override string Hebrew => "תשרי"; public override string BiblicalName => "Ethanim"; public override string BiblicalHebrew => "הָאֵתָנִים";
@@ -109,21 +109,21 @@ public abstract class BaseLunarMonthSmartEnum : SmartEnum<BaseLunarMonthSmartEnu
 		}
 
 
-		private sealed class HeshvanPrevGregYrMonth : BaseLunarMonthSmartEnum
+		private sealed class HeshvanPrevGregYrMonth : LunarMonth
 		{
 				public HeshvanPrevGregYrMonth() : base($"{nameof(Id.HeshvanPrevGregYr)}", Id.HeshvanPrevGregYr) { }
 				public override string Hebrew => "חשון"; public override string BiblicalName => "Bul"; public override string BiblicalHebrew => "בּוּל";
 				public override string FullName => nameof(Id.Heshvan) + PGY;
 		}
 
-		private sealed class KislevPrevGregYrMonth : BaseLunarMonthSmartEnum
+		private sealed class KislevPrevGregYrMonth : LunarMonth
 		{
 				public KislevPrevGregYrMonth() : base($"{nameof(Id.KislevPrevGregYr)}", Id.KislevPrevGregYr) { }
 				public override string Hebrew => "כסלו"; public override string BiblicalName => "9th"; public override string BiblicalHebrew => "";
 				public override string FullName => nameof(Id.Kislev) + PGY;
 		}
 
-		private sealed class TevetPrevGregYrMonth : BaseLunarMonthSmartEnum
+		private sealed class TevetPrevGregYrMonth : LunarMonth
 		{
 				public TevetPrevGregYrMonth() : base($"{nameof(Id.TevetPrevGregYr)}", Id.TevetPrevGregYr) { }
 				public override string Hebrew => "טבת"; public override string BiblicalName => "10th"; public override string BiblicalHebrew => "";
@@ -131,21 +131,21 @@ public abstract class BaseLunarMonthSmartEnum : SmartEnum<BaseLunarMonthSmartEnu
 		}
 
 
-		private sealed class HeshvanMonth : BaseLunarMonthSmartEnum
+		private sealed class HeshvanMonth : LunarMonth
 		{
 				public HeshvanMonth() : base($"{nameof(Id.Heshvan)}", Id.Heshvan) { }
 				public override string Hebrew => "חשון"; public override string BiblicalName => "Bul"; public override string BiblicalHebrew => "בּוּל";
 				public override string FullName => nameof(Id.Heshvan);
 		}
 
-		private sealed class KislevMonth : BaseLunarMonthSmartEnum
+		private sealed class KislevMonth : LunarMonth
 		{
 				public KislevMonth() : base($"{nameof(Id.Kislev)}", Id.Kislev) { }
 				public override string Hebrew => "כסלו"; public override string BiblicalName => "9th"; public override string BiblicalHebrew => "";
 				public override string FullName => nameof(Id.Kislev);
 		}
 
-		private sealed class TevetMonth : BaseLunarMonthSmartEnum
+		private sealed class TevetMonth : LunarMonth
 		{
 				public TevetMonth() : base($"{nameof(Id.Tevet)}", Id.Tevet) { }
 				public override string Hebrew => "טבת"; public override string BiblicalName => "10th"; public override string BiblicalHebrew => "";
@@ -153,21 +153,21 @@ public abstract class BaseLunarMonthSmartEnum : SmartEnum<BaseLunarMonthSmartEnu
 		}
 
 
-		private sealed class ShevatMonth : BaseLunarMonthSmartEnum
+		private sealed class ShevatMonth : LunarMonth
 		{
 				public ShevatMonth() : base($"{nameof(Id.Shevat)}", Id.Shevat) { }
 				public override string Hebrew => "שבט"; public override string BiblicalName => "11th"; public override string BiblicalHebrew => "";
 				public override string FullName => nameof(Id.Shevat);
 		}
 
-		private sealed class AdarMonth : BaseLunarMonthSmartEnum
+		private sealed class AdarMonth : LunarMonth
 		{
 				public AdarMonth() : base($"{nameof(Id.Adar)}", Id.Adar) { }
 				public override string Hebrew => "אדר א"; public override string BiblicalName => "12th"; public override string BiblicalHebrew => "";
 				public override string FullName => nameof(Id.Adar);
 		}
 
-		private sealed class Adar2Month : BaseLunarMonthSmartEnum
+		private sealed class Adar2Month : LunarMonth
 		{
 				public Adar2Month() : base($"{nameof(Id.Adar2)}", Id.Adar2) { }
 				public override string Hebrew => "אדר ב"; public override string BiblicalName => "13th"; public override string BiblicalHebrew => "";
