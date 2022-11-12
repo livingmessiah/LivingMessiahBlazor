@@ -61,15 +61,12 @@ public class ShabbatWeekRepository : BaseRepositoryAsync, IShabbatWeekRepository
 
 	#region ShabbatWeek
 
-	private static Tuple<string, bool> CurrentShabbatDate()
+	private static (string CompareDate, bool IsDayOfWeekSaturday) CurrentShabbatDate()
 	{
 		DateTime CompareDate = DateTime.Today;
 		string sCompareDate = DateTime.Today.ToString("yyyy-MM-dd") + " 12:00:00 AM";
-
 		bool isDayOfWeekSaturday = CompareDate.DayOfWeek == DayOfWeek.Saturday ? true : false;
-
-		var dateTuple = new Tuple<string, bool>(sCompareDate, isDayOfWeekSaturday);
-		return dateTuple;
+		return (sCompareDate, isDayOfWeekSaturday);
 	}
 
 	#endregion
@@ -79,33 +76,37 @@ public class ShabbatWeekRepository : BaseRepositoryAsync, IShabbatWeekRepository
 	public async Task<Wirecast> GetCurrentWirecast()
 	{
 		var datesTuple = CurrentShabbatDate();
-		string sCompareDate = datesTuple.Item1;
-		bool isDayOfWeekSaturday = datesTuple.Item2;
+		log.LogDebug(String.Format("Inside {0}, CompareDate={1}; IsDayOfWeekSaturday={2}"
+			, nameof(ShabbatWeekRepository) + "!" + nameof(GetCurrentWirecast), datesTuple.CompareDate, datesTuple.IsDayOfWeekSaturday));
 
-		if (isDayOfWeekSaturday)
+		base.Parms = new DynamicParameters(new { CompareDate = datesTuple.CompareDate }); 
+
+
+		if (datesTuple.IsDayOfWeekSaturday)
 		{
 			base.Sql = $@"
+--DECLARE @CompareDate varchar(30) =  '2022-11-12 12:00:00 AM'
 SELECT sw.Id, sw.ShabbatDate, sw.WirecastLink
 FROM ShabbatWeek sw
-WHERE sw.ShabbatDate >= '{sCompareDate}' AND sw.ShabbatDate <= '{sCompareDate}'
+WHERE sw.ShabbatDate >= @CompareDate AND sw.ShabbatDate <= @CompareDate
 ";
 			return await WithConnectionAsync(async connection =>
 			{
-				var rows = await connection.QueryAsync<Wirecast>(sql: base.Sql);
+				var rows = await connection.QueryAsync<Wirecast>(sql: base.Sql, param: base.Parms);
 				return rows.SingleOrDefault();
 			});
 		}
 		else
 		{
 			base.Sql = $@"
+--DECLARE @CompareDate varchar(30) =  '2022-11-12 12:00:00 AM'
 SELECT sw.Id, sw.ShabbatDate, sw.WirecastLink
 FROM ShabbatWeek sw
-WHERE sw.ShabbatDate >= '{sCompareDate}'
+WHERE sw.ShabbatDate >= @CompareDate
 ";
 			return await WithConnectionAsync(async connection =>
 			{
-							//ToDo: why does this use base.Parms?
-							var rows = await connection.QueryAsync<Wirecast>(sql: base.Sql, param: base.Parms);
+				var rows = await connection.QueryAsync<Wirecast>(sql: base.Sql, param: base.Parms);
 				return rows.First();
 			});
 		}
@@ -314,10 +315,10 @@ VALUES (@ShabbatWeekId, @WeeklyVideoTypeId, @YouTubeId, @Title, @Book, @Chapter)
 		int newId;
 		return await WithConnectionAsync(async connection =>
 		{
-					//var count = await connection.ExecuteAsync(sql: base.Sql, param: base.Parms, commandType: System.Data.CommandType.Text);
-					//return count;
-					//var returnId = this.db.Query<int>(sql, dto).SingleOrDefault();
-					newId = await connection.ExecuteScalarAsync<int>(base.Sql, base.Parms);
+			//var count = await connection.ExecuteAsync(sql: base.Sql, param: base.Parms, commandType: System.Data.CommandType.Text);
+			//return count;
+			//var returnId = this.db.Query<int>(sql, dto).SingleOrDefault();
+			newId = await connection.ExecuteScalarAsync<int>(base.Sql, base.Parms);
 			return newId;
 
 		});
