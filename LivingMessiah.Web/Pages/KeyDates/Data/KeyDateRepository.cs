@@ -48,7 +48,7 @@ FROM KeyDate.Calendar c
 	INNER JOIN KeyDate.CalendarTemplate ct
 		ON c.CalendarTemplateId = ct.Id 
 WHERE YearId=@yearId
-AND (ct.DateTypeId = @DateTypeId) OR (@DateTypeId = 0)
+AND ((ct.DateTypeId = @DateTypeId) OR (@DateTypeId = 0))
 ORDER BY Date
 ";
 		return await WithConnectionAsync(async connection =>

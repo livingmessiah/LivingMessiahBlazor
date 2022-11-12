@@ -20,12 +20,10 @@ public partial class Planner
 
 	[Parameter, EditorRequired] public int YearId { get; set; }
 	[Parameter] public bool IsXsOrSm { get; set; }
-	[Parameter] public bool ShowLunarMonthDetails { get; set; } = false;
 
 	protected string DateCSS;
 	protected string DateFormat;
 	protected List<CalendarVM> CalendarVMs;
-
 
 	public Enums.DateTypeFilter CurrentFilter { get; set; } = Enums.DateTypeFilter.Feast;
 	protected async Task OnClickFilter(Enums.DateTypeFilter newFilter)
@@ -100,19 +98,16 @@ public partial class Planner
 	{
 		foreach (var item in CalendarVMs)
 		{
-			if (ShowLunarMonthDetails)
+			if (item.DateTypeId == Enums.DateType.Month.Value)
 			{
-				if (item.DateTypeId == 1)
-				{
-					item.LunarMonth = Enums.LunarMonth.FromValue(item.Detail);
-				}
-				else
-				{
-					item.LunarMonth = null;
-				}
+				item.LunarMonth = Enums.LunarMonth.FromValue(item.Detail);
+			}
+			else
+			{
+				item.LunarMonth = null;
 			}
 
-			if (item.DateTypeId == 2)
+			if (item.DateTypeId ==  Enums.DateType.Feast.Value)
 			{
 				item.FeastDay = Enums.FeastDay.FromValue(item.Detail);
 			}

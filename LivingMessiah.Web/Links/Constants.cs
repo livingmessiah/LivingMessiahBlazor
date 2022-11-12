@@ -166,14 +166,6 @@ public static class Calendar
 		public const string Title = "Feast Table";
 		public const string Icon = "fas fa-glass-cheers";
 	}
-
-	public static class LunarMonthTable
-	{
-		public const string Index = "/LunarMonthTable";
-		public const string Title = "Lunar Month  Table";
-		public const string Icon = "far fa-moon";
-	}
-
 	
 }
 
@@ -202,7 +194,7 @@ public static class DashBoard
 }
 
 // ToDo: Refactor consideration, should this be moved to LinkSmartEnums
-//   like having a seperate private Link class imbedded in Feast.cs
+//   like having a separate private Link class embedded in Feast.cs
 public static class Feast
 {
 	public const string Index = "/feasts/";
@@ -215,6 +207,13 @@ public static class Feast
 		public const string Page = "/Shabbat";
 		public const string Title = "Shabbat";
 		public const string Icon = "far fa-hand-spock";
+	}
+
+	public static class LunarMonth
+	{
+		public const string Index = "/LunarMonth";
+		public const string Title = "Lunar Month";
+		public const string Icon = "far fa-moon";
 	}
 
 	public static class Hanukkah
