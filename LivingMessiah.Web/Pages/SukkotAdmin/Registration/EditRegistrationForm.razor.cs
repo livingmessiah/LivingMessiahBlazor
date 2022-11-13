@@ -17,17 +17,10 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration;
 
 public partial class EditRegistrationForm
 {
-	[Inject]
-	public IRegistrationService svc { get; set; }
-
-	[Inject]
-	public IRegistrationRepository db { get; set; }
-
-	[Inject]
-	public ILogger<EditRegistrationForm> Logger { get; set; }
-
-	[Inject]
-	public IToastService Toast { get; set; }
+	[Inject] public IRegistrationService svc { get; set; }
+	[Inject] public IRegistrationRepository db { get; set; }
+	[Inject] public ILogger<EditRegistrationForm> Logger { get; set; }
+	[Inject] public IToastService Toast { get; set; }
 
 	private bool ShowEditForm = false;
 
@@ -114,21 +107,21 @@ public partial class EditRegistrationForm
 		try
 		{
 			var sprocTuple = await svc.Update(RegistrationVM);
-			if (sprocTuple.Item1 != 0)
+			if (sprocTuple.RowsAffected != 0)
 			{
-				msg = $"{sprocTuple.Item3}";
+				msg = $"{sprocTuple.ReturnMsg}";
 				RegistrationVM = await svc.GetById(RegistrationVM.Id); //ToDo: do I need to refresh the data?
-				Toast.ShowInfo(sprocTuple.Item3);
+				Toast.ShowInfo(sprocTuple.ReturnMsg);
 			}
 			else
 			{
-				if (sprocTuple.Item2 == ReturnValueViolationInUniqueIndex)
+				if (sprocTuple.SprocReturnValue == ReturnValueViolationInUniqueIndex)
 				{
-					Toast.ShowWarning(sprocTuple.Item3);
+					Toast.ShowWarning(sprocTuple.ReturnMsg);
 				}
 				else
 				{
-					Toast.ShowError(sprocTuple.Item3);
+					Toast.ShowError(sprocTuple.ReturnMsg);
 				}
 			}
 		}
@@ -136,12 +129,6 @@ public partial class EditRegistrationForm
 		{
 			Toast.ShowError("An invalid operation occurred during Registration Editing, contact your administrator");
 		}
-		
 	}
-
-
-
-
-
 
 } 

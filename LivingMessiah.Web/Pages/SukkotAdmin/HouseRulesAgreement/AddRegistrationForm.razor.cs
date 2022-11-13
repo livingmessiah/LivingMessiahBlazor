@@ -13,18 +13,13 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.HouseRulesAgreement;
 
 public partial class AddRegistrationForm
 {
+	[Inject] public IRegistrationService svc { get; set; }
+	[Inject] public ILogger<AddRegistrationForm> Logger { get; set; }
+	[Inject] public IToastService Toast { get; set; }
+
 	[Parameter, EditorRequired] public string ChosenEmail { get; set; }
 
 	protected string Email;
-
-	[Inject]
-	public IRegistrationService svc { get; set; }
-
-	[Inject]
-	public ILogger<AddRegistrationForm> Logger { get; set; }
-
-	[Inject]
-	public IToastService Toast { get; set; }
 
 	public RegistrationVM RegistrationVM { get; set; } = new RegistrationVM();
 
@@ -61,20 +56,20 @@ public partial class AddRegistrationForm
 			//RegistrationVM.EMail = Email; HACK: data gotten from the form; cant figure out how to populate via EventCallbacks
 
 			var sprocTuple = await svc.Create(RegistrationVM);
-			if (sprocTuple.Item1 != 0)
+			if (sprocTuple.NewId != 0)
 			{
-				Toast.ShowInfo(sprocTuple.Item3);
+				Toast.ShowInfo(sprocTuple.ReturnMsg);
 				RegistrationVM = new RegistrationVM();
 			}
 			else
 			{
-				if (sprocTuple.Item2 == ReturnValueViolationInUniqueIndex)
+				if (sprocTuple.SprocReturnValue == ReturnValueViolationInUniqueIndex)
 				{
-					Toast.ShowWarning(sprocTuple.Item3);
+					Toast.ShowWarning(sprocTuple.ReturnMsg);
 				}
 				else
 				{
-					Toast.ShowError(sprocTuple.Item3);
+					Toast.ShowError(sprocTuple.ReturnMsg);
 				}
 			}
 

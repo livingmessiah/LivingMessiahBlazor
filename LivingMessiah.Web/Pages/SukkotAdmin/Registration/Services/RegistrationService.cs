@@ -18,10 +18,10 @@ public interface IRegistrationService
 	string ExceptionMessage { get; set; }
 	Task<RegistrationVM> GetById(int id);
 	Task<Sukkot.Components.RegistrationVM> GetByIdVer2(int id);
-	Task<Tuple<int, int, string>> Create(RegistrationVM registration);
-	Task<Tuple<int, int, string>> Update(RegistrationVM registration);
-	Task<Tuple<int, int, string>> CreateVer2(Sukkot.Components.RegistrationVM registration);
-	Task<Tuple<int, int, string>> UpdateVer2(Sukkot.Components.RegistrationVM registration);
+	Task<(int NewId, int SprocReturnValue, string ReturnMsg)> Create(RegistrationVM registration);
+	Task<(int RowsAffected, int SprocReturnValue, string ReturnMsg)> Update(RegistrationVM registration);
+	Task<(int NewId, int SprocReturnValue, string ReturnMsg)> CreateVer2(Sukkot.Components.RegistrationVM registration);
+	Task<(int RowsAffected, int SprocReturnValue, string ReturnMsg)> UpdateVer2(Sukkot.Components.RegistrationVM registration);
 }
 
 public class RegistrationService : IRegistrationService
@@ -31,8 +31,7 @@ public class RegistrationService : IRegistrationService
 	private readonly ILogger Logger;
 	private readonly ISecurityClaimsService SvcClaims;
 
-	public RegistrationService(
-		IRegistrationRepository registrationRepository, ILogger<RegistrationService> logger, ISecurityClaimsService securityClaimsService)
+	public RegistrationService(IRegistrationRepository registrationRepository, ILogger<RegistrationService> logger, ISecurityClaimsService securityClaimsService)
 	{
 		db = registrationRepository;
 		Logger = logger;
@@ -43,7 +42,7 @@ public class RegistrationService : IRegistrationService
 	//ToDo: make this private
 	public string ExceptionMessage { get; set; } = "";
 
-	public async Task<Tuple<int, int, string>> Create(RegistrationVM registrationVM)
+	public async Task<(int NewId, int SprocReturnValue, string ReturnMsg)> Create(RegistrationVM registrationVM)
 	{
 		Logger.LogInformation($"Inside {nameof(RegistrationService)}!{nameof(Create)}; calling {nameof(db.Create)}");
 		try
@@ -52,9 +51,15 @@ public class RegistrationService : IRegistrationService
 			registrationVM.Status = Status.Payment;
 			registrationVM.AttendanceBitwise = GetDaysBitwise(registrationVM.AttendanceDateList, DateRangeEnum.AttendanceDays);
 
-			var sprocTuple = await db.Create(DTO_From_VM_To_DB(registrationVM));
-			return sprocTuple;
+			int newId = 0;
+			int sprocReturnValue = 0;
+			string returnMsg = "";
 
+			var sprocTuple = await db.Create(DTO_From_VM_To_DB(registrationVM));
+			newId = sprocTuple.Item1;
+			sprocReturnValue = sprocTuple.Item2;
+			returnMsg = sprocTuple.Item3;
+			return (newId, sprocReturnValue, returnMsg); 
 		}
 		catch (Exception ex)
 		{
@@ -261,7 +266,7 @@ public class RegistrationService : IRegistrationService
 		return registration;
 	}
 
-	public async Task<Tuple<int, int, string>> Update(RegistrationVM registrationVM)
+	public async Task<(int RowsAffected, int SprocReturnValue, string ReturnMsg)> Update(RegistrationVM registrationVM)
 	{
 		Logger.LogInformation($"Inside {nameof(RegistrationService)}!{nameof(Update)}; calling {nameof(db.Update)}");
 
@@ -269,8 +274,12 @@ public class RegistrationService : IRegistrationService
 		{
 			registrationVM.AttendanceBitwise = GetDaysBitwise(registrationVM.AttendanceDateList, DateRangeEnum.AttendanceDays);
 			var sprocTuple = await db.Update(DTO_From_VM_To_DB(registrationVM));
+
+			int rowsAffected = sprocTuple.Item1;
+			int sprocReturnValue = sprocTuple.Item2;
+			string returnMsg = sprocTuple.Item3;
 			Logger.LogInformation($"Registration updated for {registrationVM.FamilyName}/{registrationVM.EMail}");
-			return sprocTuple;
+			return (rowsAffected, sprocReturnValue, returnMsg);
 		}
 		catch (Exception ex)
 		{
@@ -284,7 +293,7 @@ public class RegistrationService : IRegistrationService
 
 	#region Ver2
 
-	public async Task<Tuple<int, int, string>> CreateVer2(Sukkot.Components.RegistrationVM registrationVM)
+	public async Task<(int NewId, int SprocReturnValue, string ReturnMsg)> CreateVer2(Sukkot.Components.RegistrationVM registrationVM)
 	{
 		Logger.LogInformation($"Inside {nameof(RegistrationService)}!{nameof(CreateVer2)}; calling {nameof(db.Create)}");
 		try
@@ -294,8 +303,11 @@ public class RegistrationService : IRegistrationService
 
 			var sprocTuple = await db.Create(DTO_From_VM_To_DB_Ver2(registrationVM));
 
-			return sprocTuple;
+			int newId = sprocTuple.Item1;
+			int sprocReturnValue = sprocTuple.Item2;
+			string returnMsg = sprocTuple.Item3;
 
+			return (newId, sprocReturnValue, returnMsg);
 		}
 		catch (Exception ex)
 		{
@@ -308,14 +320,18 @@ public class RegistrationService : IRegistrationService
 		}
 	}
 
-	public async Task<Tuple<int, int, string>> UpdateVer2(Sukkot.Components.RegistrationVM registrationVM)
+	public async Task<(int RowsAffected, int SprocReturnValue, string ReturnMsg)> UpdateVer2(Sukkot.Components.RegistrationVM registrationVM)
 	{
 		Logger.LogInformation($"Inside {nameof(RegistrationService)}!{nameof(UpdateVer2)}; calling {nameof(db.Update)}");
 		try
 		{
 			var sprocTuple = await db.Update(DTO_From_VM_To_DB_Ver2(registrationVM));
 			Logger.LogInformation($"Registration updated for {registrationVM.FamilyName}/{registrationVM.EMail}");
-			return sprocTuple;
+
+			int rowsAffected = sprocTuple.Item1; ;
+			int sprocReturnValue = sprocTuple.Item2;
+			string returnMsg = sprocTuple.Item3;
+			return (rowsAffected, sprocReturnValue, returnMsg);
 		}
 		catch (Exception ex)
 		{

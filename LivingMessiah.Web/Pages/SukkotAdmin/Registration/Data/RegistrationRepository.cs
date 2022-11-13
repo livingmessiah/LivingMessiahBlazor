@@ -16,10 +16,13 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration.Data;
 public interface IRegistrationRepository
 {
 	string BaseSqlDump { get; }
-	Task<List<Domain.Registration>> GetAll();  
+	Task<List<Domain.Registration>> GetAll();
 	Task<RegistrationPOCO> GetPocoById(int id);
+
+	// Can't remove `Tuple<...>` with `(...)`, see C:\Source\LivingMessiahWiki\Tuples\Removing-Tuple-Conflicts-with-BaseRepositoryAsync.md
 	Task<Tuple<int, int, string>> Create(RegistrationPOCO registration);
 	Task<Tuple<int, int, string>> Update(RegistrationPOCO registration);
+
 	Task<List<RegistrationLookup>> PopulateRegistrationLookup();
 	Task<Sukkot.Components.RegistrationVM> GetByIdVer2(int id);
 }
@@ -87,7 +90,7 @@ ORDER BY FirstName
 		return await WithConnectionAsync(async connection =>
 		{
 			var rows = await connection.QueryAsync<Domain.Registration>(sql: base.Sql);  //, param: base.Parms
-					return rows.ToList();
+			return rows.ToList();
 		});
 	}
 
@@ -108,6 +111,7 @@ FROM Sukkot.Registration WHERE Id = @Id";
 			return rows.SingleOrDefault();
 		});
 	}
+
 
 	public async Task<Tuple<int, int, string>> Create(RegistrationPOCO registration)
 	{
@@ -137,6 +141,7 @@ FROM Sukkot.Registration WHERE Id = @Id";
 		int SprocReturnValue = 0;
 		string ReturnMsg = "";
 
+		// Can't remove `Tuple<...>` with `(...)`, see C:\Source\LivingMessiahWiki\Tuples\Removing-Tuple-Conflicts-with-BaseRepositoryAsync.md
 		return await WithConnectionAsync(async connection =>
 		{
 			base.log.LogDebug($"Inside {nameof(RegistrationRepository)}!{nameof(Create)}, {nameof(registration.EMail)}:{registration.EMail}; a about to execute SPROC: {base.Sql}");
@@ -196,6 +201,7 @@ FROM Sukkot.Registration WHERE Id = @Id";
 		int SprocReturnValue = 0;
 		string ReturnMsg = "";
 
+		// Can't remove `Tuple<...>` with `(...)`, see C:\Source\LivingMessiahWiki\Tuples\Removing-Tuple-Conflicts-with-BaseRepositoryAsync.md
 		return await WithConnectionAsync(async connection =>
 		{
 			base.log.LogDebug($"Inside {nameof(RegistrationRepository)}!{nameof(Update)}, {nameof(registration.Id)}:{registration.Id}; about to execute SPROC: { base.Sql}");

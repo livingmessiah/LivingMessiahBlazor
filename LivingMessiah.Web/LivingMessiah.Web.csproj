@@ -95,7 +95,6 @@
     <PackageReference Include="Syncfusion.Blazor.Schedule" Version="20.2.0.39" />
     <PackageReference Include="Syncfusion.Blazor.Themes" Version="20.2.0.39" />
     <PackageReference Include="Syncfusion.Blazor.TreeGrid" Version="20.2.0.39" />
-    <PackageReference Include="System.ValueTuple" Version="4.5.0" />
 		<PackageReference Include="System.ServiceModel.Syndication" Version="6.0.0" />
 	</ItemGroup>
 

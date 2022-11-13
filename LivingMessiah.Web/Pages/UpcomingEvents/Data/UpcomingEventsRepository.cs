@@ -1,13 +1,12 @@
-﻿using Dapper;
-using System;
-using System.Data;
+﻿using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
+using System.Data;
 using System.Linq;
+using System.Threading.Tasks;
+using Dapper;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using LivingMessiah.Data;                   // ToDo: Move this to LivingMessiah.Web.Data
-
-using Microsoft.Extensions.Configuration;
 
 using LivingMessiah.Web.Pages.KeyDates.Enums;
 using LivingMessiah.Web.Pages.UpcomingEvents.Queries;
