@@ -35,7 +35,7 @@
 								AllowEditing="false" AllowFiltering="false"
 								Type="ColumnType.Number" Width="70" />
 
-		<GridColumn Field=@nameof(CalendarEntry.DateTypeEnum) HeaderText="Type" Width="45" AllowEditing="false"
+		<GridColumn Field=@nameof(CalendarEntry.DateTypeEnum) HeaderText="Type" Width="60" AllowEditing="false"
 								FilterSettings="@(new FilterSettings { Type = Syncfusion.Blazor.Grids.FilterType.CheckBox })">
 		</GridColumn>
 
@@ -45,7 +45,7 @@
 								Type="ColumnType.Date" TextAlign="TextAlign.Center" Width="80">
 		</GridColumn>
 
-		<GridColumn Field=@nameof(CalendarEntry.Descr) HeaderText="Description" Width="150"
+		<GridColumn Field=@nameof(CalendarEntry.Descr) HeaderText="Description" Width="130"
 								AllowEditing="false" AllowFiltering="false" Type="ColumnType.String" />
 
 	</GridColumns>

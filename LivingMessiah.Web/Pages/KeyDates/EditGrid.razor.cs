@@ -20,22 +20,17 @@ namespace LivingMessiah.Web.Pages.KeyDates;
 [Authorize(Roles = Roles.AdminOrKeyDates)]
 public partial class EditGrid
 {
-	[Inject]
-	public IKeyDateRepository db { get; set; }
-
-	[Inject]
-	public ILogger<EditGrid> Logger { get; set; }
-	
-	[Inject]
-	public IToastService Toast { get; set; }
+	[Inject] public IKeyDateRepository db { get; set; }
+	[Inject] public ILogger<EditGrid> Logger { get; set; }
+	[Inject] public IToastService Toast { get; set; }
 
 	protected List<CalendarEntry> CalendarEntries;
 
 	private SfGrid<CalendarEntry> Grid;
 
 	#region SelectYearUI
-	private string selectedYearName = KeyDateYear.Current.Name;
-	private int selectedYear = KeyDateYear.Current.Year;
+	private string selectedYearName = KeyDateYear.Next.Name;
+	private int selectedYear = KeyDateYear.Next.Year;
 
 	private async Task ChangingYearAsync(ChangeEventArgs e)
 	{

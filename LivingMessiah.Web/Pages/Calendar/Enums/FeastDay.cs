@@ -93,7 +93,7 @@ public abstract class FeastDay : SmartEnum<FeastDay>
 		public override string Details => "";
 		public override string AddDaysDescr => "Blow trumpets sundown";
 		public override int? AddDays => -1;
-		public override bool HasCalendarDetails => false;
+		public override bool HasCalendarDetails => true;
 	}
 	private sealed class YomKippurSE : FeastDay
 	{
@@ -103,7 +103,7 @@ public abstract class FeastDay : SmartEnum<FeastDay>
 		public override string Details => "";
 		public override string AddDaysDescr => "Begins sundown";
 		public override int? AddDays => -1;
-		public override bool HasCalendarDetails => false;
+		public override bool HasCalendarDetails => true;
 	}
 	private sealed class TabernaclesSE : FeastDay
 	{

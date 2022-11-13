@@ -17,11 +17,25 @@ public partial class FeastDayCalendarDetails
 	{
 		if (FeastDay == FeastDay.Passover)
 		{
-			FeastDayDetails = FeastDayDetail.List.Where(w => w.ParentFeastDayId == FeastDay.Passover.Value).ToList();
+			FeastDayDetails = FeastDayDetail.List.Where(w => w.ParentFeastDayId == FeastDay.Passover.Value).OrderBy(o => o.AddDays).ToList();
 		}
 		else
 		{
-			FeastDayDetails = FeastDayDetail.List.Where(w => w.ParentFeastDayId == FeastDay.Tabernacles.Value).ToList();
+			if (FeastDay == FeastDay.Trumpets)
+			{
+				FeastDayDetails = FeastDayDetail.List.Where(w => w.ParentFeastDayId == FeastDay.Trumpets.Value).OrderBy(o => o.AddDays).ToList();
+			}
+			else
+			{
+				if (FeastDay == FeastDay.YomKippur)
+				{
+					FeastDayDetails = FeastDayDetail.List.Where(w => w.ParentFeastDayId == FeastDay.YomKippur.Value).OrderBy(o => o.AddDays).ToList();
+				}
+				else
+				{
+					FeastDayDetails = FeastDayDetail.List.Where(w => w.ParentFeastDayId == FeastDay.Tabernacles.Value).OrderBy(o => o.AddDays).ToList();
+				}
+			}
 		}
 	}
 
