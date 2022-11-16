@@ -11,20 +11,12 @@ namespace LivingMessiah.Web.Pages.Sukkot.Components;
 
 public partial class RegistrationEditForm
 {
-	[Inject]
-	public IRegistrationService svc { get; set; }
+	[Inject] public IRegistrationService svc { get; set; }
+	[Inject] public ILogger<RegistrationEditForm> Logger { get; set; }
+	[Inject] AppState AppState { get; set; }
 
-	[Inject]
-	public ILogger<RegistrationEditForm> Logger { get; set; }
-
-	[Inject]
-	AppState AppState { get; set; }
-
-	[Parameter, EditorRequired]
-	public int? Id { get; set; }
-
-	[Parameter, EditorRequired]
-	public string Email { get; set; }
+	[Parameter, EditorRequired] public int? Id { get; set; }
+	[Parameter, EditorRequired] public string Email { get; set; }
 
 	public RegistrationVM VM { get; set; } = new RegistrationVM();
 

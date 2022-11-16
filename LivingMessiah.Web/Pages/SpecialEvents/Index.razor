@@ -1,0 +1,73 @@
+﻿@page "/SpecialEvents"
+@using Page = LivingMessiah.Web.Links.SpecialEvents
+@using LivingMessiah.Web.SmartEnums
+@using LoginLink = LivingMessiah.Web.Links.Account
+@using static LivingMessiah.Web.Services.Auth0;
+
+@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+
+<PageTitle>@Page.Title</PageTitle>
+
+<div class="container-fluid bg-warning">
+	<div class="row pt-2 pb-1">
+
+		<div class="col-4">
+			@if (MainState.Value.DateRange is not null)
+			{
+				<p>@MainState.Value.DateRange.ToString()</p>
+			}
+		</div>
+		<div class="col-4">
+			@if (MainState.Value.CommandState is not null)
+			{
+				<p>@MainState.Value.CommandState.Name</p>
+			}
+		</div>
+		<div class="col-4">
+			@if (MainState.Value.DateRange is not null)
+			{
+				<DateRangePicker />
+			}
+		</div>
+
+	</div>
+</div>
+
+<div class="pb-1 mt-4 mb-2">
+	<h1><i class="@Page.Icon"></i> @Page.Title</h1>
+</div>
+
+
+<AuthorizeView Roles="@Roles.AdminOrAnnouncements">
+	<Authorized>
+		@if (MainState.Value.DateRange is not null)
+		{
+			<Table />
+		}
+
+		@if (MainState.Value.CommandState is not null && MainState.Value.CommandState != Enums.CommandState.Hidden)
+		{
+			<Form />
+		}
+
+	</Authorized>
+
+	<NotAuthorized>
+
+		<div class="card border-warning my-5">
+			<div class="card-header">Not Authorized</div>
+
+			<div class="card-body">
+				<h5 class="">To view <b>@Page.Title</b> you need to be logged in.</h5>
+				<button @onclick="@(() => RedirectToLoginClick(Page.Index))"
+								type="button" class="btn-primary btn-sm">
+					Login <i class='fas fa-sign-in-alt'></i>
+				</button>
+
+			</div>
+		</div>
+
+	</NotAuthorized>
+
+</AuthorizeView>
+

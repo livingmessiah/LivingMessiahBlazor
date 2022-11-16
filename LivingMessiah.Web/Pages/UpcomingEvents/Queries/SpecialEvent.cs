@@ -19,6 +19,8 @@ public class SpecialEvent
 	public string DaysDiffDescr { get; set; }
 	public string Title { get; set; }
 	public string SubTitle { get; set; }
+	public DateTime ShowBeginDate { get; set; }
+	public DateTime ShowEndDate { get; set; }
 	public string ImageUrl { get; set; }
 	public string YouTubeId { get; set; }
 	public string WebsiteUrl { get; set; }

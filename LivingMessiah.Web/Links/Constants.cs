@@ -637,6 +637,15 @@ public static class TorahTuesday
 	public const string Icon = "fas fa-torah";
 }
 
+
+public static class SpecialEvents
+{
+	public const string Index = "/SpecialEvents/";
+	public const string Title = "Special Events";
+	public const string Icon = "far fa-clock";
+}
+
+
 public static class UpcomingEvents
 {
 	public const string Index = "/UpcomingEvents/";
