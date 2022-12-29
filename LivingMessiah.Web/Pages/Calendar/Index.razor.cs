@@ -14,15 +14,16 @@ public partial class Index
 
 	public int YearId { get; set; }
 
+	private PrintedCalendarEnum printedCalendarEnum { get; set; }
+
 	protected override void OnInitialized()
 	{
 		YearId = AppSettings.Value.YearId;
 		Logger.LogDebug(string.Format("Inside Page: {0}, Class!Method: {1}, YearId:{2}"
 			, Page.Index, nameof(Index) + "!" + nameof(OnInitializedAsync), YearId));
 
+		printedCalendarEnum = PrintedCalendarEnum.ReadyForSale;
+
 	}
-
-
-
 
 }

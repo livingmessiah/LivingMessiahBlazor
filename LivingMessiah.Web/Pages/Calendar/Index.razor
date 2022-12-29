@@ -10,14 +10,15 @@
 	<h2><i class="@Page.Icon"></i> @Page.Title</h2>
 </div>
 
-@*
+@if (printedCalendarEnum == PrintedCalendarEnum.ReadyForSale)
+{
 	<div class="@MediaQuery.XsOrSm.DivClass">
-	<LmmCalendarAdvertisement IsXsOrSm="true" PrintedCalendarEnum="@printedCalendarEnum" />
+		<LmmCalendarAdvertisement IsXsOrSm="true" PrintedCalendarEnum="@printedCalendarEnum" Year="@YearId" />
 	</div>
 	<div class="d-none d-md-block">
-	<LmmCalendarAdvertisement IsXsOrSm="false" PrintedCalendarEnum="@printedCalendarEnum" />
+		<LmmCalendarAdvertisement IsXsOrSm="false" PrintedCalendarEnum="@printedCalendarEnum" Year="@YearId" />
 	</div>
-*@
+}
 
 <div class="@MediaQuery.XsOrSm.DivClass">
 	<div class="card bg-secondary text-white mb-0">
@@ -26,7 +27,7 @@
 </div>
 
 <div class="@MediaQuery.MdOrLgOrXl.DivClass">
-	<CalendarComponent IsXsOrSm="false"  YearId="@YearId" />
+	<CalendarComponent IsXsOrSm="false" YearId="@YearId" />
 </div>
 
 

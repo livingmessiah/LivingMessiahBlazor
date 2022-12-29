@@ -30,7 +30,7 @@
 
 	case PrintedCalendarEnum.ReadyForSale:
 
-		<div class="card bg-secondary text-white mb-3">
+		<div class="card border-danger border-4 mb-3">
 			<div class="row mb-2">
 				<div class="col-12">
 
@@ -50,7 +50,7 @@
 					}
 
 					<div class="lead">
-						<span class="badge bg-warning mt-1 ml-2 p-3">Living Messiah Calendar <b><u>Get It Now!</u></b></span>
+						<span class="badge bg-warning m-2 p-3"><b>@Year</b> Living Messiah Calendar <b><u>Get It Now!</u></b></span>
 					</div>
 
 				</div>
@@ -63,12 +63,13 @@
 					<div class="col-12">
 						@if (IsXsOrSm)
 						{
-							<img src="@Blobs.UrlRoot("lmm-calendar-2022-603-601.jpg")" class="card-img-top p-1"
-									 alt="@Items.TitleCalendar">
+
+							<img src="@Blobs.UrlRoot(@LMMCalendar.ImageXSorSM)" class="card-img-top p-1"
+					 alt="@Items.TitleCalendar">
 						}
 						else
 						{
-							<img src="@Blobs.UrlRoot("lmm-calendar-2022-1020-1020.jpg")" class="card-img-top p-1"
+							<img src="@Blobs.UrlRoot(@LMMCalendar.Image)" class="card-img-top p-1"
 									 alt="@Items.TitleCalendar">
 						}
 
@@ -86,13 +87,7 @@
 
 
 			}
-
-
 		</div>
-
-
-
-
 
 		break;
 
@@ -107,11 +102,9 @@
 
 
 @code {
-	[Parameter]
-	public PrintedCalendarEnum PrintedCalendarEnum { get; set; }
-
-	[Parameter]
-	public bool IsXsOrSm { get; set; }
+	[Parameter] public PrintedCalendarEnum PrintedCalendarEnum { get; set; }
+	[Parameter] public bool IsXsOrSm { get; set; }
+	[Parameter] public int Year { get; set; }
 
 	public bool IsCollapsed { get; set; } = true;
 	protected void ToggleButtonClick(bool isCollapsed)
