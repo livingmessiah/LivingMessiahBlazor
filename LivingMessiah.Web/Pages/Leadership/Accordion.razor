@@ -3,7 +3,9 @@
 
 <SfAccordion ExpandMode="ExpandMode.Single">
 	<AccordionItems>
-		@foreach (var item in LivingMessiah.Web.Pages.Leadership.Enums.Office.List.OrderBy(o => o.Value).Where(w => w.IsFilled == true).ToList())
+		@foreach (var item in LivingMessiah.Web.Pages.Leadership.Enums.Office.List
+		.OrderBy(o => o.Sort)
+		.Where(w => w.IsFilled == true).ToList())
 		{
 			<AccordionItem>
 				<HeaderTemplate>

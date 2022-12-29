@@ -11,7 +11,9 @@
 </div>
 
 <div class="d-none d-sm-block">
-	@foreach (var item in LivingMessiah.Web.Pages.Leadership.Enums.Office.List.OrderBy(o => o.Value).Where(w => w.IsFilled == true).ToList())
+	@foreach (var item in LivingMessiah.Web.Pages.Leadership.Enums.Office.List
+		.OrderBy(o => o.Sort)
+		.Where(w => w.IsFilled == true).ToList())
 	{
 		<hr class="warning" />
 		<OfficeContent Office="@item" IsXs="false"></OfficeContent>

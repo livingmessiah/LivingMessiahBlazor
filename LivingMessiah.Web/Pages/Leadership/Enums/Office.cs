@@ -15,6 +15,7 @@ public abstract class Office : SmartEnum<Office>
 		internal const int Elder1 = 5;
 		internal const int Elder2 = 6;
 		internal const int Elder3 = 7;
+		internal const int Elder4 = 8;
 	}
 	#endregion
 
@@ -26,6 +27,7 @@ public abstract class Office : SmartEnum<Office>
 	public static readonly Office Elder1 = new Elder1SE();
 	public static readonly Office Elder2 = new Elder2SE();
 	public static readonly Office Elder3 = new Elder3SE();
+	public static readonly Office Elder4 = new Elder4SE();
 	// SE=SmartEnum
 	#endregion
 
@@ -40,6 +42,7 @@ public abstract class Office : SmartEnum<Office>
 	public abstract string OfficeHolderName { get; }
 	public abstract string Email { get; }
 	public abstract string ImgClassSmMdLg { get; }
+	public abstract int Sort { get; }
 	//public abstract string BioFile { get; } // Elder3.md
 	#endregion
 
@@ -56,6 +59,7 @@ public abstract class Office : SmartEnum<Office>
 		public override string OfficeHolderName => "Mark Webb and wife Polly";
 		public override string Email => "Mark@livingmessiah.com";
 		public override string ImgClassSmMdLg => "w-50 p-3";
+		public override int Sort => 1;
 	}
 
 	private sealed class BeitDin1SE : Office
@@ -69,6 +73,8 @@ public abstract class Office : SmartEnum<Office>
 		public override string OfficeHolderName => "Ralphie Cratty and wife Peribeth";
 		public override string Email => "Ralphie@livingmessiah.com";
 		public override string ImgClassSmMdLg => "w-75 p-3";
+		public override int Sort => 2;
+
 	}
 
 	private sealed class BeitDin2SE : Office
@@ -82,6 +88,8 @@ public abstract class Office : SmartEnum<Office>
 		public override string OfficeHolderName => "Vacant";
 		public override string Email => "Info@livingmessiah.com";
 		public override string ImgClassSmMdLg => "w-50 p-3";
+		public override int Sort => 99;
+
 	}
 
 	private sealed class BeitDin3SE : Office
@@ -95,6 +103,7 @@ public abstract class Office : SmartEnum<Office>
 		public override string OfficeHolderName => "John Marsing";
 		public override string Email => "John@livingmessiah.com";
 		public override string ImgClassSmMdLg => "w-50 p-3";
+		public override int Sort => 3;
 	}
 
 	private sealed class Elder1SE : Office
@@ -108,6 +117,7 @@ public abstract class Office : SmartEnum<Office>
 		public override string OfficeHolderName => "Pat Shackleford";
 		public override string Email => "Pat@livingmessiah.com";
 		public override string ImgClassSmMdLg => "w-50 p-3";
+		public override int Sort => 4;
 	}
 
 	private sealed class Elder2SE : Office
@@ -121,6 +131,7 @@ public abstract class Office : SmartEnum<Office>
 		public override string OfficeHolderName => "Vacant";
 		public override string Email => "Info@livingmessiah.com";
 		public override string ImgClassSmMdLg => "w-50 p-3";
+		public override int Sort => 99;
 	}
 
 	private sealed class Elder3SE : Office
@@ -134,6 +145,21 @@ public abstract class Office : SmartEnum<Office>
 		public override string OfficeHolderName => "Paul Hebron";
 		public override string Email => "Paul@livingmessiah.com";
 		public override string ImgClassSmMdLg => "w-50 p-3";
+		public override int Sort => 5;
+	}
+
+	private sealed class Elder4SE : Office
+	{
+		public Elder4SE() : base($"{nameof(Id.Elder4)}", Id.Elder4) { }
+		public override string Title => "Elder";
+		public override string ImageFile => "elder-4.jpg";
+		public override string IconFile => "elder-4-icon.jpg";
+		public override string IconFile2 => "elder-5-icon.jpg";
+		public override bool IsFilled => true;
+		public override string OfficeHolderName => "Dan Murphy";
+		public override string Email => "Dan@livingmessiah.com";
+		public override string ImgClassSmMdLg => "w-50 p-3";
+		public override int Sort => 6;
 	}
 
 	#endregion
