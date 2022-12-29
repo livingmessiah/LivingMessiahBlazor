@@ -12,6 +12,7 @@ using Syncfusion.Blazor.RichTextEditor;
 using Markdig;
 using Blazored.Toast.Services;
 using LivingMessiah.Web.Pages.SpecialEvents.Stores;
+using Fluxor;
 
 namespace LivingMessiah.Web.Pages.SpecialEvents;
 
@@ -20,28 +21,22 @@ public partial class Form
 	[Inject] public IUpcomingEventsRepository db { get; set; }
 	[Inject] public ILogger<Form> Logger { get; set; }
 	[Inject] public IToastService Toast { get; set; }
-	[Inject] private IState<MainState> MainState { get; set; }
-
-
-	public FormVM VM { get; set; } = new FormVM();
+	//[Inject] private IState<MainState> MainState { get; set; }
+	[Inject] private IState<SpecialEventsState> SpecialEventsState { get; set; }
 
 	private string Title = "Add Upcoming Event";
 
-	private string UserInterfaceMessage = "";
-	private string LogExceptionMessage = "";
 
-	protected override void OnInitialized()
-	{
-		VM.SpecialEventTypeId = SpecialEventType.Other.Value;
-		VM.EventDate = DateTime.Now.AddDays(35);
-		VM.ShowBeginDate = DateTime.Now.AddMonths(1);
-		VM.ShowEndDate = DateTime.Now.AddDays(40);
-	}
 
+	private FormVM VM => SpecialEventsState.Value.Model; // model
 	protected async Task HandleValidSubmit()
 	{
-		Logger.LogDebug(string.Format("Inside {0}, VM.ToString: {1}"
-			, nameof(Form) + "!" + nameof(HandleValidSubmit), VM.ToString()));
+//		Logger.LogDebug(string.Format("Inside {0}, VM.ToString: {1}"
+//			, nameof(Form) + "!" + nameof(HandleValidSubmit), VM.ToString()));
+
+		Dispatcher.Dispatch(new SpecialEventsSubmitAction(SpecialEventsState.Value.Model));
+		
+		/*
 		try
 		{
 			VM.Id = 0;
@@ -71,6 +66,7 @@ public partial class Form
 			Logger.LogError(LogExceptionMessage);  //ex, LogExceptionMessage
 			Toast.ShowError(UserInterfaceMessage);
 		}
+		*/
 	}
 
 	private void OnInvalidSubmit()

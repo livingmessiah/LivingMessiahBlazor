@@ -1,7 +1,22 @@
 ﻿@using LivingMessiah.Web.Pages.UpcomingEvents.Enums;
 @using Syncfusion.Blazor.RichTextEditor
 
-<LoadingComponent IsLoading="VM==null">
+@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+@*@inject IState<SpecialEventsState> SpecialEventsState*@
+@inject IDispatcher Dispatcher
+
+@if (SpecialEventsState.Value.Submitting)
+{
+	<div>Submitting... Please wait.</div>
+}
+else if (SpecialEventsState.Value.Submitted 
+					&& string.IsNullOrWhiteSpace(SpecialEventsState.Value.ErrorMessage))
+{
+	@*<div class="alert alert-success">SpecialEventsState.Value.AddedOrUpdatedMessage</div>*@
+	<div class="alert alert-success">Special Event Added!</div>
+}
+else
+{
 
 	<EditForm Model="VM"
 						OnValidSubmit="HandleValidSubmit"
@@ -201,8 +216,13 @@
 		</div>
 
 	</EditForm>
+}
 
-</LoadingComponent>
+@if (!string.IsNullOrWhiteSpace(SpecialEventsState.Value.ErrorMessage))
+{
+	<div class="alert alert-danger">Error: @SpecialEventsState.Value.ErrorMessage	</div>
+}
+
 
 
 <style>

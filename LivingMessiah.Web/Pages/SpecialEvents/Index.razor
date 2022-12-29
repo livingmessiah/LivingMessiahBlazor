@@ -8,38 +8,41 @@
 
 <PageTitle>@Page.Title</PageTitle>
 
-<div class="container-fluid bg-warning">
-	<div class="row pt-2 pb-1">
-
-		<div class="col-4">
-			@if (MainState.Value.DateRange is not null)
-			{
-				<p>@MainState.Value.DateRange.ToString()</p>
-			}
-		</div>
-		<div class="col-4">
-			@if (MainState.Value.CommandState is not null)
-			{
-				<p>@MainState.Value.CommandState.Name</p>
-			}
-		</div>
-		<div class="col-4">
-			@if (MainState.Value.DateRange is not null)
-			{
-				<DateRangePicker />
-			}
-		</div>
-
-	</div>
-</div>
-
 <div class="pb-1 mt-4 mb-2">
 	<h1><i class="@Page.Icon"></i> @Page.Title</h1>
 </div>
 
+@*<Form />*@
 
 <AuthorizeView Roles="@Roles.AdminOrAnnouncements">
 	<Authorized>
+
+
+		<div class="container-fluid bg-warning">
+			<div class="row pt-2 pb-1">
+
+				<div class="col-4">
+					@if (MainState.Value.DateRange is not null)
+					{
+						<p>@MainState.Value.DateRange.ToString()</p>
+					}
+				</div>
+				<div class="col-4">
+					@if (MainState.Value.CommandState is not null)
+					{
+						<p>@MainState.Value.CommandState.Name</p>
+					}
+				</div>
+				<div class="col-4">
+					@if (MainState.Value.DateRange is not null)
+					{
+						<DateRangePicker />
+					}
+				</div>
+
+			</div>
+		</div>
+
 		@if (MainState.Value.DateRange is not null)
 		{
 			<Table />
