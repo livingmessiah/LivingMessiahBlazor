@@ -18,8 +18,13 @@
 				</HeaderTemplate>
 				<ContentTemplate>
 
+					<img src="@Blobs.Leadership(@item.ImageFile)"
+						 class="w-100 p-3"
+						alt="@item.OfficeHolderName" />
+
 					@if (item.Value == Office.CongregationLeader)
 					{
+						
 						<CongregationLeader />
 					}
 					else if (item.Value == Office.BeitDin1)
