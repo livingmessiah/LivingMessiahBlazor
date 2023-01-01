@@ -1,23 +1,20 @@
 ﻿@page "/Leadership"
 @using LivingMessiah.Web.Pages.Leadership.Enums
+@using LivingMessiah.Web.SmartEnums
 
 @using Page = LivingMessiah.Web.Links.Leadership
 <PageTitle>@Page.Title</PageTitle>
 
-<Header/>
+<Header />
 
-<div class="d-block d-sm-none">
-	<Accordion/>
+
+<div class="@MediaQuery.Xs.DivClass">
+	<Accordion />
+</div>	
+
+<div class="@MediaQuery.SmMdOrLgOrXl.DivClass">
+	<SmMdOrLgOrXlCard />
 </div>
 
-<div class="d-none d-sm-block">
-	@foreach (var item in LivingMessiah.Web.Pages.Leadership.Enums.Office.List
-		.OrderBy(o => o.Sort)
-		.Where(w => w.IsFilled == true).ToList())
-	{
-		<hr class="warning" />
-		<OfficeContent Office="@item" IsXs="false"></OfficeContent>
-	}
-</div>
 
 <Footer />

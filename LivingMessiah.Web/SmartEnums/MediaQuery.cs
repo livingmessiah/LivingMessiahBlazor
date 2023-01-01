@@ -30,9 +30,10 @@ public abstract class MediaQuery : SmartEnum<MediaQuery>
 		internal const int Lg = 5;
 		internal const int Xl = 6;
 		internal const int XsOrSm = 7;
-		internal const int MdOrLgOrXl = 8;
-		internal const int LgOrXl = 9;
-		//internal const int XsOrXl = 10;
+		internal const int SmMdOrLgOrXl = 8;
+		internal const int MdOrLgOrXl = 9;
+		internal const int LgOrXl = 10;
+		//internal const int XsOrXl = 11;
 	}
 	#endregion
 
@@ -45,6 +46,7 @@ public abstract class MediaQuery : SmartEnum<MediaQuery>
 
 	// Combination
 	public static readonly MediaQuery XsOrSm = new XsOrSmSE();
+	public static readonly MediaQuery SmMdOrLgOrXl = new SmMdOrLgOrXlSE();
 	public static readonly MediaQuery MdOrLgOrXl = new MdOrLgOrXlSE();
 	public static readonly MediaQuery LgOrXl = new LgOrXlSE();
 	//public static readonly MediaQuery XsOrXl = new XsOrXlSE(); 
@@ -109,6 +111,12 @@ public abstract class MediaQuery : SmartEnum<MediaQuery>
 	{
 		public XsOrSmSE() : base($"{nameof(Id.XsOrSm)}", Id.XsOrSm) { }
 		public override string DivClass => "d-md-none";
+	}
+
+	private sealed class SmMdOrLgOrXlSE : MediaQuery
+	{
+		public SmMdOrLgOrXlSE() : base($"{nameof(Id.SmMdOrLgOrXl)}", Id.SmMdOrLgOrXl) { }
+		public override string DivClass => "d-none d-sm-block";
 	}
 
 	private sealed class MdOrLgOrXlSE : MediaQuery

@@ -1,7 +1,0 @@
-﻿.e-accordion {
-	border: 5px solid rgb(255, 193, 7);
-}
-
-.e-accordion .e-acrdn-item.e-select > .e-acrdn-header {
-	background: #ffc107 !important;
-}

@@ -12,7 +12,10 @@
 	</div>
 
 	<div class="card-body">
-		<TableTemplate Items="LivingMessiah.Web.Pages.Leadership.Enums.Office.List.OrderBy(o => o.Value).Where(w => w.IsFilled==true).ToList()">
+		<TableTemplate 
+			Items="LivingMessiah.Web.Pages.Leadership.Enums.Office.List
+				.OrderBy(o => o.Value)
+				.Where(w => w.IsFilled==true).ToList()">
 			<TableHeader>
 				<th>Id</th>
 				<th>Name</th>
@@ -27,7 +30,9 @@
 				<td>@context.OfficeHolderName</td>
 				<td>@context.Title</td>
 				<td>
-					<img src="@Blobs.Leadership(context.IconFile)" class="card-img-top" alt="@context.Name" title="@context.ImageFile" />
+					<img src="@Blobs.Leadership(context.IconFile)" 
+						class="card-img-top" alt="@context.Name" 
+						title="@context.ImageFile" />
 				</td>
 				<td>@context.Email</td>
 			</RowTemplate>

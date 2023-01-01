@@ -156,7 +156,7 @@ public abstract class Office : SmartEnum<Office>
 		public override string IconFile => "elder-4-icon.jpg";
 		public override string IconFile2 => "elder-5-icon.jpg";
 		public override bool IsFilled => true;
-		public override string OfficeHolderName => "Dan Murphy";
+		public override string OfficeHolderName => "Dan Murphy and wife Renee";
 		public override string Email => "Dan@livingmessiah.com";
 		public override string ImgClassSmMdLg => "w-50 p-3";
 		public override int Sort => 6;
