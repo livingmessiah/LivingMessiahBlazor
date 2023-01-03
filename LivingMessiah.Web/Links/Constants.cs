@@ -437,7 +437,7 @@ public static class PayPal
 		public const string Index = "/donate";
 		public const string Title = "Donate";
 		public const string TitleLMM = "Living Messiah Ministries";
-		public const string Icon = "fab fa-paypal";
+		public const string Icon = "fas fa-donate";
 	}
 	public static class CancelDonation
 	{
