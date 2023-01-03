@@ -1,5 +1,5 @@
 namespace LivingMessiah.Web.Pages.Leadership;
 
-public partial class SmMdOrLgOrXlCard
+public partial class Card
 {
 }
