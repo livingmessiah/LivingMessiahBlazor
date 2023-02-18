@@ -1,0 +1,39 @@
+﻿/*.control-container {
+	background-color: #e5e5e5;
+	height: 300px;
+	margin: 0 auto;
+	width: 500px;
+}
+
+.e-carousel .e-carousel-items .e-carousel-item .img-container {
+	height: 100%;
+}
+
+.e-carousel .e-carousel-items .e-carousel-item .img-caption {
+	bottom: 4em;
+	color: #fff;
+	font-size: 12pt;
+	height: 2em;
+	position: relative;
+	padding: 0.3em 1em;
+	text-align: center;
+	width: 100%;
+}
+
+*/
+
+.img-container {
+	height: 100%;
+	margin: 0;
+}
+
+.img-caption {
+	color: #fff !important;
+	font-size: 1rem;
+	left: 1rem;
+	position: absolute;
+	bottom: 4rem;
+	margin-right: 1rem;
+	text-align: center;
+}
+
