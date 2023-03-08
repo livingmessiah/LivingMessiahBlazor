@@ -1,9 +1,5 @@
 ﻿@page "/Feasts"
-
-@using LivingMessiah.Web.LinkSmartEnums
-@using LivingMessiah.Web.SmartEnums
-
-@using Page = LivingMessiah.Web.Links.Feast
+@using Page = LivingMessiah.Web.Pages.Feasts.LinkSmartEnums.FeastLinks
 <PageTitle>@Page.Title</PageTitle>
 <div class="pb-2 mt-1 mb-2 ">
 	<h2><i class="@Page.Icon"></i> @Page.Title</h2>
@@ -63,7 +59,7 @@ Except for the most part, this page lists the feasts
 </div>
 
 <div class="list-group">
-	@foreach (var item in Feast.List.OrderBy(o => o.Value).ToList())
+	@foreach (var item in LinkSmartEnums.Feast.List.OrderBy(o => o.Value).ToList())
 	{
 		<a href="@item.Page" title="@item.Hebrew.TitleSuffix @item.Hebrew.Strongs"
 		 class="list-group-item @item.ListGroupItemColor">

@@ -4,7 +4,7 @@ using System;
 using System.Threading.Tasks;
 
 using Blazored.Toast.Services;
-using Page = LivingMessiah.Web.Links.Parasha;
+using Page = LivingMessiah.Web.Pages.Parasha.LinkSmartEnums.ParashaLinks;
 
 using Microsoft.Extensions.Caching.Memory;
 using LivingMessiah.Web.Pages.Parasha.Services;
@@ -13,14 +13,9 @@ namespace LivingMessiah.Web.Pages.Parasha;
 
 public partial class Index
 {
-	[Inject]
-	private IParashaService Service { get; set; }
-
-	[Inject]
-	public ILogger<Index> Logger { get; set; }
-
-	[Inject]
-	public IToastService Toast { get; set; }
+	[Inject] private IParashaService Service { get; set; }
+	[Inject] public ILogger<Index> Logger { get; set; }
+	[Inject] public IToastService Toast { get; set; }
 
 	protected CurrentParasha? CurrentParasha;
 

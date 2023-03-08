@@ -1,12 +1,10 @@
 using Microsoft.AspNetCore.Components;
 using System.Threading.Tasks;
-using LivingMessiah.Web.LinkSmartEnums;
 
 namespace LivingMessiah.Web.Pages.Parasha;
 
 public partial class SubNavBar
 {
-
 	bool collapseNavMenu = true;
 	string SubNavBarCssClass => collapseNavMenu ? "collapse" : null;
 	void ToggleSubNavBar()
@@ -15,11 +13,8 @@ public partial class SubNavBar
 	}
 
 	// Can't force EditorRequired because PrintTable is set to `Display=> false`
-	[Parameter]
-	public ParashaLink ActiveParashaEnum { get; set; }
-
-	[Parameter]
-	public bool UseDarkMode { get; set; } = false;
+	[Parameter] public LinkSmartEnums.Parasha ActiveParashaEnum { get; set; }
+	[Parameter] public bool UseDarkMode { get; set; } = false;
 
 	string NavBarColor;
 
@@ -29,8 +24,7 @@ public partial class SubNavBar
 		NavBarColor = UseDarkMode ? " navbar-dark bg-dark " : " navbar-light bg-light "; // bg-white 
 	}
 
-
-	string GetActive(ParashaLink currentParashaEnum)
+	string GetActive(LinkSmartEnums.Parasha currentParashaEnum)
 	{
 		return ActiveParashaEnum == currentParashaEnum ? " active" : "";
 	}

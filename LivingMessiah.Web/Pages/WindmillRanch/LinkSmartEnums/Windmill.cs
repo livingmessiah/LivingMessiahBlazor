@@ -1,6 +1,8 @@
-﻿namespace LivingMessiah.Web.LinkSmartEnums;
-using Ardalis.SmartEnum;
-using LivingMessiah.Web.Links;
+﻿using Ardalis.SmartEnum;
+using PageLink = LivingMessiah.Web.Pages.WindmillRanch.LinkSmartEnums.WindmillRanchLinks;
+
+namespace LivingMessiah.Web.Pages.WindmillRanch.LinkSmartEnums;
+
 
 /*
 public static class WindmillRanch
@@ -18,7 +20,7 @@ public abstract class Windmill : SmartEnum<Windmill>
 	{
 		internal const int Audit = 1;
 		internal const int Permaculture = 2;
-		internal const int Projects = 3; 
+		internal const int Projects = 3;
 		internal const int Album = 4;
 		internal const int Support = 5;
 		internal const int Archive = 6;
@@ -59,88 +61,88 @@ public abstract class Windmill : SmartEnum<Windmill>
 	{
 		public AuditSE() : base($"{nameof(Id.Audit)}", Id.Audit) { }
 		public override string Color => "dark";
-		public override string Page => WindmillRanch.Audit.Page;
-		public override string Title => WindmillRanch.Audit.Title;
+		public override string Page => PageLink.Audit.Page;
+		public override string Title => PageLink.Audit.Title;
 	}
 
 	private sealed class PermacultureSE : Windmill
 	{
 		public PermacultureSE() : base($"{nameof(Id.Permaculture)}", Id.Permaculture) { }
 		public override string Color => "success";
-		public override string Page => WindmillRanch.Permaculture.Page;
-		public override string Title => WindmillRanch.Permaculture.Title;
+		public override string Page => PageLink.Permaculture.Page;
+		public override string Title => PageLink.Permaculture.Title;
 	}
 
 	private sealed class ProjectsSE : Windmill
 	{
 		public ProjectsSE() : base($"{nameof(Id.Projects)}", Id.Projects) { }
 		public override string Color => "warning";
-		public override string Page => WindmillRanch.Projects.Page;
-		public override string Title => WindmillRanch.Projects.Title;
+		public override string Page => PageLink.Projects.Page;
+		public override string Title => PageLink.Projects.Title;
 	}
 
 	private sealed class AlbumSE : Windmill
 	{
 		public AlbumSE() : base($"{nameof(Id.Album)}", Id.Album) { }
 		public override string Color => "info";
-		public override string Page => WindmillRanch.Album.Page;
-		public override string Title => WindmillRanch.Album.Title;
+		public override string Page => PageLink.Album.Page;
+		public override string Title => PageLink.Album.Title;
 	}
 
 	private sealed class SupportSE : Windmill
 	{
 		public SupportSE() : base($"{nameof(Id.Support)}", Id.Support) { }
 		public override string Color => "success";
-		public override string Page => WindmillRanch.Support.Page;
-		public override string Title => WindmillRanch.Support.Title;
+		public override string Page => PageLink.Support.Page;
+		public override string Title => PageLink.Support.Title;
 	}
 
 	private sealed class ArchiveSE : Windmill
 	{
 		public ArchiveSE() : base($"{nameof(Id.Archive)}", Id.Archive) { }
 		public override string Color => "danger";
-		public override string Page => WindmillRanch.Archive.Page;
-		public override string Title => WindmillRanch.Archive.Title;
+		public override string Page => PageLink.Archive.Page;
+		public override string Title => PageLink.Archive.Title;
 	}
 
 	private sealed class CodeOfConductSE : Windmill
 	{
 		public CodeOfConductSE() : base($"{nameof(Id.CodeOfConduct)}", Id.CodeOfConduct) { }
 		public override string Color => "secondary";
-		public override string Page => WindmillRanch.CodeOfConduct.Page;
-		public override string Title => WindmillRanch.CodeOfConduct.Title;
+		public override string Page => PageLink.CodeOfConduct.Page;
+		public override string Title => PageLink.CodeOfConduct.Title;
 	}
 
 	private sealed class SwalesSE : Windmill
 	{
 		public SwalesSE() : base($"{nameof(Id.Swales)}", Id.Swales) { }
 		public override string Color => "primary";
-		public override string Page => WindmillRanch.Swales.Page;
-		public override string Title => WindmillRanch.Swales.Title;
+		public override string Page => PageLink.Swales.Page;
+		public override string Title => PageLink.Swales.Title;
 	}
 
 	private sealed class BulldozerSE : Windmill
 	{
 		public BulldozerSE() : base($"{nameof(Id.Bulldozer)}", Id.Bulldozer) { }
 		public override string Color => "primary";
-		public override string Page => WindmillRanch.Bulldozer.Page;
-		public override string Title => WindmillRanch.Bulldozer.Title;
+		public override string Page => PageLink.Bulldozer.Page;
+		public override string Title => PageLink.Bulldozer.Title;
 	}
 
 	private sealed class GardenSE : Windmill
 	{
 		public GardenSE() : base($"{nameof(Id.Garden)}", Id.Garden) { }
 		public override string Color => "warning";
-		public override string Page => WindmillRanch.Garden.Page;
-		public override string Title => WindmillRanch.Garden.Title;
+		public override string Page => PageLink.Garden.Page;
+		public override string Title => PageLink.Garden.Title;
 	}
 
 	private sealed class BackhoeSE : Windmill
 	{
 		public BackhoeSE() : base($"{nameof(Id.Backhoe)}", Id.Backhoe) { }
 		public override string Color => "success";
-		public override string Page => WindmillRanch.Backhoe.Page;
-		public override string Title => WindmillRanch.Backhoe.Title;
+		public override string Page => PageLink.Backhoe.Page;
+		public override string Title => PageLink.Backhoe.Title;
 	}
 
 	#endregion

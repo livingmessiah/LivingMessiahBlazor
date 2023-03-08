@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using System;
 using System.Linq;
 using Blazored.Toast.Services;
-using Page = LivingMessiah.Web.Links.Parasha;
+using Page = LivingMessiah.Web.Pages.Parasha.LinkSmartEnums.ParashaLinks;
 using LivingMessiah.Web.Pages.Parasha.Services;
 using LivingMessiah.Web.Enums;
 
@@ -13,17 +13,11 @@ namespace LivingMessiah.Web.Pages.Parasha.ListByBook;
 
 public partial class PrintTable
 {
-	[Inject]
-	private IParashaService Service { get; set; }
+	[Inject] 	private IParashaService Service { get; set; }
+	[Inject] public ILogger<PrintTable>? Logger { get; set; }
+	[Inject] public IToastService Toast { get; set; }
 
-	[Inject]
-	public ILogger<PrintTable>? Logger { get; set; }
-
-	[Inject]
-	public IToastService Toast { get; set; }
-
-	[Parameter]
-	public int BookId { get; set; } = 0;
+	[Parameter] public int BookId { get; set; } = 0;
 
 	protected string BibleBookName = String.Empty;
 	protected IReadOnlyList<Parashot> Parashot;

@@ -5,6 +5,8 @@
 @using Page = LivingMessiah.Web.Links.ShabbatService
 <PageTitle>@Page.Title</PageTitle>
 
+@using PageParasha = LivingMessiah.Web.Pages.Parasha.LinkSmartEnums.ParashaLinks;
+
 <div class="d-print-none float-end">
 	<a class="btn btn-sm btn-default" href="@LivingMessiah.Web.Links.ShabbatService.Index"
 		 @onclick="@PrintFriendly_Button_Click">
@@ -524,13 +526,14 @@ else
 
 			<p class="lead">
 				Click
-				<a href="@Parasha.Index"
-					 title="@Parasha.Title" class="btn btn-outline-warning btn-sm">
-					<i class="@Parasha.Icon" aria-hidden="true"></i>
-					&nbsp;<b>@TorahTuesday.Title</b>
+				<a href="@PageParasha.Index"
+					 title="@PageParasha.Title" class="btn btn-outline-warning btn-sm">
+					<i class="@PageParasha.Icon" aria-hidden="true"></i>
+					&nbsp;<b>@PageParasha.Title</b>
 				</a>
 				to see the a list of the readings.
 			</p>
+
 		</div>
 
 	</ChildContent>
@@ -656,7 +659,6 @@ else
 	</div>
 
 </Liturgy>
-
 
 @if (_ShowSpanish)
 {

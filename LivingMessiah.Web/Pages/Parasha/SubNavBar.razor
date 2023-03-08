@@ -1,11 +1,11 @@
-﻿@using LivingMessiah.Web.LinkSmartEnums
+﻿@using PageLink = LivingMessiah.Web.Pages.Parasha.LinkSmartEnums.ParashaLinks
 
 <nav id="subNavBar" class="navbar navbar-expand-sm navbar-toggleable-md border-bottom box-shadow p-0 mb-3 @NavBarColor">
 	<div class="container">
 
-		<a class="nav-link  @GetActive(@ParashaLink.Current)" title="" href="@ParashaLink.Current.Page">
+		<a class="nav-link @GetActive(@LinkSmartEnums.Parasha.Current)" title="" href="@PageLink.Index">
 			<i class="fas fa-home"></i>
-			@ParashaLink.Current.Title
+			@PageLink.NavBarText
 		</a>
 
 		<button class="navbar-toggler" @onclick="ToggleSubNavBar" type="button"
@@ -18,7 +18,8 @@
 				 @onclick="ToggleSubNavBar">
 
 			<ul class="navbar-nav flex-grow-1">
-				@foreach (var item in ParashaLink.List.OrderBy(o => o.Value).Where(w => w.Value != 1 & w.Display==true))
+				@foreach (var item in LinkSmartEnums.Parasha.List.OrderBy(o => o.Value)
+					.Where(w => w.Value != LinkSmartEnums.Parasha.Current.Value & w.Display == true))
 				{
 					<li class="nav-item">
 						<a class="nav-link @GetActive(item)" href="@item.Page">

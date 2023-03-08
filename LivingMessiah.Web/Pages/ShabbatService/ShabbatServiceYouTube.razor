@@ -1,25 +1,39 @@
-﻿
-@if (CurrentWeeklyVideo != null)
+﻿@if (!@LoadQuickly)
 {
-	@if (!IsPrinterFriendly && !LoadQuickly)
+	@if (CurrentWeeklyVideo != null)
 	{
-		<hr class="warning" />
+		@if (!IsPrinterFriendly && !LoadQuickly)
+		{
+			<hr class="warning" />
 
-		@((MarkupString)Heading)
+			@((MarkupString)Heading)
 
-		<div class="embed-responsive embed-responsive-16by9">
-			<iframe class="embed-responsive-item" src="@Url"
-							allowfullscreen></iframe>
-		</div>
+			<div class="embed-responsive embed-responsive-16by9">
+				<iframe class="embed-responsive-item" src="@Url"
+					allowfullscreen></iframe>
+			</div>
 
-		<p class="my-0"><i class="fas fa-share fa-rotate-270"></i> @SubTitle</p>
+			<p class="my-0"><i class="fas fa-share fa-rotate-270"></i> @SubTitle</p>
+		}
 	}
-}
-else if (LoadFailed)
-{
-	<p class="text-danger"><em>Could not load because of an Error</em></p>
+	else if (LoadFailed)
+	{
+		<p class="text-danger"><em>Could not load because of an Error</em></p>
+	}
+	else
+	{
+		<p><em>Loading...</em></p>
+	}
+
 }
 else
 {
-	<p><em>Loading...</em></p>
+	<div class="card mt-2" style="width: 100%">
+		<div class="card-header h3 px-2">
+			<span class='badge bg-warning pb-15'>YouTube Not Shown</span>
+		</div>
+		<div class="card-body">
+			<h5 class="">The YouTube iframe is not shown because LoadQuickly is @LoadQuickly</h5>
+		</div>
+	</div>
 }

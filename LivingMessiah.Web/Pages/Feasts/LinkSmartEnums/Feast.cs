@@ -1,7 +1,8 @@
-﻿namespace LivingMessiah.Web.LinkSmartEnums;
-using Ardalis.SmartEnum;
+﻿using Ardalis.SmartEnum;
 using Microsoft.AspNetCore.Components;
-using PageLink = LivingMessiah.Web.Links.Feast;
+using PageLink = LivingMessiah.Web.Pages.Feasts.LinkSmartEnums.FeastLinks;
+
+namespace LivingMessiah.Web.Pages.Feasts.LinkSmartEnums;
 
 /*
 Observations and what makes this LinkSmartEnums unique from the others

@@ -2,6 +2,10 @@
 using LivingMessiah.Web.Domain;
 using LivingMessiah.Web.Links;
 
+using PageFeast = LivingMessiah.Web.Pages.Feasts.LinkSmartEnums.FeastLinks;
+using PageParasha = LivingMessiah.Web.Pages.Parasha.LinkSmartEnums.ParashaLinks;
+using PageWindmillRanch = LivingMessiah.Web.Pages.WindmillRanch.LinkSmartEnums.WindmillRanchLinks;
+
 namespace LivingMessiah.Web.Data;
 
 public interface ILinksFactory
@@ -75,9 +79,9 @@ public class LinksFactory : ILinksFactory
 				},
 				new Link
 				{
-					Index = WindmillRanch.Index,
-					Title = WindmillRanch.Title,
-					Icon = WindmillRanch.Icon,
+					Index = PageWindmillRanch.Index,
+					Title = PageWindmillRanch.Title,
+					Icon = PageWindmillRanch.Icon,
 					HomeSidebarUsage=true,
 					SortOrder=3,
 					SitemapUsage=true
@@ -166,9 +170,9 @@ public class LinksFactory : ILinksFactory
 				},
 				new Link
 				{
-					Index = Parasha.Index,
-					Title = Parasha.Title,
-					Icon = Parasha.Icon,
+					Index = PageParasha.Index,
+					Title = PageParasha.Title,
+					Icon = PageParasha.Icon,
 					HomeSidebarUsage=true,
 					HomeFloatRightHebrew="פָּרָשַׁת",
 					HomeTitleSuffix=" Parashat H6567",
@@ -177,9 +181,9 @@ public class LinksFactory : ILinksFactory
 				},
 				new Link
 				{
-					Index = Parasha.Archive.Index,
-					Title = Parasha.Archive.Title,
-					Icon = Parasha.Archive.Icon,
+					Index = PageParasha.Archive.Index,
+					Title = PageParasha.Archive.Title,
+					Icon = PageParasha.Archive.Icon,
 					HomeSidebarUsage=false,
 					HomeFloatRightHebrew="",
 					HomeTitleSuffix="",
@@ -298,9 +302,9 @@ public class LinksFactory : ILinksFactory
 				},
 				new Link
 				{
-					Index = Feast.Index,
-					Title = Feast.Title,
-					Icon = Feast.Icon,
+					Index = PageFeast.Index,
+					Title = PageFeast.Title,
+					Icon = PageFeast.Icon,
 					HomeSidebarUsage=true,
 					HomeFloatRightHebrew="מוֹעֵד",
 					HomeTitleSuffix=" moed H4150",

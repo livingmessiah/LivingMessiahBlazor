@@ -1,10 +1,11 @@
 ﻿@page "/Parasha/ListByBook"
-@using Page = LivingMessiah.Web.Links.Parasha.ListByBook
+@using Page = LivingMessiah.Web.Pages.Parasha.LinkSmartEnums.ParashaLinks
 @using LivingMessiah.Web.SmartEnums
 
 <PageTitle>@Page.Title</PageTitle>
 
-<SubNavBar UseDarkMode="false" ActiveParashaEnum="@LivingMessiah.Web.LinkSmartEnums.ParashaLink.ListByBook"></SubNavBar>
+<SubNavBar UseDarkMode="false" ActiveParashaEnum="@LivingMessiah.Web.Pages.Parasha.LinkSmartEnums.Parasha.ListByBook" />
+
 <div class="pb-1 mt-4 mb-2">
 	<h1><i class="@Page.Icon"></i> @Page.Title</h1>
 </div>

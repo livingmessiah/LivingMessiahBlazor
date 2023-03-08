@@ -1,10 +1,10 @@
 ﻿@page "/YomKippur"
 
 @using LivingMessiah.Web.Pages.Feasts.Components
-@using Page = LivingMessiah.Web.Links.Feast
+@using Page = LivingMessiah.Web.Pages.Feasts.LinkSmartEnums.FeastLinks
 <PageTitle>@Page.YomKippur.Title</PageTitle>
 
-<ReturnAnchor></ReturnAnchor>
+<ReturnAnchor />
 
 
 <div class="pb-1 mt-4 mb-5 border-bottom border-primary">
@@ -64,6 +64,6 @@
 
 <AlephBetFooter />
 
-<img src="@Blobs.UrlEvents("yom-kippur-2021-783x891.jpg")" alt="Yom Kippur" class="img-fluid rounded mt-4" />
+@*<img src="@Blobs.UrlEvents("yom-kippur-2021-783x891.jpg")" alt="Yom Kippur" class="img-fluid rounded mt-4" />*@
 
 @*<BibleReference Feast="@LinkSmartEnums.Feast.YomKippur"/>*@
