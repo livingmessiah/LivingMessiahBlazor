@@ -22,6 +22,8 @@ public interface IShabbatWeekRepository
 	// Psalms and Proverbs
 	Task<PsalmAndProverb> GetCurrentPsalmAndProverb();
 	Task<List<vwPsalmsAndProverbs>> GetPsalmsAndProverbsList();
+	Task<List<PsalmsVM>> GetPsalms();
+
 
 	// Weekly Videos
 	Task<IReadOnlyList<vwCurrentWeeklyVideo>> GetCurrentWeeklyVideos(int daysOld);
@@ -169,6 +171,11 @@ SELECT
 FROM Bible.vwPsalmsAndProverbs v 
 WHERE ShabbatDate = dbo.udfGetNextShabbatDate()
 ";
+
+		log.LogDebug(String.Format("Inside {0}, Sql={1}"
+			, nameof(ShabbatWeekRepository) + "!" + nameof(GetCurrentPsalmAndProverb), base.Sql));
+
+
 		return await WithConnectionAsync(async connection =>
 		{
 			var rows = await connection.QueryAsync<PsalmAndProverb>(sql: base.Sql, param: base.Parms);
@@ -200,6 +207,29 @@ ORDER BY ShabbatWeekId
 		return await WithConnectionAsync(async connection =>
 		{
 			var rows = await connection.QueryAsync<vwPsalmsAndProverbs>(sql: base.Sql);
+			return rows.ToList();
+		});
+	}
+
+	public async Task<List<PsalmsVM>> GetPsalms()
+	{
+		base.Sql = $@"
+SELECT 
+  ps.Id, ps.BegVerse, ps.EndVerse, ps.EndVerse-ps.BegVerse + 1 AS VerseCount, ps.IsWholeChapter
+, 'Psalms ' + CAST (ps.Chapter AS varchar(10)) + ':' + CAST (ps.BegVerse AS varchar(10)) + '-' + CAST (ps.EndVerse AS varchar(10)) AS BCV
+, ps.Chapter
+, ps.KJVHtmlConcat
+, sw.Id AS ShabbatWeekId, CONVERT(VARCHAR(10), sw.ShabbatDate, 111) AS ShabbatDateYMD
+FROM Bible.Psalms ps
+	LEFT OUTER JOIN ShabbatWeek sw
+		ON sw.PsalmsId = ps.Id
+	INNER JOIN Bible.BookChapter bc 
+		ON ps.BookId = bc.BookId AND ps.Chapter = bc.Chapter
+ORDER BY ps.Chapter, ps.BegVerse
+";
+		return await WithConnectionAsync(async connection =>
+		{
+			var rows = await connection.QueryAsync<PsalmsVM>(sql: base.Sql);
 			return rows.ToList();
 		});
 	}

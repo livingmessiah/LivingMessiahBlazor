@@ -1,0 +1,102 @@
+﻿@page "/Psalms"
+
+@using LivingMessiah.Web.Infrastructure;
+@using Page = LivingMessiah.Web.Links.Psalms
+<PageTitle>@Page.Title</PageTitle>
+
+<div class="pb-2 mt-4 mb-2 border-bottom">
+	<h2><i class="@Page.Icon"></i> @Page.Title</h2>
+</div>
+
+@switch (_status)
+{
+	case Status.Loading:
+		<p class="text-warning"><em>Loading...</em></p>
+		break;
+
+	case Status.Loaded:
+
+		<table class="table">
+			<thead>
+				<tr>
+					<th><br />Id</th>
+					<th class="text-info"><br />BCV</th>
+					<th><br />wc</th>
+					<th class="text-center">Shabbat Week <br /> Id/YMD</th>
+					<th class="text-center"><br />Details</th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (var item in PsalmsList)
+				{
+					<tr>
+						<td>@item.Id</td>
+						<td>@item.BCV</td>
+						<td>@((MarkupString)item.IsWholeChapterIcon())</td>
+						<td class="text-center">@item.ShabbatWeek()</td>
+						<td class="text-center">
+							<button type="button" class="btn btn-primary btn-xs" 
+								@onclick="() => ShowModal(item)">
+								<i class="fas fa-ellipsis-h"></i>
+							</button>
+						</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+
+
+		<h6 class="mb-1"><b>BCV:</b> Book/Chapter/Verse</h6>
+		<h6 class="mt-0"><b>wc:</b> Whole Chapter</h6>
+		break;
+
+	case Status.Error:
+		<p class="text-danger"><em>Could not load because of an Error</em></p>
+		<p class="p-2">@_msg</p>
+		break;
+
+	default:
+		break;
+}
+
+<div class="@modalClass" style="display:@(modalOpen?"block":"none");">
+	<div class="modal-dialog modal-xl">
+		<div class="modal-content">
+			<div class="modal-header bg-light">
+
+				@if (SelectedPsalms is not null)
+				{
+					<h5 class="modal-title">@SelectedPsalms.BCV</h5>
+				}
+
+				<button type="button" class="close" @onclick="CloseModal">
+					<span>&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				@if (SelectedPsalms is not null)
+				{
+					if (!String.IsNullOrEmpty(SelectedPsalms.KJVHtmlConcat))
+					{
+						<p class="lead text-center pb-3">
+							@((MarkupString)SelectedPsalms.KJVHtmlConcat)
+						</p>
+					}
+				}
+			</div>
+			<div class="modal-footer bg-light">
+@*				<button type="button" class="btn btn-primary" @onclick="Save">
+					Save
+				</button>*@
+				<button type="button" class="btn btn-primary" @onclick="CloseModal">
+					Cancel
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+

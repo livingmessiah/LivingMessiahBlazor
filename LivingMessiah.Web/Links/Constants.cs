@@ -345,6 +345,13 @@ public static class PsalmsAndProverbs
 	public const string Icon = "fab fa-readme";
 }
 
+public static class Psalms
+{
+	public const string Index = "/Psalms";
+	public const string Title = "Psalms";
+	public const string Icon = "fab fa-readme";
+}
+
 public static class Podcast
 {
 	public const string Index = "/Podcast";
