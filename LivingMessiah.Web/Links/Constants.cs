@@ -387,7 +387,14 @@ public static class Shavuot
 	public const string Title = "Shavuot";
 	public const string Icon = "fab fa-creative-commons-zero";
 }
-
+//
+public static class RuthOmerCount
+{
+	public const string Index = "/RuthOmerCount";
+	public const string Title = "Ruth Omer Count";
+	public const string Icon = "fas fa-list-ol"; 
+	public const string Descr = "Ruth Omer Count";
+}
 public static class ShowLow
 {
 	public const string Index = "/ShowLow";

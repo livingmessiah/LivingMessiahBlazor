@@ -35,6 +35,7 @@ public static class Blobs
 	private const string shabbatService = "https://livingmessiahstorage.blob.core.windows.net/images/shabbatservice/";
 	private const string weeklyAnnouncements = "https://livingmessiahstorage.blob.core.windows.net/weeklyannouncements/";
 	private const string calendar = "https://livingmessiahstorage.blob.core.windows.net/images/calendar/";
+	private const string ruth_omer_count = "https://livingmessiahstorage.blob.core.windows.net/ruth-omer-count/";
 
 	public static string UrlSukkot2017(string blob)
 	{
@@ -44,6 +45,11 @@ public static class Blobs
 	public static string UrlCalendar(string blob)
 	{
 		return calendar + blob;
+	}
+
+	public static string RuthOmerCount(string blob)
+	{
+		return ruth_omer_count + blob;
 	}
 
 	public static string UrlWeeklyAnnouncements(string blob)

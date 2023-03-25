@@ -8,8 +8,8 @@ Used by: LivingMessiah.Web\Components\Pages\Shavuot\...
 */
 public static class Years
 {
-	public const int Previous = 2021; // 2020
-	public const int Current = 2022; // 2021
+	public const int Previous = 2022; 
+	public const int Current = 2023; 
 }
 
 /*
@@ -42,7 +42,7 @@ public static class Omer
 
 public static class Dates
 {
-		public const string _12_Passover = "4/15/2022";  // 4/25/2021
+		public const string _12_Passover = "4/5/2023";  
 	/*
 	" And you shall count from the <b>morrow of the Sabbath</b> from the day you bring the Omer [sheaf] of waving; ...
 	Leviticus 23:15-16,21
