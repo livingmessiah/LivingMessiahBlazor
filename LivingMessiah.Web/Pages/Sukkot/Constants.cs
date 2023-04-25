@@ -3,15 +3,15 @@
 
 public static class AttendanceDateRange
 {
-	public const string Min = "10/09/2022";
-	public const string Max = "10/17/2022";
+	public const string Min = "9/28/2023";
+	public const string Max = "10/08/2023";
 }
 
 
 public static class Year
 {
-	public const int Int = 2022;
-	public const string String = "2022";
+	public const int Int = 2023;
+	public const string String = "2023";
 }
 
 public static class RegistrationClosedEmail
@@ -38,7 +38,7 @@ public static class Routing
 
 public static class TShirts
 {
-	public static bool IsAvailableForSale { get; set; } = true;
+	public static bool IsAvailableForSale { get; set; } = false;
 	public static string ForSaleMessage { get; set; } = "T-Shirts are available for sale, click the image below.";
 	public static string ComingSoonMessage { get; set; } = "T-Shirts not yet available, check back later. ";
 
@@ -106,20 +106,20 @@ public static class Blobs
 public static class RegistrationMeta
 {
 	public static bool IsThereEarlyRegistration { get; set; } = false;
-	public static System.DateTime EarlyRegistrationLastDay = new System.DateTime(Year.Int, 9, 20);
-	public const decimal EarlyRegistrationFee = 60.0m;
-	public static System.DateTime RegistrationLastDay = new System.DateTime(Year.Int, 9, 20);
-	public const decimal RegistrationFee = 60.0m;
+	public static System.DateTime EarlyRegistrationLastDay = new System.DateTime(Year.Int, 9, 15);
+	public const decimal EarlyRegistrationFee = 75.0m;
+	public static System.DateTime RegistrationLastDay = new System.DateTime(Year.Int, 9, 15);
+	public const decimal RegistrationFee = 75.0m;
 
 	// Represented in the Sql Server table Sukkot.Constants; columngs AttendanceMinDate and AttendanceMaxDate
-	public const string IntroductionDates = "sundown Sunday, October 9, through sundown Monday, October 17th"; 
+	public const string IntroductionDates = "sundown Friday, September 29, through sundown Saturday, October 7th";
 }
 
 
 
 public static class Other
 {
-	public const string Banner = "2022-sukkot-banner-1023-582-3d.jpg"; 
+	public const string Banner = "2023-sukkot-banner-1020-372-3d.jpg";
 	public const string BannerAlt = $"{Year.String} Sukkot Registration Banner";
 	public static string DetailsTitle { get; set; } = $"Living Messiah Sukkot Registration {Year.String}";
 	 
