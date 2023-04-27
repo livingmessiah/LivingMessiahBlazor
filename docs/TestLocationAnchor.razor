@@ -1,0 +1,51 @@
+@page "/TestLocationAnchor"
+<h3>Test page for <code>LocationAnchor</code> component</h3>
+
+<div class="card bg-light mb-3">
+	<div class="card-body">
+		This page tests the <code>LocationAnchor</code>.
+		It was designed primarily for Special Events that needed a location anchor
+		
+		<h4 class="mt-2">Default Settings</h4>
+		<ul>
+			<li>IsPrinterFriendly: <b>false</b></li>
+			<li>IsRemote: <b>false</b></li>
+			<li>Href: <b>/Location</b></li>
+			<li>Address Name: <b>Lilving Messiah</b></li>
+		</ul>
+	</div>
+</div>
+
+
+Default...<br />
+<div class="ms-2"><LocationAnchor /></div>
+<p class="ms-2 fs-6">Create a link to the <span class="font-monospace fw-bold">/Location</span> page</p>
+
+<hr class="mt-2" />
+<p>Is Remote...</p>
+<div class="ps-2"><LocationAnchor IsRemote="true" /></div>
+<p class="text-muted fs-6 ps-2">No link, just a sattelite icon</p>
+
+<hr class="mt-2" />
+Is Remote and Printer Friendly...<br />
+<LocationAnchor IsRemote="true"
+								IsPrinterFriendly="true" />
+<p class="text-muted fs-6">Same as above, no link, just a sattelite icon</p>
+
+<hr class="mt-2" />
+Is printer friendly...<br />
+<LocationAnchor IsPrinterFriendly="true" />
+<p class="text-muted fs-6">No link, just a sign post icon and default <span class="font-monospace fw-bold">AddressName</span></p>
+
+<hr class="mt-2" />
+Specific Address...<br />
+<LocationAnchor AddressName="Cine Mark Mesa 16"
+								AddressStreet="1051 N Dobson Rd, Mesa, AZ 85201"
+								Href="https://goo.gl/maps/MxYb8ue3Ksi6uMjD7" />
+<p class="text-muted fs-6">1<sup>st</sup> line: <span class="font-monospace fw-bold">AddressName</span> value; 
+	2<sup>nd</sup>line: an anchor is created from the <span class="font-monospace fw-bold">Href</span> value
+</p>
+
+@code {
+
+}
