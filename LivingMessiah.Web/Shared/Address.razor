@@ -1,0 +1,35 @@
+﻿
+<address>
+	@((MarkupString)_address);
+</address>
+
+
+
+@code {
+	[Parameter] public bool OnOneLine { get; set; } = false;
+	[Parameter] public bool UseLabel { get; set; } = false;
+
+	string _address;
+
+	const string _Name = "Living Messiah Ministries";
+	const string _Street = "19 North Robson #106";
+	const string _CityStateZip = "Mesa, AZ 85201";
+
+	protected override void OnInitialized()
+	{
+		_address = GetAddress(OnOneLine, UseLabel);
+	}
+
+	public string GetAddress(bool onOneLine, bool useLabel)
+	{
+		return onOneLine ?
+			$"{GetLabel(useLabel)}{_Name}, {_Street}, {_CityStateZip}"
+			:
+			$"<br /><b>{_Name}</b><br />{_Street}<br />{_CityStateZip}";
+	}
+
+	private string GetLabel(bool useLabel)
+	{
+		return useLabel ?	"<b>Mailing Address</b>: " : "";
+	}
+}

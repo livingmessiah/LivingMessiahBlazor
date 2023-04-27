@@ -39,3 +39,11 @@ else
 	}
 
 }
+
+@code {
+	[Parameter] public string AddressName { get; set; } = "Living Messiah";
+	[Parameter] public string AddressStreet { get; set; } = ""; // the default is blank because the default route is a redirect to the location page
+	[Parameter] public string Href { get; set; } = "/Location";
+	[Parameter] public bool IsPrinterFriendly { get; set; } = false;
+	[Parameter] public bool IsRemote { get; set; } = false;
+}

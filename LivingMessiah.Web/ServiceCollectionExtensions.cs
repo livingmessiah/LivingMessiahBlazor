@@ -34,7 +34,6 @@ public static class ServiceCollectionExtensions
 	public static IServiceCollection AddDataStores(this IServiceCollection services)
 	{
 		services
-			.AddSingleton<IAddressService, AddressService>()
 			.AddSingleton<ILinkService, LinkService>()
 
 			.AddSingleton<IShabbatWeekService, ShabbatWeekService>()

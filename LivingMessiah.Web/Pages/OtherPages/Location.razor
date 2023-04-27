@@ -11,9 +11,7 @@
 
 <h2><span class='badge bg-warning'>Address</span></h2>
 <p>
-	<address>
-		@AddressService.GetAddress().FullAddress
-	</address>
+	<Address OnOneLine="true" />
 	<img src="@Blobs.UrlRoot("LMmapSm.jpg")" class="img-fluid" />
 </p>
 
@@ -22,8 +20,3 @@
 				width="350" height="300" frameborder="0" style="border:0" allowfullscreen>
 </iframe>
 
-
-@code {
-	[Inject]
-	private LivingMessiah.Web.Services.IAddressService AddressService { get; set; }
-}

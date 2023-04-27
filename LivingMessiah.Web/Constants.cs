@@ -151,18 +151,6 @@ public static class Blobs
 
 }
 
-// ToDo: this is redundant to LivingMessiah.Web.Data
-public static class Address
-{
-	public static string Name() { return "Living Messiah Ministries"; }
-	public static string Street1() { return "19 North Robson #106"; }
-	public static string City() { return "Mesa"; }
-	public static string State() { return "AZ"; }
-	public static string Zip() { return "85201"; }
-	public static string LatLong() { return "33.415833, -111.836272"; }
-	public static string Phone() { return "555.555.1212"; }
-}
-
 public static class Emails
 {
 	public static class Donations
