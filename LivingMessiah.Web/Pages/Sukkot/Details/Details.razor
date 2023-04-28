@@ -24,47 +24,10 @@
 
 	@if (!String.IsNullOrEmpty(vwRegistration.PayWithCheckMessage))
 	{
+		
 		<div class="d-print-none">
-			<button type="button" @onclick="PaymentInstructions_ButtonClick"
-							bs-toggle-modal="instructions"
-							class="btn btn-danger btn-lg mb-4">
-				Payment Instructions
-			</button>
 
-			<div id="instructions" class="modal fade" role="dialog">
-				<div class="modal-dialog">
-
-					<div class="modal-content">
-						<div class="modal-header">
-							<h2 class="modal-title text-primary">Check Payment Instructions</h2>
-							<button type="button" @onclick="CancelModal_ButtonClick"
-											class="btn-close" data-dismiss="modal" aria-hidden="true">
-								&times;
-							</button>
-						</div>
-
-						<div class="modal-body">
-							@((MarkupString)vwRegistration.PayWithCheckMessage)
-						</div>
-
-						<div class="modal-footer">
-
-							<button type="button" class="btn btn-danger"
-											data-dismiss="modal">
-								<i class="far fa-window-close"></i> Cancel
-							</button>
-
-							<a href="javascript:window.print()"
-								 class="btn btn-md btn-info">
-								<i class="fa fa-print"></i> Print
-							</a>
-
-						</div>
-					</div>
-
-				</div>
-			</div>
-
+			<PaymentInstructionsModal />
 
 		</div>
 	}
