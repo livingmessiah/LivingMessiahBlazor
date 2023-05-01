@@ -23,8 +23,7 @@ public partial class AddRegistrationForm
 
 	public RegistrationVM RegistrationVM { get; set; } = new RegistrationVM();
 
-	//ToDo this should come from the Sukkot.Constants and saved in cache		
-	public Sukkot.DateRangeLocal DateRangeAttendance { get; set; } = Sukkot.DateRangeLocal.FromEnum(Sukkot.DateRangeEnum.AttendanceDays);
+	public Sukkot.Enums.DateRangeType DateRangeAttendance { get; set; } = Sukkot.Enums.DateRangeType.Attendance;
 
 	public List<RegistrationLookup> RegistrationLookupList { get; set; }
 

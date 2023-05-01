@@ -7,6 +7,7 @@ using Blazored.FluentValidation;
 using LivingMessiah.Web.Services;
 using LivingMessiah.Web.Pages.SukkotAdmin.Registration.Services;
 using Blazored.Toast.Services;
+using LivingMessiah.Web.Pages.Sukkot.Enums;
 
 namespace LivingMessiah.Web.Pages.Sukkot.Components;
 
@@ -22,7 +23,8 @@ public partial class RegistrationEditForm
 
 	public RegistrationVM VM { get; set; } = new RegistrationVM();
 
-	public DateRangeLocal DateRangeAttendance { get; set; } = DateRangeLocal.FromEnum(DateRangeEnum.AttendanceDays);
+	public DateRangeType DateRangeAttendance { get; set; } = DateRangeType.Attendance;
+
 
 	private FluentValidationValidator? _fluentValidationValidator;
 

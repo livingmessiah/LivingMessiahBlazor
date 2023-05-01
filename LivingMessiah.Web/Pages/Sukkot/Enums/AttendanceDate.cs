@@ -40,8 +40,8 @@ public abstract class AttendanceDate : SmartEnum<AttendanceDate>
 	public abstract string Title { get; }
 	public abstract DateTime Date { get; }
 	public abstract int Bitwise { get; }
+	public abstract DateRangeType DateRangeType { get; }
 	#endregion
-
 
 
 	#region Private Instantiation
@@ -52,6 +52,7 @@ public abstract class AttendanceDate : SmartEnum<AttendanceDate>
 		public override string Title => "Fri 09/29";
 		public override DateTime Date => Convert.ToDateTime("2023-09-29");
 		public override int Bitwise => 1;
+		public override DateRangeType DateRangeType => DateRangeType.Attendance;
 	}
 
 	private sealed class Sat_09_30_SE : AttendanceDate
@@ -60,6 +61,7 @@ public abstract class AttendanceDate : SmartEnum<AttendanceDate>
 		public override string Title => "Sat 09/30";
 		public override DateTime Date => Convert.ToDateTime("2023-09-30");
 		public override int Bitwise => 2;
+		public override DateRangeType DateRangeType => DateRangeType.Attendance;
 	}
 
 	private sealed class Sun_10_01_SE : AttendanceDate
@@ -67,7 +69,8 @@ public abstract class AttendanceDate : SmartEnum<AttendanceDate>
 		public Sun_10_01_SE() : base($"{nameof(Id.Sun_10_01)}", Id.Sun_10_01) { }
 		public override DateTime Date => Convert.ToDateTime("2023-10-01");
 		public override string Title => "Sun 10/01";
-		
+		public override DateRangeType DateRangeType => DateRangeType.Attendance;
+
 		public override int Bitwise => 4;
 	}
 
@@ -77,6 +80,7 @@ public abstract class AttendanceDate : SmartEnum<AttendanceDate>
 		public override string Title => "Mon 10/02";
 		public override DateTime Date => Convert.ToDateTime("2023-10-02");
 		public override int Bitwise => 8;
+		public override DateRangeType DateRangeType => DateRangeType.Attendance;
 	}	
 
 	private sealed class Tue_10_03_SE : AttendanceDate
@@ -85,6 +89,7 @@ public abstract class AttendanceDate : SmartEnum<AttendanceDate>
 		public override string Title => "Tue 10/03";
 		public override DateTime Date => Convert.ToDateTime("2023-10-03");
 		public override int Bitwise => 16;
+		public override DateRangeType DateRangeType => DateRangeType.Attendance;
 	}
 
 	private sealed class Wed_10_04_SE : AttendanceDate
@@ -93,6 +98,7 @@ public abstract class AttendanceDate : SmartEnum<AttendanceDate>
 		public override string Title => "Wed 10/04";
 		public override DateTime Date => Convert.ToDateTime("2023-10-04");
 		public override int Bitwise => 32;
+		public override DateRangeType DateRangeType => DateRangeType.Attendance;
 	}
 
 	private sealed class Thu_10_05_SE : AttendanceDate
@@ -101,6 +107,7 @@ public abstract class AttendanceDate : SmartEnum<AttendanceDate>
 		public override string Title => "Thu 10/05";
 		public override DateTime Date => Convert.ToDateTime("2023-10-05");
 		public override int Bitwise => 64;
+		public override DateRangeType DateRangeType => DateRangeType.Attendance;
 	}
 
 	private sealed class Fri_10_06_SE : AttendanceDate
@@ -109,6 +116,7 @@ public abstract class AttendanceDate : SmartEnum<AttendanceDate>
 		public override string Title => "Fri 10/06";
 		public override DateTime Date => Convert.ToDateTime("2023-10-06");
 		public override int Bitwise => 128;
+		public override DateRangeType DateRangeType => DateRangeType.Attendance;
 	}
 
 	private sealed class Sat_10_07_SE : AttendanceDate
@@ -117,6 +125,7 @@ public abstract class AttendanceDate : SmartEnum<AttendanceDate>
 		public override string Title => "Sat 10/07";
 		public override DateTime Date => Convert.ToDateTime("2023-10-07");
 		public override int Bitwise => 256;
+		public override DateRangeType DateRangeType => DateRangeType.Attendance;
 	}
 
 	#endregion

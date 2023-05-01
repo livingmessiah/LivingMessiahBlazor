@@ -7,9 +7,11 @@ using LivingMessiah.Web.Pages.SukkotAdmin.Registration.Data;
 using LivingMessiah.Web.Pages.Sukkot.RegistrationSteps.Enums;
 using LivingMessiah.Web.Services;
 
-// ToDo: should this get converted to BaseSmartEnumDateRange
 using LivingMessiah.Web.Pages.Sukkot;  // Needed for DateRangeEnum.cs
-
+using LivingMessiah.Web.Pages.Sukkot.Enums;
+using Syncfusion.Blazor.DropDowns;
+using Newtonsoft.Json.Linq;
+using System.Linq;
 
 namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration.Services;
 
@@ -49,7 +51,7 @@ public class RegistrationService : IRegistrationService
 		{
 			//string email = await SvcClaims.GetEmail();	if (await SvcClaims.IsUserAuthoirized(email))	{	}
 			registrationVM.Status = Status.Payment;
-			registrationVM.AttendanceBitwise = GetDaysBitwise(registrationVM.AttendanceDateList, DateRangeEnum.AttendanceDays);
+			registrationVM.AttendanceBitwise = GetDaysBitwise(registrationVM.AttendanceDateList);
 
 			int newId = 0;
 			int sprocReturnValue = 0;
@@ -59,7 +61,7 @@ public class RegistrationService : IRegistrationService
 			newId = sprocTuple.Item1;
 			sprocReturnValue = sprocTuple.Item2;
 			returnMsg = sprocTuple.Item3;
-			return (newId, sprocReturnValue, returnMsg); 
+			return (newId, sprocReturnValue, returnMsg);
 		}
 		catch (Exception ex)
 		{
@@ -72,27 +74,31 @@ public class RegistrationService : IRegistrationService
 		}
 	}
 
-	//LivingMessiah.Web.Pages.Sukkot DateRangeEnum
-	private int GetDaysBitwise(DateTime[] dateList, DateRangeEnum dateRangeEnum)
+	private int GetDaysBitwise(DateTime[] selectedDateArray)
 	{
-		if (dateList == null) { return 0; }
-
-		//Logger.LogDebug($"Inside: {nameof(RegistrationService)}!{nameof(GetDaysBitwise)}, dateRangeEnum: {dateRangeEnum}");
-		DateRangeLocal DateRangeLocal = DateRangeLocal.FromEnum(dateRangeEnum);
+		if (selectedDateArray is null || selectedDateArray.Length == 0) { return 0; }
 
 		int bitwise = 0;
+		AttendanceDate? attendanceDate;
 
-		int a = 0;
-		foreach (DateTime day in dateList)
+		foreach (var item in selectedDateArray)
 		{
-			a = DateFactory.GetAttendanceBitwise(day);
-			//Logger.LogDebug($"......a:{a} for day:{day}");
-			bitwise = bitwise + a;
+			attendanceDate = AttendanceDate.List.Where(w => w.Date == item).SingleOrDefault();
+			if (attendanceDate is not null)
+			{
+				bitwise += attendanceDate.Bitwise;
+			}
+			else
+			{
+				ExceptionMessage = $"...Acceptance Date:{item.ToShortDateString()} is out of range; range is {DateRangeType.Attendance.Range.Min.ToShortDateString()} to {DateRangeType.Attendance.Range.Max.ToShortDateString()}";  
+				Logger.LogWarning(ExceptionMessage);
+				//throw new RegistratationException(ExceptionMessage);
+			}
 		}
 
-		//Logger.LogDebug($"...bitwise: {bitwise}");
 		return bitwise;
 	}
+
 
 	private RegistrationPOCO DTO_From_VM_To_DB(RegistrationVM registration)
 	{
@@ -132,7 +138,7 @@ public class RegistrationService : IRegistrationService
 			ChildBig = registration.ChildBig,
 			ChildSmall = registration.ChildSmall,
 			StatusId = registration.Status.Value,
-			AttendanceBitwise = GetDaysBitwise(registration.AttendanceDateList, DateRangeEnum.AttendanceDays),
+			AttendanceBitwise = GetDaysBitwise(registration.AttendanceDateList),
 			LmmDonation = registration.LmmDonation,
 			Avatar = registration.Avatar,
 			Notes = GetNotesScrubbed(registration.Notes)
@@ -272,7 +278,7 @@ public class RegistrationService : IRegistrationService
 
 		try
 		{
-			registrationVM.AttendanceBitwise = GetDaysBitwise(registrationVM.AttendanceDateList, DateRangeEnum.AttendanceDays);
+			registrationVM.AttendanceBitwise = GetDaysBitwise(registrationVM.AttendanceDateList);
 			var sprocTuple = await db.Update(DTO_From_VM_To_DB(registrationVM));
 
 			int rowsAffected = sprocTuple.Item1;
@@ -299,7 +305,7 @@ public class RegistrationService : IRegistrationService
 		try
 		{
 			registrationVM.Status = Status.Payment;
-			registrationVM.AttendanceBitwise = GetDaysBitwise(registrationVM.AttendanceDateList, DateRangeEnum.AttendanceDays);
+			registrationVM.AttendanceBitwise = GetDaysBitwise(registrationVM.AttendanceDateList);
 
 			var sprocTuple = await db.Create(DTO_From_VM_To_DB_Ver2(registrationVM));
 

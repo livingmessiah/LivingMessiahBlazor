@@ -268,25 +268,6 @@ public class SukkotService : ISukkotService
 		return s;
 	}
 
-	private int GetDaysBitwise(DateTime[] dateList, DateRangeEnum dateRangeEnum)
-	{
-		if (dateList == null) { return 0; }
-
-		//Logger.LogDebug($"Inside: {nameof(SukkotService)}!{nameof(GetDaysBitwise)}, dateRangeEnum: {dateRangeEnum}");
-		DateRangeLocal DateRangeLocal = DateRangeLocal.FromEnum(dateRangeEnum);
-
-		int bitwise = 0;
-		int a = 0;
-		foreach (DateTime day in dateList)
-		{
-			a = DateFactory.GetAttendanceBitwise(day);
-			//Logger.LogDebug($"......a:{a} for day:{day}");
-			bitwise = bitwise + a;
-		}
-		//Logger.LogDebug($"...bitwise: {bitwise}");
-		return bitwise;
-	}
-
 
 	public async Task<int> DeleteConfirmed(int id)
 	{
