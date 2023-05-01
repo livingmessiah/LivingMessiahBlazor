@@ -10,17 +10,10 @@ namespace LivingMessiah.Web.Pages.Sukkot.RegistrationSteps;
 
 public partial class Index : ComponentBase
 {
-	[Inject]
-	public ILogger<Index> Logger { get; set; }
-
-	[Inject]
-	public ISukkotService svc { get; set; }
-
-	[Inject]
-	NavigationManager NavigationManager { get; set; }
-
-	[Inject]
-	AppState AppState { get; set; }
+	[Inject] public ILogger<Index> Logger { get; set; }
+	[Inject] public ISukkotService svc { get; set; }
+	[Inject] NavigationManager NavigationManager { get; set; }
+	[Inject] AppState AppState { get; set; }
 
 	protected IndexVM IndexVM { get; set; }
 

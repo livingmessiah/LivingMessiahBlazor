@@ -63,18 +63,16 @@ public static class DateFactory
 	}
 
 	static Dictionary<DateTime, int> _AttendanceDictionary = new Dictionary<DateTime, int>
-		{
-			{ Convert.ToDateTime("2022-10-09"), 1 },
-			{ Convert.ToDateTime("2022-10-10"), 2 },
-			{ Convert.ToDateTime("2022-10-11"), 4 },
-			{ Convert.ToDateTime("2022-10-12"), 8 },
-			{ Convert.ToDateTime("2022-10-13"), 16 },
-			{ Convert.ToDateTime("2022-10-14"), 32 },
-			{ Convert.ToDateTime("2022-10-15"), 64 },
-			{ Convert.ToDateTime("2022-10-16"), 128 },
-			{ Convert.ToDateTime("2022-10-17"), 256 },
-			//{ Convert.ToDateTime("2022-10-18"), 512 },
-		};
-
+	{
+		{ Convert.ToDateTime("2023-09-29"), 1 },
+		{ Convert.ToDateTime("2023-09-30"), 2 },
+		{ Convert.ToDateTime("2023-10-01"), 4 },
+		{ Convert.ToDateTime("2023-10-02"), 8 },
+		{ Convert.ToDateTime("2023-10-03"), 16 },
+		{ Convert.ToDateTime("2023-10-04"), 32 },
+		{ Convert.ToDateTime("2023-10-05"), 64 },
+		{ Convert.ToDateTime("2023-10-06"), 128 },
+		{ Convert.ToDateTime("2023-10-07"), 256 },
+	};
 
 }

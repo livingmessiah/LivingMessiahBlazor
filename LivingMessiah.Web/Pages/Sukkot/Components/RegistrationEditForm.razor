@@ -60,29 +60,42 @@
 			</div>
 
 			@*<div class="col-sm-4">
-				<div class="form-floating mb-3">
-				<label for="avatar">Avatar</label>
-				<InputText id="avatar" class="form-control" @bind-Value="VM.Avatar" placeholder="picture (optional)" />
-				<ValidationMessage For="@(() => VM.Avatar)" />
-				</div>
-				</div>*@
+			<div class="form-floating mb-3">
+			<label for="avatar">Avatar</label>
+			<InputText id="avatar" class="form-control" @bind-Value="VM.Avatar" placeholder="picture (optional)" />
+			<ValidationMessage For="@(() => VM.Avatar)" />
+			</div>
+			</div>*@
 
 		</div>
 	</fieldset>
 
 	<fieldset class="mt-3">
 		<legend class="text-primary">Attendance</legend>
+
 		<div class="row mt-n2">
 
-			<div class="col-sm-4">
+			<div class="col-12">
 				<div class="card bg-light mb-3">
 					<div class="card-body">
-						<p class="card-text">To help us with planning, what days will you be attending?  Please select <u>ALL</u> the dates, not just the beginning and ending.</p>
+						<p class="card-text">
+							To help us with planning, select what days will you be attending.  Please select <u>ALL</u> the dates, not just the beginning and ending.
+						</p>
 					</div>
 				</div>
 			</div>
+		</div>
 
-			<div class="col-sm-8">
+		<div class="row mt-n2">
+			<div class="col-sm-12">
+				<p class="mb-1">
+					To change month, use <i class='fas fa-chevron-up'></i> <i class='fas fa-chevron-down'></i>
+				</p>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-8 col-sm-7">
 				<div class="form-floating mb-3">
 					<SfCalendar TValue="DateTime?"
 											IsMultiSelection="true" ShowTodayButton="false"
@@ -92,8 +105,11 @@
 					</SfCalendar>
 				</div>
 			</div>
-
+			<div class="col-4 col-sm-5">
+				<AttendanceDateList SelectedDates="@VM.AttendanceDateList" />
+			</div>
 		</div>
+
 	</fieldset>
 
 
@@ -148,7 +164,7 @@
 		</div>
 	</fieldset>
 
-	<button type="submit"	class="btn btn-primary btn-lg mt-2">
+	<button type="submit" class="btn btn-primary btn-lg mt-2">
 		<i class="fas fa-save"></i> @SubmitButtonText
 	</button>
 

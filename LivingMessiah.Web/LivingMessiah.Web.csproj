@@ -116,5 +116,9 @@
     </Content>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Pages\Sukkot\Enums\" />
+  </ItemGroup>
+
 
 </Project>

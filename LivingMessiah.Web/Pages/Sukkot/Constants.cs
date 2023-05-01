@@ -3,8 +3,8 @@
 
 public static class AttendanceDateRange
 {
-	public const string Min = "9/28/2023";
-	public const string Max = "10/08/2023";
+	public const string Min = "9/29/2023";
+	public const string Max = "10/07/2023";
 }
 
 
