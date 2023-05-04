@@ -1,10 +1,19 @@
 # Meta Queries
+- images: C:\Source\LivingeMessiahBlazorBackup\999-Create-MD-Docs
 
 ## `SP_Help` table_name
 -- Extensive Details: Table, lists of: Identities, Guilds, "Data_located_on_filegroup" , Index(s), Contstraints, 
 ```sql
-	EXEC SP_HELP 'MySchema.Constants' 
+EXEC SP_HELP 'MySchema.Constants' 
 ```
+
+## `SP_Depends` @objname = N'YourTable'
+-- Show dependencies for a given object
+```sql
+EXEC sp_depends @objname = N'Sukkot.AttendanceDate' ;
+EXEC sp_depends @objname = N'Sukkot.vwConstants' ;
+```
+
 
 ## zvwForeignKeyReport
 ```sql
