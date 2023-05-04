@@ -13,7 +13,7 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.HouseRulesAgreement;
 
 public partial class AddRegistrationForm
 {
-	[Inject] public IRegistrationService svc { get; set; }
+	[Inject] public IRegistrationAdminService svc { get; set; }
 	[Inject] public ILogger<AddRegistrationForm> Logger { get; set; }
 	[Inject] public IToastService Toast { get; set; }
 

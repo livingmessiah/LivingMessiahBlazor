@@ -17,7 +17,7 @@ public partial class List
 	public ILogger<RegistrationGrid> Logger { get; set; }
 
 	[Inject]
-	public IRegistrationRepository db { get; set; }
+	public IRegistrationAdminRepository db { get; set; }
 
 	//[Inject]
 	//public IRegistrationService svc { get; set; }

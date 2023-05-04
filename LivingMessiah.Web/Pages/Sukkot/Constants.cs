@@ -1,13 +1,5 @@
 ﻿namespace LivingMessiah.Web.Pages.Sukkot.Constants;
 
-
-public static class AttendanceDateRange
-{
-	public const string Min = "9/29/2023";
-	public const string Max = "10/07/2023";
-}
-
-
 public static class Year
 {
 	public const int Int = 2023;

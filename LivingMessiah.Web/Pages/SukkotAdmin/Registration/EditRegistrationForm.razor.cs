@@ -17,8 +17,8 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration;
 
 public partial class EditRegistrationForm
 {
-	[Inject] public IRegistrationService svc { get; set; }
-	[Inject] public IRegistrationRepository db { get; set; }
+	[Inject] public IRegistrationAdminService svc { get; set; }
+	[Inject] public IRegistrationAdminRepository db { get; set; }
 	[Inject] public ILogger<EditRegistrationForm> Logger { get; set; }
 	[Inject] public IToastService Toast { get; set; }
 

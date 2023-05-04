@@ -1,6 +1,7 @@
 ﻿@using LivingMessiah.Web.Pages.Sukkot;
 @using LivingMessiah.Web.Shared.Sukkot
 @using Blazored.FluentValidation
+@using LivingMessiah.Web.SmartEnums
 
 <h4>@Title <span class="float-end"><sup><i>@Title2</i></sup></span></h4>
 <EditForm Model="@VM" OnValidSubmit="@SubmitValidForm">
@@ -86,29 +87,84 @@
 			</div>
 		</div>
 
-		<div class="row mt-n2">
-			<div class="col-sm-12">
-				<p class="mb-1">
-					To change month, use <i class='fas fa-chevron-up'></i> <i class='fas fa-chevron-down'></i>
-				</p>
-			</div>
-		</div>
+		@if (Enums.DateRangeType.Attendance.HasSecondMonth)
+		{
+			<div class="@MediaQuery.Xs.DivClass">
+				<div class="row">
+					<div class="col-12">
+						<div class="form-floating mb-3">
+							<SfCalendar TValue="DateTime?"
+												IsMultiSelection="true" ShowTodayButton="false"
+												@bind-Values="@VM.AttendanceDateList"
+												Min="@DateRangeAttendance.Range.Min"
+												Max="@DateRangeAttendance.Range.Max">
+							</SfCalendar>
+						</div>
+					</div>
+				</div>
 
-		<div class="row">
-			<div class="col-8 col-sm-7">
-				<div class="form-floating mb-3">
-					<SfCalendar TValue="DateTime?"
+				<div class="row">
+					<div class="col-9">
+						<div class="form-floating mb-3">
+							<SfCalendar TValue="DateTime?"
+												IsMultiSelection="true" ShowTodayButton="false"
+												@bind-Values="@VM.AttendanceDateList2ndMonth"
+												Min="@DateRangeAttendance.Range2ndMonth.Min"
+												Max="@DateRangeAttendance.Range2ndMonth.Max">
+							</SfCalendar>
+						</div>
+					</div>
+					<div class="col-3"></div>
+				</div>
+			</div>
+
+			<div class="@MediaQuery.SmMdOrLgOrXl.DivClass">
+				<div class="row">
+					<div class="col-6">
+						<div class="form-floating mb-3">
+							<SfCalendar TValue="DateTime?"
+												IsMultiSelection="true" ShowTodayButton="false"
+												@bind-Values="@VM.AttendanceDateList"
+												Min="@DateRangeAttendance.Range.Min"
+												Max="@DateRangeAttendance.Range.Max">
+							</SfCalendar>
+						</div>
+					</div>
+
+					<div class="col-6">
+						<div class="form-floating mb-3">
+							<SfCalendar TValue="DateTime?"
+												IsMultiSelection="true" ShowTodayButton="false"
+												@bind-Values="@VM.AttendanceDateList2ndMonth"
+												Min="@DateRangeAttendance.Range2ndMonth.Min"
+												Max="@DateRangeAttendance.Range2ndMonth.Max">
+							</SfCalendar>
+						</div>
+					</div>
+				</div>
+			</div>
+		}
+		else
+		{
+			<!--HasSecondMonth=false-->
+			<div class="row">
+				<div class="col-8 col-sm-7">
+					<div class="form-floating mb-3">
+						<p>Min- Max: @DateRangeAttendance.Range.Min - @DateRangeAttendance.Range.Max</p>
+						<SfCalendar TValue="DateTime?"
 											IsMultiSelection="true" ShowTodayButton="false"
 											@bind-Values="@VM.AttendanceDateList"
 											Min="@DateRangeAttendance.Range.Min"
 											Max="@DateRangeAttendance.Range.Max">
-					</SfCalendar>
+						</SfCalendar>
+					</div>
+				</div>
+				<div class="col-4 col-sm-5">
+					<AttendanceDateList SelectedDates="@VM.AttendanceDateList" />
 				</div>
 			</div>
-			<div class="col-4 col-sm-5">
-				<AttendanceDateList SelectedDates="@VM.AttendanceDateList" />
-			</div>
-		</div>
+		}
+
 
 	</fieldset>
 

@@ -1,11 +1,9 @@
 ﻿using System;
-using LivingMessiah.Web.Pages.Sukkot.RegistrationSteps.Enums;
 
-namespace LivingMessiah.Web.Pages.Sukkot.Domain;
+namespace LivingMessiah.Web.Pages.Sukkot.Components;
 
-public class RegistrationPOCO
+public class RegistrationEditPOCO
 {
-	#region Simple Types
 	public int Id { get; set; }
 	public string FamilyName { get; set; }
 	public string FirstName { get; set; }
@@ -16,17 +14,11 @@ public class RegistrationPOCO
 	public int Adults { get; set; }
 	public int ChildBig { get; set; }
 	public int ChildSmall { get; set; }
-
 	public int StatusId { get; set; }
-	public Status Status { get; set; }
 	public int AttendanceBitwise { get; set; }
-
 	public string Notes { get; set; }
 	public string Avatar { get; set; }
 	public Decimal LmmDonation { get; set; }
-	#endregion
-
-	#region HelperMethods
 
 	public string NotesScrubbed
 	{
@@ -43,5 +35,6 @@ public class RegistrationPOCO
 
 		}
 	}
-	#endregion
+
+
 }

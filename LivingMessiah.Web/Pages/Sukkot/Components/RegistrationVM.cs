@@ -21,8 +21,8 @@ public class RegistrationVM
 	public Status Status { get; set; }
 
 	public int AttendanceBitwise { get; set; }
-	public string AttendanceDatesCSV { get; set; }
 	public DateTime[] AttendanceDateList { get; set; }
+	public DateTime[] AttendanceDateList2ndMonth { get; set; }
 	public string Notes { get; set; }
 	public string Avatar { get; set; }
 	public Decimal LmmDonation { get; set; }
@@ -54,7 +54,7 @@ public class RegistrationVMValidator : AbstractValidator<RegistrationVM>
 
 		RuleFor(p => p.Adults)
 				.NotNull().WithMessage("You must enter the number of adults")
-				.GreaterThanOrEqualTo(0).WithMessage("Number of adults must be greater than 0")
+				.GreaterThanOrEqualTo(1).WithMessage("Number of adults must be greater than 1")
 				.LessThan(20).WithMessage("Number of adults cannot be greater than 20");
 
 	}
