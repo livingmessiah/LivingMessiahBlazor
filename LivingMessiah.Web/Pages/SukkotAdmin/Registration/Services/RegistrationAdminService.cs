@@ -15,25 +15,27 @@ using System.Linq;
 
 namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration.Services;
 
-public interface IRegistrationService
+public interface IRegistrationAdminService
 {
 	string ExceptionMessage { get; set; }
-	Task<RegistrationVM> GetById(int id);
-	Task<Sukkot.Components.RegistrationVM> GetByIdVer2(int id);
-	Task<(int NewId, int SprocReturnValue, string ReturnMsg)> Create(RegistrationVM registration);
-	Task<(int RowsAffected, int SprocReturnValue, string ReturnMsg)> Update(RegistrationVM registration);
-	Task<(int NewId, int SprocReturnValue, string ReturnMsg)> CreateVer2(Sukkot.Components.RegistrationVM registration);
-	Task<(int RowsAffected, int SprocReturnValue, string ReturnMsg)> UpdateVer2(Sukkot.Components.RegistrationVM registration);
+
+	// Used by namespace SukkotAdmin
+	Task<RegistrationVM> GetById(int id);                                                                   //        Registration\EditRegistrationForm
+	Task<(int NewId, int SprocReturnValue, string ReturnMsg)> Create(RegistrationVM registration);          // HouseRulesAgreement\AddRegistrationForm 
+	Task<(int RowsAffected, int SprocReturnValue, string ReturnMsg)> Update(RegistrationVM registration);   //        Registration\EditRegistrationForm
 }
 
-public class RegistrationService : IRegistrationService
+public class RegistrationAdminService : IRegistrationAdminService
 {
 	#region Constructor and DI
-	private readonly IRegistrationRepository db;
+	private readonly IRegistrationAdminRepository db;
 	private readonly ILogger Logger;
 	private readonly ISecurityClaimsService SvcClaims;
 
-	public RegistrationService(IRegistrationRepository registrationRepository, ILogger<RegistrationService> logger, ISecurityClaimsService securityClaimsService)
+	public RegistrationAdminService(
+		IRegistrationAdminRepository registrationRepository, 
+		ILogger<RegistrationAdminService> logger, 
+		ISecurityClaimsService securityClaimsService)
 	{
 		db = registrationRepository;
 		Logger = logger;
@@ -46,7 +48,7 @@ public class RegistrationService : IRegistrationService
 
 	public async Task<(int NewId, int SprocReturnValue, string ReturnMsg)> Create(RegistrationVM registrationVM)
 	{
-		Logger.LogInformation($"Inside {nameof(RegistrationService)}!{nameof(Create)}; calling {nameof(db.Create)}");
+		Logger.LogInformation($"Inside {nameof(RegistrationAdminService)}!{nameof(Create)}; calling {nameof(db.Create)}");
 		try
 		{
 			//string email = await SvcClaims.GetEmail();	if (await SvcClaims.IsUserAuthoirized(email))	{	}
@@ -74,6 +76,7 @@ public class RegistrationService : IRegistrationService
 		}
 	}
 
+	//private int GetDaysBitwise(DateTime[] selectedDateArray, DateTime[] selectedDateArray2ndMonth)  //, DateRangeType dateRangeType
 	private int GetDaysBitwise(DateTime[] selectedDateArray)
 	{
 		if (selectedDateArray is null || selectedDateArray.Length == 0) { return 0; }
@@ -86,7 +89,7 @@ public class RegistrationService : IRegistrationService
 			attendanceDate = AttendanceDate.List.Where(w => w.Date == item).SingleOrDefault();
 			if (attendanceDate is not null)
 			{
-				bitwise += attendanceDate.Bitwise;
+				bitwise += attendanceDate.Value;  // ToDo: .Bitwise is going away
 			}
 			else
 			{
@@ -123,85 +126,10 @@ public class RegistrationService : IRegistrationService
 		return poco;
 	}
 
-	private RegistrationPOCO DTO_From_VM_To_DB_Ver2(Sukkot.Components.RegistrationVM registration)
-	{
-		RegistrationPOCO poco = new RegistrationPOCO
-		{
-			Id = registration.Id,
-			FamilyName = registration.FamilyName,
-			FirstName = registration.FirstName,
-			SpouseName = registration.SpouseName,
-			OtherNames = registration.OtherNames,
-			EMail = registration.EMail,
-			Phone = registration.Phone,
-			Adults = registration.Adults,
-			ChildBig = registration.ChildBig,
-			ChildSmall = registration.ChildSmall,
-			StatusId = registration.Status.Value,
-			AttendanceBitwise = GetDaysBitwise(registration.AttendanceDateList),
-			LmmDonation = registration.LmmDonation,
-			Avatar = registration.Avatar,
-			Notes = GetNotesScrubbed(registration.Notes)
-		};
-		return poco;
-	}
-
-
-	public async Task<Sukkot.Components.RegistrationVM> GetByIdVer2(int id)
-	{
-		Logger.LogInformation($"Inside {nameof(RegistrationService)}!{nameof(GetByIdVer2)}, id={id}");
-		Sukkot.Components.RegistrationVM VM = new();
-		try
-		{
-			VM = await db.GetByIdVer2(id);
-			string email = await SvcClaims.GetEmail();
-			VM.Status = Status.FromValue(VM.StatusId);
-			VM.AttendanceDateList = GetAttendanceDateList(VM.AttendanceDatesCSV);
-			if (await SvcClaims.IsUserAuthoirized(email) == false)
-			{
-				ExceptionMessage = $"...logged in user:{email} lacks authority for to see content of id={id}";  // /EMail:{registrationPOCO.EMail}
-				Logger.LogWarning(ExceptionMessage);
-				throw new UserNotAuthoirizedException(ExceptionMessage);
-			}
-			else
-			{
-				return VM;
-			}
-		}
-		catch (Exception ex)
-		{
-			ExceptionMessage = $"Inside {nameof(GetByIdVer2)}";
-			Logger.LogError(ex, ExceptionMessage, id);
-			ExceptionMessage += ex.Message ?? "-- ex.Message was null --";
-			throw new InvalidOperationException(ExceptionMessage);
-		}
-	}
-
-	private DateTime[] GetAttendanceDateList(string csv)
-	{
-		if (!String.IsNullOrEmpty(csv))
-		{
-			int length = csv.Split(",").Length;
-			DateTime[] list = new DateTime[length];
-			string[] array = csv.Split(',');
-			int i = 0;
-			foreach (string value in array)
-			{
-				list[i] = (DateTime.Parse(value));
-				i += 1;
-			}
-			return list;
-		}
-		else
-		{
-			return null;
-		}
-	}
-
 
 	public async Task<RegistrationVM> GetById(int id)
 	{
-		Logger.LogInformation($"Inside {nameof(RegistrationService)}!{nameof(GetById)}, id={id}");
+		Logger.LogInformation($"Inside {nameof(RegistrationAdminService)}!{nameof(GetById)}, id={id}");
 		RegistrationPOCO registrationPOCO = new RegistrationPOCO();
 		try
 		{
@@ -246,7 +174,7 @@ public class RegistrationService : IRegistrationService
 	private RegistrationVM DTO_From_DB_To_VM(RegistrationPOCO poco)
 	{
 		Logger.LogDebug(string.Format("Inside {0}"
-		, nameof(RegistrationService) + "!" + nameof(DTO_From_DB_To_VM)));
+		, nameof(RegistrationAdminService) + "!" + nameof(DTO_From_DB_To_VM)));
 
 		//Logger.LogDebug(string.Format("...poco.StatusId: {0}", poco.StatusId));
 
@@ -274,7 +202,7 @@ public class RegistrationService : IRegistrationService
 
 	public async Task<(int RowsAffected, int SprocReturnValue, string ReturnMsg)> Update(RegistrationVM registrationVM)
 	{
-		Logger.LogInformation($"Inside {nameof(RegistrationService)}!{nameof(Update)}; calling {nameof(db.Update)}");
+		Logger.LogInformation($"Inside {nameof(RegistrationAdminService)}!{nameof(Update)}; calling {nameof(db.Update)}");
 
 		try
 		{
@@ -297,81 +225,6 @@ public class RegistrationService : IRegistrationService
 
 	}
 
-	#region Ver2
-
-	public async Task<(int NewId, int SprocReturnValue, string ReturnMsg)> CreateVer2(Sukkot.Components.RegistrationVM registrationVM)
-	{
-		Logger.LogInformation($"Inside {nameof(RegistrationService)}!{nameof(CreateVer2)}; calling {nameof(db.Create)}");
-		try
-		{
-			registrationVM.Status = Status.Payment;
-			registrationVM.AttendanceBitwise = GetDaysBitwise(registrationVM.AttendanceDateList);
-
-			var sprocTuple = await db.Create(DTO_From_VM_To_DB_Ver2(registrationVM));
-
-			int newId = sprocTuple.Item1;
-			int sprocReturnValue = sprocTuple.Item2;
-			string returnMsg = sprocTuple.Item3;
-
-			return (newId, sprocReturnValue, returnMsg);
-		}
-		catch (Exception ex)
-		{
-			ExceptionMessage = $"...Error calling {nameof(db.Create)} (presumably)";
-			Logger.LogError(ex, ExceptionMessage);
-
-			// Note, the UI should NOT display this detailed Exception Message, unless maybe if Env.IsDevelopment
-			ExceptionMessage += ex.Message ?? "-- ex.Message was null --";
-			throw new InvalidOperationException(ExceptionMessage);
-		}
-	}
-
-	public async Task<(int RowsAffected, int SprocReturnValue, string ReturnMsg)> UpdateVer2(Sukkot.Components.RegistrationVM registrationVM)
-	{
-		Logger.LogInformation($"Inside {nameof(RegistrationService)}!{nameof(UpdateVer2)}; calling {nameof(db.Update)}");
-		try
-		{
-			var sprocTuple = await db.Update(DTO_From_VM_To_DB_Ver2(registrationVM));
-			Logger.LogInformation($"Registration updated for {registrationVM.FamilyName}/{registrationVM.EMail}");
-
-			int rowsAffected = sprocTuple.Item1; ;
-			int sprocReturnValue = sprocTuple.Item2;
-			string returnMsg = sprocTuple.Item3;
-			return (rowsAffected, sprocReturnValue, returnMsg);
-		}
-		catch (Exception ex)
-		{
-			ExceptionMessage = $"...Error calling {nameof(db.Update)} (presumably)";
-			Logger.LogError(ex, ExceptionMessage);
-			ExceptionMessage += ex.Message ?? "-- ex.Message was null --";
-			throw new InvalidOperationException(ExceptionMessage);
-		}
-	}
-
-	public string GetNotesScrubbed(string notes)
-	{
-		if (!string.IsNullOrEmpty(notes))
-		{
-			return notes.Replace("\"", string.Empty).Replace("'", string.Empty);
-		}
-		else
-		{
-			return notes;
-		}
-	}
-
-	#endregion
-
-	private static string DumpDateRange(DateTime[] dateList)
-	{
-		if (dateList == null) { return ""; }
-		string s = "";
-		foreach (DateTime day in dateList)
-		{
-			s += day.ToString("MM/dd") + ", ";
-		}
-		return s;
-	}
 
 	#region CustomExceptions Classes
 

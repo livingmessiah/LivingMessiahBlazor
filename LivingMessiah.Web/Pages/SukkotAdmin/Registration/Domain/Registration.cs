@@ -27,7 +27,7 @@ public class Registration
 
 	public int AttendanceBitwise { get; set; }
 	public DateTime[] AttendanceDateList { get; set; }  // NOT NULL
-	public string AttendanceDatesCSV { get; set; }
+	// public string AttendanceDatesCSV { get; set; }  // ToDo: delete, use Bitwise
 
 	public string Notes { get; set; }
 

@@ -5,15 +5,13 @@ using LivingMessiah.Web.Pages.Sukkot.Services;
 using Microsoft.AspNetCore.Components;
 using Blazored.FluentValidation;
 using LivingMessiah.Web.Services;
-using LivingMessiah.Web.Pages.SukkotAdmin.Registration.Services;
 using Blazored.Toast.Services;
-using LivingMessiah.Web.Pages.Sukkot.Enums;
 
 namespace LivingMessiah.Web.Pages.Sukkot.Components;
 
 public partial class RegistrationEditForm
 {
-	[Inject] public IRegistrationService svc { get; set; }
+	[Inject] public IRegistrationEditService svc { get; set; }
 	[Inject] public ILogger<RegistrationEditForm> Logger { get; set; }
 	[Inject] AppState AppState { get; set; }
 	[Inject] public IToastService Toast { get; set; }
@@ -23,10 +21,8 @@ public partial class RegistrationEditForm
 
 	public RegistrationVM VM { get; set; } = new RegistrationVM();
 
-	public DateRangeType DateRangeAttendance { get; set; } = DateRangeType.Attendance;
-
-
 	private FluentValidationValidator? _fluentValidationValidator;
+	public Enums.DateRangeType DateRangeAttendance { get; set; } = Enums.DateRangeType.Attendance;
 
 	private int Id2;
 	protected override async Task OnInitializedAsync()
@@ -42,7 +38,7 @@ public partial class RegistrationEditForm
 			}
 			else
 			{
-				VM = await svc.GetByIdVer2(Id2);
+				VM = await svc.GetById(Id2);
 				AppState.UpdateMessage(this, GetNotificationMessage());
 				//Toast.ShowInfo($"{GetNotificationMessage()}");
 			}
@@ -100,20 +96,20 @@ public partial class RegistrationEditForm
 	protected async Task SubmitValidForm()
 	{
 		Logger.LogDebug(string.Format("Inside {0} Id2:{1}"
-		, nameof(RegistrationEditForm) + "!" + nameof(SubmitValidForm), nameof(Id2)));
+			, nameof(RegistrationEditForm) + "!" + nameof(SubmitValidForm), Id2));
 
 		if (Id2 == 0)  // Add
 		{
 			try
 			{
-				var sprocTuple = await svc.CreateVer2(VM);
+				var sprocTuple = await svc.Create(VM);
 				Logger.LogInformation(string.Format("...Registration created! newId={0}", Id2));
-				//AppState.UpdateMessage(this, "Registration Added!");
+				AppState.UpdateMessage(this, "Registration Added!");
 				Toast.ShowInfo($"Registration Added!");
 			}
 			catch (InvalidOperationException invalidOperationException)
 			{
-				//AppState.UpdateMessage(this, invalidOperationException.Message);
+				AppState.UpdateMessage(this, invalidOperationException.Message);
 				Toast.ShowError($"{invalidOperationException.Message}");
 			}
 		}
@@ -121,15 +117,15 @@ public partial class RegistrationEditForm
 		{
 			try
 			{
-				var sprocTuple = await svc.UpdateVer2(VM);
+				var sprocTuple = await svc.Update(VM);
 				Logger.LogInformation("...Registration Updated!");
-				//AppState.UpdateMessage(this, "Registration Updated!");
+				AppState.UpdateMessage(this, "Registration Updated!");
 				Toast.ShowInfo($"Registration Updated!");
 			}
 
 			catch (InvalidOperationException invalidOperationException)
 			{
-				//AppState.UpdateMessage(this, invalidOperationException.Message);
+				AppState.UpdateMessage(this, invalidOperationException.Message);
 				Toast.ShowError($"{invalidOperationException.Message}");
 			}
 		}

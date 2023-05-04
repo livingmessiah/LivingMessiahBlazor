@@ -19,7 +19,7 @@ public class RegistrationPOCO
 	public int StatusId { get; set; }
 
 	public int AttendanceBitwise { get; set; }
-	public string AttendanceDatesCSV { get; set; }
+	public string AttendanceDatesCSV { get; set; } // ToDo: delete, use Bitwise
 
 	public string Notes { get; set; }
 	public string Avatar { get; set; }
@@ -28,7 +28,7 @@ public class RegistrationPOCO
 
 	#region HelperMethods
 
-
+	// ToDo: delete, use Bitwise
 	public DateTime[] AttendanceDateList
 	{
 		get

@@ -59,7 +59,6 @@ SELECT TOP 1
 Id, FamilyName, FirstName, SpouseName, OtherNames, EMail, Phone, Adults, ChildBig, ChildSmall
 , StatusId
 , AttendanceBitwise, LmmDonation, Notes, Avatar
-, Sukkot.udfAttendanceDatesConcat(Id) AS AttendanceDatesCSV
 FROM Sukkot.Registration 
 WHERE Id = @Id
 ";

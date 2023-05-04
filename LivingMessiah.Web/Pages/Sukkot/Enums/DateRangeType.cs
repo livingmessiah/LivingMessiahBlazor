@@ -5,7 +5,6 @@ namespace LivingMessiah.Web.Pages.Sukkot.Enums;
 
 public abstract class DateRangeType : SmartEnum<DateRangeType>
 {
-	// ToDo: Create Sql CodeGen for this
 	#region Id's
 	private static class Id
 	{
@@ -25,24 +24,44 @@ public abstract class DateRangeType : SmartEnum<DateRangeType>
 	#region Extra Fields
 	public abstract string Title { get; }
 	public abstract DateRange Range { get; }
+	public abstract DateRange Range2ndMonth { get; }
+	public abstract bool HasSecondMonth { get; }
 	#endregion
 
 
 	#region Private Instantiation
 
+	// Configuration with NO second month
+	/*
 	private sealed class AttendanceSE : DateRangeType
 	{
 		public AttendanceSE() : base($"{nameof(Id.Attendance)}", Id.Attendance) { }
 		public override string Title => "Attendance Date";
 		public override DateRange Range => new DateRange(Convert.ToDateTime("2023-09-29"), Convert.ToDateTime("2023-10-07"));
-
+		public override DateRange Range2ndMonth => null;
+		public override bool HasSecondMonth => false;
 	}
+	*/
+
+	// 	 Configuration WITH second month
+	/**/
+	private sealed class AttendanceSE : DateRangeType
+	{
+		public AttendanceSE() : base($"{nameof(Id.Attendance)}", Id.Attendance) { }
+		public override string Title => "Attendance Date";
+		public override DateRange Range => new DateRange(Convert.ToDateTime("2023-09-29"), Convert.ToDateTime("2023-09-30"));
+		public override DateRange Range2ndMonth => new DateRange(Convert.ToDateTime("2023-10-01"), Convert.ToDateTime("2023-10-07"));
+		public override bool HasSecondMonth => true;
+	}
+	
 
 	private sealed class LodgingSE : DateRangeType
 	{
 		public LodgingSE() : base($"{nameof(Id.Lodging)}", Id.Lodging) { }
 		public override string Title => "Lodging Date";
-		public override DateRange Range => new DateRange(Convert.ToDateTime("2023-09-29"), Convert.ToDateTime("2023-10-07"));
+		public override DateRange Range => new DateRange(Convert.ToDateTime("2023-09-29"), Convert.ToDateTime("2023-09-30"));
+		public override bool HasSecondMonth => true;
+		public override DateRange Range2ndMonth => new DateRange(Convert.ToDateTime("2023-10-01"), Convert.ToDateTime("2023-10-07"));
 	}
 
 	#endregion
@@ -51,7 +70,5 @@ public abstract class DateRangeType : SmartEnum<DateRangeType>
 public record DateRange(DateTime Min, DateTime Max);
 
 /*
-
-SELECT
-FROM Sukkot.AttendanceDate
+	SELECT DateRangeCodeGen FROM Sukkot.vwDateRangeTypeCodeGen
 */

@@ -50,9 +50,12 @@ public static class ServiceCollectionExtensions
 
 			//.AddSingleton<ISukkotSettings, SukkotSettings>()
 			.AddTransient<ISukkotService, SukkotService>()
-			.AddTransient<IRegistrationService, RegistrationService>()
+			.AddTransient<IRegistrationAdminService, RegistrationAdminService>()
 
-			.AddTransient<IRegistrationRepository, RegistrationRepository>()
+			.AddTransient<IRegistrationEditService, RegistrationEditService>()
+			.AddTransient<IRegistrationEditRepository, RegistrationEditRepository>()
+			
+			.AddTransient<IRegistrationAdminRepository, RegistrationAdminRepository>()
 			.AddTransient<IDonationRepository, DonationRepository>()
 			.AddTransient<ISukkotAdminService, SukkotAdminService>()
 			.AddTransient<IContactRepository, ContactRepository>()
