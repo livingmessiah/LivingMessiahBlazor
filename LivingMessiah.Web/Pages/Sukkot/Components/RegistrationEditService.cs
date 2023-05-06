@@ -52,19 +52,9 @@ public class RegistrationEditService : IRegistrationEditService
 			string email = await SvcClaims.GetEmail();
 			VM.Status = Status.FromValue(VM.StatusId);
 
-			if (!Enums.DateRangeType.Attendance.HasSecondMonth)
-			{
-				VM.AttendanceDateList = AttendanceDate.FromValue(VM.AttendanceBitwise).Select(s => s.Date).ToArray();
-			}
-			else
-			{
-				VM.AttendanceDateList = AttendanceDate.FromValue(VM.AttendanceBitwise)
-					.Where(w => w.SecondMonth == false)
-					.Select(s => s.Date).ToArray();
-				VM.AttendanceDateList2ndMonth = AttendanceDate.FromValue(VM.AttendanceBitwise)
-					.Where(w => w.SecondMonth == true)
-					.Select(s => s.Date).ToArray();
-			}
+			var tuple = Helper.GetAttendanceDatesArray(VM.AttendanceBitwise);
+			VM.AttendanceDateList = tuple.week1;
+			VM.AttendanceDateList2ndMonth = tuple.week2;
 
 			if (await SvcClaims.IsUserAuthoirized(email) == false)
 			{

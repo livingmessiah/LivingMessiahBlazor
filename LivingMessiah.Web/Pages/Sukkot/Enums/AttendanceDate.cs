@@ -44,9 +44,8 @@ public abstract class AttendanceDate : SmartFlagEnum<AttendanceDate>
 	#region Extra Fields
 	public abstract string Title { get; }
 	public abstract DateTime Date { get; }
-	//public abstract int Bitwise { get; }
 	public abstract DateRangeType DateRangeType { get; }
-	public abstract bool SecondMonth { get; }
+	public abstract int Week { get; }
 	#endregion
 
 
@@ -60,7 +59,7 @@ public abstract class AttendanceDate : SmartFlagEnum<AttendanceDate>
 		public override DateTime Date => DateTime.MaxValue;
 		public override int Bitwise => Id.All;
 		public override DateRangeType DateRangeType => DateRangeType.Attendance;
-		public override bool SecondMonth => false; // N/A
+		public override int Week => 1; // N/A
 	}
 
 	private sealed class NoneSE : AttendanceDate
@@ -70,7 +69,7 @@ public abstract class AttendanceDate : SmartFlagEnum<AttendanceDate>
 		public override DateTime Date => DateTime.MinValue;
 		public override int Bitwise => Id.None;
 		public override DateRangeType DateRangeType => DateRangeType.Attendance;
-		public override bool SecondMonth => false; // N/A
+		public override int Week => 1; // N/A
 	}
 	*/
 
@@ -79,90 +78,72 @@ public abstract class AttendanceDate : SmartFlagEnum<AttendanceDate>
 		public Fri_09_29_SE() : base($"{nameof(Id.Fri_09_29)}", Id.Fri_09_29) { }
 		public override string Title => "Fri 09/29";
 		public override DateTime Date => Convert.ToDateTime("2023-09-29");
-		//public override int Bitwise => 1;
 		public override DateRangeType DateRangeType => DateRangeType.Attendance;
-		public override bool SecondMonth => false;
-		
+		public override int Week => 1;
 	}
-
 	private sealed class Sat_09_30_SE : AttendanceDate
 	{
 		public Sat_09_30_SE() : base($"{nameof(Id.Sat_09_30)}", Id.Sat_09_30) { }
 		public override string Title => "Sat 09/30";
 		public override DateTime Date => Convert.ToDateTime("2023-09-30");
-		//public override int Bitwise => 2;
 		public override DateRangeType DateRangeType => DateRangeType.Attendance;
-		public override bool SecondMonth => false;
+		public override int Week => 1;
 	}
-
 	private sealed class Sun_10_01_SE : AttendanceDate
 	{
 		public Sun_10_01_SE() : base($"{nameof(Id.Sun_10_01)}", Id.Sun_10_01) { }
-		public override DateTime Date => Convert.ToDateTime("2023-10-01");
 		public override string Title => "Sun 10/01";
-		//public override int Bitwise => 4;
+		public override DateTime Date => Convert.ToDateTime("2023-10-01");
 		public override DateRangeType DateRangeType => DateRangeType.Attendance;
-		public override bool SecondMonth => true;
+		public override int Week => 2;
 	}
-
 	private sealed class Mon_10_02_SE : AttendanceDate
 	{
 		public Mon_10_02_SE() : base($"{nameof(Id.Mon_10_02)}", Id.Mon_10_02) { }
 		public override string Title => "Mon 10/02";
 		public override DateTime Date => Convert.ToDateTime("2023-10-02");
-		//public override int Bitwise => 8;
 		public override DateRangeType DateRangeType => DateRangeType.Attendance;
-		public override bool SecondMonth => true;
-	}	
-
+		public override int Week => 2;
+	}
 	private sealed class Tue_10_03_SE : AttendanceDate
 	{
 		public Tue_10_03_SE() : base($"{nameof(Id.Tue_10_03)}", Id.Tue_10_03) { }
 		public override string Title => "Tue 10/03";
 		public override DateTime Date => Convert.ToDateTime("2023-10-03");
-		//public override int Bitwise => 16;
 		public override DateRangeType DateRangeType => DateRangeType.Attendance;
-		public override bool SecondMonth => true;
+		public override int Week => 2;
 	}
-
 	private sealed class Wed_10_04_SE : AttendanceDate
 	{
 		public Wed_10_04_SE() : base($"{nameof(Id.Wed_10_04)}", Id.Wed_10_04) { }
 		public override string Title => "Wed 10/04";
 		public override DateTime Date => Convert.ToDateTime("2023-10-04");
-		//public override int Bitwise => 32;
 		public override DateRangeType DateRangeType => DateRangeType.Attendance;
-		public override bool SecondMonth => true;
+		public override int Week => 2;
 	}
-
 	private sealed class Thu_10_05_SE : AttendanceDate
 	{
 		public Thu_10_05_SE() : base($"{nameof(Id.Thu_10_05)}", Id.Thu_10_05) { }
 		public override string Title => "Thu 10/05";
 		public override DateTime Date => Convert.ToDateTime("2023-10-05");
-		//public override int Bitwise => 64;
 		public override DateRangeType DateRangeType => DateRangeType.Attendance;
-		public override bool SecondMonth => true;
+		public override int Week => 2;
 	}
-
 	private sealed class Fri_10_06_SE : AttendanceDate
 	{
 		public Fri_10_06_SE() : base($"{nameof(Id.Fri_10_06)}", Id.Fri_10_06) { }
 		public override string Title => "Fri 10/06";
 		public override DateTime Date => Convert.ToDateTime("2023-10-06");
-		//public override int Bitwise => 128;
 		public override DateRangeType DateRangeType => DateRangeType.Attendance;
-		public override bool SecondMonth => true;
+		public override int Week => 2;
 	}
-
 	private sealed class Sat_10_07_SE : AttendanceDate
 	{
 		public Sat_10_07_SE() : base($"{nameof(Id.Sat_10_07)}", Id.Sat_10_07) { }
 		public override string Title => "Sat 10/07";
 		public override DateTime Date => Convert.ToDateTime("2023-10-07");
-		//public override int Bitwise => 256;
 		public override DateRangeType DateRangeType => DateRangeType.Attendance;
-		public override bool SecondMonth => true;
+		public override int Week => 2;
 	}
 
 	#endregion

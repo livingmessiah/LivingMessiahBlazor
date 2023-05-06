@@ -1,81 +1,149 @@
-﻿@page "/Sukkot/Details/{Id:int}/{showPrintInstructionMessage:bool}"
-@using LivingMessiah.Web.Pages.Sukkot.Constants
-@using LivingMessiah.Web.Infrastructure;
-@using static LivingMessiah.Web.Links.Sukkot
-@using static LivingMessiah.Web.Services.Auth0
-@using LivingMessiah.Web.Shared.Sukkot
+﻿@using LivingMessiah.Web.Pages.Sukkot.Constants
+@using LivingMessiah.Web.Pages.Sukkot.RegistrationSteps.Enums
 @using LivingMessiah.Web.Pages.Sukkot.Domain
-@using LivingMessiah.Web.Pages.Sukkot.Components
+@using LivingMessiah.Web.SmartEnums
+@using LivingMessiah.Web.Pages.Sukkot.Enums;
 
-<AuthorizeView Roles="@Roles.SukkotMenuBar">
-	<SukkotAdminMenubar></SukkotAdminMenubar>
-</AuthorizeView>
+@{
+	string Phone2 = !String.IsNullOrEmpty(@vwRegistration.Phone) ? $"Phone: {@vwRegistration.Phone}, " : "";
+}
 
-@using Page = LivingMessiah.Web.Links.Sukkot
-<PageTitle>@Page.DetailsTitle</PageTitle>
+@* General <div class="row"></div> *@
+<div class="d-print-none">
+	<div class="d-none d-sm-block">
 
-<div class="d-print-none float-end">
-	<a class="btn btn-sm btn-default" href="javascript:window.print()">
-		<span class="fas fa-print"></span> Print
-	</a>
+		<div class="row">
+			<div class="col-sm-12">
+				@* @Html.DisplayFor(model => vwRegistration.EMail) ...  @Html.DisplayFor(model => vwRegistration.Status) *@
+				<small class="float-end">EMail: @vwRegistration.EMail, @Phone2 Status: @vwRegistration.StatusName</small>
+				<h4>General</h4>
+			</div>
+		</div>
+
+	</div>
+
+	<div class="d-block d-sm-none">
+
+		<div class="row">
+			<div class="col-2">
+				<h4>General</h4>
+			</div>
+			<div class="col-10">
+				<ul>
+					<li>Registration#: @vwRegistration.Id</li>
+					<li>EMail: @vwRegistration.EMail</li>
+					<li>Phone: @vwRegistration.Phone</li>
+					<li>Status: @vwRegistration.StatusName</li>
+				</ul>
+			</div>
+		</div>
+
+	</div>
 </div>
 
-<LoadingComponent IsLoading="vwRegistration == null">
+<div class="row d-none d-print-block">
+	<div class="col-5">
+		<h3>General</h3>
+	</div>
+	<div class="col-7">
+		<ul>
+			<li>Registration#: @vwRegistration.Id</li>
+			<li>EMail: @vwRegistration.EMail</li>
+			<li>Phone: @vwRegistration.Phone</li>
+			<li>Status: @vwRegistration.StatusName</li>
+		</ul>
+	</div>
+</div>
 
-	@if (!String.IsNullOrEmpty(vwRegistration.PayWithCheckMessage))
-	{
-		
-		<div class="d-print-none">
 
-			<PaymentInstructionsModal />
+@* House Rules Agreement *@
+<hr class="warning d-print-none" />
+<div class="row">
+	<div class="col-sm-12">
+		<small class="float-end">Agreed on: @vwRegistration.HouseRulesAgreementDate</small>
+		<h4>House Rules Agreement</h4>
+	</div>
+</div>
 
-		</div>
-	}
 
-	<h4 class="mb-4">
-		@Other.DetailsTitle
-	</h4>
+@* Attendance *@
+<hr class="warning d-print-none" />
 
-	<div class="card border-primary mb-3">
+<div class="row">
+	<div class="col-12">
+		<div class="float-end">
+				<ul class="list-inline">
+					<li class="list-inline-item" >Adults: <span class="">@vwRegistration.Adults</span></li>
+					<li class="list-inline-item" >Child (Big):<span class="">@vwRegistration.ChildBig</span></li>
+					<li class="list-inline-item" >Child (Small):<span class="">@vwRegistration.ChildSmall</span></li>
+				</ul>
+			</div>
+		<h4>Attendance</h4>
+	</div>
+</div>
 
-		@*<div class="card-header">
-			<h4 class="card-title">@Title</h4>
-		</div>*@
+<div class="@MediaQuery.Xs.DivClass">
+	<AttendanceDateCalendar IsXs="true"
+													AttendanceDateList="vwRegistration.AttendanceDateList"
+													AttendanceDateList2ndMonth="vwRegistration.AttendanceDateList2ndMonth">
+	</AttendanceDateCalendar>
+</div>
 
-		<div class="body">
-			<ul>
-				<li>
-					Name: @vwRegistration.FullName(false); <i>@vwRegistration.OtherNames</i>
-				</li>
-				<li>
-					Registration#: @vwRegistration.Id
-				</li>
-			</ul>
+<div class="@MediaQuery.SmMdOrLgOrXl.DivClass">
+	<AttendanceDateCalendar IsXs="false"
+													AttendanceDateList="vwRegistration.AttendanceDateList"
+													AttendanceDateList2ndMonth="vwRegistration.AttendanceDateList2ndMonth">
+	</AttendanceDateCalendar>
+</div>
 
+@* Cost *@
+<hr class="warning d-print-none" />
+
+@* Cost Non-Print (hidden-xs) *@
+<div class="d-print-none">
+	<div class="d-none d-sm-block">
+		<CostAccountStyle vwRegistration="@vwRegistration"></CostAccountStyle>
+	</div>
+
+	@* Cost Non-Print (visible-xs) *@
+	<div class="d-block d-sm-none">
+		<div class="row">
+
+			<div class="col-2">
+				<h4>Cost</h4>
+			</div>
+			<div class="col-10">
+				<ul class="">
+					<li>Registration Cost: <span class="float-end">@vwRegistration.RegistrationFeeAdjusted</span></li>
+					<li>Total: <span class="float-end"><b>@vwRegistration.RegistrationFeeAdjusted</b></span></li>
+				</ul>
+			</div>
 		</div>
 	</div>
 
-	<DetailsContent vwRegistration="@vwRegistration"/>
+</div>
 
-</LoadingComponent>
+@* Cost Print *@
+<div class="d-none d-print-block">
+	<CostAccountStyle vwRegistration="@vwRegistration"></CostAccountStyle>
+</div>
 
-<RegistrationStepsLink BackwardDirection="true"/>
-
-@if (DatabaseError)
+@if (!String.IsNullOrEmpty(vwRegistration.Notes))
 {
-	<p class="text-danger"><em>@DatabaseErrorMsg</em></p>
+	<hr class="warning d-print-none" />
+	<div class="row">
+		<div class="col-sm-2">
+			<h4>Notes</h4>
+		</div>
+		<div class="col-sm-10">
+			@vwRegistration.Notes
+		</div>
+	</div>
 }
-else
-{
-	if (DatabaseWarning)
-	{
-		<p class="text-warning">@DatabaseWarningMsg</p>
-	}
-	else
-	{
-		if (DatabaseInformation)
-		{
-			<p class="text-info">@DatabaseInformationMsg</p>
-		}
-	}
-}
+
+<div class="row d-none d-print-block">
+	<br />
+	<div class="col-12">
+		<Address OnOneLine="true" UseLabel="true" />
+	</div>
+</div>

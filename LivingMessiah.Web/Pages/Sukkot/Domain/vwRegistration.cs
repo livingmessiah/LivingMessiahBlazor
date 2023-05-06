@@ -35,7 +35,6 @@ public class vwRegistration
 
 	[DisplayName("Attendance Total")]
 	public int AttendanceTotal { get; set; }
-	public string AttendanceDatesCSV { get; set; }
 
 	public int StatusId { get; set; }
 	public string StatusName
@@ -65,6 +64,8 @@ public class vwRegistration
 	public string Notes { get; set; }
 
 	public int AttendanceBitwise { get; set; }
+	public DateTime[] AttendanceDateList { get; set; }
+	public DateTime[] AttendanceDateList2ndMonth { get; set; }
 
 	public string PayWithCheckMessage { get; set; }
 
@@ -79,29 +80,5 @@ public class vwRegistration
 		return s;
 	}
 
-
-	public DateTime[] AttendanceDateList
-	{
-		get
-		{
-			if (!String.IsNullOrEmpty(AttendanceDatesCSV))
-			{
-				int length = AttendanceDatesCSV.Split(",").Length;
-				DateTime[] list = new DateTime[length];
-				string[] array = AttendanceDatesCSV.Split(",");
-				int i = 0;
-				foreach (string value in array)
-				{
-					list[i] = (DateTime.Parse(value));
-					i += 1;
-				}
-				return list;
-			}
-			else
-			{
-				return null;
-			}
-		}
-	}
 
 }
