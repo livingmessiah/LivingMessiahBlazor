@@ -15,9 +15,7 @@ public interface ISukkotRepository
 {
 	string BaseSqlDump { get; }
 	Task<vwRegistration> ById(int id);
-	Task<RegistrationPOCO> ById2(int id);
 	Task<vwRegistrationStep> GetByEmail(string email);
-
 	Task<int> Create(RegistrationPOCO registration);
 	Task<int> Update(RegistrationPOCO registration);
 	Task<int> Delete(int id);
@@ -46,25 +44,6 @@ public class SukkotRepository : BaseRepositoryAsync, ISukkotRepository
 		return await WithConnectionAsync(async connection =>
 		{
 			var rows = await connection.QueryAsync<vwRegistration>(sql: base.Sql, param: base.Parms);
-			return rows.SingleOrDefault();
-		});
-	}
-
-	public async Task<RegistrationPOCO> ById2(int id)
-	{
-		base.Parms = new DynamicParameters(new { Id = id });
-		base.Sql = $@"
---DECLARE @Id int = 32
-SELECT TOP 1 
-Id, FamilyName, FirstName, SpouseName, OtherNames, EMail, Phone, Adults, ChildBig, ChildSmall
-, StatusId
-, AttendanceBitwise, LmmDonation, Notes, Avatar
-FROM Sukkot.Registration 
-WHERE Id = @Id
-";
-		return await WithConnectionAsync(async connection =>
-		{
-			var rows = await connection.QueryAsync<RegistrationPOCO>(sql: base.Sql, param: base.Parms);
 			return rows.SingleOrDefault();
 		});
 	}

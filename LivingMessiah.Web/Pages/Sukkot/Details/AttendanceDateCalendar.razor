@@ -4,27 +4,23 @@
 	{
 		<div class="row">
 			<div class="col-12">
-				<div class="form-floating mb-3">
-					<SfCalendar TValue="DateTime?"
-									IsMultiSelection="true" ShowTodayButton="false"
-									@bind-Values="@AttendanceDateList"
-									Min="@DateRangeAttendance.Range.Min"
-									Max="@DateRangeAttendance.Range.Max">
-					</SfCalendar>
-				</div>
+				<SfCalendar TValue="DateTime?"
+								IsMultiSelection="true" ShowTodayButton="false"
+								Values="@AttendanceDateList"
+								Min="@DateRangeAttendance.Range.Min"
+								Max="@DateRangeAttendance.Range.Max">
+				</SfCalendar>
 			</div>
 		</div>
 
 		<div class="row">
 			<div class="col-12">
-				<div class="form-floating mb-3">
-					<SfCalendar TValue="DateTime?"
-									IsMultiSelection="true" ShowTodayButton="false"
-									@bind-Values="@AttendanceDateList2ndMonth"
-									Min="@DateRangeAttendance.Range2ndMonth.Min"
-									Max="@DateRangeAttendance.Range2ndMonth.Max">
-					</SfCalendar>
-				</div>
+				<SfCalendar TValue="DateTime?"
+								IsMultiSelection="true" ShowTodayButton="false"
+								Values="@AttendanceDateList2ndMonth"
+								Min="@DateRangeAttendance.Range2ndMonth.Min"
+								Max="@DateRangeAttendance.Range2ndMonth.Max">
+				</SfCalendar>
 			</div>
 		</div>
 	}
@@ -32,25 +28,23 @@
 	{
 		<div class="row">
 			<div class="col-6">
-				<div class="form-floating mb-3">
 					<SfCalendar TValue="DateTime?"
 									IsMultiSelection="true" ShowTodayButton="false"
-									@bind-Values="@AttendanceDateList"
+									Values="@AttendanceDateList"
 									Min="@DateRangeAttendance.Range.Min"
 									Max="@DateRangeAttendance.Range.Max">
 					</SfCalendar>
-				</div>
+			
 			</div>
 
 			<div class="col-6">
-				<div class="form-floating mb-3">
 					<SfCalendar TValue="DateTime?"
 									IsMultiSelection="true" ShowTodayButton="false"
-									@bind-Values="@AttendanceDateList2ndMonth"
+									Values="@AttendanceDateList2ndMonth"
 									Min="@DateRangeAttendance.Range2ndMonth.Min"
 									Max="@DateRangeAttendance.Range2ndMonth.Max">
 					</SfCalendar>
-				</div>
+				
 			</div>
 		</div>
 	}
@@ -58,19 +52,13 @@
 else
 {
 	<div class="row">
-		<div class="col-8 col-sm-7">
-			<div class="form-floating mb-3">
-				<p>Min- Max: @DateRangeAttendance.Range.Min - @DateRangeAttendance.Range.Max</p>
+		<div class="col-12">
 				<SfCalendar TValue="DateTime?"
 									IsMultiSelection="true" ShowTodayButton="false"
-									@bind-Values="@AttendanceDateList"
+									Values="@AttendanceDateList"
 									Min="@DateRangeAttendance.Range.Min"
 									Max="@DateRangeAttendance.Range.Max">
 				</SfCalendar>
-			</div>
-		</div>
-		<div class="col-4 col-sm-5">
-			@*<AttendanceDateList SelectedDates="@AttendanceDateList" />*@
 		</div>
 	</div>
 }
@@ -79,7 +67,7 @@ else
 	[Parameter] public bool IsXs { get; set; }
 	[Parameter] public DateTime[] AttendanceDateList { get; set; }
 	[Parameter] public DateTime[] AttendanceDateList2ndMonth { get; set; }
-	
+
 	public Enums.DateRangeType DateRangeAttendance { get; set; } = Enums.DateRangeType.Attendance;
 
 }

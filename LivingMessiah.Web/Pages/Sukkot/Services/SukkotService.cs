@@ -11,6 +11,8 @@ using LivingMessiah.Web.Pages.Sukkot.RegistrationSteps.Enums;
 using LivingMessiah.Web.Pages.Sukkot.Constants;
 using LivingMessiah.Web.Infrastructure;
 using LivingMessiah.Web.Services;
+using LivingMessiah.Web.Pages.Sukkot.Enums;
+using System.Linq;
 
 namespace LivingMessiah.Web.Pages.Sukkot.Services;
 
@@ -209,6 +211,10 @@ public class SukkotService : ISukkotService
 			if (showPrintInstructionMessage)
 			{
 				vm.PayWithCheckMessage = Other.PayWithCheckModalMessage;
+
+				var tuple = Helper.GetAttendanceDatesArray(vm.AttendanceBitwise);
+				vm.AttendanceDateList = tuple.week1;
+				vm.AttendanceDateList2ndMonth = tuple.week2;
 			}
 		}
 
