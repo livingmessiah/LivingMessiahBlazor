@@ -52,8 +52,8 @@
 						<Template>
 							@{
 								var vm = (context as EditVM);
-								<button @onclick="@(e => Image_ButtonClick(vm.Id))"
-												class="btn-default btn-xs" title="@PageUploadImage.Title Id: @vm.Id">
+								<button @onclick="@(e => Image_ButtonClick(vm!.Id))"
+												class="btn-default btn-xs" title="@PageUploadImage.Title Id: @vm!.Id">
 									<i class="@PageUploadImage.Icon"></i>
 								</button>
 							}
@@ -64,8 +64,8 @@
 						<Template>
 							@{
 								var vm = (context as EditVM);
-								<button @onclick="@(e => Edit_ButtonClick(vm.Id))"
-												class="btn-default btn-xs" title="@PageEditMarkdown.Title Id: @vm.Id">
+								<button @onclick="@(e => Edit_ButtonClick(vm!.Id))"
+												class="btn-default btn-xs" title="@PageEditMarkdown.Title Id: @vm!.Id">
 									<i class="@PageEditMarkdown.Icon"></i>
 								</button>
 							}

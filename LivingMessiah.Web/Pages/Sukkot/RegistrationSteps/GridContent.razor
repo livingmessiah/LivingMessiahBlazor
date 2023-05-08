@@ -89,7 +89,7 @@
 		</div>
 	}
 	
-	@if (UsersCurrentStatus.DisplayRegistrationToggleButton && RegistrationStep is not null)
+	@if (UsersCurrentStatus!.DisplayRegistrationToggleButton && RegistrationStep is not null)
 	{
 		<Toggle Email="@EmailParm" Id="@RegistrationStep.Id"></Toggle>
 	}

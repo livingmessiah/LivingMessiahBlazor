@@ -137,7 +137,7 @@ ORDER BY {sortField}
 		return await WithConnectionAsync(async connection =>
 		{
 			var rows = await connection.QueryAsync<vwAttendancePeopleSummary>(sql: base.Sql);
-			return rows.SingleOrDefault();
+			return rows.SingleOrDefault()!;
 		});
 	}
 

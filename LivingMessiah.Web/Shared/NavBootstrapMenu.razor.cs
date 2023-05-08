@@ -5,28 +5,27 @@ namespace LivingMessiah.Web.Shared;
 
 public partial class NavBootstrapMenu
 {
+	[Parameter] public bool UseDarkMode { get; set; } = false;
 
-		bool collapseNavMenu = true;
-		string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
-		void ToggleNavBootstrapMenu()
-		{
-				collapseNavMenu = !collapseNavMenu;
-		}
-
-		[Parameter]
-		public bool UseDarkMode { get; set; } = false;
-
-		string NavBarColor;
-		string TextColor;
-
-		protected override async Task OnInitializedAsync()
-		{
-				await Task.Delay(0);
-				NavBarColor = UseDarkMode ? " navbar-dark bg-dark " : " navbar-light bg-white ";
-				TextColor = UseDarkMode ? " text-white " : " text-dark ";
-		}
+	bool collapseNavMenu = true;
+	string NavMenuCssClass => collapseNavMenu! ? "collapse" : null;
+	void ToggleNavBootstrapMenu()
+	{
+		collapseNavMenu = !collapseNavMenu;
+	}
 
 
-		//	https://github.com/soeleman/DotNetLab/blob/master/src/net3/3-0/aspnet/blazor/server-side/MenuHorizontal/MenuHorizontalApp/Shared/NavBootstrapMenu.razor
+	string? NavBarColor;
+	string? TextColor;
+
+	protected override async Task OnInitializedAsync()
+	{
+		await Task.Delay(0);
+		NavBarColor = UseDarkMode ? " navbar-dark bg-dark " : " navbar-light bg-white ";
+		TextColor = UseDarkMode ? " text-white " : " text-dark ";
+	}
+
+
+	//	https://github.com/soeleman/DotNetLab/blob/master/src/net3/3-0/aspnet/blazor/server-side/MenuHorizontal/MenuHorizontalApp/Shared/NavBootstrapMenu.razor
 
 }

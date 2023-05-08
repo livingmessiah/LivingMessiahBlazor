@@ -19,7 +19,7 @@
 				<div class="col-sm-4">
 					<div class="mb-3">
 						<label for="eMail" class="control-label">Email</label>
-						<InputText id="eMail" class="form-control" @bind-Value="RegistrationVM.EMail" />
+						<InputText id="eMail" class="form-control" @bind-Value="RegistrationVM!.EMail" />
 						<ValidationMessage For="@(() => RegistrationVM.EMail)" />
 					</div>
 				</div>

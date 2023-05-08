@@ -7,32 +7,32 @@ namespace LivingMessiah.Web.Infrastructure;
 
 public static class ClaimsPrincipalExtensions
 {
-	public static string GetRoleLMM(this ClaimsPrincipal user)
+	public static string? GetRoleLMM(this ClaimsPrincipal? user)
 	{
-		return user.Claims?.FirstOrDefault(c => c.Type == "https://schemas.livingmessiah.com/roles")?.Value;
+		return user!.Claims!.FirstOrDefault(c => c.Type == "https://schemas.livingmessiah.com/roles")?.Value;
 	}
 
-	public static string GetUserId(this ClaimsPrincipal user)
+	public static string? GetUserId(this ClaimsPrincipal? user)
 	{
-		return user.Claims?.FirstOrDefault(c => c.Type == "sub")?.Value;
+		return user!.Claims!.FirstOrDefault(c => c.Type == "sub")?.Value;
 	}
 
-	public static string GetUserName(this ClaimsPrincipal user)
+	public static string? GetUserName(this ClaimsPrincipal user)
 	{
 		return user.Claims?.FirstOrDefault(c => c.Type == "name")?.Value;
 	}
 
-	public static string GetUserNameSoapVersion(this ClaimsPrincipal user)
+	public static string? GetUserNameSoapVersion(this ClaimsPrincipal user)
 	{
 		return user.Claims?.FirstOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.Name)?.Value;
 	}
 
-	public static string GetUserEmail(this ClaimsPrincipal user)
+	public static string? GetUserEmail(this ClaimsPrincipal user)
 	{
 		return user.Claims?.FirstOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.Email)?.Value;
 	}
 
-	public static string GetRoles(this ClaimsPrincipal user)
+	public static string? GetRoles(this ClaimsPrincipal user)
 	{
 		string roles = "";
 		foreach (var claim in user.Claims)

@@ -4,7 +4,7 @@ namespace LivingMessiah.Web.Stores;
 
 public class SetBibleWebsiteAction
 {
-	public BibleWebsite BibleWebsite { get; } 
+	public BibleWebsite? BibleWebsite { get; } 
 	public SetBibleWebsiteAction() { }
 
 	public SetBibleWebsiteAction(BibleWebsite BibleWebsite)

@@ -9,7 +9,7 @@ public class HouseRulesAgreementVM
 	[MaxLength(75)]
 	[DataType(DataType.EmailAddress)]
 	[DisplayName("eMail")]
-	public string EMail { get; set; }
+	public string? EMail { get; set; }
 
 }
 

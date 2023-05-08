@@ -12,7 +12,9 @@ public partial class AnchorNavigation
 {
 	protected override void OnInitialized()
 	{
+#pragma warning disable CS8622 // Nullability of reference types in type of parameter doesn't match the target delegate (possibly because of nullability attributes).
 		NavigationManager.LocationChanged += OnLocationChanged;
+#pragma warning restore CS8622 // Nullability of reference types in type of parameter doesn't match the target delegate (possibly because of nullability attributes).
 	}
 
 	protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -22,7 +24,10 @@ public partial class AnchorNavigation
 
 	public void Dispose()
 	{
+#pragma warning disable CS8622 // Nullability of reference types in type of parameter doesn't match the target delegate (possibly because of nullability attributes).
 		NavigationManager.LocationChanged -= OnLocationChanged;
+#pragma warning restore CS8622 // Nullability of reference types in type of parameter doesn't match the target delegate (possibly because of nullability attributes).
+
 	}
 
 	private async void OnLocationChanged(object sender, LocationChangedEventArgs e)

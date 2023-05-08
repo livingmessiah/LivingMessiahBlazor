@@ -7,12 +7,12 @@
 <div class="card mt-0 mb-3">
 	<div class="card-body bg-light">
 		
-		@((MarkupString)RemainderAndTotal(RegistrationStep.RemainingCost, RegistrationStep.TotalDonation))
+		@((MarkupString)RemainderAndTotal(RegistrationStep!.RemainingCost, RegistrationStep.TotalDonation))
 
 		<p class="lead">
 			Currently, the only way to pay for registration is via <u>Check</u>.  Click
 
-			<CommonButtons RegistrationStepId="RegistrationStep.Id"
+			<CommonButtons RegistrationStepId="RegistrationStep!.Id"
 										 NavButton="NB.NavButton.DetailsPrint">
 			</CommonButtons>  and follow the instructions.
 

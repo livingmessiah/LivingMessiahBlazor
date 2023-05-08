@@ -5,7 +5,7 @@ namespace LivingMessiah.Web.Pages.Sukkot.RegistrationSteps;
 public partial class PartlyPaidParagraph
 {
 	[Parameter, EditorRequired]
-	public RegistrationStep RegistrationStep { get; set; }
+	public RegistrationStep? RegistrationStep { get; set; }
 
 	public static MarkupString RemainderAndTotal(decimal remainingCost, decimal totalDonation)
 	{

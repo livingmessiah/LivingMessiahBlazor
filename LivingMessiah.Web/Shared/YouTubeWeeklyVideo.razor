@@ -1,7 +1,7 @@
 ﻿
 <LoadingComponent IsLoading="CurrentWeeklyVideo==null">
 
-	<h1 class="mt-5"><span class="badge bg-warning">@CurrentWeeklyVideo.WvtDescr</span></h1>
+	<h1 class="mt-5"><span class="badge bg-warning">@CurrentWeeklyVideo!.WvtDescr</span></h1>
 
 	<h3><i class="@CurrentWeeklyVideo.WvtIcon"></i> @CurrentWeeklyVideo.Title</h3>
 
@@ -39,19 +39,4 @@
 		</a>
 	</span>
 
-
-
-
 </LoadingComponent>
-
-@if (DatabaseError)
-{
-	<p class="text-danger"><em>@DatabaseErrorMsg</em></p>
-}
-else
-{
-	if (DatabaseWarning)
-	{
-		<p class="text-warning">@DatabaseWarningMsg</p>
-	}
-}

@@ -59,8 +59,7 @@ ORDER BY FirstName
 SELECT Id, FamilyName, FirstName, SpouseName, OtherNames, EMail, Phone
 , Adults, ChildBig, ChildSmall
 , StatusId
-, AttendanceBitwise
-, Notes
+--, AttendanceBitwise, Notes
 --, LmmDonation, Avatar
 FROM Sukkot.Registration
 ORDER BY FirstName
@@ -86,7 +85,7 @@ FROM Sukkot.Registration WHERE Id = @Id";
 		return await WithConnectionAsync(async connection =>
 		{
 			var rows = await connection.QueryAsync<RegistrationPOCO>(sql: base.Sql, param: base.Parms);
-			return rows.SingleOrDefault();
+			return rows.SingleOrDefault()!;
 		});
 	}
 

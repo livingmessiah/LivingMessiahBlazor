@@ -6,14 +6,13 @@ namespace LivingMessiah.Web.Shared.Header;
 
 public partial class BookChapterAnchorList
 {
-	[Inject] private IState<ToolbarState> ToolbarState { get; set; }
-
+	[Inject] private IState<ToolbarState>? ToolbarState { get; set; }
 
 	protected string AnchorBookChapterUrl(int chapter)
 	{
-		if (ToolbarState.Value.BibleWebsite == BibleWebsite.MyHebrewBible)
+		if (ToolbarState!.Value.BibleWebsite == BibleWebsite.MyHebrewBible)
 		{
-			return $"{BibleWebsite.MyHebrewBible.UrlBase}{ToolbarState.Value.BibleBook.Title}/{chapter}{UrlSuffix(true)}";
+			return $"{BibleWebsite.MyHebrewBible.UrlBase}{ToolbarState.Value.BibleBook!.Title}/{chapter}{UrlSuffix(true)}";
 		}
 		else
 		{
@@ -21,7 +20,7 @@ public partial class BookChapterAnchorList
 			//https://www.stepbible.org/?q=version=LBLA|reference=Matt.3&options=HNVUG
 			if (ToolbarState.Value.BibleWebsite == BibleWebsite.StepBibleSpanish)
 			{
-				if (ToolbarState.Value.BibleBook.Value < 40)
+				if (ToolbarState.Value.BibleBook!.Value < 40)
 				{ 
 					return $"{BibleWebsite.StepBibleSpanish.UrlBase}?q=version=LBLA|reference={ToolbarState.Value.BibleBook.Abrv}.{chapter}&options=NVUGVH&display=INTERLEAVED"; 
 				}
@@ -33,7 +32,7 @@ public partial class BookChapterAnchorList
 			}
 			else
 			{
-				if (ToolbarState.Value.BibleBook.Value < 40)
+				if (ToolbarState.Value.BibleBook!.Value < 40)
 				{
 					return $"{BibleWebsite.StepBible.UrlBase}{Versions(true)}|reference={ToolbarState.Value.BibleBook.Abrv}.{chapter}{UrlSuffix(true)}";
 				}
@@ -48,13 +47,13 @@ public partial class BookChapterAnchorList
 
 	protected string BookChapterTitle(int chapter)
 	{
-		if (ToolbarState.Value.BibleWebsite == BibleWebsite.MyHebrewBible)
+		if (ToolbarState!.Value.BibleWebsite == BibleWebsite.MyHebrewBible)
 		{
-			return $"{BibleWebsite.MyHebrewBible.UrlTitle}{ToolbarState.Value.BibleBook.Title}/{chapter}{UrlSuffix(true)}";
+			return $"{BibleWebsite.MyHebrewBible.UrlTitle}{ToolbarState.Value.BibleBook!.Title}/{chapter}{UrlSuffix(true)}";
 		}
 		else
 		{
-			if (ToolbarState.Value.BibleBook.Value < 40)
+			if (ToolbarState.Value.BibleBook!.Value < 40)
 			{
 				return $"{BibleWebsite.StepBible.UrlTitle} {ToolbarState.Value.BibleBook.Abrv}.{chapter} OT";
 			}
@@ -68,7 +67,7 @@ public partial class BookChapterAnchorList
 
 	private string Versions(bool isOT) 
 	{
-		if (ToolbarState.Value.BibleWebsite == BibleWebsite.MyHebrewBible)
+		if (ToolbarState!.Value.BibleWebsite == BibleWebsite.MyHebrewBible)
 		{
 			return "";
 		}
@@ -87,7 +86,7 @@ public partial class BookChapterAnchorList
 
 	private string UrlSuffix(bool isOT)
 	{
-		if (ToolbarState.Value.BibleWebsite == BibleWebsite.MyHebrewBible)
+		if (ToolbarState!.Value.BibleWebsite == BibleWebsite.MyHebrewBible)
 		{
 			return "/slug";
 		}

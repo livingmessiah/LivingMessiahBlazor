@@ -5,8 +5,8 @@ namespace LivingMessiah.Web.Pages.Sukkot.Domain;
 public class RegistrationSummary
 {
 	public int Id { get; set; }
-	public string FamilyName { get; set; }
-	public string EMail { get; set; }
+	public string? FamilyName { get; set; }
+	public string? EMail { get; set; }
 	public int Adults { get; set; }
 	public int ChildBig { get; set; }
 	public int ChildSmall { get; set; }

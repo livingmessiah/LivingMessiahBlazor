@@ -17,10 +17,10 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration;
 
 public partial class EditRegistrationForm
 {
-	[Inject] public IRegistrationAdminService svc { get; set; }
-	[Inject] public IRegistrationAdminRepository db { get; set; }
-	[Inject] public ILogger<EditRegistrationForm> Logger { get; set; }
-	[Inject] public IToastService Toast { get; set; }
+	[Inject] public IRegistrationAdminService? svc { get; set; }
+	[Inject] public IRegistrationAdminRepository? db { get; set; }
+	[Inject] public ILogger<EditRegistrationForm>? Logger { get; set; }
+	[Inject] public IToastService? Toast { get; set; }
 
 	private bool ShowEditForm = false;
 
@@ -28,23 +28,23 @@ public partial class EditRegistrationForm
 
 	public Sukkot.Enums.DateRangeType DateRangeAttendance { get; set; } = Sukkot.Enums.DateRangeType.Attendance;
 
-	public List<RegistrationLookup> RegistrationLookupList { get; set; }
+	public List<RegistrationLookup>? RegistrationLookupList { get; set; }
 
 	private string Title = "";
 	private string msg = "";
 
 	protected override async Task OnInitializedAsync()
 	{
-		Logger.LogDebug(string.Format("Inside {0}", nameof(EditRegistrationForm) + "!" + nameof(OnInitialized)));
+		Logger!.LogDebug(string.Format("Inside {0}", nameof(EditRegistrationForm) + "!" + nameof(OnInitialized)));
 
 		Title = "Registration Edit ";
 		try
 		{
-			RegistrationLookupList = await db.PopulateRegistrationLookup();
+			RegistrationLookupList = await db!.PopulateRegistrationLookup();
 		}
 		catch (Exception)
 		{
-			Toast.ShowError("Error getting registration lookup from database, contact your administrator");
+			Toast!.ShowError("Error getting registration lookup from database, contact your administrator");
 		}
 	}
 
@@ -70,17 +70,16 @@ public partial class EditRegistrationForm
 
 	private async Task GetRegistration(int registrationId)
 	{
-		
-		Logger.LogDebug(string.Format("Inside {0}; registrationId:{1}"
+		Logger!.LogDebug(string.Format("Inside {0}; registrationId:{1}"
 			, nameof(EditRegistrationForm) + "!" + nameof(GetRegistration), registrationId));
 		try
 		{
-			RegistrationVM = await svc.GetById(registrationId);
+			RegistrationVM = await svc!.GetById(registrationId);
 			if (RegistrationVM == null)
 			{
 				msg = $"Registration not found; registrationId:{registrationId}";
-				Toast.ShowWarning(msg);
-				Logger.LogWarning("..." + msg);
+				Toast!.ShowWarning(msg);
+				Logger!.LogWarning("..." + msg);
 			}
 			else
 			{
@@ -90,8 +89,8 @@ public partial class EditRegistrationForm
 		}
 		catch (Exception ex)
 		{
-			Toast.ShowError("Error reading database");
-			Logger.LogError(ex, $"...Error reading database");
+			Toast!.ShowError("Error reading database");
+			Logger!.LogError(ex, $"...Error reading database");
 		}
 		StateHasChanged();  // https://stackoverflow.com/questions/56436577/blazor-form-submit-needs-two-clicks-to-refresh-view
 	}
@@ -101,31 +100,31 @@ public partial class EditRegistrationForm
 
 	protected async Task HandleValidSubmit()
 	{
-		Logger.LogDebug(string.Format("Inside {0}", nameof(EditRegistrationForm) + "!" + nameof(HandleValidSubmit)));
+		Logger!.LogDebug(string.Format("Inside {0}", nameof(EditRegistrationForm) + "!" + nameof(HandleValidSubmit)));
 		try
 		{
-			var sprocTuple = await svc.Update(RegistrationVM);
+			var sprocTuple = await svc!.Update(RegistrationVM);
 			if (sprocTuple.RowsAffected != 0)
 			{
 				msg = $"{sprocTuple.ReturnMsg}";
 				RegistrationVM = await svc.GetById(RegistrationVM.Id); //ToDo: do I need to refresh the data?
-				Toast.ShowInfo(sprocTuple.ReturnMsg);
+				Toast!.ShowInfo(sprocTuple.ReturnMsg);
 			}
 			else
 			{
 				if (sprocTuple.SprocReturnValue == ReturnValueViolationInUniqueIndex)
 				{
-					Toast.ShowWarning(sprocTuple.ReturnMsg);
+					Toast!.ShowWarning(sprocTuple.ReturnMsg);
 				}
 				else
 				{
-					Toast.ShowError(sprocTuple.ReturnMsg);
+					Toast!.ShowError(sprocTuple.ReturnMsg);
 				}
 			}
 		}
 		catch (Exception)
 		{
-			Toast.ShowError("An invalid operation occurred during Registration Editing, contact your administrator");
+			Toast!.ShowError("An invalid operation occurred during Registration Editing, contact your administrator");
 		}
 	}
 

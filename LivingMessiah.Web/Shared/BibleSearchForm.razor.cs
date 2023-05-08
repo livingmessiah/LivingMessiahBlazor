@@ -27,12 +27,11 @@ public partial class BibleSearchForm
 }
 
 
-
 public class FormValidation
 {
 	[Required]
 	[Display(Name = "Book")]
-	public BibleBook SelectedBook { get; set; }
+	public BibleBook? SelectedBook { get; set; }
 
 	public string MyHebrewBibleBookChapterUrl(int chapter)
 	{

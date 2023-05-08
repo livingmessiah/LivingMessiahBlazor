@@ -17,9 +17,9 @@ Observations and what makes this LinkSmartEnums unique from the others
 
 public record class Hebrew
 {
-	public string FloatRightHebrew { get; set; }
-	public string TitleSuffix { get; set; }
-	public string Strongs { get; set; }
+	public string? FloatRightHebrew { get; set; }
+	public string? TitleSuffix { get; set; }
+	public string? Strongs { get; set; }
 }
 
 public abstract class Feast : SmartEnum<Feast>

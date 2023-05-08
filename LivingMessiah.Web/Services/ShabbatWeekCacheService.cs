@@ -5,7 +5,6 @@ using LivingMessiah.Domain;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 using System.Linq;
-using System.Runtime.CompilerServices;
 
 namespace LivingMessiah.Web.Services;
 
@@ -13,11 +12,11 @@ public interface IShabbatWeekCacheService
 {
 
 	// Psalms and Videos
-	Task<PsalmAndProverb> GetCurrentPsalmAndProverb(bool UseCache = false);
+	Task<PsalmAndProverb>? GetCurrentPsalmAndProverb(bool UseCache = false);
 
 	// Weekly Videos
-	Task<IReadOnlyList<vwCurrentWeeklyVideo>> GetCurrentWeeklyVideos();
-	Task<vwCurrentWeeklyVideo> GetCurrentWeeklyVideoByTypeId(int typeId);
+	Task<IReadOnlyList<vwCurrentWeeklyVideo>>? GetCurrentWeeklyVideos();
+	Task<vwCurrentWeeklyVideo>? GetCurrentWeeklyVideoByTypeId(int typeId);
 }
 
 public class ShabbatWeekCacheService : IShabbatWeekCacheService
@@ -40,9 +39,10 @@ public class ShabbatWeekCacheService : IShabbatWeekCacheService
 	#endregion
 
 
-	public async Task<PsalmAndProverb> GetCurrentPsalmAndProverb(bool useCache)
+	public async Task<PsalmAndProverb>? GetCurrentPsalmAndProverb(bool useCache)
 	{
-		var cacheKey = Settings.Constants.PsalmsAndProverbsCache.Key;
+		//var cacheKey = Settings.Constants.PsalmsAndProverbsCache.Key;
+		string cacheKey = "CalendarVM";
 		string msg = $"Inside {nameof(ShabbatWeekCacheService)}!{nameof(GetCurrentPsalmAndProverb)}; cacheKey:{cacheKey};...";
 
 		if (!useCache)
@@ -51,7 +51,9 @@ public class ShabbatWeekCacheService : IShabbatWeekCacheService
 			return await db.GetCurrentPsalmAndProverb();
 		}
 
-		if (!memoryCache.TryGetValue(cacheKey, out PsalmAndProverb psalmAndProverb))
+		// ToDo: CS8600 Don't understand the proper way to remove this type of warning, so I'm sticking my head in the sand
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
+		if (!memoryCache.TryGetValue(cacheKey!, out PsalmAndProverb psalmAndProverb))
 		{
 			//log.LogDebug($"{msg}; Key NOT found in cache, calling {nameof(db.GetCurrentPsalmAndProverb)}");
 			psalmAndProverb = await db.GetCurrentPsalmAndProverb();
@@ -68,17 +70,18 @@ public class ShabbatWeekCacheService : IShabbatWeekCacheService
 		{
 			//log.LogDebug($"{msg}; Key found in cache");
 		}
+#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
 
-		return psalmAndProverb;
+		return psalmAndProverb!;
 	}
 
 	// Weekly Videos
-	public async Task<IReadOnlyList<vwCurrentWeeklyVideo>> GetCurrentWeeklyVideos()
+	public async Task<IReadOnlyList<vwCurrentWeeklyVideo>>? GetCurrentWeeklyVideos()
 	{
-		//string sourceOfData = "Cache";
 		var cacheKey = Settings.Constants.CurrentWeeklyVideosCache.Key;
 		log.LogDebug($"Inside {nameof(ShabbatWeekCacheService)}!{nameof(GetCurrentWeeklyVideos)}; cacheKey:{cacheKey}");
 
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
 		if (!memoryCache.TryGetValue(cacheKey, out IReadOnlyList<vwCurrentWeeklyVideo> currentWeeklyVideos))
 		{
 			//sourceOfData = "Not Cache";
@@ -108,13 +111,17 @@ public class ShabbatWeekCacheService : IShabbatWeekCacheService
 		{
 			log.LogDebug($"...Key found in cache");
 		}
+#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
 
+		// ToDo: CS8603 Don't understand the proper way to remove this type of warning, so I'm sticking my head in the sand
+#pragma warning disable CS8603 // Possible null reference return.
 		return currentWeeklyVideos;
+#pragma warning restore CS8603 // Possible null reference return.
 	}
 
-	public async Task<vwCurrentWeeklyVideo> GetCurrentWeeklyVideoByTypeId(int typeId)
+	public async Task<vwCurrentWeeklyVideo>? GetCurrentWeeklyVideoByTypeId(int typeId)
 	{
-		return (await GetCurrentWeeklyVideos()).Where(w => w.WvtId == typeId).SingleOrDefault();
+		return (await GetCurrentWeeklyVideos()!).Where(w => w.WvtId == typeId).SingleOrDefault()!;
 	}
 
 }

@@ -14,7 +14,7 @@ public class WeeklyVideoModel
 		[Required]
 		[Display(Name = "YouTube Id")]
 		[StringLength(50, MinimumLength = 3, ErrorMessage = "length {0} must be between {2} and {1}.")]
-		public string YouTubeId { get; set; }
+		public string? YouTubeId { get; set; }
 
 		/*
 Unique every week
@@ -28,12 +28,12 @@ More static as it derived from the Book/Chapter
 		[Required]
 		[Display(Name = "YouTube Title")]
 		[StringLength(150, MinimumLength = 3, ErrorMessage = "length of {0} must be between {2} and {1}")]
-		public string Title { get; set; }
+		public string? Title { get; set; }
 
 		//[Required]
-		public string GraphicFileRoot { get; set; } // File given by Ralphie
+		public string? GraphicFileRoot { get; set; } // File given by Ralphie
 
-		public string NotesFileRoot { get; set; }   // File given by Mark
+		public string? NotesFileRoot { get; set; }   // File given by Mark
 
 		[Range(1, 66, ErrorMessage = "length of {0} must be between {1} and {2}")]
 		public int Book { get; set; }

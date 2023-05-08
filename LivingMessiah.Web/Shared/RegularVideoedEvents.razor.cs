@@ -13,14 +13,10 @@ namespace LivingMessiah.Web.Shared;
 
 public partial class RegularVideoedEvents
 {
-	[Inject]
-	public IOptions<AppSettings> AppSettings { get; set; }
-
-	[Inject]
-	public IShabbatWeekCacheService svc { get; set; }
-
-	[Inject] public ILogger<RegularVideoedEvents> Logger { get; set; }
-	[Inject] public IToastService Toast { get; set; }
+	[Inject] public IOptions<AppSettings>? AppSettings { get; set; }
+	[Inject] public IShabbatWeekCacheService? svc { get; set; }
+	[Inject] public ILogger<RegularVideoedEvents>? Logger { get; set; }
+	[Inject] public IToastService? Toast { get; set; }
 
 	protected bool ShowCurrentWeeklyVideos { get; set; }
 	private string UserInterfaceMessage = "";
@@ -29,27 +25,27 @@ public partial class RegularVideoedEvents
 
 	public DateTime MessageExpiration { get; set; } = new System.DateTime(2022, 01, 01);
 
-	protected IReadOnlyList<vwCurrentWeeklyVideo> CurrentWeeklyVideos;
+	protected IReadOnlyList<vwCurrentWeeklyVideo>? CurrentWeeklyVideos;
 
 	protected override async Task OnInitializedAsync()
 	{
-		ShowCurrentWeeklyVideos = AppSettings.Value.ShowCurrentWeeklyVideos;
+		ShowCurrentWeeklyVideos = AppSettings!.Value.ShowCurrentWeeklyVideos;
 
-		Logger.LogDebug($"Inside {nameof(RegularVideoedEvents)}!{nameof(OnInitializedAsync)}; ShowCurrentWeeklyVideos:{ShowCurrentWeeklyVideos}");
+		Logger!.LogDebug($"Inside {nameof(RegularVideoedEvents)}!{nameof(OnInitializedAsync)}; ShowCurrentWeeklyVideos:{ShowCurrentWeeklyVideos}");
 		if (ShowCurrentWeeklyVideos)
 		{
 			try
 			{
-				CurrentWeeklyVideos = await svc.GetCurrentWeeklyVideos();
+				CurrentWeeklyVideos = await svc!.GetCurrentWeeklyVideos()!;
 
 				if (CurrentWeeklyVideos is not null)
 				{
-					Logger.LogDebug($"...{nameof(CurrentWeeklyVideos)}.Count:{CurrentWeeklyVideos.Count}");
+					Logger!.LogDebug($"...{nameof(CurrentWeeklyVideos)}.Count:{CurrentWeeklyVideos.Count}");
 				}
 				else
 				{
 					UserInterfaceMessage = $"{nameof(CurrentWeeklyVideos)} NOT FOUND";
-					Toast.ShowWarning(UserInterfaceMessage);
+					Toast!.ShowWarning(UserInterfaceMessage);
 				}
 			}
 			catch (System.Exception ex)
@@ -57,8 +53,8 @@ public partial class RegularVideoedEvents
 				UserInterfaceMessage = "An invalid operation occurred, contact your administrator";
 				LogExceptionMessage = string.Format("  Inside catch of {0}"
 					, nameof(RegularVideoedEvents) + "!" + nameof(OnInitializedAsync));
-				Logger.LogError(ex, LogExceptionMessage);
-				Toast.ShowError(UserInterfaceMessage);
+				Logger!.LogError(ex, LogExceptionMessage);
+				Toast!.ShowError(UserInterfaceMessage);
 			}
 			finally
 			{

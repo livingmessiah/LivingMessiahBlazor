@@ -51,11 +51,9 @@ public class GridDataRepository : IGridDataRepository
 	private readonly IConfiguration config;
 	protected readonly ILogger Logger;
 
-	public string Sql { get; set; }
-	public DynamicParameters Parms { get; set; }  // using Dapper; Note, only place dependent on Dapper
-
-
-	string connectionString;
+	public string? Sql { get; set; }
+	public DynamicParameters? Parms { get; set; }  // using Dapper; Note, only place dependent on Dapper
+		string? connectionString;
 
 	public string SqlDump
 	{

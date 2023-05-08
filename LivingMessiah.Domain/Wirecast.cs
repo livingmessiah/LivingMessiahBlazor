@@ -14,6 +14,6 @@ public class Wirecast
 		[Required]
 		[MaxLength(100)]
 		[Url]
-		public String WirecastLink { get; set; }
+		public string? WirecastLink { get; set; }
 
 }

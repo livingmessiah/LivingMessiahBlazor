@@ -15,15 +15,15 @@ public enum WeeklyVideoType
 public class WeeklyVideoIndex
 {
 		public int TypeId { get; set; }
-		public string Descr { get; set; }
+		public string? Descr { get; set; }
 		public int ShabbatWeekId { get; set; }
 		public int RowNum { get; set; }
 		public DateTime ShabbatDate { get; set; }
 		public int? WeeklyVideoId { get; set; }
-		public string YouTubeId { get; set; }
-		public string Title { get; set; }
-		public string GraphicFile { get; set; }
-		public string NotesFile { get; set; }
+		public string? YouTubeId { get; set; }
+		public string? Title { get; set; }
+		public string? GraphicFile { get; set; }
+		public string? NotesFile { get; set; }
 		public int Book { get; set; }
 		public int Chapter { get; set; }
 

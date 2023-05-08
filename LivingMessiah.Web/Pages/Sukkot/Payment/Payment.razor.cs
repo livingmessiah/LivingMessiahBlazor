@@ -7,55 +7,47 @@ using System.Threading.Tasks;
 
 using LivingMessiah.Web.Pages.Sukkot.Services;
 using LivingMessiah.Web.Pages.Sukkot.Domain;
+using Blazored.Toast.Services;
 
 namespace LivingMessiah.Web.Pages.Sukkot.Payment;
 
 public partial class Payment
 {
-	[Inject]
-	public ILogger<Payment> Logger { get; set; }
+	[Inject] public ILogger<Payment>? Logger { get; set; }
+	[Inject] public ISukkotService? svc { get; set; }
+	[Inject] public AuthenticationStateProvider? AuthenticationStateProvider { get; set; }
+	[Inject] public IToastService? Toast { get; set; }
 
-	[Inject]
-	public ISukkotService svc { get; set; }
+	[Parameter] public int Id { get; set; }
 
-	[Inject]
-	public AuthenticationStateProvider AuthenticationStateProvider { get; set; }
+	public RegistrationSummary? RegistrationSummary { get; set; }
 
-	[Parameter]
-	public int Id { get; set; }
-
-	public RegistrationSummary RegistrationSummary { get; set; }
-
-	public ClaimsPrincipal User { get; set; }
+	public ClaimsPrincipal? User { get; set; }
 
 	protected override async Task OnInitializedAsync()
 	{
-		Logger.LogDebug(string.Format("Inside {0} Id:{1}"
+		Logger!.LogDebug(string.Format("Inside {0} Id:{1}"
 			, nameof(Payment) + "!" + nameof(OnInitializedAsync), Id));
-		InitializeErrorHandling();
 		InitializeAlertHandlingling();
 		RegistrationSummary = new RegistrationSummary();
 		try
 		{
-			var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+			var authState = await AuthenticationStateProvider!.GetAuthenticationStateAsync();
 			User = authState.User;
-			RegistrationSummary = await svc.Summary(Id, User);
+			RegistrationSummary = await svc!.Summary(Id, User);
 			GotRecord = true;
 		}
 		catch (PaymentSummaryException paymentSummaryRecordNotFoundException)
 		{
-			DatabaseInformation = true;
-			DatabaseInformationMsg = paymentSummaryRecordNotFoundException.Message;
+			Toast!.ShowInfo(paymentSummaryRecordNotFoundException.Message);
 		}
 		catch (UserNotAuthoirizedException userNotAuthoirizedException)
 		{
-			DatabaseWarning = true;
-			DatabaseWarningMsg = userNotAuthoirizedException.Message;
+			Toast!.ShowInfo(userNotAuthoirizedException.Message);
 		}
 		catch (InvalidOperationException invalidOperationException)
 		{
-			DatabaseError = true;
-			DatabaseErrorMsg = invalidOperationException.Message;
+			Toast!.ShowError(invalidOperationException.Message);
 		}
 		AttemptingToGetRecord = false;
 		if (!GotRecord)
@@ -74,26 +66,7 @@ public partial class Payment
 	}
 	protected bool GotRecord;
 	protected bool AttemptingToGetRecord;
-	protected string AttemptingToGetRecordMsg;
-	#endregion
-
-	#region ErrorHandling
-	private void InitializeErrorHandling()
-	{
-		DatabaseInformationMsg = "";
-		DatabaseInformation = false;
-		DatabaseWarningMsg = "";
-		DatabaseWarning = false;
-		DatabaseErrorMsg = "";
-		DatabaseError = false;
-	}
-
-	protected bool DatabaseInformation = false;
-	protected string DatabaseInformationMsg { get; set; }
-	protected bool DatabaseWarning = false;
-	protected string DatabaseWarningMsg { get; set; }
-	protected bool DatabaseError { get; set; } // = false; handled by InitializeErrorHandling
-	protected string DatabaseErrorMsg { get; set; }
+	protected string? AttemptingToGetRecordMsg;
 	#endregion
 
 }

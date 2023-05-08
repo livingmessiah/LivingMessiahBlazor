@@ -12,25 +12,19 @@ using static LivingMessiah.Web.Services.Auth0;
 using Microsoft.AspNetCore.Authorization;
 
 using Syncfusion.Blazor.Grids;
-
+using Blazored.Toast.Services;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace LivingMessiah.Web.Pages.SukkotAdmin.Donations;
 
 [Authorize(Roles = Roles.AdminOrSukkot)]
 public partial class DonationsGrid
 {
-	[Inject]
-	public ILogger<DonationsGrid> Logger { get; set; }
+	[Inject] public ILogger<DonationsGrid>? Logger { get; set; }
+	[Inject] public IDonationRepository? db { get; set; }
+	[Inject] public IToastService? Toast { get; set; }
 
-	[Inject]
-	public IDonationRepository db { get; set; }
-
-	public IEnumerable<DonationReport> DonationReportList { get; set; }
-
-	protected bool DatabaseError { get; set; } = false;
-	protected string DatabaseErrorMsg { get; set; }
-	protected bool DatabaseWarning = false;
-	protected string DatabaseWarningMsg { get; set; }
+	public IEnumerable<DonationReport>? DonationReportList { get; set; }
 
 	public DonationStatusFilter CurrentFilter { get; set; } = DonationStatusFilter.FullList;
 
@@ -39,20 +33,21 @@ public partial class DonationsGrid
 		await GetDataWithParms(CurrentFilter);
 	}
 
-	private SfGrid<DonationReport> Grid;
+	private SfGrid<DonationReport>? Grid;
+
 	public async Task ToolbarClickHandler(Syncfusion.Blazor.Navigations.ClickEventArgs args)
 	{
 		if (args.Item.Id == SyncFusionToolbar.Pdf.ArgId)
 		{
-			await this.Grid.ExportToPdfAsync();
+			await this.Grid!.ExportToPdfAsync();
 		}
 		if (args.Item.Id == SyncFusionToolbar.Excel.ArgId)
 		{
-			await this.Grid.ExportToExcelAsync();
+			await this.Grid!.ExportToExcelAsync();
 		}
 		if (args.Item.Id == SyncFusionToolbar.Csv.ArgId)
 		{
-			await this.Grid.ExportToCsvAsync();
+			await this.Grid!.ExportToCsvAsync();
 		}
 
 	}
@@ -63,30 +58,29 @@ public partial class DonationsGrid
 		RegistrationSort sortAndDirection = RegistrationSort.ByFirstName;
 		string sort = sortAndDirection.SqlTableColumnName + sortAndDirection.Order;
 
-		Logger.LogDebug($"Inside {nameof(DonationsGrid)}!{nameof(GetDataWithParms)}; smartEnumFilter.Name:{filter.Name}; sort:{sort}");
+		string message = $"Inside {nameof(DonationsGrid)}!{nameof(GetDataWithParms)}; smartEnumFilter.Name:{filter.Name}; sort:{sort}";
+		Logger!.LogDebug(message);
 		try
 		{
-			DonationReportList = await db.GetDonationReport(filter, sort);
+			DonationReportList = await db!.GetDonationReport(filter, sort);
 			if (DonationReportList == null)
 			{
-				DatabaseWarning = true;
-				DatabaseWarningMsg = "DonationReportList NOT FOUND";
+				Toast!.ShowWarning("DonationReportList NOT FOUND");
 			}
 		}
 		catch (Exception ex)
 		{
-			DatabaseError = true;
-			DatabaseErrorMsg = $"Error reading database";
-			Logger.LogError(ex, $"...{DatabaseErrorMsg}");
+			Logger!.LogError(ex, $"...Error reading database");
+			Toast!.ShowError("Error reading database");
+
 		}
 		StateHasChanged();  // https://stackoverflow.com/questions/56436577/blazor-form-submit-needs-two-clicks-to-refresh-view
 	}
 
-
 	protected async void OnClickFilter(DonationStatusFilter newFilter)
 	{
 		CurrentFilter = newFilter;
-		Logger.LogDebug($"Inside {nameof(OnClickFilter)}; {newFilter.Name} is now the current filter");
+		Logger!.LogDebug($"Inside {nameof(OnClickFilter)}; {newFilter.Name} is now the current filter");
 		await GetDataWithParms(newFilter);
 	}
 

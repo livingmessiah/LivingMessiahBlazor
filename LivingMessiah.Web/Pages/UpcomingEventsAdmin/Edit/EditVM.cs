@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using LivingMessiah.Web.Pages.UpcomingEvents.Enums;
 
@@ -21,23 +20,23 @@ public class EditVM
 
 	public int SpecialEventTypeId { get; set; }
 
-	public SpecialEventType SpecialEventType { get; set; }
+	public SpecialEventType? SpecialEventType { get; set; }
 
 	[Required]
-	public string Title { get; set; }  // NOT NULL
+	public string? Title { get; set; }  // NOT NULL
 
-	public string SubTitle { get; set; }
+	public string? SubTitle { get; set; }
 
 	//[DataType(DataType.Upload)]
 
 	//[DataType(DataType.ImageUrl)]
-	public string ImageUrl { get; set; }
+	public string? ImageUrl { get; set; }
 
-	public string YouTubeId { get; set; }
+	public string? YouTubeId { get; set; }
 
 	[DataType(DataType.Url)]
-	public string WebsiteUrl { get; set; }
+	public string? WebsiteUrl { get; set; }
 
-	public string WebsiteDescr { get; set; }
-	public string Description { get; set; }  // ToDo: md?, probably going to be Component Body
+	public string? WebsiteDescr { get; set; }
+	public string? Description { get; set; }  // ToDo: md?, probably going to be Component Body
 }

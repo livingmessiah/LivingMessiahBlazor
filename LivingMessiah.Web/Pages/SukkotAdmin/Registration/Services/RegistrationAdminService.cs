@@ -33,8 +33,8 @@ public class RegistrationAdminService : IRegistrationAdminService
 	private readonly ISecurityClaimsService SvcClaims;
 
 	public RegistrationAdminService(
-		IRegistrationAdminRepository registrationRepository, 
-		ILogger<RegistrationAdminService> logger, 
+		IRegistrationAdminRepository registrationRepository,
+		ILogger<RegistrationAdminService> logger,
 		ISecurityClaimsService securityClaimsService)
 	{
 		db = registrationRepository;
@@ -53,7 +53,7 @@ public class RegistrationAdminService : IRegistrationAdminService
 		{
 			//string email = await SvcClaims.GetEmail();	if (await SvcClaims.IsUserAuthoirized(email))	{	}
 			registrationVM.Status = Status.Payment;
-			registrationVM.AttendanceBitwise = GetDaysBitwise(registrationVM.AttendanceDateList);
+			registrationVM.AttendanceBitwise = GetDaysBitwise(registrationVM.AttendanceDateList!);
 
 			int newId = 0;
 			int sprocReturnValue = 0;
@@ -93,7 +93,7 @@ public class RegistrationAdminService : IRegistrationAdminService
 			}
 			else
 			{
-				ExceptionMessage = $"...Acceptance Date:{item.ToShortDateString()} is out of range; range is {DateRangeType.Attendance.Range.Min.ToShortDateString()} to {DateRangeType.Attendance.Range.Max.ToShortDateString()}";  
+				ExceptionMessage = $"...Acceptance Date:{item.ToShortDateString()} is out of range; range is {DateRangeType.Attendance.Range.Min.ToShortDateString()} to {DateRangeType.Attendance.Range.Max.ToShortDateString()}";
 				Logger.LogWarning(ExceptionMessage);
 				//throw new RegistratationException(ExceptionMessage);
 			}
@@ -117,7 +117,7 @@ public class RegistrationAdminService : IRegistrationAdminService
 			Adults = registration.Adults,
 			ChildBig = registration.ChildBig,
 			ChildSmall = registration.ChildSmall,
-			StatusId = registration.Status.Value,
+			StatusId = registration.Status!.Value,
 			AttendanceBitwise = registration.AttendanceBitwise,
 			LmmDonation = registration.LmmDonation,
 			Avatar = registration.Avatar,
@@ -176,7 +176,9 @@ public class RegistrationAdminService : IRegistrationAdminService
 		Logger.LogDebug(string.Format("Inside {0}"
 		, nameof(RegistrationAdminService) + "!" + nameof(DTO_From_DB_To_VM)));
 
-		//Logger.LogDebug(string.Format("...poco.StatusId: {0}", poco.StatusId));
+		//Logger!.LogDebug(string.Format("...poco.StatusId: {0}", poco.StatusId));
+		
+		var tuple = Helper.GetAttendanceDatesArray(poco.AttendanceBitwise);
 
 		RegistrationVM registration = new RegistrationVM
 		{
@@ -192,11 +194,15 @@ public class RegistrationAdminService : IRegistrationAdminService
 			ChildSmall = poco.ChildSmall,
 			Status = Status.FromValue(poco.StatusId),
 			AttendanceBitwise = poco.AttendanceBitwise,
-			AttendanceDateList = poco.AttendanceDateList,
+			AttendanceDateList = tuple.week1,
+			AttendanceDateList2ndMonth = tuple.week2,
 			LmmDonation = poco.LmmDonation,
 			Avatar = poco.Avatar,
 			Notes = poco.Notes
 		};
+
+
+
 		return registration;
 	}
 
@@ -206,7 +212,7 @@ public class RegistrationAdminService : IRegistrationAdminService
 
 		try
 		{
-			registrationVM.AttendanceBitwise = GetDaysBitwise(registrationVM.AttendanceDateList);
+			registrationVM.AttendanceBitwise = GetDaysBitwise(registrationVM!.AttendanceDateList!);
 			var sprocTuple = await db.Update(DTO_From_VM_To_DB(registrationVM));
 
 			int rowsAffected = sprocTuple.Item1;

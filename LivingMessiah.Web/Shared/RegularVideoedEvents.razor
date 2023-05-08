@@ -6,7 +6,7 @@
 	<ReagularVideoMessage MessageExpiration="@MessageExpiration"></ReagularVideoMessage>
 
 	<LoadingComponent IsLoading="CurrentWeeklyVideos is null" TurnSpinnerOff="@TurnSpinnerOff">
-		@foreach (var item in CurrentWeeklyVideos)
+		@foreach (var item in CurrentWeeklyVideos!)
 		{
 			<YouTubeWeeklyVideo WeeklyVideoType="(LivingMessiah.Domain.WeeklyVideoType)item.WvtId">
 

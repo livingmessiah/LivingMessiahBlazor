@@ -16,9 +16,9 @@ namespace LivingMessiah.Web.Pages.UpcomingEventsAdmin.CRUD;
 
 public partial class Form
 {
-	[Inject] public IUpcomingEventsRepository db { get; set; }
-	[Inject] public ILogger<Form> Logger { get; set; }
-	[Inject] public IToastService Toast { get; set; }
+	[Inject] public IUpcomingEventsRepository? db { get; set; }
+	[Inject] public ILogger<Form>? Logger { get; set; }
+	[Inject] public IToastService? Toast { get; set; }
 
 	public FormVM VM { get; set; } = new FormVM();
 
@@ -37,26 +37,26 @@ public partial class Form
 
 	protected async Task HandleValidSubmit()
 	{
-		Logger.LogDebug(string.Format("Inside {0}, VM.ToString: {1}"
+		Logger!.LogDebug(string.Format("Inside {0}, VM.ToString: {1}"
 			, nameof(Form) + "!" + nameof(HandleValidSubmit), VM.ToString()));
 		try
 		{
 			VM.Id = 0;
-			var sprocTuple = await db.Create(VM);
+			var sprocTuple = await db!.Create(VM);
 			if (sprocTuple.NewId != 0)
 			{
-				Toast.ShowInfo($"{sprocTuple.ReturnMsg}");
+				Toast!.ShowInfo($"{sprocTuple.ReturnMsg}");
 				VM = new FormVM();
 			}
 			else
 			{
 				if (sprocTuple.SprocReturnValue == ReturnValueViolationInUniqueIndex)
 				{
-					Toast.ShowWarning($"{sprocTuple.ReturnMsg}");
+					Toast!.ShowWarning($"{sprocTuple.ReturnMsg}");
 				}
 				else
 				{
-					Toast.ShowError($"{sprocTuple.ReturnMsg}");
+					Toast!.ShowError($"{sprocTuple.ReturnMsg}");
 				}
 			}
 		}
@@ -65,8 +65,8 @@ public partial class Form
 			UserInterfaceMessage = "An invalid operation occurred, contact your administrator";
 			LogExceptionMessage = string.Format("  Inside catch of {0}"
 				, nameof(Form) + "!" + nameof(HandleValidSubmit));
-			Logger.LogError(LogExceptionMessage);  //ex, LogExceptionMessage
-			Toast.ShowError(UserInterfaceMessage);
+			Logger!.LogError(LogExceptionMessage);  //ex, LogExceptionMessage
+			Toast!.ShowError(UserInterfaceMessage);
 		}
 	}
 
@@ -88,8 +88,8 @@ public partial class Form
 	}
 
 	private bool IsPreview { get; set; }
-	private string HtmlValue { get; set; }
-	private MarkdownPipeline Pipeline { get; set; }
+	private string? HtmlValue { get; set; }
+	private MarkdownPipeline? Pipeline { get; set; }
 	/*
 			private string MarkdownValue { get; set; } = @"The sample is added to showcase **markdown editing**.
 

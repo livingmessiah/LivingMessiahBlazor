@@ -95,7 +95,7 @@ WHERE sw.ShabbatDate >= @CompareDate AND sw.ShabbatDate <= @CompareDate
 			return await WithConnectionAsync(async connection =>
 			{
 				var rows = await connection.QueryAsync<Wirecast>(sql: base.Sql, param: base.Parms);
-				return rows.SingleOrDefault();
+				return rows.SingleOrDefault()!;
 			});
 		}
 		else
@@ -121,7 +121,7 @@ WHERE sw.ShabbatDate >= @CompareDate
 		return await WithConnectionAsync(async connection =>
 		{
 			var rows = await connection.QueryAsync<ScratchPad>(sql: base.Sql);
-			return rows.SingleOrDefault();
+			return rows.SingleOrDefault()!;
 		});
 	}
 
@@ -179,7 +179,7 @@ WHERE ShabbatDate = dbo.udfGetNextShabbatDate()
 		return await WithConnectionAsync(async connection =>
 		{
 			var rows = await connection.QueryAsync<PsalmAndProverb>(sql: base.Sql, param: base.Parms);
-			return rows.SingleOrDefault();
+			return rows.SingleOrDefault()!;
 		});
 	}
 

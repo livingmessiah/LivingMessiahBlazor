@@ -12,8 +12,8 @@ namespace LivingMessiah.Web.Pages.UpcomingEventsAdmin.Edit;
 
 public partial class GridComponent
 {
-	[Inject] public ILogger<GridComponent> Logger { get; set; }
-	[Inject] NavigationManager NavManager { get; set; }
+	[Inject] public ILogger<GridComponent>? Logger { get; set; }
+	[Inject] NavigationManager? NavManager { get; set; }
 
 	protected void OnActionBegin(ActionEventArgs<EditVM> args)
 	{
@@ -29,17 +29,18 @@ public partial class GridComponent
 
 	private void Image_ButtonClick(int id)
 	{
-		NavManager.NavigateTo(PageUploadImage.Page + "/" + id);
+		NavManager!.NavigateTo(PageUploadImage.Page + "/" + id);
 	}
 
 	private void Edit_ButtonClick(int id)
 	{
-		NavManager.NavigateTo(PageEditMarkdown.Page + "/" + id);
+		NavManager!.NavigateTo(PageEditMarkdown.Page + "/" + id);
 	}
 
 	void Failure(FailureEventArgs e)
 	{
-		Logger.LogDebug($"Error inside {nameof(GridComponent)}; e.Error: {e.Error}");
+		string message = $"Error inside {nameof(GridComponent)}; e.Error: {e.Error}";
+		Logger!.LogDebug(message);
 	}
 
 }

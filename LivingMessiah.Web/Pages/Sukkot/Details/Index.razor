@@ -22,7 +22,7 @@
 
 <LoadingComponent IsLoading="vwRegistration == null">
 
-	@if (!String.IsNullOrEmpty(vwRegistration.PayWithCheckMessage))
+	@if (!String.IsNullOrEmpty(vwRegistration!.PayWithCheckMessage))
 	{
 		<div class="d-print-none">
 			<PaymentInstructionsModal />

@@ -6,38 +6,18 @@ namespace LivingMessiah.Web.Pages.UpcomingEvents;
 
 public partial class SpecialEvent
 {
-	[Inject]
-	NavigationManager NavManager { get; set; }
+	[Inject] NavigationManager? NavManager { get; set; }
 
-	[Parameter]
-	public int Id { get; set; }
-
-	[Parameter]
-	public DateTime EventDate { get; set; }
-
-	[Parameter]
-	public SpecialEventType SpecialEventType { get; set; }
-
-	[Parameter]
-	public String Title { get; set; }
-
-	[Parameter]
-	public String SubTitle { get; set; }
-
-	[Parameter]
-	public String ImageUrl { get; set; }
-
-	[Parameter]
-	public String WebsiteUrl { get; set; }
-
-	[Parameter]
-	public String WebsiteDescr { get; set; }
-
-	[Parameter]
-	public String YouTubeId { get; set; }
-
-	[Parameter]
-	public String Description { get; set; }
+	[Parameter] public int Id { get; set; }
+	[Parameter] public DateTime EventDate { get; set; }
+	[Parameter] public SpecialEventType? SpecialEventType { get; set; }
+	[Parameter]	public string?  Title { get; set; }
+	[Parameter]	public string?  SubTitle { get; set; }
+	[Parameter]	public string?  ImageUrl { get; set; }
+	[Parameter]	public string?  WebsiteUrl { get; set; }
+	[Parameter]	public string?  WebsiteDescr { get; set; }
+	[Parameter]	public string?  YouTubeId { get; set; }
+	[Parameter]	public string?  Description { get; set; }
 
 	protected override void OnInitialized()
 	{
@@ -45,8 +25,8 @@ public partial class SpecialEvent
 	}
 
 	public bool ShowVideo { get; set; } = false;
-	protected string OppositeIcon;
-	protected string OppositeToggleMsg;
+	protected string?  OppositeIcon;
+	protected string?  OppositeToggleMsg;
 
 	protected void ShowVideo_Button_Click()
 	{
@@ -71,6 +51,6 @@ public partial class SpecialEvent
 
 	private void Edit_ButtonClick(int id)
 	{
-		NavManager.NavigateTo(Links.UpcomingEventsAdmin.EditMarkdown.Page + "/" + id);
+		NavManager!.NavigateTo(Links.UpcomingEventsAdmin.EditMarkdown.Page + "/" + id);
 	}
 }

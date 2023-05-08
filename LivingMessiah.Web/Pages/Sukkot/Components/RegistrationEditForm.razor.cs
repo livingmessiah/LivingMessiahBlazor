@@ -13,8 +13,8 @@ public partial class RegistrationEditForm
 {
 	[Inject] public IRegistrationEditService svc { get; set; }
 	[Inject] public ILogger<RegistrationEditForm> Logger { get; set; }
-	[Inject] AppState AppState { get; set; }
-	[Inject] public IToastService Toast { get; set; }
+	[Inject] AppState? AppState { get; set; }
+	[Inject] public IToastService? Toast { get; set; }
 
 	[Parameter, EditorRequired] public int? Id { get; set; }
 	[Parameter, EditorRequired] public string Email { get; set; }

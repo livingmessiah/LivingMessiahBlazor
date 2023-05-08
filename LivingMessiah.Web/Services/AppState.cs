@@ -7,8 +7,10 @@ namespace LivingMessiah.Web.Services;
 public class AppState
 {
 	#region Constructor and DI
-	private readonly ILogger Logger;
+	private readonly ILogger? Logger;
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 	public AppState(ILogger<AppState> logger)
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 	{
 		Logger = logger;
 	}
@@ -19,7 +21,7 @@ public class AppState
 	public string Message { get; private set; } = "";
 	public void UpdateMessage(ComponentBase Source, string Message)
 	{
-		Logger.LogDebug(string.Format("Inside {0}, Message: {1}"
+		Logger!.LogDebug(string.Format("Inside {0}, Message: {1}"
 			, nameof(AppState) + "!" + nameof(UpdateMessage), Message));
 		this.Message = Message;
 		NotifyStateChanged(Source, "Message");

@@ -9,7 +9,7 @@ public class PsalmsVM
 	public int EndVerse { get; set; }
 	public int VerseCount { get; set; }
 	public bool IsWholeChapter { get; set; }
-	public string BCV { get; set; }
+	public string? BCV { get; set; }
 	public int Chapter { get; set; }
 	public string? KJVHtmlConcat { get; set; }
 	public int? ShabbatWeekId { get; set; }

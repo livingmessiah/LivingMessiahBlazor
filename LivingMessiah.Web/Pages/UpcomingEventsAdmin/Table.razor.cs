@@ -8,11 +8,12 @@ namespace LivingMessiah.Web.Pages.UpcomingEventsAdmin;
 
 public partial class Table
 {
-	[Inject] public IUpcomingEventsRepository db { get; set; }
+	[Inject] public IUpcomingEventsRepository? db { get; set; }
 
-	protected List<SpecialEvent> SpecialEvents;
+	protected List<SpecialEvent>? SpecialEvents;
+
 	protected override async Task OnInitializedAsync()
 	{
-		SpecialEvents = await db.GetEvents(daysAhead: 100, daysPast: -100);
+		SpecialEvents = await db!.GetEvents(daysAhead: 100, daysPast: -100);
 	}
 }

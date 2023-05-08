@@ -102,9 +102,9 @@ public class SukkotService : ISukkotService
 		try
 		{
 			var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-			ClaimsPrincipal user = authState.User;
+			ClaimsPrincipal? user = authState.User;
 
-			if (user.Identity.IsAuthenticated)
+			if (user.Identity!.IsAuthenticated)
 			{
 				if (user.Verified())
 				{
@@ -112,7 +112,7 @@ public class SukkotService : ISukkotService
 					vm.EmailAddress = user.GetUserEmail();
 
 					var vw = new vwRegistrationStep();
-					vw = await db.GetByEmail(vm.EmailAddress);
+					vw = await db.GetByEmail(vm.EmailAddress!);
 
 					if (vw is not null)
 					{
@@ -130,7 +130,7 @@ public class SukkotService : ISukkotService
 							vm.RegistrationStep.TotalDonation = vw.TotalDonation;
 							vm.RegistrationStep.RegistrationFeeAdjusted = vw.RegistrationFeeAdjusted;
 
-							vm.Status = Status.FromValue((int)vw.StatusId);
+							vm.Status = Status.FromValue((int)vw.StatusId!);
 						}
 						else
 						{
@@ -214,7 +214,7 @@ public class SukkotService : ISukkotService
 
 				var tuple = Helper.GetAttendanceDatesArray(vm.AttendanceBitwise);
 				vm.AttendanceDateList = tuple.week1;
-				vm.AttendanceDateList2ndMonth = tuple.week2;
+				vm.AttendanceDateList2ndMonth = tuple.week2!;
 			}
 		}
 
@@ -226,7 +226,7 @@ public class SukkotService : ISukkotService
 			throw new InvalidOperationException(UserInterfaceMessage);
 		}
 
-		if (!IsUserAuthoirized(vm.EMail, id, user))
+		if (!IsUserAuthoirized(vm.EMail!, id, user))
 		{
 			LogExceptionMessage = $"Inside {nameof(Details)}, logged in user:{vm.EMail} lacks authority for id={id}";
 			Logger.LogWarning(LogExceptionMessage);
@@ -252,9 +252,9 @@ public class SukkotService : ISukkotService
 			throw new InvalidOperationException(UserInterfaceMessage);
 		}
 
-		if (!IsUserAuthoirized(vm.EMail, id, user))
+		if (!IsUserAuthoirized(vm.EMail!, id, user))
 		{
-			LogExceptionMessage = $"Inside {nameof(DeleteConfirmation)}, logged in user:{vm.EMail} lacks authority for id={id}";
+			LogExceptionMessage = $"Inside {nameof(DeleteConfirmation)}, logged in user:{vm.EMail!} lacks authority for id={id}";
 			Logger.LogWarning(LogExceptionMessage);
 			UserInterfaceMessage += "User not authorized";
 			throw new UserNotAuthoirizedException(LogExceptionMessage);

@@ -8,7 +8,7 @@ public partial class Index
 {
 	public bool RefreshHraList { get; set; }
 
-	public string	Email { get; set; }
+	public string?	Email { get; set; }
 
 	protected override void OnInitialized()
 	{

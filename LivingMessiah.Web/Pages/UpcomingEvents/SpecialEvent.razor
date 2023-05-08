@@ -13,7 +13,7 @@
 			</div>
 			<div class="col-6">
 				<h4>
-					<span class="float-end"><i>@SpecialEventType.Descr</i></span>
+					<span class="float-end"><i>@SpecialEventType!.Descr</i></span>
 				</h4>
 			</div>
 		</div>
@@ -52,7 +52,7 @@
 					<div class="col">
 						<button class="my-3 btn btn-xlarge btn-primary"
 										@onclick="@(e => ShowVideo_Button_Click())">
-							@((MarkupString)OppositeIcon) @OppositeToggleMsg
+							@((MarkupString)OppositeIcon!) @OppositeToggleMsg
 						</button>
 					</div>
 				</div>
@@ -74,7 +74,7 @@
 
 	<div class="card-body">
 		<p class="pb-2 border-success">
-			@((MarkupString)Description)
+			@((MarkupString)Description!)
 		</p>
 		<button @onclick="@(e => Edit_ButtonClick(@Id))"
 						class="btn-default btn-sm" title="@LinkEditMarkdown.Title Id: @Id">

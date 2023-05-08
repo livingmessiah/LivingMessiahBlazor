@@ -8,19 +8,19 @@ using Microsoft.AspNetCore.Components;
 
 using LivingMessiah.Web.Pages.Sukkot.Domain;
 using LivingMessiah.Web.Pages.SukkotAdmin.Services;
+using Syncfusion.Blazor.Notifications;
+using Blazored.Toast.Services;
 
 namespace LivingMessiah.Web.Pages.SukkotAdmin.RegistrationList;
 
 [Authorize(Roles = Roles.AdminOrSukkot)]
 public partial class RegistrationList
 {
-	[Inject]
-	public ILogger<RegistrationList> Logger { get; set; }
+	[Inject] public ILogger<RegistrationList>? Logger { get; set; }
+	[Inject] public ISukkotAdminService? svc { get; set; }
+	[Inject] public IToastService? Toast { get; set; }
 
-	[Inject]
-	public ISukkotAdminService svc { get; set; }
-
-	public List<vwRegistration> Registrations { get; set; }
+	public List<vwRegistration>? Registrations { get; set; }
 
 	private bool IsCurrentSortAscending = true;
 	private EnumsOld.RegistrationSortEnum CurrentRegistrationSortEnum = EnumsOld.RegistrationSortEnum.LastName;
@@ -34,7 +34,7 @@ public partial class RegistrationList
 
 	async Task SortClicked(EnumsOld.RegistrationSortEnum registrationSortEnum)
 	{
-		Logger.LogDebug(string.Format("...{0} registrationSortEnum:{1}"
+		Logger!.LogDebug(string.Format("...{0} registrationSortEnum:{1}"
 			, nameof(RegistrationList) + "!" + nameof(SortClicked), registrationSortEnum));
 
 		if (registrationSortEnum != CurrentRegistrationSortEnum)
@@ -53,10 +53,10 @@ public partial class RegistrationList
 	{
 		try
 		{
-			Logger.LogDebug(string.Format("Inside {0} , registrationSortEnum: {1}, isAscending: {2}"
+			Logger!.LogDebug(string.Format("Inside {0} , registrationSortEnum: {1}, isAscending: {2}"
 					, nameof(RegistrationList) + "!" + nameof(PopulateRegistrationList), registrationSortEnum, isAscending));
 			
-			Registrations = await svc.GetAll(registrationSortEnum, isAscending);
+			Registrations = await svc!.GetAll(registrationSortEnum, isAscending);
 			
 			if (Registrations is not null)
 			{
@@ -64,14 +64,12 @@ public partial class RegistrationList
 			}
 			else
 			{
-				DatabaseWarning = true;
-				DatabaseWarningMsg = $"{nameof(Registrations)} is null";
+				Toast!.ShowWarning($"{nameof(Registrations)} is null");
 			}
 		}
 		catch (InvalidOperationException invalidOperationException)
 		{
-			DatabaseError = true;
-			DatabaseErrorMsg = invalidOperationException.Message;
+			Toast!.ShowError(invalidOperationException.Message);
 		}
 	}
 
@@ -96,22 +94,4 @@ public partial class RegistrationList
 		return $"Sorted by {CurrentRegistrationSortEnum.ToString()} {(IsCurrentSortAscending ? "" : "(descending)")}";
 	}
 
-	#region ErrorHandling
-	private void InitializeErrorHandling()
-	{
-		DatabaseInformationMsg = "";
-		DatabaseInformation = false;
-		DatabaseWarningMsg = "";
-		DatabaseWarning = false;
-		DatabaseErrorMsg = "";
-		DatabaseError = false;
-	}
-
-	protected bool DatabaseInformation = false;
-	protected string DatabaseInformationMsg { get; set; }
-	protected bool DatabaseWarning = false;
-	protected string DatabaseWarningMsg { get; set; }
-	protected bool DatabaseError { get; set; } // = false; handled by InitializeErrorHandling
-	protected string DatabaseErrorMsg { get; set; }
-	#endregion
 }

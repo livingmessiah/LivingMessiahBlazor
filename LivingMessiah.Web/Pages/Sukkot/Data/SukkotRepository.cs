@@ -44,7 +44,7 @@ public class SukkotRepository : BaseRepositoryAsync, ISukkotRepository
 		return await WithConnectionAsync(async connection =>
 		{
 			var rows = await connection.QueryAsync<vwRegistration>(sql: base.Sql, param: base.Parms);
-			return rows.SingleOrDefault();
+			return rows.SingleOrDefault()!;
 		});
 	}
 
@@ -65,7 +65,7 @@ WHERE EMail = @EMail
 		return await WithConnectionAsync(async connection =>
 		{
 			var rows = await connection.QueryAsync<vwRegistrationStep>(sql: base.Sql, param: base.Parms);
-			return rows.SingleOrDefault();
+			return rows.SingleOrDefault()!;
 		});
 	}
 
@@ -83,7 +83,7 @@ WHERE EMail = @EMail
 			Adults = registration.Adults,
 			ChildBig = registration.ChildBig,
 			ChildSmall = registration.ChildSmall,
-			StatusId = registration.Status.Value,
+			StatusId = registration.Status!.Value,
 			AttendanceBitwise = registration.AttendanceBitwise,
 			LmmDonation = 0,
 			Avatar = registration.Avatar,
@@ -127,7 +127,7 @@ UPDATE Sukkot.Registration SET
 	ChildBig = {registration.ChildBig},
 	ChildSmall = {registration.ChildSmall},
 	AttendanceBitwise = {registration.AttendanceBitwise},
-	StatusId = {registration.Status.Value},  
+	StatusId = {registration.Status!.Value},  
 	LmmDonation = {registration.LmmDonation},
 	Notes = N'{registration.NotesScrubbed}',
 	Avatar = N'{registration.Avatar}'

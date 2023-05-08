@@ -7,7 +7,7 @@
 			<ul class="fa-ul">
 				@foreach (TItem item in Data ?? Array.Empty<TItem>())
 				{
-					<li>@ChildContent(item)</li>
+					<li>@ChildContent!(item)</li>
 				}
 			</ul>
 		</div>
@@ -16,7 +16,7 @@
 	case LinkTypeEnum.HomeSidebar:
 		@foreach (TItem item in Data ?? Array.Empty<TItem>())
 		{
-			@ChildContent(item)
+			@ChildContent!(item)
 		}
 		break;
 
@@ -43,7 +43,7 @@
 			@foreach (TItem item in Data ?? Array.Empty<TItem>())
 			{
 				<li class="nav-item">
-					@ChildContent(item)
+					@ChildContent!(item)
 				</li>
 			}
 		</ul>

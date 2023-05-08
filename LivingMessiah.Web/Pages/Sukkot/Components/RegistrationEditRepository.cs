@@ -47,7 +47,7 @@ WHERE Id = @Id
 		return await WithConnectionAsync(async connection =>
 		{
 			var rows = await connection.QueryAsync<Sukkot.Components.RegistrationVM>(sql: base.Sql, param: base.Parms);
-			return rows.SingleOrDefault();
+			return rows.SingleOrDefault()!;
 		});
 	}
 

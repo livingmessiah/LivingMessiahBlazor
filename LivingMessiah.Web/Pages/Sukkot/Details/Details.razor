@@ -5,7 +5,7 @@
 @using LivingMessiah.Web.Pages.Sukkot.Enums;
 
 @{
-	string Phone2 = !String.IsNullOrEmpty(@vwRegistration.Phone) ? $"Phone: {@vwRegistration.Phone}, " : "";
+	string Phone2 = !String.IsNullOrEmpty(@vwRegistration!.Phone) ? $"Phone: {@vwRegistration.Phone}, " : "";
 }
 
 @* General <div class="row"></div> *@

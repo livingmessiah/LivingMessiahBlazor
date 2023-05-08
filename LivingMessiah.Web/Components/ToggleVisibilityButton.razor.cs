@@ -9,7 +9,7 @@ namespace LivingMessiah.Web.Components;
 
 public partial class ToggleVisibilityButton
 {
-		[Parameter] public RenderFragment ChildContent { get; set; }
+		[Parameter] public RenderFragment? ChildContent { get; set; }
 
 		[Parameter(CaptureUnmatchedValues = true)]
 		public IReadOnlyDictionary<string, object> AdditionalAttributes { get; set; }
@@ -20,16 +20,16 @@ public partial class ToggleVisibilityButton
 				{ "buttonfloat", "float-end" }
 			};
 
-		string BadgeColor => AdditionalAttributes
+		string? BadgeColor => AdditionalAttributes
 			.TryGetValue("badgecolor", out var value) ? value.ToString() : string.Empty;
 
-		string ButtonColor => AdditionalAttributes
+		string? ButtonColor => AdditionalAttributes
 			.TryGetValue("buttoncolor", out var value) ? value.ToString() : string.Empty;
 
-		string ButtonSize => AdditionalAttributes
+		string? ButtonSize => AdditionalAttributes
 			.TryGetValue("buttonsize", out var value) ? value.ToString() : string.Empty;
 
-		string ButtonFloat => AdditionalAttributes
+		string? ButtonFloat => AdditionalAttributes
 			.TryGetValue("buttonfloat", out var value) ? value.ToString() : string.Empty;
 
 		//[Parameter] 	public string Title { get; set; }

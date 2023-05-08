@@ -5,14 +5,14 @@ namespace LivingMessiah.Web.Pages.WindmillRanch.Components;
 
 public partial class SwaleRainEventCarousel
 {
-	[Parameter, EditorRequired] public MediaQuery mq { get; set; }
+	[Parameter, EditorRequired] public MediaQuery? mq { get; set; }
 
 	protected string width = "";
 	protected string height = "";
 
 	protected override void OnInitialized()
 	{
-		mq
+		mq!
 			.When(MediaQuery.Xs).Then(() =>
 			{
 				width = "400px";

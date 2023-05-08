@@ -16,11 +16,11 @@ namespace LivingMessiah.Web.Pages.UpcomingEventsAdmin;
 
 public partial class SimpleGrid
 {
-	[Inject] public IUpcomingEventsRepository db { get; set; }
-	[Inject] public ILogger<SimpleGrid> Logger { get; set; }
-	[Inject] public IToastService Toast { get; set; }
+	[Inject] public IUpcomingEventsRepository? db { get; set; }
+	[Inject] public ILogger<SimpleGrid>? Logger { get; set; }
+	[Inject] public IToastService? Toast { get; set; }
 
-	protected List<SpecialEvent> SpecialEvents;
+	protected List<SpecialEvent>? SpecialEvents;
 
 	private const int DaysPast = -600; //daysPast: -3
 	private const int DaysAhead = 100;
@@ -30,24 +30,24 @@ public partial class SimpleGrid
 	{
 		try
 		{
-			Logger.LogDebug(string.Format("Inside {0}"
+			Logger!.LogDebug(string.Format("Inside {0}"
 				, nameof(SimpleGrid) + "!" + nameof(OnInitializedAsync)));
-			SpecialEvents = await db.GetEvents(daysAhead: DaysAhead, daysPast: DaysPast);  
+			SpecialEvents = await db!.GetEvents(daysAhead: DaysAhead, daysPast: DaysPast);  
 			if (SpecialEvents is not null)
 			{
 				RowCnt = SpecialEvents.Count;
-				Logger.LogDebug(string.Format("...UpcomingEventList.Count:{0}", SpecialEvents.Count));
+				Logger!.LogDebug(string.Format("...UpcomingEventList.Count:{0}", SpecialEvents.Count));
 			}
 			else
 			{
-				Toast.ShowWarning($"{nameof(SpecialEvents)} NOT FOUND");
+				Toast!.ShowWarning($"{nameof(SpecialEvents)} NOT FOUND");
 			}
 		}
 		catch (Exception ex)
 		{
-			Logger.LogError(ex, string.Format("  Inside catch of {0}"
+			Logger!.LogError(ex, string.Format("  Inside catch of {0}"
 				, nameof(SimpleGrid) + "!" + nameof(OnInitializedAsync)));
-			Toast.ShowError("An invalid operation occurred, contact your administrator");
+			Toast!.ShowError("An invalid operation occurred, contact your administrator");
 		}
 	}
 

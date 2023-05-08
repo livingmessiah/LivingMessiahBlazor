@@ -8,15 +8,14 @@ namespace LivingMessiah.Web.Pages.Admin.AudioVisual;
 
 public partial class BibleBookChapterDDL
 {
-	[Inject]
-	ISmartEnumServiceForSfDropDownList svcDDL { get; set; }
+	[Inject] ISmartEnumServiceForSfDropDownList? svcDDL { get; set; }
 
-	public string SelectedValue;
+	public string? SelectedValue;
 	public int SelectedId;
 
 	public int CurrentLastChapter = 150;
 
-	protected List<DropDownListVM> DataSource => svcDDL.GetBibleBooksVM().ToList();  // ** ToDo: Update**
+	protected List<DropDownListVM> DataSource => svcDDL!.GetBibleBooksVM().ToList();  // ** ToDo: Update**
 
 	public void OnChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<string, DropDownListVM> args)
 	{

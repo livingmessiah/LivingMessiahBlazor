@@ -27,7 +27,7 @@
 </div>*@
 
 <LoadingComponent IsLoading="SpecialEvents==null" TurnSpinnerOff="@TurnSpinnerOff">
-	@foreach (var item in SpecialEvents)
+	@foreach (var item in SpecialEvents!)
 	{
 		<SpecialEvent Id ="@item.Id"
 							EventDate="@item.EventDate"
@@ -38,7 +38,7 @@
 							WebsiteUrl="@item.WebsiteUrl"
 							WebsiteDescr="@item.WebsiteDescr"
 							YouTubeId="@item.YouTubeId"
-							Description="@Markdig.Markdown.ToHtml(item.Description, pipeline)">
+							Description="@Markdig.Markdown.ToHtml(item.Description!, pipeline)">
 			</SpecialEvent>
 	}
 </LoadingComponent>

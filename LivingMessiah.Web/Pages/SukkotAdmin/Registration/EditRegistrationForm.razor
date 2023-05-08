@@ -46,7 +46,7 @@
 					<div class="col-sm-4">
 						<div class="mb-3">
 							<label for="familyName" class="control-label">Family Name</label>
-							<InputText id="familyName" class="form-control" @bind-Value="RegistrationVM.FamilyName" />
+							<InputText id="familyName" class="form-control" @bind-Value="RegistrationVM!.FamilyName" />
 							<ValidationMessage For="@(() => RegistrationVM.FamilyName)" />
 						</div>
 					</div>

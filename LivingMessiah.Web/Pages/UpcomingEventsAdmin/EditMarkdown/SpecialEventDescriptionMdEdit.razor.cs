@@ -10,10 +10,9 @@ namespace LivingMessiah.Web.Pages.UpcomingEventsAdmin.EditMarkdown;
 
 public partial class SpecialEventDescriptionMdEdit
 {
-
-	[Inject] public ILogger<SpecialEventDescriptionMdEdit> Logger { get; set; }
-	[Inject] public IUpcomingEventsRepository db { get; set; }
-	[Inject] public IToastService Toast { get; set; }
+	[Inject] public ILogger<SpecialEventDescriptionMdEdit>? Logger { get; set; }
+	[Inject] public IUpcomingEventsRepository? db { get; set; }
+	[Inject] public IToastService? Toast { get; set; }
 
 	[Parameter] public int Id { get; set; }
 
@@ -26,14 +25,14 @@ public partial class SpecialEventDescriptionMdEdit
 	{
 		try
 		{
-			Logger.LogDebug(string.Format("Inside {0} Id:{1}"
+			Logger!.LogDebug(string.Format("Inside {0} Id:{1}"
 				, nameof(SpecialEventDescriptionMdEdit) + "!" + nameof(OnInitializedAsync), Id));
 
-			VM = await db.GetDescription(Id);
+			VM = await db!.GetDescription(Id);
 			if (VM is null)
 			{
 				UserInterfaceMessage = $"{nameof(VM)} NOT FOUND";
-				Toast.ShowWarning(UserInterfaceMessage);
+				Toast!.ShowWarning(UserInterfaceMessage);
 			}
 		}
 		catch (Exception ex)
@@ -41,8 +40,8 @@ public partial class SpecialEventDescriptionMdEdit
 			UserInterfaceMessage = "An invalid operation occurred, contact your administrator";
 			LogExceptionMessage = string.Format("  Inside catch of {0}"
 				, nameof(SpecialEventDescriptionMdEdit) + "!" + nameof(OnInitializedAsync));
-			Logger.LogError(ex, LogExceptionMessage);
-			Toast.ShowError(UserInterfaceMessage);
+			Logger!.LogError(ex, LogExceptionMessage);
+			Toast!.ShowError(UserInterfaceMessage);
 		}
 	}
 
@@ -54,25 +53,25 @@ public partial class SpecialEventDescriptionMdEdit
 
 	protected async Task ValidSubmit(EditContext context)
 	{
-		Logger.LogDebug(string.Format("Inside {0}"
+		Logger!.LogDebug(string.Format("Inside {0}"
 			, nameof(SpecialEventDescriptionMdEdit) + "!" + nameof(ValidSubmit)));
 		int rows = 0;
 		EditMarkdownVM vm = (EditMarkdownVM)context.Model;
 		try
 		{
-			rows = await db.UpdateDescription(vm.Id, vm.Description);
+			rows = await db!.UpdateDescription(vm.Id, vm.Description);
 			HasRowBeenUpdated = true;
-			Toast.ShowInfo("Description Updated");
+			Toast!.ShowInfo("Description Updated");
 		}
 		catch (Exception ex)
 		{
 			UserInterfaceMessage = "An invalid operation occurred, contact your administrator";
 			LogExceptionMessage = string.Format("  Inside catch of {0}"
 				, nameof(SpecialEventDescriptionMdEdit) + "!" + nameof(ValidSubmit));
-			Logger.LogError(ex, LogExceptionMessage);
-			Toast.ShowError(UserInterfaceMessage);
+			Logger!.LogError(ex, LogExceptionMessage);
+			Toast!.ShowError(UserInterfaceMessage);
 		}
-		Logger.LogDebug(string.Format("...rows {0}", rows));
+		Logger!.LogDebug(string.Format("...rows {0}", rows));
 	}
 
 

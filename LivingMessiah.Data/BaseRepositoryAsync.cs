@@ -15,9 +15,9 @@ public abstract class BaseRepositoryAsync
 
 		private readonly IConfiguration config;
 		protected readonly ILogger log;
-		protected BaseRepositoryAsync(IConfiguration config, ILogger<BaseRepositoryAsync> logger)
+		protected BaseRepositoryAsync(IConfiguration? config, ILogger<BaseRepositoryAsync> logger)
 		{
-				this.config = config;
+				this.config = config!;
 				this.log = logger;
 		}
 
@@ -31,7 +31,7 @@ public abstract class BaseRepositoryAsync
 		/// <returns>Task of type T - we'll be using this to build and execute our query</returns>
 		protected async Task<T> WithConnectionAsync<T>(Func<IDbConnection, Task<T>> getData)
 		{
-				string connectionString = config[configationConnectionKey];
+				string? connectionString = config[configationConnectionKey];
 				string errMsg = "";
 
 				try
@@ -75,8 +75,8 @@ public abstract class BaseRepositoryAsync
 				}
 		}
 
-		public string Sql { get; set; }
-		public DynamicParameters Parms { get; set; }  // using Dapper; Note, only place dependent on Dapper
+		public string? Sql { get; set; }
+		public DynamicParameters? Parms { get; set; }  // using Dapper; Note, only place dependent on Dapper
 
 
 		public string SqlDump

@@ -45,13 +45,13 @@
 
 <LoadingComponent IsLoading="NotesList == null">
 
-	@if (!NotesList.Any())
+	@if (!NotesList!.Any())
 	{
 		<h3 class="text-danger">No Registrations that have notes yet</h3>
 	}
 	else
 	{
-		@foreach (var item in NotesList)
+		@foreach (var item in NotesList!)
 		{
 			rowCount += 1;
 

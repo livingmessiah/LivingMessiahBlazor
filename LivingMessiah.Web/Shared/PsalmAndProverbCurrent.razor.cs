@@ -13,22 +13,17 @@ namespace LivingMessiah.Web.Shared;
 
 public partial class PsalmAndProverbCurrent
 {
-	[Inject]
-	public IShabbatWeekCacheService svc { get; set; }
+	[Inject] public IShabbatWeekCacheService? svc { get; set; }
+	[Inject] public ILogger<PsalmAndProverbCurrent>? Logger { get; set; }
+	[Parameter] public bool PerformHtmlValidation { get; set; } = true;
 
-	[Inject]
-	public ILogger<PsalmAndProverbCurrent> Logger { get; set; }
+	protected PsalmAndProverb? CurrentPsalmAndProverb;
+	protected string?  ShabbatDateYMD;
 
-	[Parameter]
-	public bool PerformHtmlValidation { get; set; } = true;
-
-	protected PsalmAndProverb CurrentPsalmAndProverb;
-	protected string ShabbatDateYMD;
-
-	protected string PsalmsHeading;
-	protected string PsalmsVerses;
-	protected string ProverbsHeading;
-	protected string ProverbsVerses;
+	protected string?  PsalmsHeading;
+	protected string?  PsalmsVerses;
+	protected string?  ProverbsHeading;
+	protected string?  ProverbsVerses;
 
 	protected bool LoadFailed;
 
@@ -37,7 +32,7 @@ public partial class PsalmAndProverbCurrent
 		try
 		{
 			//Logger.LogDebug($"Inside {nameof(PsalmAndProverbCurrent)}!{nameof(OnInitializedAsync)}");
-			CurrentPsalmAndProverb = await svc.GetCurrentPsalmAndProverb(UseCache: true);
+			CurrentPsalmAndProverb = await svc!.GetCurrentPsalmAndProverb(UseCache: true)!;
 			ShabbatDateYMD = CurrentPsalmAndProverb.ShabbatDate.ToString("MMM dd");
 			PsalmsHeading = BuildHeading(CurrentPsalmAndProverb.PsalmsBCV, CurrentPsalmAndProverb.PsalmsTitle);
 			PsalmsVerses = ValidateHtml(CurrentPsalmAndProverb.PsalmsKJVHtmlConcat, hasNestedTags: true);
@@ -49,22 +44,22 @@ public partial class PsalmAndProverbCurrent
 		catch (Exception ex)
 		{
 			LoadFailed = true;
-			Logger.LogWarning(ex, $"Failed to load page {nameof(PsalmAndProverbCurrent)}, PerformHtmlValidation: {PerformHtmlValidation}");
+			Logger!.LogWarning(ex, $"Failed to load page {nameof(PsalmAndProverbCurrent)}, PerformHtmlValidation: {PerformHtmlValidation}");
 		}
 	}
 
-	private string BuildHeading(string bookChapterVerse, string Title)
+	private string BuildHeading(string? bookChapterVerse, string? Title)
 	{
-		//string s = $"{bookChapterVerse} <span class='float-end'><small><i>{ValidateHtml(Title)}</i></small></span>";
-		string s = $"{bookChapterVerse}";
+		//string?  s = $"{bookChapterVerse} <span class='float-end'><small><i>{ValidateHtml(Title)}</i></small></span>";
+		string?  s = $"{bookChapterVerse}";
 		return ValidateHtml(s, hasNestedTags: true);
 	}
 
-	private string ValidateHtml(string html, bool hasNestedTags = false)
+	private string ValidateHtml(string? html, bool hasNestedTags = false)
 	{
 		if (!PerformHtmlValidation)
 		{
-			return html;
+			return html!;
 		}
 		else
 		{
@@ -77,7 +72,7 @@ public partial class PsalmAndProverbCurrent
 			}
 			else
 			{
-				return html;
+				return html!;
 			}
 		}
 	}

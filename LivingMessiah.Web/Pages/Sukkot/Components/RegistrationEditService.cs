@@ -83,7 +83,7 @@ public class RegistrationEditService : IRegistrationEditService
 		try
 		{
 			registrationVM.Status = Status.Payment;
-			registrationVM.AttendanceBitwise = GetDaysBitwise(registrationVM.AttendanceDateList, registrationVM.AttendanceDateList2ndMonth, Enums.DateRangeType.Attendance);
+			registrationVM.AttendanceBitwise = GetDaysBitwise(registrationVM.AttendanceDateList!, registrationVM.AttendanceDateList2ndMonth!, Enums.DateRangeType.Attendance);
 
 			var sprocTuple = await db.Create(DTO_From_VM_To_DB(registrationVM));
 
@@ -140,11 +140,11 @@ public class RegistrationEditService : IRegistrationEditService
 			Adults = registration.Adults,
 			ChildBig = registration.ChildBig,
 			ChildSmall = registration.ChildSmall,
-			StatusId = registration.Status.Value,
-			AttendanceBitwise = GetDaysBitwise(registration.AttendanceDateList, registration.AttendanceDateList2ndMonth, Enums.DateRangeType.Attendance),
+			StatusId = registration.Status!.Value,
+			AttendanceBitwise = GetDaysBitwise(registration.AttendanceDateList!, registration.AttendanceDateList2ndMonth!, Enums.DateRangeType.Attendance),
 			LmmDonation = registration.LmmDonation,
 			Avatar = registration.Avatar,
-			Notes = GetNotesScrubbed(registration.Notes)
+			Notes = GetNotesScrubbed(registration.Notes!)
 		};
 
 		Logger.LogDebug(string.Format("...Inside RegistrationEditPOCO [2], poco.AttendanceBitwise: {0}", poco.AttendanceBitwise));
@@ -157,7 +157,7 @@ public class RegistrationEditService : IRegistrationEditService
 		if (selectedDateArray is null || selectedDateArray.Length == 0) { return 0; }
 
 		int bitwise = 0;
-		AttendanceDate attendanceDate;
+		AttendanceDate? attendanceDate;
 
 		foreach (var item in selectedDateArray)
 		{

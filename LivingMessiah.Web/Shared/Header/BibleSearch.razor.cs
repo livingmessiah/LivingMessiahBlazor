@@ -11,8 +11,8 @@ namespace LivingMessiah.Web.Shared.Header;
 
 public partial class BibleSearch
 {
-	[Inject] private IState<ToolbarState> ToolbarState { get; set; }
-	[Inject] public IDispatcher Dispatcher { get; set; }
+	[Inject] private IState<ToolbarState>? ToolbarState { get; set; }
+	[Inject] public IDispatcher? Dispatcher { get; set; }
 
 	private async Task<IEnumerable<BibleBook>> SearchBibleBooks(string searchText)
 	{
@@ -20,19 +20,19 @@ public partial class BibleSearch
 			.Where(x => x.Title.ToLower().Contains(searchText.ToLower()))
 			.OrderBy(o => o.Value));
 	}
-	private BibleBook SelectedBook { get; set; }
+	private BibleBook? SelectedBook { get; set; }
 
 	private async Task SelectedResultChanged(BibleBook result)
 	{
-		if (ToolbarState.Value.BibleWebsite is null)
+		if (ToolbarState!.Value.BibleWebsite is null)
 		{
 			var action1 = new SetBibleWebsiteAction(BibleWebsite.MyHebrewBible);
-			Dispatcher.Dispatch(action1);
+			Dispatcher!.Dispatch(action1);
 		}
 
 		await Task.Delay(0);  // ToDo: can I do this without async/await ?
 		SelectedBook = result;
 		var action2 = new SetBibleBookAction(result);
-		Dispatcher.Dispatch(action2);
+		Dispatcher!.Dispatch(action2);
 	}
 }

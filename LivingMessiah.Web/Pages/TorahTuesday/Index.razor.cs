@@ -2,35 +2,34 @@
 
 public partial class Index
 {
+	protected override void OnInitialized()
+	{
+		SetShowLatestVideoButton();
+	}
 
-		protected override void OnInitialized()
+	public bool ShowLatestVideo { get; set; } = false;
+	protected string? OppositeIcon;
+	protected string? OppositeToggleMsg;
+
+	protected void ShowLatestVideo_Button_Click()
+	{
+		ShowLatestVideo = !ShowLatestVideo;
+		SetShowLatestVideoButton();
+		StateHasChanged();
+	}
+
+	protected void SetShowLatestVideoButton()
+	{
+		if (ShowLatestVideo)
 		{
-				SetShowLatestVideoButton();
+			OppositeIcon = "<i class='far fa-arrow-alt-circle-up'></i>";
+			OppositeToggleMsg = "Hide Latest Video";
 		}
-
-		public bool ShowLatestVideo { get; set; } = false;
-		protected string OppositeIcon;
-		protected string OppositeToggleMsg;
-
-		protected void ShowLatestVideo_Button_Click()
+		else
 		{
-				ShowLatestVideo = !ShowLatestVideo;
-				SetShowLatestVideoButton();
-				StateHasChanged();
+			OppositeIcon = "<i class='far fa-arrow-alt-circle-down'></i>";
+			OppositeToggleMsg = "Show Latest Video";
 		}
-
-		protected void SetShowLatestVideoButton()
-		{
-				if (ShowLatestVideo)
-				{
-						OppositeIcon = "<i class='far fa-arrow-alt-circle-up'></i>";
-						OppositeToggleMsg = "Hide Latest Video";
-				}
-				else
-				{
-						OppositeIcon = "<i class='far fa-arrow-alt-circle-down'></i>";
-						OppositeToggleMsg = "Show Latest Video";
-				}
-		}
+	}
 
 }
