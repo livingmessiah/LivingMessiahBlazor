@@ -2,13 +2,15 @@
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 
+using LivingMessiah.Web.Pages.Sukkot.Enums;
+using LivingMessiah.Web.Pages.Sukkot.RegistrationSteps.Enums;
+
 using LivingMessiah.Web.Pages.SukkotAdmin.Registration.Domain;
 using LivingMessiah.Web.Pages.SukkotAdmin.Registration.Data;
-using LivingMessiah.Web.Pages.Sukkot.RegistrationSteps.Enums;
 using LivingMessiah.Web.Services;
 
 using LivingMessiah.Web.Pages.Sukkot;  // Needed for DateRangeEnum.cs
-using LivingMessiah.Web.Pages.Sukkot.Enums;
+
 using Syncfusion.Blazor.DropDowns;
 using Newtonsoft.Json.Linq;
 using System.Linq;
@@ -53,7 +55,7 @@ public class RegistrationAdminService : IRegistrationAdminService
 		{
 			//string email = await SvcClaims.GetEmail();	if (await SvcClaims.IsUserAuthoirized(email))	{	}
 			registrationVM.Status = Status.Payment;
-			registrationVM.AttendanceBitwise = GetDaysBitwise(registrationVM.AttendanceDateList!);
+			registrationVM.AttendanceBitwise = Helper.GetDaysBitwise(registrationVM.AttendanceDateList!, registrationVM.AttendanceDateList2ndMonth!, Sukkot.Enums.DateRangeType.Attendance);
 
 			int newId = 0;
 			int sprocReturnValue = 0;
@@ -76,33 +78,6 @@ public class RegistrationAdminService : IRegistrationAdminService
 		}
 	}
 
-	//private int GetDaysBitwise(DateTime[] selectedDateArray, DateTime[] selectedDateArray2ndMonth)  //, DateRangeType dateRangeType
-	private int GetDaysBitwise(DateTime[] selectedDateArray)
-	{
-		if (selectedDateArray is null || selectedDateArray.Length == 0) { return 0; }
-
-		int bitwise = 0;
-		AttendanceDate? attendanceDate;
-
-		foreach (var item in selectedDateArray)
-		{
-			attendanceDate = AttendanceDate.List.Where(w => w.Date == item).SingleOrDefault();
-			if (attendanceDate is not null)
-			{
-				bitwise += attendanceDate.Value;  // ToDo: .Bitwise is going away
-			}
-			else
-			{
-				ExceptionMessage = $"...Acceptance Date:{item.ToShortDateString()} is out of range; range is {DateRangeType.Attendance.Range.Min.ToShortDateString()} to {DateRangeType.Attendance.Range.Max.ToShortDateString()}";
-				Logger.LogWarning(ExceptionMessage);
-				//throw new RegistratationException(ExceptionMessage);
-			}
-		}
-
-		return bitwise;
-	}
-
-
 	private RegistrationPOCO DTO_From_VM_To_DB(RegistrationVM registration)
 	{
 		RegistrationPOCO poco = new RegistrationPOCO
@@ -118,14 +93,13 @@ public class RegistrationAdminService : IRegistrationAdminService
 			ChildBig = registration.ChildBig,
 			ChildSmall = registration.ChildSmall,
 			StatusId = registration.Status!.Value,
-			AttendanceBitwise = registration.AttendanceBitwise,
+			AttendanceBitwise = Helper.GetDaysBitwise(registration.AttendanceDateList!, registration.AttendanceDateList2ndMonth!, Sukkot.Enums.DateRangeType.Attendance),
 			LmmDonation = registration.LmmDonation,
 			Avatar = registration.Avatar,
 			Notes = registration.Notes
 		};
 		return poco;
 	}
-
 
 	public async Task<RegistrationVM> GetById(int id)
 	{
@@ -176,8 +150,6 @@ public class RegistrationAdminService : IRegistrationAdminService
 		Logger.LogDebug(string.Format("Inside {0}"
 		, nameof(RegistrationAdminService) + "!" + nameof(DTO_From_DB_To_VM)));
 
-		//Logger!.LogDebug(string.Format("...poco.StatusId: {0}", poco.StatusId));
-		
 		var tuple = Helper.GetAttendanceDatesArray(poco.AttendanceBitwise);
 
 		RegistrationVM registration = new RegistrationVM
@@ -201,18 +173,16 @@ public class RegistrationAdminService : IRegistrationAdminService
 			Notes = poco.Notes
 		};
 
-
-
 		return registration;
 	}
 
 	public async Task<(int RowsAffected, int SprocReturnValue, string ReturnMsg)> Update(RegistrationVM registrationVM)
 	{
-		Logger.LogInformation($"Inside {nameof(RegistrationAdminService)}!{nameof(Update)}; calling {nameof(db.Update)}");
+		const string MessageUpdate = $"Inside {nameof(RegistrationAdminService)}!{nameof(Update)}; calling {nameof(db.Update)}";
+		Logger.LogInformation(MessageUpdate);
 
 		try
 		{
-			registrationVM.AttendanceBitwise = GetDaysBitwise(registrationVM!.AttendanceDateList!);
 			var sprocTuple = await db.Update(DTO_From_VM_To_DB(registrationVM));
 
 			int rowsAffected = sprocTuple.Item1;
@@ -230,7 +200,6 @@ public class RegistrationAdminService : IRegistrationAdminService
 		}
 
 	}
-
 
 	#region CustomExceptions Classes
 

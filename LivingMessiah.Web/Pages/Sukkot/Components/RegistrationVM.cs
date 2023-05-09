@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using FluentValidation;
 using LivingMessiah.Web.Pages.Sukkot.RegistrationSteps.Enums;
 
@@ -16,8 +17,9 @@ public class RegistrationVM
 	public int Adults { get; set; }
 	public int ChildBig { get; set; }
 	public int ChildSmall { get; set; }
-	
-	public int StatusId { get; set; }
+
+	// Only used by Sukkot\Components\RegistrationEditService!GetById VM.Status = Status.FromValue(VM.StatusId);	
+	public int StatusId { get; set; }  
 	public Status? Status { get; set; }
 
 	public int AttendanceBitwise { get; set; }
@@ -27,6 +29,25 @@ public class RegistrationVM
 	public string? Avatar { get; set; }
 	public Decimal LmmDonation { get; set; }
 
+	public string DumpAttendanceDates
+	{
+		get
+		{
+			return this.AttendanceDateList is not null ?
+				String.Join(", ", this.AttendanceDateList.Select(date => date.ToString("yyyy-MM-dd")))
+				: "";
+		}
+	}
+
+	public string DumpAttendanceDates2ndMonth
+	{
+		get
+		{
+			return this.AttendanceDateList2ndMonth is not null ?
+				String.Join(", ", this.AttendanceDateList2ndMonth.Select(date => date.ToString("yyyy-MM-dd")))
+				: "";
+		}
+	}
 }
 
 

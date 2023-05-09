@@ -101,27 +101,40 @@
 
 			<fieldset class="mt-3">
 				<legend class="text-primary">Attendance</legend>
+
 				<div class="row mt-n2">
 
-					<div class="col-sm-4">
+					<div class="col-sm-12">
 						<div class="card bg-light mb-3">
-							@*<div class="card-header"></div>*@
 							<div class="card-body">
-								@*<h4 class="card-title">Attendance</h4>*@
 								<p class="card-text">What days will you be attending?  This helps us with planning.</p>
 							</div>
 						</div>
 					</div>
 
-					<div class="col-sm-8">
-						<div class="mb-3">
-							@*<label for="attendanceDays" class="control-label">Select Dates</label>*@
+				</div>
 
+				<div class="row mt-n2">
+
+					<div class="col-sm-6">
+						<div class="mb-3">
 							<SfCalendar TValue="DateTime?"
 												IsMultiSelection="true" ShowTodayButton="false"
 												@bind-Values="@RegistrationVM.AttendanceDateList"
 												Min="@DateRangeAttendance.Range.Min"
 												Max="@DateRangeAttendance.Range.Max">
+							</SfCalendar>
+
+						</div>
+					</div>
+
+					<div class="col-sm-6">
+						<div class="mb-3">
+							<SfCalendar TValue="DateTime?"
+												IsMultiSelection="true" ShowTodayButton="false"
+												@bind-Values="@RegistrationVM.AttendanceDateList2ndMonth"
+												Min="@DateRangeAttendance.Range2ndMonth.Min"
+												Max="@DateRangeAttendance.Range2ndMonth.Max">
 							</SfCalendar>
 
 						</div>

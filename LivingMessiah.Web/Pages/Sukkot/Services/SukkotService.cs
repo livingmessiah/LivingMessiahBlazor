@@ -208,16 +208,7 @@ public class SukkotService : ISukkotService
 		try
 		{
 			vm = await db.ById(id);
-			if (showPrintInstructionMessage)
-			{
-				vm.PayWithCheckMessage = Other.PayWithCheckModalMessage;
-
-				var tuple = Helper.GetAttendanceDatesArray(vm.AttendanceBitwise);
-				vm.AttendanceDateList = tuple.week1;
-				vm.AttendanceDateList2ndMonth = tuple.week2!;
-			}
 		}
-
 		catch (Exception ex)
 		{
 			LogExceptionMessage = $"Inside {nameof(Details)}, {nameof(db.ById)}";
@@ -234,6 +225,11 @@ public class SukkotService : ISukkotService
 			throw new UserNotAuthoirizedException(UserInterfaceMessage);
 		}
 
+		if (showPrintInstructionMessage) { vm.PayWithCheckMessage = Other.PayWithCheckModalMessage; }
+
+		var tuple = Helper.GetAttendanceDatesArray(vm.AttendanceBitwise);
+		vm.AttendanceDateList = tuple.week1;
+		vm.AttendanceDateList2ndMonth = tuple.week2!;
 		return vm;
 	}
 

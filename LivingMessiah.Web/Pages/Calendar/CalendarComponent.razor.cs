@@ -78,7 +78,7 @@ public partial class CalendarComponent
 				if (CalendarVMs != null)
 				{
 					Logger!.LogDebug(string.Format("... Data gotten from DATABASE"));
-					Cache.Set(CacheSettings.Key, CalendarVMs, TimeSpan.FromMinutes(CacheSettings.FromMinutes));
+					Cache!.Set(CacheSettings.Key, CalendarVMs, TimeSpan.FromMinutes(CacheSettings.FromMinutes));
 					LoadAppointmentDataList();
 				}
 				else

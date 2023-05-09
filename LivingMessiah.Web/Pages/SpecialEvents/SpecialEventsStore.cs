@@ -7,6 +7,12 @@ using LivingMessiah.Web.Pages.UpcomingEvents.Data;
 using Blazored.Toast.Services;
 using System;
 
+
+using Fluxor;
+using System.Reflection;
+
+
+
 namespace LivingMessiah.Web.Pages.SpecialEvents;
 
 // 1. Action
@@ -96,14 +102,24 @@ public class SpecialEventsEffects
 // 5. Effects Server version
 public class SpecialEventsEffects
 {
-	//[Inject] public ILogger<SpecialEventsEffects> Logger { get; set; }
-	[Inject] public IUpcomingEventsRepository? db { get; set; }
-	[Inject] public IToastService? Toast { get; set; }
+	#region Constructor and DI
+	private readonly ILogger Logger;
+	private IUpcomingEventsRepository db;
+	private IToastService? Toast;
+
+	public SpecialEventsEffects(
+		ILogger<SpecialEventsEffects> logger, IUpcomingEventsRepository repository, IToastService toast)
+	{
+		Logger = logger;
+		db = repository;
+		Toast = toast;
+	}
+	#endregion
 
 	[EffectMethod]
 	public async Task SubmitSpecialEvents(SpecialEventsSubmitAction action, IDispatcher dispatcher)
 	{
-		//Logger.LogDebug(string.Format("Inside {0}, Action: {1}", nameof(SpecialEventsEffects) + "!" + nameof(SubmitSpecialEvents), action ));
+		Logger!.LogDebug(string.Format("Inside {0}, Action: {1}", nameof(SpecialEventsEffects) + "!" + nameof(SubmitSpecialEvents), action ));
 
 		await Task.Delay(500); // just so we can see the "submitting" message
 		try
@@ -126,11 +142,11 @@ public class SpecialEventsEffects
 				}
 			}
 		}
-		catch (Exception)   // ex
+		catch (Exception ex)
 		{
-			//Logger!.LogError(ex, string.Format("...Inside catch of {0}", nameof(SpecialEventsEffects) + "!" + nameof(SubmitSpecialEvents)));
+			Logger!.LogError(ex, string.Format("...Inside catch of {0}", nameof(SpecialEventsEffects) + "!" + nameof(SubmitSpecialEvents)));
 			dispatcher.Dispatch(new SpecialEventsSubmitFailureAction("An invalid operation occurred, contact your administrator"));
-			//Toast!.ShowError("An invalid operation occurred, contact your administrator");
+			Toast!.ShowError("An invalid operation occurred, contact your administrator");
 		}
 	}
 }
