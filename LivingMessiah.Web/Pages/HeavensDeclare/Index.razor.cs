@@ -4,12 +4,11 @@ namespace LivingMessiah.Web.Pages.HeavensDeclare;
 
 public partial class Index
 {
-		protected List<Video> Videos;
+	protected List<VideoRecord>? VideoRecords;
 
-		protected override void OnInitialized()
-		{
-				Videos = new List<Video>();
-				Videos = Data.GetAll();
-		}
+	protected override void OnInitialized()
+	{
+		VideoRecords = new List<VideoRecord>();
+	}
 
 }

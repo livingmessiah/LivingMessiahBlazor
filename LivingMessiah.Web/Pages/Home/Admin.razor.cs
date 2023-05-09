@@ -6,13 +6,14 @@ namespace LivingMessiah.Web.Pages.Home;
 
 public partial class Admin
 {
-	[Inject] public Services.ILinkService LinkService { get; set; }
+	[Inject] public Services.ILinkService? LinkService { get; set; }
 
-	private IEnumerable<LinkBasic> AdminLinks;
+	private IEnumerable<LinkBasic>? AdminLinks;
+
 	protected override void OnInitialized()
 	{
 		base.OnInitialized();
-		AdminLinks = LinkService.GetAdminLinks();
+		AdminLinks = LinkService!.GetAdminLinks();
 	}
 }
 

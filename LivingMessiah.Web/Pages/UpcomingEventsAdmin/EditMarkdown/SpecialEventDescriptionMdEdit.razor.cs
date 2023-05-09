@@ -59,7 +59,7 @@ public partial class SpecialEventDescriptionMdEdit
 		EditMarkdownVM vm = (EditMarkdownVM)context.Model;
 		try
 		{
-			rows = await db!.UpdateDescription(vm.Id, vm.Description);
+			rows = await db!.UpdateDescription(vm.Id, vm.Description!);
 			HasRowBeenUpdated = true;
 			Toast!.ShowInfo("Description Updated");
 		}

@@ -2,7 +2,7 @@
 
 public class SetDateRangeAction
 {
-	public DateRange DateRange { get; }
+	public DateRange? DateRange { get; }
 	public SetDateRangeAction() { }
 
 	public SetDateRangeAction(DateRange DateRange)

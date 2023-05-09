@@ -6,7 +6,7 @@ public static class Reducers
 	public static MainState ReduceSetDateRangeAction(MainState state,
 			SetDateRangeAction action) =>
 					new MainState(
-						DateRange: action.DateRange,
+						DateRange: action.DateRange!,
 						CommandState: state.CommandState,
 						CurrentId: state.CurrentId);
 

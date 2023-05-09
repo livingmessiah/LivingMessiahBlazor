@@ -11,8 +11,8 @@ using System.Xml;
 
 public class DropDownListVM
 {
-	public string Value { get; set; }
-	public string Text { get; set; }
+	public string? Value { get; set; }
+	public string? Text { get; set; }
 }
 
 public interface IYouTubeFeedService
@@ -68,7 +68,6 @@ public class YouTubeFeedService : IYouTubeFeedService
 		}
 		return l;
 	}
-
 
 	public async Task<List<DropDownListVM>> GetDropDownList(string url, int take)
 	{

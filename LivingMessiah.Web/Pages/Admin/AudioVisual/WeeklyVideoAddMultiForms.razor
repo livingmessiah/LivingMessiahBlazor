@@ -11,9 +11,8 @@
 <h4 class="mt-4 mb-2"><span class="badge bg-warning">YouTube Feed</span></h4>
 
 <LoadingComponent IsLoading="WeeklyVideoAddVMList==null || ShabbatWeekList==null">
-	@foreach (var item in WeeklyVideoAddVMList)
+	@foreach (var item in WeeklyVideoAddVMList!)
 	{
-
 		<a href="https://www.youtube.com/watch?v=@item.YouTubeId" target="_blank" title="@item.YouTubeId">
 			<img src='https://img.youtube.com/vi/@item.YouTubeId/mqdefault.jpg' class='mt-4' />
 			<br>@item.Title
@@ -27,12 +26,12 @@
 
 			<div class="mb-3 row">
 
-				@if (ShabbatWeekList.Any())
+				@if (ShabbatWeekList!.Any())
 				{
 					<label for="shabbatWeekId" class="col-md-3 col-form-label">Shabbat Week Id:</label>
 					<div class="col-md-9">
 						<InputSelect id="shabbatWeekId" @bind-Value="item.ShabbatWeekId" class="form-control">
-							@foreach (var item in ShabbatWeekList)
+							@foreach (var item in ShabbatWeekList!)
 							{
 						<option value="@item.Id">@item.ShabbatDate.ToShortDateString() [@item.Id]</option>
 							}

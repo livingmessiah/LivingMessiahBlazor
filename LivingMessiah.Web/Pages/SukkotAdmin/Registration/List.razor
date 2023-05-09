@@ -48,34 +48,3 @@
 		</div>
 	</div>
 </div>
-
-@*
-
-Note:
-  BaseStatusSmartEnum was throwing an circut error, but it was not showing up here even with OnActionFailure
-
-ToDo:
-  figure out the best way to handle exception handling with syncfusion components
-
-	<GridEvents TValue="@Domain.Registration" OnActionFailure="Failure"></GridEvents>
-
-	@if (DatabaseError)
-	{
-	<p class="text-danger"><em>@DatabaseErrorMsg</em></p>
-	}
-	else
-	{
-	if (DatabaseWarning)
-	{
-	<p class="text-warning">@DatabaseWarningMsg</p>
-	}
-	}
-
-	void Failure(FailureEventArgs e)
-	{
-		DatabaseErrorMsg = $"Error inside {nameof(Failure)}";  //; e.Error: {e.Error}
-		Logger.LogError(string.Format("Inside {0}; e.Error: {1}", nameof(List) + "!" + nameof(Failure), e.Error));
-		DatabaseError = true;
-	}
-
-*@

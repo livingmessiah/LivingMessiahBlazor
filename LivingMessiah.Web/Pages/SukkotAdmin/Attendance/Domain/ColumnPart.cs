@@ -2,7 +2,7 @@
 
 public class ColumnPart
 {
-	public string DimensionOne { get; set; }
+	public string? DimensionOne { get; set; }
 	public int Days { get; set; }
 }
 

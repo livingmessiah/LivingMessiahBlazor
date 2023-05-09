@@ -9,8 +9,8 @@ namespace LivingMessiah.Web.Pages.Calendar;
 
 public partial class Index
 {
-	[Inject] public IOptions<AppSettings> AppSettings { get; set; }
-	[Inject] public ILogger<Index> Logger { get; set; }
+	[Inject] public IOptions<AppSettings>? AppSettings { get; set; }
+	[Inject] public ILogger<Index>? Logger { get; set; }
 
 	public int YearId { get; set; }
 
@@ -18,12 +18,11 @@ public partial class Index
 
 	protected override void OnInitialized()
 	{
-		YearId = AppSettings.Value.YearId;
-		Logger.LogDebug(string.Format("Inside Page: {0}, Class!Method: {1}, YearId:{2}"
+		YearId = AppSettings!.Value.YearId;
+		Logger!.LogDebug(string.Format("Inside Page: {0}, Class!Method: {1}, YearId:{2}"
 			, Page.Index, nameof(Index) + "!" + nameof(OnInitializedAsync), YearId));
 
 		printedCalendarEnum = PrintedCalendarEnum.ReadyForSale;
-
 	}
 
 }

@@ -22,7 +22,7 @@
 				<div class="col-sm-4">
 					<div class="mb-3">
 						<label for="wirecast" class="control-label">Wirecast Link</label>
-						<InputText id="wirecast" class="form-control" @bind-Value="Wirecast.WirecastLink" />
+						<InputText id="wirecast" class="form-control" @bind-Value="Wirecast!.WirecastLink" />
 						<ValidationMessage For="@(() => Wirecast.WirecastLink)" />
 					</div>
 				</div>
@@ -60,7 +60,7 @@
 				<div class="col-12">
 					<div class="mb-3">
 						@*<label for="scratchPad" class="control-label">Scratch Pad</label>*@
-						<InputTextArea id="scratchPad" rows="20" class="form-control" @bind-Value="ScratchPad.WireCast" />
+						<InputTextArea id="scratchPad" rows="20" class="form-control" @bind-Value="ScratchPad!.WireCast" />
 						<ValidationMessage For="@(() => ScratchPad.WireCast)" />
 					</div>
 				</div>

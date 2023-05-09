@@ -10,27 +10,27 @@ namespace LivingMessiah.Web.Pages.Psalms;
 
 public partial class Index
 {
-	[Inject] public IShabbatWeekRepository db { get; set; }
-	[Inject] public ILogger<Index> Logger { get; set; }
+	[Inject] public IShabbatWeekRepository? db { get; set; }
+	[Inject] public ILogger<Index>? Logger { get; set; }
 
 	protected Status _status;
 	protected string _msg = string.Empty;
 
-	protected List<PsalmsVM> PsalmsList;
+	protected List<PsalmsVM>? PsalmsList;
 
 	protected override async Task OnInitializedAsync()
 	{
 		try
 		{
 			_status = Status.Loading;
-			PsalmsList = await db.GetPsalms();
+			PsalmsList = await db!.GetPsalms();
 			_status = Status.Loaded;
 		}
 		catch (Exception ex)
 		{
 			_status = Status.Error;
 			_msg = $"Error calling {nameof(db.GetPsalms)}"; 
-			Logger.LogError(ex, $"Failed to load page {nameof(Index)}");
+			Logger!.LogError(ex, $"Failed to load page {nameof(Index)}");
 		}
 	}
 

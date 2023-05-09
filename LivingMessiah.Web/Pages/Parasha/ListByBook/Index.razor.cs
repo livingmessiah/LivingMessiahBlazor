@@ -10,9 +10,9 @@ namespace LivingMessiah.Web.Pages.Parasha.ListByBook;
 
 public partial class Index
 {
-	[Inject] private IParashaService Service { get; set; }
-	[Inject] public ILogger<Index> Logger { get; set; }
-	[Inject] public IToastService Toast { get; set; }
+	[Inject] private IParashaService? Service { get; set; }
+	[Inject] public ILogger<Index>? Logger { get; set; }
+	[Inject] public IToastService? Toast { get; set; }
 
 	protected CurrentParasha? CurrentParasha;
 
@@ -20,20 +20,20 @@ public partial class Index
 
 	protected override async Task OnInitializedAsync()
 	{
-		Logger.LogDebug(string.Format("Inside Page: {0}, Class!Method: {1}", Page.Index, nameof(Index) + "!" + nameof(OnInitializedAsync)));
+		Logger!.LogDebug(string.Format("Inside Page: {0}, Class!Method: {1}", Page.Index, nameof(Index) + "!" + nameof(OnInitializedAsync)));
 
 		try
 		{
-			CurrentParasha = await Service.GetCurrentParasha();
+			CurrentParasha = await Service!.GetCurrentParasha();
 
 			if (CurrentParasha is null || !String.IsNullOrEmpty(Service.UserInterfaceMessage))
 			{
-				Toast.ShowWarning(Service.UserInterfaceMessage);
+				Toast!.ShowWarning(Service!.UserInterfaceMessage);
 			}
 		}
 		catch (InvalidOperationException invalidOperationException)
 		{
-			Toast.ShowError(invalidOperationException.Message);
+			Toast!.ShowError(invalidOperationException.Message);
 		}
 		finally
 		{

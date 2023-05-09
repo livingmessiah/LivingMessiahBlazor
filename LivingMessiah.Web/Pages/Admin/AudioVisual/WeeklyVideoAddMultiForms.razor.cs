@@ -8,40 +8,35 @@ using LivingMessiah.Web.Pages.Admin.AudioVisual.Services;
 using LivingMessiah.Web.SmartEnums;
 using Microsoft.AspNetCore.Authorization;
 using static LivingMessiah.Web.Services.Auth0;
+using Blazored.Toast.Services;
 
 namespace LivingMessiah.Web.Pages.Admin.AudioVisual;
 
 //[Authorize(Roles = Roles.AdminOrAudiovisual)]
 public partial class WeeklyVideoAddMultiForms
 {
-	[Inject]
-	public IYouTubeFeedService Svc { get; set; }
-
-	[Inject]
-	public ILogger<WeeklyVideoAddMultiForms> Logger { get; set; }
-
-	[Inject]
-	public IWeeklyVideosRepository db { get; set; }
-
-	[Inject]
-	NavigationManager NavigationManager { get; set; }
+	[Inject] public IYouTubeFeedService? Svc { get; set; }
+	[Inject] public ILogger<WeeklyVideoAddMultiForms>? Logger { get; set; }
+	[Inject] public IWeeklyVideosRepository? db { get; set; }
+	[Inject] NavigationManager? NavigationManager { get; set; }
+	[Inject] public IToastService? Toast { get; set; }
 
 	public WeeklyVideoAddVM vm { get; set; } = new WeeklyVideoAddVM();
-	public List<WeeklyVideoAddVM> WeeklyVideoAddVMList { get; set; } = new List<WeeklyVideoAddVM>();
+	public List<WeeklyVideoAddVM>? WeeklyVideoAddVMList { get; set; } = new List<WeeklyVideoAddVM>();
 
-	public List<YouTubeFeedModel> YouTubeList { get; set; }
+	public List<YouTubeFeedModel>? YouTubeList { get; set; }
 
-	public List<ShabbatWeek> ShabbatWeekList { get; set; }  // Populates EditForm!InputSelect control (id=shabbatWeekId)
-	public List<WeeklyVideoTable> WeeklyVideoTableList { get; set; }
+	public List<ShabbatWeek>? ShabbatWeekList { get; set; }  // Populates EditForm!InputSelect control (id=shabbatWeekId)
+	public List<WeeklyVideoTable>? WeeklyVideoTableList { get; set; }
 	
 	private int _shabbatWeekId = 1;
 
 	protected override async Task OnInitializedAsync()
 	{
-		Logger.LogDebug(string.Format("Inside {0}", nameof(WeeklyVideoAddMultiForms) + "!" + nameof(OnInitialized)));
+		Logger!.LogDebug(string.Format("Inside {0}", nameof(WeeklyVideoAddMultiForms) + "!" + nameof(OnInitialized)));
 		await PopulateShabbatWeek();
 
-		YouTubeList = await Svc.GetModel(SocialMedia.YouTube.YouTubeFeed(), 5);
+		YouTubeList = await Svc!.GetModel(SocialMedia.YouTube.YouTubeFeed(), 5);
 		await PopulateWeeklyVideoTableList();
 		PopulateWeeklyVideoAddVMList();
 		//UpdateYouTubeList();
@@ -52,28 +47,26 @@ public partial class WeeklyVideoAddMultiForms
 
 	private async Task PopulateShabbatWeek()
 	{
-		Logger.LogDebug(string.Format("Inside {0}; WeekCount:{1}", nameof(Index) + "!" + nameof(PopulateShabbatWeek), WeekCount));
+		Logger!.LogDebug(string.Format("Inside {0}; WeekCount:{1}", nameof(Index) + "!" + nameof(PopulateShabbatWeek), WeekCount));
 
 		try
 		{
-			ShabbatWeekList = await db.GetShabbatWeekList(WeekCount);
+			ShabbatWeekList = await db!.GetShabbatWeekList(WeekCount);
 
 			if (ShabbatWeekList is null)
 			{
-				DatabaseWarning = true;
-				DatabaseWarningMsg = $"{nameof(ShabbatWeekList)} NOT FOUND";
+				Toast!.ShowWarning($"{nameof(ShabbatWeekList)} NOT FOUND");
 			}
 			else
 			{
-				_shabbatWeekId = ShabbatWeekList.FirstOrDefault().Id;
+				_shabbatWeekId = ShabbatWeekList.FirstOrDefault()!.Id;
 			}
 
 		}
 		catch (Exception ex)
 		{
-			DatabaseError = true;
-			DatabaseErrorMsg = $"Error reading database";
-			Logger.LogError(ex, $"...{DatabaseErrorMsg}");
+			Logger!.LogError(ex, "...Error reading database");
+			Toast!.ShowError("Error reading database");
 		}
 	}
 
@@ -81,18 +74,15 @@ public partial class WeeklyVideoAddMultiForms
 
 	private void PopulateWeeklyVideoAddVMList()
 	{
-		Logger.LogDebug(string.Format("...PopulateWeeklyVideoAddVMList Start"));
+		Logger!.LogDebug(string.Format("...PopulateWeeklyVideoAddVMList Start"));
 
-		
-
-		foreach (var item in YouTubeList)
+		foreach (var item in YouTubeList!)
 		{
-			
-			WeeklyVideoTable wvt = WeeklyVideoTableList.Find(x => x.YouTubeId == item.YouTubeId);
+			WeeklyVideoTable wvt = WeeklyVideoTableList!.Find(x => x.YouTubeId == item.YouTubeId)!;
 
 			if (wvt is null)
 			{
-				WeeklyVideoAddVMList.Add(new WeeklyVideoAddVM()
+				WeeklyVideoAddVMList!.Add(new WeeklyVideoAddVM()
 				{
 					WeeklyVideoTypeId = WeeklyVideoType.MainServiceEnglish,
 					ShabbatWeekId = _shabbatWeekId,
@@ -100,13 +90,10 @@ public partial class WeeklyVideoAddMultiForms
 					YouTubeId = item.YouTubeId,
 				});
 			}
-
-
 		}
 
-		Logger.LogDebug(string.Format("...PopulateWeeklyVideoAddVMList End"));
+		Logger!.LogDebug(string.Format("...PopulateWeeklyVideoAddVMList End"));
 	}
-
 
 
 	// This should be changed GetMissingYouTubeListOnly
@@ -137,40 +124,35 @@ public partial class WeeklyVideoAddMultiForms
 
 	private async Task PopulateWeeklyVideoTableList()
 	{
-		Logger.LogDebug(string.Format("Inside {0}; WeekCount:{1}", nameof(Index) + "!" + nameof(PopulateWeeklyVideoTableList), WeekCount));
+		Logger!.LogDebug(string.Format("Inside {0}; WeekCount:{1}", nameof(Index) + "!" + nameof(PopulateWeeklyVideoTableList), WeekCount));
 
 		try
 		{
-			WeeklyVideoTableList = await db.GetWeeklyVideoTableList(5);
+			WeeklyVideoTableList = await db!.GetWeeklyVideoTableList(5);
 
 			if (WeeklyVideoTableList is null)
 			{
-				DatabaseWarning = true;
-				DatabaseWarningMsg = $"{nameof(WeeklyVideoTableList)} NOT FOUND";
+				Toast!.ShowWarning($"{nameof(WeeklyVideoTableList)} NOT FOUND");
 			}
 
 		}
 		catch (Exception ex)
 		{
-			DatabaseError = true;
-			DatabaseErrorMsg = $"Error reading database (WeeklyVideoTableList)";
-			Logger.LogError(ex, $"...{DatabaseErrorMsg}");
+			Logger!.LogError(ex, "...Error reading database (WeeklyVideoTableList)");
+			Toast!.ShowError("Error reading database (WeeklyVideoTableList)");
 		}
 	}
-
 
 	#region Events
 
 	void Edit_ButtonClick(int? id)
 	{
-		NavigationManager.NavigateTo(Links.Admin.AudioVisual.Update.Index + "/" + id);
+		NavigationManager!.NavigateTo(Links.Admin.AudioVisual.Update.Index + "/" + id);
 	}
 
 	protected async Task HandleValidSubmit()
 	{
-		Logger.LogDebug(string.Format("...{0}", nameof(WeeklyVideoAddMultiForms) + "!" + nameof(HandleValidSubmit)));
-		DatabaseInformation = false;
-		DatabaseInformationMsg = "";
+		Logger!.LogDebug(string.Format("...{0}", nameof(WeeklyVideoAddMultiForms) + "!" + nameof(HandleValidSubmit)));
 
 		int newId = 0;
 		WeeklyVideoInsert dto = new WeeklyVideoInsert();
@@ -183,7 +165,7 @@ public partial class WeeklyVideoAddMultiForms
 
 		try
 		{
-			newId = await db.WeeklyVideoAdd(dto);
+			newId = await db!.WeeklyVideoAdd(dto);
 			//StateHasChanged(); this didn't work, I wanted to update WeeklyVideoTableList bud it didn't work
 			//vm.ShabbatWeekId = 0;
 			vm.Title = "";
@@ -191,40 +173,14 @@ public partial class WeeklyVideoAddMultiForms
 		}
 		catch (Exception ex)
 		{
-			DatabaseError = true;
-			DatabaseErrorMsg = $"Error inserting row in database";
-			Logger.LogError(ex, $"...{DatabaseErrorMsg}");
+			Logger!.LogError(ex, "Error inserting row in database");
+			Toast!.ShowError("Error inserting row in database");
 		}
 
-		Logger.LogDebug(string.Format("...newId: {0}", newId));
-
-		DatabaseInformation = true;
-		DatabaseInformationMsg = $"Record Added; newId: {newId}";
+		Logger!.LogDebug(string.Format("...newId: {0}", newId));
+		Toast!.ShowInfo($"Record Added; newId: {newId}");
 	}
 
 	#endregion
-
-	#region ErrorHandling
-	private void InitializeErrorHandling()
-	{
-		DatabaseInformationMsg = "";
-		DatabaseInformation = false;
-		DatabaseWarningMsg = "";
-		DatabaseWarning = false;
-		DatabaseErrorMsg = "";
-		DatabaseError = false;
-	}
-
-	protected bool DatabaseInformation = false;
-	protected string DatabaseInformationMsg { get; set; }
-	protected bool DatabaseWarning = false;
-	protected string DatabaseWarningMsg { get; set; }
-	protected bool DatabaseError { get; set; } // = false; handled by InitializeErrorHandling
-	protected string DatabaseErrorMsg { get; set; }
-
-
-	#endregion
-
-
 
 }

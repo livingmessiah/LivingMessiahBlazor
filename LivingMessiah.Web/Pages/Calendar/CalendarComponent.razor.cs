@@ -24,10 +24,10 @@ namespace LivingMessiah.Web.Pages.Calendar;
 
 public partial class CalendarComponent
 {
-	[Inject] public ILogger<CalendarComponent> Logger { get; set; }
-	[Inject] public IKeyDateRepository db { get; set; }
-	[Inject] public IMemoryCache Cache { get; set; }
-	[Inject] public IToastService Toast { get; set; }
+	[Inject] public ILogger<CalendarComponent>? Logger { get; set; }
+	[Inject] public IKeyDateRepository? db { get; set; }
+	[Inject] public IMemoryCache? Cache { get; set; }
+	[Inject] public IToastService? Toast { get; set; }
 
 
 	[Parameter] public bool IsXsOrSm { get; set; }
@@ -35,13 +35,13 @@ public partial class CalendarComponent
 
 	protected PrintedCalendarEnum printedCalendarEnum = PrintedCalendarEnum.ReadyForSale;
 
-	protected SfSchedule<ReadonlyEventsData> ScheduleRef;
+	protected SfSchedule<ReadonlyEventsData>? ScheduleRef;
 
 	public DateTime CurrentDate = DateTime.Now;
 
-	protected List<CalendarVM> CalendarVMs;
+	protected List<CalendarVM>? CalendarVMs;
 
-	public List<ReadonlyEventsData> AppointmentDataList { get; set; }
+	public List<ReadonlyEventsData>? AppointmentDataList { get; set; }
 
 	public View ViewNow = View.Month;
 
@@ -53,49 +53,49 @@ public partial class CalendarComponent
 
 	public class DropDownData
 	{
-		public string Name { get; set; }
-		public View Value { get; set; }
+		public string? Name { get; set; }
+		public View? Value { get; set; }
 	}
 
 	protected override async Task OnInitializedAsync()
 	{
-		Logger.LogDebug(string.Format("Inside Page: {0}, Class!Method: {1}, YearId:{2}"
+		Logger!.LogDebug(string.Format("Inside Page: {0}, Class!Method: {1}, YearId:{2}"
 			, Page.Index, nameof(CalendarComponent) + "!" + nameof(OnInitializedAsync), YearId));
 		await PopulateCalendar(YearId);
 	}
 
 	private async Task PopulateCalendar(int year)
 	{
-		Logger.LogDebug(string.Format("Inside Page: {0}, Class!Method: {1}, year:{2}"
+		Logger!.LogDebug(string.Format("Inside Page: {0}, Class!Method: {1}, year:{2}"
 			, Page.Index, nameof(CalendarComponent) + "!" + nameof(PopulateCalendar), year));
 
-		CalendarVMs = Cache.Get<List<CalendarVM>>(CacheSettings.Key);
+		CalendarVMs = Cache!.Get<List<CalendarVM>>(CacheSettings.Key);
 		if (CalendarVMs is null)
 		{
 			try
 			{
-				CalendarVMs = await db.GetPlannerVM(YearId, Enums.DateTypeFilter.FullList);
+				CalendarVMs = await db!.GetPlannerVM(YearId, Enums.DateTypeFilter.FullList);
 				if (CalendarVMs != null)
 				{
-					Logger.LogDebug(string.Format("... Data gotten from DATABASE"));
+					Logger!.LogDebug(string.Format("... Data gotten from DATABASE"));
 					Cache.Set(CacheSettings.Key, CalendarVMs, TimeSpan.FromMinutes(CacheSettings.FromMinutes));
 					LoadAppointmentDataList();
 				}
 				else
 				{
-					Toast.ShowWarning("CalendarEntries NOT FOUND");
+					Toast!.ShowWarning("CalendarEntries NOT FOUND");
 				}
 			}
 			catch (Exception ex)
 			{
-				Logger.LogError(ex, string.Format("...Inside catch of {0}"
+				Logger!.LogError(ex, string.Format("...Inside catch of {0}"
 					, nameof(CalendarComponent) + "!" + nameof(PopulateCalendar)));
-				Toast.ShowError("An invalid operation occurred, contact your administrator");
+				Toast!.ShowError("An invalid operation occurred, contact your administrator");
 			}
 		}
 		else
 		{
-			Logger.LogDebug(string.Format("... Data gotten from CACHE"));
+			Logger!.LogDebug(string.Format("... Data gotten from CACHE"));
 			LoadAppointmentDataList();
 		}
 	}
@@ -103,7 +103,7 @@ public partial class CalendarComponent
 
 	private void LoadAppointmentDataList()
 	{
-		Logger.LogDebug(string.Format("...{0}", nameof(CalendarComponent) + "!" + nameof(LoadAppointmentDataList)));
+		Logger!.LogDebug(string.Format("...{0}", nameof(CalendarComponent) + "!" + nameof(LoadAppointmentDataList)));
 		AppointmentDataList = new List<ReadonlyEventsData>();
 
 		string color = "";
@@ -112,7 +112,7 @@ public partial class CalendarComponent
 			Enums.DateType dateType;
 			Enums.Season season;
 
-			foreach (var item in CalendarVMs)
+			foreach (var item in CalendarVMs!)
 			{
 				dateType = Enums.DateType.FromValue(item.DateTypeId);
 				if (dateType.Value == Enums.DateType.Season)
@@ -142,9 +142,9 @@ public partial class CalendarComponent
 		}
 		catch (Exception ex)
 		{
-			Logger.LogError(ex, string.Format("...Inside catch of {0}"
+			Logger!.LogError(ex, string.Format("...Inside catch of {0}"
 				, nameof(CalendarComponent) + "!" + nameof(LoadAppointmentDataList)));
-			Toast.ShowError("An invalid operation occurred, contact your administrator");
+			Toast!.ShowError("An invalid operation occurred, contact your administrator");
 		}
 
 	}
@@ -152,7 +152,7 @@ public partial class CalendarComponent
 	public void OnEventRendered(EventRenderedArgs<ReadonlyEventsData> args)
 	{
 		args.Attributes = ScheduleData.ApplyCategoryColor(
-			args.Data.CategoryColor, args.Attributes, ViewNow);
+			args.Data.CategoryColor!, args.Attributes, ViewNow);
 	}
 
 
@@ -161,7 +161,7 @@ public partial class CalendarComponent
 
 	public async void OnPrintClick()
 	{
-		await ScheduleRef.PrintAsync();
+		await ScheduleRef!.PrintAsync();
 	}
 
 	public async void OnExportClick(Syncfusion.Blazor.SplitButtons.MenuEventArgs args)
@@ -169,7 +169,7 @@ public partial class CalendarComponent
 		if (args.Item.Text == "Excel")
 		{
 			List<ReadonlyEventsData> ExportDatas = new List<ReadonlyEventsData>();
-			List<ReadonlyEventsData> EventCollection = await ScheduleRef.GetEventsAsync();
+			List<ReadonlyEventsData> EventCollection = await ScheduleRef!.GetEventsAsync();
 			List<ReadonlyEventsData> datas = EventCollection.ToList();
 			foreach (ReadonlyEventsData data in datas)
 			{
@@ -185,7 +185,7 @@ public partial class CalendarComponent
 		}
 		else
 		{
-			await ScheduleRef.ExportToICalendarAsync();
+			await ScheduleRef!.ExportToICalendarAsync();
 		}
 	}
 	#endregion

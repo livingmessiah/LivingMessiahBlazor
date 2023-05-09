@@ -8,8 +8,8 @@ public class WeeklyVideoTable
 	public int ShabbatWeekId { get; set; }
 	public DateTime ShabbatDate { get; set; }
 	public int WeeklyVideoTypeId { get; set; }
-	public string WeeklyVideoTypeDescr { get; set; }
-	public string YouTubeId { get; set; }
+	public string? WeeklyVideoTypeDescr { get; set; }
+	public string? YouTubeId { get; set; }
 	public string Url()
 	{
 		if (YouTubeId != null)
@@ -21,6 +21,6 @@ public class WeeklyVideoTable
 			return "";
 		}
 	}
-	public string Title { get; set; }
+	public string? Title { get; set; }
 }
 

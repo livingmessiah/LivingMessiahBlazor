@@ -15,6 +15,7 @@ public partial class YouTubeWeeklyVideo
 	[Parameter] public WeeklyVideoType? WeeklyVideoType { get; set; }
 
 	public vwCurrentWeeklyVideo? CurrentWeeklyVideo;
+	protected bool TurnSpinnerOff = false;
 
 	protected override async Task OnInitializedAsync()
 	{
@@ -34,6 +35,10 @@ public partial class YouTubeWeeklyVideo
 		{
 			Logger!.LogError(ex, "Error reading database");
 			Toast!.ShowError("An invalid operation occurred reading database, contact your administrator");
+		}
+		finally
+		{
+			TurnSpinnerOff = true;
 		}
 	}
 

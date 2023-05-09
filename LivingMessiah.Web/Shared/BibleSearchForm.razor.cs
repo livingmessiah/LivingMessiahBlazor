@@ -35,12 +35,12 @@ public class FormValidation
 
 	public string MyHebrewBibleBookChapterUrl(int chapter)
 	{
-		return "https://myhebrewbible.com/BookChapter/" + SelectedBook.Title + "/" + chapter + "/slug";
+		return "https://myhebrewbible.com/BookChapter/" + SelectedBook!.Title + "/" + chapter + "/slug";
 	}
 
 	public string MyHebrewBibleBookChapterTitle(int chapter)
 	{
-		return "MyHebrewBible.com/BookChapter/" + SelectedBook.Title + "/" + chapter;
+		return "MyHebrewBible.com/BookChapter/" + SelectedBook!.Title + "/" + chapter;
 	}
 
 }

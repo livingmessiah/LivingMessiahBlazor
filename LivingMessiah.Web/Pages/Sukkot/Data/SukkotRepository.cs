@@ -34,7 +34,7 @@ public class SukkotRepository : BaseRepositoryAsync, ISukkotRepository
 
 	public string BaseSqlDump
 	{
-		get { return base.SqlDump; }
+		get { return base.SqlDump!; }
 	}
 
 	public async Task<vwRegistration> ById(int id)
@@ -166,7 +166,7 @@ FROM Sukkot.tvfRegistrationSummary(@id)
 		return await WithConnectionAsync(async connection =>
 		{
 			var rows = await connection.QueryAsync<RegistrationSummary>(base.Sql, base.Parms);
-			return rows.SingleOrDefault();
+			return rows.SingleOrDefault()!;
 		});
 	}
 

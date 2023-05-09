@@ -4,21 +4,21 @@ namespace LivingMessiah.Web.Pages.Shavuot.Domain;
 
 public static class OmerGematriaFactory
 {
-		public static string GetHebrew(int count)
+	public static string? GetHebrew(int count)
+	{
+		bool found;
+		found = _dictionary.TryGetValue(count, out string? hebrew);
+		if (found)
 		{
-				bool found;
-				found = _dictionary.TryGetValue(count, out string hebrew);
-				if (found)
-				{
-						return hebrew;
-				}
-				else
-				{
-						return "";
-				}
+			return hebrew;
 		}
+		else
+		{
+			return "";
+		}
+	}
 
-		static Dictionary<int, string> _dictionary = new Dictionary<int, string>
+	static Dictionary<int, string?> _dictionary = new Dictionary<int, string?>
 		{
 				{ 1, "א" },
 				{ 2, "ב" },

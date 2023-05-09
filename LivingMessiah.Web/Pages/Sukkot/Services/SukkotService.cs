@@ -80,7 +80,7 @@ public class SukkotService : ISukkotService
 			throw new InvalidOperationException(UserInterfaceMessage);
 		}
 
-		if (!IsUserAuthoirized(vm.EMail, id, user))
+		if (!IsUserAuthoirized(vm.EMail!, id, user))
 		{
 			LogExceptionMessage = $"Inside {nameof(Summary)}, logged in user:{vm.EMail} lacks authority for id={id}";
 			Logger.LogWarning(LogExceptionMessage);
@@ -308,7 +308,7 @@ public class SukkotService : ISukkotService
 
 	private bool IsUserAuthoirized(string registrationEmail, int id, ClaimsPrincipal user)
 	{
-		string userEmail = user.GetUserEmail();
+		string? userEmail = user.GetUserEmail();
 		if (userEmail == registrationEmail) { return true; }
 
 		if (user.RoleHasAdminOrSukkot())

@@ -5,13 +5,13 @@ using Microsoft.AspNetCore.Components;
 //ToDo This is being used
 public partial class BibleReference
 {
-	[Parameter] public Feast Feast { get; set; }
+	[Parameter] public Feast? Feast { get; set; }
 
 	protected string RelatedVerse = "";
 
 	protected override void OnInitialized()
 	{
-		Feast
+		Feast!
 			.When(Feast.Hanukkah).Then(() => RelatedVerse = "ToDo: Add John 20 reference")
 			.When(Feast.Purim).Then(() => RelatedVerse = "No references in scripture")
 			.When(Feast.Passover).Then(() => RelatedVerse = "ToDo: Add Leviticus 23 reference")

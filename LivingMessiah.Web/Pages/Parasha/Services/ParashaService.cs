@@ -88,7 +88,7 @@ public class ParashaService : IParashaService
 			UserInterfaceMessage += "An invalid operation occurred, contact your administrator";
 			throw new InvalidOperationException(UserInterfaceMessage);
 		}
-		return vm;
+		return vm!;
 	}
 
 

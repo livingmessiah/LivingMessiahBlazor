@@ -9,63 +9,40 @@ using static LivingMessiah.Web.Services.Auth0;
 using Microsoft.AspNetCore.Authorization;
 
 using Syncfusion.Blazor.Grids;
+using Blazored.Toast.Services;
+
+using Page = LivingMessiah.Web.Links.Contact;
 
 namespace LivingMessiah.Web.Pages.Contacts;
 
 [Authorize(Roles = Roles.AdminOrElder)]
 public partial class Index
 {
-		[Inject]
-		public ILogger<Index> Logger { get; set; }
+	private const string Message = $"Failed to load page {Page.Index},  Class!Method:{nameof(Index)}!{nameof(OnInitializedAsync)}";
 
-		[Inject]
-		public IContactRepository db { get; set; }
+	[Inject] public ILogger<Index>? Logger { get; set; }
+	[Inject] public IContactRepository? db { get; set; }
+	[Inject] public IToastService? Toast { get; set; }
 
-		public IEnumerable<Domain.ContactVM> Contacts { get; set; }
+	public IEnumerable<Domain.ContactVM>? Contacts { get; set; }
 
-		//private SfGrid<Domain.ContactVM> Grid;
-
-		protected override async Task OnInitializedAsync()
+	protected override async Task OnInitializedAsync()
+	{
+		Logger!.LogDebug(Message);
+		try
 		{
-				Logger.LogDebug($"Inside {nameof(Index)}!{nameof(OnInitializedAsync)}");
-				try
-				{
-						Contacts = await db.GetAll();
-						if (Contacts == null)
-						{
-								DatabaseWarning = true;
-								DatabaseWarningMsg = "Contacts NOT FOUND";
-						}
-				}
-				catch (Exception ex)
-				{
-						DatabaseError = true;
-						DatabaseErrorMsg = $"Error reading database";
-						Logger.LogError(ex, $"...{DatabaseErrorMsg}");
-				}
-				StateHasChanged();
+			Contacts = await db!.GetAll();
+			if (Contacts == null)
+			{
+				Toast!.ShowWarning("Contacts NOT FOUND");
+			}
 		}
-
-
-		#region ErrorHandling
-
-		private void InitializeErrorHandling()
+		catch (Exception ex)
 		{
-				DatabaseInformationMsg = "";
-				DatabaseInformation = false;
-				DatabaseWarningMsg = "";
-				DatabaseWarning = false;
-				DatabaseErrorMsg = "";
-				DatabaseError = false;
+			Logger!.LogError(ex, Message);
+			Toast!.ShowError($"Error reading database. {Message}");
 		}
-
-		protected bool DatabaseInformation = false;
-		protected string DatabaseInformationMsg { get; set; }
-		protected bool DatabaseWarning = false;
-		protected string DatabaseWarningMsg { get; set; }
-		protected bool DatabaseError { get; set; } // = false; handled by InitializeErrorHandling
-		protected string DatabaseErrorMsg { get; set; }
-		#endregion
-
+		StateHasChanged();
+	}
 
 }

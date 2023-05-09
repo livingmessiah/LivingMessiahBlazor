@@ -11,7 +11,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			@foreach (var item in letters)
+			@foreach (var item in letters!)
 			{
 				<tr>
 					<td class="text-center">@item.Id</td>
@@ -30,7 +30,7 @@
 	</table>
 
 @code {
-	private List<HebrewLetter> letters;
+	private List<HebrewLetter>? letters;
 
 	protected override void OnInitialized()
 	{

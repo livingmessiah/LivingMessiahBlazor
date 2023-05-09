@@ -8,13 +8,13 @@ public static class Reducers
 	public static ToolbarState ReduceSetBibleBookAction(ToolbarState state,
 			SetBibleBookAction action) =>
 					new ToolbarState(
-						BibleBook: action.BibleBook,
-						BibleWebsite: state.BibleWebsite);
+						BibleBook: action.BibleBook!,
+						BibleWebsite: state.BibleWebsite!);
 
 	[ReducerMethod]
 	public static ToolbarState ReduceSetBibleWebsiteAction(ToolbarState state,
 			SetBibleWebsiteAction action) =>
 					new ToolbarState(
-						BibleBook: state.BibleBook,
-						BibleWebsite: action.BibleWebsite); 
+						BibleBook: state.BibleBook!,
+						BibleWebsite: action.BibleWebsite!); 
 }

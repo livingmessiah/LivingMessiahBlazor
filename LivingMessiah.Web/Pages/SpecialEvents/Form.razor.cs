@@ -18,23 +18,22 @@ namespace LivingMessiah.Web.Pages.SpecialEvents;
 
 public partial class Form
 {
-	[Inject] public IUpcomingEventsRepository db { get; set; }
-	[Inject] public ILogger<Form> Logger { get; set; }
-	[Inject] public IToastService Toast { get; set; }
+	[Inject] public IUpcomingEventsRepository? db { get; set; }
+	[Inject] public ILogger<Form>? Logger { get; set; }
+	[Inject] public IToastService? Toast { get; set; }
 	//[Inject] private IState<MainState> MainState { get; set; }
-	[Inject] private IState<SpecialEventsState> SpecialEventsState { get; set; }
+	[Inject] private IState<SpecialEventsState>? SpecialEventsState { get; set; }
 
 	private string Title = "Add Upcoming Event";
 
-
-
-	private FormVM VM => SpecialEventsState.Value.Model; // model
+	private FormVM VM => SpecialEventsState!.Value.Model!; // model
 	protected async Task HandleValidSubmit()
 	{
-//		Logger.LogDebug(string.Format("Inside {0}, VM.ToString: {1}"
-//			, nameof(Form) + "!" + nameof(HandleValidSubmit), VM.ToString()));
+		//		Logger.LogDebug(string.Format("Inside {0}, VM.ToString: {1}"
+		//			, nameof(Form) + "!" + nameof(HandleValidSubmit), VM.ToString()));
 
-		Dispatcher.Dispatch(new SpecialEventsSubmitAction(SpecialEventsState.Value.Model));
+		await Task.Delay(0);
+		Dispatcher.Dispatch(new SpecialEventsSubmitAction(SpecialEventsState!.Value.Model!));
 		
 		/*
 		try
@@ -71,7 +70,7 @@ public partial class Form
 
 	private void OnInvalidSubmit()
 	{
-		//Toast.ShowWarning("Invalid Submit");
+		//Toast!.ShowWarning("Invalid Submit");
 	}
 
 	private void OnValueChange(Syncfusion.Blazor.RichTextEditor.ChangeEventArgs args)
@@ -87,8 +86,8 @@ public partial class Form
 	}
 
 	private bool IsPreview { get; set; }
-	private string HtmlValue { get; set; }
-	private MarkdownPipeline Pipeline { get; set; }
+	private string? HtmlValue { get; set; }
+	private MarkdownPipeline? Pipeline { get; set; }
 
 	private void PreviewClick()
 	{
@@ -126,9 +125,6 @@ public partial class Form
 	private Dictionary<string, string> ListSyntax { get; set; } = new Dictionary<string, string>(){
 				{ "OL", "1., 2., 3." }
 		};
-
-
-
 
 } // class 
 

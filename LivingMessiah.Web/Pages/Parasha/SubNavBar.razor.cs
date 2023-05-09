@@ -6,17 +6,17 @@ namespace LivingMessiah.Web.Pages.Parasha;
 public partial class SubNavBar
 {
 	bool collapseNavMenu = true;
-	string SubNavBarCssClass => collapseNavMenu ? "collapse" : null;
+	string? SubNavBarCssClass => collapseNavMenu ? "collapse" : null;
 	void ToggleSubNavBar()
 	{
 		collapseNavMenu = !collapseNavMenu;
 	}
 
 	// Can't force EditorRequired because PrintTable is set to `Display=> false`
-	[Parameter] public LinkSmartEnums.Parasha ActiveParashaEnum { get; set; }
+	[Parameter] public LinkSmartEnums.Parasha? ActiveParashaEnum { get; set; }
 	[Parameter] public bool UseDarkMode { get; set; } = false;
 
-	string NavBarColor;
+	string? NavBarColor;
 
 	protected override async Task OnInitializedAsync()
 	{

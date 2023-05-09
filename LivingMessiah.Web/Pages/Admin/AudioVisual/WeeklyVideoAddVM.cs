@@ -11,8 +11,8 @@ public class WeeklyVideoAddVM
 
 	[Required]
 	[StringLength(11, MinimumLength = 3, ErrorMessage = "length {0} must be between {2} and {1}.")]
-	public string YouTubeId { get; set; }
+	public string? YouTubeId { get; set; }
 
 	[Required]
-	public string Title { get; set; } 
+	public string? Title { get; set; } 
 }

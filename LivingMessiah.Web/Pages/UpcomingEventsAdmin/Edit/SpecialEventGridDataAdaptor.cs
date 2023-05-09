@@ -14,7 +14,7 @@ namespace LivingMessiah.Web.Pages.UpcomingEventsAdmin.Edit;
 public interface ISpecialEventGridDataAdaptor
 {
 	Task<object> InsertAsync(DataManager dataManager, object data, string key);
-	Task<object> ReadAsync(DataManagerRequest dataManagerRequest, string key = null);
+	Task<object> ReadAsync(DataManagerRequest dataManagerRequest, string? key = null); 
 	Task<object> RemoveAsync(DataManager dataManager, object primaryKeyValue, string keyField, string key);
 	Task<object> UpdateAsync(DataManager dataManager, object data, string keyField, string key);
 }

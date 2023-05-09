@@ -110,7 +110,7 @@ WHERE Id = @Id";
 		return await WithConnectionAsync(async connection =>
 		{
 			var rows = await connection.QueryAsync<WeeklyVideoUpdateVM>(sql: base.Sql, base.Parms);
-			return rows.SingleOrDefault();
+			return rows.SingleOrDefault()!;
 		});
 	}
 

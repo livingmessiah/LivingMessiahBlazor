@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
 using System.Collections.Generic;
-using LivingMessiah.Web.Domain;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Components.Authorization;
 using System.Linq;
@@ -13,25 +12,24 @@ namespace LivingMessiah.Web.Pages.Account;
 [Authorize]
 public partial class Claims
 {
-	[Inject]
-	public AuthenticationStateProvider AuthenticationStateProvider { get; set; }
+	[Inject] public AuthenticationStateProvider? AuthenticationStateProvider { get; set; }
 
-	public string EmailAddress { get; set; }
-	public string Name { get; set; }
-	public string ProfileImage { get; set; }
-	public string Country { get; set; }
+	public string? EmailAddress { get; set; }
+	public string? Name { get; set; }
+	public string? ProfileImage { get; set; }
+	public string? Country { get; set; }
 	public bool IsAdmin { get; set; }
-	public string Role { get; set; }
+	public string? Role { get; set; }
 
-	private string _authMessage;
+	private string? _authMessage;
 	private IEnumerable<Claim> _claims = Enumerable.Empty<Claim>();
 
-	protected List<Claim> ClaimList;
+	protected List<Claim>? ClaimList;
 
 	protected override async Task OnInitializedAsync()
 	{
 		base.OnInitialized();
-		var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+		var authState = await AuthenticationStateProvider!.GetAuthenticationStateAsync();
 		var user = authState.User;
 
 		//Name = user.Identity.Name;  // Note, this does not work, see OnInitializedAsync at LivingMessiah.Web\Pages\Sukkot\Index.razor.cs
@@ -45,10 +43,10 @@ public partial class Claims
 
 	private async Task GetClaimsPrincipalData()
 	{
-		var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+		var authState = await AuthenticationStateProvider!.GetAuthenticationStateAsync();
 		var user = authState.User;
 
-		if (user.Identity.IsAuthenticated)
+		if (user.Identity!.IsAuthenticated)
 		{
 			_authMessage = $"{Name} is authenticated.";
 
@@ -61,8 +59,6 @@ public partial class Claims
 			_authMessage = "The user is NOT authenticated.";
 		}
 
-
 	}
-
 
 }

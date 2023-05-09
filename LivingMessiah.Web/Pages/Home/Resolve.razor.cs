@@ -5,6 +5,6 @@ namespace LivingMessiah.Web.Pages.Home;
 
 public partial class Resolve
 {
-	[Parameter, EditorRequired] public MediaQuery MediaQuery { get; set; }
+	[Parameter, EditorRequired] public MediaQuery? MediaQuery { get; set; }
 }
 

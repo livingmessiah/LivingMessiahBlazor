@@ -71,8 +71,8 @@ public partial class WeeklyVideoUpdateForm
 		dto.Id = vm.Id;
 		dto.ShabbatWeekId = vm.ShabbatWeekId;
 		dto.WeeklyVideoTypeId = vm.WeeklyVideoTypeId;
-		dto.YouTubeId = vm.YouTubeId;
-		dto.Title = vm.Title;
+		dto.YouTubeId = vm.YouTubeId!;
+		dto.Title = vm.Title!;
 		dto.Book = 0;
 		dto.Chapter = 0;
 

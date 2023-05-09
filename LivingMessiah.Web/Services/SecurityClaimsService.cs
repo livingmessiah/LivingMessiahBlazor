@@ -24,7 +24,9 @@ public class SecurityClaimsService : ISecurityClaimsService
 	#region Constructor and DI
 
 	private AuthenticationStateProvider ASP;
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 	public SecurityClaimsService(AuthenticationStateProvider aSP)
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 	{
 		ASP = aSP;
 	}
@@ -50,7 +52,7 @@ public class SecurityClaimsService : ISecurityClaimsService
 		//return _user.GetUserEmail();
 		*/
 		_user = await GetUser();
-		return _user.Claims?.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+		return _user.Claims?.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value!;
 
 	}
 
@@ -78,10 +80,10 @@ public class SecurityClaimsService : ISecurityClaimsService
 	public async Task<bool> IsUserAuthoirized(string registrationEmail)
 	{
 		_user = await GetUser();
-		string sEmail = _user.Claims?.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+		string sEmail = _user.Claims?.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value!;
 
 		if (sEmail == registrationEmail) { return true; }
-		return SearchRoles(_user.Claims, Roles.Admin, Roles.Sukkot);
+		return SearchRoles(_user.Claims!, Roles.Admin, Roles.Sukkot);
 	}
 
 	public async Task<bool> RoleHasAdminOrSukkot()

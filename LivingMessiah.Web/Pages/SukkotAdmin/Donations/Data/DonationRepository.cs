@@ -29,7 +29,7 @@ public class DonationRepository : BaseRepositoryAsync, IDonationRepository
 
 	public string BaseSqlDump
 	{
-		get { return base.SqlDump; }
+		get { return base.SqlDump!; }
 	}
 
 	public DonationRepository(IConfiguration config, ILogger<DonationRepository> logger) : base(config, logger)
@@ -55,13 +55,22 @@ ORDER BY FirstName
 		base.Sql = "Sukkot.stpDonationInsert ";
 		base.Parms = new DynamicParameters(new
 		{
+			donation.RegistrationId,
+			donation.Amount,
+			donation.Notes,
+			donation.ReferenceId,
+			donation.CreatedBy,   
+			donation.CreateDate
+		});
+
+		/*
 			RegistrationId = donation.RegistrationId,
 			Amount = donation.Amount,
 			Notes = donation.Notes,
 			ReferenceId = donation.ReferenceId,
-			CreatedBy = donation.CreatedBy,   // email,
+			CreatedBy = donation.CreatedBy,   
 			CreateDate = donation.CreateDate
-		});
+		*/
 
 		base.Parms.Add("@NewId", dbType: DbType.Int32, direction: ParameterDirection.Output);
 
@@ -204,7 +213,7 @@ WHERE d.Id = @Id
 		return await WithConnectionAsync(async connection =>
 		{
 			var donationDetail = await connection.QueryAsync<DonationDetail>(base.Sql, base.Parms);
-			return donationDetail.SingleOrDefault();
+			return donationDetail.SingleOrDefault()!;
 		});
 	}
 

@@ -4,14 +4,9 @@ namespace LivingMessiah.Web.Pages.HeavensDeclare;
 
 public partial class YouTubeHeavensDeclare
 {
-	[Parameter]
-	public string UrlId { get; set; }
-
-	[Parameter]
-	public string Title { get; set; }
-
-	[Parameter]
-	public string Description { get; set; }
+	[Parameter] public string? UrlId { get; set; }
+	[Parameter]	public string? Title { get; set; }
+	[Parameter]	public string? Description { get; set; }
 
 	const string BaseUrl = "https://www.youtube.com/embed/";
 	protected string Url
@@ -23,7 +18,6 @@ public partial class YouTubeHeavensDeclare
 	}
 
 }
-
 
 /*
 Error CS0115 'foo.OnInitialized()': no suitable method found to override

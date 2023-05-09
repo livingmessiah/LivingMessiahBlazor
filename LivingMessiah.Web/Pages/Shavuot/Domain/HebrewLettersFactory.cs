@@ -4,9 +4,9 @@ namespace LivingMessiah.Web.Pages.Shavuot.Domain;
 
 public static class HebrewLettersFactory
 {
-		public static List<HebrewLetter> HebrewLetters()
-		{
-				return new List<HebrewLetter>
+	public static List<HebrewLetter> HebrewLetters()
+	{
+		return new List<HebrewLetter>
 			{
 
 new HebrewLetter {Id = 1, UnicodeName = "Aleph", Hebrew = "א", Gematria = 1, Sofit = "", WithoutDagesh = ""},
@@ -33,7 +33,7 @@ new HebrewLetter {Id = 21, UnicodeName = "Sheen | Seen", Hebrew = "שׁ", Gematr
 new HebrewLetter {Id = 22, UnicodeName = "Tav", Hebrew = "ת", Gematria = 400, Sofit = "", WithoutDagesh = ""},
 
 			};
-		}
+	}
 }
 
 /*

@@ -8,11 +8,11 @@ public class DonationDetail
 		public int RegistrationId { get; set; } // Note 1
 		public int Detail { get; set; }
 		public decimal Amount { get; set; }
-		public string Notes { get; set; }      // Null
-		public string ReferenceId { get; set; } // Note 2
+		public string? Notes { get; set; }      // Null
+		public string? ReferenceId { get; set; } // Note 2
 		public DateTime CreateDate { get; set; }
-		public string CreatedBy { get; set; }
-		public string Name { get; set; }  // ToDo: this should be deleted
+		public string? CreatedBy { get; set; }
+		public string? Name { get; set; }  // ToDo: this should be deleted
 }
 
 /*

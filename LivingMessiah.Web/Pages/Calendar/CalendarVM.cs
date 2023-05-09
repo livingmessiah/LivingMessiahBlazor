@@ -7,7 +7,7 @@ public class CalendarVM
 	public int CalendarTemplateId { get; set; } //Id
 	public DateTime Date { get; set; }
 	public int Detail { get; set; }
-	public string Descr { get; set; }   //CalendarTemplateId.Descr
+	public string? Descr { get; set; }   //CalendarTemplateId.Descr
 	public int DateTypeId { get; set; }
 	public Enums.LunarMonth? LunarMonth { get; set; }
 	public Enums.FeastDay? FeastDay { get; set; }

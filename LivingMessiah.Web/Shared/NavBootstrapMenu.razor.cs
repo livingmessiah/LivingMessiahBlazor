@@ -8,12 +8,11 @@ public partial class NavBootstrapMenu
 	[Parameter] public bool UseDarkMode { get; set; } = false;
 
 	bool collapseNavMenu = true;
-	string NavMenuCssClass => collapseNavMenu! ? "collapse" : null;
+	string? NavMenuCssClass => collapseNavMenu! ? "collapse" : null;
 	void ToggleNavBootstrapMenu()
 	{
 		collapseNavMenu = !collapseNavMenu;
 	}
-
 
 	string? NavBarColor;
 	string? TextColor;
@@ -24,7 +23,6 @@ public partial class NavBootstrapMenu
 		NavBarColor = UseDarkMode ? " navbar-dark bg-dark " : " navbar-light bg-white ";
 		TextColor = UseDarkMode ? " text-white " : " text-dark ";
 	}
-
 
 	//	https://github.com/soeleman/DotNetLab/blob/master/src/net3/3-0/aspnet/blazor/server-side/MenuHorizontal/MenuHorizontalApp/Shared/NavBootstrapMenu.razor
 

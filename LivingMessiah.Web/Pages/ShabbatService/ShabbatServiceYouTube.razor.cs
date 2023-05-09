@@ -10,8 +10,8 @@ namespace LivingMessiah.Web.Pages.ShabbatService;
 //public partial class ShabbatServiceYouTube : BaseSection
 public partial class ShabbatServiceYouTube
 {
-	[Inject] public IShabbatWeekCacheService Svc { get; set; }
-	[Inject] public ILogger<ShabbatServiceYouTube> Logger { get; set; }
+	[Inject] public IShabbatWeekCacheService? Svc { get; set; }
+	[Inject] public ILogger<ShabbatServiceYouTube>? Logger { get; set; }
 
 	[Parameter]	public bool ShowSpanish { get; set; }
 	[Parameter] public bool LoadQuickly { get; set; } = false;
@@ -20,25 +20,26 @@ public partial class ShabbatServiceYouTube
 	protected const string SubTitle = "Watch the video when it is live";
 
 
-	protected string Url { get; set; }
-
-	protected string Heading;
+	protected string? Url { get; set; }
+	protected string? Heading;
 	protected bool LoadFailed = false;
-	public vwCurrentWeeklyVideo CurrentWeeklyVideo;
+	public vwCurrentWeeklyVideo? CurrentWeeklyVideo;
 
 	protected override async Task OnInitializedAsync()
 	{
 		try
 		{
 			LoadFailed = false;
-			Logger.LogDebug($"Inside {nameof(ShabbatServiceYouTube)}!{nameof(OnInitializedAsync)}, ShowSpanish:{ShowSpanish} ");
+			Logger!.LogDebug($"Inside {nameof(ShabbatServiceYouTube)}!{nameof(OnInitializedAsync)}, ShowSpanish:{ShowSpanish} ");
 
-			CurrentWeeklyVideo = await Svc.GetCurrentWeeklyVideoByTypeId(
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
+			CurrentWeeklyVideo = await Svc!.GetCurrentWeeklyVideoByTypeId(
 				(ShowSpanish) ? (int)WeeklyVideoType.MainServiceSpanish : (int)WeeklyVideoType.MainServiceEnglish);
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
 
 			if (CurrentWeeklyVideo != null)
 			{
-				SetUrl(CurrentWeeklyVideo.YouTubeId);
+				SetUrl(CurrentWeeklyVideo.YouTubeId!);
 				SetHeader();
 			}
 			else
@@ -50,7 +51,7 @@ public partial class ShabbatServiceYouTube
 		catch (System.Exception ex)
 		{
 			LoadFailed = true;
-			Logger.LogError(ex, $"<br /><br /> {nameof(OnInitializedAsync)}");
+			Logger!.LogError(ex, $"<br /><br /> {nameof(OnInitializedAsync)}");
 		}
 
 	}

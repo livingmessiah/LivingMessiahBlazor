@@ -8,10 +8,10 @@ namespace LivingMessiah.Web.Pages.Calendar;
 
 public partial class FeastDayCalendarDetails
 {
-	[Parameter] public FeastDay FeastDay { get; set; }
+	[Parameter] public FeastDay? FeastDay { get; set; }
 	[Parameter] public DateTime Date { get; set; }
 
-	protected List<FeastDayDetail> FeastDayDetails { get; set; }
+	protected List<FeastDayDetail>? FeastDayDetails { get; set; }
 
 	protected override void OnInitialized()
 	{

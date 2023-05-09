@@ -5,5 +5,5 @@ namespace LivingMessiah.Web.Pages.Home;
 
 public partial class IntroductionAndWelcome
 {
-	[Parameter] public MediaQuery MediaQuery { get; set; }
+	[Parameter] public MediaQuery? MediaQuery { get; set; }
 }

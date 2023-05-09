@@ -29,7 +29,7 @@ public class RegistrationEditRepository : BaseRepositoryAsync, IRegistrationEdit
 
 	public string BaseSqlDump
 	{
-		get { return base.SqlDump; }
+		get { return base.SqlDump!; }
 	}
 
 	public async Task<RegistrationVM> GetById(int id)

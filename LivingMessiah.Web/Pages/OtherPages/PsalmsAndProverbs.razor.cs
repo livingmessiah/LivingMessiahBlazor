@@ -5,35 +5,38 @@ using LivingMessiah.Web.Services;
 using LivingMessiah.Domain;
 using Microsoft.Extensions.Logging;
 using System;
+using Blazored.Toast.Services;
+using Page = LivingMessiah.Web.Links.PsalmsAndProverbs;
 
 namespace LivingMessiah.Web.Pages.OtherPages;
 
 public partial class PsalmsAndProverbs
 {
-		[Inject]
-		public IShabbatWeekService svc { get; set; }
+	[Inject] public IShabbatWeekService? svc { get; set; }
+	[Inject] public ILogger<PsalmsAndProverbs>? Logger { get; set; }
+	[Inject] public IToastService? Toast { get; set; }
 
-		[Inject]
-		public ILogger<PsalmsAndProverbs> Logger { get; set; }
+	protected List<vwPsalmsAndProverbs>? PsalmsAndProverbsList;
 
-		protected List<vwPsalmsAndProverbs> PsalmsAndProverbsList;
+	private const string Message = $"Failed to load page {Page.Index}, Class!Method:{nameof(PsalmsAndProverbs)}!{nameof(OnInitializedAsync)}";
+	protected bool TurnSpinnerOff = false;
 
-		protected bool LoadFailed;
-
-		protected override async Task OnInitializedAsync()
+	protected override async Task OnInitializedAsync()
+	{
+		try
 		{
-				try
-				{
-						LoadFailed = false;
-						PsalmsAndProverbsList = await svc.GetPsalmsAndProverbsList();
-				}
-				catch (Exception ex)
-				{
-						LoadFailed = true;
-						Logger.LogWarning(ex, $"Failed to load page {nameof(PsalmsAndProverbs)}");
-				}
-
+			PsalmsAndProverbsList = await svc!.GetPsalmsAndProverbsList();
 		}
+		catch (Exception ex)
+		{
+			Logger!.LogWarning(ex, Message);
+			Toast!.ShowError(Message);
+		}
+		finally
+		{
+			TurnSpinnerOff = true;
+		}
+	}
 
 }
 

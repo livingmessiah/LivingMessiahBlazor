@@ -6,7 +6,7 @@ public partial class HeaderRow
 {
 	[Parameter] public int DateTypeId { get; set; }
 	[Parameter] public int Detail { get; set; }
-	[Parameter] public string Descr { get; set; }
+	[Parameter] public string? Descr { get; set; }
 
 	public  string Badge()
 	{
@@ -41,7 +41,7 @@ public partial class HeaderRow
 		}
 		else
 		{
-			return Descr;
+			return Descr!;
 		}
 	}
 

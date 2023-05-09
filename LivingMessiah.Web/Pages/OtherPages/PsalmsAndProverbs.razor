@@ -12,8 +12,7 @@
 	<PsalmAndProverbCurrent PerformHtmlValidation="true" />
 </div>
 
-@if (PsalmsAndProverbsList != null)
-{
+<LoadingComponent IsLoading="PsalmsAndProverbsList==null" TurnSpinnerOff="@TurnSpinnerOff">
 	<h3 class="text-warning mt-5 mb-0">Upcoming Psalms And Proverbs</h3>
 
 	<TableTemplate Items="PsalmsAndProverbsList">
@@ -35,9 +34,9 @@
 					@context.PsalmsBCV
 				</a>
 				@if (context.IsWholeChapter)
-		{
-		<sup>wc</sup>
-}
+				{
+					<sup>wc</sup>
+				}
 			</td>
 			<td>
 				<a href="@context.ProverbsUrl" target="_blank"
@@ -53,12 +52,5 @@
 
 	<h6 class="mb-1"><b>BCV:</b> Book/Chapter/Verse</h6>
 	<h6 class="mt-0"><b>wc:</b> Whole Chapter</h6>
-}
-else if (LoadFailed)
-{
-	<p class="text-danger"><em>Could not load because of an Error</em></p>
-}
-else
-{
-	<p><em>Loading...</em></p>
-}
+
+</LoadingComponent>

@@ -35,7 +35,7 @@ public class RegistrationAdminRepository : BaseRepositoryAsync, IRegistrationAdm
 
 	public string BaseSqlDump
 	{
-		get { return base.SqlDump; }
+		get { return base.SqlDump!; }
 	}
 
 	public async Task<List<RegistrationLookup>> PopulateRegistrationLookup()

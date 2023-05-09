@@ -19,8 +19,8 @@ public record SpecialEventsState
 {
 	public bool Submitting { get; init; }
 	public bool Submitted { get; init; }
-	public string ErrorMessage { get; init; }
-	public FormVM Model { get; init; }
+	public string? ErrorMessage { get; init; }
+	public FormVM? Model { get; init; }
 }
 
 // 3. Feature
@@ -97,8 +97,8 @@ public class SpecialEventsEffects
 public class SpecialEventsEffects
 {
 	//[Inject] public ILogger<SpecialEventsEffects> Logger { get; set; }
-	[Inject] public IUpcomingEventsRepository db { get; set; }
-	[Inject] public IToastService Toast { get; set; }
+	[Inject] public IUpcomingEventsRepository? db { get; set; }
+	[Inject] public IToastService? Toast { get; set; }
 
 	[EffectMethod]
 	public async Task SubmitSpecialEvents(SpecialEventsSubmitAction action, IDispatcher dispatcher)
@@ -108,29 +108,29 @@ public class SpecialEventsEffects
 		await Task.Delay(500); // just so we can see the "submitting" message
 		try
 		{
-			var sprocTuple = await db.CreateSpecialEvent(action.FormVM);
+			var sprocTuple = await db!.CreateSpecialEvent(action.FormVM);
 			if (sprocTuple.NewId != 0)
 			{
-				Toast.ShowInfo($"{sprocTuple.ReturnMsg}");
+				Toast!.ShowInfo($"{sprocTuple.ReturnMsg}");
 				//VM = new FormVM();
 			}
 			else
 			{
 				if (sprocTuple.SprocReturnValue == ReturnValueViolationInUniqueIndex)
 				{
-					Toast.ShowWarning($"{sprocTuple.ReturnMsg}");
+					Toast!.ShowWarning($"{sprocTuple.ReturnMsg}");
 				}
 				else
 				{
-					Toast.ShowError($"{sprocTuple.ReturnMsg}");
+					Toast!.ShowError($"{sprocTuple.ReturnMsg}");
 				}
 			}
 		}
-		catch (Exception ex)  
+		catch (Exception)   // ex
 		{
-			//Logger.LogError(ex, string.Format("...Inside catch of {0}", nameof(SpecialEventsEffects) + "!" + nameof(SubmitSpecialEvents)));
+			//Logger!.LogError(ex, string.Format("...Inside catch of {0}", nameof(SpecialEventsEffects) + "!" + nameof(SubmitSpecialEvents)));
 			dispatcher.Dispatch(new SpecialEventsSubmitFailureAction("An invalid operation occurred, contact your administrator"));
-			//Toast.ShowError("An invalid operation occurred, contact your administrator");
+			//Toast!.ShowError("An invalid operation occurred, contact your administrator");
 		}
 	}
 }

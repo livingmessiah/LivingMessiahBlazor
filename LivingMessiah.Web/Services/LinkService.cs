@@ -13,7 +13,7 @@ public interface ILinkService
 	List<Link> GetHomeSidebarLinks(bool isXsOrSm);
 	List<LinkBasic> GetAdminLinks();
 	List<LinkBasic> GetDashboardLinks();
-	List<Link> GetFeastLinks();
+	//List<Link> GetFeastLinks();
 	//List<LinkBasic> GetMarkdownLinks();
 }
 
@@ -75,10 +75,10 @@ public class LinkService : ILinkService
 		LinksFactory links = new LinksFactory();
 		List<LinkBasic> feasts = new List<LinkBasic>();
 
-		foreach (Link link in GetFeastLinks())
-		{
-			feasts.Add(new LinkBasic() { Icon = link.Icon, Index = link.Index, Title = link.Title });
-		}
+		//foreach (Link link in GetFeastLinks())
+		//{
+		//	feasts.Add(new LinkBasic() { Icon = link.Icon, Index = link.Index, Title = link.Title });
+		//}
 
 		if (feasts is not null)
 		{
@@ -96,11 +96,11 @@ public class LinkService : ILinkService
 		return links.GetDashboardLinks().ToList();
 	}
 
-	public List<Link> GetFeastLinks()
-	{
-		LinksFactory links = new LinksFactory();
-		return links.GetFeastLinks().ToList();
-	}
+	//public List<Link> GetFeastLinks()
+	//{
+	//	LinksFactory links = new LinksFactory();
+	//	return links.GetFeastLinks().ToList();
+	//}
 
 	/*
 	public List<LinkBasic> GetMarkdownLinks()

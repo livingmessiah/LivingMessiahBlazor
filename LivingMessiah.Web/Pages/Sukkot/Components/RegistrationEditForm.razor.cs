@@ -11,13 +11,13 @@ namespace LivingMessiah.Web.Pages.Sukkot.Components;
 
 public partial class RegistrationEditForm
 {
-	[Inject] public IRegistrationEditService svc { get; set; }
-	[Inject] public ILogger<RegistrationEditForm> Logger { get; set; }
+	[Inject] public IRegistrationEditService? svc { get; set; }
+	[Inject] public ILogger<RegistrationEditForm>? Logger { get; set; }
 	[Inject] AppState? AppState { get; set; }
 	[Inject] public IToastService? Toast { get; set; }
 
 	[Parameter, EditorRequired] public int? Id { get; set; }
-	[Parameter, EditorRequired] public string Email { get; set; }
+	[Parameter, EditorRequired] public string? Email { get; set; }
 
 	public RegistrationVM VM { get; set; } = new RegistrationVM();
 
@@ -28,7 +28,7 @@ public partial class RegistrationEditForm
 	protected override async Task OnInitializedAsync()
 	{
 		Id2 = Id ?? 0;
-		Logger.LogInformation(string.Format("Inside {0}; Id2:{1}", nameof(RegistrationEditForm) + "!" + nameof(OnInitializedAsync), Id2));
+		Logger!.LogInformation(string.Format("Inside {0}; Id2:{1}", nameof(RegistrationEditForm) + "!" + nameof(OnInitializedAsync), Id2));
 
 		try
 		{
@@ -38,9 +38,9 @@ public partial class RegistrationEditForm
 			}
 			else
 			{
-				VM = await svc.GetById(Id2);
-				AppState.UpdateMessage(this, GetNotificationMessage());
-				//Toast.ShowInfo($"{GetNotificationMessage()}");
+				VM = await svc!.GetById(Id2);
+				AppState!.UpdateMessage(this, GetNotificationMessage());
+				//Toast!.ShowInfo($"{GetNotificationMessage()}");
 			}
 
 			SetUiForAddOrEdit();
@@ -48,17 +48,17 @@ public partial class RegistrationEditForm
 		}
 		catch (RegistratationException registratationException)
 		{
-			AppState.UpdateMessage(this, registratationException.Message);
-			Toast.ShowError($"{registratationException.Message}");
+			AppState!.UpdateMessage(this, registratationException.Message);
+			Toast!.ShowError($"{registratationException.Message}");
 		}
 
 		catch (InvalidOperationException invalidOperationException)
 		{
-			AppState.UpdateMessage(this, invalidOperationException.Message);
-			Toast.ShowError($"{invalidOperationException.Message}");
+			AppState!.UpdateMessage(this, invalidOperationException.Message);
+			Toast!.ShowError($"{invalidOperationException.Message}");
 		}
 
-		Logger.LogInformation(string.Format("...finished {0}", nameof(RegistrationEditForm) + "!" + nameof(OnInitializedAsync)));
+		Logger!.LogInformation(string.Format("...finished {0}", nameof(RegistrationEditForm) + "!" + nameof(OnInitializedAsync)));
 	}
 
 	protected string Title = "";
@@ -95,38 +95,38 @@ public partial class RegistrationEditForm
 
 	protected async Task SubmitValidForm()
 	{
-		Logger.LogDebug(string.Format("Inside {0} Id2:{1}"
+		Logger!.LogDebug(string.Format("Inside {0} Id2:{1}"
 			, nameof(RegistrationEditForm) + "!" + nameof(SubmitValidForm), Id2));
 
 		if (Id2 == 0)  // Add
 		{
 			try
 			{
-				var sprocTuple = await svc.Create(VM);
-				Logger.LogInformation(string.Format("...Registration created! newId={0}", Id2));
-				AppState.UpdateMessage(this, "Registration Added!");
-				Toast.ShowInfo($"Registration Added!");
+				var sprocTuple = await svc!.Create(VM);
+				Logger!.LogInformation(string.Format("...Registration created! newId={0}", Id2));
+				AppState!.UpdateMessage(this, "Registration Added!");
+				Toast!.ShowInfo($"Registration Added!");
 			}
 			catch (InvalidOperationException invalidOperationException)
 			{
-				AppState.UpdateMessage(this, invalidOperationException.Message);
-				Toast.ShowError($"{invalidOperationException.Message}");
+				AppState!.UpdateMessage(this, invalidOperationException.Message);
+				Toast!.ShowError($"{invalidOperationException.Message}");
 			}
 		}
 		else  // Edit
 		{
 			try
 			{
-				var sprocTuple = await svc.Update(VM);
-				Logger.LogInformation("...Registration Updated!");
-				AppState.UpdateMessage(this, "Registration Updated!");
-				Toast.ShowInfo($"Registration Updated!");
+				var sprocTuple = await svc!.Update(VM);
+				Logger!.LogInformation("...Registration Updated!");
+				AppState!.UpdateMessage(this, "Registration Updated!");
+				Toast!.ShowInfo($"Registration Updated!");
 			}
 
 			catch (InvalidOperationException invalidOperationException)
 			{
-				AppState.UpdateMessage(this, invalidOperationException.Message);
-				Toast.ShowError($"{invalidOperationException.Message}");
+				AppState!.UpdateMessage(this, invalidOperationException.Message);
+				Toast!.ShowError($"{invalidOperationException.Message}");
 			}
 		}
 	}

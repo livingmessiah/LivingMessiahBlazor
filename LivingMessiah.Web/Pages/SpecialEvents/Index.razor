@@ -17,12 +17,11 @@
 <AuthorizeView Roles="@Roles.AdminOrAnnouncements">
 	<Authorized>
 
-
 		<div class="container-fluid bg-warning">
 			<div class="row pt-2 pb-1">
 
 				<div class="col-4">
-					@if (MainState.Value.DateRange is not null)
+					@if (MainState!.Value.DateRange is not null)
 					{
 						<p>@MainState.Value.DateRange.ToString()</p>
 					}

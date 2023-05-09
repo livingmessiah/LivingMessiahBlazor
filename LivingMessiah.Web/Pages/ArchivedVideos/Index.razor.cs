@@ -10,32 +10,28 @@ namespace LivingMessiah.Web.Pages.ArchivedVideos;
 
 public partial class Index
 {
-		[Inject]
-		public IShabbatWeekService svc { get; set; }
+	[Inject] public IShabbatWeekService? svc { get; set; }
+	[Inject] public ILogger<Index>? Logger { get; set; }
 
-		[Inject]
-		public ILogger<Index> Logger { get; set; }
+	[Parameter]	public int Top { get; set; } = 10;
 
-		[Parameter]
-		public int Top { get; set; } = 10;
-
-		protected bool ReadOperationFailed = false;
-		protected IReadOnlyList<WeeklyVideoIndex> ArchivedVideos;
+	protected bool ReadOperationFailed = false;
+	protected IReadOnlyList<WeeklyVideoIndex>? ArchivedVideos;
 
 
-		protected override async Task OnInitializedAsync()
+	protected override async Task OnInitializedAsync()
+	{
+		try
 		{
-				try
-				{
-						ReadOperationFailed = false;
-						ArchivedVideos = await svc.GetTopWeeklyVideos(Top);
-				}
-
-				catch (System.Exception ex)
-				{
-						ReadOperationFailed = true;
-						Logger.LogError(ex, $"<br /><br /> {nameof(OnInitializedAsync)}");
-				}
-
+			ReadOperationFailed = false;
+			ArchivedVideos = await svc!.GetTopWeeklyVideos(Top);
 		}
+
+		catch (System.Exception ex)
+		{
+			ReadOperationFailed = true;
+			Logger!.LogError(ex, $"<br /><br /> {nameof(OnInitializedAsync)}");
+		}
+
+	}
 }

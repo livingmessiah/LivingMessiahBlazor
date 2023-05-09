@@ -12,7 +12,7 @@
 
 <LoadingComponent IsLoading="CurrentParasha==null" TurnSpinnerOff="@TurnSpinnerOff">
 
-	<PrintButton BookId="@CurrentParasha.BookId"/>
+	<PrintButton BookId="@CurrentParasha!.BookId"/>
 
 	<div class="@MediaQuery.XsOrSm.DivClass">
 		<Table IsXsOrSm="true" BookId="@CurrentParasha.BookId"></Table>

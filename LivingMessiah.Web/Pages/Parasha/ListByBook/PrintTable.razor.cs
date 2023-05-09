@@ -13,14 +13,14 @@ namespace LivingMessiah.Web.Pages.Parasha.ListByBook;
 
 public partial class PrintTable
 {
-	[Inject] 	private IParashaService Service { get; set; }
+	[Inject] 	private IParashaService? Service { get; set; }
 	[Inject] public ILogger<PrintTable>? Logger { get; set; }
-	[Inject] public IToastService Toast { get; set; }
+	[Inject] public IToastService? Toast { get; set; }
 
 	[Parameter] public int BookId { get; set; } = 0;
 
 	protected string BibleBookName = String.Empty;
-	protected IReadOnlyList<Parashot> Parashot;
+	protected IReadOnlyList<Parashot>? Parashot;
 	protected bool TurnSpinnerOff = false;
 
 	protected override async Task OnInitializedAsync()
@@ -30,10 +30,10 @@ public partial class PrintTable
 
 		try
 		{
-			Parashot = await Service.GetParashotByBookId(BookId);
+			Parashot = await Service!.GetParashotByBookId(BookId);
 			if (Parashot is null || !Parashot.Any())
 			{
-				Toast.ShowWarning(Service.UserInterfaceMessage);
+				Toast!.ShowWarning(Service.UserInterfaceMessage);
 			}
 			else
 			{
@@ -43,7 +43,7 @@ public partial class PrintTable
 
 		catch (InvalidOperationException invalidOperationException)
 		{
-			Toast.ShowError(invalidOperationException.Message);
+			Toast!.ShowError(invalidOperationException.Message);
 		}
 		finally
 		{

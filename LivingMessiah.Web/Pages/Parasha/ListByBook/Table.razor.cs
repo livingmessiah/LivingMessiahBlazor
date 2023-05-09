@@ -11,25 +11,17 @@ namespace LivingMessiah.Web.Pages.Parasha.ListByBook;
 
 public partial class Table
 {
-	[Inject]
-	private IParashaService Service { get; set; }
+	[Inject] private IParashaService? Service { get; set; }
+	[Inject] public ILogger<Table>? Logger { get; set; }
+	[Inject] public IToastService? Toast { get; set; }
 
-	[Inject] 
-	public ILogger<Table>? Logger { get; set; }
-	
-	[Inject]
-	public IToastService Toast { get; set; }
+	[Parameter]	public bool IsXsOrSm { get; set; }
+	[Parameter]	public int BookId { get; set; } = 0;
 
-	protected IReadOnlyList<Parashot> Parashot;
-
-	[Parameter]
-	public bool IsXsOrSm { get; set; }
-
-	[Parameter]
-	public int BookId { get; set; } = 0;
+	protected IReadOnlyList<Parashot>? Parashot;
 
 	protected bool TurnSpinnerOff = false;
-	protected string Colspan;
+	protected string? Colspan;
 	protected int prevGregorianYear = 0;
 
 	protected override async Task OnInitializedAsync()
@@ -41,16 +33,16 @@ public partial class Table
 
 		try
 		{
-			Parashot = await Service.GetParashotByBookId(BookId);
+			Parashot = await Service!.GetParashotByBookId(BookId);
 			if (Parashot is null || !Parashot.Any())
 			{
-				Toast.ShowWarning(Service.UserInterfaceMessage);
+				Toast!.ShowWarning(Service.UserInterfaceMessage);
 			}
 		}
 
 		catch (InvalidOperationException invalidOperationException)
 		{
-			Toast.ShowError(invalidOperationException.Message);
+			Toast!.ShowError(invalidOperationException.Message);
 		}
 		finally
 		{

@@ -4,14 +4,14 @@
 {
 	<CascadingValue Value="@IsPrinterFriendly">
 		<ImageDisplayOption>
-			<img src='@Blobs.UrlShabbatService(Section.GraphicUrl)' alt="@Section.Title" class="img-fluid rounded mt-4" />
+			<img src='@Blobs.UrlShabbatService(Section!.GraphicUrl)' alt="@Section.Title" class="img-fluid rounded mt-4" />
 		</ImageDisplayOption>
 	</CascadingValue>
 }
 
 <div class="card mt-2 @CardCss" style="width: 100%">
 	<div class="card-header h3 px-2">
-		<span class='badge @HeaderBadgeColor pb-15'>@Section.Title</span>
+		<span class='badge @HeaderBadgeColor pb-15'>@Section!.Title</span>
 		@if (!IsPrinterFriendly)
 		{
 			@if (IsCollapsed)
@@ -27,7 +27,6 @@
 						class="btn-primary btn-sm float-end">
 					Hide <i class='fas fa-chevron-up'></i>
 				</Button>
-
 			}
 		}
 	</div>
