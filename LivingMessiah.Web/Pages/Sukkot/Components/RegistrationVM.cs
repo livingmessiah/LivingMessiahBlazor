@@ -18,7 +18,6 @@ public class RegistrationVM
 	public int ChildBig { get; set; }
 	public int ChildSmall { get; set; }
 
-	// Only used by Sukkot\Components\RegistrationEditService!GetById VM.Status = Status.FromValue(VM.StatusId);	
 	public int StatusId { get; set; }  
 	public Status? Status { get; set; }
 

@@ -56,6 +56,7 @@ public class RegistrationVM
 	[Range(0, 12, ErrorMessage = "{0} must be between {1} and {2}")]
 	public int ChildSmall { get; set; }
 
+	public int StatusId { get; set; }
 	public Status? Status { get; set; }
 
 	[DisplayName("Attendance Bitwise")]

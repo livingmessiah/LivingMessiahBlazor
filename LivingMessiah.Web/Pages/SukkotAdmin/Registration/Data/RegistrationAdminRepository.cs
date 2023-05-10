@@ -17,11 +17,11 @@ public interface IRegistrationAdminRepository
 {
 	string BaseSqlDump { get; }
 	Task<List<Domain.Registration>> GetAll();
-	Task<RegistrationPOCO> GetPocoById(int id);
+	Task<RegistrationVM> GetById(int id);
 
 	// Can't remove `Tuple<...>` with `(...)`, see C:\Source\LivingMessiahWiki\Tuples\Removing-Tuple-Conflicts-with-BaseRepositoryAsync.md
-	Task<Tuple<int, int, string>> Create(RegistrationPOCO registration);
-	Task<Tuple<int, int, string>> Update(RegistrationPOCO registration);
+	Task<Tuple<int, int, string>> Create(Sukkot.Domain.RegistrationPOCO registration);
+	Task<Tuple<int, int, string>> Update(Sukkot.Domain.RegistrationPOCO registration);
 
 	Task<List<RegistrationLookup>> PopulateRegistrationLookup(); // used by: EditRegistrationForm (SukkotAdmin.Registration)
 }
@@ -52,7 +52,6 @@ ORDER BY FirstName
 		});
 	}
 
-	// , Sukkot.udfAttendanceDatesConcat(Id) AS AttendanceDatesCS ToDo: delete, use Bitwise
 	public async Task<List<Domain.Registration>> GetAll()
 	{
 		base.Sql = $@"
@@ -71,8 +70,7 @@ ORDER BY FirstName
 		});
 	}
 
-	// , Sukkot.udfAttendanceDatesConcat(Id) AS AttendanceDatesCS ToDo: delete, use Bitwise
-	public async Task<RegistrationPOCO> GetPocoById(int id)
+	public async Task<RegistrationVM> GetById(int id)
 	{
 		base.Parms = new DynamicParameters(new { Id = id });
 		base.Sql = $@"
@@ -81,16 +79,17 @@ SELECT TOP 1
 Id, FamilyName, FirstName, SpouseName, OtherNames, EMail, Phone, Adults, ChildBig, ChildSmall
 , StatusId
 , AttendanceBitwise, LmmDonation, Notes, Avatar
-FROM Sukkot.Registration WHERE Id = @Id";
+FROM Sukkot.Registration 
+WHERE Id = @Id";
 		return await WithConnectionAsync(async connection =>
 		{
-			var rows = await connection.QueryAsync<RegistrationPOCO>(sql: base.Sql, param: base.Parms);
+			var rows = await connection.QueryAsync<RegistrationVM>(sql: base.Sql, param: base.Parms);
 			return rows.SingleOrDefault()!;
 		});
 	}
 
 
-	public async Task<Tuple<int, int, string>> Create(RegistrationPOCO registration)
+	public async Task<Tuple<int, int, string>> Create(Sukkot.Domain.RegistrationPOCO registration)
 	{
 		base.Sql = "Sukkot.stpRegistrationInsert";
 		base.Parms = new DynamicParameters(new
@@ -150,7 +149,7 @@ FROM Sukkot.Registration WHERE Id = @Id";
 		});
 	}
 
-	public async Task<Tuple<int, int, string>> Update(RegistrationPOCO registration)
+	public async Task<Tuple<int, int, string>> Update(Sukkot.Domain.RegistrationPOCO registration)
 	{
 		base.Sql = "Sukkot.stpRegistrationUpdate";
 		base.Parms = new DynamicParameters(new

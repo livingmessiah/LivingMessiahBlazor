@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 
@@ -7,9 +6,6 @@ using LivingMessiah.Web.Services;
 using LivingMessiah.Web.Pages.Sukkot.Enums;
 using LivingMessiah.Web.Pages.Sukkot.RegistrationSteps.Enums;
 using LivingMessiah.Web.Pages.Sukkot.Services;
-using LivingMessiah.Web.Pages.SukkotAdmin.Registration.Domain;
-using static LivingMessiah.Web.Links.Store;
-using LivingMessiah.Web.Pages.Admin.AudioVisual.Services;
 
 namespace LivingMessiah.Web.Pages.Sukkot.Components;
 
@@ -44,7 +40,8 @@ public class RegistrationEditService : IRegistrationEditService
 
 	public async Task<RegistrationVM> GetById(int id)
 	{
-		Logger.LogInformation($"Inside {nameof(RegistrationEditService)}!{nameof(GetById)}, id={id}");
+		string message = $"Inside {nameof(RegistrationEditService)}!{nameof(GetById)}, id={id}";
+		Logger.LogInformation(message);
 		RegistrationVM VM = new();
 		try
 		{
@@ -52,9 +49,9 @@ public class RegistrationEditService : IRegistrationEditService
 			string email = await SvcClaims.GetEmail();
 			VM.Status = Status.FromValue(VM.StatusId);
 
-			var tuple = Helper.GetAttendanceDatesArray(VM.AttendanceBitwise);
-			VM.AttendanceDateList = tuple.week1;
-			VM.AttendanceDateList2ndMonth = tuple.week2;
+			var (week1, week2) = Helper.GetAttendanceDatesArray(VM.AttendanceBitwise);
+			VM.AttendanceDateList = week1;
+			VM.AttendanceDateList2ndMonth = week2;
 
 			if (await SvcClaims.IsUserAuthoirized(email) == false)
 			{
@@ -76,14 +73,13 @@ public class RegistrationEditService : IRegistrationEditService
 		}
 	}
 
-
 	public async Task<(int NewId, int SprocReturnValue, string ReturnMsg)> Create(RegistrationVM registrationVM)
 	{
 		Logger.LogInformation($"Inside {nameof(IRegistrationEditService)}!{nameof(Create)}; calling {nameof(db.Create)}");
 		try
 		{
 			registrationVM.Status = Status.Payment;
-			registrationVM.AttendanceBitwise = GetDaysBitwise(registrationVM.AttendanceDateList!, registrationVM.AttendanceDateList2ndMonth!, Enums.DateRangeType.Attendance);
+			registrationVM.AttendanceBitwise = Helper.GetDaysBitwise(registrationVM.AttendanceDateList!, registrationVM.AttendanceDateList2ndMonth!, Enums.DateRangeType.Attendance);
 
 			var sprocTuple = await db.Create(DTO_From_VM_To_DB(registrationVM));
 
@@ -141,7 +137,7 @@ public class RegistrationEditService : IRegistrationEditService
 			ChildBig = registration.ChildBig,
 			ChildSmall = registration.ChildSmall,
 			StatusId = registration.Status!.Value,
-			AttendanceBitwise = GetDaysBitwise(registration.AttendanceDateList!, registration.AttendanceDateList2ndMonth!, Enums.DateRangeType.Attendance),
+			AttendanceBitwise = Helper.GetDaysBitwise(registration.AttendanceDateList!, registration.AttendanceDateList2ndMonth!, Enums.DateRangeType.Attendance),
 			LmmDonation = registration.LmmDonation,
 			Avatar = registration.Avatar,
 			Notes = GetNotesScrubbed(registration.Notes!)
@@ -150,49 +146,6 @@ public class RegistrationEditService : IRegistrationEditService
 		Logger.LogDebug(string.Format("...Inside RegistrationEditPOCO [2], poco.AttendanceBitwise: {0}", poco.AttendanceBitwise));
 
 		return poco;
-	}
-
-	private int GetDaysBitwise(DateTime[] selectedDateArray, DateTime[] selectedDateArray2ndMonth, Enums.DateRangeType dateRangeType)
-	{
-		if (selectedDateArray is null || selectedDateArray.Length == 0) { return 0; }
-
-		int bitwise = 0;
-		AttendanceDate? attendanceDate;
-
-		foreach (var item in selectedDateArray)
-		{
-			attendanceDate = AttendanceDate.List.Where(w => w.Date == item).SingleOrDefault();
-			if (attendanceDate is not null)
-			{
-				bitwise += attendanceDate.Value;
-			}
-			else
-			{
-				ExceptionMessage = $"...Acceptance Date:{item.ToShortDateString()} is out of range; range is {DateRangeType.Attendance.Range.Min.ToShortDateString()} to {DateRangeType.Attendance.Range.Max.ToShortDateString()}";
-				Logger.LogWarning(ExceptionMessage);
-				//throw new RegistratationException(ExceptionMessage);
-			}
-		}
-
-		if (dateRangeType.HasSecondMonth)
-		{
-			foreach (var item in selectedDateArray2ndMonth)
-			{
-				attendanceDate = AttendanceDate.List.Where(w => w.Date == item).SingleOrDefault();
-				if (attendanceDate is not null)
-				{
-					bitwise += attendanceDate.Value;
-				}
-				else
-				{
-					ExceptionMessage = $"...Acceptance Date:{item.ToShortDateString()} is out of range; range is {DateRangeType.Attendance.Range.Min.ToShortDateString()} to {DateRangeType.Attendance.Range.Max.ToShortDateString()}";
-					Logger.LogWarning(ExceptionMessage);
-					//throw new RegistratationException(ExceptionMessage);
-				}
-			}
-		}
-
-		return bitwise;
 	}
 
 	public string GetNotesScrubbed(string notes)

@@ -21,7 +21,7 @@
 
 				<div class="col-sm-6">
 					<label for="eventTypeEnum" class="control-label">Event Type</label>
-					<InputSelect id="type" @bind-Value="VM.SpecialEventTypeId" class="form-control">
+					<InputSelect id="type" @bind-Value="VM!.SpecialEventTypeId" class="form-control">
 						@foreach (var item in SpecialEventType.List.ToList())
 						{
 							<option value="@item.Value">@item.Descr</option>

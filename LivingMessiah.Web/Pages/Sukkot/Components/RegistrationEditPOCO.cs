@@ -14,8 +14,12 @@ public class RegistrationEditPOCO
 	public int Adults { get; set; }
 	public int ChildBig { get; set; }
 	public int ChildSmall { get; set; }
+
 	public int StatusId { get; set; }
+	//public Status? Status { get; set; }
+
 	public int AttendanceBitwise { get; set; }
+
 	public string? Notes { get; set; }
 	public string? Avatar { get; set; }
 	public Decimal LmmDonation { get; set; }

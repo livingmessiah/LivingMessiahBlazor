@@ -16,9 +16,9 @@ public interface IRegistrationEditRepository
 	string BaseSqlDump { get; }
 
 	// Can't remove `Tuple<...>` with `(...)`, see C:\Source\LivingMessiahWiki\Tuples\Removing-Tuple-Conflicts-with-BaseRepositoryAsync.md
+	Task<RegistrationVM> GetById(int id);
 	Task<Tuple<int, int, string>> Create(RegistrationEditPOCO registration);
 	Task<Tuple<int, int, string>> Update(RegistrationEditPOCO registration);
-	Task<RegistrationVM> GetById(int id);
 }
 
 public class RegistrationEditRepository : BaseRepositoryAsync, IRegistrationEditRepository

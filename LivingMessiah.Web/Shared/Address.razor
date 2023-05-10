@@ -1,6 +1,6 @@
 ﻿
 <address>
-	@((MarkupString)_address);
+	@((MarkupString)_address!);
 </address>
 
 
@@ -9,7 +9,7 @@
 	[Parameter] public bool OnOneLine { get; set; } = false;
 	[Parameter] public bool UseLabel { get; set; } = false;
 
-	string _address;
+	string? _address;
 
 	const string _Name = "Living Messiah Ministries";
 	const string _Street = "19 North Robson #106";
