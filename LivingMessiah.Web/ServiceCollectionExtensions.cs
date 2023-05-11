@@ -16,8 +16,6 @@ using LivingMessiah.Web.Pages.Sukkot.Data;
 using LivingMessiah.Web.Pages.Sukkot.Services;
 using LivingMessiah.Web.Pages.SukkotAdmin.Data;
 using LivingMessiah.Web.Pages.SukkotAdmin.Donations.Data;
-using LivingMessiah.Web.Pages.SukkotAdmin.Registration.Data;
-using LivingMessiah.Web.Pages.SukkotAdmin.Registration.Services;
 using LivingMessiah.Web.Pages.SukkotAdmin.Services;
 using LivingMessiah.Web.Pages.UpcomingEvents.Data;
 using LivingMessiah.Web.Services;
@@ -26,6 +24,8 @@ using LivingMessiah.Web.Pages.Sukkot.Components;
 using LivingMessiah.Web.Pages.Parasha.Services;
 using LivingMessiah.Web.Pages.Parasha.Data;
 using LivingMessiah.Web.Pages.UpcomingEventsAdmin.Edit;
+using LivingMessiah.Web.Links;
+//using LivingMessiah.Web.Pages.Sukkot.RegistrationEntry;
 
 namespace LivingMessiah.Web;
 
@@ -50,12 +50,11 @@ public static class ServiceCollectionExtensions
 
 			//.AddSingleton<ISukkotSettings, SukkotSettings>()
 			.AddTransient<ISukkotService, SukkotService>()
-			.AddTransient<IRegistrationAdminService, RegistrationAdminService>()
 
-			.AddTransient<IRegistrationEditService, RegistrationEditService>()
-			.AddTransient<IRegistrationEditRepository, RegistrationEditRepository>()
-			
-			.AddTransient<IRegistrationAdminRepository, RegistrationAdminRepository>()
+			.AddTransient<Pages.Sukkot.RegistrationEntry.IService, Pages.Sukkot.RegistrationEntry.Service>()
+			.AddTransient<Pages.Sukkot.RegistrationEntry.IRepository, Pages.Sukkot.RegistrationEntry.Repository>()
+			.AddTransient<IValidator<Pages.Sukkot.RegistrationEntry.ViewModel>, Pages.Sukkot.RegistrationEntry.ViewModelValidator>()
+
 			.AddTransient<IDonationRepository, DonationRepository>()
 			.AddTransient<ISukkotAdminService, SukkotAdminService>()
 			.AddTransient<IContactRepository, ContactRepository>()
@@ -66,10 +65,7 @@ public static class ServiceCollectionExtensions
 			.AddScoped<AppState>()
 			.AddSingleton<IParashaRepository, ParashaRepository>()
 			.AddSingleton<IParashaService, ParashaService>()
-			.AddSingleton<IYouTubeFeedService, YouTubeFeedService>()
-			.AddTransient<IValidator<RegistrationVM>, RegistrationVMValidator>();
-		
-
+			.AddSingleton<IYouTubeFeedService, YouTubeFeedService>();
 		return services;
 	}
 

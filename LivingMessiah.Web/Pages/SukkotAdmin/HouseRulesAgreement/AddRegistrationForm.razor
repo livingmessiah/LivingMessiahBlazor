@@ -4,9 +4,9 @@
 
 @using LivingMessiah.Web.Pages.SukkotAdmin.Donations.Domain
 
-<LoadingComponent IsLoading="RegistrationVM==null">
+<LoadingComponent IsLoading="VM==null">
 
-	<EditForm Model="RegistrationVM"
+	<EditForm Model="VM"
 						OnValidSubmit="HandleValidSubmit"
 						class="card card-body bg-light mt-5">
 		<DataAnnotationsValidator />
@@ -19,8 +19,8 @@
 				<div class="col-sm-4">
 					<div class="mb-3">
 						<label for="eMail" class="control-label">Email</label>
-						<InputText id="eMail" class="form-control" @bind-Value="RegistrationVM!.EMail" />
-						<ValidationMessage For="@(() => RegistrationVM.EMail)" />
+						<InputText id="eMail" class="form-control" @bind-Value="VM!.EMail" />
+						<ValidationMessage For="@(() => VM.EMail)" />
 					</div>
 				</div>
 			</div>
@@ -35,24 +35,24 @@
 				<div class="col-sm-4">
 					<div class="mb-3">
 						<label for="familyName" class="control-label">Family Name</label>
-						<InputText id="familyName" class="form-control" @bind-Value="RegistrationVM.FamilyName" />
-						<ValidationMessage For="@(() => RegistrationVM.FamilyName)" />
+						<InputText id="familyName" class="form-control" @bind-Value="VM.FamilyName" />
+						<ValidationMessage For="@(() => VM.FamilyName)" />
 					</div>
 				</div>
 
 				<div class="col-sm-4">
 					<div class="mb-3">
 						<label for="firstName" class="control-label">First Name</label>
-						<InputText id="firstName" class="form-control" @bind-Value="RegistrationVM.FirstName" />
-						<ValidationMessage For="@(() => RegistrationVM.FirstName)" />
+						<InputText id="firstName" class="form-control" @bind-Value="VM.FirstName" />
+						<ValidationMessage For="@(() => VM.FirstName)" />
 					</div>
 				</div>
 
 				<div class="col-sm-4">
 					<div class="mb-3">
 						<label for="spouseName" class="control-label">Spouses Name</label>
-						<InputText id="spouseName" class="form-control" @bind-Value="RegistrationVM.SpouseName" />
-						<ValidationMessage For="@(() => RegistrationVM.SpouseName)" />
+						<InputText id="spouseName" class="form-control" @bind-Value="VM.SpouseName" />
+						<ValidationMessage For="@(() => VM.SpouseName)" />
 					</div>
 				</div>
 
@@ -63,24 +63,24 @@
 				<div class="col-sm-4">
 					<div class="mb-3">
 						<label for="otherNames" class="control-label">Other Names</label>
-						<InputText id="otherNames" class="form-control" @bind-Value="RegistrationVM.OtherNames" />
-						<ValidationMessage For="@(() => RegistrationVM.OtherNames)" />
+						<InputText id="otherNames" class="form-control" @bind-Value="VM.OtherNames" />
+						<ValidationMessage For="@(() => VM.OtherNames)" />
 					</div>
 				</div>
 
 				<div class="col-sm-4">
 					<div class="mb-3">
 						<label for="email" class="control-label">Email</label>
-						<InputText id="email" class="form-control" @bind-Value="RegistrationVM.EMail" placeholder="email" />
-						<ValidationMessage For="@(() => RegistrationVM.EMail)" />
+						<InputText id="email" class="form-control" @bind-Value="VM.EMail" placeholder="email" />
+						<ValidationMessage For="@(() => VM.EMail)" />
 					</div>
 				</div>
 
 				<div class="col-sm-4">
 					<div class="mb-3">
 						<label for="phone" class="control-label">Phone</label>
-						<InputText id="phone" class="form-control" @bind-Value="RegistrationVM.Phone" placeholder="phone (optional)" />
-						<ValidationMessage For="@(() => RegistrationVM.Phone)" />
+						<InputText id="phone" class="form-control" @bind-Value="VM.Phone" placeholder="phone (optional)" />
+						<ValidationMessage For="@(() => VM.Phone)" />
 					</div>
 				</div>
 
@@ -108,7 +108,7 @@
 
 						<SfCalendar TValue="DateTime?"
 												IsMultiSelection="true" ShowTodayButton="false"
-												@bind-Values="@RegistrationVM.AttendanceDateList"
+												@bind-Values="@VM.AttendanceDateList"
 												Min="@DateRangeAttendance.Range.Min"
 												Max="@DateRangeAttendance.Range.Max">
 						</SfCalendar>
@@ -128,8 +128,8 @@
 					<div class="mb-3">
 
 						<label for="adults" class="control-label">Adults</label>
-						<InputNumber id="adults" class="form-control" @bind-Value="RegistrationVM.Adults" />
-						<ValidationMessage For="@(() => RegistrationVM.Adults)" />
+						<InputNumber id="adults" class="form-control" @bind-Value="VM.Adults" />
+						<ValidationMessage For="@(() => VM.Adults)" />
 
 					</div>
 				</div>
@@ -137,16 +137,16 @@
 				<div class="col-sm-3">
 					<div class="mb-3">
 						<label for="childBig" class="control-label">Child <sup>big</sup></label>
-						<InputNumber id="childBig" class="form-control" @bind-Value="RegistrationVM.ChildBig" />
-						<ValidationMessage For="@(() => RegistrationVM.ChildBig)" />
+						<InputNumber id="childBig" class="form-control" @bind-Value="VM.ChildBig" />
+						<ValidationMessage For="@(() => VM.ChildBig)" />
 					</div>
 				</div>
 
 				<div class="col-sm-3">
 					<div class="mb-3">
 						<label for="childSmall" class="control-label">Child <sup>small</sup></label>
-						<InputNumber id="childSmall" class="form-control" @bind-Value="RegistrationVM.ChildSmall" />
-						<ValidationMessage For="@(() => RegistrationVM.ChildSmall)" />
+						<InputNumber id="childSmall" class="form-control" @bind-Value="VM.ChildSmall" />
+						<ValidationMessage For="@(() => VM.ChildSmall)" />
 					</div>
 				</div>
 
@@ -165,8 +165,8 @@
 						<p class="">
 							Please include emergency contact and name of fellowship or congregation currently attending, if none list a personal reference
 						</p>
-						<InputTextArea id="notes" class="form-control" @bind-Value="RegistrationVM.Notes" />
-						<ValidationMessage For="@(() => RegistrationVM.Notes)" />
+						<InputTextArea id="notes" class="form-control" @bind-Value="VM.Notes" />
+						<ValidationMessage For="@(() => VM.Notes)" />
 
 					</div>
 				</div>

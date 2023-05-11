@@ -1,35 +1,32 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-
 using LivingMessiah.Web.Pages.Sukkot.Enums;
 using LivingMessiah.Web.Pages.Sukkot.RegistrationSteps.Enums;
 
-using LivingMessiah.Web.Pages.SukkotAdmin.Registration.Domain;
-using LivingMessiah.Web.Pages.SukkotAdmin.Registration.Data;
 using LivingMessiah.Web.Services;
 
-namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration.Services;
+namespace LivingMessiah.Web.Pages.Sukkot.RegistrationEntry;
 
-public interface IRegistrationAdminService
+public interface IService
 {
 	string ExceptionMessage { get; set; }
 
-	Task<RegistrationVM> GetById(int id);                                                                   //        Registration\EditRegistrationForm
-	Task<(int NewId, int SprocReturnValue, string ReturnMsg)> Create(RegistrationVM registration);          // HouseRulesAgreement\AddRegistrationForm 
-	Task<(int RowsAffected, int SprocReturnValue, string ReturnMsg)> Update(RegistrationVM registration);   //        Registration\EditRegistrationForm
+	Task<ViewModel> GetById(int id);                                                                   
+	Task<(int NewId, int SprocReturnValue, string ReturnMsg)> Create(ViewModel registration);          
+	Task<(int RowsAffected, int SprocReturnValue, string ReturnMsg)> Update(ViewModel registration);   
 }
 
-public class RegistrationAdminService : IRegistrationAdminService
+public class Service : IService
 {
 	#region Constructor and DI
-	private readonly IRegistrationAdminRepository db;
+	private readonly IRepository db;
 	private readonly ILogger Logger;
 	private readonly ISecurityClaimsService SvcClaims;
 
-	public RegistrationAdminService(
-		IRegistrationAdminRepository registrationRepository,
-		ILogger<RegistrationAdminService> logger,
+	public Service(
+		IRepository registrationRepository,
+		ILogger<Service> logger,
 		ISecurityClaimsService securityClaimsService)
 	{
 		db = registrationRepository;
@@ -40,12 +37,12 @@ public class RegistrationAdminService : IRegistrationAdminService
 
 	public string ExceptionMessage { get; set; } = "";
 	
-	public async Task<RegistrationVM> GetById(int id)
+	public async Task<ViewModel> GetById(int id)
 	{
-		string message = $"Inside {nameof(RegistrationAdminService)}!{nameof(GetById)}, id={id}";
+		string message = $"Inside {nameof(Service)}!{nameof(GetById)}, id={id}";
 		Logger.LogInformation(message);
 		
-		RegistrationVM VM = new();
+		ViewModel VM = new();
 		try
 		{
 			VM = await db.GetById(id);
@@ -78,16 +75,16 @@ public class RegistrationAdminService : IRegistrationAdminService
 		}
 	}
 
-	public async Task<(int NewId, int SprocReturnValue, string ReturnMsg)> Create(RegistrationVM registrationVM)
+	public async Task<(int NewId, int SprocReturnValue, string ReturnMsg)> Create(ViewModel vm)
 	{
-		Logger.LogInformation($"Inside {nameof(RegistrationAdminService)}!{nameof(Create)}; calling {nameof(db.Create)}");
+		Logger.LogInformation($"Inside {nameof(Service)}!{nameof(Create)}; calling {nameof(db.Create)}");
 		try
 		{
 			//string email = await SvcClaims.GetEmail();	if (await SvcClaims.IsUserAuthoirized(email))	{	}
-			registrationVM.Status = Status.Payment;
-			registrationVM.AttendanceBitwise = Helper.GetDaysBitwise(registrationVM.AttendanceDateList!, registrationVM.AttendanceDateList2ndMonth!, Sukkot.Enums.DateRangeType.Attendance);
+			vm.Status = Status.Payment;
+			vm.AttendanceBitwise = Helper.GetDaysBitwise(vm.AttendanceDateList!, vm.AttendanceDateList2ndMonth!, Sukkot.Enums.DateRangeType.Attendance);
 
-			var sprocTuple = await db.Create(DTO_From_VM_To_DB(registrationVM));
+			var sprocTuple = await db.Create(DTO_From_VM_To_DB(vm));
 			int newId = sprocTuple.Item1;
 			int sprocReturnValue = sprocTuple.Item2;
 			string returnMsg = sprocTuple.Item3;
@@ -105,19 +102,19 @@ public class RegistrationAdminService : IRegistrationAdminService
 		}
 	}
 
-	public async Task<(int RowsAffected, int SprocReturnValue, string ReturnMsg)> Update(RegistrationVM registrationVM)
+	public async Task<(int RowsAffected, int SprocReturnValue, string ReturnMsg)> Update(ViewModel vm)
 	{
-		const string MessageUpdate = $"Inside {nameof(RegistrationAdminService)}!{nameof(Update)}; calling {nameof(db.Update)}";
+		const string MessageUpdate = $"Inside {nameof(Service)}!{nameof(Update)}; calling {nameof(db.Update)}";
 		Logger.LogInformation(MessageUpdate);
-
+		Logger.LogDebug(string.Format("... vm.StatusId: {0}", vm.StatusId));
 		try
 		{
-			var sprocTuple = await db.Update(DTO_From_VM_To_DB(registrationVM));
+			var sprocTuple = await db.Update(DTO_From_VM_To_DB(vm));
 
 			int rowsAffected = sprocTuple.Item1;
 			int sprocReturnValue = sprocTuple.Item2;
 			string returnMsg = sprocTuple.Item3;
-			Logger.LogInformation($"Registration updated for {registrationVM.FamilyName}/{registrationVM.EMail}");
+			Logger.LogInformation($"Registration updated for {vm.FamilyName}/{vm.EMail}");
 			return (rowsAffected, sprocReturnValue, returnMsg);
 		}
 		catch (Exception ex)
@@ -130,25 +127,25 @@ public class RegistrationAdminService : IRegistrationAdminService
 
 	}
 
-	private Sukkot.Domain.RegistrationPOCO DTO_From_VM_To_DB(RegistrationVM registration)
+	private DTO DTO_From_VM_To_DB(ViewModel vm)
 	{
-		Sukkot.Domain.RegistrationPOCO poco = new Sukkot.Domain.RegistrationPOCO
+		DTO poco = new DTO
 		{
-			Id = registration.Id,
-			FamilyName = registration.FamilyName,
-			FirstName = registration.FirstName,
-			SpouseName = registration.SpouseName,
-			OtherNames = registration.OtherNames,
-			EMail = registration.EMail,
-			Phone = registration.Phone,
-			Adults = registration.Adults,
-			ChildBig = registration.ChildBig,
-			ChildSmall = registration.ChildSmall,
-			StatusId = registration.Status!.Value,
-			AttendanceBitwise = Helper.GetDaysBitwise(registration.AttendanceDateList!, registration.AttendanceDateList2ndMonth!, Sukkot.Enums.DateRangeType.Attendance),
-			LmmDonation = registration.LmmDonation,
-			Avatar = registration.Avatar,
-			Notes = registration.Notes
+			Id = vm.Id,
+			FamilyName = vm.FamilyName,
+			FirstName = vm.FirstName,
+			SpouseName = vm.SpouseName!.Trim(),
+			OtherNames = vm.OtherNames,
+			EMail = vm.EMail,
+			Phone = vm.Phone,
+			Adults = vm.Adults,
+			ChildBig = vm.ChildBig,
+			ChildSmall = vm.ChildSmall,
+			StatusId = vm.Status!.Value,
+			AttendanceBitwise = Helper.GetDaysBitwise(vm.AttendanceDateList!, vm.AttendanceDateList2ndMonth!, Sukkot.Enums.DateRangeType.Attendance),
+			LmmDonation = vm.LmmDonation,
+			Avatar = vm.Avatar,
+			Notes = vm.Notes
 		};
 		return poco;
 	}

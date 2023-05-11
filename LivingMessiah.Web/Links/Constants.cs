@@ -441,6 +441,23 @@ public static class Sukkot
 		public const string BackToButtonIcon = "fas fa-campground";
 	}
 
+	public static class RegistrationEntry
+	{
+		public static class NormalUser
+		{
+			public const string Index = "/RegistrationEntry";
+			public const string Title = "Registration Entry";
+		}
+
+		public static class SuperUser
+		{
+			public const string Index = "/RegistrationEntry/SuperUser";
+			public const string Title = "Registration Entry | Super User";
+			public const string Icon = "fas fa-mask";
+		}
+	}
+
+
 	public const LivingMessiah.Web.Pages.KeyDates.Enums.FeastDayEnum FeastDay = LivingMessiah.Web.Pages.KeyDates.Enums.FeastDayEnum.Tabernacles;
 	public const string Index = "/Sukkot";
 	public const string Title = "Sukkot";
@@ -459,8 +476,6 @@ public static class Sukkot
 	public const string RegistrationList = "/SukkotAdmin/RegistrationList";
 	public const string RegistrationListTitle = "Sukkot Admin Registration List";
 
-	public const string RegistrationGrid = "/SukkotAdmin/RegistrationGrid";
-	public const string RegistrationGridTitle = "Sukkot Admin Registration Grid";
 
 	public const string Notes = "/SukkotAdmin/Notes";
 	public const string NotesTitle = "Sukkot Admin Registration Notes";

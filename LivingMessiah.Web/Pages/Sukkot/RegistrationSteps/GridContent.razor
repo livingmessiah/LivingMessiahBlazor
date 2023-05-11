@@ -2,7 +2,7 @@
 @using LivingMessiah.Web.Shared.Sukkot
 @using NB = LivingMessiah.Web.Shared.Sukkot.Enums
 @using Page = LivingMessiah.Web.Links.Sukkot.RegistrationSteps
-@using LivingMessiah.Web.Pages.Sukkot.Components
+@using LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.NormalUser
 
 @*Step 1*@
 @if (ComparisonStatus == Status.NotAuthenticated && ComparisonStatus == UsersCurrentStatus)
@@ -84,7 +84,7 @@
 	{
 		<div class="card mt-0 mb-3">
 			<div class="card-body bg-light">
-				<RegistrationEditForm Email="@EmailParm" Id="null" />
+				<EntryForm Email="@EmailParm" Id="null" />
 			</div>
 		</div>
 	}

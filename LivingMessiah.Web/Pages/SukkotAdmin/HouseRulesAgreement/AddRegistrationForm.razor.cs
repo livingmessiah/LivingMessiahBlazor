@@ -3,17 +3,16 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
 using System.Collections.Generic;
-using LivingMessiah.Web.Pages.SukkotAdmin.Registration.Services; // using service, don't need .Data;
-using LivingMessiah.Web.Pages.SukkotAdmin.Registration.Domain;
+
+using LivingMessiah.Web.Pages.Sukkot.RegistrationEntry;
 using LivingMessiah.Web.Pages.Sukkot.RegistrationSteps.Enums;
-using static LivingMessiah.Web.Pages.Sukkot.Constants.SqlServer;
 using Blazored.Toast.Services;
 
 namespace LivingMessiah.Web.Pages.SukkotAdmin.HouseRulesAgreement;
 
 public partial class AddRegistrationForm
 {
-	[Inject] public IRegistrationAdminService? svc { get; set; }
+	[Inject] public IService? svc { get; set; }
 	[Inject] public ILogger<AddRegistrationForm>? Logger { get; set; }
 	[Inject] public IToastService? Toast { get; set; }
 
@@ -21,21 +20,19 @@ public partial class AddRegistrationForm
 
 	protected string? Email;
 
-	public RegistrationVM RegistrationVM { get; set; } = new RegistrationVM();
-
+	public ViewModel VM { get; set; } = new ViewModel();
 	public Sukkot.Enums.DateRangeType DateRangeAttendance { get; set; } = Sukkot.Enums.DateRangeType.Attendance;
-
 	public List<RegistrationLookup>? RegistrationLookupList { get; set; }
 
 	protected override void OnInitialized()
 	{
 		Logger!.LogDebug(string.Format("Inside {0}, ChosenEmail: {1}",
 			nameof(AddRegistrationForm) + "!" + nameof(OnInitialized), ChosenEmail));
-		RegistrationVM = new RegistrationVM();
+
 		if (!string.IsNullOrEmpty(ChosenEmail))
 		{
 			ChosenEmail = Email;
-			RegistrationVM.EMail = Email;
+			VM.EMail = Email;
 			Toast!.ShowInfo($"Email: {Email}");
 		}
 		else
@@ -50,19 +47,19 @@ public partial class AddRegistrationForm
 
 		try
 		{
-			RegistrationVM.Id = 0;
-			RegistrationVM.Status = Status.StartRegistraion;
+			VM.Id = 0;
+			VM.Status = Status.StartRegistraion;
 			//RegistrationVM.EMail = Email; HACK: data gotten from the form; cant figure out how to populate via EventCallbacks
 
-			var sprocTuple = await svc!.Create(RegistrationVM);
+			var sprocTuple = await svc!.Create(VM);
 			if (sprocTuple.NewId != 0)
 			{
 				Toast!.ShowInfo(sprocTuple.ReturnMsg);
-				RegistrationVM = new RegistrationVM();
+				VM = new ViewModel();
 			}
 			else
 			{
-				if (sprocTuple.SprocReturnValue == ReturnValueViolationInUniqueIndex)
+				if (sprocTuple.SprocReturnValue == 2601) // Unique Index Violation
 				{
 					Toast!.ShowWarning(sprocTuple.ReturnMsg);
 				}

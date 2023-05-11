@@ -1,0 +1,50 @@
+﻿<div class="col-lg-12 control-section">
+	<div class="content-wrapper">
+		<div class="row mt-4">
+
+			<SfGrid ID="Grid"
+							DataSource="@Registrations" @ref="Grid"
+							AllowSelection="true" AllowFiltering="true" AllowSorting="true">
+				<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+
+				@*  CommandClicked="OnSaveClicked" *@
+
+				<GridSortSettings>
+					<GridSortColumns>
+						<GridSortColumn Field="@nameof(ViewModel.FirstName)" Direction="SortDirection.Ascending" />
+					</GridSortColumns>
+				</GridSortSettings>
+
+				<GridEvents TValue="ViewModel"></GridEvents>
+				@* ... RowSelected="RowSelectHandler" RowDeselected="RowDeSelectHandler" />*@
+
+				<GridColumns>
+
+					<GridColumn Field=@nameof(ViewModel.Id) HeaderText="Id" IsPrimaryKey="true" Width="30" AllowSorting="true" AllowFiltering="false">
+					</GridColumn>
+
+					<GridColumn Field=@nameof(ViewModel.FirstName) HeaderText="First" Width="50" AllowSorting="true">
+					</GridColumn>
+
+					<GridColumn Field=@nameof(ViewModel.FamilyName) HeaderText="Last" Width="50" AllowSorting="true">
+					</GridColumn>
+
+					<GridColumn Field=@nameof(ViewModel.SpouseName) HeaderText="Spouse" Width="50" AllowSorting="false" AllowFiltering="false">
+					</GridColumn>
+
+					<GridColumn Field=@nameof(ViewModel.EMail) HeaderText="Email" Width="80" AllowSorting="false" AllowFiltering="true">
+					</GridColumn>
+
+					<GridColumn Field=@nameof(ViewModel.Phone) HeaderText="Phone" Width="50" AllowSorting="false" AllowFiltering="false">
+					</GridColumn>
+
+					<GridColumn Field=@nameof(ViewModel.Status.Name) HeaderText="Status" Width="100"
+											FilterSettings="@(new FilterSettings { Type = Syncfusion.Blazor.Grids.FilterType.CheckBox })">
+					</GridColumn>
+
+				</GridColumns>
+
+			</SfGrid>
+		</div>
+	</div>
+</div>

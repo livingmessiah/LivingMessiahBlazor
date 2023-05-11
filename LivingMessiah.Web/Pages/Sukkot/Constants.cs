@@ -129,12 +129,3 @@ Make the check payable to <b>Living Messiah</b> and attach it to the printed out
 <br /><br />Thanks!
 ";
 }
-
-// ToDo: maybe this does not belong here?
-public static class SqlServer
-{
-	public const int ReturnValueOk = 0;
-	public const int ReturnValueViolationInUniqueIndex = 2601;
-	public const string ReturnValueName = "ReturnValue";
-	public const string ReturnValueParm = "@ReturnValue";
-}

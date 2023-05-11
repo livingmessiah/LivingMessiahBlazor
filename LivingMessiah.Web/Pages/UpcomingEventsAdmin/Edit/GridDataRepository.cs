@@ -11,7 +11,6 @@ using Microsoft.Extensions.Configuration;
 using LivingMessiah.Web.Pages.KeyDates.Enums;
 using LivingMessiah.Web.Pages.UpcomingEvents.Queries;
 using LivingMessiah.Web.Pages.UpcomingEventsAdmin.Edit;
-using static LivingMessiah.Web.Pages.SqlServer;
 
 // From Base Class
 using System.Text;
@@ -192,7 +191,7 @@ WHERE Id = @Id
 		});
 
 		Parms.Add("@NewId", dbType: DbType.Int32, direction: ParameterDirection.Output);
-		Parms.Add(ReturnValueParm, dbType: DbType.Int32, direction: ParameterDirection.ReturnValue);
+		Parms.Add("@ReturnValue", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue);
 
 		int NewId = 0;
 		int SprocReturnValue = 0;
@@ -202,12 +201,12 @@ WHERE Id = @Id
 		{
 			await connect.OpenAsync();
 			var affectedrows = await connect.ExecuteAsync(Sql, Parms, commandType: System.Data.CommandType.StoredProcedure);
-			SprocReturnValue = Parms.Get<int>(ReturnValueName);
+			SprocReturnValue = Parms.Get<int>("ReturnValue");
 			int? x = Parms.Get<int?>("NewId");
 
 			if (x == null)
 			{
-				if (SprocReturnValue == ReturnValueViolationInUniqueIndex)
+				if (SprocReturnValue == 2601) // Unique Index Violation
 				{
 					ReturnMsg = $"Database call did not insert a new record because it caused a Unique Index Violation; registration.EMail: {EditVM.Title}; ";
 					Logger.LogWarning($"...ReturnMsg: {ReturnMsg}; {Environment.NewLine} {Sql}");

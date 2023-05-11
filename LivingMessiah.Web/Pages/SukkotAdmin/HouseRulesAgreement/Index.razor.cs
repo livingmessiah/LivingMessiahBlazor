@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Components;
 
 namespace LivingMessiah.Web.Pages.SukkotAdmin.HouseRulesAgreement;
 
-
 public partial class Index
 {
 	public bool RefreshHraList { get; set; }

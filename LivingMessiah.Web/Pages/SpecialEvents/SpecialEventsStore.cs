@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Components;
 
 using Microsoft.Extensions.Logging;
-using static LivingMessiah.Web.Pages.SqlServer;
 using LivingMessiah.Web.Pages.UpcomingEvents.Data;
 using Blazored.Toast.Services;
 using System;
@@ -132,7 +131,7 @@ public class SpecialEventsEffects
 			}
 			else
 			{
-				if (sprocTuple.SprocReturnValue == ReturnValueViolationInUniqueIndex)
+				if (sprocTuple.SprocReturnValue == 2601) // Unique Index Violation
 				{
 					Toast!.ShowWarning($"{sprocTuple.ReturnMsg}");
 				}

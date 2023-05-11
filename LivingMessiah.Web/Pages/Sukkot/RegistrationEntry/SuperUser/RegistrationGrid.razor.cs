@@ -4,27 +4,26 @@ using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
-using LivingMessiah.Web.Pages.SukkotAdmin.Registration.Data;
-//using LivingMessiah.Web.Pages.SukkotAdmin.Registration.Domain;
+
 using Syncfusion.Blazor.Grids;
 using Blazored.Toast.Services;
 
-namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration;
+namespace LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.SuperUser;
 
 //[Authorize(Roles = Roles.AdminOrSukkot)]
-public partial class List
+public partial class RegistrationGrid
 {
 	[Inject] public ILogger<RegistrationGrid>? Logger { get; set; }
-	[Inject] public IRegistrationAdminRepository? db { get; set; }
+	[Inject] public IRepository? db { get; set; }
 	[Inject] public IToastService? Toast { get; set; }
 
-	public IEnumerable<Domain.Registration>? Registrations { get; set; }
+	public IEnumerable<ViewModel>? Registrations { get; set; }
 
-	private SfGrid<Domain.Registration>? Grid;
+	private SfGrid<ViewModel>? Grid;
 
 	protected override async Task OnInitializedAsync()
 	{
-		Logger!.LogDebug($"Inside {nameof(List)}!{nameof(OnInitializedAsync)}");
+		Logger!.LogDebug($"Inside {nameof(RegistrationGrid)}!{nameof(OnInitializedAsync)}");
 		try
 		{
 			Registrations = await db!.GetAll();

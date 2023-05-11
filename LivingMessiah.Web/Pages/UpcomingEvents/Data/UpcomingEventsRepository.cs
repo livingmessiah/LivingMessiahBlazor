@@ -10,7 +10,6 @@ using LivingMessiah.Data;                   // ToDo: Move this to LivingMessiah.
 
 using LivingMessiah.Web.Pages.KeyDates.Enums;
 using LivingMessiah.Web.Pages.UpcomingEvents.Queries;
-using static LivingMessiah.Web.Pages.SqlServer;
 using LivingMessiah.Web.Pages.UpcomingEventsAdmin.EditMarkdown;
 using LivingMessiah.Web.Pages.UpcomingEventsAdmin.CRUD;
 
@@ -63,7 +62,7 @@ public class UpcomingEventsRepository : BaseRepositoryAsync, IUpcomingEventsRepo
 		});
 
 		base.Parms.Add("@NewId", dbType: DbType.Int32, direction: ParameterDirection.Output);
-		base.Parms.Add(ReturnValueParm, dbType: DbType.Int32, direction: ParameterDirection.ReturnValue);
+		base.Parms.Add("@ReturnValue", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue);
 
 		int newId = 0;
 		int sprocReturnValue = 0;
@@ -73,11 +72,11 @@ public class UpcomingEventsRepository : BaseRepositoryAsync, IUpcomingEventsRepo
 		{
 			base.log.LogDebug($"Inside {nameof(UpcomingEventsRepository)}!{nameof(Create)}, {nameof(formVM.Title)}; about to execute SPROC: {base.Sql}");
 			var affectedrows = await connection.ExecuteAsync(sql: base.Sql, param: base.Parms, commandType: System.Data.CommandType.StoredProcedure);
-			sprocReturnValue = base.Parms.Get<int>(ReturnValueName);
+			sprocReturnValue = base.Parms.Get<int>("ReturnValue");
 			int? x = base.Parms.Get<int?>("NewId");
 			if (x == null)
 			{
-				if (sprocReturnValue == ReturnValueViolationInUniqueIndex)
+				if (sprocReturnValue == 2601) // Unique Index Violation
 				{
 					returnMsg = $"Database call did not insert a new record because it caused a Unique Index Violation; registration.EMail: {formVM.Title}; ";
 					base.log.LogWarning($"...returnMsg: {returnMsg}; {Environment.NewLine} {base.Sql}");
@@ -117,7 +116,7 @@ public class UpcomingEventsRepository : BaseRepositoryAsync, IUpcomingEventsRepo
 		});
 
 		base.Parms.Add("@NewId", dbType: DbType.Int32, direction: ParameterDirection.Output);
-		base.Parms.Add(ReturnValueParm, dbType: DbType.Int32, direction: ParameterDirection.ReturnValue);
+		base.Parms.Add("@ReturnValue", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue);
 
 		int newId = 0;
 		int sprocReturnValue = 0;
@@ -127,11 +126,11 @@ public class UpcomingEventsRepository : BaseRepositoryAsync, IUpcomingEventsRepo
 		{
 			base.log.LogDebug($"Inside {nameof(UpcomingEventsRepository)}!{nameof(CreateSpecialEvent)}, {nameof(formVM.Title)}; about to execute SPROC: {base.Sql}");
 			var affectedrows = await connection.ExecuteAsync(sql: base.Sql, param: base.Parms, commandType: System.Data.CommandType.StoredProcedure);
-			sprocReturnValue = base.Parms.Get<int>(ReturnValueName);
+			sprocReturnValue = base.Parms.Get<int>("ReturnValue");
 			int? x = base.Parms.Get<int?>("NewId");
 			if (x == null)
 			{
-				if (sprocReturnValue == ReturnValueViolationInUniqueIndex)
+				if (sprocReturnValue == 2601) // Unique Index Violation
 				{
 					returnMsg = $"Database call did not insert a new record because it caused a Unique Index Violation; registration.EMail: {formVM.Title}; ";
 					base.log.LogWarning($"...returnMsg: {returnMsg}; {Environment.NewLine} {base.Sql}");

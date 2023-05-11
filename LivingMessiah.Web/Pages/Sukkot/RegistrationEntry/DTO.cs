@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace LivingMessiah.Web.Pages.Sukkot.Components;
+namespace LivingMessiah.Web.Pages.Sukkot.RegistrationEntry;
 
-public class RegistrationEditPOCO
+public record DTO
 {
 	public int Id { get; set; }
 	public string? FamilyName { get; set; }
@@ -16,28 +16,11 @@ public class RegistrationEditPOCO
 	public int ChildSmall { get; set; }
 
 	public int StatusId { get; set; }
-	//public Status? Status { get; set; }
 
 	public int AttendanceBitwise { get; set; }
 
 	public string? Notes { get; set; }
 	public string? Avatar { get; set; }
 	public Decimal LmmDonation { get; set; }
-
-	public string? NotesScrubbed
-	{
-		get
-		{
-			if (!string.IsNullOrEmpty(Notes))
-			{
-				return Notes.Replace("\"", string.Empty).Replace("'", string.Empty);
-			}
-			else
-			{
-				return Notes;
-			}
-
-		}
-	}
 
 }
