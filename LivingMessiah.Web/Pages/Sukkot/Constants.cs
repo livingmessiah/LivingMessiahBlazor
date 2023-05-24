@@ -60,10 +60,15 @@ public static class PDFs
 {
 	public const string RegistrationWalkThrough = "sukkot-registration-walkthrough-users-manual.pdf";
 	public const string PayPalWalkThrough = "sukkot-making-a-payment-with-paypal.pdf";
+	public const string Schedule = "sukkot-2023-schedule.pdf";
+	public const string LiabilityWaiver = "sukkot-2022-liability-waiver.pdf"; // NOT DONE YET
+	public const string HouseRules = "sukkot-2023-house-rules.pdf";
+	public const string LegalAgreementVerbiage = "Sukkot-2023-Legal-Agreement-Verbiage.pdf";
+
+	// Where are these used?, both written 8/7/2021
 	public const string WindmillRanchSupplementalRules = "windmill-ranch-supplemental-rules.pdf";
-	public const string WindmillRanchSurroundingArea = "windmill-ranch-surrounding-area.pdf";
-	public const string Schedule = "sukkot-2022-schedule.pdf";
-	public const string LiabilityWaiver = "sukkot-2022-liability-waiver.pdf";
+	public const string WindmillRanchSurroundingArea = "windmill-ranch-surrounding-area.pdf";  
+		
 	//public const string ActivitiesForChildren = "sukkot-2019-activities.pdf";
 	public const string Passport = "passport-v1.pdf";
 }

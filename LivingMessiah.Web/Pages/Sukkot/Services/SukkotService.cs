@@ -108,7 +108,7 @@ public class SukkotService : ISukkotService
 			{
 				if (user.Verified())
 				{
-					vm.UserName = user.GetUserNameSoapVersion();
+					vm.UserName = user.GetUserName() ?? "?";
 					vm.EmailAddress = user.GetUserEmail();
 
 					var vw = new vwRegistrationStep();
