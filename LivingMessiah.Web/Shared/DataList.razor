@@ -23,7 +23,7 @@
 	case LinkTypeEnum.Feast:
 		@foreach (TItem item in Data ?? Array.Empty<TItem>())
 		{
-			@ChildContent(item)
+			@ChildContent!(item)
 		}
 		break;
 
@@ -32,7 +32,7 @@
 			@foreach (TItem item in Data ?? Array.Empty<TItem>())
 			{
 				<li class="nav-item">
-					@ChildContent(item)
+					@ChildContent!(item)
 				</li>
 			}
 		</ul>
@@ -54,7 +54,7 @@
 			@foreach (TItem item in Data ?? Array.Empty<TItem>())
 			{
 				<li class="nav-item">
-					@ChildContent(item)
+					@ChildContent!(item)
 				</li>
 			}
 		</ul>

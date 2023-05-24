@@ -1,29 +1,33 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using LivingMessiah.Web.Pages.SukkotAdmin.Data; // Should be independent from SukkotAdmin
-using LivingMessiah.Web.Pages.SukkotAdmin.Registration.Data;
 
-namespace LivingMessiah.Web.Pages.Sukkot.Components;
+using LivingMessiah.Web.Pages.SukkotAdmin.Data; // for BaseRepositoryAsync
 
+namespace LivingMessiah.Web.Pages.Sukkot.RegistrationEntry;
 
-public interface IRegistrationEditRepository
+public interface IRepository
 {
 	string BaseSqlDump { get; }
+	Task<List<ViewModel>> GetAll();
+	Task<ViewModel> GetById(int id);
 
 	// Can't remove `Tuple<...>` with `(...)`, see C:\Source\LivingMessiahWiki\Tuples\Removing-Tuple-Conflicts-with-BaseRepositoryAsync.md
-	Task<Tuple<int, int, string>> Create(RegistrationEditPOCO registration);
-	Task<Tuple<int, int, string>> Update(RegistrationEditPOCO registration);
-	Task<RegistrationVM> GetById(int id);
+	Task<Tuple<int, int, string>> Create(DTO registration);
+	Task<Tuple<int, int, string>> Update(DTO registration);
+
+	Task<List<RegistrationLookup>> PopulateRegistrationLookup(); // used by: EditRegistrationForm (SukkotAdmin.Registration)
 }
 
-public class RegistrationEditRepository : BaseRepositoryAsync, IRegistrationEditRepository
+
+public class Repository : BaseRepositoryAsync, IRepository
 {
-	public RegistrationEditRepository(IConfiguration config, ILogger<RegistrationEditRepository> logger) : base(config, logger)
+	public Repository(IConfiguration config, ILogger<Repository> logger) : base(config, logger)
 	{
 	}
 
@@ -32,26 +36,58 @@ public class RegistrationEditRepository : BaseRepositoryAsync, IRegistrationEdit
 		get { return base.SqlDump!; }
 	}
 
-	public async Task<RegistrationVM> GetById(int id)
+	public async Task<List<RegistrationLookup>> PopulateRegistrationLookup()
+	{
+		base.Sql = $@"
+SELECT Id AS ID, Sukkot.udfFormatName(1, FamilyName, FirstName, NULL, NULL) AS Text
+FROM Sukkot.Registration
+ORDER BY FirstName
+";
+		return await WithConnectionAsync(async connection =>
+		{
+			var rows = await connection.QueryAsync<RegistrationLookup>(base.Sql);
+			return rows.ToList();
+		});
+	}
+
+	public async Task<List<ViewModel>> GetAll()
+	{
+		base.Sql = $@"
+SELECT Id, FamilyName, FirstName, SpouseName, OtherNames, EMail, Phone
+, Adults, ChildBig, ChildSmall
+, StatusId
+--, AttendanceBitwise, Notes
+--, LmmDonation, Avatar
+FROM Sukkot.Registration
+ORDER BY FirstName
+";
+		return await WithConnectionAsync(async connection =>
+		{
+			var rows = await connection.QueryAsync<ViewModel>(sql: base.Sql);  //, param: base.Parms
+			return rows.ToList();
+		});
+	}
+
+	public async Task<ViewModel> GetById(int id)
 	{
 		base.Parms = new DynamicParameters(new { Id = id });
 		base.Sql = $@"
---DECLARE @Id int = 32
+--DECLARE @id int=4
 SELECT TOP 1 
 Id, FamilyName, FirstName, SpouseName, OtherNames, EMail, Phone, Adults, ChildBig, ChildSmall
 , StatusId
 , AttendanceBitwise, LmmDonation, Notes, Avatar
 FROM Sukkot.Registration 
-WHERE Id = @Id
-";
+WHERE Id = @Id";
 		return await WithConnectionAsync(async connection =>
 		{
-			var rows = await connection.QueryAsync<Sukkot.Components.RegistrationVM>(sql: base.Sql, param: base.Parms);
+			var rows = await connection.QueryAsync<ViewModel>(sql: base.Sql, param: base.Parms);
 			return rows.SingleOrDefault()!;
 		});
 	}
 
-	public async Task<Tuple<int, int, string>> Create(RegistrationEditPOCO registration)
+
+	public async Task<Tuple<int, int, string>> Create(DTO registration)
 	{
 		base.Sql = "Sukkot.stpRegistrationInsert";
 		base.Parms = new DynamicParameters(new
@@ -82,13 +118,13 @@ WHERE Id = @Id
 		// Can't remove `Tuple<...>` with `(...)`, see C:\Source\LivingMessiahWiki\Tuples\Removing-Tuple-Conflicts-with-BaseRepositoryAsync.md
 		return await WithConnectionAsync(async connection =>
 		{
-			base.log.LogDebug($"Inside {nameof(RegistrationAdminRepository)}!{nameof(Create)}, {nameof(registration.EMail)}:{registration.EMail}; a about to execute SPROC: {base.Sql}");
+			base.log.LogDebug($"Inside {nameof(Repository)}!{nameof(Create)}, {nameof(registration.EMail)}:{registration.EMail}; a about to execute SPROC: {base.Sql}");
 			var affectedrows = await connection.ExecuteAsync(sql: base.Sql, param: base.Parms, commandType: System.Data.CommandType.StoredProcedure);
 			SprocReturnValue = base.Parms.Get<int>("ReturnValue");
 			int? x = base.Parms.Get<int?>("NewId");
 			if (x == null)
 			{
-				if (SprocReturnValue == 2601) // ReturnValueViolationInUniqueIndex
+				if (SprocReturnValue == 2601) // Unique Index Violation
 				{
 					ReturnMsg = $"Database call did not insert a new record because it caused a Unique Index Violation; registration.EMail: {@registration.EMail}; ";
 					base.log.LogWarning($"...ReturnMsg: {ReturnMsg}; {Environment.NewLine} {base.Sql}");
@@ -111,7 +147,7 @@ WHERE Id = @Id
 		});
 	}
 
-	public async Task<Tuple<int, int, string>> Update(RegistrationEditPOCO registration)
+	public async Task<Tuple<int, int, string>> Update(DTO registration)
 	{
 		base.Sql = "Sukkot.stpRegistrationUpdate";
 		base.Parms = new DynamicParameters(new
@@ -129,7 +165,7 @@ WHERE Id = @Id
 			AttendanceBitwise = registration.AttendanceBitwise,
 			StatusId = registration.StatusId,
 			LmmDonation = registration.LmmDonation,
-			Notes = registration.NotesScrubbed,
+			Notes = DTOHelper.Scrub(registration.Notes),
 			Avatar = registration.Avatar
 		});
 
@@ -142,13 +178,13 @@ WHERE Id = @Id
 		// Can't remove `Tuple<...>` with `(...)`, see C:\Source\LivingMessiahWiki\Tuples\Removing-Tuple-Conflicts-with-BaseRepositoryAsync.md
 		return await WithConnectionAsync(async connection =>
 		{
-			base.log.LogDebug($"Inside {nameof(RegistrationAdminRepository)}!{nameof(Update)}, {nameof(registration.Id)}:{registration.Id}; about to execute SPROC: {base.Sql}");
+			base.log.LogDebug($"Inside {nameof(Repository)}!{nameof(Update)}, {nameof(registration.Id)}:{registration.Id}; about to execute SPROC: { base.Sql}");
 			RowsAffected = await connection.ExecuteAsync(sql: base.Sql, param: base.Parms, commandType: System.Data.CommandType.StoredProcedure);
 			SprocReturnValue = base.Parms.Get<int>("ReturnValue");
 
-			if (SprocReturnValue != 0)  // ReturnValueOk
+			if (SprocReturnValue != 0) // ReturnValueOk
 			{
-				if (SprocReturnValue == 2601) // ReturnValueViolationInUniqueIndex
+				if (SprocReturnValue == 2601) // Unique Index Violation
 				{
 					ReturnMsg = $"Database call did not update the record because it caused a Unique Index Violation; registration.EMail: {@registration.EMail}; ";
 					base.log.LogWarning($"...ReturnMsg: {ReturnMsg}; {Environment.NewLine} {base.Sql}");
@@ -167,5 +203,4 @@ WHERE Id = @Id
 			return new Tuple<int, int, string>(RowsAffected, SprocReturnValue, ReturnMsg);
 		});
 	}
-
 }

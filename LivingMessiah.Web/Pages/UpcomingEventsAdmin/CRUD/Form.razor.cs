@@ -7,7 +7,6 @@ using Microsoft.Extensions.Logging;
 using LivingMessiah.Web.Pages.UpcomingEvents.Enums;
 using LivingMessiah.Web.Pages.UpcomingEvents.Data;
 
-using static LivingMessiah.Web.Pages.SqlServer;
 using Syncfusion.Blazor.RichTextEditor;
 using Markdig;
 using Blazored.Toast.Services;
@@ -50,7 +49,7 @@ public partial class Form
 			}
 			else
 			{
-				if (sprocTuple.SprocReturnValue == ReturnValueViolationInUniqueIndex)
+				if (sprocTuple.SprocReturnValue == 2601) // Unique Index Violation
 				{
 					Toast!.ShowWarning($"{sprocTuple.ReturnMsg}");
 				}

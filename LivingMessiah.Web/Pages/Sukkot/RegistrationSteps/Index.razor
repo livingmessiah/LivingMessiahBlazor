@@ -26,11 +26,11 @@
 	<h2><i class="@Page.Icon"></i> @Page.Title</h2>
 </div>
 
-@if (!String.IsNullOrEmpty(@AppState.Message))
+@if (!String.IsNullOrEmpty(@AppState!.Message))
 {
 	<div class="card border-primary mb-3">
 		<div class="card-body">
-			@AppState.Message
+			@AppState!.Message
 		</div>
 	</div>
 }
@@ -48,7 +48,7 @@ else
 		<div class="col-12">
 			<div class="my-2 pt-2 float-end">
 				<p class="text-info">
-					<small> Status: @IndexVM.Status.Name [<b>@IndexVM.Status.Value</b>]</small>
+					<small> Status: @IndexVM!.Status.Name [<b>@IndexVM.Status.Value</b>]</small>
 				</p>
 			</div>
 		</div>

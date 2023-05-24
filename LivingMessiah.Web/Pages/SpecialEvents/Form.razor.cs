@@ -1,76 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
-
-using LivingMessiah.Web.Pages.UpcomingEvents.Enums;
-using LivingMessiah.Web.Pages.UpcomingEvents.Data;
-
-using static LivingMessiah.Web.Pages.SqlServer;
 using Syncfusion.Blazor.RichTextEditor;
 using Markdig;
-using Blazored.Toast.Services;
-using LivingMessiah.Web.Pages.SpecialEvents.Stores;
-using Fluxor;
 
 namespace LivingMessiah.Web.Pages.SpecialEvents;
 
 public partial class Form
 {
-	[Inject] public IUpcomingEventsRepository? db { get; set; }
 	[Inject] public ILogger<Form>? Logger { get; set; }
-	[Inject] public IToastService? Toast { get; set; }
-	//[Inject] private IState<MainState> MainState { get; set; }
 	[Inject] private IState<SpecialEventsState>? SpecialEventsState { get; set; }
+	[Inject] public IDispatcher? Dispatcher { get; set; }
 
 	private string Title = "Add Upcoming Event";
 
 	private FormVM VM => SpecialEventsState!.Value.Model!; // model
+
+	private const string Message = $"Inside Class!Method:{nameof(Form)}!{nameof(HandleValidSubmit)}; calling Dispatch {nameof(SpecialEventsSubmitAction)}";
+
 	protected async Task HandleValidSubmit()
 	{
-		//		Logger.LogDebug(string.Format("Inside {0}, VM.ToString: {1}"
-		//			, nameof(Form) + "!" + nameof(HandleValidSubmit), VM.ToString()));
-
+		Logger!.LogDebug(Message);
 		await Task.Delay(0);
-		Dispatcher.Dispatch(new SpecialEventsSubmitAction(SpecialEventsState!.Value.Model!));
-		
-		/*
-		try
-		{
-			VM.Id = 0;
-			var sprocTuple = await db.CreateSpecialEvent(VM);
-			if (sprocTuple.NewId != 0)
-			{
-				Toast.ShowInfo($"{sprocTuple.ReturnMsg}");
-				VM = new FormVM();
-			}
-			else
-			{
-				if (sprocTuple.SprocReturnValue == ReturnValueViolationInUniqueIndex)
-				{
-					Toast.ShowWarning($"{sprocTuple.ReturnMsg}");
-				}
-				else
-				{
-					Toast.ShowError($"{sprocTuple.ReturnMsg}");
-				}
-			}
-		}
-		catch (Exception)  // catch (Exception ex)
-		{
-			UserInterfaceMessage = "An invalid operation occurred, contact your administrator";
-			LogExceptionMessage = string.Format("  Inside catch of {0}"
-				, nameof(Form) + "!" + nameof(HandleValidSubmit));
-			Logger.LogError(LogExceptionMessage);  //ex, LogExceptionMessage
-			Toast.ShowError(UserInterfaceMessage);
-		}
-		*/
+		Dispatcher!.Dispatch(new SpecialEventsSubmitAction(SpecialEventsState!.Value.Model!));
 	}
 
 	private void OnInvalidSubmit()
 	{
-		//Toast!.ShowWarning("Invalid Submit");
+		
 	}
 
 	private void OnValueChange(Syncfusion.Blazor.RichTextEditor.ChangeEventArgs args)

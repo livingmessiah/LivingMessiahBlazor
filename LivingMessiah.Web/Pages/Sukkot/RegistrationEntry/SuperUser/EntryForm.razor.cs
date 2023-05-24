@@ -2,32 +2,26 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
-
-using LivingMessiah.Web.Pages.SukkotAdmin.Registration.Services; // using service, don't need .Data;
-using LivingMessiah.Web.Pages.SukkotAdmin.Registration.Domain;
-using LivingMessiah.Web.Pages.SukkotAdmin.Registration.Data;
-using LivingMessiah.Web.Pages.Sukkot.RegistrationSteps.Enums;
-using static LivingMessiah.Web.Pages.Sukkot.Constants.SqlServer;
-
 using Syncfusion.Blazor.DropDowns;
 using System.Collections.Generic;
 using Blazored.Toast.Services;
+using Blazored.FluentValidation;
 
-namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration;
+namespace LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.SuperUser;
 
-public partial class EditRegistrationForm
+public partial class EntryForm
 {
-	[Inject] public IRegistrationAdminService? svc { get; set; }
-	[Inject] public IRegistrationAdminRepository? db { get; set; }
-	[Inject] public ILogger<EditRegistrationForm>? Logger { get; set; }
+	[Inject] public IService? svc { get; set; }
+	[Inject] public IRepository? db { get; set; }
+	[Inject] public ILogger<EntryForm>? Logger { get; set; }
 	[Inject] public IToastService? Toast { get; set; }
 
 	private bool ShowEditForm = false;
 
-	public RegistrationVM RegistrationVM { get; set; } = new RegistrationVM();
+	public ViewModel VM { get; set; } = new ViewModel();
 
+	private FluentValidationValidator? _fluentValidationValidator;
 	public Sukkot.Enums.DateRangeType DateRangeAttendance { get; set; } = Sukkot.Enums.DateRangeType.Attendance;
-
 	public List<RegistrationLookup>? RegistrationLookupList { get; set; }
 
 	private string Title = "";
@@ -35,7 +29,7 @@ public partial class EditRegistrationForm
 
 	protected override async Task OnInitializedAsync()
 	{
-		Logger!.LogDebug(string.Format("Inside {0}", nameof(EditRegistrationForm) + "!" + nameof(OnInitialized)));
+		Logger!.LogDebug(string.Format("Inside {0}", nameof(EntryForm) + "!" + nameof(OnInitialized)));
 
 		Title = "Registration Edit ";
 		try
@@ -71,11 +65,11 @@ public partial class EditRegistrationForm
 	private async Task GetRegistration(int registrationId)
 	{
 		Logger!.LogDebug(string.Format("Inside {0}; registrationId:{1}"
-			, nameof(EditRegistrationForm) + "!" + nameof(GetRegistration), registrationId));
+			, nameof(EntryForm) + "!" + nameof(GetRegistration), registrationId));
 		try
 		{
-			RegistrationVM = await svc!.GetById(registrationId);
-			if (RegistrationVM == null)
+			VM = await svc!.GetById(registrationId);
+			if (VM == null)
 			{
 				msg = $"Registration not found; registrationId:{registrationId}";
 				Toast!.ShowWarning(msg);
@@ -100,19 +94,19 @@ public partial class EditRegistrationForm
 
 	protected async Task HandleValidSubmit()
 	{
-		Logger!.LogDebug(string.Format("Inside {0}", nameof(EditRegistrationForm) + "!" + nameof(HandleValidSubmit)));
+		Logger!.LogDebug(string.Format("Inside {0}", nameof(EntryForm) + "!" + nameof(HandleValidSubmit)));
 		try
 		{
-			var sprocTuple = await svc!.Update(RegistrationVM);
+			var sprocTuple = await svc!.Update(VM);
 			if (sprocTuple.RowsAffected != 0)
 			{
 				msg = $"{sprocTuple.ReturnMsg}";
-				RegistrationVM = await svc.GetById(RegistrationVM.Id); //ToDo: do I need to refresh the data?
+				VM = await svc.GetById(VM.Id); //ToDo: do I need to refresh the data?
 				Toast!.ShowInfo(sprocTuple.ReturnMsg);
 			}
 			else
 			{
-				if (sprocTuple.SprocReturnValue == ReturnValueViolationInUniqueIndex)
+				if (sprocTuple.SprocReturnValue == 2601) // Unique Index Violation
 				{
 					Toast!.ShowWarning(sprocTuple.ReturnMsg);
 				}

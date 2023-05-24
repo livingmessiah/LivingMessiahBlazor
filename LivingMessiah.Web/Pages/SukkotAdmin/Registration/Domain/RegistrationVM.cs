@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using LivingMessiah.Web.Pages.Sukkot.RegistrationSteps.Enums;
 
 namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration.Domain;
@@ -55,6 +56,7 @@ public class RegistrationVM
 	[Range(0, 12, ErrorMessage = "{0} must be between {1} and {2}")]
 	public int ChildSmall { get; set; }
 
+	public int StatusId { get; set; }
 	public Status? Status { get; set; }
 
 	[DisplayName("Attendance Bitwise")]
@@ -75,5 +77,25 @@ public class RegistrationVM
 	[DisplayName("LMM Donation")]
 	[DataType(DataType.Currency)]
 	public Decimal LmmDonation { get; set; }
+
+	public string DumpAttendanceDates
+	{
+		get
+		{
+			return this.AttendanceDateList is not null ?
+				String.Join(", ", this.AttendanceDateList.Select(date => date.ToString("yyyy-MM-dd")))
+				: "";
+		}
+	}
+
+	public string DumpAttendanceDates2ndMonth
+	{
+		get
+		{
+			return this.AttendanceDateList2ndMonth is not null ?
+				String.Join(", ", this.AttendanceDateList2ndMonth.Select(date => date.ToString("yyyy-MM-dd")))
+				: "";
+		}
+	}
 
 }

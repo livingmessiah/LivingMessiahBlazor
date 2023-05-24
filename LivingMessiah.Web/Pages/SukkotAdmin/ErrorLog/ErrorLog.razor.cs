@@ -58,6 +58,7 @@ public partial class ErrorLog
 		{
 			AffectedRows = await db!.EmptyErrorLog();
 			ErrorLogs = await db.GetzvwErrorLog();
+			Toast!.ShowInfo($"Errors emptied, AffectedRows: {AffectedRows}");
 			StateHasChanged();
 		}
 		catch (Exception ex)

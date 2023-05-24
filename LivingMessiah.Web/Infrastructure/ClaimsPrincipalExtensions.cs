@@ -22,11 +22,6 @@ public static class ClaimsPrincipalExtensions
 		return user.Claims?.FirstOrDefault(c => c.Type == "name")?.Value;
 	}
 
-	public static string? GetUserNameSoapVersion(this ClaimsPrincipal user)
-	{
-		return user.Claims?.FirstOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.Name)?.Value;
-	}
-
 	public static string? GetUserEmail(this ClaimsPrincipal user)
 	{
 		return user.Claims?.FirstOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.Email)?.Value;

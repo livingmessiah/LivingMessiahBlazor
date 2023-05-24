@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using LivingMessiah.Web.Infrastructure;
 using System;
+using static Microsoft.ApplicationInsights.MetricDimensionNames.TelemetryContext;
 
 namespace LivingMessiah.Web.Shared.Header;
 
@@ -38,7 +39,7 @@ public partial class ProfileAnchor
 			Verified = false;
 		}
 
-		Name = user.GetUserNameSoapVersion();
+		Name = user.GetUserName() ?? "?";
 		EmailAddress = user.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
 		Role = user.Claims.FirstOrDefault(c => c.Type == "https://schemas.livingmessiah.com/roles")?.Value;
 

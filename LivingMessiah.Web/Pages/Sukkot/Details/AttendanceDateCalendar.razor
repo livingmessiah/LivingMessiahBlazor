@@ -65,8 +65,8 @@ else
 
 @code {
 	[Parameter] public bool IsXs { get; set; }
-	[Parameter] public DateTime[] AttendanceDateList { get; set; }
-	[Parameter] public DateTime[] AttendanceDateList2ndMonth { get; set; }
+	[Parameter] public DateTime[]? AttendanceDateList { get; set; }
+	[Parameter] public DateTime[]? AttendanceDateList2ndMonth { get; set; }
 
 	public Enums.DateRangeType DateRangeAttendance { get; set; } = Enums.DateRangeType.Attendance;
 

@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration.Domain;
+namespace LivingMessiah.Web.Pages.Sukkot.RegistrationEntry;
 
-public class RegistrationPOCO
+public class ViewModel
 {
 	public int Id { get; set; }
 	public string? FamilyName { get; set; }
@@ -15,27 +15,14 @@ public class RegistrationPOCO
 	public int ChildBig { get; set; }
 	public int ChildSmall { get; set; }
 
-	public int StatusId { get; set; }
-	public int AttendanceBitwise { get; set; }
+	public int StatusId { get; set; } // The SuperUser!EntryForm needs this
+	public RegistrationSteps.Enums.Status? Status { get; set; }
+
+	public int AttendanceBitwise { get; set; } // does the VM need this?
+	public DateTime[]? AttendanceDateList { get; set; }
+	public DateTime[]? AttendanceDateList2ndMonth { get; set; }
 
 	public string? Notes { get; set; }
 	public string? Avatar { get; set; }
 	public Decimal LmmDonation { get; set; }
-
-	public string? NotesScrubbed
-	{
-		get
-		{
-			if (!string.IsNullOrEmpty(Notes))
-			{
-				return Notes.Replace("\"", string.Empty).Replace("'", string.Empty);
-			}
-			else
-			{
-				return Notes;
-			}
-
-		}
-	}
-
 }

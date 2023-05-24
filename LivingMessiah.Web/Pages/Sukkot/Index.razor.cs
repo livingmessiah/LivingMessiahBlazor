@@ -10,7 +10,8 @@ public partial class Index
 {
 	[Inject] public AuthenticationStateProvider? AuthenticationStateProvider { get; set; }
 
-	public string? Salutation { get; set; }
+	protected string? Salutation { get; set; }
+	
 	public ClaimsPrincipal? User { get; set; }
 
 	/*
@@ -22,6 +23,6 @@ public partial class Index
 		base.OnInitialized();
 		var authState = await AuthenticationStateProvider!.GetAuthenticationStateAsync();
 		User = authState.User;
-		Salutation = User.GetUserNameSoapVersion();
+		Salutation = User.GetUserName() ?? "?";
 	}
 }

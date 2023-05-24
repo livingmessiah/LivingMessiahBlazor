@@ -16,8 +16,8 @@ public interface ISukkotRepository
 	string BaseSqlDump { get; }
 	Task<vwRegistration> ById(int id);
 	Task<vwRegistrationStep> GetByEmail(string email);
-	Task<int> Create(RegistrationPOCO registration);
-	Task<int> Update(RegistrationPOCO registration);
+	Task<int> Create(RegistrationPOCO registration); // No references
+	Task<int> Update(RegistrationPOCO registration); // No references
 	Task<int> Delete(int id);
 	Task<RegistrationSummary> GetRegistrationSummary(int id);
 

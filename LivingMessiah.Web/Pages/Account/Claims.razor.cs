@@ -33,7 +33,7 @@ public partial class Claims
 		var user = authState.User;
 
 		//Name = user.Identity.Name;  // Note, this does not work, see OnInitializedAsync at LivingMessiah.Web\Pages\Sukkot\Index.razor.cs
-		Name = user.GetUserNameSoapVersion();
+		Name = user.GetUserName() ?? "?";
 
 		EmailAddress = user.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
 		ProfileImage = user.Claims.FirstOrDefault(c => c.Type == "picture")?.Value;

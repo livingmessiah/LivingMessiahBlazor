@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Components;
 
-namespace LivingMessiah.Web.Pages.Sukkot.Components;
+namespace LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.NormalUser;
 
 public partial class Toggle
 {
@@ -12,5 +12,5 @@ public partial class Toggle
 	{
 		IsCollapsed = !isCollapsed;
 	}
-	
+
 }

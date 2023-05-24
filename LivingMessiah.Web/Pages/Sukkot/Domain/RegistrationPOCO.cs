@@ -5,7 +5,6 @@ namespace LivingMessiah.Web.Pages.Sukkot.Domain;
 
 public class RegistrationPOCO
 {
-	#region Simple Types
 	public int Id { get; set; }
 	public string? FamilyName { get; set; }
 	public string? FirstName { get; set; }
@@ -19,14 +18,12 @@ public class RegistrationPOCO
 
 	public int StatusId { get; set; }
 	public Status? Status { get; set; }
+
 	public int AttendanceBitwise { get; set; }
 
 	public string? Notes { get; set; }
 	public string? Avatar { get; set; }
 	public Decimal LmmDonation { get; set; }
-	#endregion
-
-	#region HelperMethods
 
 	public string? NotesScrubbed
 	{
@@ -43,5 +40,5 @@ public class RegistrationPOCO
 
 		}
 	}
-	#endregion
+
 }

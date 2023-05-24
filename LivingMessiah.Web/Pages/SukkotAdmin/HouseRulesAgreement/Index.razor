@@ -1,5 +1,4 @@
-﻿
-@page "/SukkotAdmin/HouseRulesAgreement/"
+﻿@page "/SukkotAdmin/HouseRulesAgreement/"
 @using Page = LivingMessiah.Web.Links.Sukkot.HouseRulesAgreement
 @using static LivingMessiah.Web.Services.Auth0
 @using LivingMessiah.Web.Shared.Sukkot
@@ -10,7 +9,6 @@
 <AuthorizeView Roles="@Roles.SukkotMenuBar">
 	<SukkotAdminMenubar></SukkotAdminMenubar>
 </AuthorizeView>
-
 
 <PageTitle>@Page.Title</PageTitle>
 
@@ -23,10 +21,7 @@
 @*<NoRegistrationTable RefreshHraList="@RefreshHraList" />*@
 <NoRegistrationTable />
 
-
 <p class="text-black-50 mt-3">&dagger; HRA: <b>H</b>ouse <b>R</b>ules <b>A</b>greement </p>
-
-
 
 @*<p class="text-black-50 mt-3">RefreshHraList: @RefreshHraList </p>*@
 
