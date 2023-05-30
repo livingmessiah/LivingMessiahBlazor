@@ -1,4 +1,9 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿//ToDo: This needs to be DELETED!
+//  It's equivalent needs to be found in...
+//	- Pages\Sukkot\RegistrationEntry\NormalUser\Index.razor
+//	- Pages\Sukkot\RegistrationEntry\SuperUser\Index.razor
+
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.Extensions.Logging;
 using System;

@@ -1,9 +1,8 @@
 ﻿using System;
 
-namespace LivingMessiah.Web.Pages.Sukkot.RegistrationEntry;
+namespace LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.AddOrEdit;
 
-//ToDo: Delete
-public class ViewModel
+public class FormVM
 {
 	public int Id { get; set; }
 	public string? FamilyName { get; set; }

@@ -5,17 +5,40 @@ namespace LivingMessiah.Web.Pages.Sukkot.Enums;
 
 public class Helper
 {
-	public static (DateTime[] week1, DateTime[]? week2) GetAttendanceDatesArray(int attendanceBitwise)
+	public static (DateTime[]? week1, DateTime[]? week2) GetAttendanceDatesArray(int attendanceBitwise)
 	{
 		if (!Enums.DateRangeType.Attendance.HasSecondMonth)
 		{
-			return (AttendanceDate.FromValue(attendanceBitwise).Select(s => s.Date).ToArray(), null);
+			if (AttendanceDate.FromValue(attendanceBitwise) == AttendanceDate.None)
+			{
+				return (null, null);
+			}
+			else
+			{
+				return (AttendanceDate.FromValue(attendanceBitwise).Select(s => s.Date).ToArray(), null);
+			}
 		}
 		else
 		{
-			return
-				(AttendanceDate.FromValue(attendanceBitwise).Where(w => w.Week == 1).Select(s => s.Date).ToArray(),
-				 AttendanceDate.FromValue(attendanceBitwise).Where(w => w.Week == 2).Select(s => s.Date).ToArray());
+			DateTime[]? wk1;
+			DateTime[]? wk2;
+			if (AttendanceDate.FromValue(attendanceBitwise) == AttendanceDate.None)
+			{
+				wk1 = null;
+			}
+			else
+			{
+				wk1 = AttendanceDate.FromValue(attendanceBitwise).Where(w => w.Week == 1).Select(s => s.Date).ToArray();
+			}
+			if (AttendanceDate.FromValue(attendanceBitwise) == AttendanceDate.None)
+			{
+				wk2 = null;
+			}
+			else
+			{
+				wk2 = AttendanceDate.FromValue(attendanceBitwise).Where(w => w.Week == 2).Select(s => s.Date).ToArray();
+			}
+			return (wk1, wk2);
 		}
 	}
 
@@ -45,20 +68,28 @@ public class Helper
 
 		if (dateRangeType.HasSecondMonth)
 		{
-			foreach (var item in selectedDateArray2ndMonth)
+			if (selectedDateArray2ndMonth is null || selectedDateArray2ndMonth.Length == 0) 
+			{ 
+			}
+			else
 			{
-				attendanceDate = AttendanceDate.List.Where(w => w.Date == item).SingleOrDefault();
-				if (attendanceDate is not null)
+				foreach (var item in selectedDateArray2ndMonth)
 				{
-					bitwise += attendanceDate.Value;
-				}
-				else
-				{
-					//ExceptionMessage = $"...Acceptance Date:{item.ToShortDateString()} is out of range; range is {DateRangeType.Attendance.Range.Min.ToShortDateString()} to {DateRangeType.Attendance.Range.Max.ToShortDateString()}";
-					//Logger.LogWarning(ExceptionMessage);
-					//throw new RegistratationException(ExceptionMessage);
+					attendanceDate = AttendanceDate.List.Where(w => w.Date == item).SingleOrDefault();
+					if (attendanceDate is not null)
+					{
+						bitwise += attendanceDate.Value;
+					}
+					else
+					{
+						//ExceptionMessage = $"...Acceptance Date:{item.ToShortDateString()} is out of range; range is {DateRangeType.Attendance.Range.Min.ToShortDateString()} to {DateRangeType.Attendance.Range.Max.ToShortDateString()}";
+						//Logger.LogWarning(ExceptionMessage);
+						//throw new RegistratationException(ExceptionMessage);
+					}
 				}
 			}
+
+
 		}
 
 		return bitwise;

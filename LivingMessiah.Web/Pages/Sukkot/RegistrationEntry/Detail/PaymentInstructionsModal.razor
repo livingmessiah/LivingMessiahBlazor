@@ -1,0 +1,54 @@
+﻿
+<button type="button" class="btn btn-danger btn-lg mb-4"
+				@onclick="() => ShowModal()">
+	Payment Instructions
+	<i class="fas fa-chevron-down"></i>
+</button>
+
+<div class="@modalClass" style="display:@(modalOpen?"block":"none");">
+	<div class="modal-dialog modal-xl">
+		<div class="modal-content">
+			<div class="modal-header bg-light">
+
+				<h5 class="modal-title text-primary">Check Payment Instructions</h5>
+
+				<button type="button" class="close" @onclick="CloseModal">
+					<span>&times;</span>
+				</button>
+			</div>
+
+			<div class="modal-body">
+				@((MarkupString)LivingMessiah.Web.Pages.Sukkot.Constants.Other.PayWithCheckModalMessage)
+			</div>
+
+			<div class="modal-footer bg-light">
+				<button type="button" class="btn btn-primary" @onclick="CloseModal">
+					Cancel
+				</button>
+				<a href="javascript:window.print()"
+					 class="btn btn-md btn-info">
+					<i class="fa fa-print"></i> Print
+				</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+@code {
+	bool modalOpen = false;
+	string modalClass = "modal";
+
+	void ShowModal()
+	{
+		modalOpen = true;
+		modalClass += " show";
+		StateHasChanged();
+	}
+
+	void CloseModal()
+	{
+		modalOpen = false;
+		modalClass = "modal";
+	}
+
+}

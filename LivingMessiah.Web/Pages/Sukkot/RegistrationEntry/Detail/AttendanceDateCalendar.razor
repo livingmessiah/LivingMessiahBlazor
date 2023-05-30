@@ -1,0 +1,73 @@
+﻿@if (Enums.DateRangeType.Attendance.HasSecondMonth)
+{
+	@if (IsXs)
+	{
+		<div class="row">
+			<div class="col-12">
+				<SfCalendar TValue="DateTime?"
+								IsMultiSelection="true" ShowTodayButton="false"
+								Values="@AttendanceDateList"
+								Min="@DateRangeAttendance.Range.Min"
+								Max="@DateRangeAttendance.Range.Max">
+				</SfCalendar>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-12">
+				<SfCalendar TValue="DateTime?"
+								IsMultiSelection="true" ShowTodayButton="false"
+								Values="@AttendanceDateList2ndMonth"
+								Min="@DateRangeAttendance.Range2ndMonth.Min"
+								Max="@DateRangeAttendance.Range2ndMonth.Max">
+				</SfCalendar>
+			</div>
+		</div>
+	}
+	else
+	{
+		<div class="row">
+			<div class="col-6">
+					<SfCalendar TValue="DateTime?"
+									IsMultiSelection="true" ShowTodayButton="false"
+									Values="@AttendanceDateList"
+									Min="@DateRangeAttendance.Range.Min"
+									Max="@DateRangeAttendance.Range.Max">
+					</SfCalendar>
+			
+			</div>
+
+			<div class="col-6">
+					<SfCalendar TValue="DateTime?"
+									IsMultiSelection="true" ShowTodayButton="false"
+									Values="@AttendanceDateList2ndMonth"
+									Min="@DateRangeAttendance.Range2ndMonth.Min"
+									Max="@DateRangeAttendance.Range2ndMonth.Max">
+					</SfCalendar>
+				
+			</div>
+		</div>
+	}
+}
+else
+{
+	<div class="row">
+		<div class="col-12">
+				<SfCalendar TValue="DateTime?"
+									IsMultiSelection="true" ShowTodayButton="false"
+									Values="@AttendanceDateList"
+									Min="@DateRangeAttendance.Range.Min"
+									Max="@DateRangeAttendance.Range.Max">
+				</SfCalendar>
+		</div>
+	</div>
+}
+
+@code {
+	[Parameter] public bool IsXs { get; set; }
+	[Parameter] public DateTime[]? AttendanceDateList { get; set; }
+	[Parameter] public DateTime[]? AttendanceDateList2ndMonth { get; set; }
+
+	public Enums.DateRangeType DateRangeAttendance { get; set; } = Enums.DateRangeType.Attendance;
+
+}

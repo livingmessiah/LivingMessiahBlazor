@@ -45,7 +45,7 @@ public class Service : IService
 		ViewModel VM = new();
 		try
 		{
-			VM = await db.GetById(id);
+			VM = await db.GetById2(id);
 			string email = await SvcClaims.GetEmail();
 			VM.Status = Status.FromValue(VM.StatusId);
 
@@ -127,6 +127,7 @@ public class Service : IService
 
 	}
 
+	//SpouseName = vm.SpouseName!.Trim(),
 	private DTO DTO_From_VM_To_DB(ViewModel vm)
 	{
 		DTO poco = new DTO
@@ -134,7 +135,7 @@ public class Service : IService
 			Id = vm.Id,
 			FamilyName = vm.FamilyName,
 			FirstName = vm.FirstName,
-			SpouseName = vm.SpouseName!.Trim(),
+			SpouseName = vm.SpouseName?.Trim() ?? string.Empty,
 			OtherNames = vm.OtherNames,
 			EMail = vm.EMail,
 			Phone = vm.Phone,

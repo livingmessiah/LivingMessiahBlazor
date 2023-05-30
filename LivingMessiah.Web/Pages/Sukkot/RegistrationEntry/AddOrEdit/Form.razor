@@ -1,41 +1,18 @@
-﻿@using static LivingMessiah.Web.Services.Auth0
-@using LivingMessiah.Web.Shared.Sukkot
-@using LivingMessiah.Web.Pages.Sukkot.RegistrationEntry
-@using LivingMessiah.Web.Pages.Sukkot.RegistrationSteps.Enums
-@using Blazored.FluentValidation
+﻿@using Blazored.FluentValidation;
+@using LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.SuperUser.Enums
 
-<LoadingComponent IsLoading="VM==null">
+@inherits Fluxor.Blazor.Web.Components.FluxorComponent
 
-	<div class="row mt-2">
+<EditForm Model="VM"
+					OnValidSubmit="HandleValidSubmit"
+					class="card card-body bg-light mt-1">
+	<FluentValidationValidator @ref="_fluentValidationValidator" DisableAssemblyScanning="@true" />
+	<ValidationSummary />
 
-		<div class="col-8">
-			<div class="card border-info">
-				<SfAutoComplete Placeholder="Select a Registrant to edit" @bind-Value="@SelectedRegistrantName"
-												DataSource="@RegistrationLookupList">
-					<AutoCompleteFieldSettings Value="Text"></AutoCompleteFieldSettings>
-					<AutoCompleteEvents TItem="RegistrationLookup"
-															ValueChange="OnValueChanged"
-															TValue="string"
-															OnValueSelect="OnSelect"></AutoCompleteEvents>
-				</SfAutoComplete>
-			</div>
-		</div>
-
-		<div class="col-4">
-			<p>Filter by name</p>
-		</div>
-	</div>
-
-	@if (ShowEditForm)
-	{
-		<EditForm Model="VM" OnValidSubmit="HandleValidSubmit"
-						class="card card-body bg-light mt-5">
-			<FluentValidationValidator @ref="_fluentValidationValidator" DisableAssemblyScanning="@true" />
-			<ValidationSummary />
-
-			<fieldset class="py-1 my-0">
-				<legend class="text-success text-center"> @Title</legend>
-			</fieldset>
+@*	<fieldset class="py-1 my-0">
+		<legend class="text-success text-center"> @Title</legend>
+	</fieldset>
+*@
 
 			<fieldset class="mt-3">
 				<legend class="text-primary">Contact Information</legend>
@@ -114,6 +91,8 @@
 				</div>
 
 				<div class="row mt-n2">
+
+			@*LivingMessiah.Web.Pages.Sukkot.Enums*@
 
 					<div class="col-sm-6">
 						<div class="mb-3">
@@ -205,7 +184,7 @@
 					<div class="col-sm-12">
 						<label for="statusEnum" class="control-label">Status Type</label>
 						<InputSelect id="type" @bind-Value="VM.StatusId" class="form-control">
-							@foreach (var item in Status.List.ToList())
+							@foreach (var item in Sukkot.RegistrationSteps.Enums.Status.List.ToList())
 							{
 								<option value="@item.Value">@item.Heading</option>
 							}
@@ -217,21 +196,27 @@
 
 			</fieldset>
 
-			<div class="row mt-3">
-				<div class="col-sm-6">
-					<div class="mb-3">
-						<button class="btn btn-success btn-lg">
-							<i class="fas fa-save"></i> Save
-						</button>
-					</div>
 
+	<div class="row">
+		<div class="col-sm-6">
+			<div class="mb-3">
+
+				<button type="submit" class="@SuperUser.Constants.SaveButton.Color">
+					<i class="@SuperUser.Constants.SaveButton.Icon"></i> @State!.Value.FormMode!.SubmitText
+				</button>
+
+				@*
+				Cancel button has to be a div (ie not a button) thereby not triggering validation which is what I want
+				[Blazor Modal Form Validation: You have to click the cancel button twice to close the modal when you delete a form field](https://stackoverflow.com/a/67737357/41106)
+				*@
+				<div @onclick="@(e => CancelActionHandler())" class="@SuperUser.Constants.CancelButton.Color">
+					<i class="@SuperUser.Constants.CancelButton.Icon"></i> @SuperUser.Constants.CancelButton.Text
 				</div>
+
 			</div>
+		</div>
+		<div class="col-sm-6"></div>
+	</div>
 
-		</EditForm>
-
-	}
-
-</LoadingComponent>
-
+</EditForm>
 

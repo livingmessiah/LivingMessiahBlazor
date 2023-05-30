@@ -8,18 +8,25 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
 using LivingMessiah.Web.Pages.SukkotAdmin.Data; // for BaseRepositoryAsync
+using LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.Detail;
 
 namespace LivingMessiah.Web.Pages.Sukkot.RegistrationEntry;
 
 public interface IRepository
 {
 	string BaseSqlDump { get; }
-	Task<List<ViewModel>> GetAll();
-	Task<ViewModel> GetById(int id);
+	Task<List<SuperUser.Data.vwRegistration>> GetAll();
+	Task<SuperUser.Data.vwRegistration> GetById(int id);
+
+	Task<List<RegistrationEntry.ViewModel>> GetAll2();
+	Task<RegistrationEntry.ViewModel> GetById2(int id);
+
+	Task<Detail.DisplayVM> GetDisplayById(int id);
 
 	// Can't remove `Tuple<...>` with `(...)`, see C:\Source\LivingMessiahWiki\Tuples\Removing-Tuple-Conflicts-with-BaseRepositoryAsync.md
 	Task<Tuple<int, int, string>> Create(DTO registration);
 	Task<Tuple<int, int, string>> Update(DTO registration);
+	Task<int> Delete(int id);
 
 	Task<List<RegistrationLookup>> PopulateRegistrationLookup(); // used by: EditRegistrationForm (SukkotAdmin.Registration)
 }
@@ -50,7 +57,7 @@ ORDER BY FirstName
 		});
 	}
 
-	public async Task<List<ViewModel>> GetAll()
+	public async Task<List<SuperUser.Data.vwRegistration>> GetAll()
 	{
 		base.Sql = $@"
 SELECT Id, FamilyName, FirstName, SpouseName, OtherNames, EMail, Phone
@@ -63,12 +70,12 @@ ORDER BY FirstName
 ";
 		return await WithConnectionAsync(async connection =>
 		{
-			var rows = await connection.QueryAsync<ViewModel>(sql: base.Sql);  //, param: base.Parms
+			var rows = await connection.QueryAsync<SuperUser.Data.vwRegistration>(sql: base.Sql); 
 			return rows.ToList();
 		});
 	}
 
-	public async Task<ViewModel> GetById(int id)
+	public async Task<SuperUser.Data.vwRegistration> GetById(int id)
 	{
 		base.Parms = new DynamicParameters(new { Id = id });
 		base.Sql = $@"
@@ -81,11 +88,74 @@ FROM Sukkot.Registration
 WHERE Id = @Id";
 		return await WithConnectionAsync(async connection =>
 		{
-			var rows = await connection.QueryAsync<ViewModel>(sql: base.Sql, param: base.Parms);
+			var rows = await connection.QueryAsync<SuperUser.Data.vwRegistration>(sql: base.Sql, param: base.Parms);
 			return rows.SingleOrDefault()!;
 		});
 	}
 
+
+	public async Task<List<RegistrationEntry.ViewModel>> GetAll2()
+	{
+		base.Sql = $@"
+SELECT Id, FamilyName, FirstName, SpouseName, OtherNames, EMail, Phone
+, Adults, ChildBig, ChildSmall
+, StatusId
+--, AttendanceBitwise, Notes
+--, LmmDonation, Avatar
+FROM Sukkot.Registration
+ORDER BY FirstName
+";
+		return await WithConnectionAsync(async connection =>
+		{
+			var rows = await connection.QueryAsync<RegistrationEntry.ViewModel>(sql: base.Sql);
+			return rows.ToList();
+		});
+	}
+
+	public async Task<RegistrationEntry.ViewModel> GetById2(int id)
+	{
+		base.Parms = new DynamicParameters(new { Id = id });
+		base.Sql = $@"
+--DECLARE @id int=4
+SELECT TOP 1 
+Id, FamilyName, FirstName, SpouseName, OtherNames, EMail, Phone, Adults, ChildBig, ChildSmall
+, StatusId
+, AttendanceBitwise, LmmDonation, Notes, Avatar
+FROM Sukkot.Registration 
+WHERE Id = @Id";
+		return await WithConnectionAsync(async connection =>
+		{
+			var rows = await connection.QueryAsync<RegistrationEntry.ViewModel>(sql: base.Sql, param: base.Parms);
+			return rows.SingleOrDefault()!;
+		});
+	}
+
+	public async Task<Detail.DisplayVM> GetDisplayById(int id)
+	{
+		base.Parms = new DynamicParameters(new { Id = id });
+		base.Sql = $@"
+--DECLARE @id int=1
+SELECT TOP 1
+Id, HouseRulesAgreementId
+, FamilyName, FirstName, SpouseName, OtherNames
+, Name, NameAndSpouse, NameAndSpouseWithOther
+, EMail, Phone
+, Adults, ChildBig, ChildSmall
+, StatusId, Status, RegistrationFeeAdjusted
+, AttendanceBitwise
+, AttendanceTotal
+, HouseRulesAgreementDate
+, Notes
+, LmmDonation
+, Avatar
+FROM Sukkot.vwRegistration WHERE Id = @id";
+
+		return await WithConnectionAsync(async connection =>
+		{
+			var rows = await connection.QueryAsync<DisplayVM>(sql: base.Sql, param: base.Parms);
+			return rows.SingleOrDefault()!;
+		});
+	}
 
 	public async Task<Tuple<int, int, string>> Create(DTO registration)
 	{
@@ -201,6 +271,19 @@ WHERE Id = @Id";
 			}
 
 			return new Tuple<int, int, string>(RowsAffected, SprocReturnValue, ReturnMsg);
+		});
+	}
+
+
+	public async Task<int> Delete(int id)
+	{
+		base.Sql = "Sukkot.stpRegistrationDelete";
+		base.Parms = new DynamicParameters(new { RegistrationId = id });
+		return await WithConnectionAsync(async connection =>
+		{
+			var affectedRows = await connection.ExecuteAsync(sql: base.Sql, param: base.Parms, commandType: System.Data.CommandType.StoredProcedure);
+			//if (affectedRows < 0) { throw new Exception($"Registration NOT Deleted"); }
+			return affectedRows;
 		});
 	}
 }

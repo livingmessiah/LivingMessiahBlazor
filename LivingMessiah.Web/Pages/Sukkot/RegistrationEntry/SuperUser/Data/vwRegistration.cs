@@ -1,9 +1,8 @@
 ﻿using System;
 
-namespace LivingMessiah.Web.Pages.Sukkot.RegistrationEntry;
+namespace LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.SuperUser.Data;
 
-//ToDo: Delete
-public class ViewModel
+public class vwRegistration
 {
 	public int Id { get; set; }
 	public string? FamilyName { get; set; }
@@ -15,15 +14,18 @@ public class ViewModel
 	public int Adults { get; set; }
 	public int ChildBig { get; set; }
 	public int ChildSmall { get; set; }
-
 	public int StatusId { get; set; } // The SuperUser!EntryForm needs this
-	public RegistrationSteps.Enums.Status? Status { get; set; }
 
-	public int AttendanceBitwise { get; set; } // does the VM need this?
-	public DateTime[]? AttendanceDateList { get; set; }
-	public DateTime[]? AttendanceDateList2ndMonth { get; set; }
-
-	public string? Notes { get; set; }
-	public string? Avatar { get; set; }
-	public Decimal LmmDonation { get; set; }
+//	public string? Notes { get; set; }
+//	public string? Avatar { get; set; }
+//	public Decimal LmmDonation { get; set; }
 }
+
+
+/*
+SELECT Id, FamilyName, FirstName, SpouseName, OtherNames, EMail, Phone
+, Adults, ChildBig, ChildSmall
+, StatusId
+FROM Sukkot.Registration
+ORDER BY FirstName 
+ */

@@ -1,45 +1,70 @@
 ﻿@page "/RegistrationEntry/SuperUser"
 
+@using Page = LivingMessiah.Web.Links.Sukkot.RegistrationEntry.SuperUser
 @using static LivingMessiah.Web.Services.Auth0
 @using LivingMessiah.Web.Shared.Sukkot
+@using LivingMessiah.Web.SmartEnums
+@using LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.AddOrEdit
+@using LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.Detail
+@using LoginLink = LivingMessiah.Web.Links.Account
 
-@* Hint: If the only reason you need a code behind is to implement Authorize, then just use the `@attrubue` this e.g.*@
-@attribute [Authorize(Roles = Roles.AdminOrSukkot)] 
+@inherits Fluxor.Blazor.Web.Components.FluxorComponent
 
-<AuthorizeView Roles="@Roles.SukkotMenuBar">
-	<SukkotAdminMenubar></SukkotAdminMenubar>
+<AuthorizeView Roles="@Roles.AdminOrAnnouncements">
+	<Authorized>
+		
+		<!-- ToDo: can this be moved to <PageHeader ??? -->
+		<SukkotAdminMenubar></SukkotAdminMenubar>
+
+		<div class="@MediaQuery.XsOrSm.DivClass">
+			<PageHeader IsXsOrSm="true" />
+		</div>
+
+		<div class="@MediaQuery.MdOrLgOrXl.DivClass">
+			<PageHeader IsXsOrSm="false" />
+		</div>
+
+		@if (State!.Value.VisibleComponent == Enums.VisibleComponent.MasterList)
+		{
+			<div class="@MediaQuery.XsOrSm.DivClass">
+				<MasterList IsXsOrSm="true" />
+			</div>
+
+			<div class="@MediaQuery.MdOrLgOrXl.DivClass">
+				<MasterList IsXsOrSm="false" />
+			</div>
+		}
+		else
+		{
+			<ShowMasterIndex />
+
+			@if (State!.Value.VisibleComponent == Enums.VisibleComponent.AddEditForm)
+			{
+				<Form />
+			}
+			else
+			{
+				@*
+		ToDo:
+		- Details Pages\Sukkot\Details\Index.razor
+		page "/Sukkot/Details/{Id:int}/{showPrintInstructionMessage:bool}"
+
+		*@
+				<Display />
+			}
+		}
+	</Authorized>
+	<NotAuthorized>
+
+		<div class="card border-warning my-5">
+			<div class="card-header">Not Authorized</div>
+			<div class="card-body">
+				<h5 class="">To view <b>@Page.Title</b> you need to be logged in.</h5>
+				<LivingMessiah.Web.Pages.Sukkot.RegistrationSteps.LoginRedirectButton ReturnUrl="@Page.Index" />
+			</div>
+		</div>
+
+	</NotAuthorized>
 </AuthorizeView>
 
-@using Page = LivingMessiah.Web.Links.Sukkot.RegistrationEntry.SuperUser
-<PageTitle>@Page.Title</PageTitle>
-
-<div class="pb-2 mt-4 mb-4 border-bottom">
-	<h3><i class="fas fa-table"></i> @Page.Title</h3>
-</div>
-
-<SfTab CssClass="">
-	<TabItems>
-
-		<TabItem>
-			<ChildContent>
-				<TabHeader Text="List"></TabHeader>
-			</ChildContent>
-			<ContentTemplate>
-
-				<RegistrationGrid />
-
-			</ContentTemplate>
-		</TabItem>
-
-		<TabItem>
-			<ChildContent>
-				<TabHeader Text="Edit"></TabHeader>
-			</ChildContent>
-			<ContentTemplate>
-				<EntryForm />
-			</ContentTemplate>
-		</TabItem>
-
-	</TabItems>
-</SfTab>
-
+<ToasterSuperUser />
