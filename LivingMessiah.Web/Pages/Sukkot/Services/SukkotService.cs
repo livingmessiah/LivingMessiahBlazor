@@ -134,7 +134,7 @@ public class SukkotService : ISukkotService
 						}
 						else
 						{
-							vm.Status = Status.StartRegistraion;
+							vm.Status = Status.StartRegistration;
 						}
 					}
 					else

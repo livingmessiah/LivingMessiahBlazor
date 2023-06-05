@@ -9,6 +9,7 @@ using System;
 using LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.AddOrEdit;
 using LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.Detail;
 using LivingMessiah.Web.Pages.Sukkot.Enums;
+using LivingMessiah.Web.Pages.UpcomingEventsAdmin.EditMarkdown;
 /*
 
 Show HRA tables with not registration just like  NoRegistrationTable (SukkotAdmin.HouseRulesAgreement)
@@ -28,7 +29,7 @@ namespace LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.SuperUser;
 #region 1. Action
 // 1.1 GetList() actions
 public record Get_List_Action();
-public record Get_List_Success_Action(List<Data.vwRegistration> vwRegistrations);
+public record Get_List_Success_Action(List<Data.vwSuperUser> vwSuperUserList);
 public record Get_List_Warning_Action(string WarningMessage);
 public record Get_List_Failure_Action(string ErrorMessage);
 
@@ -41,7 +42,7 @@ public record Edit_Action(int Id);
 
 // 1.2.1 GetDisplayItem() actions
 public record Get_DisplayItem_Action(int Id);
-public record Get_DisplayItem_Success_Action(DisplayVM? DisplayVM); 
+public record Get_DisplayItem_Success_Action(DisplayVM? DisplayVM);
 public record Get_DisplayItem_Warning_Action(string WarningMessage);
 public record Get_DisplayItem_Failure_Action(string ErrorMessage);
 public record Display_Action(int Id);
@@ -51,8 +52,11 @@ public record Submitting_Request_Action(FormVM FormVM, Enums.FormMode? FormMode)
 public record Submitted_Response_Success_Action(string SuccessMessage);
 public record Submitted_Response_Failure_Action(string ErrorMessage);
 
+public record Add_HRA_Action(string? EMail, string TimeZone);
+
+
 // 1.4 Actions related to MasterList
-public record Add_Action();
+public record Add_Action(string? EMail); // , int StatusId 
 
 // 1.5 Delete() actions
 public record Delete_Action(int Id);
@@ -74,8 +78,9 @@ public record State
 	public string? WarningMessage { get; init; }
 	public string? ErrorMessage { get; init; }
 	public FormVM? FormVM { get; init; }
+	public string? HRA_EMail { get; init; } 
 	public DisplayVM? DisplayVM { get; init; }
-	public List<Data.vwRegistration>? vwRegistrationList { get; init; }
+	public List<Data.vwSuperUser>? vwSuperUserList { get; init; }
 	public PageHeaderVM? PageHeaderVM { get; init; }
 }
 
@@ -96,6 +101,7 @@ public class FeatureImplementation : Feature<State>
 			ErrorMessage = string.Empty,
 			PageHeaderVM = Constants.GetPageHeaderForIndexVM(),
 			FormVM = new FormVM(),
+			HRA_EMail = string.Empty,
 			DisplayVM = new DisplayVM()
 		};
 	}
@@ -115,7 +121,7 @@ public static class Reducers
 			VisibleComponent = Enums.VisibleComponent.MasterList,
 			WarningMessage = string.Empty,
 			ErrorMessage = string.Empty,
-			vwRegistrationList = action.vwRegistrations
+			vwSuperUserList = action.vwSuperUserList
 		};
 	}
 
@@ -164,14 +170,12 @@ public static class Reducers
 		};
 	}
 
-	//
-
 	[ReducerMethod]
 	public static State On_Get_DisplayItem_Action(State state, Get_DisplayItem_Action action)
 	{
 		return state;
 	}
-	
+
 	[ReducerMethod]
 	public static State On_Get_DisplayItem_Success(
 		State state, Get_DisplayItem_Success_Action action)
@@ -213,12 +217,21 @@ public static class Reducers
 
 
 	[ReducerMethod]
+	public static State On_Add_HRA(
+		State state, Add_HRA_Action action)
+	{
+		return state with { HRA_EMail = action.EMail };
+	}
+
+
+	[ReducerMethod]
 	public static State OnAdd(
 		State state, Add_Action action)
 	{
 		return state with
 		{
 			VisibleComponent = Enums.VisibleComponent.AddEditForm,
+			HRA_EMail = action.EMail,
 			FormMode = Enums.FormMode.Add,
 			FormVM = new FormVM()
 		};
@@ -272,7 +285,7 @@ public static class Reducers
 	{
 		return state with
 		{
-			PageHeaderVM = new PageHeaderVM { Title = action.Title, Icon = action.Icon, Color = action.Color, Id = action.Id }
+			PageHeaderVM = new PageHeaderVM { Title = action.Title, Icon = action.Icon, Color = action.Color, Id = action.Id } 
 		};
 	}
 }
@@ -299,16 +312,16 @@ public class Effects
 		Logger.LogDebug(string.Format("Inside {0}", inside));
 		try
 		{
-			List<Data.vwRegistration> vwRegistrations = new();
-			vwRegistrations = await db!.GetAll();
+			List<Data.vwSuperUser> vwSuperUserList = new();
+			vwSuperUserList = await db!.GetAll();
 
-			if (vwRegistrations is not null)
+			if (vwSuperUserList is not null)
 			{
-				dispatcher.Dispatch(new Get_List_Success_Action(vwRegistrations));
+				dispatcher.Dispatch(new Get_List_Success_Action(vwSuperUserList));
 			}
 			else
 			{
-				Logger.LogWarning(string.Format("...{0}; {1} is null", inside, nameof(vwRegistrations)));
+				Logger.LogWarning(string.Format("...{0}; {1} is null", inside, nameof(vwSuperUserList)));
 				dispatcher.Dispatch(new Get_List_Warning_Action("No Registrations Found"));
 			}
 		}
@@ -319,6 +332,53 @@ public class Effects
 		}
 	}
 
+
+
+	[EffectMethod]
+	public async Task Submit(Submitting_Request_Action action, IDispatcher dispatcher)
+	{
+		if (action.FormMode is null) throw new ArgumentException("Parameter cannot be null", nameof(action.FormMode));
+
+		string inside = $"{nameof(Effects)}!{nameof(Submit)}; Action: {action.FormMode.Name}";
+
+		if (action.FormMode == Enums.FormMode.Add)
+		{
+			Logger.LogDebug(string.Format("Inside {0}", inside));
+			try
+			{
+				//action.FormVM.StatusId = RegistrationSteps.Enums.Status.StartRegistration;
+				var sprocTuple = await db.CreateRegistration(action.FormVM);
+				dispatcher.Dispatch(new Submitted_Response_Success_Action(sprocTuple.Item3));  // "Registration Added id: ???"
+				//SEE NOTES ON SpecialEventsRepository 
+			}
+			catch (Exception ex)
+			{
+				Logger.LogError(ex, string.Format("...Inside catch of {0}", inside));
+				dispatcher.Dispatch(new Submitted_Response_Failure_Action($"An invalid operation occurred, contact your administrator. Action: {action.FormMode.Name}"));
+			}
+		}
+		else
+		{
+			//string inside = $"{nameof(Effects)}!{nameof(Submit)}; Action: {action.FormMode.Name}";
+			Logger.LogDebug(string.Format("Inside {0}; Id: {1}", inside, action.FormVM.Id));
+			try
+			{
+				var sprocTuple = await db.UpdateRegistration(action.FormVM);
+				dispatcher.Dispatch(new Submitted_Response_Success_Action(
+					$"Registration Updated for id: [{action.FormVM.Id}], Affected Rows: {sprocTuple.Item1}"));  //sprocTuple.RowsAffected
+			}
+			catch (Exception ex)
+			{
+				Logger.LogError(ex, string.Format("...Inside catch of {0}", inside));
+				dispatcher.Dispatch(new Submitted_Response_Failure_Action(
+					$"An invalid operation occurred, contact your administrator. Action: {action.FormMode.Name}"));
+			}
+		}
+
+	}
+
+
+
 	[EffectMethod]
 	public async Task GetItem(Get_Item_Action action, IDispatcher dispatcher)
 	{
@@ -327,51 +387,50 @@ public class Effects
 		Logger.LogDebug(string.Format("Inside {0}", inside));
 		try
 		{
-			Data.vwRegistration? vwRegistration = new();
-			vwRegistration = await db!.GetById(action.Id);
+			AddOrEdit.FormVM? formVM = new();
+			formVM = await db!.GetAddOrEditId(action.Id);
 
-			if (vwRegistration is null)
+			if (formVM is null)
 			{
-				Logger.LogWarning(string.Format("...{0}; {1} is null", inside, nameof(vwRegistration)));
+				Logger.LogWarning(string.Format("...{0}; {1} is null", inside, nameof(formVM)));
 				dispatcher.Dispatch(new Get_Item_Warning_Action($"Registration Not Found; Id: {action.Id}"));
 			}
 			else
 			{
-				Logger.LogDebug(string.Format("...FamilyName: {0}", vwRegistration!.FamilyName));
-				FormVM formVM = new FormVM
-				{
-					Id = vwRegistration.Id,
-					FamilyName = vwRegistration.FamilyName,
-					FirstName = vwRegistration.FirstName,
-					SpouseName = vwRegistration.SpouseName,
-					OtherNames = vwRegistration.OtherNames,
-					EMail = vwRegistration.EMail,
-					Phone = vwRegistration.Phone,
-					Adults = vwRegistration.Adults,
-					ChildBig = vwRegistration.ChildBig,
-					ChildSmall = vwRegistration.ChildSmall,
-					StatusId = vwRegistration.StatusId
-				};
+				var tuple = Helper.GetAttendanceDatesArray(formVM!.AttendanceBitwise);
+				formVM!.AttendanceDateList = tuple.week1;
+				formVM!.AttendanceDateList2ndMonth = tuple.week2!;
+				formVM!.Status = RegistrationSteps.Enums.Status.FromValue(formVM!.StatusId);
 
 				dispatcher.Dispatch(new Get_Item_Success_Action(formVM));
 				dispatcher.Dispatch(new Edit_Action(action.Id));
-
-				/*
-				if (action.FormMode == Enums.FormMode.Edit)
-				{
-					dispatcher.Dispatch(new Edit_Action(action.Id));
-				}
-				else
-				{
-					dispatcher.Dispatch(new Display_Action(action.Id));
-				}
-				*/
 			}
 		}
 		catch (Exception ex)
 		{
 			Logger.LogError(ex, string.Format("...Inside catch of {0}", inside));
 			dispatcher.Dispatch(new Get_Item_Failure_Action("An invalid operation occurred, contact your administrator"));
+		}
+	}
+
+
+	[EffectMethod]
+	public async Task AddHra(Add_HRA_Action action, IDispatcher dispatcher)
+	{
+		string inside = $"{nameof(Effects)}!{nameof(AddHra)}; Email: {action.EMail}";
+		Logger.LogDebug(string.Format("Inside {0}", inside));
+
+		int id = 0;
+		try
+		{
+			id = await db.InsertHouseRulesAgreement(action.EMail!, action.TimeZone);
+			//var sprocTuple = await db.CreateRegistration(action.FormVM);
+			dispatcher.Dispatch(new Submitted_Response_Success_Action("Registration Added id: ???"));  //SEE NOTES ON SpecialEventsRepository
+		}
+		catch (Exception ex)
+		{
+			Logger.LogError(ex, string.Format("...Inside catch of {0}", inside));
+			dispatcher.Dispatch(new Submitted_Response_Failure_Action($"An invalid operation occurred, contact your administrator. Action: {action.EMail}"));
 		}
 	}
 

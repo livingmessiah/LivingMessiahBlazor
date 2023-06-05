@@ -7,6 +7,7 @@ namespace LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.SuperUser;
 public partial class ActionButtons
 {
 	[Parameter, EditorRequired] public Crud? ParmCrud { get; set; }
+	[Parameter] public string? EMail { get; set; } // Required for Add
 	[Parameter, EditorRequired] public int Id { get; set; } // Use 0 for Add and Repopulate
 	[Parameter, EditorRequired] public bool IsXsOrSm { get; set; }
 	[Parameter] public EventCallback<CrudAndIdArgs> OnCrudActionSelected { get; set; }
@@ -16,6 +17,7 @@ public partial class ActionButtons
 		CrudAndIdArgs args = new CrudAndIdArgs
 		{
 			Crud = ParmCrud!,
+			EMail = EMail ?? "???",
 			Id = Id
 		};
 		await OnCrudActionSelected.InvokeAsync(args);
@@ -25,11 +27,25 @@ public partial class ActionButtons
 	{
 		return IsXsOrSm ? (MarkupString)"<br>" : (MarkupString)"";
 	}
+
+	private string GetTitle()
+	{
+		if (Id != 0)
+		{
+			return $"Id: {Id}";
+		}
+		else
+		{
+			return ""; 
+		}
+	}
+
 }
 
 public struct CrudAndIdArgs
 {
 	public Crud Crud { get; set; }
+	public string EMail { get; set; } 
 	public int Id { get; set; }
 }
 

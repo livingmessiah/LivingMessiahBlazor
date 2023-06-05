@@ -48,7 +48,7 @@ public partial class AddRegistrationForm
 		try
 		{
 			VM.Id = 0;
-			VM.Status = Status.StartRegistraion;
+			VM.Status = Status.StartRegistration;
 			//RegistrationVM.EMail = Email; HACK: data gotten from the form; cant figure out how to populate via EventCallbacks
 
 			var sprocTuple = await svc!.Create(VM);

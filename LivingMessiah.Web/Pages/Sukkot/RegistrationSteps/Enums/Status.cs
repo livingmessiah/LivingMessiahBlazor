@@ -10,7 +10,7 @@ public abstract class Status : SmartEnum<Status>
 		internal const int NotAuthenticated = 1;
 		internal const int EmailNotConfirmed = 2;
 		internal const int AgreementNotSigned = 3;
-		internal const int StartRegistraion = 4;
+		internal const int StartRegistration = 4;
 		internal const int Payment = 5;
 		internal const int Complete = 6;
 	}
@@ -20,7 +20,7 @@ public abstract class Status : SmartEnum<Status>
 	public static readonly Status NotAuthenticated = new NotAuthenticatedSE();
 	public static readonly Status EmailNotConfirmed = new EmailNotConfirmedSE();
 	public static readonly Status AgreementNotSigned = new AgreementNotSignedSE();
-	public static readonly Status StartRegistraion = new StartRegistraionSE();
+	public static readonly Status StartRegistration = new StartRegistrationSE();
 	public static readonly Status Payment = new PaymentSE();
 	public static readonly Status Complete = new CompleteSE();
 	// SE=SmartEnum
@@ -82,9 +82,9 @@ public abstract class Status : SmartEnum<Status>
 		public override bool DisplayRegistrationToggleButton => false;
 	}
 
-	private sealed class StartRegistraionSE : Status
+	private sealed class StartRegistrationSE : Status
 	{
-		public StartRegistraionSE() : base($"{nameof(Id.StartRegistraion)}", Id.StartRegistraion) { }
+		public StartRegistrationSE() : base($"{nameof(Id.StartRegistration)}", Id.StartRegistration) { }
 		public override int StepNumber => 4;
 		public override bool UsedInDbOnly => true;
 		public override string Heading => "Registration Form";
@@ -112,7 +112,7 @@ public abstract class Status : SmartEnum<Status>
 			return status == Status.NotAuthenticated ||
 						 status == Status.EmailNotConfirmed ||
 						 status == Status.AgreementNotSigned ||
-						 status == Status.StartRegistraion;
+						 status == Status.StartRegistration;
 		}
 		public override bool DisplayRegistrationToggleButton => true;
 
@@ -131,7 +131,7 @@ public abstract class Status : SmartEnum<Status>
 			return status == Status.NotAuthenticated ||
 						 status == Status.EmailNotConfirmed ||
 						 status == Status.AgreementNotSigned ||
-						 status == Status.StartRegistraion ||
+						 status == Status.StartRegistration ||
 						 status == Status.Payment ||
 						 status == Status.Complete;
 		}
@@ -148,7 +148,7 @@ public abstract class Status : SmartEnum<Status>
 			s += $" {(this.DisplayAsCompleted(NotAuthenticated) ? NotAuthenticated.Name : "__")  }";
 			s += $" {(this.DisplayAsCompleted(EmailNotConfirmed) ? EmailNotConfirmed.Name : "__")  }";
 			s += $" {(this.DisplayAsCompleted(AgreementNotSigned) ? AgreementNotSigned.Name : "__")  }";
-			s += $" {(this.DisplayAsCompleted(StartRegistraion) ? StartRegistraion.Name : "__")  }";
+			s += $" {(this.DisplayAsCompleted(StartRegistration) ? StartRegistration.Name : "__")  }";
 			s += $" {(this.DisplayAsCompleted(Payment) ? Payment.Name : "__")  }";
 			s += $" {(this.DisplayAsCompleted(Complete) ? Complete.Name : "__")  }";
 

@@ -426,7 +426,7 @@ public static class Sukkot
 	{
 		public const string Index = "/SukkotAdmin/HouseRulesAgreement";
 		public const string Title = "House Rules Agreement";
-		public const string TitleMenu = "Add";
+		public const string TitleMenu = "H.R.A.";
 		public const string Icon = "fas fa-campground";
 	}
 
@@ -453,6 +453,7 @@ public static class Sukkot
 		{
 			public const string Index = "/RegistrationEntry/SuperUser";
 			public const string Title = "Registration Entry | Super User";
+			public const string IconText = "Super User";
 			public const string Icon = "fas fa-mask";
 		}
 	}

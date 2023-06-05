@@ -1,0 +1,16 @@
+﻿<p class="mt-4 mb-0 text-black-50">Status...</p>
+
+@*<ul class="list-inline">
+	@foreach (var item in Sukkot.RegistrationSteps.Enums.Status.List.OrderBy(o => o.Value).ToList())
+	{
+		<li class="list-inline-item"><small>@item.Value: @item.Heading</small></li>
+	}
+</ul>*@
+
+
+<ul class="list-inline">
+	@foreach (var item in Sukkot.RegistrationSteps.Enums.Status.List.OrderBy(o => o.Value).ToList())
+	{
+		<li class="list-inline-item"><small>@item.Value: @item.Name</small></li>
+	}
+</ul>

@@ -21,7 +21,7 @@ public partial class MasterList
 	protected override void OnInitialized()
 	{
 		Logger!.LogDebug(string.Format("Inside {0}", nameof(MasterList) + "!" + nameof(OnInitialized)));
-		if (State!.Value.vwRegistrationList is null)
+		if (State!.Value.vwSuperUserList is null)
 		{
 			Dispatcher!.Dispatch(new Get_List_Action());
 		}
@@ -31,12 +31,12 @@ public partial class MasterList
 	private async Task ReturnedCrud(CrudAndIdArgs args)
 	{
 		Logger!.LogDebug(string.Format("inside: {0}; args.Crud.Name: {1}; icon: {2}; id: {3}"
-			, nameof(MasterList), args.Crud.Name, args.Crud.Icon, args.Id));
+			, nameof(MasterList) + "!" + nameof(ReturnedCrud), args.Crud.Name, args.Crud.Icon, args.Id));
 
 		switch (args.Crud.Name)
 		{
 			case nameof(Enums.Crud.Add):
-				Dispatcher!.Dispatch(new Add_Action());
+				Dispatcher!.Dispatch(new Add_Action(args.EMail)); //, RegistrationSteps.Enums.Status.StartRegistration.Value
 				Dispatcher!.Dispatch(new Set_PageHeader_For_Detail_Action(args.Crud.Name, args.Crud!.Icon, args.Crud!.Color, args.Id));
 				break;
 
@@ -67,14 +67,16 @@ public partial class MasterList
 		}
 	}
 
-
-	//private async Task<bool> IsModalConfirmed(int id)
-	//{
-	//	var parameters = new ModalParameters { { nameof(ConfirmDeleteModal.Message), $"Special Event Id: {id}" } };
-	//	var modal = Modal.Show<ConfirmDeleteModal>("Confirmation Required", parameters);
-	//	var result = await modal.Result;
-	//	return result.Confirmed;
-	//}
-
+	private string GetCardHeader(string fullName, string email)
+	{
+		if (string.IsNullOrEmpty(fullName))
+		{
+			return $"<h4><b>Email</b>: {email}</h4>";
+		}
+		else
+		{
+			return $"<h4><b>Name</b>: {fullName}</h4><h5><b>Email</b>: {email}</h5>";
+		}
+	}
 
 }

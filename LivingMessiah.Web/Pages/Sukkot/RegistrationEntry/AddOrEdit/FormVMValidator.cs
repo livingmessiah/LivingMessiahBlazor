@@ -23,13 +23,21 @@ public class FormVMValidator : AbstractValidator<FormVM>
 			RuleFor(p => p.Phone)
 					.MaximumLength(15).WithMessage("Phone number cannot be longer than 15 characters");
 
-			RuleFor(p => p.EMail).EmailAddress();
-
 			RuleFor(p => p.Adults)
 					.NotNull().WithMessage("You must enter the number of adults")
 					.GreaterThanOrEqualTo(1).WithMessage("Number of adults must be greater than 1")
 					.LessThan(20).WithMessage("Number of adults cannot be greater than 20");
+
+			/*
+			RuleFor(p => p.StatusId)
+					.NotNull().WithMessage("You must select a Status Id");
+			*/
 		}
 
 	}
 }
+
+/*
+ Move to Add HRA
+			RuleFor(p => p.EMail).EmailAddress();
+ */

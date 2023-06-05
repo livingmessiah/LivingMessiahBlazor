@@ -6,35 +6,41 @@
 @if (IsXsOrSm)
 {
 	<div class="mb-1">
-		<ActionButtons OnCrudActionSelected="@ReturnedCrud" ParmCrud="Enums.Crud.Add" IsXsOrSm="@IsXsOrSm" Id="0" />
 		<ActionButtons OnCrudActionSelected="@ReturnedCrud" ParmCrud="Enums.Crud.Repopulate" IsXsOrSm="@IsXsOrSm" Id="0" />
 	</div>
 
-	<LoadingComponent IsLoading="State!.Value.vwRegistrationList == null">
+	<LoadingComponent IsLoading="State!.Value.vwSuperUserList == null">
 
-		@foreach (var item in State!.Value.vwRegistrationList!)
+		@foreach (var item in State!.Value.vwSuperUserList!)
 		{
 			<div class="card text-dark bg-light mb-5">
-				<div class="card-header text-center">
-					<h4>@item.FirstName</h4>
-					<p>StatusId: @item.StatusId</p>
+				<div class="card-header">
+					@((MarkupString)GetCardHeader(item.FullName ?? string.Empty, item.EMail!))
 				</div>
 				<div class="card-body">
-					<div class="float-start">
-						ToDo
-					</div>
-					<div class="float-end">
-						Days <i class='fas fa-angle-left'></i>
-						or <i class='fas fa-angle-right'></i>
-					</div>
+					<ul>
+						<li>Ph. @item.Phone</li>
+						<li><p>StatusId: @item.StatusId: @item.StatusName</p></li>
+					</ul>
+					<p><small>Notes: @item.Notes</small></p>
+
 				</div>
 
-				<h4 class="text-center mb-3">@item.OtherNames</h4>
-
 				<div class="card-footer">
-					<ActionButtons OnCrudActionSelected="@ReturnedCrud" ParmCrud="Enums.Crud.Edit" IsXsOrSm="@IsXsOrSm" Id="@item.Id" />
-					<ActionButtons OnCrudActionSelected="@ReturnedCrud" ParmCrud="Enums.Crud.Delete" IsXsOrSm="@IsXsOrSm" Id="@item.Id" />
-					<ActionButtons OnCrudActionSelected="@ReturnedCrud" ParmCrud="Enums.Crud.Display" IsXsOrSm="@IsXsOrSm" Id="@item.Id" />
+					@if (@item.StatusId == RegistrationSteps.Enums.Status.StartRegistration)
+					{
+						<div class="btn-group float-end">
+							<ActionButtons OnCrudActionSelected="@ReturnedCrud" ParmCrud="Enums.Crud.Add" IsXsOrSm="@IsXsOrSm" Id="0" EMail="@item.EMail" />
+						</div>
+					}
+					else
+					{
+						<div class="btn-group float-end">
+							<ActionButtons OnCrudActionSelected="@ReturnedCrud" ParmCrud="Enums.Crud.Edit" IsXsOrSm="@IsXsOrSm" Id="@item.Id" />
+							<ActionButtons OnCrudActionSelected="@ReturnedCrud" ParmCrud="Enums.Crud.Delete" IsXsOrSm="@IsXsOrSm" Id="@item.Id" />
+							<ActionButtons OnCrudActionSelected="@ReturnedCrud" ParmCrud="Enums.Crud.Display" IsXsOrSm="@IsXsOrSm" Id="@item.Id" />
+						</div>
+					}
 				</div>
 
 			</div>
@@ -44,36 +50,40 @@
 else
 {
 	<span class="float-end mb-1">
-		<ActionButtons OnCrudActionSelected="@ReturnedCrud" ParmCrud="Enums.Crud.Add" IsXsOrSm="@IsXsOrSm" Id="0" />
 		<ActionButtons OnCrudActionSelected="@ReturnedCrud" ParmCrud="Enums.Crud.Repopulate" IsXsOrSm="@IsXsOrSm" Id="0" />
 	</span>
 
-	<TableTemplate Items="State!.Value.vwRegistrationList"
+	<TableTemplate Items="State!.Value.vwSuperUserList"
 							 HeaderCSS="table table-primary table-hover">
 		<TableHeader>
-			<th>Id</th>
-			<th>First Name</th>
-			<th>Family Name</th>
-			<th>Spouse Name</th>
+			<th>Full Name</th>
 			<th>Email</th>
 			<th>Phone</th>
 			<th>Status</th>
+			<th>Notes or HRA Acpt. Dt.</th>
 			<th class="text-center">Actions</th>
 		</TableHeader>
 
 		<RowTemplate>
-			<td>@context.Id</td>
-			<td>@context.FirstName</td>
-			<td>@context.FamilyName</td>
-			<td>@context.SpouseName</td>
+			<td>@context.FullName</td>
 			<td>@context.EMail </td>
 			<td>@context.Phone </td>
-			<td>@context.StatusId </td>
+			<td>@context.StatusName</td>
+			<td><small>@context.Notes</small></td>
 			<td class="text-center">
 				<div class="btn-group">
-					<ActionButtons OnCrudActionSelected="@ReturnedCrud" ParmCrud="Enums.Crud.Edit" IsXsOrSm="@IsXsOrSm" Id="@context.Id" />
-					<ActionButtons OnCrudActionSelected="@ReturnedCrud" ParmCrud="Enums.Crud.Delete" IsXsOrSm="@IsXsOrSm" Id="@context.Id" />
-					<ActionButtons OnCrudActionSelected="@ReturnedCrud" ParmCrud="Enums.Crud.Display" IsXsOrSm="@IsXsOrSm" Id="@context.Id" />
+
+					@if (@context.StatusId == RegistrationSteps.Enums.Status.StartRegistration)
+					{
+						<ActionButtons OnCrudActionSelected="@ReturnedCrud" ParmCrud="Enums.Crud.Add" IsXsOrSm="@IsXsOrSm" Id="0" EMail="@context.EMail" />
+					}
+					else
+					{
+						<ActionButtons OnCrudActionSelected="@ReturnedCrud" ParmCrud="Enums.Crud.Edit" IsXsOrSm="@IsXsOrSm" Id="@context.Id" />
+						<ActionButtons OnCrudActionSelected="@ReturnedCrud" ParmCrud="Enums.Crud.Delete" IsXsOrSm="@IsXsOrSm" Id="@context.Id" />
+						<ActionButtons OnCrudActionSelected="@ReturnedCrud" ParmCrud="Enums.Crud.Display" IsXsOrSm="@IsXsOrSm" Id="@context.Id" />
+					}
+
 				</div>
 			</td>
 
@@ -82,3 +92,5 @@ else
 	</TableTemplate>
 
 }
+
+<StatusInlineUL />

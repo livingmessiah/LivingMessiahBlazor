@@ -1,7 +1,7 @@
 ﻿@using System.Threading.Tasks
 
-<button @onclick="@OnButtonClicked" title="@Id"
+<button @onclick="@OnButtonClicked" title="@GetTitle()"
 				type="button" class="@ParmCrud.ButtonColor btn-sm">
 	<i class="@ParmCrud!.Icon"></i>
-	@((MarkupString)GetBr())<small>@ParmCrud.Text</small>
+	<small>@ParmCrud.Text</small>
 </button>
