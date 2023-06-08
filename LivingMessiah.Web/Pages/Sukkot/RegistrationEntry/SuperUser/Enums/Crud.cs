@@ -11,7 +11,8 @@ public abstract class Crud : SmartEnum<Crud>
 		internal const int Edit = 2;
 		internal const int Display = 3;
 		internal const int Delete = 4;
-		internal const int Repopulate = 5;
+		internal const int DeleteHRA = 5;
+		internal const int Repopulate = 6;
 	}
 	#endregion
 
@@ -20,6 +21,7 @@ public abstract class Crud : SmartEnum<Crud>
 	public static readonly Crud Edit = new EditSE();
 	public static readonly Crud Display = new DisplaySE();
 	public static readonly Crud Delete = new DeleteSE();
+	public static readonly Crud DeleteHRA = new DeleteHRASE();
 	public static readonly Crud Repopulate = new RepopulateSE();
 	#endregion
 
@@ -68,6 +70,15 @@ public abstract class Crud : SmartEnum<Crud>
 	{
 		public DeleteSE() : base($"{nameof(Id.Delete)}", Id.Delete) { }
 		public override string Text => "Delete";
+		public override string Icon => "fa fa-times";
+		public override string Color => "text-danger";
+		public override string ButtonColor => "btn btn-outline-danger";
+	}
+
+	private sealed class DeleteHRASE : Crud
+	{
+		public DeleteHRASE() : base($"{nameof(Id.DeleteHRA)}", Id.DeleteHRA) { }
+		public override string Text => "Delete HRA";
 		public override string Icon => "fa fa-times";
 		public override string Color => "text-danger";
 		public override string ButtonColor => "btn btn-outline-danger";

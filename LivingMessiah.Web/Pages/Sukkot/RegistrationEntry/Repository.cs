@@ -36,6 +36,7 @@ public interface IRepository
 	Task<int> InsertHouseRulesAgreement(string email, string timeZone);
 
 	Task<int> Delete(int id);
+	Task<int> DeleteHRA(int id);
 
 	Task<List<RegistrationLookup>> PopulateRegistrationLookup(); // used by: EditRegistrationForm (SukkotAdmin.Registration)
 }
@@ -70,6 +71,7 @@ ORDER BY FirstName
 	{
 		base.Sql = $@"
 SELECT Id, EMail, FullName, StatusId, Phone, Notes
+, IdHra
 FROM Sukkot.vwSuperUser 
 ORDER BY FullName
 ";
@@ -439,8 +441,8 @@ FROM Sukkot.vwRegistration WHERE Id = @id";
 		base.Parms.Add("@NewId", dbType: DbType.Int32, direction: ParameterDirection.Output);
 		return await WithConnectionAsync(async connection =>
 		{
-			base.log.LogDebug($"Inside {nameof(SukkotRepository)}!{nameof(InsertHouseRulesAgreement)}; About to execute sql:{base.Sql}");
-			var affectedrows = await connection.ExecuteAsync(sql: base.Sql, param: base.Parms, commandType: System.Data.CommandType.StoredProcedure);
+			base.log.LogDebug($"Inside {nameof(Repository)}!{nameof(InsertHouseRulesAgreement)}; About to execute sql:{base.Sql}");
+			var affectedRows = await connection.ExecuteAsync(sql: base.Sql, param: base.Parms, commandType: System.Data.CommandType.StoredProcedure);
 			int? x = base.Parms.Get<int?>("NewId");
 			if (x == null)
 			{
@@ -456,9 +458,6 @@ FROM Sukkot.vwRegistration WHERE Id = @id";
 		});
 	}
 
-
-
-
 	public async Task<int> Delete(int id)
 	{
 		base.Sql = "Sukkot.stpRegistrationDelete";
@@ -470,4 +469,17 @@ FROM Sukkot.vwRegistration WHERE Id = @id";
 			return affectedRows;
 		});
 	}
+
+
+	public async Task<int> DeleteHRA(int id)
+	{
+		base.Sql = "Sukkot.stpHRADelete";
+		base.Parms = new DynamicParameters(new { Id = id });
+		return await WithConnectionAsync(async connection =>
+		{
+			var affectedRows = await connection.ExecuteAsync(sql: base.Sql, param: base.Parms, commandType: System.Data.CommandType.StoredProcedure);
+			return affectedRows;
+		});
+	}
+
 }

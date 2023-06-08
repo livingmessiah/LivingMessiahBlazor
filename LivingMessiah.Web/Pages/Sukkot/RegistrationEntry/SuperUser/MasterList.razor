@@ -30,7 +30,8 @@
 					@if (@item.StatusId == RegistrationSteps.Enums.Status.StartRegistration)
 					{
 						<div class="btn-group float-end">
-							<ActionButtons OnCrudActionSelected="@ReturnedCrud" ParmCrud="Enums.Crud.Add" IsXsOrSm="@IsXsOrSm" Id="0" EMail="@item.EMail" />
+							<ActionButtons OnCrudActionSelected="@ReturnedCrud" ParmCrud="Enums.Crud.Add" IsXsOrSm="@IsXsOrSm" Id="@item.IdHra" EMail="@item.EMail" />
+							<ActionButtons OnCrudActionSelected="@ReturnedCrud" ParmCrud="Enums.Crud.DeleteHRA" IsXsOrSm="@IsXsOrSm" Id="@item.IdHra" />
 						</div>
 					}
 					else
@@ -75,7 +76,8 @@ else
 
 					@if (@context.StatusId == RegistrationSteps.Enums.Status.StartRegistration)
 					{
-						<ActionButtons OnCrudActionSelected="@ReturnedCrud" ParmCrud="Enums.Crud.Add" IsXsOrSm="@IsXsOrSm" Id="0" EMail="@context.EMail" />
+						<ActionButtons OnCrudActionSelected="@ReturnedCrud" ParmCrud="Enums.Crud.Add" IsXsOrSm="@IsXsOrSm" Id="@context.IdHra" EMail="@context.EMail" />
+						<ActionButtons OnCrudActionSelected="@ReturnedCrud" ParmCrud="Enums.Crud.DeleteHRA" IsXsOrSm="@IsXsOrSm" Id="@context.IdHra" />
 					}
 					else
 					{

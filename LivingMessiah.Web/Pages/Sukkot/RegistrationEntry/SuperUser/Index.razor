@@ -6,6 +6,8 @@
 @using LivingMessiah.Web.SmartEnums
 @using LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.AddOrEdit
 @using LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.Detail
+@*@using HRA = LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.HouseRulesAgreement.Form*@
+@using LivingMessiah.Web.Pages.Sukkot.RegistrationEntry
 @using LoginLink = LivingMessiah.Web.Links.Account
 
 @inherits Fluxor.Blazor.Web.Components.FluxorComponent
@@ -26,7 +28,8 @@
 
 		@if (State!.Value.VisibleComponent == Enums.VisibleComponent.MasterList)
 		{
-			<AddHraForm />
+			
+			<LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.HouseRulesAgreement.Form />
 			<br />
 
 			<div class="@MediaQuery.XsOrSm.DivClass">
@@ -43,7 +46,7 @@
 
 			@if (State!.Value.VisibleComponent == Enums.VisibleComponent.AddEditForm)
 			{
-				<Form />
+				<LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.AddOrEdit.Form />
 			}
 			else
 			{

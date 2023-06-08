@@ -29,6 +29,7 @@ public partial class ToasterSuperUser
 
 		SubscribeToAction<Submitted_Response_Success_Action>(Submitted_Response_Success_Toast);
 
+		SubscribeToAction<Response_Message_Action>(Response_Message_Toast);
 
 		base.OnInitialized();
 	}
@@ -55,4 +56,31 @@ public partial class ToasterSuperUser
 	private void Submitted_Response_Success_Toast(Submitted_Response_Success_Action action) 
 		=> Toast!.ShowSuccess($"Submit {action.SuccessMessage}");
 
+	private void Response_Message_Toast(Response_Message_Action action)
+	{
+		switch (action.MessageType)
+		{
+			case Enums.ResponseMessage.Success:
+				Toast!.ShowSuccess(action.Message);
+				break;
+
+			case Enums.ResponseMessage.Warning:
+				Toast!.ShowWarning(action.Message);
+				break;
+
+			case Enums.ResponseMessage.Failure:
+				Toast!.ShowError(action.Message);
+				break;
+
+			case Enums.ResponseMessage.Info:
+				Toast!.ShowInfo(action.Message);
+				break;
+
+			//default:
+			//	break;
+		}
+	}
+
 }
+
+

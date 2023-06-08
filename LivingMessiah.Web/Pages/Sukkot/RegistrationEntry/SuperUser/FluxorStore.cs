@@ -47,10 +47,11 @@ public record Get_DisplayItem_Warning_Action(string WarningMessage);
 public record Get_DisplayItem_Failure_Action(string ErrorMessage);
 public record Display_Action(int Id);
 
+// ToDo: "Submitting_Request" is to generic because I
 // 1.3 Actions related to Form Submission
 public record Submitting_Request_Action(FormVM FormVM, Enums.FormMode? FormMode);
-public record Submitted_Response_Success_Action(string SuccessMessage);
-public record Submitted_Response_Failure_Action(string ErrorMessage);
+public record Submitted_Response_Success_Action(string SuccessMessage);  // These should be generic Success_Action
+public record Submitted_Response_Failure_Action(string ErrorMessage);    // These should be generic Failure_Action, same for Warning
 
 public record Add_HRA_Action(string? EMail, string TimeZone);
 
@@ -63,9 +64,15 @@ public record Delete_Action(int Id);
 public record DeleteSuccess_Action(string SuccessMessage);
 public record DeleteFailure_Action(string ErrorMessage);
 
+public record Delete_HRA_Action(int Id);
+
+
 // 1.6 Display actions
 public record Set_PageHeader_For_Index_Action(PageHeaderVM PageHeaderVM);
 public record Set_PageHeader_For_Detail_Action(string Title, string Icon, string Color, int Id);
+
+public record Response_Message_Action(ResponseMessage MessageType, string Message);  
+
 #endregion
 
 
@@ -259,16 +266,6 @@ public static class Reducers
 	}
 
 	[ReducerMethod]
-	public static State OnDelete(
-		State state, Delete_Action action)
-	{
-		return state with
-		{
-			VisibleComponent = Enums.VisibleComponent.MasterList,
-		};
-	}
-
-	[ReducerMethod]
 	public static State On_Set_PageHeader_For_Index(
 	State state, Set_PageHeader_For_Index_Action action)
 	{
@@ -424,8 +421,7 @@ public class Effects
 		try
 		{
 			id = await db.InsertHouseRulesAgreement(action.EMail!, action.TimeZone);
-			//var sprocTuple = await db.CreateRegistration(action.FormVM);
-			dispatcher.Dispatch(new Submitted_Response_Success_Action("Registration Added id: ???"));  //SEE NOTES ON SpecialEventsRepository
+			dispatcher.Dispatch(new Submitted_Response_Success_Action($"House Rules Agreement added; id: {id}"));  
 		}
 		catch (Exception ex)
 		{
@@ -475,12 +471,31 @@ public class Effects
 		try
 		{
 			var affectedRows = await db.Delete(action.Id);
-			dispatcher.Dispatch(new DeleteSuccess_Action($"Registration {action.Id} has been deleted"));
+			dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Success, $"Registration {action.Id} has been deleted"));
 		}
 		catch (Exception ex)
 		{
 			Logger.LogError(ex, string.Format("...Inside catch of {0}", inside));
-			dispatcher.Dispatch(new DeleteFailure_Action($"An invalid operation occurred, contact your administrator"));
+			dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Failure, "An invalid operation occurred, contact your administrator"));
 		}
 	}
+
+
+	[EffectMethod]
+	public async Task DeleteHRA(Delete_HRA_Action action, IDispatcher dispatcher)
+	{
+		string inside = $"{nameof(Effects)}!{nameof(DeleteHRA)}; Id: {action.Id}";
+		Logger.LogDebug(string.Format("Inside {0}; Id: {1}", inside, action.Id));
+		try
+		{
+			var affectedRows = await db.DeleteHRA(action.Id);
+			dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Success, $"House Rules Agreement {action.Id} has been deleted"));
+		}
+		catch (Exception ex)
+		{
+			Logger.LogError(ex, string.Format("...Inside catch of {0}", inside));
+			dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Failure, "An invalid operation occurred, contact your administrator"));
+		}
+	}
+
 }

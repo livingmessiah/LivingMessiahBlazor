@@ -37,7 +37,3 @@ public class FormVMValidator : AbstractValidator<FormVM>
 	}
 }
 
-/*
- Move to Add HRA
-			RuleFor(p => p.EMail).EmailAddress();
- */

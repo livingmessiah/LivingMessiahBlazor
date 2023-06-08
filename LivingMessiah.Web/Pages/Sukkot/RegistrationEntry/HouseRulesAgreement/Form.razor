@@ -1,15 +1,13 @@
-﻿@using LivingMessiah.Web.Shared.Sukkot
-@using LivingMessiah.Web.Pages.SukkotAdmin.Registration.Domain
-
-@using LivingMessiah.Web.Pages.SukkotAdmin.Donations.Domain
+﻿@using Blazored.FluentValidation;
+@using LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.HouseRulesAgreement
 
 @inherits Fluxor.Blazor.Web.Components.FluxorComponent
 
 
 <EditForm Model="VM"
-					OnValidSubmit="Add_ButtonClick"
+					OnValidSubmit="HandleValidSubmit"
 					class="card card-body bg-light mt-5">
-	<DataAnnotationsValidator />
+	<FluentValidationValidator @ref="_fluentValidationValidator" DisableAssemblyScanning="@true" />
 	<ValidationSummary />
 
 	<div class="row mt-n2">
@@ -17,7 +15,7 @@
 		<div class="col-sm-8">
 			<div class="mb-3">
 				<label for="familyName" class="control-label">Email</label>
-				<InputText id="familyName" class="form-control" @bind-Value="VM.EMail" />
+				<InputText id="familyName" class="form-control" @bind-Value="VM!.EMail" />
 				<ValidationMessage For="@(() => VM.EMail)" />
 			</div>
 		</div>

@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Components;
 using LivingMessiah.Web.Shared;
-//using Blazored.Modal.Services;
 using Fluxor;
 using System;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
+using System.Reflection;
+using Blazored.Modal.Services;
+using Blazored.Modal;
 
 namespace LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.SuperUser;
 
@@ -16,7 +18,7 @@ public partial class MasterList
 
 	[Parameter, EditorRequired] public bool IsXsOrSm { get; set; }
 
-	//[CascadingParameter] IModalService Modal { get; set; } = default!;
+	[CascadingParameter] IModalService Modal { get; set; } = default!;
 
 	protected override void OnInitialized()
 	{
@@ -52,19 +54,34 @@ public partial class MasterList
 				break;
 
 			case nameof(Enums.Crud.Delete):
-				await Task.Delay(0); // ToDo: Delete this
-				//if (await IsModalConfirmed(args.Id) == true)
-				//{
-				//	Dispatcher!.Dispatch(new Delete_Action(args.Id));
-				//	Dispatcher!.Dispatch(new Get_List_Action());
-				//}
+				if (await IsModalConfirmed(args.Id, "Registration") == true)
+				{
+					Dispatcher!.Dispatch(new Delete_Action(args.Id));
+					Dispatcher!.Dispatch(new Get_List_Action());
+				}
+				break;
 
+			case nameof(Enums.Crud.DeleteHRA):
+				if (await IsModalConfirmed(args.Id, "House Rules Agreement (HRA)") == true)
+				{
+					Dispatcher!.Dispatch(new Delete_HRA_Action(args.Id));
+					Dispatcher!.Dispatch(new Get_List_Action());
+				}
 				break;
 
 			case "Repopulate":
 				Dispatcher!.Dispatch(new Get_List_Action());
 				break;
 		}
+	}
+
+
+	private async Task<bool> IsModalConfirmed(int id, string title)
+	{
+		var parameters = new ModalParameters { { nameof(ConfirmDeleteModal.Message), $"{title} Id: {id}" } };
+		var modal = Modal.Show<ConfirmDeleteModal>("Confirmation Required", parameters);
+		var result = await modal.Result;
+		return result.Confirmed;
 	}
 
 	private string GetCardHeader(string fullName, string email)

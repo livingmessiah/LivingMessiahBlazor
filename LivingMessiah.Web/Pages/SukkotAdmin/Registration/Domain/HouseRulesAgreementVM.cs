@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace LivingMessiah.Web.Pages.SukkotAdmin.Registration.Domain;
 
+//ToDo Delete, use LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.HouseRulesAgreement.FormVM
 public class HouseRulesAgreementVM
 {
 	[Required]

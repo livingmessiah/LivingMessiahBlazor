@@ -14,6 +14,7 @@ public class vwSuperUser
 		}
 	}
 
+	public int IdHra { get; set; }
 
 	/*
 	public string FullNameOrEMail

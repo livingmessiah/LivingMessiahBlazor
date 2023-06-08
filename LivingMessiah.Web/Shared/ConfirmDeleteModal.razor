@@ -1,0 +1,16 @@
+﻿@*@using Blazored.Modal;
+@using Blazored.Modal.Services;*@
+
+<div>
+	<p>Click <b class="text-danger">Delete</b> button to delete...</p>
+	<h4 class="my3">@Message</h4>
+	<button @onclick="Delete" class="btn btn-danger">Delete</button>
+	<button @onclick="Cancel" class="btn btn-secondary">Cancel</button>
+</div>
+
+@code {
+	[CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; } = default!;
+	[Parameter] public string? Message { get; set; }
+	async Task Delete() => await BlazoredModal.CloseAsync(ModalResult.Ok(true));
+	async Task Cancel() => await BlazoredModal.CancelAsync();
+}
