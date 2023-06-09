@@ -25,8 +25,6 @@ public interface ISukkotService
 	Task<int> DeleteConfirmed(int id);
 	Task<RegistrationSummary> Summary(int id, ClaimsPrincipal user);
 	Task<IndexVM> GetRegistrationStep();
-	Task<int> AddHouseRulesAgreementRecord(string email, string timeZone);
-	Task<int> DeleteHouseRulesAgreementRecord(string email);
 }
 
 public class SukkotService : ISukkotService
@@ -163,44 +161,7 @@ public class SukkotService : ISukkotService
 		return vm;
 	}
 
-	public async Task<int> AddHouseRulesAgreementRecord(string email, string timeZone)
-	{
-		Logger.LogInformation(string.Format("Inside {0}, email:{1}, timeZone:{2}"
-			, nameof(SukkotService) + "!" + nameof(AddHouseRulesAgreementRecord), email, timeZone));
-		int id = 0;
-		try
-		{
-			id = await db.InsertHouseRulesAgreement(email, timeZone);
-		}
-		catch (Exception ex)
-		{
-			LogExceptionMessage = $"Inside {nameof(AddHouseRulesAgreementRecord)}, db.{nameof(db.InsertHouseRulesAgreement)}";
-			Logger.LogError(ex, LogExceptionMessage, id);
-			UserInterfaceMessage += "An invalid operation occurred adding House Rules Agreement record, contact your administrator";
-			throw new InvalidOperationException(UserInterfaceMessage);
-		}
-		return id;
-	}
 
-
-	public async Task<int> DeleteHouseRulesAgreementRecord(string email)
-	{
-		int count = 0;
-		try
-		{
-			Logger.LogInformation("Delete House Rules Agreement Record");
-			count = await db.DeleteHouseRulesAgreementRecord(email);
-			Logger.LogInformation(string.Format("House Rules Agreement Record deleted for email {0}; affected rows={1}", email, count));
-		}
-		catch (Exception ex)
-		{
-			LogExceptionMessage = $"Inside {nameof(DeleteHouseRulesAgreementRecord)}, {nameof(db.DeleteHouseRulesAgreementRecord)}, email={email}";
-			Logger.LogError(ex, LogExceptionMessage);
-			UserInterfaceMessage += "An invalid operation occurred during House Rules Agreement deletion, contact your administrator";
-			throw new InvalidOperationException(UserInterfaceMessage);
-		}
-		return count;
-	}
 		
 	public async Task<vwRegistration> Details(int id, ClaimsPrincipal user, bool showPrintInstructionMessage = false)
 	{

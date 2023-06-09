@@ -7,10 +7,10 @@ public abstract class Crud : SmartEnum<Crud>
 	#region Id's
 	private static class Id
 	{
-		internal const int Add = 1;
+		internal const int AddRegistration = 1;
 		internal const int Edit = 2;
 		internal const int Display = 3;
-		internal const int Delete = 4;
+		internal const int DeleteRegistration = 4;
 		internal const int DeleteHRA = 5;
 		internal const int Repopulate = 6;
 	}
@@ -41,8 +41,8 @@ public abstract class Crud : SmartEnum<Crud>
 
 	private sealed class AddSE : Crud
 	{
-		public AddSE() : base($"{nameof(Id.Add)}", Id.Add) { }
-		public override string Text => "Add";
+		public AddSE() : base($"{nameof(Id.AddRegistration)}", Id.AddRegistration) { }
+		public override string Text => "Add Reg.";
 		public override string Icon => "fas fa-plus";
 		public override string Color => "text-success";
 		public override string ButtonColor => "btn btn-outline-success";
@@ -68,8 +68,8 @@ public abstract class Crud : SmartEnum<Crud>
 
 	private sealed class DeleteSE : Crud
 	{
-		public DeleteSE() : base($"{nameof(Id.Delete)}", Id.Delete) { }
-		public override string Text => "Delete";
+		public DeleteSE() : base($"{nameof(Id.DeleteRegistration)}", Id.DeleteRegistration) { }
+		public override string Text => "Delete Reg.";
 		public override string Icon => "fa fa-times";
 		public override string Color => "text-danger";
 		public override string ButtonColor => "btn btn-outline-danger";

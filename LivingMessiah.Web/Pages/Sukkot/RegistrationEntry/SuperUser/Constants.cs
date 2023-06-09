@@ -25,4 +25,10 @@ public static class Constants
 		public const string Text = "Cancel";
 		public const string Color = "btn btn-outline-secondary btn-sm";
 	}
+
+	public static class Effects
+	{
+		public const string ResponseMessageFailure = "An invalid operation occurred, contact your administrator";
+	}
+
 }

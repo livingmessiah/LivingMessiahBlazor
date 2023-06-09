@@ -28,7 +28,6 @@ public abstract class NavButton : SmartEnum<NavButton>
 	public static readonly NavButton Donation = new DonationSE();
 	public static readonly NavButton RegistrationSteps = new RegistrationStepsSE();
 	public static readonly NavButton RegistrationStepsBack = new RegistrationStepsBackSE();
-	public static readonly NavButton Add = new AddSE();
 	// SE=SmartEnum
 	#endregion
 
@@ -107,17 +106,6 @@ public abstract class NavButton : SmartEnum<NavButton>
 		public override string Icon => Link.RegistrationSteps.BackToButtonIcon;
 		public override string Css => "btn btn-success btn-lg";  
 		public override string Route => Link.RegistrationSteps.Index;
-		public override string RouteSuffix => "";
-	}
-
-	private sealed class AddSE : NavButton
-	{
-		public AddSE() : base($"{nameof(Id.Add)}", Id.Add) { }
-		public override string Label => "Add";
-		public override string Title => "Registration Add";
-		public override string Icon => "fas fa-plus";
-		public override string Css => "btn btn-success";
-		public override string Route => Link.HouseRulesAgreement.Index;
 		public override string RouteSuffix => "";
 	}
 

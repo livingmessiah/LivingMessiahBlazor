@@ -1,5 +1,4 @@
 ﻿using Fluxor;
-using LivingMessiah.Web.Enums;
 using LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.SuperUser.Enums;
 using LivingMessiah.Web.Pages.Sukkot.RegistrationEntry;
 using Microsoft.Extensions.Logging;
@@ -9,49 +8,32 @@ using System;
 using LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.AddOrEdit;
 using LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.Detail;
 using LivingMessiah.Web.Pages.Sukkot.Enums;
-using LivingMessiah.Web.Pages.UpcomingEventsAdmin.EditMarkdown;
-/*
 
-Show HRA tables with not registration just like  NoRegistrationTable (SukkotAdmin.HouseRulesAgreement)
-- Include a Add Button on top
-- Include a Delete Button Column
-
-Show Combo GetEmailForm and HRA Modal Agreement Button
-
-Show Registered Table
-- Populate Columns with Registrations List<TableDetails>?
-- Include a Add Button on top
-- Include a Edit/View/Delete Button Action Columns
-
-*/
 namespace LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.SuperUser;
 
 #region 1. Action
+
+// 1.0 Common actions
+public record Set_VisibleComponent_Action(VisibleComponent VisibleComponent);
+
 // 1.1 GetList() actions
 public record Get_List_Action();
-public record Get_List_Success_Action(List<Data.vwSuperUser> vwSuperUserList);
-public record Get_List_Warning_Action(string WarningMessage);
-public record Get_List_Failure_Action(string ErrorMessage);
+public record Set_Data_MasterList_Action(List<Data.vwSuperUser> vwSuperUserList);
 
 // 1.2 GetItem() actions
-public record Get_Item_Action(int Id, Enums.FormMode? FormMode);
-public record Get_Item_Success_Action(FormVM? FormVM);
-public record Get_Item_Warning_Action(string WarningMessage);
-public record Get_Item_Failure_Action(string ErrorMessage);
+public record Get_EditItem_Action(int Id, Enums.FormMode? FormMode); // FormMode is always Edit
+public record Set_Registration_FormVM_Action(FormVM? FormVM);
 public record Edit_Action(int Id);
 
 // 1.2.1 GetDisplayItem() actions
 public record Get_DisplayItem_Action(int Id);
-public record Get_DisplayItem_Success_Action(DisplayVM? DisplayVM);
-public record Get_DisplayItem_Warning_Action(string WarningMessage);
-public record Get_DisplayItem_Failure_Action(string ErrorMessage);
+public record Set_DisplayVM_Action(DisplayVM? DisplayVM);
+
 public record Display_Action(int Id);
 
-// ToDo: "Submitting_Request" is to generic because I
+// ToDo: "Submitting_Request" is to generic because I have two forms one for HRA and one for Registration
 // 1.3 Actions related to Form Submission
 public record Submitting_Request_Action(FormVM FormVM, Enums.FormMode? FormMode);
-public record Submitted_Response_Success_Action(string SuccessMessage);  // These should be generic Success_Action
-public record Submitted_Response_Failure_Action(string ErrorMessage);    // These should be generic Failure_Action, same for Warning
 
 public record Add_HRA_Action(string? EMail, string TimeZone);
 
@@ -61,9 +43,6 @@ public record Add_Action(string? EMail); // , int StatusId
 
 // 1.5 Delete() actions
 public record Delete_Action(int Id);
-public record DeleteSuccess_Action(string SuccessMessage);
-public record DeleteFailure_Action(string ErrorMessage);
-
 public record Delete_HRA_Action(int Id);
 
 
@@ -81,11 +60,8 @@ public record State
 {
 	public Enums.VisibleComponent? VisibleComponent { get; init; }
 	public Enums.FormMode? FormMode { get; init; }
-	public string? SuccessMessage { get; init; }
-	public string? WarningMessage { get; init; }
-	public string? ErrorMessage { get; init; }
-	public FormVM? FormVM { get; init; }
-	public string? HRA_EMail { get; init; } 
+	public FormVM? FormVM { get; init; } // Consider renaming to RegistrationFormVM
+	public string? HRA_EMail { get; init; } // This doesn't have a FormVM
 	public DisplayVM? DisplayVM { get; init; }
 	public List<Data.vwSuperUser>? vwSuperUserList { get; init; }
 	public PageHeaderVM? PageHeaderVM { get; init; }
@@ -103,9 +79,6 @@ public class FeatureImplementation : Feature<State>
 		{
 			FormMode = null,
 			VisibleComponent = Enums.VisibleComponent.MasterList,
-			SuccessMessage = string.Empty,
-			WarningMessage = string.Empty,
-			ErrorMessage = string.Empty,
 			PageHeaderVM = Constants.GetPageHeaderForIndexVM(),
 			FormVM = new FormVM(),
 			HRA_EMail = string.Empty,
@@ -120,45 +93,30 @@ public static class Reducers
 {
 
 	[ReducerMethod]
-	public static State On_Get_List_Success(
-		State state, Get_List_Success_Action action)
+	public static State On_Set_VisibleComponent(
+		State state, Set_VisibleComponent_Action action)
 	{
 		return state with
 		{
-			VisibleComponent = Enums.VisibleComponent.MasterList,
-			WarningMessage = string.Empty,
-			ErrorMessage = string.Empty,
+			VisibleComponent = action.VisibleComponent
+		};
+	}
+
+	[ReducerMethod]
+	public static State On_Set_Data_MasterList(
+		State state, Set_Data_MasterList_Action action)
+	{
+		return state with
+		{
 			vwSuperUserList = action.vwSuperUserList
 		};
 	}
 
-	[ReducerMethod]
-	public static State On_Get_List_Warning(
-		State state, Get_List_Warning_Action action)
-	{
-		return state with
-		{
-			VisibleComponent = Enums.VisibleComponent.MasterList,
-			WarningMessage = action.WarningMessage
-		};
-	}
+
 
 	[ReducerMethod]
-	public static State On_Get_List_Failure(
-		State state, Get_List_Failure_Action action)
-	{
-		return state with { ErrorMessage = action.ErrorMessage };
-	}
-
-	[ReducerMethod]
-	public static State On_Get_Item(State state, Get_Item_Action action)
-	{
-		return state with { FormMode = action.FormMode };
-	}
-
-	[ReducerMethod]
-	public static State On_Get_Item_Success(
-		State state, Get_Item_Success_Action action)
+	public static State On_Set_Registration_FormVM(
+	State state, Set_Registration_FormVM_Action action)
 	{
 		return state with
 		{
@@ -167,25 +125,23 @@ public static class Reducers
 	}
 
 	[ReducerMethod]
-	public static State On_Get_Item_Failure(
-			State state, Get_Item_Failure_Action action)
+	public static State On_Get_EditItem(State state, Get_EditItem_Action action)
 	{
-		return state with
-		{
-			VisibleComponent = Enums.VisibleComponent.MasterList,
-			ErrorMessage = action.ErrorMessage
-		};
+		return state with { FormMode = action.FormMode };
 	}
 
+	// Why do I need this ReducerMethod if it's not changing the State?
 	[ReducerMethod]
 	public static State On_Get_DisplayItem_Action(State state, Get_DisplayItem_Action action)
 	{
 		return state;
 	}
 
+
+
 	[ReducerMethod]
-	public static State On_Get_DisplayItem_Success(
-		State state, Get_DisplayItem_Success_Action action)
+	public static State On_Set_DisplayVM(
+	State state, Set_DisplayVM_Action action)
 	{
 		return state with
 		{
@@ -193,35 +149,12 @@ public static class Reducers
 		};
 	}
 
-
 	[ReducerMethod]
 	public static State On_Submitting_Request(
 		State state, Submitting_Request_Action action)
 	{
 		return state with { FormMode = action.FormMode };
 	}
-
-	public static State On_Submitted_Response_Success(State state)
-	{
-		return state with
-		{
-			VisibleComponent = Enums.VisibleComponent.MasterList,
-			SuccessMessage = ""
-		};
-	}
-
-
-	[ReducerMethod]
-	public static State On_Submitted_Response_Failure(
-			State state, Submitted_Response_Failure_Action action)
-	{
-		return state with
-		{
-			ErrorMessage = action.ErrorMessage,
-			VisibleComponent = Enums.VisibleComponent.MasterList
-		};
-	}
-
 
 	[ReducerMethod]
 	public static State On_Add_HRA(
@@ -307,6 +240,8 @@ public class Effects
 		string inside = nameof(Effects) + "!" + nameof(GetList) + "!" + nameof(Get_List_Action);
 
 		Logger.LogDebug(string.Format("Inside {0}", inside));
+		dispatcher.Dispatch(new Set_VisibleComponent_Action(VisibleComponent.MasterList));
+		
 		try
 		{
 			List<Data.vwSuperUser> vwSuperUserList = new();
@@ -314,19 +249,32 @@ public class Effects
 
 			if (vwSuperUserList is not null)
 			{
-				dispatcher.Dispatch(new Get_List_Success_Action(vwSuperUserList));
+				dispatcher.Dispatch(new Set_Data_MasterList_Action(vwSuperUserList));
+				dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Success, "Some Registrations Found"));
 			}
 			else
 			{
 				Logger.LogWarning(string.Format("...{0}; {1} is null", inside, nameof(vwSuperUserList)));
-				dispatcher.Dispatch(new Get_List_Warning_Action("No Registrations Found"));
+				dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Warning, "No Registrations Found"));
 			}
 		}
 		catch (Exception ex)
 		{
 			Logger.LogError(ex, string.Format("...Inside catch of {0}", inside));
-			dispatcher.Dispatch(new Get_List_Failure_Action("An invalid operation occurred, contact your administrator."));
+			//dispatcher.Dispatch(new Get_List_Failure_Action("An invalid operation occurred, contact your administrator."));
+			dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Failure, Constants.Effects.ResponseMessageFailure));
 		}
+
+		/*
+		Question: 
+		  regardless if vwSuperUserList ends up having data, no data, or an exception occurred, 
+			should I always do a dispatch Set_Data_MasterList_Action(vwSuperUserList) ??
+
+		finally 
+		{
+			dispatcher.Dispatch(new Set_Data_MasterList_Action(vwSuperUserList));
+		}
+		*/
 	}
 
 
@@ -343,32 +291,32 @@ public class Effects
 			Logger.LogDebug(string.Format("Inside {0}", inside));
 			try
 			{
-				//action.FormVM.StatusId = RegistrationSteps.Enums.Status.StartRegistration;
 				var sprocTuple = await db.CreateRegistration(action.FormVM);
-				dispatcher.Dispatch(new Submitted_Response_Success_Action(sprocTuple.Item3));  // "Registration Added id: ???"
+				dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Success, sprocTuple.Item3));
 				//SEE NOTES ON SpecialEventsRepository 
 			}
 			catch (Exception ex)
 			{
 				Logger.LogError(ex, string.Format("...Inside catch of {0}", inside));
-				dispatcher.Dispatch(new Submitted_Response_Failure_Action($"An invalid operation occurred, contact your administrator. Action: {action.FormMode.Name}"));
+				dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Failure, Constants.Effects.ResponseMessageFailure));
+				dispatcher.Dispatch(new Set_VisibleComponent_Action(VisibleComponent.MasterList));
 			}
 		}
 		else
 		{
-			//string inside = $"{nameof(Effects)}!{nameof(Submit)}; Action: {action.FormMode.Name}";
 			Logger.LogDebug(string.Format("Inside {0}; Id: {1}", inside, action.FormVM.Id));
 			try
 			{
 				var sprocTuple = await db.UpdateRegistration(action.FormVM);
-				dispatcher.Dispatch(new Submitted_Response_Success_Action(
-					$"Registration Updated for id: [{action.FormVM.Id}], Affected Rows: {sprocTuple.Item1}"));  //sprocTuple.RowsAffected
+				dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Success
+					, $"Registration Updated for id: [{action.FormVM.Id}], Affected Rows: {sprocTuple.Item1}")); //sprocTuple.RowsAffected
 			}
 			catch (Exception ex)
 			{
 				Logger.LogError(ex, string.Format("...Inside catch of {0}", inside));
-				dispatcher.Dispatch(new Submitted_Response_Failure_Action(
-					$"An invalid operation occurred, contact your administrator. Action: {action.FormMode.Name}"));
+				dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Failure
+					, $"{Constants.Effects.ResponseMessageFailure}. Action: {action.FormMode.Name}"));
+				dispatcher.Dispatch(new Set_VisibleComponent_Action(VisibleComponent.MasterList));
 			}
 		}
 
@@ -377,7 +325,7 @@ public class Effects
 
 
 	[EffectMethod]
-	public async Task GetItem(Get_Item_Action action, IDispatcher dispatcher)
+	public async Task GetItem(Get_EditItem_Action action, IDispatcher dispatcher)
 	{
 		string inside = $"{nameof(Effects)}!{nameof(GetItem)};  Action: {nameof(action.FormMode.Name)}; Id: {action.Id}";
 
@@ -390,7 +338,8 @@ public class Effects
 			if (formVM is null)
 			{
 				Logger.LogWarning(string.Format("...{0}; {1} is null", inside, nameof(formVM)));
-				dispatcher.Dispatch(new Get_Item_Warning_Action($"Registration Not Found; Id: {action.Id}"));
+				//dispatcher.Dispatch(new Get_Item_Warning_Action($"Registration Not Found; Id: {action.Id}"));
+				dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Warning, $"Registration Not Found; Id: {action.Id}"));
 			}
 			else
 			{
@@ -399,14 +348,16 @@ public class Effects
 				formVM!.AttendanceDateList2ndMonth = tuple.week2!;
 				formVM!.Status = RegistrationSteps.Enums.Status.FromValue(formVM!.StatusId);
 
-				dispatcher.Dispatch(new Get_Item_Success_Action(formVM));
+				dispatcher.Dispatch(new Set_Registration_FormVM_Action(formVM));
+				dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Info, $"Got {formVM!.FamilyName!}"));
 				dispatcher.Dispatch(new Edit_Action(action.Id));
 			}
 		}
 		catch (Exception ex)
 		{
 			Logger.LogError(ex, string.Format("...Inside catch of {0}", inside));
-			dispatcher.Dispatch(new Get_Item_Failure_Action("An invalid operation occurred, contact your administrator"));
+			dispatcher.Dispatch(new Set_VisibleComponent_Action(VisibleComponent.MasterList));  // ToDo: does this make sense?
+			dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Failure, Constants.Effects.ResponseMessageFailure));
 		}
 	}
 
@@ -421,12 +372,14 @@ public class Effects
 		try
 		{
 			id = await db.InsertHouseRulesAgreement(action.EMail!, action.TimeZone);
-			dispatcher.Dispatch(new Submitted_Response_Success_Action($"House Rules Agreement added; id: {id}"));  
+			dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Success, $"House Rules Agreement added; id: {id}"));
 		}
 		catch (Exception ex)
 		{
 			Logger.LogError(ex, string.Format("...Inside catch of {0}", inside));
-			dispatcher.Dispatch(new Submitted_Response_Failure_Action($"An invalid operation occurred, contact your administrator. Action: {action.EMail}"));
+			dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Failure
+			, $"{Constants.Effects.ResponseMessageFailure}. Email: {action.EMail}"));
+			dispatcher.Dispatch(new Set_VisibleComponent_Action(VisibleComponent.MasterList));
 		}
 	}
 
@@ -444,7 +397,7 @@ public class Effects
 			if (displayVM is null)
 			{
 				Logger.LogWarning(string.Format("...{0}; {1} is null", inside, nameof(displayVM)));
-				dispatcher.Dispatch(new Get_DisplayItem_Warning_Action($"Registration [Display] Not Found; Id: {action.Id}"));
+				dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Warning, $"Registration [Display] Not Found; Id: {action.Id}"));
 			}
 			else
 			{
@@ -452,14 +405,15 @@ public class Effects
 				displayVM!.AttendanceDateList = tuple.week1;
 				displayVM!.AttendanceDateList2ndMonth = tuple.week2!;
 				Logger.LogDebug(string.Format("...FullName: {0}", displayVM!.FullName(false)));
-				dispatcher.Dispatch(new Get_DisplayItem_Success_Action(displayVM));  //displayVM!.FullName(false)
+				dispatcher.Dispatch(new Set_DisplayVM_Action(displayVM));
+				dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Info, $"Got {displayVM!.FullName(false)}"));
 				dispatcher.Dispatch(new Display_Action(action.Id));
 			}
 		}
 		catch (Exception ex)
 		{
 			Logger.LogError(ex, string.Format("...Inside catch of {0}", inside));
-			dispatcher.Dispatch(new Get_DisplayItem_Failure_Action("An invalid operation occurred, contact your administrator"));
+			dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Failure, Constants.Effects.ResponseMessageFailure));
 		}
 	}
 
@@ -476,7 +430,7 @@ public class Effects
 		catch (Exception ex)
 		{
 			Logger.LogError(ex, string.Format("...Inside catch of {0}", inside));
-			dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Failure, "An invalid operation occurred, contact your administrator"));
+			dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Failure, Constants.Effects.ResponseMessageFailure));
 		}
 	}
 
@@ -494,7 +448,7 @@ public class Effects
 		catch (Exception ex)
 		{
 			Logger.LogError(ex, string.Format("...Inside catch of {0}", inside));
-			dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Failure, "An invalid operation occurred, contact your administrator"));
+			dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Failure, Constants.Effects.ResponseMessageFailure));
 		}
 	}
 

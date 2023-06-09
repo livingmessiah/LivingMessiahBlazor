@@ -20,10 +20,6 @@ public interface ISukkotRepository
 	Task<int> Update(RegistrationPOCO registration); // No references
 	Task<int> Delete(int id);
 	Task<RegistrationSummary> GetRegistrationSummary(int id);
-
-	Task<int> InsertHouseRulesAgreement(string email, string timeZone);
-	Task<List<vwHouseRulesAgreement>> NoRegistration();
-	Task<int> DeleteHouseRulesAgreementRecord(string email);
 }
 
 public class SukkotRepository : BaseRepositoryAsync, ISukkotRepository
@@ -146,9 +142,9 @@ WHERE Id = {registration.Id};
 		base.Parms = new DynamicParameters(new { RegistrationId = id });
 		return await WithConnectionAsync(async connection =>
 		{
-			var affectedrows = await connection.ExecuteAsync(sql: base.Sql, param: base.Parms, commandType: System.Data.CommandType.StoredProcedure);
-			//if (affectedrows < 0) { throw new Exception($"Registration NOT Deleted"); }
-			return affectedrows;
+			var affectedRows = await connection.ExecuteAsync(sql: base.Sql, param: base.Parms, commandType: System.Data.CommandType.StoredProcedure);
+			//if (affectedRows < 0) { throw new Exception($"Registration NOT Deleted"); }
+			return affectedRows;
 		});
 	}
 
@@ -170,61 +166,6 @@ FROM Sukkot.tvfRegistrationSummary(@id)
 		});
 	}
 
-	public async Task<List<vwHouseRulesAgreement>> NoRegistration() 
-	{
-		base.Sql = $@"
-SELECT hra.Id, hra.EMail, hra.AcceptedDate, hra.TimeZone
-FROM Sukkot.HouseRulesAgreement hra
-	LEFT JOIN Sukkot.Registration r 
-		ON hra.Id=r.HouseRulesAgreementId
-WHERE r.HouseRulesAgreementId IS NULL
-";
-		return await WithConnectionAsync(async connection =>
-		{
-			var rows = await connection.QueryAsync<vwHouseRulesAgreement>(base.Sql);
-			return rows.ToList();
-		});
-	}
-
-	public async Task<int> InsertHouseRulesAgreement(string email, string timeZone)
-	{
-		base.Sql = "Sukkot.stpHouseRulesAgreementInsert";
-		base.Parms = new DynamicParameters(new
-		{
-			EMail = email,
-			TimeZone = timeZone
-		});
-		base.Parms.Add("@NewId", dbType: DbType.Int32, direction: ParameterDirection.Output);
-		return await WithConnectionAsync(async connection =>
-		{
-			base.log.LogDebug($"Inside {nameof(SukkotRepository)}!{nameof(InsertHouseRulesAgreement)}; About to execute sql:{base.Sql}");
-			var affectedrows = await connection.ExecuteAsync(sql: base.Sql, param: base.Parms, commandType: System.Data.CommandType.StoredProcedure);
-			int? x = base.Parms.Get<int?>("NewId");
-			if (x == null)
-			{
-				base.log.LogWarning($"NewId is null; returning as 0; Check dbo.ErrorLog for IX_HouseRulesAgreement_Unique  duplication Error; email: {email}");
-				return 0;
-			}
-			else
-			{
-				int NewId = int.TryParse(x.ToString(), out NewId) ? NewId : 0;
-				base.log.LogDebug($"Return NewId:{NewId}");
-				return NewId;
-			}
-		});
-	}
-
-	public async Task<int> DeleteHouseRulesAgreementRecord(string email)
-	{
-		base.Sql = "Sukkot.stpHouseRulesAgreementDelete";
-		base.Parms = new DynamicParameters(new { EMail = email });
-		return await WithConnectionAsync(async connection =>
-		{
-			var affectedrows = await connection.ExecuteAsync(sql: base.Sql, param: base.Parms, commandType: System.Data.CommandType.StoredProcedure);
-			//if (affectedrows < 0) { throw new Exception($"Registration NOT Deleted"); }
-			return affectedrows;
-		});
-	}
 }
 
 

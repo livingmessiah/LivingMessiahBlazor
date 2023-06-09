@@ -32,10 +32,14 @@ public partial class AgreementButtons
 		int id = 0;
 		try
 		{
+/*			
 			id = await svc!.AddHouseRulesAgreementRecord(EmailParm!, GetLocalTimeZone());
 			Logger!.LogDebug(string.Format("...returned id: {0}", id));
 			AppState!.UpdateMessage(this, "Record updated for House Rules Agreement");
 			Toast!.ShowInfo($"Record updated for House Rules Agreement");
+*/
+			Toast!.ShowInfo($"ToDo: THIS NEEDS TO BE FIXED");
+
 		}
 		catch (InvalidOperationException invalidOperationException)
 		{

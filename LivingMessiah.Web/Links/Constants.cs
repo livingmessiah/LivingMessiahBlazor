@@ -422,14 +422,6 @@ public static class Store
 
 public static class Sukkot
 {
-	public static class HouseRulesAgreement
-	{
-		public const string Index = "/SukkotAdmin/HouseRulesAgreement";
-		public const string Title = "House Rules Agreement";
-		public const string TitleMenu = "H.R.A.";
-		public const string Icon = "fas fa-campground";
-	}
-
 	public static class RegistrationSteps
 	{
 		public const string Index = "/Sukkot/RegistrationSteps";
