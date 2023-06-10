@@ -14,7 +14,7 @@
 
 <AuthorizeView Roles="@Roles.AdminOrAnnouncements">
 	<Authorized>
-		
+
 		<!-- ToDo: can this be moved to <PageHeader ??? -->
 		<SukkotAdminMenubar></SukkotAdminMenubar>
 
@@ -27,10 +27,25 @@
 		</div>
 
 		@if (State!.Value.VisibleComponent == Enums.VisibleComponent.MasterList)
-		{
-			
+		{		
 			<LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.HouseRulesAgreement.Form />
 			<br />
+			
+			if (State!.Value.ShowAgreementParagraph)
+			{
+				<div class="@MediaQuery.Xs.DivClass">
+					<div class="card mt-0 mb-3">
+						<div class="card-body bg-light">
+							<AgreementParagraph IsXs="true" />
+							<AgreementButtons />
+						</div>
+					</div>
+				</div>
+				<div class="@MediaQuery.SmMdOrLgOrXl.DivClass">
+					<AgreementParagraph IsXs="false" />
+					<AgreementButtons />
+				</div>
+			}
 
 			<div class="@MediaQuery.XsOrSm.DivClass">
 				<MasterList IsXsOrSm="true" />

@@ -1,8 +1,8 @@
 ﻿@using Blazored.FluentValidation;
 @using LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.HouseRulesAgreement
+@using LivingMessiah.Web.SmartEnums
 
 @inherits Fluxor.Blazor.Web.Components.FluxorComponent
-
 
 <EditForm Model="VM"
 					OnValidSubmit="HandleValidSubmit"
@@ -30,9 +30,25 @@
 	</div>
 
 	<div class="row mt-2">
-		<div class="col-12">
+		<div class="col-sm-8">
 			<p class="text-black-50"><b>HRA:</b> House Rules Agreement</p>
 		</div>
+		<div class="col-sm-4">
+			<div @onclick="@(e => ShowAgreement())" class="@SuperUser.Constants.ShowAgreementButton.Color">
+				<i class="@SuperUser.Constants.ShowAgreementButton.Icon"></i> @SuperUser.Constants.ShowAgreementButton.Text
+			</div>
+		</div>
 	</div>
+
+	@if (@State!.Value.MessageState != LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.SuperUser.Enums.MessageState.Empty)
+	{
+		<div class="row mt-2">
+			<div class="col-12">
+				<p class="@State!.Value.MessageState!.Color">
+					<b>@State!.Value.MessageState.Text</b>
+				</p>
+			</div>
+		</div>
+	}
 
 </EditForm>

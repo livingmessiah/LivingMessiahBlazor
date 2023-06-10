@@ -35,6 +35,9 @@ public record Display_Action(int Id);
 // 1.3 Actions related to Form Submission
 public record Submitting_Request_Action(FormVM FormVM, Enums.FormMode? FormMode);
 
+public record Set_ShowAgreementParagraph_Action(bool Toggle);
+public record Set_MessageState_Action(Enums.MessageState MessageState);
+
 public record Add_HRA_Action(string? EMail, string TimeZone);
 
 
@@ -59,12 +62,14 @@ public record Response_Message_Action(ResponseMessage MessageType, string Messag
 public record State
 {
 	public Enums.VisibleComponent? VisibleComponent { get; init; }
+	public PageHeaderVM? PageHeaderVM { get; init; }
 	public Enums.FormMode? FormMode { get; init; }
 	public FormVM? FormVM { get; init; } // Consider renaming to RegistrationFormVM
 	public string? HRA_EMail { get; init; } // This doesn't have a FormVM
+	public bool ShowAgreementParagraph { get; init; }
+	public Enums.MessageState? MessageState { get; init; }
 	public DisplayVM? DisplayVM { get; init; }
 	public List<Data.vwSuperUser>? vwSuperUserList { get; init; }
-	public PageHeaderVM? PageHeaderVM { get; init; }
 }
 
 
@@ -77,11 +82,13 @@ public class FeatureImplementation : Feature<State>
 	{
 		return new State
 		{
-			FormMode = null,
 			VisibleComponent = Enums.VisibleComponent.MasterList,
 			PageHeaderVM = Constants.GetPageHeaderForIndexVM(),
+			FormMode = null,
 			FormVM = new FormVM(),
 			HRA_EMail = string.Empty,
+			ShowAgreementParagraph = false,
+			MessageState = Enums.MessageState.Empty,
 			DisplayVM = new DisplayVM()
 		};
 	}
@@ -91,6 +98,28 @@ public class FeatureImplementation : Feature<State>
 // 4. Reducers
 public static class Reducers
 {
+
+	[ReducerMethod]
+	public static State On_Set_ShowAgreementParagraph(
+		State state, Set_ShowAgreementParagraph_Action action)
+	{
+		return state with
+		{
+			ShowAgreementParagraph = action.Toggle
+		};
+	}
+
+	[ReducerMethod]
+	public static State On_Set_MessageState(
+		State state, Set_MessageState_Action action)
+	{
+		return state with
+		{
+			MessageState = action.MessageState
+		};
+	}
+
+	
 
 	[ReducerMethod]
 	public static State On_Set_VisibleComponent(
@@ -111,8 +140,6 @@ public static class Reducers
 			vwSuperUserList = action.vwSuperUserList
 		};
 	}
-
-
 
 	[ReducerMethod]
 	public static State On_Set_Registration_FormVM(
@@ -137,8 +164,6 @@ public static class Reducers
 		return state;
 	}
 
-
-
 	[ReducerMethod]
 	public static State On_Set_DisplayVM(
 	State state, Set_DisplayVM_Action action)
@@ -162,7 +187,6 @@ public static class Reducers
 	{
 		return state with { HRA_EMail = action.EMail };
 	}
-
 
 	[ReducerMethod]
 	public static State OnAdd(
@@ -250,7 +274,7 @@ public class Effects
 			if (vwSuperUserList is not null)
 			{
 				dispatcher.Dispatch(new Set_Data_MasterList_Action(vwSuperUserList));
-				dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Success, "Some Registrations Found"));
+				//dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Success, "Some Registrations Found"));
 			}
 			else
 			{

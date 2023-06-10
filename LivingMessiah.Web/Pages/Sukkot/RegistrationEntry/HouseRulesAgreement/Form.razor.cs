@@ -28,8 +28,19 @@ public partial class Form
 		*/
 	}
 
+	void ShowAgreement()
+	{
+		Logger!.LogDebug(string.Format("Inside {0}", nameof(Form) + "!" + nameof(ShowAgreement)));
+		Dispatcher!.Dispatch(new Set_ShowAgreementParagraph_Action(true));
+		Dispatcher!.Dispatch(new Set_MessageState_Action(SuperUser.Enums.MessageState.Empty));
+
+
+		
+	}
+
 	private string GetLocalTimeZone()
 	{
 		return $"Time Zone: {TimeZoneInfo.Local}.";
 	}
+
 }
