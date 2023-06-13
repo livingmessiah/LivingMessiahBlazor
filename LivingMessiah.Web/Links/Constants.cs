@@ -444,7 +444,7 @@ public static class Sukkot
 		public static class SuperUser
 		{
 			public const string Index = "/RegistrationEntry/SuperUser";
-			public const string Title = "Registration Entry | Super User";
+			public const string Title = "Super User Registration";
 			public const string IconText = "Super User";
 			public const string Icon = "fas fa-mask";
 		}

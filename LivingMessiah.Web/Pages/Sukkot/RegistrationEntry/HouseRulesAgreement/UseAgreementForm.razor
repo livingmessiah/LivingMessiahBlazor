@@ -1,0 +1,80 @@
+﻿@using Blazored.FluentValidation;
+@using LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.HouseRulesAgreement
+@using LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.SuperUser
+@using LivingMessiah.Web.SmartEnums
+
+@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+
+
+@if (State!.Value.HRA_FormState == HRA_FormState.Start)
+{
+	<div class="card card-body bg-light mt-0 mb-2">
+		<div class="@MediaQuery.Xs.DivClass">
+			<div class="card mt-0 mb-3">
+				<div class="card-body bg-light">
+					<AgreementParagraph IsXs="true" />
+					<AgreementButtons />
+				</div>
+			</div>
+		</div>
+		<div class="@MediaQuery.SmMdOrLgOrXl.DivClass">
+			<AgreementParagraph IsXs="false" />
+			<AgreementButtons />
+		</div>
+	</div>
+}
+
+@if (State!.Value.HRA_FormState == HRA_FormState.Agreed)
+{
+	@* <div class="mb-3"> <EditForm Model="VM"*@
+	<div class="">
+
+		<EditForm Model="@State.Value.HRA_FormVM"
+						OnValidSubmit="HandleValidSubmit"
+						class="card card-body bg-light mt-0">
+			<FluentValidationValidator @ref="_fluentValidationValidator" DisableAssemblyScanning="@true" />
+			<ValidationSummary />
+
+			<div class="row mt-n2 align-items-center">
+
+				<div class="col-sm-8">
+					<InputText id="eMail" placeholder="Email" class="form-control" @bind-Value="@State.Value.HRA_FormVM!.EMail" />
+					<ValidationMessage For="@(() => @State.Value.HRA_FormVM)" />
+				</div>
+
+				<div class="col-sm-4">
+					<button class="btn btn-outline-success btn-sm">
+						<i class="fas fa-save"></i> Add HRA Record
+					</button>
+				</div>
+			</div>
+
+		</EditForm>
+
+	</div>
+}
+
+<div class="mb-3">
+
+	<div class="card border-primary mt-0 p-2">
+		<p class="@State!.Value.HRA_FormState!.Color">
+			<b>@State!.Value.HRA_FormState!.Text</b>
+		</p>
+
+		@if (State!.Value.HRA_FormState == HRA_FormState.DidNotAgree)
+		{
+			<div class="row">
+				<div class="col-12">
+					<button @onclick="@Reset_ButtonClick"
+								type="button" class="btn btn-primary btn-sm">
+						<i class="fas fa-power-off"></i>
+						Reset
+					</button>
+				</div>
+			</div>
+		}
+	</div>
+
+</div>
+
+

@@ -9,6 +9,7 @@ public class Helper
 	{
 		if (!Enums.DateRangeType.Attendance.HasSecondMonth)
 		{
+#pragma warning disable CS0252 // Possible unintended reference comparison; left hand side needs cast
 			if (AttendanceDate.FromValue(attendanceBitwise) == AttendanceDate.None)
 			{
 				return (null, null);
@@ -17,11 +18,13 @@ public class Helper
 			{
 				return (AttendanceDate.FromValue(attendanceBitwise).Select(s => s.Date).ToArray(), null);
 			}
+#pragma warning restore CS0252 // Possible unintended reference comparison; left hand side needs cast
 		}
 		else
 		{
 			DateTime[]? wk1;
 			DateTime[]? wk2;
+#pragma warning disable CS0252 // Possible unintended reference comparison; left hand side needs cast
 			if (AttendanceDate.FromValue(attendanceBitwise) == AttendanceDate.None)
 			{
 				wk1 = null;
@@ -30,6 +33,8 @@ public class Helper
 			{
 				wk1 = AttendanceDate.FromValue(attendanceBitwise).Where(w => w.Week == 1).Select(s => s.Date).ToArray();
 			}
+#pragma warning restore CS0252 // Possible unintended reference comparison; left hand side needs cast
+#pragma warning disable CS0252 // Possible unintended reference comparison; left hand side needs cast
 			if (AttendanceDate.FromValue(attendanceBitwise) == AttendanceDate.None)
 			{
 				wk2 = null;
@@ -38,6 +43,7 @@ public class Helper
 			{
 				wk2 = AttendanceDate.FromValue(attendanceBitwise).Where(w => w.Week == 2).Select(s => s.Date).ToArray();
 			}
+#pragma warning restore CS0252 // Possible unintended reference comparison; left hand side needs cast
 			return (wk1, wk2);
 		}
 	}

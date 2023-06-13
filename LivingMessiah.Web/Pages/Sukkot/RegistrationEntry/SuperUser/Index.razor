@@ -6,7 +6,10 @@
 @using LivingMessiah.Web.SmartEnums
 @using LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.AddOrEdit
 @using LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.Detail
+
+@using LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.HouseRulesAgreement
 @*@using HRA = LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.HouseRulesAgreement.Form*@
+
 @using LivingMessiah.Web.Pages.Sukkot.RegistrationEntry
 @using LoginLink = LivingMessiah.Web.Links.Account
 
@@ -26,26 +29,24 @@
 			<PageHeader IsXsOrSm="false" />
 		</div>
 
+		<div class="row mt-4 mb-0">
+			<div class="col-12">
+				<BypassAgreementToggle />
+			</div>
+		</div>
+
 		@if (State!.Value.VisibleComponent == Enums.VisibleComponent.MasterList)
-		{		
-			<LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.HouseRulesAgreement.Form />
-			<br />
-			
-			if (State!.Value.ShowAgreementParagraph)
+		{
+			if (State!.Value.BypassAgreement)
 			{
-				<div class="@MediaQuery.Xs.DivClass">
-					<div class="card mt-0 mb-3">
-						<div class="card-body bg-light">
-							<AgreementParagraph IsXs="true" />
-							<AgreementButtons />
-						</div>
-					</div>
-				</div>
-				<div class="@MediaQuery.SmMdOrLgOrXl.DivClass">
-					<AgreementParagraph IsXs="false" />
-					<AgreementButtons />
-				</div>
+				<LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.HouseRulesAgreement.BypassAgreementForm />
 			}
+			else
+			{
+				<LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.HouseRulesAgreement.UseAgreementForm />
+			}
+
+			
 
 			<div class="@MediaQuery.XsOrSm.DivClass">
 				<MasterList IsXsOrSm="true" />
@@ -65,13 +66,10 @@
 			}
 			else
 			{
-				@*
-		ToDo:
-		- Details Pages\Sukkot\Details\Index.razor
-		page "/Sukkot/Details/{Id:int}/{showPrintInstructionMessage:bool}"
-
-		*@
-				<Display />
+				@* FN: 1 *@
+				<div class="card border-primary my-3 p-2">
+					<Display />
+				</div>
 			}
 		}
 	</Authorized>
@@ -89,3 +87,11 @@
 </AuthorizeView>
 
 <ToasterSuperUser />
+
+@*
+# FootNotes
+## FN: 1 
+- ToDo: look at how the showPrintInstructionMessage is being used 
+	- Details Pages\Sukkot\Details\Index.razor
+	-	page "/Sukkot/Details/{Id:int}/{showPrintInstructionMessage:bool}"
+*@

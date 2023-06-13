@@ -1,0 +1,34 @@
+﻿@using Blazored.FluentValidation;
+@using LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.HouseRulesAgreement
+@using LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.SuperUser
+@using LivingMessiah.Web.SmartEnums
+
+@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+
+<div class="mb-3">
+	<EditForm Model="@State.Value.HRA_FormVM"
+						OnValidSubmit="HandleValidSubmit"
+						class="card card-body bg-light mt-0">
+		<FluentValidationValidator @ref="_fluentValidationValidator" DisableAssemblyScanning="@true" />
+		<ValidationSummary />
+
+		<div class="row mt-n2 align-items-center">
+
+			<div class="col-sm-8">
+				<InputText id="eMail" placeholder="Email" class="form-control" @bind-Value="@State.Value.HRA_FormVM!.EMail" />
+				<ValidationMessage For="@(() => @State.Value.HRA_FormVM)" />
+			</div>
+
+			<div class="col-sm-4">
+					<button class="btn btn-outline-success btn-sm" >
+						<i class="fas fa-save"></i> Add HRA Record
+					</button>
+
+			</div>
+		</div>
+
+
+	</EditForm>
+
+</div>
+

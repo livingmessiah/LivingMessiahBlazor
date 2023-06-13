@@ -17,7 +17,7 @@ public partial class Form
 	{
 		Logger!.LogDebug(string.Format("Inside {0}", nameof(Form) + "!" + nameof(OnInitialized)));
 		
-		string? s = State!.Value.HRA_EMail ?? string.Empty;
+		string? s = State!.Value.HRA_FormVM!.EMail ?? string.Empty;
 		if (!string.IsNullOrEmpty(s)) 
 		{
 			VM!.EMail = s;

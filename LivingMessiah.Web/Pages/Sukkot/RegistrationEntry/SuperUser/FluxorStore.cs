@@ -17,7 +17,7 @@ namespace LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.SuperUser;
 public record Set_VisibleComponent_Action(VisibleComponent VisibleComponent);
 
 // 1.1 GetList() actions
-public record Get_List_Action();
+public record Get_List_Action();  // used by EffectMethod db!.GetAll, There is no ReducerMethod.
 public record Set_Data_MasterList_Action(List<Data.vwSuperUser> vwSuperUserList);
 
 // 1.2 GetItem() actions
@@ -35,14 +35,16 @@ public record Display_Action(int Id);
 // 1.3 Actions related to Form Submission
 public record Submitting_Request_Action(FormVM FormVM, Enums.FormMode? FormMode);
 
-public record Set_ShowAgreementParagraph_Action(bool Toggle);
-public record Set_MessageState_Action(Enums.MessageState MessageState);
 
-public record Add_HRA_Action(string? EMail, string TimeZone);
+public record Set_BypassAgreement_Action(bool BypassAgreement); // HouseRulesAgreement.FormVM FormVM 
+public record Set_HRA_FormState_Action(HouseRulesAgreement.HRA_FormState HRA_FormState);
 
+//public record Add_HRA_Action(string? EMail, string TimeZone);  // db.InsertHouseRulesAgreement, do I need this
+public record Add_HRA_Action(HouseRulesAgreement.FormVM FormVM, string TimeZone);
+public record ReSet_HRA_Action(HouseRulesAgreement.FormVM HRA_FormVM, HouseRulesAgreement.HRA_FormState HRA_FormState);
 
 // 1.4 Actions related to MasterList
-public record Add_Action(string? EMail); // , int StatusId 
+public record Add_Registration_Action(string? EMail);
 
 // 1.5 Delete() actions
 public record Delete_Action(int Id);
@@ -53,7 +55,7 @@ public record Delete_HRA_Action(int Id);
 public record Set_PageHeader_For_Index_Action(PageHeaderVM PageHeaderVM);
 public record Set_PageHeader_For_Detail_Action(string Title, string Icon, string Color, int Id);
 
-public record Response_Message_Action(ResponseMessage MessageType, string Message);  
+public record Response_Message_Action(ResponseMessage MessageType, string Message);
 
 #endregion
 
@@ -65,9 +67,13 @@ public record State
 	public PageHeaderVM? PageHeaderVM { get; init; }
 	public Enums.FormMode? FormMode { get; init; }
 	public FormVM? FormVM { get; init; } // Consider renaming to RegistrationFormVM
-	public string? HRA_EMail { get; init; } // This doesn't have a FormVM
-	public bool ShowAgreementParagraph { get; init; }
-	public Enums.MessageState? MessageState { get; init; }
+
+	public string? HRA_EMail { get; init; } // why can't I just use HRA_FormVM.EMail?
+	public HouseRulesAgreement.FormVM? HRA_FormVM { get; init; }
+	public bool BypassAgreement { get; init; }
+	public HouseRulesAgreement.HRA_FormState? HRA_FormState { get; init; }  
+	
+
 	public DisplayVM? DisplayVM { get; init; }
 	public List<Data.vwSuperUser>? vwSuperUserList { get; init; }
 }
@@ -86,9 +92,11 @@ public class FeatureImplementation : Feature<State>
 			PageHeaderVM = Constants.GetPageHeaderForIndexVM(),
 			FormMode = null,
 			FormVM = new FormVM(),
-			HRA_EMail = string.Empty,
-			ShowAgreementParagraph = false,
-			MessageState = Enums.MessageState.Empty,
+
+			HRA_EMail = string.Empty, // why can't I just use HRA_FormVM.EMail?
+			HRA_FormVM = new HouseRulesAgreement.FormVM(),
+			BypassAgreement = true,
+			HRA_FormState = HouseRulesAgreement.HRA_FormState.Start, 
 			DisplayVM = new DisplayVM()
 		};
 	}
@@ -99,23 +107,37 @@ public class FeatureImplementation : Feature<State>
 public static class Reducers
 {
 
+
 	[ReducerMethod]
-	public static State On_Set_ShowAgreementParagraph(
-		State state, Set_ShowAgreementParagraph_Action action)
+	public static State On_Set_BypassAgreement(
+	State state, Set_BypassAgreement_Action action)
 	{
 		return state with
 		{
-			ShowAgreementParagraph = action.Toggle
+			BypassAgreement = action.BypassAgreement
+		};
+	}
+
+
+	[ReducerMethod]
+	public static State On_Set_HRA_FormState(
+	State state, Set_HRA_FormState_Action action)
+	{
+		return state with
+		{
+			HRA_FormState = action.HRA_FormState
 		};
 	}
 
 	[ReducerMethod]
-	public static State On_Set_MessageState(
-		State state, Set_MessageState_Action action)
+	public static State On_ReSet_HRA(
+	State state, ReSet_HRA_Action action)
 	{
 		return state with
 		{
-			MessageState = action.MessageState
+			HRA_FormState = action.HRA_FormState,
+			HRA_FormVM = action.HRA_FormVM,
+			HRA_EMail = string.Empty
 		};
 	}
 
@@ -181,16 +203,19 @@ public static class Reducers
 		return state with { FormMode = action.FormMode };
 	}
 
+	// Add_HRA_Action is used by Reg. FormVM!HandleValidSubmit and [EffectMethod]  AddHra(
 	[ReducerMethod]
 	public static State On_Add_HRA(
 		State state, Add_HRA_Action action)
 	{
-		return state with { HRA_EMail = action.EMail };
+		//return state with {  HRA_EMail = action.EMail };  // why can't I just use HRA_FormVM.EMail?
+		return state with { HRA_FormVM = action.FormVM };
 	}
 
+
 	[ReducerMethod]
-	public static State OnAdd(
-		State state, Add_Action action)
+	public static State On_Add_Registration(
+		State state, Add_Registration_Action action)
 	{
 		return state with
 		{
@@ -239,7 +264,7 @@ public static class Reducers
 	{
 		return state with
 		{
-			PageHeaderVM = new PageHeaderVM { Title = action.Title, Icon = action.Icon, Color = action.Color, Id = action.Id } 
+			PageHeaderVM = new PageHeaderVM { Title = action.Title, Icon = action.Icon, Color = action.Color, Id = action.Id }
 		};
 	}
 }
@@ -259,13 +284,13 @@ public class Effects
 	#endregion
 
 	[EffectMethod]
-	public async Task GetList(Get_List_Action action, IDispatcher dispatcher)
+	public async Task GetList(Get_List_Action action, IDispatcher dispatcher) // action is never used
 	{
 		string inside = nameof(Effects) + "!" + nameof(GetList) + "!" + nameof(Get_List_Action);
 
 		Logger.LogDebug(string.Format("Inside {0}", inside));
 		dispatcher.Dispatch(new Set_VisibleComponent_Action(VisibleComponent.MasterList));
-		
+
 		try
 		{
 			List<Data.vwSuperUser> vwSuperUserList = new();
@@ -291,7 +316,7 @@ public class Effects
 
 		/*
 		Question: 
-		  regardless if vwSuperUserList ends up having data, no data, or an exception occurred, 
+			regardless if vwSuperUserList ends up having data, no data, or an exception occurred, 
 			should I always do a dispatch Set_Data_MasterList_Action(vwSuperUserList) ??
 
 		finally 
@@ -389,20 +414,21 @@ public class Effects
 	[EffectMethod]
 	public async Task AddHra(Add_HRA_Action action, IDispatcher dispatcher)
 	{
-		string inside = $"{nameof(Effects)}!{nameof(AddHra)}; Email: {action.EMail}";
+		string inside = $"{nameof(Effects)}!{nameof(AddHra)}; Email: {action.FormVM.EMail}";  // action.EMail
 		Logger.LogDebug(string.Format("Inside {0}", inside));
 
 		int id = 0;
 		try
 		{
-			id = await db.InsertHouseRulesAgreement(action.EMail!, action.TimeZone);
+			//id = await db.InsertHouseRulesAgreement(action.EMail!, action.TimeZone);
+			id = await db.InsertHouseRulesAgreement(action.FormVM.EMail!, action.TimeZone);
 			dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Success, $"House Rules Agreement added; id: {id}"));
 		}
 		catch (Exception ex)
 		{
 			Logger.LogError(ex, string.Format("...Inside catch of {0}", inside));
 			dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Failure
-			, $"{Constants.Effects.ResponseMessageFailure}. Email: {action.EMail}"));
+			, $"{Constants.Effects.ResponseMessageFailure}. Email: {action.FormVM.EMail}"));
 			dispatcher.Dispatch(new Set_VisibleComponent_Action(VisibleComponent.MasterList));
 		}
 	}
@@ -477,3 +503,6 @@ public class Effects
 	}
 
 }
+
+
+// Ignore Spelling: HRA

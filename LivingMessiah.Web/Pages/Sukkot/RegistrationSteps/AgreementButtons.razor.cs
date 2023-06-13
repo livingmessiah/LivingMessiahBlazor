@@ -27,9 +27,10 @@ public partial class AgreementButtons
 
 	private async Task Agree_ButtonClick()
 	{
+		await Task.Delay(0);
 		Logger!.LogDebug(string.Format("Event: {0} clicked"
 			, nameof(AgreementButtons) + "!" + nameof(Agree_ButtonClick)));
-		int id = 0;
+		//int id = 0;
 		try
 		{
 /*			

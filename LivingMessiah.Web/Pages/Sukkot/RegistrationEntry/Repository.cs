@@ -452,7 +452,7 @@ FROM Sukkot.vwRegistration WHERE Id = @id";
 			else
 			{
 				int NewId = int.TryParse(x.ToString(), out NewId) ? NewId : 0;
-				base.log.LogDebug($"Return NewId:{NewId}");
+				base.log.LogDebug($"...Return NewId:{NewId}");
 				return NewId;
 			}
 		});

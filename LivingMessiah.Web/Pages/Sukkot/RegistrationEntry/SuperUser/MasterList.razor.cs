@@ -38,7 +38,7 @@ public partial class MasterList
 		switch (args.Crud.Name)
 		{
 			case nameof(Enums.Crud.Add):
-				Dispatcher!.Dispatch(new Add_Action(args.EMail)); //, RegistrationSteps.Enums.Status.StartRegistration.Value
+				Dispatcher!.Dispatch(new Add_Registration_Action(args.EMail)); //, RegistrationSteps.Enums.Status.StartRegistration.Value
 				Dispatcher!.Dispatch(new Set_PageHeader_For_Detail_Action(args.Crud.Name, args.Crud!.Icon, args.Crud!.Color, args.Id));
 				break;
 

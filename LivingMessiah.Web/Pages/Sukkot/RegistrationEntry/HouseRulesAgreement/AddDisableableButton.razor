@@ -1,0 +1,17 @@
+﻿<button class="btn btn-outline-success btn-sm" disabled="@Disable" title="Disable: @Disable">
+	<i class="fas fa-save"></i> Add HRA Record
+</button>
+
+
+@code {
+	[Parameter, EditorRequired] public string? Disable { get; set; }
+	//<button class="btn btn-primary" type="submit" disabled="@(!context.Validate())">Send</button>
+	/*
+		private bool resetValidation = false;
+	private void ResetValidationErrors()
+		{
+		resetValidation = true;
+	}
+
+	*/
+}
