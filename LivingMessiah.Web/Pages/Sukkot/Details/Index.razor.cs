@@ -42,6 +42,10 @@ public partial class Index
 		{
 			vwRegistration = await svc!.Details(Id, User, showPrintInstructionMessage);
 		}
+		catch (UserNotAuthoirizedException userNotAuthoirizedException)
+		{
+			Toast!.ShowInfo(userNotAuthoirizedException.Message);
+		}
 		catch (InvalidOperationException invalidOperationException)
 		{
 			Toast!.ShowError($"{invalidOperationException.Message}");

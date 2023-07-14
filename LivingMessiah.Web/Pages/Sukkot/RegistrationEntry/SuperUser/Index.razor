@@ -15,7 +15,7 @@
 
 @inherits Fluxor.Blazor.Web.Components.FluxorComponent
 
-<AuthorizeView Roles="@Roles.AdminOrAnnouncements">
+<AuthorizeView Roles="@Roles.AdminOrSukkot">
 	<Authorized>
 
 		<!-- ToDo: can this be moved to <PageHeader ??? -->
@@ -45,8 +45,6 @@
 			{
 				<LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.HouseRulesAgreement.UseAgreementForm />
 			}
-
-			
 
 			<div class="@MediaQuery.XsOrSm.DivClass">
 				<MasterList IsXsOrSm="true" />
