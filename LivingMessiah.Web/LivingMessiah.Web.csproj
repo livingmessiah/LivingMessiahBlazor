@@ -118,5 +118,9 @@
     </Content>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Pages\Sukkot\RegistrationSteps\Data\" />
+  </ItemGroup>
+
 
 </Project>

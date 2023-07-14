@@ -3,8 +3,9 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
 using LivingMessiah.Web.Services;
-using LivingMessiah.Web.Pages.Sukkot.Services;
+using LivingMessiah.Web.Pages.Sukkot.RegistrationEntry;
 using Blazored.Toast.Services;
+
 
 namespace LivingMessiah.Web.Pages.Sukkot.RegistrationSteps;
 
@@ -13,8 +14,8 @@ public partial class AgreementButtons
 	[Inject] public ILogger<AgreementButtons>? Logger { get; set; }
 	[Inject] AppState? AppState { get; set; }
 	[Inject] public IToastService? Toast { get; set; }
-	[Inject] public ISukkotService? svc { get; set; }
-	
+	[Inject] public IRepository? db { get; set; }
+
 	[Parameter, EditorRequired] public string? EmailParm { get; set; }
 
 	void DoNotAgree_ButtonClick()
@@ -30,17 +31,13 @@ public partial class AgreementButtons
 		await Task.Delay(0);
 		Logger!.LogDebug(string.Format("Event: {0} clicked"
 			, nameof(AgreementButtons) + "!" + nameof(Agree_ButtonClick)));
-		//int id = 0;
+		int id = 0;
 		try
 		{
-/*			
-			id = await svc!.AddHouseRulesAgreementRecord(EmailParm!, GetLocalTimeZone());
+			id = await db!.InsertHouseRulesAgreement(EmailParm!, GetLocalTimeZone());
 			Logger!.LogDebug(string.Format("...returned id: {0}", id));
-			AppState!.UpdateMessage(this, "Record updated for House Rules Agreement");
 			Toast!.ShowInfo($"Record updated for House Rules Agreement");
-*/
-			Toast!.ShowInfo($"ToDo: THIS NEEDS TO BE FIXED");
-
+						AppState!.UpdateMessage(this, "Record updated for House Rules Agreement");
 		}
 		catch (InvalidOperationException invalidOperationException)
 		{
