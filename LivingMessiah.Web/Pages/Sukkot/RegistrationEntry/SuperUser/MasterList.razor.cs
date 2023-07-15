@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using System.Reflection;
 using Blazored.Modal.Services;
 using Blazored.Modal;
+using LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.Detail;
+using LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.SuperUser.Enums;
 
 namespace LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.SuperUser;
 
@@ -32,12 +34,12 @@ public partial class MasterList
 
 	private async Task ReturnedCrud(CrudAndIdArgs args)
 	{
-		Logger!.LogDebug(string.Format("inside: {0}; args.Crud.Name: {1}; icon: {2}; id: {3}"
-			, nameof(MasterList) + "!" + nameof(ReturnedCrud), args.Crud.Name, args.Crud.Icon, args.Id));
+		string inside = $"inside {nameof(MasterList) + "!" + nameof(ReturnedCrud)}; args.Crud.Name: {args.Crud.Name}";
+		Logger!.LogDebug(string.Format("{0}", inside));
 
 		switch (args.Crud.Name)
 		{
-			case nameof(Enums.Crud.Add):
+			case nameof(Enums.Crud.AddRegistration):
 				Dispatcher!.Dispatch(new Add_Registration_Action(args.EMail)); //, RegistrationSteps.Enums.Status.StartRegistration.Value
 				Dispatcher!.Dispatch(new Set_PageHeader_For_Detail_Action(args.Crud.Name, args.Crud!.Icon, args.Crud!.Color, args.Id));
 				break;
@@ -52,7 +54,7 @@ public partial class MasterList
 				Dispatcher!.Dispatch(new Set_PageHeader_For_Detail_Action(args.Crud.Name, args.Crud!.Icon, args.Crud!.Color, args.Id));
 				break;
 
-			case nameof(Enums.Crud.Delete):
+			case nameof(Enums.Crud.DeleteRegistration):
 				if (await IsModalConfirmed(args.Id, "Registration") == true)
 				{
 					Dispatcher!.Dispatch(new Delete_Action(args.Id));
@@ -68,8 +70,13 @@ public partial class MasterList
 				}
 				break;
 
-			case "Repopulate":
+			case nameof(Enums.Crud.Repopulate):
 				Dispatcher!.Dispatch(new Get_List_Action());
+				break;
+
+			default:
+				// ToDo: maybe just log this
+				Dispatcher!.Dispatch(new Response_Message_Action(ResponseMessage.Warning, $"{args.Crud.Name} unknown!!!; {inside}"));
 				break;
 		}
 	}

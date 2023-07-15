@@ -341,7 +341,7 @@ public class Effects
 			try
 			{
 				var sprocTuple = await db.CreateRegistration(action.FormVM);
-				dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Success, sprocTuple.Item3));
+				dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Success, $"{sprocTuple.Item3}  { Constants.Effects.RepopulateMessage }" ));
 				//SEE NOTES ON SpecialEventsRepository 
 			}
 			catch (Exception ex)
@@ -358,7 +358,7 @@ public class Effects
 			{
 				var sprocTuple = await db.UpdateRegistration(action.FormVM);
 				dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Success
-					, $"Registration Updated for id: [{action.FormVM.Id}], Affected Rows: {sprocTuple.Item1}")); //sprocTuple.RowsAffected
+					, $"Registration Updated for id: [{action.FormVM.Id}], Affected Rows: {sprocTuple.Item1} {Constants.Effects.RepopulateMessage} ")); //sprocTuple.RowsAffected
 			}
 			catch (Exception ex)
 			{
@@ -475,7 +475,7 @@ public class Effects
 		try
 		{
 			var affectedRows = await db.Delete(action.Id);
-			dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Success, $"Registration {action.Id} has been deleted"));
+			dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Success, $"Registration {action.Id} has been deleted {Constants.Effects.RepopulateMessage}"));
 		}
 		catch (Exception ex)
 		{
@@ -493,7 +493,7 @@ public class Effects
 		try
 		{
 			var affectedRows = await db.DeleteHRA(action.Id);
-			dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Success, $"House Rules Agreement {action.Id} has been deleted"));
+			dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Success, $"House Rules Agreement {action.Id} has been deleted {Constants.Effects.RepopulateMessage}"));
 		}
 		catch (Exception ex)
 		{

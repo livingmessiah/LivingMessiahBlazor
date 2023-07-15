@@ -17,10 +17,10 @@ public abstract class Crud : SmartEnum<Crud>
 	#endregion
 
 	#region  Declared Public Instances
-	public static readonly Crud Add = new AddSE();
+	public static readonly Crud AddRegistration = new AddRegistrationSE();
 	public static readonly Crud Edit = new EditSE();
 	public static readonly Crud Display = new DisplaySE();
-	public static readonly Crud Delete = new DeleteSE();
+	public static readonly Crud DeleteRegistration = new DeleteRegistrationSE();
 	public static readonly Crud DeleteHRA = new DeleteHRASE();
 	public static readonly Crud Repopulate = new RepopulateSE();
 	#endregion
@@ -39,9 +39,9 @@ public abstract class Crud : SmartEnum<Crud>
 
 	#region Private Instantiation
 
-	private sealed class AddSE : Crud
+	private sealed class AddRegistrationSE : Crud
 	{
-		public AddSE() : base($"{nameof(Id.AddRegistration)}", Id.AddRegistration) { }
+		public AddRegistrationSE() : base($"{nameof(Id.AddRegistration)}", Id.AddRegistration) { }
 		public override string Text => "Add Reg.";
 		public override string Icon => "fas fa-plus";
 		public override string Color => "text-success";
@@ -66,9 +66,9 @@ public abstract class Crud : SmartEnum<Crud>
 		public override string ButtonColor => "btn btn-outline-info";
 	}
 
-	private sealed class DeleteSE : Crud
+	private sealed class DeleteRegistrationSE : Crud
 	{
-		public DeleteSE() : base($"{nameof(Id.DeleteRegistration)}", Id.DeleteRegistration) { }
+		public DeleteRegistrationSE() : base($"{nameof(Id.DeleteRegistration)}", Id.DeleteRegistration) { }
 		public override string Text => "Delete Reg.";
 		public override string Icon => "fa fa-times";
 		public override string Color => "text-danger";

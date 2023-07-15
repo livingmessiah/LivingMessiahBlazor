@@ -29,6 +29,7 @@ public static class Constants
 	public static class Effects
 	{
 		public const string ResponseMessageFailure = "An invalid operation occurred, contact your administrator";
+		public const string RepopulateMessage = " *** CLICK THE REPOPULATE BUTTON! ***";
 	}
 
 }

@@ -30,7 +30,7 @@
 					@if (@item.StatusId == RegistrationSteps.Enums.Status.StartRegistration)
 					{
 						<div class="btn-group float-end">
-							<ActionButtons OnCrudActionSelected="@ReturnedCrud" ParmCrud="Enums.Crud.Add" IsXsOrSm="@IsXsOrSm" Id="@item.IdHra" EMail="@item.EMail" />
+							<ActionButtons OnCrudActionSelected="@ReturnedCrud" ParmCrud="Enums.Crud.AddRegistration" IsXsOrSm="@IsXsOrSm" Id="@item.IdHra" EMail="@item.EMail" />
 							<ActionButtons OnCrudActionSelected="@ReturnedCrud" ParmCrud="Enums.Crud.DeleteHRA" IsXsOrSm="@IsXsOrSm" Id="@item.IdHra" />
 						</div>
 					}
@@ -38,7 +38,7 @@
 					{
 						<div class="btn-group float-end">
 							<ActionButtons OnCrudActionSelected="@ReturnedCrud" ParmCrud="Enums.Crud.Edit" IsXsOrSm="@IsXsOrSm" Id="@item.Id" />
-							<ActionButtons OnCrudActionSelected="@ReturnedCrud" ParmCrud="Enums.Crud.Delete" IsXsOrSm="@IsXsOrSm" Id="@item.Id" />
+							<ActionButtons OnCrudActionSelected="@ReturnedCrud" ParmCrud="Enums.Crud.DeleteRegistration" IsXsOrSm="@IsXsOrSm" Id="@item.Id" />
 							<ActionButtons OnCrudActionSelected="@ReturnedCrud" ParmCrud="Enums.Crud.Display" IsXsOrSm="@IsXsOrSm" Id="@item.Id" />
 						</div>
 					}
@@ -77,13 +77,13 @@ else
 
 					@if (@context.StatusId == RegistrationSteps.Enums.Status.StartRegistration)
 					{
-						<ActionButtons OnCrudActionSelected="@ReturnedCrud" ParmCrud="Enums.Crud.Add" IsXsOrSm="@IsXsOrSm" Id="@context.IdHra" EMail="@context.EMail" />
+						<ActionButtons OnCrudActionSelected="@ReturnedCrud" ParmCrud="Enums.Crud.AddRegistration" IsXsOrSm="@IsXsOrSm" Id="@context.IdHra" EMail="@context.EMail" />
 						<ActionButtons OnCrudActionSelected="@ReturnedCrud" ParmCrud="Enums.Crud.DeleteHRA" IsXsOrSm="@IsXsOrSm" Id="@context.IdHra" />
 					}
 					else
 					{
 						<ActionButtons OnCrudActionSelected="@ReturnedCrud" ParmCrud="Enums.Crud.Edit" IsXsOrSm="@IsXsOrSm" Id="@context.Id" />
-						<ActionButtons OnCrudActionSelected="@ReturnedCrud" ParmCrud="Enums.Crud.Delete" IsXsOrSm="@IsXsOrSm" Id="@context.Id" />
+						<ActionButtons OnCrudActionSelected="@ReturnedCrud" ParmCrud="Enums.Crud.DeleteRegistration" IsXsOrSm="@IsXsOrSm" Id="@context.Id" />
 						<ActionButtons OnCrudActionSelected="@ReturnedCrud" ParmCrud="Enums.Crud.Display" IsXsOrSm="@IsXsOrSm" Id="@context.Id" />
 					}
 

@@ -11,6 +11,7 @@ using LivingMessiah.Web.Pages.SukkotAdmin.Data; // for BaseRepositoryAsync
 using LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.Detail;
 using LivingMessiah.Web.Pages.SukkotAdmin.RegistrationNotes.Domain;
 using LivingMessiah.Web.Pages.Sukkot.Data;
+using LivingMessiah.Web.Pages.Sukkot.Enums;
 
 namespace LivingMessiah.Web.Pages.Sukkot.RegistrationEntry;
 
@@ -206,7 +207,7 @@ FROM Sukkot.vwRegistration WHERE Id = @id";
 			ChildBig = formVM.ChildBig,
 			ChildSmall = formVM.ChildSmall,
 			StatusId = formVM.StatusId,
-			AttendanceBitwise = formVM.AttendanceBitwise,
+			AttendanceBitwise = Helper.GetDaysBitwise(formVM.AttendanceDateList!, formVM.AttendanceDateList2ndMonth!, Sukkot.Enums.DateRangeType.Attendance),
 			LmmDonation = 0,
 			Notes = formVM.Notes,
 			Avatar = string.Empty
@@ -266,7 +267,7 @@ FROM Sukkot.vwRegistration WHERE Id = @id";
 			Adults = formVM.Adults,
 			ChildBig = formVM.ChildBig,
 			ChildSmall = formVM.ChildSmall,
-			AttendanceBitwise = formVM.AttendanceBitwise,
+			AttendanceBitwise = Helper.GetDaysBitwise(formVM.AttendanceDateList!, formVM.AttendanceDateList2ndMonth!, Sukkot.Enums.DateRangeType.Attendance),
 			StatusId = formVM.StatusId,
 			LmmDonation = formVM.LmmDonation,
 			Notes = DTOHelper.Scrub(formVM.Notes),
