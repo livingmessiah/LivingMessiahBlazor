@@ -37,7 +37,7 @@ public class LinksFactory : ILinksFactory
 			{
 				new LinkBasic {Index = PsalmsAndProverbs.Index, Title = PsalmsAndProverbs.Title, Icon = PsalmsAndProverbs.Icon, },
 				new LinkBasic {Index = Contact.Index, Title = Contact.Title, Icon = Contact.Icon, },
-				new LinkBasic {Index = Sukkot.RegistrationEntry.SuperUser.Index, Title = Sukkot.RegistrationEntry.SuperUser.Title, Icon = Sukkot.RegistrationEntry.SuperUser.Icon, },
+				new LinkBasic {Index = Sukkot.SuperUser.Index, Title = Sukkot.SuperUser.Title, Icon = Sukkot.SuperUser.Icon, },
 				new LinkBasic {Index = SpecialEvents.Index, Title = SpecialEvents.Title, Icon = SpecialEvents.Icon, },
  			};  
 	}

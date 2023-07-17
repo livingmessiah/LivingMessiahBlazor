@@ -36,6 +36,7 @@
 		<TableHeader>
 			<th>SPROC</th>
 			<th>Line</th>
+			<th>#</th>
 			<th>Error Message</th>
 			<th>Id</th>
 			<th>How<br />Old</th>
@@ -43,6 +44,7 @@
 		</TableHeader>
 		<RowTemplate>
 			<td>@context.ErrorProcedure</td>
+			<td>@context.ErrorNumber</td>
 			<td>@context.ErrorLine</td>
 			<td>@context.ErrorMessage</td>
 			<td>@context.ErrorLogID</td>

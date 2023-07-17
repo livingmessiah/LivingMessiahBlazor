@@ -1,0 +1,95 @@
+﻿@page "/Sukkot/SuperUser"
+
+@using Page = LivingMessiah.Web.Links.Sukkot.SuperUser
+@using static LivingMessiah.Web.Services.Auth0
+@using LivingMessiah.Web.Shared.Sukkot
+@using LivingMessiah.Web.SmartEnums
+@using LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.AddOrEdit
+@using LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.Detail
+
+@using LivingMessiah.Web.Pages.Sukkot.HouseRulesAgreement
+@*@using HRA = LivingMessiah.Web.Pages.Sukkot.HouseRulesAgreement.Form*@
+
+@using LivingMessiah.Web.Pages.Sukkot.RegistrationEntry
+@using LoginLink = LivingMessiah.Web.Links.Account
+
+@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+
+<AuthorizeView Roles="@Roles.AdminOrSukkot">
+	<Authorized>
+
+		<!-- ToDo: can this be moved to <PageHeader ??? -->
+		<SukkotAdminMenubar></SukkotAdminMenubar>
+
+		<div class="@MediaQuery.XsOrSm.DivClass">
+			<PageHeader IsXsOrSm="true" />
+		</div>
+
+		<div class="@MediaQuery.MdOrLgOrXl.DivClass">
+			<PageHeader IsXsOrSm="false" />
+		</div>
+
+		<div class="row mt-4 mb-0">
+			<div class="col-12">
+				<BypassAgreementToggle />
+			</div>
+		</div>
+
+		@if (State!.Value.VisibleComponent == Enums.VisibleComponent.MasterList)
+		{
+			if (State!.Value.BypassAgreement)
+			{
+				<LivingMessiah.Web.Pages.Sukkot.HouseRulesAgreement.BypassAgreementForm />
+			}
+			else
+			{
+				<LivingMessiah.Web.Pages.Sukkot.HouseRulesAgreement.UseAgreementForm />
+			}
+
+			<div class="@MediaQuery.XsOrSm.DivClass">
+				<MasterList IsXsOrSm="true" />
+			</div>
+
+			<div class="@MediaQuery.MdOrLgOrXl.DivClass">
+				<MasterList IsXsOrSm="false" />
+			</div>
+		}
+		else
+		{
+			<ShowMasterIndex />
+
+			@if (State!.Value.VisibleComponent == Enums.VisibleComponent.AddEditForm)
+			{
+				<LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.AddOrEdit.Form />
+			}
+			else
+			{
+				@* FN: 1 *@
+				<div class="card border-primary my-3 p-2">
+					<Display />
+				</div>
+			}
+		}
+	</Authorized>
+	<NotAuthorized>
+
+		<div class="card border-warning my-5">
+			<div class="card-header">Not Authorized</div>
+			<div class="card-body">
+				<h5 class="">To view <b>@Page.Title</b> you need to be logged in.</h5>
+				<LivingMessiah.Web.Pages.Sukkot.RegistrationSteps.LoginRedirectButton ReturnUrl="@Page.Index" />
+			</div>
+		</div>
+
+	</NotAuthorized>
+</AuthorizeView>
+
+<ToasterSuperUser />
+
+@*
+# FootNotes
+## FN: 1 
+- ToDo: look at how the showPrintInstructionMessage is being used 
+	- Details Pages\Sukkot\Details\Index.razor
+	-	page "/Sukkot/Details/{Id:int}/{showPrintInstructionMessage:bool}"
+*@

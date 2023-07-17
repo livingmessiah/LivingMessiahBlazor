@@ -166,7 +166,7 @@ public static class Calendar
 		public const string Title = "Feast Table";
 		public const string Icon = "fas fa-glass-cheers";
 	}
-	
+
 }
 
 public static class Contact
@@ -248,7 +248,7 @@ public static class IndepthStudy
 
 public static class IntroductionAndWelcome
 {
-	
+
 	public const string Index = "/IntroductionAndWelcome";
 	public const string Title = "Welcome";
 	public const string Icon = "far fa-handshake";
@@ -433,21 +433,12 @@ public static class Sukkot
 		public const string BackToButtonIcon = "fas fa-campground";
 	}
 
-	public static class RegistrationEntry
+	public static class SuperUser
 	{
-		public static class NormalUser
-		{
-			public const string Index = "/RegistrationEntry";
-			public const string Title = "Registration Entry";
-		}
-
-		public static class SuperUser
-		{
-			public const string Index = "/RegistrationEntry/SuperUser";
-			public const string Title = "Super User Registration";
-			public const string IconText = "Super User";
-			public const string Icon = "fas fa-mask";
-		}
+		public const string Index = "Sukkot/SuperUser";
+		public const string Title = "Super User Registration";
+		public const string IconText = "Super User";
+		public const string Icon = "fas fa-mask";
 	}
 
 
@@ -573,7 +564,7 @@ public static class UpcomingEventsAdmin
 
 	public static class Table
 	{
-		public const string Page = "/UpcomingEventsAdminTable";  
+		public const string Page = "/UpcomingEventsAdminTable";
 		public const string Title = "Upcoming Events Table";
 		public const string Icon = "fas fa-table";
 	}

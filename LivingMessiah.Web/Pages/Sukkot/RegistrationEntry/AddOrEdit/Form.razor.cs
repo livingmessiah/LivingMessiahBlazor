@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Blazored.FluentValidation;
 using Microsoft.Extensions.Logging;
-using LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.SuperUser;
+using LivingMessiah.Web.Pages.Sukkot.SuperUser;
 
 namespace LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.AddOrEdit;
 

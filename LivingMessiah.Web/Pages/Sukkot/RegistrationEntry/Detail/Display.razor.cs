@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
-using LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.SuperUser;
+using LivingMessiah.Web.Pages.Sukkot.SuperUser;
 
 namespace LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.Detail;
 
