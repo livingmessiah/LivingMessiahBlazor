@@ -48,7 +48,7 @@ public record ReSet_HRA_Action(HouseRulesAgreement.FormVM HRA_FormVM, HouseRules
 
 // 1.4 Actions related to MasterList
 public record Add_Registration_Action(string? EMail);
-public record Add_Donation_Action(int RegistrationId, string? EMail);
+public record Add_Donation_Action(int RegistrationId, string? EMail, string? FullName);
 
 // 1.5 Delete() actions
 public record Delete_Action(int Id);
@@ -75,6 +75,7 @@ public record State
 
 	public DonationFormVM? DonationFormVM { get; init; }
 	public int RegistrationId { get; init; }
+	public string? FullName { get; init; }
 
 	public string? HRA_EMail { get; init; } // why can't I just use HRA_FormVM.EMail?
 	public HouseRulesAgreement.FormVM? HRA_FormVM { get; init; }
@@ -254,6 +255,7 @@ public static class Reducers
 			VisibleComponent = Enums.VisibleComponent.DonationForm,
 			RegistrationId = action.RegistrationId,
 			HRA_EMail = action.EMail,
+			FullName = action.FullName,
 			DonationFormVM = new DonationFormVM()
 		};
 	}

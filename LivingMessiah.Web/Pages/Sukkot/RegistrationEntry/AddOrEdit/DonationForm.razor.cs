@@ -18,7 +18,7 @@ public partial class DonationForm
 	private FluentValidationValidator? _fluentValidationValidator;
 
 	private DonationFormVM? VM => State!.Value.DonationFormVM;
-
+	protected string? FullName;
 
 	protected override async Task OnInitializedAsync()
 	{
@@ -30,6 +30,7 @@ public partial class DonationForm
 		VM!.CreatedBy = email;
 		VM!.CreateDate = DateTime.UtcNow;
 		VM!.RegistrationId = State!.Value.RegistrationId;
+		FullName = State!.Value.FullName;
 
 		await base.OnInitializedAsync();
 	}

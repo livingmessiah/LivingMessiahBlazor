@@ -18,6 +18,8 @@ public partial class PreviousDonationsTable
 	[Inject] public ILogger<PreviousDonationsTable>? Logger { get; set; }
 	[Inject] public IToastService? Toast { get; set; }
 
+	[Parameter, EditorRequired] public int RegistrationId { get; set; }
+
 	public List<vwDonationDetail>? DonationDetails { get; set; } = new List<vwDonationDetail>(); //init;
 
 	private decimal Total { get; set; } = 0;
@@ -57,7 +59,7 @@ public partial class PreviousDonationsTable
 	{
 		try
 		{
-			DonationDetails = await db!.GetByRegistrationId(20);
+			DonationDetails = await db!.GetByRegistrationId(RegistrationId);
 
 			if (DonationDetails is null)
 			{

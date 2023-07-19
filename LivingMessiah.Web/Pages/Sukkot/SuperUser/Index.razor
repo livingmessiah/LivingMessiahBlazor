@@ -66,9 +66,7 @@
 			{
 				@if (State!.Value.VisibleComponent == Enums.VisibleComponent.DonationForm)
 				{
-					@*<LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.AddOrEdit.DonationFilter />*@
-					<LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.AddOrEdit.DonationForm />
-					<LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.AddOrEdit.PreviousDonationsTable />
+					<LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.AddOrEdit.DonationIndex RegistrationId="@State!.Value.RegistrationId" />
 				}
 				else
 				{

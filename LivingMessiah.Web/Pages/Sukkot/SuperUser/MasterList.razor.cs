@@ -75,7 +75,7 @@ public partial class MasterList
 				break;
 
 			case nameof(Enums.Crud.AddDonation):
-				Dispatcher!.Dispatch(new Add_Donation_Action(args.Id, args.EMail)); 
+				Dispatcher!.Dispatch(new Add_Donation_Action(args.Id, args.EMail, args.FullName)); 
 				Dispatcher!.Dispatch(new Set_PageHeader_For_Detail_Action(args.Crud.Text, args.Crud!.Icon, args.Crud!.Color, args.Id));
 				break;
 

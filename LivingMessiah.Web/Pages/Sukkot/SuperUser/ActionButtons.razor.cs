@@ -11,6 +11,7 @@ public partial class ActionButtons
 	[Parameter, EditorRequired] public int Id { get; set; } // Use 0 for Add and Repopulate
 	[Parameter, EditorRequired] public bool IsXsOrSm { get; set; }
 	[Parameter] public EventCallback<CrudAndIdArgs> OnCrudActionSelected { get; set; }
+	[Parameter] public string? FullName { get; set; } // Required for Donation
 
 	private async Task OnButtonClicked()
 	{
@@ -18,7 +19,8 @@ public partial class ActionButtons
 		{
 			Crud = ParmCrud!,
 			EMail = EMail ?? "???",
-			Id = Id
+			Id = Id,
+			FullName = FullName ?? "???"
 		};
 		await OnCrudActionSelected.InvokeAsync(args);
 	}
@@ -47,5 +49,6 @@ public struct CrudAndIdArgs
 	public Crud Crud { get; set; }
 	public string EMail { get; set; } 
 	public int Id { get; set; }
+	public string FullName { get; set; }
 }
 
