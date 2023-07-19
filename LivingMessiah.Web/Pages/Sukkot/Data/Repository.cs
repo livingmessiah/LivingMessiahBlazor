@@ -7,46 +7,42 @@ using Dapper;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
-
-using LivingMessiah.Web.Pages.SukkotAdmin.Data; // for BaseRepositoryAsync
-
 using LivingMessiah.Web.Pages.Sukkot.RegistrationEntry;
-//using LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.Detail;
 
 using LivingMessiah.Web.Pages.Sukkot.Enums;
+using LivingMessiah.Web.Pages.SukkotAdmin.Data; // for BaseRepositoryAsync
+using LivingMessiah.Web.Pages.Sukkot.SuperUser.Data;
+using LivingMessiah.Web.Pages.SukkotAdmin.Donations.Data;
 
-using LivingMessiah.Web.Pages.Sukkot;
-using Syncfusion.Blazor.Grids;
-using Serilog.Core;
+//using LivingMessiah.Web.Pages.SukkotAdmin.Donations.Data;
+//using LivingMessiah.Web.Pages.SukkotAdmin.Donations.Domain;
 
 namespace LivingMessiah.Web.Pages.Sukkot.Data;
 
 public interface IRepository
 {
 	string BaseSqlDump { get; }
+	
+	// Used by FluxorStore
 	Task<List<SuperUser.Data.vwSuperUser>> GetAll();
-	Task<SuperUser.Data.vwRegistration> GetById(int id);
-
-	Task<List<ViewModel_RE_DELETE>> GetAll2();
-	Task<ViewModel_RE_DELETE> GetById2(int id);
-
-	Task<RegistrationEntry.AddOrEdit.FormVM> GetAddOrEditId(int id);
+	Task<RegistrationEntry.AddOrEdit.RegistrationFormVM> GetAddOrEditId(int id);
 	Task<RegistrationEntry.Detail.DisplayVM> GetDisplayById(int id);
+	Task<Tuple<int, int, string>> CreateRegistration(RegistrationEntry.AddOrEdit.RegistrationFormVM formVM);
+	Task<Tuple<int, int, string>> UpdateRegistration(RegistrationEntry.AddOrEdit.RegistrationFormVM formVM);
+	Task<int> Delete(int id);			// stpRegistrationDelete
 
-	Task<Tuple<int, int, string>> CreateRegistration(RegistrationEntry.AddOrEdit.FormVM formVM);
-	Task<Tuple<int, int, string>> UpdateRegistration(RegistrationEntry.AddOrEdit.FormVM formVM);
+	Task<Tuple<int, int, string>> InsertHouseRulesAgreement(string email, string timeZone);  // Also used by RegistrationSteps!AgreementButtons
+	Task<int> DeleteHRA(int id);	// stpHRADelete
 
+	Task<List<SuperUser.Data.vwDonationDetail>> GetByRegistrationId(int registrationId);
+	Task<Tuple<int, int, string>> InsertRegistrationDonation(RegistrationEntry.AddOrEdit.DonationFormVM donation); //SuperUser.Data.Donation donation
+	Task<int> DeleteDonationDetail(int id);
 
-	// Can't remove `Tuple<...>` with `(...)`, see C:\Source\LivingMessiahWiki\Tuples\Removing-Tuple-Conflicts-with-BaseRepositoryAsync.md
+	// Used by Services
+	Task<ViewModel_RE_DELETE> GetById2(int id); 
 	Task<Tuple<int, int, string>> Create(DTO registration);
 	Task<Tuple<int, int, string>> Update(DTO registration);
 
-	Task<Tuple<int, int, string>> InsertHouseRulesAgreement(string email, string timeZone);
-
-	Task<int> Delete(int id);
-	Task<int> DeleteHRA(int id);
-
-	Task<List<RegistrationLookup>> PopulateRegistrationLookup(); // used by: EditRegistrationForm (SukkotAdmin.Registration)
 }
 
 
@@ -61,19 +57,7 @@ public class Repository : BaseRepositoryAsync, IRepository
 		get { return SqlDump!; }
 	}
 
-	public async Task<List<RegistrationLookup>> PopulateRegistrationLookup()
-	{
-		Sql = $@"
-SELECT Id AS ID, Sukkot.udfFormatName(1, FamilyName, FirstName, NULL, NULL) AS Text
-FROM Sukkot.Registration
-ORDER BY FirstName
-";
-		return await WithConnectionAsync(async connection =>
-		{
-			var rows = await connection.QueryAsync<RegistrationLookup>(Sql);
-			return rows.ToList();
-		});
-	}
+	#region Registration used by FluxorStore
 
 	public async Task<List<SuperUser.Data.vwSuperUser>> GetAll()
 	{
@@ -90,45 +74,7 @@ ORDER BY FullName
 		});
 	}
 
-	public async Task<SuperUser.Data.vwRegistration> GetById(int id)
-	{
-		Parms = new DynamicParameters(new { Id = id });
-		Sql = $@"
---DECLARE @id int=4
-SELECT TOP 1 
-Id, FamilyName, FirstName, SpouseName, OtherNames, EMail, Phone, Adults, ChildBig, ChildSmall
-, StatusId
-, AttendanceBitwise, LmmDonation, Notes
---, Avatar
-FROM Sukkot.Registration 
-WHERE Id = @Id";
-		return await WithConnectionAsync(async connection =>
-		{
-			var rows = await connection.QueryAsync<SuperUser.Data.vwRegistration>(sql: Sql, param: Parms);
-			return rows.SingleOrDefault()!;
-		});
-	}
-
-
-	public async Task<List<ViewModel_RE_DELETE>> GetAll2()
-	{
-		Sql = $@"
-SELECT Id, FamilyName, FirstName, SpouseName, OtherNames, EMail, Phone
-, Adults, ChildBig, ChildSmall
-, StatusId
---, AttendanceBitwise, Notes
---, LmmDonation, Avatar
-FROM Sukkot.Registration
-ORDER BY FirstName
-";
-		return await WithConnectionAsync(async connection =>
-		{
-			var rows = await connection.QueryAsync<ViewModel_RE_DELETE>(sql: Sql);
-			return rows.ToList();
-		});
-	}
-
-	public async Task<RegistrationEntry.AddOrEdit.FormVM> GetAddOrEditId(int id)
+	public async Task<RegistrationEntry.AddOrEdit.RegistrationFormVM> GetAddOrEditId(int id)
 	{
 		Parms = new DynamicParameters(new { Id = id });
 		Sql = $@"
@@ -145,28 +91,7 @@ WHERE Id = @Id";
 
 		return await WithConnectionAsync(async connection =>
 		{
-			var rows = await connection.QueryAsync<RegistrationEntry.AddOrEdit.FormVM>(sql: Sql, param: Parms);
-			return rows.SingleOrDefault()!;
-		});
-	}
-
-
-
-	public async Task<ViewModel_RE_DELETE> GetById2(int id)
-	{
-		Parms = new DynamicParameters(new { Id = id });
-		Sql = $@"
---DECLARE @id int=4
-SELECT TOP 1 
-Id, FamilyName, FirstName, SpouseName, OtherNames, EMail, Phone, Adults, ChildBig, ChildSmall
-, StatusId
-, AttendanceBitwise, LmmDonation, Notes
---, Avatar
-FROM Sukkot.Registration 
-WHERE Id = @Id";
-		return await WithConnectionAsync(async connection =>
-		{
-			var rows = await connection.QueryAsync<ViewModel_RE_DELETE>(sql: Sql, param: Parms);
+			var rows = await connection.QueryAsync<RegistrationEntry.AddOrEdit.RegistrationFormVM>(sql: Sql, param: Parms);
 			return rows.SingleOrDefault()!;
 		});
 	}
@@ -199,7 +124,7 @@ FROM Sukkot.vwRegistration WHERE Id = @id";
 	}
 
 
-	public async Task<Tuple<int, int, string>> CreateRegistration(RegistrationEntry.AddOrEdit.FormVM formVM)
+	public async Task<Tuple<int, int, string>> CreateRegistration(RegistrationEntry.AddOrEdit.RegistrationFormVM formVM)
 	{
 		Sql = "Sukkot.stpRegistrationInsert";
 		Parms = new DynamicParameters(new
@@ -261,7 +186,7 @@ FROM Sukkot.vwRegistration WHERE Id = @id";
 		});
 	}
 
-	public async Task<Tuple<int, int, string>> UpdateRegistration(RegistrationEntry.AddOrEdit.FormVM formVM)
+	public async Task<Tuple<int, int, string>> UpdateRegistration(RegistrationEntry.AddOrEdit.RegistrationFormVM formVM)
 	{
 		Sql = "Sukkot.stpRegistrationUpdate";
 		Parms = new DynamicParameters(new
@@ -318,7 +243,194 @@ FROM Sukkot.vwRegistration WHERE Id = @id";
 			return new Tuple<int, int, string>(RowsAffected, SprocReturnValue, ReturnMsg);
 		});
 	}
+	
+	public async Task<int> Delete(int id)
+	{
+		Sql = "Sukkot.stpRegistrationDelete";
+		Parms = new DynamicParameters(new { RegistrationId = id });
+		return await WithConnectionAsync(async connection =>
+		{
+			var affectedRows = await connection.ExecuteAsync(sql: Sql, param: Parms, commandType: CommandType.StoredProcedure);
+			//if (affectedRows < 0) { throw new Exception($"Registration NOT Deleted"); }
+			return affectedRows;
+		});
+	}
+	
+	#endregion
 
+
+	#region HRA
+	public async Task<Tuple<int, int, string>> InsertHouseRulesAgreement(string email, string timeZone)
+	{
+		Sql = "Sukkot.stpHouseRulesAgreementInsert";
+		Parms = new DynamicParameters(new
+		{
+			EMail = email,
+			TimeZone = timeZone
+		});
+		Parms.Add("@NewId", dbType: DbType.Int32, direction: ParameterDirection.Output);
+		Parms.Add("@ReturnValue", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue);
+
+		int NewId = 0;
+		int SprocReturnValue = 0;
+		string ReturnMsg = "";
+
+		return await WithConnectionAsync(async connection =>
+		{
+			log.LogDebug($"Inside {nameof(Repository)}!{nameof(InsertHouseRulesAgreement)}; About to execute sql:{Sql}");
+			var affectedRows = await connection.ExecuteAsync(sql: Sql, param: Parms, commandType: CommandType.StoredProcedure);
+			SprocReturnValue = base.Parms.Get<int>("ReturnValue");
+			int? x = Parms.Get<int?>("NewId");
+
+			if (x == null)
+			{
+				if (SprocReturnValue == 2601) // Unique Index Violation
+				{
+					ReturnMsg = $"Database call did not insert a new HRA record because it caused a Unique Index Violation; email: {email}; ";
+					log.LogWarning($"...ReturnMsg: {ReturnMsg}; {Environment.NewLine} {Sql}");
+				}
+				else
+				{
+					ReturnMsg = $"Database call failed; email: {email ?? "NULL!!"}; SprocReturnValue: {SprocReturnValue}";
+					log.LogWarning($"...ReturnMsg: {ReturnMsg}; {Environment.NewLine} {Sql}");
+				}
+			}
+			else
+			{
+				NewId = int.TryParse(x.ToString(), out NewId) ? NewId : 0;
+				ReturnMsg = $"House Rules Agreement created for {email}; NewId={NewId}";
+				log.LogDebug($"...Return NewId:{NewId}");
+			}
+			
+			return new Tuple<int, int, string>(NewId, SprocReturnValue, ReturnMsg);
+
+		});
+	}
+
+	public async Task<int> DeleteHRA(int id)
+	{
+		Sql = "Sukkot.stpHRADelete";
+		Parms = new DynamicParameters(new { Id = id });
+		return await WithConnectionAsync(async connection =>
+		{
+			var affectedRows = await connection.ExecuteAsync(sql: Sql, param: Parms, commandType: CommandType.StoredProcedure);
+			return affectedRows;
+		});
+	}
+	#endregion
+
+
+	#region Donation
+
+	public async Task<List<vwDonationDetail>> GetByRegistrationId(int registrationId)
+	{
+		Sql = $@"
+-- DECLARE @registrationId int = 20
+SELECT Id, Detail, Amount, Notes, ReferenceId, CreateDate, CreatedBy --, FamilyName
+FROM Sukkot.vwDonationDetail 
+WHERE RegistrationId=@registrationId
+ORDER BY Detail
+";
+		base.Parms = new DynamicParameters(new { RegistrationId = registrationId });
+
+		return await WithConnectionAsync(async connection =>
+		{
+			var rows = await connection.QueryAsync<vwDonationDetail>(sql: Sql, param: Parms);
+			return rows.ToList();
+		});
+	}
+
+	public async Task<Tuple<int, int, string>> InsertRegistrationDonation(RegistrationEntry.AddOrEdit.DonationFormVM donation)
+	{
+		base.Sql = "Sukkot.stpDonationInsert ";
+		base.Parms = new DynamicParameters(new
+		{
+			donation.RegistrationId,
+			donation.Amount,
+			donation.Notes,
+			donation.ReferenceId,
+			donation.CreatedBy,
+			donation.CreateDate
+		});
+
+		Parms.Add("@NewId", dbType: DbType.Int32, direction: ParameterDirection.Output);
+		Parms.Add("@ReturnValue", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue);
+
+		int NewId = 0;
+		int SprocReturnValue = 0;
+		string ReturnMsg = "";
+
+		string inside = $"{nameof(Repository)}!{nameof(InsertRegistrationDonation)}; about to execute SPROC: {Sql}";
+		log.LogDebug(string.Format("Inside {0}", inside));
+
+		return await WithConnectionAsync(async connection =>
+		{
+			var affectedrows = await connection.ExecuteAsync(sql: base.Sql, param: base.Parms, commandType: CommandType.StoredProcedure);
+			SprocReturnValue = Parms.Get<int>("ReturnValue");
+			int? x = base.Parms.Get<int?>("NewId");
+			if (x == null)
+			{
+				if (SprocReturnValue == 2601) // Unique Index Violation
+				{
+					ReturnMsg = $"Database call did not insert a new donation record because it caused a Unique Index Violation; donation.RegistrationId: {donation.RegistrationId}; ";
+					log.LogWarning($"...ReturnMsg: {ReturnMsg}; {Environment.NewLine} {Sql}");
+				}
+				else
+				{
+					ReturnMsg = $"Database call failed for donation insert; donation.RegistrationId: {donation.RegistrationId}; SprocReturnValue: {SprocReturnValue}";
+					log.LogWarning($"...ReturnMsg: {ReturnMsg}; {Environment.NewLine} {Sql}");
+				}
+				
+			}
+			else
+			{
+				int NewId = int.TryParse(x.ToString(), out NewId) ? NewId : 0;
+				ReturnMsg = $"Donation created for {donation.RegistrationId}; NewId={NewId}";
+				log.LogDebug($"Return NewId:{NewId}");
+				
+			}
+
+			return new Tuple<int, int, string>(NewId, SprocReturnValue, ReturnMsg);
+		});
+	}
+
+	public async Task<int> DeleteDonationDetail(int id)
+	{
+		base.Parms = new DynamicParameters(new { Id = id });
+		base.Sql = "DELETE FROM Sukkot.Donation WHERE Id=@Id";
+
+		base.log.LogDebug($"Inside {nameof(DonationRepository)}!{nameof(DeleteDonationDetail)}, Sql: {Sql}, id: {id}");
+
+		return await WithConnectionAsync(async connection =>
+		{
+			var affectedrows = await connection.ExecuteAsync(sql: base.Sql, param: base.Parms);
+			return affectedrows;
+		});
+	}
+
+	#endregion
+
+
+	#region Registration used by Service
+
+	public async Task<ViewModel_RE_DELETE> GetById2(int id)
+	{
+		Parms = new DynamicParameters(new { Id = id });
+		Sql = $@"
+--DECLARE @id int=4
+SELECT TOP 1 
+Id, FamilyName, FirstName, SpouseName, OtherNames, EMail, Phone, Adults, ChildBig, ChildSmall
+, StatusId
+, AttendanceBitwise, LmmDonation, Notes
+--, Avatar
+FROM Sukkot.Registration 
+WHERE Id = @Id";
+		return await WithConnectionAsync(async connection =>
+		{
+			var rows = await connection.QueryAsync<ViewModel_RE_DELETE>(sql: Sql, param: Parms);
+			return rows.SingleOrDefault()!;
+		});
+	}
 
 	public async Task<Tuple<int, int, string>> Create(DTO registration)
 	{
@@ -436,77 +548,83 @@ FROM Sukkot.vwRegistration WHERE Id = @id";
 			return new Tuple<int, int, string>(RowsAffected, SprocReturnValue, ReturnMsg);
 		});
 	}
+	
+	#endregion
 
-
-	public async Task<Tuple<int, int, string>> InsertHouseRulesAgreement(string email, string timeZone)
-	{
-		Sql = "Sukkot.stpHouseRulesAgreementInsert";
-		Parms = new DynamicParameters(new
-		{
-			EMail = email,
-			TimeZone = timeZone
-		});
-		Parms.Add("@NewId", dbType: DbType.Int32, direction: ParameterDirection.Output);
-		Parms.Add("@ReturnValue", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue);
-
-		int NewId = 0;
-		int SprocReturnValue = 0;
-		string ReturnMsg = "";
-
-		return await WithConnectionAsync(async connection =>
-		{
-			log.LogDebug($"Inside {nameof(Repository)}!{nameof(InsertHouseRulesAgreement)}; About to execute sql:{Sql}");
-			var affectedRows = await connection.ExecuteAsync(sql: Sql, param: Parms, commandType: CommandType.StoredProcedure);
-			SprocReturnValue = base.Parms.Get<int>("ReturnValue");
-			int? x = Parms.Get<int?>("NewId");
-
-			if (x == null)
-			{
-				if (SprocReturnValue == 2601) // Unique Index Violation
-				{
-					ReturnMsg = $"Database call did not insert a new HRA record because it caused a Unique Index Violation; email: {email}; ";
-					log.LogWarning($"...ReturnMsg: {ReturnMsg}; {Environment.NewLine} {Sql}");
-				}
-				else
-				{
-					ReturnMsg = $"Database call failed; email: {email ?? "NULL!!"}; SprocReturnValue: {SprocReturnValue}";
-					log.LogWarning($"...ReturnMsg: {ReturnMsg}; {Environment.NewLine} {Sql}");
-				}
-			}
-			else
-			{
-				NewId = int.TryParse(x.ToString(), out NewId) ? NewId : 0;
-				ReturnMsg = $"House Rules Agreement created for {email}; NewId={NewId}";
-				log.LogDebug($"...Return NewId:{NewId}");
-			}
-			
-			return new Tuple<int, int, string>(NewId, SprocReturnValue, ReturnMsg);
-
-		});
-	}
-
-
-	public async Task<int> Delete(int id)
-	{
-		Sql = "Sukkot.stpRegistrationDelete";
-		Parms = new DynamicParameters(new { RegistrationId = id });
-		return await WithConnectionAsync(async connection =>
-		{
-			var affectedRows = await connection.ExecuteAsync(sql: Sql, param: Parms, commandType: CommandType.StoredProcedure);
-			//if (affectedRows < 0) { throw new Exception($"Registration NOT Deleted"); }
-			return affectedRows;
-		});
-	}
-
-	public async Task<int> DeleteHRA(int id)
-	{
-		Sql = "Sukkot.stpHRADelete";
-		Parms = new DynamicParameters(new { Id = id });
-		return await WithConnectionAsync(async connection =>
-		{
-			var affectedRows = await connection.ExecuteAsync(sql: Sql, param: Parms, commandType: CommandType.StoredProcedure);
-			return affectedRows;
-		});
-	}
 
 }
+
+/*
+# Footnotes
+
+FN1. Can't remove `Tuple<...>` with `(...)`, see C:\Source\LivingMessiahWiki\Tuples\Removing-Tuple-Conflicts-with-BaseRepositoryAsync.md
+
+*/
+
+/*
+
+## GetById
+Task<SuperUser.Data.vwRegistration> GetById(int id);
+
+public async Task<SuperUser.Data.vwRegistration> GetById(int id)
+	{
+		Parms = new DynamicParameters(new { Id = id });
+		Sql = $@"
+--DECLARE @id int=4
+SELECT TOP 1 
+Id, FamilyName, FirstName, SpouseName, OtherNames, EMail, Phone, Adults, ChildBig, ChildSmall
+, StatusId
+, AttendanceBitwise, LmmDonation, Notes
+--, Avatar
+FROM Sukkot.Registration 
+WHERE Id = @Id";
+		return await WithConnectionAsync(async connection =>
+		{
+			var rows = await connection.QueryAsync<SuperUser.Data.vwRegistration>(sql: Sql, param: Parms);
+			return rows.SingleOrDefault()!;
+		});
+	}
+
+
+## GetAll2
+	Task<List<ViewModel_RE_DELETE>> GetAll2();
+
+	public async Task<List<ViewModel_RE_DELETE>> GetAll2()
+	{
+		Sql = $@"
+SELECT Id, FamilyName, FirstName, SpouseName, OtherNames, EMail, Phone
+, Adults, ChildBig, ChildSmall
+, StatusId
+--, AttendanceBitwise, Notes
+--, LmmDonation, Avatar
+FROM Sukkot.Registration
+ORDER BY FirstName
+";
+		return await WithConnectionAsync(async connection =>
+		{
+			var rows = await connection.QueryAsync<ViewModel_RE_DELETE>(sql: Sql);
+			return rows.ToList();
+		});
+	}
+
+
+## PopulateRegistrationLookup
+
+	Task<List<RegistrationLookup>> PopulateRegistrationLookup(); // used by: EditRegistrationForm (SukkotAdmin.Registration)
+
+	public async Task<List<RegistrationLookup>> PopulateRegistrationLookup()
+	{
+		Sql = $@"
+SELECT Id AS ID, Sukkot.udfFormatName(1, FamilyName, FirstName, NULL, NULL) AS Text
+FROM Sukkot.Registration
+ORDER BY FirstName
+";
+		return await WithConnectionAsync(async connection =>
+		{
+			var rows = await connection.QueryAsync<RegistrationLookup>(Sql);
+			return rows.ToList();
+		});
+	}
+
+
+*/

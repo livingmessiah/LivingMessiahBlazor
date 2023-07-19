@@ -64,10 +64,19 @@
 			}
 			else
 			{
-				@* FN: 1 *@
-				<div class="card border-primary my-3 p-2">
-					<Display />
-				</div>
+				@if (State!.Value.VisibleComponent == Enums.VisibleComponent.DonationForm)
+				{
+					@*<LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.AddOrEdit.DonationFilter />*@
+					<LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.AddOrEdit.DonationForm />
+					<LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.AddOrEdit.PreviousDonationsTable />
+				}
+				else
+				{
+					@* FN: 1 *@
+					<div class="card border-primary my-3 p-2">
+						<Display />
+					</div>
+				}
 			}
 		}
 	</Authorized>
@@ -88,8 +97,8 @@
 
 @*
 # FootNotes
-## FN: 1 
-- ToDo: look at how the showPrintInstructionMessage is being used 
+## FN: 1
+- ToDo: look at how the showPrintInstructionMessage is being used
 	- Details Pages\Sukkot\Details\Index.razor
 	-	page "/Sukkot/Details/{Id:int}/{showPrintInstructionMessage:bool}"
 *@

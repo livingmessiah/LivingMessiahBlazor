@@ -10,6 +10,7 @@ public abstract class FormMode : SmartEnum<FormMode>
 		internal const int Add = 1;
 		internal const int Edit = 2;
 		internal const int Display = 3;
+		internal const int Donatioin = 4;
 	}
 	#endregion
 
@@ -17,6 +18,7 @@ public abstract class FormMode : SmartEnum<FormMode>
 	public static readonly FormMode Add = new AddSE();
 	public static readonly FormMode Edit = new EditSE();
 	public static readonly FormMode Display = new DisplaySE();
+	public static readonly FormMode Donation = new DonationSE();
 	#endregion
 
 	private FormMode(string name, int value) : base(name, value)  // Constructor
@@ -46,6 +48,12 @@ public abstract class FormMode : SmartEnum<FormMode>
 	{
 		public DisplaySE() : base($"{nameof(Id.Display)}", Id.Display) { }
 		public override string SubmitText => "N/A";
+	}
+
+	private sealed class DonationSE : FormMode
+	{
+		public DonationSE() : base($"{nameof(Id.Donatioin)}", Id.Donatioin) { }
+		public override string SubmitText => "Add Donation";
 	}
 
 	#endregion

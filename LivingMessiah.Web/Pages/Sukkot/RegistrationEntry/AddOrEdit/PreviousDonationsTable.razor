@@ -1,0 +1,74 @@
+﻿
+
+<h4 class="mt-4 mb-1">
+	<span class="text-black float-end">
+		Previous Donations
+	</span>
+</h4>
+
+<LoadingComponent IsLoading="DonationDetails == null">
+	<TableTemplate Items="DonationDetails"
+								 HeaderCSS="table table-primary table-hover">
+		<TableHeader>
+			<th>#</th>
+			<th class ="text-center">$</th>
+			<th>Reference Id / Notes</th>
+			<th>Created By</th>
+
+			<th class="text-center">Actions</th>
+		</TableHeader>
+
+		<RowTemplate>
+			<td>@context.Detail</td>
+			<td class="text-center">
+				@context.AmountNoCents<br />
+			</td>
+			<td>
+				<small>@context.ReferenceId</small><br />
+				<small>@context.Notes</small>
+			</td>
+
+			<td>
+				@context.CreatedBy <br />  @context.CreateDate.ToString(DateFormat.MM_dd_hh_mm)
+			</td>
+
+			<td class="text-center">
+				<div class="btn-group">
+
+					<button @onclick="@(() => DeleteHandler(context.Id))" title="Id: @context.Id"
+									type="button" class="text-danger btn-sm">
+						<i class="fa fa-times"></i>
+						<small>Delete</small>
+					</button>
+
+@*					<button @onclick="@(() => EditHandler(context.Id))" title="Id: @context.Id"
+									type="button" class="text-primary btn-sm">
+						<i class="fas fa-pencil-alt"></i>
+						<small>Edit</small>
+					</button>*@
+
+				</div>
+			</td>
+
+		</RowTemplate>
+
+		<TableFooter>
+			<th>Σ</th>
+			<th class="text-center">@TotalNoCents</th>
+			<th>Total</th>
+			<th></th>
+			<th></th>
+		</TableFooter>
+
+
+	</TableTemplate>
+
+</LoadingComponent>
+
+@*
+					<button @onclick="@OnButtonClicked" title="@GetTitle()"
+									type="button" class="@ParmCrud.ButtonColor btn-sm">
+						<i class="@ParmCrud!.Icon"></i>
+						<small>@ParmCrud.Text</small>
+					</button>
+*@

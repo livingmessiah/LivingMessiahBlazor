@@ -23,7 +23,8 @@ public record Set_Data_MasterList_Action(List<Data.vwSuperUser> vwSuperUserList)
 
 // 1.2 GetItem() actions
 public record Get_EditItem_Action(int Id, Enums.FormMode? FormMode); // FormMode is always Edit
-public record Set_Registration_FormVM_Action(FormVM? FormVM);
+public record Set_Registration_FormVM_Action(RegistrationFormVM? FormVM);
+public record Set_Donation_FormVM_Action(DonationFormVM? FormVM);
 public record Edit_Action(int Id);
 
 // 1.2.1 GetDisplayItem() actions
@@ -34,7 +35,8 @@ public record Display_Action(int Id);
 
 // ToDo: "Submitting_Request" is to generic because I have two forms one for HRA and one for Registration
 // 1.3 Actions related to Form Submission
-public record Submitting_Request_Action(FormVM FormVM, Enums.FormMode? FormMode);
+public record Submitting_Request_Action(RegistrationFormVM FormVM, Enums.FormMode? FormMode);
+public record Submitting_Donation_Request_Action(DonationFormVM FormVM);
 
 
 public record Set_BypassAgreement_Action(bool BypassAgreement); // HouseRulesAgreement.FormVM FormVM 
@@ -46,6 +48,7 @@ public record ReSet_HRA_Action(HouseRulesAgreement.FormVM HRA_FormVM, HouseRules
 
 // 1.4 Actions related to MasterList
 public record Add_Registration_Action(string? EMail);
+public record Add_Donation_Action(int RegistrationId, string? EMail);
 
 // 1.5 Delete() actions
 public record Delete_Action(int Id);
@@ -67,7 +70,11 @@ public record State
 	public Enums.VisibleComponent? VisibleComponent { get; init; }
 	public PageHeaderVM? PageHeaderVM { get; init; }
 	public Enums.FormMode? FormMode { get; init; }
-	public FormVM? FormVM { get; init; } // Consider renaming to RegistrationFormVM
+	public RegistrationFormVM? RegistrationFormVM { get; init; }
+
+
+	public DonationFormVM? DonationFormVM { get; init; }
+	public int RegistrationId { get; init; }
 
 	public string? HRA_EMail { get; init; } // why can't I just use HRA_FormVM.EMail?
 	public HouseRulesAgreement.FormVM? HRA_FormVM { get; init; }
@@ -92,8 +99,8 @@ public class FeatureImplementation : Feature<State>
 			VisibleComponent = Enums.VisibleComponent.MasterList,
 			PageHeaderVM = Constants.GetPageHeaderForIndexVM(),
 			FormMode = null,
-			FormVM = new FormVM(),
-
+			RegistrationFormVM = new RegistrationFormVM(),
+			DonationFormVM = new DonationFormVM(),
 			HRA_EMail = string.Empty, // why can't I just use HRA_FormVM.EMail?
 			HRA_FormVM = new HouseRulesAgreement.FormVM(),
 			BypassAgreement = true,
@@ -170,7 +177,18 @@ public static class Reducers
 	{
 		return state with
 		{
-			FormVM = action.FormVM
+			RegistrationFormVM = action.FormVM
+		};
+	}
+
+	// ToDo: This is need for something like	[EffectMethod] public async Task GetDonationItem(Get_EditItem_Action action, IDispatcher dispatcher)
+	[ReducerMethod]
+	public static State On_Set_Donation_FormVM(
+	State state, Set_Donation_FormVM_Action action)
+	{
+		return state with
+		{
+			DonationFormVM = action.FormVM
 		};
 	}
 
@@ -213,7 +231,6 @@ public static class Reducers
 		return state with { HRA_FormVM = action.FormVM };
 	}
 
-
 	[ReducerMethod]
 	public static State On_Add_Registration(
 		State state, Add_Registration_Action action)
@@ -223,9 +240,24 @@ public static class Reducers
 			VisibleComponent = Enums.VisibleComponent.AddEditForm,
 			HRA_EMail = action.EMail,
 			FormMode = Enums.FormMode.Add,
-			FormVM = new FormVM()
+			RegistrationFormVM = new RegistrationFormVM()
 		};
 	}
+
+
+	[ReducerMethod]
+	public static State On_Add_Donation(
+		State state, Add_Donation_Action action)
+	{
+		return state with
+		{
+			VisibleComponent = Enums.VisibleComponent.DonationForm,
+			RegistrationId = action.RegistrationId,
+			HRA_EMail = action.EMail,
+			DonationFormVM = new DonationFormVM()
+		};
+	}
+
 
 	[ReducerMethod]
 	public static State OnEdit(
@@ -392,7 +424,7 @@ public class Effects
 		Logger.LogDebug(string.Format("Inside {0}", inside));
 		try
 		{
-			RegistrationEntry.AddOrEdit.FormVM? formVM = new();
+			RegistrationEntry.AddOrEdit.RegistrationFormVM? formVM = new();
 			formVM = await db!.GetAddOrEditId(action.Id);
 
 			if (formVM is null)
@@ -521,6 +553,40 @@ public class Effects
 			dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Failure, Constants.Effects.ResponseMessageFailure));
 		}
 	}
+
+
+
+	[EffectMethod]
+	public async Task AddDonation(Submitting_Donation_Request_Action action, IDispatcher dispatcher)
+	{
+		string inside = $"{nameof(Effects)}!{nameof(AddDonation)}; RegistrationId: {action.FormVM.RegistrationId}";  
+		Logger.LogDebug(string.Format("Inside {0}", inside));
+
+		try
+		{
+			var sprocTuple = await db.InsertRegistrationDonation(action.FormVM);
+			Logger.LogDebug(string.Format("...sprocTuple.Item2=ReturnValue {0}", sprocTuple.Item2));
+
+			if (sprocTuple.Item2 == 0) // Item2=ReturnValue
+			{
+				dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Success, $"{sprocTuple.Item3}"));
+				dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Info, $"{Constants.Effects.RepopulateMessage}"));
+			}
+			else
+			{
+				dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Warning, $"{sprocTuple.Item3}"));
+			}
+
+
+		}
+		catch (Exception ex)
+		{
+			Logger.LogError(ex, string.Format("...Inside catch of {0}", inside));
+			dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Failure, $"{Constants.Effects.ResponseMessageFailure}."));
+			dispatcher.Dispatch(new Set_VisibleComponent_Action(VisibleComponent.MasterList));
+		}
+	}
+
 
 }
 

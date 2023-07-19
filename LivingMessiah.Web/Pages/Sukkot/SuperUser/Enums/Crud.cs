@@ -13,6 +13,7 @@ public abstract class Crud : SmartEnum<Crud>
 		internal const int DeleteRegistration = 4;
 		internal const int DeleteHRA = 5;
 		internal const int Repopulate = 6;
+		internal const int AddDonation = 7;
 	}
 	#endregion
 
@@ -23,6 +24,7 @@ public abstract class Crud : SmartEnum<Crud>
 	public static readonly Crud DeleteRegistration = new DeleteRegistrationSE();
 	public static readonly Crud DeleteHRA = new DeleteHRASE();
 	public static readonly Crud Repopulate = new RepopulateSE();
+	public static readonly Crud AddDonation = new AddDonationSE();
 	#endregion
 
 	private Crud(string name, int value) : base(name, value)  // Constructor
@@ -35,7 +37,6 @@ public abstract class Crud : SmartEnum<Crud>
 	public abstract string Color { get; }
 	public abstract string ButtonColor { get; }
 	#endregion
-
 
 	#region Private Instantiation
 
@@ -91,6 +92,15 @@ public abstract class Crud : SmartEnum<Crud>
 		public override string Icon => "fas fa-retweet";
 		public override string Color => "text-warning";
 		public override string ButtonColor => "btn btn-outline-warning";
+	}
+
+	private sealed class AddDonationSE : Crud
+	{
+		public AddDonationSE() : base($"{nameof(Id.AddDonation)}", Id.AddDonation) { }
+		public override string Text => "Add Donation(s)";
+		public override string Icon => "fas fa-dollar-sign"; 
+		public override string Color => "text-success";
+		public override string ButtonColor => "btn btn-outline-success";
 	}
 
 	#endregion

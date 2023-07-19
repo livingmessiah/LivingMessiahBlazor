@@ -41,7 +41,7 @@ public partial class MasterList
 		{
 			case nameof(Enums.Crud.AddRegistration):
 				Dispatcher!.Dispatch(new Add_Registration_Action(args.EMail)); //, RegistrationSteps.Enums.Status.StartRegistration.Value
-				Dispatcher!.Dispatch(new Set_PageHeader_For_Detail_Action(args.Crud.Name, args.Crud!.Icon, args.Crud!.Color, args.Id));
+				Dispatcher!.Dispatch(new Set_PageHeader_For_Detail_Action(args.Crud.Text, args.Crud!.Text, args.Crud!.Color, args.Id));
 				break;
 
 			case nameof(Enums.Crud.Edit):
@@ -72,6 +72,11 @@ public partial class MasterList
 
 			case nameof(Enums.Crud.Repopulate):
 				Dispatcher!.Dispatch(new Get_List_Action());
+				break;
+
+			case nameof(Enums.Crud.AddDonation):
+				Dispatcher!.Dispatch(new Add_Donation_Action(args.Id, args.EMail)); 
+				Dispatcher!.Dispatch(new Set_PageHeader_For_Detail_Action(args.Crud.Text, args.Crud!.Icon, args.Crud!.Color, args.Id));
 				break;
 
 			default:

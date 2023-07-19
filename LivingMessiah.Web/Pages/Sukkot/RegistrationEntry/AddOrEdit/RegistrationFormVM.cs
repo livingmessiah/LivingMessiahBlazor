@@ -3,7 +3,7 @@ using System;
 
 namespace LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.AddOrEdit;
 
-public class FormVM
+public class RegistrationFormVM
 {
 	public int Id { get; set; }
 	public string? FamilyName { get; set; }

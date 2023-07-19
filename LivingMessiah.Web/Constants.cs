@@ -6,9 +6,19 @@ public static class DateFormat
 {
 	public const string ddd_mm_dd = "ddd, MM/dd";  //ddd, MM/dd/yyyy
 	public const string mm_dd = "MM/dd";
+	public const string MM_dd_HH_mm = "MM/dd HH:mm";
+	public const string MM_dd_hh_mm = "MM/dd hh:mm";
 	public const string dd = "dd";
 	public const string dddd_dd_MMMM = "dddd, dd MMMM";
 	public const string dddd_MMMM_dd = "dddd, MMMM dd ";
+}
+
+public static class CurrencyFormat
+{
+	public const string NoCents = "{0:C0}"; // doesn't work use a property like below
+	/*
+		public string AmountNoCents { get { return String.Format("{0:C0}", Amount); }	}
+	*/
 }
 
 public static class Blobs

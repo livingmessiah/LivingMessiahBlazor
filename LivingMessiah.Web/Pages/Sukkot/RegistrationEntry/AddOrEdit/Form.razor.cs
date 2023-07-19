@@ -11,7 +11,7 @@ public partial class Form
 	[Inject] private IState<State>? State { get; set; }
 	[Inject] public IDispatcher? Dispatcher { get; set; }
 
-	private FormVM? VM => State!.Value.FormVM;
+	private RegistrationFormVM? VM => State!.Value.RegistrationFormVM;
 
 	protected override void OnInitialized()
 	{
@@ -36,7 +36,7 @@ public partial class Form
 	{
 		Logger!.LogDebug(string.Format("Inside {0}, FormMode: {1}"
 			, nameof(Form) + "!" + nameof(HandleValidSubmit), State!.Value.FormMode!.Name));
-		Dispatcher!.Dispatch(new Submitting_Request_Action(State!.Value.FormVM!, State!.Value.FormMode!));
+		Dispatcher!.Dispatch(new Submitting_Request_Action(State!.Value.RegistrationFormVM!, State!.Value.FormMode!));
 		Dispatcher!.Dispatch(new Get_List_Action());
 		Dispatcher!.Dispatch(new Set_PageHeader_For_Index_Action(SuperUser.Constants.GetPageHeaderForIndexVM()));
 	}

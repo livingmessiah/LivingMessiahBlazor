@@ -21,7 +21,6 @@ public interface IDonationRepository
 	Task<List<DonationDetail>> GetDonationDetailsAll();
 	Task<DonationDetail> GetDonationDetail(int id);
 	Task<DonationDetail> UpdateDonationDetail(DonationDetail donationDetail);
-	Task<int> DeleteDonationDetail(int id);
 	Task<List<RegistrationLookup>> PopulateRegistrationLookup();
 }
 public class DonationRepository : BaseRepositoryAsync, IDonationRepository
@@ -214,20 +213,6 @@ WHERE d.Id = @Id
 		{
 			var donationDetail = await connection.QueryAsync<DonationDetail>(base.Sql, base.Parms);
 			return donationDetail.SingleOrDefault()!;
-		});
-	}
-
-	public async Task<int> DeleteDonationDetail(int id)
-	{
-		base.Parms = new DynamicParameters(new { Id = id });
-		base.Sql = "DELETE FROM Sukkot.Donation WHERE Id=@Id";
-
-		base.log.LogDebug($"Inside {nameof(DonationRepository)}!{nameof(DeleteDonationDetail)}, Sql: {Sql}, id: {id}");
-
-		return await WithConnectionAsync(async connection =>
-		{
-			var affectedrows = await connection.ExecuteAsync(sql: base.Sql, param: base.Parms);
-			return affectedrows;
 		});
 	}
 

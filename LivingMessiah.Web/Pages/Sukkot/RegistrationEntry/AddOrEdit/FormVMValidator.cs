@@ -2,7 +2,7 @@
 
 namespace LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.AddOrEdit;
 
-public class FormVMValidator : AbstractValidator<FormVM>
+public class FormVMValidator : AbstractValidator<RegistrationFormVM>
 {
 	public FormVMValidator()
 	{
