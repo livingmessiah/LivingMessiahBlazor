@@ -33,6 +33,7 @@ public abstract class Status : SmartEnum<Status>
 	public abstract int StepNumber { get; }
 	public abstract bool UsedInDbOnly { get; }
 	public abstract string Heading { get; }
+	public abstract string Text { get; }
 	public abstract string Icon { get; }
 	public abstract bool UsedByUI { get; }
 	public abstract bool DisplayAsCompleted(Status status);
@@ -48,6 +49,7 @@ public abstract class Status : SmartEnum<Status>
 		public override int StepNumber => 1;
 		public override bool UsedInDbOnly => false;
 		public override string Heading => "Login";
+		public override string Text => "Login";
 		public override string Icon => "fas fa-check";
 		public override bool UsedByUI => true;
 		public override bool DisplayAsCompleted(Status status) => false;
@@ -60,6 +62,7 @@ public abstract class Status : SmartEnum<Status>
 		public override int StepNumber => 2;
 		public override bool UsedInDbOnly => false;
 		public override string Heading => "Email Confirmation";
+		public override string Text => "Email Confirmation";
 		public override string Icon => "fas fa-check";
 		public override bool UsedByUI => true;
 		public override bool DisplayAsCompleted(Status status) => status == Status.NotAuthenticated;
@@ -72,6 +75,7 @@ public abstract class Status : SmartEnum<Status>
 		public override int StepNumber => 3;
 		public override bool UsedInDbOnly => false;
 		public override string Heading => "Sign Agreement";
+		public override string Text => "Sign Agreement";
 		public override string Icon => "fas fa-check";
 		public override bool UsedByUI => true;
 		public override bool DisplayAsCompleted(Status status)
@@ -88,6 +92,7 @@ public abstract class Status : SmartEnum<Status>
 		public override int StepNumber => 4;
 		public override bool UsedInDbOnly => true;
 		public override string Heading => "Registration Form";
+		public override string Text => "Start Registration";
 		public override string Icon => "fas fa-check";
 		public override bool UsedByUI => true;
 		public override bool DisplayAsCompleted(Status status)
@@ -105,6 +110,7 @@ public abstract class Status : SmartEnum<Status>
 		public override int StepNumber => 5;
 		public override bool UsedInDbOnly => true;
 		public override string Heading => "Payment";
+		public override string Text => "Payment";
 		public override string Icon => "fas fa-check";  //fas fa-star-half
 		public override bool UsedByUI => true;
 		public override bool DisplayAsCompleted(Status status)
@@ -124,6 +130,7 @@ public abstract class Status : SmartEnum<Status>
 		public override int StepNumber => 6; 
 		public override bool UsedInDbOnly => true;
 		public override string Heading => "Registration Complete";
+		public override string Text => "Registered";
 		public override string Icon => "fas fa-check";
 		public override bool UsedByUI => true;
 		public override bool DisplayAsCompleted(Status status)

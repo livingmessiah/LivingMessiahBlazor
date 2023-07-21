@@ -1,9 +1,8 @@
 ﻿using System;
 
-namespace LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.AddOrEdit;
+namespace LivingMessiah.Web.Pages.Sukkot.SuperUser.Donations;
 
-//ToDo Flesh Out
-public class DonationFormVM
+public class FormVM
 {
 	public int Id { get; set; }
 	public int RegistrationId { get; set; }

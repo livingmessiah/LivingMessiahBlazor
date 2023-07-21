@@ -8,7 +8,8 @@
 
 <LoadingComponent IsLoading="DonationDetails == null">
 	<TableTemplate Items="DonationDetails"
-								 HeaderCSS="table table-primary table-hover">
+								TableFooterColor="table-primary"
+								 HeaderCSS="table table-light table-hover">
 		<TableHeader>
 			<th>#</th>
 			<th class ="text-center">$</th>
@@ -34,19 +35,11 @@
 
 			<td class="text-center">
 				<div class="btn-group">
-
 					<button @onclick="@(() => DeleteHandler(context.Id))" title="Id: @context.Id"
 									type="button" class="text-danger btn-sm">
 						<i class="fa fa-times"></i>
 						<small>Delete</small>
 					</button>
-
-@*					<button @onclick="@(() => EditHandler(context.Id))" title="Id: @context.Id"
-									type="button" class="text-primary btn-sm">
-						<i class="fas fa-pencil-alt"></i>
-						<small>Edit</small>
-					</button>*@
-
 				</div>
 			</td>
 
@@ -65,10 +58,3 @@
 
 </LoadingComponent>
 
-@*
-					<button @onclick="@OnButtonClicked" title="@GetTitle()"
-									type="button" class="@ParmCrud.ButtonColor btn-sm">
-						<i class="@ParmCrud!.Icon"></i>
-						<small>@ParmCrud.Text</small>
-					</button>
-*@

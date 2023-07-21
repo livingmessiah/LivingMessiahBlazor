@@ -30,6 +30,8 @@ public partial class ActionButtons
 		return IsXsOrSm ? (MarkupString)"<br>" : (MarkupString)"";
 	}
 
+
+
 	private string GetTitle()
 	{
 		if (Id != 0)

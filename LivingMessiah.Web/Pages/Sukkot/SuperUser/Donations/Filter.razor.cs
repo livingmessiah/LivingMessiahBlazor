@@ -9,11 +9,11 @@ using System;
 using LivingMessiah.Web.Pages.SukkotAdmin.Donations.Domain;
 using System.Collections.Generic;
 
-namespace LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.AddOrEdit;
+namespace LivingMessiah.Web.Pages.Sukkot.SuperUser.Donations;
 
-public partial class DonationFilter
+public partial class Filter
 {
-	[Inject] public ILogger<DonationFilter>? Logger { get; set; }
+	[Inject] public ILogger<Filter>? Logger { get; set; }
 	[Inject] public IToastService? Toast { get; set; }
 	[Inject] public LivingMessiah.Web.Pages.SukkotAdmin.Donations.Data.IDonationRepository? db { get; set; }
 
@@ -32,7 +32,7 @@ public partial class DonationFilter
 		RegistrationSort sortAndDirection = RegistrationSort.ByFirstName;
 		string sort = sortAndDirection.SqlTableColumnName + sortAndDirection.Order;
 
-		string message = $"Inside {nameof(DonationFilter)}!{nameof(GetDataWithParms)}; smartEnumFilter.Name:{filter.Name}; sort:{sort}";
+		string message = $"Inside {nameof(Filter)}!{nameof(GetDataWithParms)}; smartEnumFilter.Name:{filter.Name}; sort:{sort}";
 		Logger!.LogDebug(message);
 		try
 		{

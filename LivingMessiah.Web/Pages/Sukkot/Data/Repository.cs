@@ -13,6 +13,9 @@ using LivingMessiah.Web.Pages.Sukkot.Enums;
 using LivingMessiah.Web.Pages.SukkotAdmin.Data; // for BaseRepositoryAsync
 using LivingMessiah.Web.Pages.Sukkot.SuperUser.Data;
 using LivingMessiah.Web.Pages.SukkotAdmin.Donations.Data;
+using LivingMessiah.Web.Pages.Sukkot.NormalUser;
+using Serilog.Core;
+using LivingMessiah.Web.Pages.Sukkot.Services;
 
 //using LivingMessiah.Web.Pages.SukkotAdmin.Donations.Data;
 //using LivingMessiah.Web.Pages.SukkotAdmin.Donations.Domain;
@@ -29,17 +32,17 @@ public interface IRepository
 	Task<RegistrationEntry.Detail.DisplayVM> GetDisplayById(int id);
 	Task<Tuple<int, int, string>> CreateRegistration(RegistrationEntry.AddOrEdit.RegistrationFormVM formVM);
 	Task<Tuple<int, int, string>> UpdateRegistration(RegistrationEntry.AddOrEdit.RegistrationFormVM formVM);
-	Task<int> Delete(int id);			// stpRegistrationDelete
+	Task<Tuple<int, int, string>> DeleteRegistration(int id);			
 
 	Task<Tuple<int, int, string>> InsertHouseRulesAgreement(string email, string timeZone);  // Also used by RegistrationSteps!AgreementButtons
 	Task<int> DeleteHRA(int id);	// stpHRADelete
 
 	Task<List<SuperUser.Data.vwDonationDetail>> GetByRegistrationId(int registrationId);
-	Task<Tuple<int, int, string>> InsertRegistrationDonation(RegistrationEntry.AddOrEdit.DonationFormVM donation); //SuperUser.Data.Donation donation
+	Task<Tuple<int, int, string>> InsertRegistrationDonation(SuperUser.Donations.FormVM donation); //SuperUser.Data.Donation donation
 	Task<int> DeleteDonationDetail(int id);
 
 	// Used by Services
-	Task<ViewModel_RE_DELETE> GetById2(int id); 
+	Task<EntryFormVM> GetById2(int id);   //ViewModel_RE_DELETE
 	Task<Tuple<int, int, string>> Create(DTO registration);
 	Task<Tuple<int, int, string>> Update(DTO registration);
 
@@ -63,6 +66,7 @@ public class Repository : BaseRepositoryAsync, IRepository
 	{
 		Sql = $@"
 SELECT Id, EMail, FullName, StatusId, Phone, Notes
+, TotalDonation
 , IdHra
 FROM Sukkot.vwSuperUser 
 ORDER BY FullName
@@ -244,15 +248,44 @@ FROM Sukkot.vwRegistration WHERE Id = @id";
 		});
 	}
 	
-	public async Task<int> Delete(int id)
+	public async Task<Tuple<int, int, string>> DeleteRegistration(int id)
 	{
 		Sql = "Sukkot.stpRegistrationDelete";
 		Parms = new DynamicParameters(new { RegistrationId = id });
+
+		Parms.Add("@ReturnValue", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue);
+
+		int RowsAffected = 0;
+		int SprocReturnValue = 0;
+		string ReturnMsg = "";
+
 		return await WithConnectionAsync(async connection =>
 		{
-			var affectedRows = await connection.ExecuteAsync(sql: Sql, param: Parms, commandType: CommandType.StoredProcedure);
-			//if (affectedRows < 0) { throw new Exception($"Registration NOT Deleted"); }
-			return affectedRows;
+			string inside = $"{nameof(Repository)}!{nameof(DeleteRegistration)}, RegistrationId: {id}; about to execute SPROC: {Sql}";
+			log.LogDebug(string.Format("Inside {0}", inside));
+			RowsAffected = await connection.ExecuteAsync(sql: Sql, param: Parms, commandType: CommandType.StoredProcedure);
+			SprocReturnValue = Parms.Get<int>("ReturnValue");
+
+			if (SprocReturnValue != 0) // ReturnValueOk
+			{
+				if (SprocReturnValue == 51000) // Can not have donation rows when deleting registration
+				{
+					ReturnMsg = $"Database call did not delete the registration record because it has donation rows; RegistrationId: {id}; Manually delete the donation row(s) then delete the registration.";
+					log.LogWarning($"...ReturnMsg: {ReturnMsg}; {Environment.NewLine} {Sql}");
+				}
+				else
+				{
+					ReturnMsg = $"Database call failed to delete RegistrationId: {id}; SprocReturnValue: {SprocReturnValue}";
+					log.LogWarning($"...ReturnMsg: {ReturnMsg}; {Environment.NewLine} {Sql}");
+				}
+			}
+			else
+			{
+				ReturnMsg = $"Registration deleted for RegistrationId: {id}";
+			}
+			
+			return new Tuple<int, int, string>(RowsAffected, SprocReturnValue, ReturnMsg);
+
 		});
 	}
 	
@@ -340,7 +373,7 @@ ORDER BY Detail
 		});
 	}
 
-	public async Task<Tuple<int, int, string>> InsertRegistrationDonation(RegistrationEntry.AddOrEdit.DonationFormVM donation)
+	public async Task<Tuple<int, int, string>> InsertRegistrationDonation(SuperUser.Donations.FormVM donation)
 	{
 		base.Sql = "Sukkot.stpDonationInsert ";
 		base.Parms = new DynamicParameters(new
@@ -413,7 +446,7 @@ ORDER BY Detail
 
 	#region Registration used by Service
 
-	public async Task<ViewModel_RE_DELETE> GetById2(int id)
+	public async Task<EntryFormVM> GetById2(int id)  //ViewModel_RE_DELETE
 	{
 		Parms = new DynamicParameters(new { Id = id });
 		Sql = $@"
@@ -427,7 +460,7 @@ FROM Sukkot.Registration
 WHERE Id = @Id";
 		return await WithConnectionAsync(async connection =>
 		{
-			var rows = await connection.QueryAsync<ViewModel_RE_DELETE>(sql: Sql, param: Parms);
+			var rows = await connection.QueryAsync<EntryFormVM>(sql: Sql, param: Parms);  //ViewModel_RE_DELETE
 			return rows.SingleOrDefault()!;
 		});
 	}
@@ -558,73 +591,5 @@ WHERE Id = @Id";
 # Footnotes
 
 FN1. Can't remove `Tuple<...>` with `(...)`, see C:\Source\LivingMessiahWiki\Tuples\Removing-Tuple-Conflicts-with-BaseRepositoryAsync.md
-
-*/
-
-/*
-
-## GetById
-Task<SuperUser.Data.vwRegistration> GetById(int id);
-
-public async Task<SuperUser.Data.vwRegistration> GetById(int id)
-	{
-		Parms = new DynamicParameters(new { Id = id });
-		Sql = $@"
---DECLARE @id int=4
-SELECT TOP 1 
-Id, FamilyName, FirstName, SpouseName, OtherNames, EMail, Phone, Adults, ChildBig, ChildSmall
-, StatusId
-, AttendanceBitwise, LmmDonation, Notes
---, Avatar
-FROM Sukkot.Registration 
-WHERE Id = @Id";
-		return await WithConnectionAsync(async connection =>
-		{
-			var rows = await connection.QueryAsync<SuperUser.Data.vwRegistration>(sql: Sql, param: Parms);
-			return rows.SingleOrDefault()!;
-		});
-	}
-
-
-## GetAll2
-	Task<List<ViewModel_RE_DELETE>> GetAll2();
-
-	public async Task<List<ViewModel_RE_DELETE>> GetAll2()
-	{
-		Sql = $@"
-SELECT Id, FamilyName, FirstName, SpouseName, OtherNames, EMail, Phone
-, Adults, ChildBig, ChildSmall
-, StatusId
---, AttendanceBitwise, Notes
---, LmmDonation, Avatar
-FROM Sukkot.Registration
-ORDER BY FirstName
-";
-		return await WithConnectionAsync(async connection =>
-		{
-			var rows = await connection.QueryAsync<ViewModel_RE_DELETE>(sql: Sql);
-			return rows.ToList();
-		});
-	}
-
-
-## PopulateRegistrationLookup
-
-	Task<List<RegistrationLookup>> PopulateRegistrationLookup(); // used by: EditRegistrationForm (SukkotAdmin.Registration)
-
-	public async Task<List<RegistrationLookup>> PopulateRegistrationLookup()
-	{
-		Sql = $@"
-SELECT Id AS ID, Sukkot.udfFormatName(1, FamilyName, FirstName, NULL, NULL) AS Text
-FROM Sukkot.Registration
-ORDER BY FirstName
-";
-		return await WithConnectionAsync(async connection =>
-		{
-			var rows = await connection.QueryAsync<RegistrationLookup>(Sql);
-			return rows.ToList();
-		});
-	}
-
 
 */

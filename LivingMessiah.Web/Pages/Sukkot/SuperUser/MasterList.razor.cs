@@ -55,15 +55,16 @@ public partial class MasterList
 				break;
 
 			case nameof(Enums.Crud.DeleteRegistration):
-				if (await IsModalConfirmed(args.Id, "Registration") == true)
+
+				if (await IsModalConfirmed("Registration", "Name", args.FullName ) == true)
 				{
-					Dispatcher!.Dispatch(new Delete_Action(args.Id));
+					Dispatcher!.Dispatch(new Delete_Registration_Action(args.Id));
 					Dispatcher!.Dispatch(new Get_List_Action());
 				}
 				break;
 
 			case nameof(Enums.Crud.DeleteHRA):
-				if (await IsModalConfirmed(args.Id, "House Rules Agreement (HRA)") == true)
+				if (await IsModalConfirmed("HRA", "e-mail", args.EMail ) == true)
 				{
 					Dispatcher!.Dispatch(new Delete_HRA_Action(args.Id));
 					Dispatcher!.Dispatch(new Get_List_Action());
@@ -74,8 +75,8 @@ public partial class MasterList
 				Dispatcher!.Dispatch(new Get_List_Action());
 				break;
 
-			case nameof(Enums.Crud.AddDonation):
-				Dispatcher!.Dispatch(new Add_Donation_Action(args.Id, args.EMail, args.FullName)); 
+			case nameof(Enums.Crud.Donation):
+				Dispatcher!.Dispatch(new Donation_Action(args.Id, args.FullName)); 
 				Dispatcher!.Dispatch(new Set_PageHeader_For_Detail_Action(args.Crud.Text, args.Crud!.Icon, args.Crud!.Color, args.Id));
 				break;
 
@@ -87,9 +88,9 @@ public partial class MasterList
 	}
 
 
-	private async Task<bool> IsModalConfirmed(int id, string title)
+	private async Task<bool> IsModalConfirmed(string title, string label, string value) 
 	{
-		var parameters = new ModalParameters { { nameof(ConfirmDeleteModal.Message), $"{title} Id: {id}" } };
+		var parameters = new ModalParameters { { nameof(ConfirmDeleteModal.Message), $"{title} for {label}: {value}" } };
 		var modal = Modal.Show<ConfirmDeleteModal>("Confirmation Required", parameters);
 		var result = await modal.Result;
 		return result.Confirmed;

@@ -7,9 +7,9 @@ using System;
 
 namespace LivingMessiah.Web.Pages.Sukkot.HouseRulesAgreement;
 
-public partial class BypassAgreementForm
+public partial class SuperUserAgreementForm
 {
-	[Inject] public ILogger<BypassAgreementForm>? Logger { get; set; }
+	[Inject] public ILogger<SuperUserAgreementForm>? Logger { get; set; }
 	[Inject] private IState<State>? State { get; set; }
 	[Inject] public IDispatcher? Dispatcher { get; set; }
 
@@ -17,7 +17,7 @@ public partial class BypassAgreementForm
 
 	protected void HandleValidSubmit()
 	{
-		Logger!.LogDebug(string.Format("Inside {0}", nameof(BypassAgreementForm) + "!" + nameof(HandleValidSubmit)));
+		Logger!.LogDebug(string.Format("Inside {0}", nameof(SuperUserAgreementForm) + "!" + nameof(HandleValidSubmit)));
 		Dispatcher!.Dispatch(new Add_HRA_Action(State!.Value.HRA_FormVM!, GetLocalTimeZone()));
 		Dispatcher!.Dispatch(new ReSet_HRA_Action(new HouseRulesAgreement.FormVM(), HRA_FormState.Start));
 		Dispatcher!.Dispatch(new Get_List_Action());

@@ -1,16 +1,10 @@
-﻿<p class="mt-4 mb-0 text-black-50">Status...</p>
-
-@*<ul class="list-inline">
-	@foreach (var item in Sukkot.RegistrationSteps.Enums.Status.List.OrderBy(o => o.Value).ToList())
-	{
-		<li class="list-inline-item"><small>@item.Value: @item.Heading</small></li>
-	}
-</ul>*@
-
+﻿<p class="mt-4 mb-0 text-black-50">Steps...</p>
 
 <ul class="list-inline">
-	@foreach (var item in Sukkot.RegistrationSteps.Enums.Status.List.OrderBy(o => o.Value).ToList())
+	@foreach (var item in Sukkot.RegistrationSteps.Enums.Status.List
+	.Where(w => w.Value > Sukkot.RegistrationSteps.Enums.Status.AgreementNotSigned)
+	.OrderBy(o => o.Value).ToList())
 	{
-		<li class="list-inline-item"><small>@item.Value: @item.Name</small></li>
+		<li class="list-inline-item"><small>@item.Value: @item.Text</small></li>
 	}
 </ul>

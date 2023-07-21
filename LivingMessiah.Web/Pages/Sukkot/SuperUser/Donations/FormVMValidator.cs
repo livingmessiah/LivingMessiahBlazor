@@ -1,10 +1,10 @@
 ﻿using FluentValidation;
 
-namespace LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.AddOrEdit;
+namespace LivingMessiah.Web.Pages.Sukkot.SuperUser.Donations;
 
-public class DonationFormVMValidator : AbstractValidator<DonationFormVM>
+public class FormVMValidator : AbstractValidator<FormVM>
 {
-	public DonationFormVMValidator()
+	public FormVMValidator()
 	{
 		{
 			RuleFor(p => p.ReferenceId)

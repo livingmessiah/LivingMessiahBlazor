@@ -7,7 +7,7 @@ namespace LivingMessiah.Web.Pages.Sukkot.Domain;
 public class vwRegistration
 {
 	public int Id { get; set; }
-	[DisplayName("Family Name")]
+	[DisplayName("Last Name")]
 	public string? FamilyName { get; set; }
 
 	[DisplayName("First Name")]

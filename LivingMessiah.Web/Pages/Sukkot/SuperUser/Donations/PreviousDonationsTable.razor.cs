@@ -10,7 +10,7 @@ using System.Linq;
 using LivingMessiah.Web.Pages.Sukkot.SuperUser;
 using Blazored.Toast.Services;
 
-namespace LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.AddOrEdit;
+namespace LivingMessiah.Web.Pages.Sukkot.SuperUser.Donations;
 
 public partial class PreviousDonationsTable
 {

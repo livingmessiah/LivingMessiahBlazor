@@ -4,14 +4,14 @@
 @using static LivingMessiah.Web.Services.Auth0
 @using LivingMessiah.Web.Shared.Sukkot
 @using LivingMessiah.Web.SmartEnums
-@using LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.AddOrEdit
-@using LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.Detail
 
 @using LivingMessiah.Web.Pages.Sukkot.HouseRulesAgreement
 @*@using HRA = LivingMessiah.Web.Pages.Sukkot.HouseRulesAgreement.Form*@
+@using LoginLink = LivingMessiah.Web.Links.Account
 
 @using LivingMessiah.Web.Pages.Sukkot.RegistrationEntry
-@using LoginLink = LivingMessiah.Web.Links.Account
+@using LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.AddOrEdit
+@using LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.Detail
 
 @inherits Fluxor.Blazor.Web.Components.FluxorComponent
 
@@ -29,22 +29,10 @@
 			<PageHeader IsXsOrSm="false" />
 		</div>
 
-		<div class="row mt-4 mb-0">
-			<div class="col-12">
-				<BypassAgreementToggle />
-			</div>
-		</div>
 
 		@if (State!.Value.VisibleComponent == Enums.VisibleComponent.MasterList)
 		{
-			if (State!.Value.BypassAgreement)
-			{
-				<LivingMessiah.Web.Pages.Sukkot.HouseRulesAgreement.BypassAgreementForm />
-			}
-			else
-			{
-				<LivingMessiah.Web.Pages.Sukkot.HouseRulesAgreement.UseAgreementForm />
-			}
+			<LivingMessiah.Web.Pages.Sukkot.HouseRulesAgreement.SuperUserAgreementForm />
 
 			<div class="@MediaQuery.XsOrSm.DivClass">
 				<MasterList IsXsOrSm="true" />
@@ -66,7 +54,7 @@
 			{
 				@if (State!.Value.VisibleComponent == Enums.VisibleComponent.DonationForm)
 				{
-					<LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.AddOrEdit.DonationIndex RegistrationId="@State!.Value.RegistrationId" />
+					<LivingMessiah.Web.Pages.Sukkot.SuperUser.Donations.Index RegistrationId="@State!.Value.RegistrationId" />
 				}
 				else
 				{

@@ -31,16 +31,16 @@
 					{
 						<div class="btn-group float-end">
 							<ActionButtons OnCrudActionSelected="@ReturnedCrud" ParmCrud="Enums.Crud.AddRegistration" IsXsOrSm="@IsXsOrSm" Id="@item.IdHra" EMail="@item.EMail" />
-							<ActionButtons OnCrudActionSelected="@ReturnedCrud" ParmCrud="Enums.Crud.DeleteHRA" IsXsOrSm="@IsXsOrSm" Id="@item.IdHra" />
+							<ActionButtons OnCrudActionSelected="@ReturnedCrud" ParmCrud="Enums.Crud.DeleteHRA" IsXsOrSm="@IsXsOrSm" Id="@item.IdHra" EMail="@item.EMail" FullName="@item.FullName" />
 						</div>
 					}
 					else
 					{
 						<div class="btn-group float-end">
 							<ActionButtons OnCrudActionSelected="@ReturnedCrud" ParmCrud="Enums.Crud.Edit" IsXsOrSm="@IsXsOrSm" Id="@item.Id" />
-							<ActionButtons OnCrudActionSelected="@ReturnedCrud" ParmCrud="Enums.Crud.DeleteRegistration" IsXsOrSm="@IsXsOrSm" Id="@item.Id" />
+							<ActionButtons OnCrudActionSelected="@ReturnedCrud" ParmCrud="Enums.Crud.DeleteRegistration" IsXsOrSm="@IsXsOrSm" Id="@item.Id" FullName="@item.FullName" />
 							<ActionButtons OnCrudActionSelected="@ReturnedCrud" ParmCrud="Enums.Crud.Display" IsXsOrSm="@IsXsOrSm" Id="@item.Id" />
-							<ActionButtons OnCrudActionSelected="@ReturnedCrud" ParmCrud="Enums.Crud.AddDonation" IsXsOrSm="@IsXsOrSm" Id="@item.Id" FullName="@item.FullName" />
+							<ActionButtons OnCrudActionSelected="@ReturnedCrud" ParmCrud="Enums.Crud.Donation" IsXsOrSm="@IsXsOrSm" Id="@item.Id" FullName="@item.FullName" />
 						</div>
 					}
 				</div>
@@ -56,37 +56,38 @@ else
 	</span>
 
 	<TableTemplate Items="State!.Value.vwSuperUserList"
-							 HeaderCSS="table table-primary table-hover">
+							 HeaderCSS="table table-light table-hover">
 		<TableHeader>
 			<th>Full Name</th>
 			<th>Email</th>
-			@*<th>Phone</th>*@
 			<th>Next Step</th>
 			<th>Notes</th>
-			
+			<th class="text-start">$</th>
 			<th class="text-center">Actions</th>
 		</TableHeader>
 
 		<RowTemplate>
-			<td>@context.FullName</td>
+			<td class="@context.FullNameOrNAColor">@context.FullNameOrNA</td>
 			<td>@context.EMail </td>
-			@*<td>@context.Phone </td>*@
 			<td>@context.StatusName</td>
 			<td><small>@context.Notes</small></td>
+			<td class="@context.TotalDonationClass">
+				@context.TotalDonationNoCents
+			</td>
 			<td class="text-center">
 				<div class="btn-group">
 
 					@if (@context.StatusId == RegistrationSteps.Enums.Status.StartRegistration)
 					{
 						<ActionButtons OnCrudActionSelected="@ReturnedCrud" ParmCrud="Enums.Crud.AddRegistration" IsXsOrSm="@IsXsOrSm" Id="@context.IdHra" EMail="@context.EMail" />
-						<ActionButtons OnCrudActionSelected="@ReturnedCrud" ParmCrud="Enums.Crud.DeleteHRA" IsXsOrSm="@IsXsOrSm" Id="@context.IdHra" />
+						<ActionButtons OnCrudActionSelected="@ReturnedCrud" ParmCrud="Enums.Crud.DeleteHRA" IsXsOrSm="@IsXsOrSm" Id="@context.IdHra" EMail="@context.EMail" FullName="@context.FullName" />
 					}
 					else
 					{
 						<ActionButtons OnCrudActionSelected="@ReturnedCrud" ParmCrud="Enums.Crud.Edit" IsXsOrSm="@IsXsOrSm" Id="@context.Id" />
-						<ActionButtons OnCrudActionSelected="@ReturnedCrud" ParmCrud="Enums.Crud.DeleteRegistration" IsXsOrSm="@IsXsOrSm" Id="@context.Id" />
+						<ActionButtons OnCrudActionSelected="@ReturnedCrud" ParmCrud="Enums.Crud.DeleteRegistration" IsXsOrSm="@IsXsOrSm" Id="@context.Id" FullName="@context.FullName" />
 						<ActionButtons OnCrudActionSelected="@ReturnedCrud" ParmCrud="Enums.Crud.Display" IsXsOrSm="@IsXsOrSm" Id="@context.Id" />
-						<ActionButtons OnCrudActionSelected="@ReturnedCrud" ParmCrud="Enums.Crud.AddDonation" IsXsOrSm="@IsXsOrSm" Id="@context.Id" FullName="@context.FullName" />
+						<ActionButtons OnCrudActionSelected="@ReturnedCrud" ParmCrud="Enums.Crud.Donation" IsXsOrSm="@IsXsOrSm" Id="@context.Id" FullName="@context.FullName" />
 					}
 
 				</div>

@@ -48,15 +48,14 @@ public static class ServiceCollectionExtensions
 			.AddTransient<IWeeklyVideosRepository, WeeklyVideosRepository>()
 			.AddTransient<ISecurityClaimsService, SecurityClaimsService>()
 
-			//.AddSingleton<ISukkotSettings, SukkotSettings>()
 			.AddTransient<ISukkotService, SukkotService>()
 
 			.AddTransient<IService, Service>()        //Pages.Sukkot.Services;
 			.AddTransient<IRepository, Repository>()  //Pages.Sukkot.Data;
 
 			.AddTransient<IValidator<Pages.Sukkot.HouseRulesAgreement.FormVM>, Pages.Sukkot.HouseRulesAgreement.FormVMValidator>()
-			.AddTransient<IValidator<Pages.Sukkot.RegistrationEntry.AddOrEdit.RegistrationFormVM>, Pages.Sukkot.RegistrationEntry.AddOrEdit.FormVMValidator>()
-			.AddTransient<IValidator<Pages.Sukkot.RegistrationEntry.AddOrEdit.DonationFormVM>, Pages.Sukkot.RegistrationEntry.AddOrEdit.DonationFormVMValidator>()
+			.AddTransient<IValidator<Pages.Sukkot.NormalUser.EntryFormVM>, Pages.Sukkot.NormalUser.EntryFormVMValidator>()
+			.AddTransient<IValidator<Pages.Sukkot.SuperUser.Donations.FormVM>, Pages.Sukkot.SuperUser.Donations.FormVMValidator>()
 
 			.AddTransient<IDonationRepository, DonationRepository>()
 			.AddTransient<ISukkotAdminService, SukkotAdminService>()

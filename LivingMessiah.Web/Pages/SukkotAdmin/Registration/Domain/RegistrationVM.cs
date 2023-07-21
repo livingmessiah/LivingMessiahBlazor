@@ -15,7 +15,7 @@ public class RegistrationVM
 
 	[Required]
 	[MaxLength(75)]
-	[DisplayName("Family Name")]
+	[DisplayName("Last Name")]
 	public string? FamilyName { get; set; }
 
 	[Required]

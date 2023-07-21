@@ -50,32 +50,38 @@ public class Helper
 
 	public static int GetDaysBitwise(DateTime[] selectedDateArray, DateTime[] selectedDateArray2ndMonth, DateRangeType dateRangeType)
 	{
-		if (selectedDateArray is null || selectedDateArray.Length == 0) { return 0; }
-
 		int bitwise = 0;
 		AttendanceDate? attendanceDate;
 
 		//if (dateRangeType == DateRangeType.Attendance)	{ 	}
 
-		foreach (var item in selectedDateArray)
+		if (selectedDateArray is null || selectedDateArray.Length == 0)
 		{
-			attendanceDate = AttendanceDate.List.Where(w => w.Date == item).SingleOrDefault();
-			if (attendanceDate is not null)
+		}
+		else
+		{
+			foreach (var item in selectedDateArray!)
 			{
-				bitwise += attendanceDate.Value;  // ToDo: .Bitwise is going away
-			}
-			else
-			{
-				//ExceptionMessage = $"...Acceptance Date:{item.ToShortDateString()} is out of range; range is {DateRangeType.Attendance.Range.Min.ToShortDateString()} to {DateRangeType.Attendance.Range.Max.ToShortDateString()}";
-				//Logger.LogWarning(ExceptionMessage);
-				//throw new RegistratationException(ExceptionMessage);
+				attendanceDate = AttendanceDate.List.Where(w => w.Date == item).SingleOrDefault();
+				if (attendanceDate is not null)
+				{
+					bitwise += attendanceDate.Value;  // ToDo: .Bitwise is going away
+				}
+				else
+				{
+					//ExceptionMessage = $"...Acceptance Date:{item.ToShortDateString()} is out of range; range is {DateRangeType.Attendance.Range.Min.ToShortDateString()} to {DateRangeType.Attendance.Range.Max.ToShortDateString()}";
+					//Logger.LogWarning(ExceptionMessage);
+					//throw new RegistratationException(ExceptionMessage);
+				}
 			}
 		}
 
+
+
 		if (dateRangeType.HasSecondMonth)
 		{
-			if (selectedDateArray2ndMonth is null || selectedDateArray2ndMonth.Length == 0) 
-			{ 
+			if (selectedDateArray2ndMonth is null || selectedDateArray2ndMonth.Length == 0)
+			{
 			}
 			else
 			{

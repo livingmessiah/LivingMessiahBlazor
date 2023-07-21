@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Linq;
 
-namespace LivingMessiah.Web.Pages.Sukkot;
+namespace LivingMessiah.Web.Pages.Sukkot.NormalUser;
 
-//ToDo: Delete
-public class ViewModel_RE_DELETE
+// copied from Sukkot.ViewModel_RE_DELETE
+public class EntryFormVM
 {
 	public int Id { get; set; }
 	public string? FamilyName { get; set; }
@@ -26,4 +27,29 @@ public class ViewModel_RE_DELETE
 	public string? Notes { get; set; }
 	public string? Avatar { get; set; }
 	public Decimal LmmDonation { get; set; }
+
+	/*
+	Logger!.LogDebug(string.Format("...attendance date, 1st Mo. {0}, 2nd Mo. {1}"
+		, VM.DumpAttendanceDates, VM.DumpAttendanceDates2ndMonth));
+	*/
+	public string DumpAttendanceDates
+	{
+		get
+		{
+			return this.AttendanceDateList is not null ?
+				String.Join(", ", this.AttendanceDateList.Select(date => date.ToString("yyyy-MM-dd")))
+				: "";
+		}
+	}
+
+	public string DumpAttendanceDates2ndMonth
+	{
+		get
+		{
+			return this.AttendanceDateList2ndMonth is not null ?
+				String.Join(", ", this.AttendanceDateList2ndMonth.Select(date => date.ToString("yyyy-MM-dd")))
+				: "";
+		}
+	}
+
 }

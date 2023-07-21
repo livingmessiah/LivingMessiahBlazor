@@ -7,6 +7,7 @@ using LivingMessiah.Web.Services;
 using Blazored.Toast.Services;
 using static LivingMessiah.Web.Pages.Sukkot.Services.Service;
 using LivingMessiah.Web.Pages.Sukkot.Services;
+using System.Linq;
 
 namespace LivingMessiah.Web.Pages.Sukkot.NormalUser;
 
@@ -19,8 +20,8 @@ public partial class EntryForm
 
 	[Parameter, EditorRequired] public int? Id { get; set; }
 	[Parameter, EditorRequired] public string? Email { get; set; }
-
-	public ViewModel_RE_DELETE VM { get; set; } = new ViewModel_RE_DELETE();
+		
+	public EntryFormVM VM { get; set; } = new EntryFormVM();
 
 	private FluentValidationValidator? _fluentValidationValidator;
 	public Enums.DateRangeType DateRangeAttendance { get; set; } = Enums.DateRangeType.Attendance;

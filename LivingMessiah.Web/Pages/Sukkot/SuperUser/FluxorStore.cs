@@ -7,7 +7,7 @@ using System;
 using LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.AddOrEdit;
 using LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.Detail;
 using LivingMessiah.Web.Pages.Sukkot.Enums;
-using LivingMessiah.Web.Pages.Sukkot.RegistrationSteps;
+using LivingMessiah.Web.Pages.Sukkot.SuperUser.Donations;
 using LivingMessiah.Web.Pages.Sukkot.Data;
 
 namespace LivingMessiah.Web.Pages.Sukkot.SuperUser;
@@ -24,7 +24,7 @@ public record Set_Data_MasterList_Action(List<Data.vwSuperUser> vwSuperUserList)
 // 1.2 GetItem() actions
 public record Get_EditItem_Action(int Id, Enums.FormMode? FormMode); // FormMode is always Edit
 public record Set_Registration_FormVM_Action(RegistrationFormVM? FormVM);
-public record Set_Donation_FormVM_Action(DonationFormVM? FormVM);
+public record Set_Donation_FormVM_Action(FormVM? FormVM);
 public record Edit_Action(int Id);
 
 // 1.2.1 GetDisplayItem() actions
@@ -36,7 +36,7 @@ public record Display_Action(int Id);
 // ToDo: "Submitting_Request" is to generic because I have two forms one for HRA and one for Registration
 // 1.3 Actions related to Form Submission
 public record Submitting_Request_Action(RegistrationFormVM FormVM, Enums.FormMode? FormMode);
-public record Submitting_Donation_Request_Action(DonationFormVM FormVM);
+public record Submitting_Donation_Request_Action(FormVM FormVM);
 
 
 public record Set_BypassAgreement_Action(bool BypassAgreement); // HouseRulesAgreement.FormVM FormVM 
@@ -48,10 +48,10 @@ public record ReSet_HRA_Action(HouseRulesAgreement.FormVM HRA_FormVM, HouseRules
 
 // 1.4 Actions related to MasterList
 public record Add_Registration_Action(string? EMail);
-public record Add_Donation_Action(int RegistrationId, string? EMail, string? FullName);
+public record Donation_Action(int RegistrationId, string? FullName);
 
 // 1.5 Delete() actions
-public record Delete_Action(int Id);
+public record Delete_Registration_Action(int Id);
 public record Delete_HRA_Action(int Id);
 
 
@@ -73,7 +73,7 @@ public record State
 	public RegistrationFormVM? RegistrationFormVM { get; init; }
 
 
-	public DonationFormVM? DonationFormVM { get; init; }
+	public FormVM? DonationFormVM { get; init; }
 	public int RegistrationId { get; init; }
 	public string? FullName { get; init; }
 
@@ -101,7 +101,7 @@ public class FeatureImplementation : Feature<State>
 			PageHeaderVM = Constants.GetPageHeaderForIndexVM(),
 			FormMode = null,
 			RegistrationFormVM = new RegistrationFormVM(),
-			DonationFormVM = new DonationFormVM(),
+			DonationFormVM = new FormVM(),
 			HRA_EMail = string.Empty, // why can't I just use HRA_FormVM.EMail?
 			HRA_FormVM = new HouseRulesAgreement.FormVM(),
 			BypassAgreement = true,
@@ -247,16 +247,15 @@ public static class Reducers
 
 
 	[ReducerMethod]
-	public static State On_Add_Donation(
-		State state, Add_Donation_Action action)
+	public static State On_Donation(
+		State state, Donation_Action action)
 	{
 		return state with
 		{
 			VisibleComponent = Enums.VisibleComponent.DonationForm,
 			RegistrationId = action.RegistrationId,
-			HRA_EMail = action.EMail,
 			FullName = action.FullName,
-			DonationFormVM = new DonationFormVM()
+			DonationFormVM = new FormVM()
 		};
 	}
 
@@ -362,7 +361,6 @@ public class Effects
 	}
 
 
-
 	[EffectMethod]
 	public async Task Submit(Submitting_Request_Action action, IDispatcher dispatcher)
 	{
@@ -417,11 +415,10 @@ public class Effects
 	}
 
 
-
 	[EffectMethod]
-	public async Task GetItem(Get_EditItem_Action action, IDispatcher dispatcher)
+	public async Task GetRegistration(Get_EditItem_Action action, IDispatcher dispatcher)
 	{
-		string inside = $"{nameof(Effects)}!{nameof(GetItem)};  Action: {nameof(action.FormMode.Name)}; Id: {action.Id}";
+		string inside = $"{nameof(Effects)}!{nameof(GetRegistration)};  Action: {nameof(action.FormMode.Name)}; Id: {action.Id}";
 
 		Logger.LogDebug(string.Format("Inside {0}", inside));
 		try
@@ -451,6 +448,33 @@ public class Effects
 		{
 			Logger.LogError(ex, string.Format("...Inside catch of {0}", inside));
 			dispatcher.Dispatch(new Set_VisibleComponent_Action(VisibleComponent.MasterList));  // ToDo: does this make sense?
+			dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Failure, Constants.Effects.ResponseMessageFailure));
+		}
+	}
+
+
+	[EffectMethod]
+	public async Task DeleteRegistration(Delete_Registration_Action action, IDispatcher dispatcher)
+	{
+		string inside = $"{nameof(Effects)}!{nameof(DeleteRegistration)}; Id: {action.Id}";
+		Logger.LogDebug(string.Format("Inside {0}; Id: {1}", inside, action.Id));
+		try
+		{
+			var sprocTuple = await db.DeleteRegistration(action.Id);
+
+			if (sprocTuple.Item2 != 51000) // Can not have donation rows when deleting registration
+			{
+				dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Success, $"{sprocTuple.Item3}"));
+				dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Info, $"{Constants.Effects.RepopulateMessage}"));
+			}
+			else
+			{
+				dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Warning, $"{sprocTuple.Item3}"));
+			}
+		}
+		catch (Exception ex)
+		{
+			Logger.LogError(ex, string.Format("...Inside catch of {0}", inside));
 			dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Failure, Constants.Effects.ResponseMessageFailure));
 		}
 	}
@@ -511,24 +535,6 @@ public class Effects
 				dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Info, $"Got {displayVM!.FullName(false)}"));
 				dispatcher.Dispatch(new Display_Action(action.Id));
 			}
-		}
-		catch (Exception ex)
-		{
-			Logger.LogError(ex, string.Format("...Inside catch of {0}", inside));
-			dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Failure, Constants.Effects.ResponseMessageFailure));
-		}
-	}
-
-	[EffectMethod]
-	public async Task Delete(Delete_Action action, IDispatcher dispatcher)
-	{
-		string inside = $"{nameof(Effects)}!{nameof(Delete)}; Id: {action.Id}";
-		Logger.LogDebug(string.Format("Inside {0}; Id: {1}", inside, action.Id));
-		try
-		{
-			var affectedRows = await db.Delete(action.Id);
-			dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Success, $"Registration {action.Id} has been deleted"));
-			dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Info, $"{Constants.Effects.RepopulateMessage}"));
 		}
 		catch (Exception ex)
 		{
