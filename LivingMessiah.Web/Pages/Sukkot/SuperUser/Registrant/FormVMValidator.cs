@@ -1,8 +1,8 @@
 ﻿using FluentValidation;
 
-namespace LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.AddOrEdit;
+namespace LivingMessiah.Web.Pages.Sukkot.SuperUser.Registrant;
 
-public class FormVMValidator : AbstractValidator<RegistrationFormVM>
+public class FormVMValidator : AbstractValidator<FormVM>
 {
 	public FormVMValidator()
 	{

@@ -1,9 +1,8 @@
-﻿using LivingMessiah.Web.Pages.UpcomingEvents.Enums;
-using System;
+﻿using System;
 
-namespace LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.AddOrEdit;
+namespace LivingMessiah.Web.Pages.Sukkot.SuperUser.Registrant;
 
-public class RegistrationFormVM
+public class FormVM
 {
 	public int Id { get; set; }
 	public string? FamilyName { get; set; }
@@ -25,17 +24,4 @@ public class RegistrationFormVM
 
 	public string? Notes { get; set; }
 	public Decimal LmmDonation { get; set; }
-
-
-	/*
-	DON'T KNOW IF I NEED THIS; GOTTEN FROM C:\Users\JohnM\source\repos\fluxor\BlazorServerFluxorSerilog\BlzSrvFlxSrl\BlzSrvFlxSrl\Features\SpecialEvents\FormVM.cs
-	ToDo: Warning	CS8618	Non-nullable property 'Description' et. al. must contain a non-null value
-	  when exiting constructor. Consider declaring the property as nullable.
-	public FormVM()
-	{
-		SpecialEventTypeId = SpecialEventType.Other.Value;
-		EventDate = DateTime.Now.AddDays(35);
-	}
-	*/
-
 }

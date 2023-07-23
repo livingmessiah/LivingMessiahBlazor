@@ -4,11 +4,14 @@ using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System;
-using LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.AddOrEdit;
 using LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.Detail;
 using LivingMessiah.Web.Pages.Sukkot.Enums;
-using LivingMessiah.Web.Pages.Sukkot.SuperUser.Donations;
 using LivingMessiah.Web.Pages.Sukkot.Data;
+
+/*
+using LivingMessiah.Web.Pages.Sukkot.SuperUser.Donations;
+using LivingMessiah.Web.Pages.Sukkot.SuperUser.Registrant;
+*/
 
 namespace LivingMessiah.Web.Pages.Sukkot.SuperUser;
 
@@ -23,8 +26,8 @@ public record Set_Data_MasterList_Action(List<Data.vwSuperUser> vwSuperUserList)
 
 // 1.2 GetItem() actions
 public record Get_EditItem_Action(int Id, Enums.FormMode? FormMode); // FormMode is always Edit
-public record Set_Registration_FormVM_Action(RegistrationFormVM? FormVM);
-public record Set_Donation_FormVM_Action(FormVM? FormVM);
+public record Set_Registrant_FormVM_Action(Registrant.FormVM? FormVM);
+public record Set_Donation_FormVM_Action(Donations.FormVM? FormVM);
 public record Edit_Action(int Id);
 
 // 1.2.1 GetDisplayItem() actions
@@ -35,8 +38,8 @@ public record Display_Action(int Id);
 
 // ToDo: "Submitting_Request" is to generic because I have two forms one for HRA and one for Registration
 // 1.3 Actions related to Form Submission
-public record Submitting_Request_Action(RegistrationFormVM FormVM, Enums.FormMode? FormMode);
-public record Submitting_Donation_Request_Action(FormVM FormVM);
+public record Submitting_Request_Action(Registrant.FormVM FormVM, Enums.FormMode? FormMode);
+public record Submitting_Donation_Request_Action(Donations.FormVM FormVM);
 
 
 public record Set_BypassAgreement_Action(bool BypassAgreement); // HouseRulesAgreement.FormVM FormVM 
@@ -72,10 +75,10 @@ public record State
 	public PageHeaderVM? PageHeaderVM { get; init; }
 	public DetailPageHeaderVM? DetailPageHeaderVM { get; init; }
 	public Enums.FormMode? FormMode { get; init; }
-	public RegistrationFormVM? RegistrationFormVM { get; init; }
+	public Registrant.FormVM? RegistrantFormVM { get; init; }
 
 
-	public FormVM? DonationFormVM { get; init; }
+	public Donations.FormVM? DonationFormVM { get; init; }
 	public int RegistrationId { get; init; }
 	public string? FullName { get; init; }
 
@@ -102,8 +105,8 @@ public class FeatureImplementation : Feature<State>
 			VisibleComponent = Enums.VisibleComponent.MasterList,
 			PageHeaderVM = Constants.GetPageHeaderForIndexVM(),
 			FormMode = null,
-			RegistrationFormVM = new RegistrationFormVM(),
-			DonationFormVM = new FormVM(),
+			RegistrantFormVM = new Registrant.FormVM(),
+			DonationFormVM = new Donations.FormVM(),
 			HRA_EMail = string.Empty, // why can't I just use HRA_FormVM.EMail?
 			HRA_FormVM = new HouseRulesAgreement.FormVM(),
 			BypassAgreement = true,
@@ -175,12 +178,12 @@ public static class Reducers
 	}
 
 	[ReducerMethod]
-	public static State On_Set_Registration_FormVM(
-	State state, Set_Registration_FormVM_Action action)
+	public static State On_Set_Registrant_FormVM(
+	State state, Set_Registrant_FormVM_Action action)
 	{
 		return state with
 		{
-			RegistrationFormVM = action.FormVM
+			RegistrantFormVM = action.FormVM
 		};
 	}
 
@@ -243,7 +246,7 @@ public static class Reducers
 			VisibleComponent = Enums.VisibleComponent.AddEditForm,
 			HRA_EMail = action.EMail,
 			FormMode = Enums.FormMode.Add,
-			RegistrationFormVM = new RegistrationFormVM()
+			RegistrantFormVM = new Registrant.FormVM()
 		};
 	}
 
@@ -257,7 +260,7 @@ public static class Reducers
 			VisibleComponent = Enums.VisibleComponent.DonationForm,
 			RegistrationId = action.RegistrationId,
 			FullName = action.FullName,
-			DonationFormVM = new FormVM()
+			DonationFormVM = new Donations.FormVM()
 		};
 	}
 
@@ -437,13 +440,12 @@ public class Effects
 		Logger.LogDebug(string.Format("Inside {0}", inside));
 		try
 		{
-			RegistrationEntry.AddOrEdit.RegistrationFormVM? formVM = new();
+			Registrant.FormVM? formVM = new();
 			formVM = await db!.GetAddOrEditId(action.Id);
 
 			if (formVM is null)
 			{
 				Logger.LogWarning(string.Format("...{0}; {1} is null", inside, nameof(formVM)));
-				//dispatcher.Dispatch(new Get_Item_Warning_Action($"Registration Not Found; Id: {action.Id}"));
 				dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Warning, $"Registration Not Found; Id: {action.Id}"));
 			}
 			else
@@ -453,7 +455,7 @@ public class Effects
 				formVM!.AttendanceDateList2ndMonth = tuple.week2!;
 				formVM!.Status = RegistrationSteps.Enums.Status.FromValue(formVM!.StatusId);
 
-				dispatcher.Dispatch(new Set_Registration_FormVM_Action(formVM));
+				dispatcher.Dispatch(new Set_Registrant_FormVM_Action(formVM));
 				dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Info, $"Got {formVM!.FamilyName!}"));
 				dispatcher.Dispatch(new Edit_Action(action.Id));
 			}

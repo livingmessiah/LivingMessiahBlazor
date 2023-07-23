@@ -6,12 +6,10 @@
 @using LivingMessiah.Web.SmartEnums
 
 @using LivingMessiah.Web.Pages.Sukkot.HouseRulesAgreement
-@*@using HRA = LivingMessiah.Web.Pages.Sukkot.HouseRulesAgreement.Form*@
 @using LoginLink = LivingMessiah.Web.Links.Account
 
 @using LivingMessiah.Web.Pages.Sukkot.RegistrationEntry
-@using LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.AddOrEdit
-@using LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.Detail
+@*@using LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.Detail*@
 
 @inherits Fluxor.Blazor.Web.Components.FluxorComponent
 
@@ -49,7 +47,7 @@
 
 			@if (State!.Value.VisibleComponent == Enums.VisibleComponent.AddEditForm)
 			{
-				<LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.AddOrEdit.Form />
+				<LivingMessiah.Web.Pages.Sukkot.SuperUser.Registrant.Form />
 			}
 			else
 			{
@@ -61,7 +59,7 @@
 				{
 					@* FN: 1 *@
 					<div class="card border-primary my-3 p-2">
-						<Display />
+						<LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.Detail.Display />
 					</div>
 				}
 			}

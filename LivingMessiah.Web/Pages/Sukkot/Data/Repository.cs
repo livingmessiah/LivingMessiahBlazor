@@ -7,8 +7,9 @@ using Dapper;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
-using LivingMessiah.Web.Pages.Sukkot.RegistrationEntry;
+using LivingMessiah.Web.Pages.Sukkot;
 
+//using LivingMessiah.Web.Pages.Sukkot.SuperUser;
 using LivingMessiah.Web.Pages.Sukkot.Enums;
 using LivingMessiah.Web.Pages.SukkotAdmin.Data; // for BaseRepositoryAsync
 using LivingMessiah.Web.Pages.Sukkot.SuperUser.Data;
@@ -28,10 +29,10 @@ public interface IRepository
 	
 	// Used by FluxorStore
 	Task<List<SuperUser.Data.vwSuperUser>> GetAll();
-	Task<RegistrationEntry.AddOrEdit.RegistrationFormVM> GetAddOrEditId(int id);
+	Task<SuperUser.Registrant.FormVM> GetAddOrEditId(int id);
 	Task<RegistrationEntry.Detail.DisplayVM> GetDisplayById(int id);
-	Task<Tuple<int, int, string>> CreateRegistration(RegistrationEntry.AddOrEdit.RegistrationFormVM formVM);
-	Task<Tuple<int, int, string>> UpdateRegistration(RegistrationEntry.AddOrEdit.RegistrationFormVM formVM);
+	Task<Tuple<int, int, string>> CreateRegistration(SuperUser.Registrant.FormVM formVM);
+	Task<Tuple<int, int, string>> UpdateRegistration(SuperUser.Registrant.FormVM formVM);
 	Task<Tuple<int, int, string>> DeleteRegistration(int id);			
 
 	Task<Tuple<int, int, string>> InsertHouseRulesAgreement(string email, string timeZone);  // Also used by RegistrationSteps!AgreementButtons
@@ -43,8 +44,8 @@ public interface IRepository
 
 	// Used by Services
 	Task<EntryFormVM> GetById2(int id);   //ViewModel_RE_DELETE
-	Task<Tuple<int, int, string>> Create(DTO registration);
-	Task<Tuple<int, int, string>> Update(DTO registration);
+	Task<Tuple<int, int, string>> Create(Sukkot.RegistrationEntry.DTO registration);
+	Task<Tuple<int, int, string>> Update(Sukkot.RegistrationEntry.DTO registration);
 
 }
 
@@ -78,7 +79,7 @@ ORDER BY FullName
 		});
 	}
 
-	public async Task<RegistrationEntry.AddOrEdit.RegistrationFormVM> GetAddOrEditId(int id)
+	public async Task<SuperUser.Registrant.FormVM> GetAddOrEditId(int id)
 	{
 		Parms = new DynamicParameters(new { Id = id });
 		Sql = $@"
@@ -95,7 +96,7 @@ WHERE Id = @Id";
 
 		return await WithConnectionAsync(async connection =>
 		{
-			var rows = await connection.QueryAsync<RegistrationEntry.AddOrEdit.RegistrationFormVM>(sql: Sql, param: Parms);
+			var rows = await connection.QueryAsync<SuperUser.Registrant.FormVM>(sql: Sql, param: Parms);
 			return rows.SingleOrDefault()!;
 		});
 	}
@@ -128,7 +129,7 @@ FROM Sukkot.vwRegistration WHERE Id = @id";
 	}
 
 
-	public async Task<Tuple<int, int, string>> CreateRegistration(RegistrationEntry.AddOrEdit.RegistrationFormVM formVM)
+	public async Task<Tuple<int, int, string>> CreateRegistration(SuperUser.Registrant.FormVM formVM)
 	{
 		Sql = "Sukkot.stpRegistrationInsert";
 		Parms = new DynamicParameters(new
@@ -190,7 +191,7 @@ FROM Sukkot.vwRegistration WHERE Id = @id";
 		});
 	}
 
-	public async Task<Tuple<int, int, string>> UpdateRegistration(RegistrationEntry.AddOrEdit.RegistrationFormVM formVM)
+	public async Task<Tuple<int, int, string>> UpdateRegistration(SuperUser.Registrant.FormVM formVM)
 	{
 		Sql = "Sukkot.stpRegistrationUpdate";
 		Parms = new DynamicParameters(new
@@ -208,7 +209,7 @@ FROM Sukkot.vwRegistration WHERE Id = @id";
 			AttendanceBitwise = Helper.GetDaysBitwise(formVM.AttendanceDateList!, formVM.AttendanceDateList2ndMonth!, DateRangeType.Attendance),
 			formVM.StatusId,
 			formVM.LmmDonation,
-			Notes = DTOHelper.Scrub(formVM.Notes),
+			Notes = Sukkot.RegistrationEntry.DTOHelper.Scrub(formVM.Notes),
 			Avatar = string.Empty
 		});
 
@@ -465,7 +466,7 @@ WHERE Id = @Id";
 		});
 	}
 
-	public async Task<Tuple<int, int, string>> Create(DTO registration)
+	public async Task<Tuple<int, int, string>> Create(Sukkot.RegistrationEntry.DTO registration)
 	{
 		Sql = "Sukkot.stpRegistrationInsert";
 		Parms = new DynamicParameters(new
@@ -525,7 +526,7 @@ WHERE Id = @Id";
 		});
 	}
 
-	public async Task<Tuple<int, int, string>> Update(DTO registration)
+	public async Task<Tuple<int, int, string>> Update(Sukkot.RegistrationEntry.DTO registration)
 	{
 		Sql = "Sukkot.stpRegistrationUpdate";
 		Parms = new DynamicParameters(new
@@ -543,7 +544,7 @@ WHERE Id = @Id";
 			registration.AttendanceBitwise,
 			registration.StatusId,
 			registration.LmmDonation,
-			Notes = DTOHelper.Scrub(registration.Notes),
+			Notes = Sukkot.RegistrationEntry.DTOHelper.Scrub(registration.Notes),
 			registration.Avatar
 		});
 

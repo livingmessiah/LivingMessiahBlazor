@@ -1,7 +1,14 @@
 ﻿@using Blazored.FluentValidation;
-@using LivingMessiah.Web.Pages.Sukkot.SuperUser.Enums
+@*@using LivingMessiah.Web.Pages.Sukkot.SuperUser.Enums*@
+@*@using LivingMessiah.Web.Pages.Sukkot.SuperUser.Registrant*@
 
 @inherits Fluxor.Blazor.Web.Components.FluxorComponent
+
+
+@*
+
+*@
+
 
 <EditForm Model="VM"
 					OnValidSubmit="HandleValidSubmit"
@@ -168,9 +175,9 @@
 				<label for="statusEnum" class="control-label">Status Type</label>
 				<InputSelect id="type" @bind-Value="VM.StatusId" class="form-control">
 					@foreach (var item in Sukkot.RegistrationSteps.Enums.Status
-						.List.Where(w => w.Value >= Sukkot.RegistrationSteps.Enums.Status.Payment.Value)
-						.OrderBy(o => o.Value)
-						.ToList())
+					.List.Where(w => w.Value >= Sukkot.RegistrationSteps.Enums.Status.Payment.Value)
+					.OrderBy(o => o.Value)
+					.ToList())
 					{
 						<option value="@item.Value">@item.Heading</option>
 					}
