@@ -1,0 +1,11 @@
+﻿@using Microsoft.AspNetCore.Components;
+
+@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+
+<legend class="text-primary bg-light mb-0 p-2">
+	<b>@State!.Value.DetailPageHeaderVM!.Label:</b> @State!.Value.DetailPageHeaderVM!.Value
+</legend>
+
+@code {
+	[Inject] private IState<State>? State { get; set; }
+}

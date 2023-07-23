@@ -3,44 +3,31 @@
 
 @inherits Fluxor.Blazor.Web.Components.FluxorComponent
 
-@*<div class="row">
-	<div class="col-12">
+<div class="pb-1 mt-4 mb-2">
+	<div class="pb-1 mt-4 mb-1 border-bottom border-info">
+		@if (IsXsOrSm)
+		{
+			<h3>
+				<i class="@Page.Icon"></i> @Page.Title
+				<span class="@State!.Value.PageHeaderVM!.Color float-end">
+					<i class="@State!.Value.PageHeaderVM!.Icon"></i>
+					@State!.Value.PageHeaderVM!.Title
+				</span>
+			</h3>
+		}
+		else
+		{
+			<h1>
+				<i class="@Page.Icon"></i> @Page.Title
+				<span class="@State!.Value.PageHeaderVM!.Color float-end">
+					<i class="@State!.Value.PageHeaderVM!.Icon"></i>
+					@State!.Value.PageHeaderVM!.Title
+				</span>
+			</h1>
+
+		}
 	</div>
 </div>
-*@
-
-		<div class="pb-1 mt-4 mb-2">
-
-			@if (IsXsOrSm)
-			{
-				<h3>
-					<i class="@Page.Icon"></i> @Page.Title
-					<span class="@State!.Value.PageHeaderVM!.Color float-end">
-						<i class="@State!.Value.PageHeaderVM!.Icon"></i>
-						@State!.Value.PageHeaderVM!.Title
-					</span>
-				</h3>
-				@*<p class="float-end mt-1">@State!.Value.Email</p>*@
-				@*<p class="mt-1">Email: @State!.Value.FormVM.EMail</p>*@
-			}
-			else
-			{
-				<h1>
-					<i class="@Page.Icon"></i> @Page.Title
-					<span class="@State!.Value.PageHeaderVM!.Color float-end">
-						<i class="@State!.Value.PageHeaderVM!.Icon"></i>
-						@State!.Value.PageHeaderVM!.Title
-					</span>
-				</h1>
-				
-			}
-
-		</div>
-
-@*<p class="mt-1">Email: @State!.Value.FormVM.EMail</p>*@
-
-@*<p class="float-end mt-1">@State!.Value.PageHeaderVM.EMail</p>*@
-
 
 @code {
 	[Inject] private IState<State>? State { get; set; }

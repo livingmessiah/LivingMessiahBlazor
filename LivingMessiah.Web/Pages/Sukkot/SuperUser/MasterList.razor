@@ -37,9 +37,9 @@
 					else
 					{
 						<div class="btn-group float-end">
-							<ActionButtons OnCrudActionSelected="@ReturnedCrud" ParmCrud="Enums.Crud.Edit" IsXsOrSm="@IsXsOrSm" Id="@item.Id" />
+							<ActionButtons OnCrudActionSelected="@ReturnedCrud" ParmCrud="Enums.Crud.Edit" IsXsOrSm="@IsXsOrSm" Id="@item.Id" FullName="@item.FullName" />
 							<ActionButtons OnCrudActionSelected="@ReturnedCrud" ParmCrud="Enums.Crud.DeleteRegistration" IsXsOrSm="@IsXsOrSm" Id="@item.Id" FullName="@item.FullName" />
-							<ActionButtons OnCrudActionSelected="@ReturnedCrud" ParmCrud="Enums.Crud.Display" IsXsOrSm="@IsXsOrSm" Id="@item.Id" />
+							<ActionButtons OnCrudActionSelected="@ReturnedCrud" ParmCrud="Enums.Crud.Display" IsXsOrSm="@IsXsOrSm" Id="@item.Id" FullName="@item.FullName" />
 							<ActionButtons OnCrudActionSelected="@ReturnedCrud" ParmCrud="Enums.Crud.Donation" IsXsOrSm="@IsXsOrSm" Id="@item.Id" FullName="@item.FullName" />
 						</div>
 					}
@@ -84,9 +84,9 @@ else
 					}
 					else
 					{
-						<ActionButtons OnCrudActionSelected="@ReturnedCrud" ParmCrud="Enums.Crud.Edit" IsXsOrSm="@IsXsOrSm" Id="@context.Id" />
+						<ActionButtons OnCrudActionSelected="@ReturnedCrud" ParmCrud="Enums.Crud.Edit" IsXsOrSm="@IsXsOrSm" Id="@context.Id" FullName="@context.FullName" />
 						<ActionButtons OnCrudActionSelected="@ReturnedCrud" ParmCrud="Enums.Crud.DeleteRegistration" IsXsOrSm="@IsXsOrSm" Id="@context.Id" FullName="@context.FullName" />
-						<ActionButtons OnCrudActionSelected="@ReturnedCrud" ParmCrud="Enums.Crud.Display" IsXsOrSm="@IsXsOrSm" Id="@context.Id" />
+						<ActionButtons OnCrudActionSelected="@ReturnedCrud" ParmCrud="Enums.Crud.Display" IsXsOrSm="@IsXsOrSm" Id="@context.Id" FullName="@context.FullName" />
 						<ActionButtons OnCrudActionSelected="@ReturnedCrud" ParmCrud="Enums.Crud.Donation" IsXsOrSm="@IsXsOrSm" Id="@context.Id" FullName="@context.FullName" />
 					}
 

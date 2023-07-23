@@ -58,6 +58,7 @@ public record Delete_HRA_Action(int Id);
 // 1.6 Display actions
 public record Set_PageHeader_For_Index_Action(PageHeaderVM PageHeaderVM);
 public record Set_PageHeader_For_Detail_Action(string Title, string Icon, string Color, int Id);
+public record Set_DetailPageHeader_Action(string Label, string Value);
 
 public record Response_Message_Action(ResponseMessage MessageType, string Message);
 
@@ -69,6 +70,7 @@ public record State
 {
 	public Enums.VisibleComponent? VisibleComponent { get; init; }
 	public PageHeaderVM? PageHeaderVM { get; init; }
+	public DetailPageHeaderVM? DetailPageHeaderVM { get; init; }
 	public Enums.FormMode? FormMode { get; init; }
 	public RegistrationFormVM? RegistrationFormVM { get; init; }
 
@@ -301,6 +303,18 @@ public static class Reducers
 			PageHeaderVM = new PageHeaderVM { Title = action.Title, Icon = action.Icon, Color = action.Color, Id = action.Id }
 		};
 	}
+
+	[ReducerMethod]
+	public static State On_Set_DetailPageHeader(
+		State state, Set_DetailPageHeader_Action action)
+	{
+		return state with
+		{
+			DetailPageHeaderVM = new DetailPageHeaderVM { Label = action.Label, Value = action.Value }
+		};
+	}
+
+
 }
 
 // 5. Effects
