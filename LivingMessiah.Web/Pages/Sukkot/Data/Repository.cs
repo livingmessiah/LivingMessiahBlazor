@@ -7,16 +7,15 @@ using Dapper;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
-using LivingMessiah.Web.Pages.Sukkot;
+using LivingMessiah.Web.Pages.Sukkot.Services; // needed for DTO.cs
 
-//using LivingMessiah.Web.Pages.Sukkot.SuperUser;
 using LivingMessiah.Web.Pages.Sukkot.Enums;
 using LivingMessiah.Web.Pages.SukkotAdmin.Data; // for BaseRepositoryAsync
 using LivingMessiah.Web.Pages.Sukkot.SuperUser.Data;
 using LivingMessiah.Web.Pages.SukkotAdmin.Donations.Data;
 using LivingMessiah.Web.Pages.Sukkot.NormalUser;
 using Serilog.Core;
-using LivingMessiah.Web.Pages.Sukkot.Services;
+using System.Data.SqlClient;
 
 //using LivingMessiah.Web.Pages.SukkotAdmin.Donations.Data;
 //using LivingMessiah.Web.Pages.SukkotAdmin.Donations.Domain;
@@ -26,17 +25,16 @@ namespace LivingMessiah.Web.Pages.Sukkot.Data;
 public interface IRepository
 {
 	string BaseSqlDump { get; }
-	
+
 	// Used by FluxorStore
 	Task<List<SuperUser.Data.vwSuperUser>> GetAll();
 	Task<SuperUser.Registrant.FormVM> GetAddOrEditId(int id);
-	Task<RegistrationEntry.Detail.DisplayVM> GetDisplayById(int id);
 	Task<Tuple<int, int, string>> CreateRegistration(SuperUser.Registrant.FormVM formVM);
 	Task<Tuple<int, int, string>> UpdateRegistration(SuperUser.Registrant.FormVM formVM);
-	Task<Tuple<int, int, string>> DeleteRegistration(int id);			
+	Task<Tuple<int, int, string>> DeleteRegistration(int id);
 
 	Task<Tuple<int, int, string>> InsertHouseRulesAgreement(string email, string timeZone);  // Also used by RegistrationSteps!AgreementButtons
-	Task<int> DeleteHRA(int id);	// stpHRADelete
+	Task<int> DeleteHRA(int id);  // stpHRADelete
 
 	Task<List<SuperUser.Data.vwDonationDetail>> GetByRegistrationId(int registrationId);
 	Task<Tuple<int, int, string>> InsertRegistrationDonation(SuperUser.Donations.FormVM donation); //SuperUser.Data.Donation donation
@@ -44,8 +42,8 @@ public interface IRepository
 
 	// Used by Services
 	Task<EntryFormVM> GetById2(int id);   //ViewModel_RE_DELETE
-	Task<Tuple<int, int, string>> Create(Sukkot.RegistrationEntry.DTO registration);
-	Task<Tuple<int, int, string>> Update(Sukkot.RegistrationEntry.DTO registration);
+	Task<Tuple<int, int, string>> Create(DTO registration);
+	Task<Tuple<int, int, string>> Update(DTO registration);
 
 }
 
@@ -101,34 +99,6 @@ WHERE Id = @Id";
 		});
 	}
 
-	public async Task<RegistrationEntry.Detail.DisplayVM> GetDisplayById(int id)
-	{
-		Parms = new DynamicParameters(new { Id = id });
-		Sql = $@"
---DECLARE @id int=1
-SELECT TOP 1
-Id, HouseRulesAgreementId
-, FamilyName, FirstName, SpouseName, OtherNames
-, Name, NameAndSpouse, NameAndSpouseWithOther
-, EMail, Phone
-, Adults, ChildBig, ChildSmall
-, StatusId, Status, RegistrationFeeAdjusted
-, AttendanceBitwise
-, AttendanceTotal
-, HouseRulesAgreementDate
-, Notes
-, LmmDonation
---, Avatar
-FROM Sukkot.vwRegistration WHERE Id = @id";
-
-		return await WithConnectionAsync(async connection =>
-		{
-			var rows = await connection.QueryAsync<RegistrationEntry.Detail.DisplayVM>(sql: Sql, param: Parms);
-			return rows.SingleOrDefault()!;
-		});
-	}
-
-
 	public async Task<Tuple<int, int, string>> CreateRegistration(SuperUser.Registrant.FormVM formVM)
 	{
 		Sql = "Sukkot.stpRegistrationInsert";
@@ -162,7 +132,7 @@ FROM Sukkot.vwRegistration WHERE Id = @id";
 		{
 			string inside = $"{nameof(Repository)}!{nameof(CreateRegistration)}, Email: {formVM.EMail}; about to execute SPROC: {Sql}";
 			log.LogDebug(string.Format("Inside {0}", inside));
-			
+
 			var affectedRows = await connection.ExecuteAsync(sql: Sql, param: Parms, commandType: CommandType.StoredProcedure);
 			SprocReturnValue = Parms.Get<int>("ReturnValue");
 			int? x = Parms.Get<int?>("NewId");
@@ -209,7 +179,7 @@ FROM Sukkot.vwRegistration WHERE Id = @id";
 			AttendanceBitwise = Helper.GetDaysBitwise(formVM.AttendanceDateList!, formVM.AttendanceDateList2ndMonth!, DateRangeType.Attendance),
 			formVM.StatusId,
 			formVM.LmmDonation,
-			Notes = Sukkot.RegistrationEntry.DTOHelper.Scrub(formVM.Notes),
+			Notes = DTOHelper.Scrub(formVM.Notes),
 			Avatar = string.Empty
 		});
 
@@ -222,7 +192,7 @@ FROM Sukkot.vwRegistration WHERE Id = @id";
 		// Can't remove `Tuple<...>` with `(...)`, see C:\Source\LivingMessiahWiki\Tuples\Removing-Tuple-Conflicts-with-BaseRepositoryAsync.md
 		return await WithConnectionAsync(async connection =>
 		{
-			string inside = $"{nameof(Repository)}!{nameof(UpdateRegistration)}, Id: {formVM.Id}; Email: {formVM.EMail}; about to execute SPROC: {Sql}"; 
+			string inside = $"{nameof(Repository)}!{nameof(UpdateRegistration)}, Id: {formVM.Id}; Email: {formVM.EMail}; about to execute SPROC: {Sql}";
 			log.LogDebug(string.Format("Inside {0}", inside));
 			RowsAffected = await connection.ExecuteAsync(sql: Sql, param: Parms, commandType: CommandType.StoredProcedure);
 			SprocReturnValue = Parms.Get<int>("ReturnValue");
@@ -248,7 +218,7 @@ FROM Sukkot.vwRegistration WHERE Id = @id";
 			return new Tuple<int, int, string>(RowsAffected, SprocReturnValue, ReturnMsg);
 		});
 	}
-	
+
 	public async Task<Tuple<int, int, string>> DeleteRegistration(int id)
 	{
 		Sql = "Sukkot.stpRegistrationDelete";
@@ -284,12 +254,12 @@ FROM Sukkot.vwRegistration WHERE Id = @id";
 			{
 				ReturnMsg = $"Registration deleted for RegistrationId: {id}";
 			}
-			
+
 			return new Tuple<int, int, string>(RowsAffected, SprocReturnValue, ReturnMsg);
 
 		});
 	}
-	
+
 	#endregion
 
 
@@ -335,7 +305,7 @@ FROM Sukkot.vwRegistration WHERE Id = @id";
 				ReturnMsg = $"House Rules Agreement created for {email}; NewId={NewId}";
 				log.LogDebug($"...Return NewId:{NewId}");
 			}
-			
+
 			return new Tuple<int, int, string>(NewId, SprocReturnValue, ReturnMsg);
 
 		});
@@ -414,14 +384,14 @@ ORDER BY Detail
 					ReturnMsg = $"Database call failed for donation insert; donation.RegistrationId: {donation.RegistrationId}; SprocReturnValue: {SprocReturnValue}";
 					log.LogWarning($"...ReturnMsg: {ReturnMsg}; {Environment.NewLine} {Sql}");
 				}
-				
+
 			}
 			else
 			{
 				int NewId = int.TryParse(x.ToString(), out NewId) ? NewId : 0;
 				ReturnMsg = $"Donation created for {donation.RegistrationId}; NewId={NewId}";
 				log.LogDebug($"Return NewId:{NewId}");
-				
+
 			}
 
 			return new Tuple<int, int, string>(NewId, SprocReturnValue, ReturnMsg);
@@ -466,7 +436,7 @@ WHERE Id = @Id";
 		});
 	}
 
-	public async Task<Tuple<int, int, string>> Create(Sukkot.RegistrationEntry.DTO registration)
+	public async Task<Tuple<int, int, string>> Create(DTO registration)
 	{
 		Sql = "Sukkot.stpRegistrationInsert";
 		Parms = new DynamicParameters(new
@@ -526,7 +496,7 @@ WHERE Id = @Id";
 		});
 	}
 
-	public async Task<Tuple<int, int, string>> Update(Sukkot.RegistrationEntry.DTO registration)
+	public async Task<Tuple<int, int, string>> Update(DTO registration)
 	{
 		Sql = "Sukkot.stpRegistrationUpdate";
 		Parms = new DynamicParameters(new
@@ -544,7 +514,7 @@ WHERE Id = @Id";
 			registration.AttendanceBitwise,
 			registration.StatusId,
 			registration.LmmDonation,
-			Notes = Sukkot.RegistrationEntry.DTOHelper.Scrub(registration.Notes),
+			Notes = DTOHelper.Scrub(registration.Notes),
 			registration.Avatar
 		});
 
@@ -582,7 +552,7 @@ WHERE Id = @Id";
 			return new Tuple<int, int, string>(RowsAffected, SprocReturnValue, ReturnMsg);
 		});
 	}
-	
+
 	#endregion
 
 

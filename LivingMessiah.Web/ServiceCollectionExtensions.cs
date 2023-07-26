@@ -25,7 +25,6 @@ using LivingMessiah.Web.Pages.Parasha.Services;
 using LivingMessiah.Web.Pages.Parasha.Data;
 using LivingMessiah.Web.Pages.UpcomingEventsAdmin.Edit;
 using LivingMessiah.Web.Links;
-//using LivingMessiah.Web.Pages.Sukkot.RegistrationEntry;
 
 namespace LivingMessiah.Web;
 
@@ -52,6 +51,7 @@ public static class ServiceCollectionExtensions
 
 			.AddTransient<IService, Service>()        //Pages.Sukkot.Services;
 			.AddTransient<IRepository, Repository>()  //Pages.Sukkot.Data;
+			.AddTransient<IRepositoryNoBase, RepositoryNoBase>()  //Pages.Sukkot.Data;
 
 			.AddTransient<IValidator<Pages.Sukkot.HouseRulesAgreement.FormVM>, Pages.Sukkot.HouseRulesAgreement.FormVMValidator>()
 			.AddTransient<IValidator<Pages.Sukkot.NormalUser.EntryFormVM>, Pages.Sukkot.NormalUser.EntryFormVMValidator>()

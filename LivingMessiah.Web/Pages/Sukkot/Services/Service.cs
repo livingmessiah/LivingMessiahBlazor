@@ -135,9 +135,9 @@ public class Service : IService
 	}
 
 	//SpouseName = vm.SpouseName!.Trim(),
-	private RegistrationEntry.DTO DTO_From_VM_To_DB(EntryFormVM vm)
+	private DTO DTO_From_VM_To_DB(EntryFormVM vm)
 	{
-		RegistrationEntry.DTO poco = new RegistrationEntry.DTO
+		DTO poco = new DTO
 		{
 			Id = vm.Id,
 			FamilyName = vm.FamilyName,

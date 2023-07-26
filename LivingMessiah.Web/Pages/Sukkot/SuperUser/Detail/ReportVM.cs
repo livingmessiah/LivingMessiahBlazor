@@ -1,9 +1,10 @@
-﻿using System;
+﻿using LivingMessiah.Web.Pages.Sukkot.SuperUser.Data;
+using System;
+using System.Collections.Generic;
 
-namespace LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.Detail;
+namespace LivingMessiah.Web.Pages.Sukkot.SuperUser.Detail;
 
-
-public class DisplayVM
+public class ReportVM
 {
 	public int Id { get; set; }
 	public string? FamilyName { get; set; }
@@ -13,7 +14,7 @@ public class DisplayVM
 	public string? EMail { get; set; }
 	public string? Phone { get; set; }
 
-	public string Phone2 
+	public string Phone2
 	{
 		get
 		{
@@ -65,5 +66,7 @@ public class DisplayVM
 		return s;
 	}
 
+	//public List<vwDonationDetail> Donations { get; set; } = new();
+	public IEnumerable<vwDonationDetail>? Donations { get; set; } // = new();
 
 }

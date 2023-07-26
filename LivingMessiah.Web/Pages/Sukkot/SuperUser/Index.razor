@@ -8,9 +8,6 @@
 @using LivingMessiah.Web.Pages.Sukkot.HouseRulesAgreement
 @using LoginLink = LivingMessiah.Web.Links.Account
 
-@using LivingMessiah.Web.Pages.Sukkot.RegistrationEntry
-@*@using LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.Detail*@
-
 @inherits Fluxor.Blazor.Web.Components.FluxorComponent
 
 <AuthorizeView Roles="@Roles.AdminOrSukkot">
@@ -30,6 +27,7 @@
 
 		@if (State!.Value.VisibleComponent == Enums.VisibleComponent.MasterList)
 		{
+
 			<LivingMessiah.Web.Pages.Sukkot.HouseRulesAgreement.SuperUserAgreementForm />
 
 			<div class="@MediaQuery.XsOrSm.DivClass">
@@ -59,7 +57,7 @@
 				{
 					@* FN: 1 *@
 					<div class="card border-primary my-3 p-2">
-						<LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.Detail.Display />
+						<LivingMessiah.Web.Pages.Sukkot.SuperUser.Detail.Report />
 					</div>
 				}
 			}

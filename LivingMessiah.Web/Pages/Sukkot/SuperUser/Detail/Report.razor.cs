@@ -1,14 +1,13 @@
 ﻿using Microsoft.AspNetCore.Components;
-using LivingMessiah.Web.Pages.Sukkot.SuperUser;
 
-namespace LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.Detail;
+namespace LivingMessiah.Web.Pages.Sukkot.SuperUser.Detail;
 
-public partial class Display
+public partial class Report
 {
 	[Inject] private IState<State>? State { get; set; }
 	[Inject] public IDispatcher? Dispatcher { get; set; }
 
-	DisplayVM? DisplayVM => State!.Value.DisplayVM;
+	ReportVM? ReportVM => State!.Value.DetailReportVM;
 
 	void CancelActionHandler()
 	{

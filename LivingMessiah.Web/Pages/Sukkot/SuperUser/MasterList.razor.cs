@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Reflection;
 using Blazored.Modal.Services;
 using Blazored.Modal;
-using LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.Detail;
+using LivingMessiah.Web.Pages.Sukkot.SuperUser.Detail;
 using LivingMessiah.Web.Pages.Sukkot.SuperUser.Enums;
 
 namespace LivingMessiah.Web.Pages.Sukkot.SuperUser;

@@ -1,4 +1,6 @@
-﻿@if (Enums.DateRangeType.Attendance.HasSecondMonth)
+﻿@using AttendanceEnums = LivingMessiah.Web.Pages.Sukkot.Enums
+
+@if (@AttendanceEnums.DateRangeType.Attendance.HasSecondMonth)
 {
 	@if (IsXs)
 	{
@@ -68,6 +70,6 @@ else
 	[Parameter] public DateTime[]? AttendanceDateList { get; set; }
 	[Parameter] public DateTime[]? AttendanceDateList2ndMonth { get; set; }
 
-	public Enums.DateRangeType DateRangeAttendance { get; set; } = Enums.DateRangeType.Attendance;
+	public AttendanceEnums.DateRangeType DateRangeAttendance { get; set; } = AttendanceEnums.DateRangeType.Attendance;
 
 }

@@ -4,9 +4,10 @@ using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System;
-using LivingMessiah.Web.Pages.Sukkot.RegistrationEntry.Detail;
+using LivingMessiah.Web.Pages.Sukkot.SuperUser.Detail;
 using LivingMessiah.Web.Pages.Sukkot.Enums;
 using LivingMessiah.Web.Pages.Sukkot.Data;
+using System.Linq;
 
 /*
 using LivingMessiah.Web.Pages.Sukkot.SuperUser.Donations;
@@ -32,7 +33,7 @@ public record Edit_Action(int Id);
 
 // 1.2.1 GetDisplayItem() actions
 public record Get_DisplayItem_Action(int Id);
-public record Set_DisplayVM_Action(DisplayVM? DisplayVM);
+public record Set_ReportVM_Action(ReportVM? ReportVM);
 
 public record Display_Action(int Id);
 
@@ -88,7 +89,7 @@ public record State
 	public HouseRulesAgreement.HRA_FormState? HRA_FormState { get; init; }  
 	
 
-	public DisplayVM? DisplayVM { get; init; }
+	public ReportVM? DetailReportVM { get; init; }
 	public List<Data.vwSuperUser>? vwSuperUserList { get; init; }
 }
 
@@ -96,7 +97,7 @@ public record State
 // 3. Feature
 public class FeatureImplementation : Feature<State>
 {
-	public override string GetName() => "RegistrationEntry";
+	public override string GetName() => "SuperUser";
 
 	protected override State GetInitialState()
 	{
@@ -110,8 +111,8 @@ public class FeatureImplementation : Feature<State>
 			HRA_EMail = string.Empty, // why can't I just use HRA_FormVM.EMail?
 			HRA_FormVM = new HouseRulesAgreement.FormVM(),
 			BypassAgreement = true,
-			HRA_FormState = HouseRulesAgreement.HRA_FormState.Start, 
-			DisplayVM = new DisplayVM()
+			HRA_FormState = HouseRulesAgreement.HRA_FormState.Start,
+			DetailReportVM = new ReportVM()
 		};
 	}
 }
@@ -212,12 +213,12 @@ public static class Reducers
 	}
 
 	[ReducerMethod]
-	public static State On_Set_DisplayVM(
-	State state, Set_DisplayVM_Action action)
+	public static State On_Set_ReportVM(
+	State state, Set_ReportVM_Action action)
 	{
 		return state with
 		{
-			DisplayVM = action.DisplayVM
+			DetailReportVM = action.ReportVM
 		};
 	}
 
@@ -326,11 +327,13 @@ public class Effects
 	#region Constructor and DI
 	private readonly ILogger Logger;
 	private readonly IRepository db;
+	private readonly IRepositoryNoBase dbNoBase;
 
-	public Effects(ILogger<Effects> logger, IRepository repository)
+	public Effects(ILogger<Effects> logger, IRepository repository, IRepositoryNoBase repositoryNoBase)
 	{
 		Logger = logger;
 		db = repository;
+		dbNoBase = repositoryNoBase;
 	}
 	#endregion
 
@@ -533,22 +536,32 @@ public class Effects
 		Logger.LogDebug(string.Format("Inside {0}", inside));
 		try
 		{
-			DisplayVM? displayVM = new();
-			displayVM = await db!.GetDisplayById(action.Id);
+			ReportVM? reportVM = new();
+			reportVM = await dbNoBase!.GetDisplayAndDonationsById(action.Id);
 
-			if (displayVM is null)
+			if (reportVM is null)
 			{
-				Logger.LogWarning(string.Format("...{0}; {1} is null", inside, nameof(displayVM)));
+				Logger.LogWarning(string.Format("...{0}; {1} is null", inside, nameof(reportVM)));
 				dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Warning, $"Registration [Display] Not Found; Id: {action.Id}"));
 			}
 			else
 			{
-				var tuple = Helper.GetAttendanceDatesArray(displayVM!.AttendanceBitwise);
-				displayVM!.AttendanceDateList = tuple.week1;
-				displayVM!.AttendanceDateList2ndMonth = tuple.week2!;
-				Logger.LogDebug(string.Format("...FullName: {0}", displayVM!.FullName(false)));
-				dispatcher.Dispatch(new Set_DisplayVM_Action(displayVM));
-				dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Info, $"Got {displayVM!.FullName(false)}"));
+				var tuple = Helper.GetAttendanceDatesArray(reportVM!.AttendanceBitwise);
+				reportVM!.AttendanceDateList = tuple.week1;
+				reportVM!.AttendanceDateList2ndMonth = tuple.week2!;
+				Logger.LogDebug(string.Format("...FullName: {0}", reportVM!.FullName(false)));
+
+				if (reportVM!.Donations is null) 
+				{ 
+					Logger.LogDebug("...Donations is null"); 	
+				}
+				else
+				{
+					Logger.LogDebug(string.Format("...Donations is NOT null; Count:{0}", reportVM!.Donations.Count()));
+				}
+
+				dispatcher.Dispatch(new Set_ReportVM_Action(reportVM));
+				dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Info, $"Got {reportVM!.FullName(false)}"));
 				dispatcher.Dispatch(new Display_Action(action.Id));
 			}
 		}
