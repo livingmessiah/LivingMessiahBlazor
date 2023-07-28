@@ -96,7 +96,7 @@
 @* Cost Non-Print (hidden-xs) *@
 <div class="d-print-none">
 	<div class="d-none d-sm-block">
-		<CostAccountStyle ReportVM="@State!.Value.DetailReportVM"></CostAccountStyle>
+		<CostAccountStyle ReportVM="@State!.Value.ReportVM"></CostAccountStyle>
 	</div>
 
 	@* Cost Non-Print (visible-xs) *@
@@ -129,7 +129,7 @@
 
 @* Cost Print *@
 <div class="d-none d-print-block">
-	<CostAccountStyle ReportVM="@State!.Value.DetailReportVM"></CostAccountStyle>
+	<CostAccountStyle ReportVM="@State!.Value.ReportVM"></CostAccountStyle>
 </div>
 
 @if (!String.IsNullOrEmpty(ReportVM.Notes))

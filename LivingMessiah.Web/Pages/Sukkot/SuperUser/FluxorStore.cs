@@ -4,11 +4,13 @@ using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System;
-using LivingMessiah.Web.Pages.Sukkot.SuperUser.Detail;
 using LivingMessiah.Web.Pages.Sukkot.Enums;
 using LivingMessiah.Web.Pages.Sukkot.Data;
 using System.Linq;
-using LivingMessiah.Web.Pages.Sukkot.SuperUser.Index;
+using ParentState = LivingMessiah.Web.Pages.Sukkot.SuperUser.Index;
+
+//using LivingMessiah.Web.Pages.Sukkot.SuperUser.Index;
+//using LivingMessiah.Web.Pages.Sukkot.SuperUser.Detail;
 
 /*
 using LivingMessiah.Web.Pages.Sukkot.SuperUser.Registrant;
@@ -30,9 +32,7 @@ public record Get_EditItem_Action(int Id, Enums.FormMode? FormMode); // FormMode
 public record Set_Registrant_FormVM_Action(Registrant.FormVM? FormVM);
 public record Edit_Action(int Id);
 
-// 1.2.1 GetDisplayItem() actions
-public record Get_DisplayItem_Action(int Id);
-public record Set_ReportVM_Action(ReportVM? ReportVM);
+
 
 public record Display_Action(int Id);
 
@@ -58,9 +58,6 @@ public record Delete_Registration_Action(int Id);
 public record Delete_HRA_Action(int Id);
 
 
-// 1.6 Display actions
-public record Set_DetailPageHeader_Action(string Label, string Value);
-
 public record Response_Message_Action(ResponseMessage MessageType, string Message);
 
 #endregion
@@ -80,7 +77,7 @@ public record State
 	public HouseRulesAgreement.HRA_FormState? HRA_FormState { get; init; }  
 	
 
-	public ReportVM? DetailReportVM { get; init; }
+	
 	public List<Data.vwSuperUser>? vwSuperUserList { get; init; }
 }
 
@@ -99,8 +96,8 @@ public class FeatureImplementation : Feature<State>
 			HRA_EMail = string.Empty, // why can't I just use HRA_FormVM.EMail?
 			HRA_FormVM = new HouseRulesAgreement.FormVM(),
 			BypassAgreement = true,
-			HRA_FormState = HouseRulesAgreement.HRA_FormState.Start,
-			DetailReportVM = new ReportVM()
+			HRA_FormState = HouseRulesAgreement.HRA_FormState.Start
+			
 		};
 	}
 }
@@ -168,23 +165,6 @@ public static class Reducers
 	public static State On_Get_EditItem(State state, Get_EditItem_Action action)
 	{
 		return state with { FormMode = action.FormMode };
-	}
-
-	// Why do I need this ReducerMethod if it's not changing the State?
-	[ReducerMethod]
-	public static State On_Get_DisplayItem_Action(State state, Get_DisplayItem_Action action)
-	{
-		return state;
-	}
-
-	[ReducerMethod]
-	public static State On_Set_ReportVM(
-	State state, Set_ReportVM_Action action)
-	{
-		return state with
-		{
-			DetailReportVM = action.ReportVM
-		};
 	}
 
 	[ReducerMethod]
@@ -266,7 +246,7 @@ public class Effects
 		string inside = nameof(Effects) + "!" + nameof(GetList) + "!" + nameof(Get_List_Action);
 
 		Logger.LogDebug(string.Format("Inside {0}", inside));
-		dispatcher.Dispatch(new Set_VisibleComponent_Action(VisibleComponent.MasterList));
+		dispatcher.Dispatch(new ParentState.Set_VisibleComponent_Action(VisibleComponent.MasterList));
 
 		try
 		{
@@ -333,7 +313,7 @@ public class Effects
 			{
 				Logger.LogError(ex, string.Format("...Inside catch of {0}", inside));
 				dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Failure, Constants.Effects.ResponseMessageFailure));
-				dispatcher.Dispatch(new Set_VisibleComponent_Action(VisibleComponent.MasterList));
+				dispatcher.Dispatch(new ParentState.Set_VisibleComponent_Action(VisibleComponent.MasterList));
 			}
 		}
 		else
@@ -351,7 +331,7 @@ public class Effects
 				Logger.LogError(ex, string.Format("...Inside catch of {0}", inside));
 				dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Failure
 					, $"{Constants.Effects.ResponseMessageFailure}. Action: {action.FormMode.Name}"));
-				dispatcher.Dispatch(new Set_VisibleComponent_Action(VisibleComponent.MasterList));
+				dispatcher.Dispatch(new ParentState.Set_VisibleComponent_Action(VisibleComponent.MasterList));
 			}
 		}
 
@@ -389,7 +369,7 @@ public class Effects
 		catch (Exception ex)
 		{
 			Logger.LogError(ex, string.Format("...Inside catch of {0}", inside));
-			dispatcher.Dispatch(new Set_VisibleComponent_Action(VisibleComponent.MasterList));  // ToDo: does this make sense?
+			dispatcher.Dispatch(new ParentState.Set_VisibleComponent_Action(VisibleComponent.MasterList));  // ToDo: does this make sense?
 			dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Failure, Constants.Effects.ResponseMessageFailure));
 		}
 	}
@@ -421,53 +401,9 @@ public class Effects
 		{
 			Logger.LogError(ex, string.Format("...Inside catch of {0}", inside));
 			dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Failure, $"{Constants.Effects.ResponseMessageFailure}."));
-			dispatcher.Dispatch(new Set_VisibleComponent_Action(VisibleComponent.MasterList));
 		}
 	}
 
-	[EffectMethod]
-	public async Task GetDisplayItem(Get_DisplayItem_Action action, IDispatcher dispatcher)
-	{
-		string inside = $"{nameof(Effects)}!{nameof(GetDisplayItem)}; Id: {action.Id}";
-
-		Logger.LogDebug(string.Format("Inside {0}", inside));
-		try
-		{
-			ReportVM? reportVM = new();
-			reportVM = await dbNoBase!.GetDisplayAndDonationsById(action.Id);
-
-			if (reportVM is null)
-			{
-				Logger.LogWarning(string.Format("...{0}; {1} is null", inside, nameof(reportVM)));
-				dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Warning, $"Registration [Display] Not Found; Id: {action.Id}"));
-			}
-			else
-			{
-				var tuple = Helper.GetAttendanceDatesArray(reportVM!.AttendanceBitwise);
-				reportVM!.AttendanceDateList = tuple.week1;
-				reportVM!.AttendanceDateList2ndMonth = tuple.week2!;
-				Logger.LogDebug(string.Format("...FullName: {0}", reportVM!.FullName(false)));
-
-				if (reportVM!.Donations is null) 
-				{ 
-					Logger.LogDebug("...Donations is null"); 	
-				}
-				else
-				{
-					Logger.LogDebug(string.Format("...Donations is NOT null; Count:{0}", reportVM!.Donations.Count()));
-				}
-
-				dispatcher.Dispatch(new Set_ReportVM_Action(reportVM));
-				//dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Info, $"Got {reportVM!.FullName(false)}"));
-				dispatcher.Dispatch(new Display_Action(action.Id));
-			}
-		}
-		catch (Exception ex)
-		{
-			Logger.LogError(ex, string.Format("...Inside catch of {0}", inside));
-			dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Failure, Constants.Effects.ResponseMessageFailure));
-		}
-	}
 
 
 	[EffectMethod]

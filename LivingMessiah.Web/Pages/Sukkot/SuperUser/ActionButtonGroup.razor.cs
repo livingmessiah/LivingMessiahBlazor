@@ -35,19 +35,20 @@ public partial class ActionButtonGroup
 			case nameof(Enums.Crud.AddRegistration):
 				Dispatcher!.Dispatch(new Add_Registration_Action(args.EMail)); //, RegistrationSteps.Enums.Status.StartRegistration.Value
 				Dispatcher!.Dispatch(new ParentState.Set_PageHeader_For_Detail_Action(args.Crud.Text, args.Crud!.Text, args.Crud!.Color, args.Id));
-				Dispatcher!.Dispatch(new Set_DetailPageHeader_Action("Email", args.EMail));
+				Dispatcher!.Dispatch(new ParentState.Set_DetailPageHeader_Action("Email", args.EMail));
 				break;
 
 			case nameof(Enums.Crud.Edit):
 				Dispatcher!.Dispatch(new ParentState.Set_PageHeader_For_Detail_Action(args.Crud.Name, args.Crud!.Icon, args.Crud!.Color, args.Id));
 				Dispatcher!.Dispatch(new Get_EditItem_Action(args.Id, Enums.FormMode.Edit));
-				Dispatcher!.Dispatch(new Set_DetailPageHeader_Action("Name", args.FullName));
+				Dispatcher!.Dispatch(new ParentState.Set_DetailPageHeader_Action("Name", args.FullName));
 				break;
 
 			case nameof(Enums.Crud.Display):
-				Dispatcher!.Dispatch(new Get_DisplayItem_Action(args.Id));
+				Dispatcher!.Dispatch(new Detail.Get_Action(args.Id));
+				Dispatcher!.Dispatch(new ParentState.Set_VisibleComponent_Action(VisibleComponent.DisplayCard));
 				Dispatcher!.Dispatch(new ParentState.Set_PageHeader_For_Detail_Action(args.Crud.Name, args.Crud!.Icon, args.Crud!.Color, args.Id));
-				Dispatcher!.Dispatch(new Set_DetailPageHeader_Action("Name", args.FullName));
+				Dispatcher!.Dispatch(new ParentState.Set_DetailPageHeader_Action("Name", args.FullName));
 				break;
 
 			case nameof(Enums.Crud.DeleteRegistration):
@@ -71,7 +72,7 @@ public partial class ActionButtonGroup
 				Dispatcher!.Dispatch(new Donations.Form_Prep_Action(args.Id, args.FullName));
 				Dispatcher!.Dispatch(new ParentState.Set_VisibleComponent_Action(VisibleComponent.DonationForm));
 				Dispatcher!.Dispatch(new ParentState.Set_PageHeader_For_Detail_Action(args.Crud.Text, args.Crud!.Icon, args.Crud!.Color, args.Id));
-				Dispatcher!.Dispatch(new Set_DetailPageHeader_Action("Name", args.FullName));
+				Dispatcher!.Dispatch(new ParentState.Set_DetailPageHeader_Action("Name", args.FullName));
 				break;
 
 			default:

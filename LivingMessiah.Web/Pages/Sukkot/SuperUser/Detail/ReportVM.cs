@@ -32,16 +32,11 @@ public class ReportVM
 	{
 		get
 		{
-			return RegistrationSteps.Enums.Status.FromValue(StatusId).Name;
-		}
-	}
-
-	public int StatusValue
-	{
-		get
-		{
-
-			return RegistrationSteps.Enums.Status.FromValue(StatusId);
+			// Hack:
+			return 
+				StatusId != 0 ? 
+				RegistrationSteps.Enums.Status.FromValue(StatusId).Name : 
+				RegistrationSteps.Enums.Status.NotAuthenticated.Name;
 		}
 	}
 

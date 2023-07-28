@@ -4,7 +4,7 @@
 public record Set_VisibleComponent_Action(Enums.VisibleComponent VisibleComponent);
 public record Set_PageHeader_For_Index_Action(PageHeaderVM PageHeaderVM);  
 public record Set_PageHeader_For_Detail_Action(string Title, string Icon, string Color, int Id);
-
+public record Set_DetailPageHeader_Action(string Label, string Value);
 
 // 2. State
 public record IndexState
