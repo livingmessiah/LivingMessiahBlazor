@@ -10,7 +10,6 @@ using LivingMessiah.Web.Pages.Sukkot.Data;
 using System.Linq;
 
 /*
-using LivingMessiah.Web.Pages.Sukkot.SuperUser.Donations;
 using LivingMessiah.Web.Pages.Sukkot.SuperUser.Registrant;
 */
 
@@ -28,7 +27,6 @@ public record Set_Data_MasterList_Action(List<Data.vwSuperUser> vwSuperUserList)
 // 1.2 GetItem() actions
 public record Get_EditItem_Action(int Id, Enums.FormMode? FormMode); // FormMode is always Edit
 public record Set_Registrant_FormVM_Action(Registrant.FormVM? FormVM);
-public record Set_Donation_FormVM_Action(Donations.FormVM? FormVM);
 public record Edit_Action(int Id);
 
 // 1.2.1 GetDisplayItem() actions
@@ -40,7 +38,7 @@ public record Display_Action(int Id);
 // ToDo: "Submitting_Request" is to generic because I have two forms one for HRA and one for Registration
 // 1.3 Actions related to Form Submission
 public record Submitting_Request_Action(Registrant.FormVM FormVM, Enums.FormMode? FormMode);
-public record Submitting_Donation_Request_Action(Donations.FormVM FormVM);
+
 
 
 public record Set_BypassAgreement_Action(bool BypassAgreement); // HouseRulesAgreement.FormVM FormVM 
@@ -52,7 +50,7 @@ public record ReSet_HRA_Action(HouseRulesAgreement.FormVM HRA_FormVM, HouseRules
 
 // 1.4 Actions related to MasterList
 public record Add_Registration_Action(string? EMail);
-public record Donation_Action(int RegistrationId, string? FullName);
+
 
 // 1.5 Delete() actions
 public record Delete_Registration_Action(int Id);
@@ -79,7 +77,7 @@ public record State
 	public Registrant.FormVM? RegistrantFormVM { get; init; }
 
 
-	public Donations.FormVM? DonationFormVM { get; init; }
+	
 	public int RegistrationId { get; init; }
 	public string? FullName { get; init; }
 
@@ -107,7 +105,6 @@ public class FeatureImplementation : Feature<State>
 			PageHeaderVM = Constants.GetPageHeaderForIndexVM(),
 			FormMode = null,
 			RegistrantFormVM = new Registrant.FormVM(),
-			DonationFormVM = new Donations.FormVM(),
 			HRA_EMail = string.Empty, // why can't I just use HRA_FormVM.EMail?
 			HRA_FormVM = new HouseRulesAgreement.FormVM(),
 			BypassAgreement = true,
@@ -121,8 +118,6 @@ public class FeatureImplementation : Feature<State>
 // 4. Reducers
 public static class Reducers
 {
-
-
 	[ReducerMethod]
 	public static State On_Set_BypassAgreement(
 	State state, Set_BypassAgreement_Action action)
@@ -188,16 +183,6 @@ public static class Reducers
 		};
 	}
 
-	// ToDo: This is need for something like	[EffectMethod] public async Task GetDonationItem(Get_EditItem_Action action, IDispatcher dispatcher)
-	[ReducerMethod]
-	public static State On_Set_Donation_FormVM(
-	State state, Set_Donation_FormVM_Action action)
-	{
-		return state with
-		{
-			DonationFormVM = action.FormVM
-		};
-	}
 
 	[ReducerMethod]
 	public static State On_Get_EditItem(State state, Get_EditItem_Action action)
@@ -248,20 +233,6 @@ public static class Reducers
 			HRA_EMail = action.EMail,
 			FormMode = Enums.FormMode.Add,
 			RegistrantFormVM = new Registrant.FormVM()
-		};
-	}
-
-
-	[ReducerMethod]
-	public static State On_Donation(
-		State state, Donation_Action action)
-	{
-		return state with
-		{
-			VisibleComponent = Enums.VisibleComponent.DonationForm,
-			RegistrationId = action.RegistrationId,
-			FullName = action.FullName,
-			DonationFormVM = new Donations.FormVM()
 		};
 	}
 
@@ -472,32 +443,6 @@ public class Effects
 	}
 
 
-	[EffectMethod]
-	public async Task DeleteRegistration(Delete_Registration_Action action, IDispatcher dispatcher)
-	{
-		string inside = $"{nameof(Effects)}!{nameof(DeleteRegistration)}; Id: {action.Id}";
-		Logger.LogDebug(string.Format("Inside {0}; Id: {1}", inside, action.Id));
-		try
-		{
-			var sprocTuple = await db.DeleteRegistration(action.Id);
-
-			if (sprocTuple.Item2 != 51000) // Can not have donation rows when deleting registration
-			{
-				dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Success, $"{sprocTuple.Item3}"));
-				dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Info, $"{Constants.Effects.RepopulateMessage}"));
-			}
-			else
-			{
-				dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Warning, $"{sprocTuple.Item3}"));
-			}
-		}
-		catch (Exception ex)
-		{
-			Logger.LogError(ex, string.Format("...Inside catch of {0}", inside));
-			dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Failure, Constants.Effects.ResponseMessageFailure));
-		}
-	}
-
 
 	[EffectMethod]
 	public async Task AddHra(Add_HRA_Action action, IDispatcher dispatcher)
@@ -592,37 +537,6 @@ public class Effects
 	}
 
 
-
-	[EffectMethod]
-	public async Task AddDonation(Submitting_Donation_Request_Action action, IDispatcher dispatcher)
-	{
-		string inside = $"{nameof(Effects)}!{nameof(AddDonation)}; RegistrationId: {action.FormVM.RegistrationId}";  
-		Logger.LogDebug(string.Format("Inside {0}", inside));
-
-		try
-		{
-			var sprocTuple = await db.InsertRegistrationDonation(action.FormVM);
-			Logger.LogDebug(string.Format("...sprocTuple.Item2=ReturnValue {0}", sprocTuple.Item2));
-
-			if (sprocTuple.Item2 == 0) // Item2=ReturnValue
-			{
-				dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Success, $"{sprocTuple.Item3}"));
-				dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Info, $"{Constants.Effects.RepopulateMessage}"));
-			}
-			else
-			{
-				dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Warning, $"{sprocTuple.Item3}"));
-			}
-
-
-		}
-		catch (Exception ex)
-		{
-			Logger.LogError(ex, string.Format("...Inside catch of {0}", inside));
-			dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Failure, $"{Constants.Effects.ResponseMessageFailure}."));
-			dispatcher.Dispatch(new Set_VisibleComponent_Action(VisibleComponent.MasterList));
-		}
-	}
 
 
 }

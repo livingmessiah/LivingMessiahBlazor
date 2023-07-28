@@ -11,13 +11,13 @@ namespace LivingMessiah.Web.Pages.Sukkot.SuperUser.Donations;
 public partial class Form
 {
 	[Inject] public ILogger<Form>? Logger { get; set; }
-	[Inject] private IState<State>? State { get; set; }
+	[Inject] private IState<DonationState>? DonationState { get; set; }
 	[Inject] public IDispatcher? Dispatcher { get; set; }
 	[Inject] public ISecurityClaimsService? SvcClaims { get; set; }
 
 	private FluentValidationValidator? _fluentValidationValidator;
 
-	private FormVM? VM => State!.Value.DonationFormVM;
+	private FormVM? VM => DonationState!.Value.DonationFormVM;
 	protected string? FullName;
 
 	protected override async Task OnInitializedAsync()
@@ -29,8 +29,8 @@ public partial class Form
 
 		VM!.CreatedBy = email;
 		VM!.CreateDate = DateTime.UtcNow;
-		VM!.RegistrationId = State!.Value.RegistrationId;
-		FullName = State!.Value.FullName;
+		VM!.RegistrationId = DonationState!.Value.RegistrationId;
+		FullName = DonationState!.Value.FullName;
 
 		await base.OnInitializedAsync();
 	}
@@ -39,7 +39,7 @@ public partial class Form
 	protected void HandleValidDonationSubmit()
 	{
 		Logger!.LogDebug(string.Format("Inside {0}", nameof(Form) + "!" + nameof(HandleValidDonationSubmit)));
-		Dispatcher!.Dispatch(new Submitting_Donation_Request_Action(State!.Value.DonationFormVM!));
+		Dispatcher!.Dispatch(new Add_Action(DonationState!.Value.DonationFormVM!));
 		Dispatcher!.Dispatch(new Set_PageHeader_For_Index_Action(SuperUser.Constants.GetPageHeaderForIndexVM()));
 	}
 

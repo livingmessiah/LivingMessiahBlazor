@@ -66,7 +66,7 @@ public partial class ActionButtonGroup
 				break;
 
 			case nameof(Enums.Crud.Donation):
-				Dispatcher!.Dispatch(new Donation_Action(args.Id, args.FullName));
+				Dispatcher!.Dispatch(new Donations.Form_Prep_Action(args.Id, args.FullName));
 				Dispatcher!.Dispatch(new Set_PageHeader_For_Detail_Action(args.Crud.Text, args.Crud!.Icon, args.Crud!.Color, args.Id));
 				Dispatcher!.Dispatch(new Set_DetailPageHeader_Action("Name", args.FullName));
 				break;
