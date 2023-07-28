@@ -1,4 +1,6 @@
-﻿namespace LivingMessiah.Web.Pages.Sukkot.SuperUser;
+﻿using LivingMessiah.Web.Pages.Sukkot.SuperUser.Index;
+
+namespace LivingMessiah.Web.Pages.Sukkot.SuperUser;
 
 public static class Constants
 {

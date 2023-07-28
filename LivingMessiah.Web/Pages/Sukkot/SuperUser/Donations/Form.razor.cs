@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Blazored.FluentValidation;
 using Microsoft.Extensions.Logging;
-using LivingMessiah.Web.Pages.Sukkot.SuperUser;
 using LivingMessiah.Web.Services;
 using System.Threading.Tasks;
 using System;
+
+using ParentState = LivingMessiah.Web.Pages.Sukkot.SuperUser.Index;
 
 namespace LivingMessiah.Web.Pages.Sukkot.SuperUser.Donations;
 
@@ -17,7 +18,7 @@ public partial class Form
 
 	private FluentValidationValidator? _fluentValidationValidator;
 
-	private FormVM? VM => DonationState!.Value.DonationFormVM;
+	private FormVM? VM => DonationState!.Value.FormVM;
 	protected string? FullName;
 
 	protected override async Task OnInitializedAsync()
@@ -39,14 +40,14 @@ public partial class Form
 	protected void HandleValidDonationSubmit()
 	{
 		Logger!.LogDebug(string.Format("Inside {0}", nameof(Form) + "!" + nameof(HandleValidDonationSubmit)));
-		Dispatcher!.Dispatch(new Add_Action(DonationState!.Value.DonationFormVM!));
-		Dispatcher!.Dispatch(new Set_PageHeader_For_Index_Action(SuperUser.Constants.GetPageHeaderForIndexVM()));
+		Dispatcher!.Dispatch(new Add_Action(DonationState!.Value.FormVM!));
+		Dispatcher!.Dispatch(new ParentState.Set_PageHeader_For_Index_Action(SuperUser.Constants.GetPageHeaderForIndexVM()));
 	}
 
 	void CancelActionHandler()
 	{
 		Logger!.LogDebug(string.Format("Inside {0}", nameof(Form) + "!" + nameof(CancelActionHandler)));
-		Dispatcher!.Dispatch(new Set_PageHeader_For_Index_Action(SuperUser.Constants.GetPageHeaderForIndexVM()));
+		Dispatcher!.Dispatch(new ParentState.Set_PageHeader_For_Index_Action(SuperUser.Constants.GetPageHeaderForIndexVM()));
 	}
 
 }

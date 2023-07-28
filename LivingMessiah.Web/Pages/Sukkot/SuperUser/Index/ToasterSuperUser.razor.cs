@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Components;
 using Syncfusion.Blazor.Grids;
 using System;
 
-namespace LivingMessiah.Web.Pages.Sukkot.SuperUser;
+namespace LivingMessiah.Web.Pages.Sukkot.SuperUser.Index;
 
 public partial class ToasterSuperUser
 {
@@ -34,8 +34,8 @@ public partial class ToasterSuperUser
 				Toast!.ShowInfo(action.Message);
 				break;
 
-			//default:
-			//	break;
+				//default:
+				//	break;
 		}
 	}
 

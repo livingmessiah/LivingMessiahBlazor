@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Blazored.FluentValidation;
 using Microsoft.Extensions.Logging;
+using ParentState = LivingMessiah.Web.Pages.Sukkot.SuperUser.Index;
 
 namespace LivingMessiah.Web.Pages.Sukkot.SuperUser.Registrant;
 
@@ -37,13 +38,13 @@ public partial class Form
 			, nameof(Form) + "!" + nameof(HandleValidSubmit), State!.Value.FormMode!.Name));
 		Dispatcher!.Dispatch(new Submitting_Request_Action(State!.Value.RegistrantFormVM!, State!.Value.FormMode!));
 		Dispatcher!.Dispatch(new Get_List_Action());
-		Dispatcher!.Dispatch(new Set_PageHeader_For_Index_Action(SuperUser.Constants.GetPageHeaderForIndexVM()));
+		Dispatcher!.Dispatch(new ParentState.Set_PageHeader_For_Index_Action(SuperUser.Constants.GetPageHeaderForIndexVM()));
 	}
 
 	void CancelActionHandler()
 	{
 		Logger!.LogDebug(string.Format("Inside {0}", nameof(Form) + "!" + nameof(CancelActionHandler)));
-		Dispatcher!.Dispatch(new Set_PageHeader_For_Index_Action(SuperUser.Constants.GetPageHeaderForIndexVM()));
+		Dispatcher!.Dispatch(new ParentState.Set_PageHeader_For_Index_Action(SuperUser.Constants.GetPageHeaderForIndexVM()));
 	}
 }
 

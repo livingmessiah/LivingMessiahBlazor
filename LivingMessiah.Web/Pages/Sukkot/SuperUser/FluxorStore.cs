@@ -8,6 +8,7 @@ using LivingMessiah.Web.Pages.Sukkot.SuperUser.Detail;
 using LivingMessiah.Web.Pages.Sukkot.Enums;
 using LivingMessiah.Web.Pages.Sukkot.Data;
 using System.Linq;
+using LivingMessiah.Web.Pages.Sukkot.SuperUser.Index;
 
 /*
 using LivingMessiah.Web.Pages.Sukkot.SuperUser.Registrant;
@@ -18,7 +19,7 @@ namespace LivingMessiah.Web.Pages.Sukkot.SuperUser;
 #region 1. Action
 
 // 1.0 Common actions
-public record Set_VisibleComponent_Action(VisibleComponent VisibleComponent);
+
 
 // 1.1 GetList() actions
 public record Get_List_Action();  // used by EffectMethod db!.GetAll, There is no ReducerMethod.
@@ -58,8 +59,6 @@ public record Delete_HRA_Action(int Id);
 
 
 // 1.6 Display actions
-public record Set_PageHeader_For_Index_Action(PageHeaderVM PageHeaderVM);
-public record Set_PageHeader_For_Detail_Action(string Title, string Icon, string Color, int Id);
 public record Set_DetailPageHeader_Action(string Label, string Value);
 
 public record Response_Message_Action(ResponseMessage MessageType, string Message);
@@ -70,15 +69,9 @@ public record Response_Message_Action(ResponseMessage MessageType, string Messag
 // 2. State
 public record State
 {
-	public Enums.VisibleComponent? VisibleComponent { get; init; }
-	public PageHeaderVM? PageHeaderVM { get; init; }
-	public DetailPageHeaderVM? DetailPageHeaderVM { get; init; }
 	public Enums.FormMode? FormMode { get; init; }
 	public Registrant.FormVM? RegistrantFormVM { get; init; }
-
-
 	
-	public int RegistrationId { get; init; }
 	public string? FullName { get; init; }
 
 	public string? HRA_EMail { get; init; } // why can't I just use HRA_FormVM.EMail?
@@ -101,8 +94,6 @@ public class FeatureImplementation : Feature<State>
 	{
 		return new State
 		{
-			VisibleComponent = Enums.VisibleComponent.MasterList,
-			PageHeaderVM = Constants.GetPageHeaderForIndexVM(),
 			FormMode = null,
 			RegistrantFormVM = new Registrant.FormVM(),
 			HRA_EMail = string.Empty, // why can't I just use HRA_FormVM.EMail?
@@ -151,17 +142,6 @@ public static class Reducers
 		};
 	}
 
-	
-
-	[ReducerMethod]
-	public static State On_Set_VisibleComponent(
-		State state, Set_VisibleComponent_Action action)
-	{
-		return state with
-		{
-			VisibleComponent = action.VisibleComponent
-		};
-	}
 
 	[ReducerMethod]
 	public static State On_Set_Data_MasterList(
@@ -229,7 +209,7 @@ public static class Reducers
 	{
 		return state with
 		{
-			VisibleComponent = Enums.VisibleComponent.AddEditForm,
+			//VisibleComponent = Enums.VisibleComponent.AddEditForm,
 			HRA_EMail = action.EMail,
 			FormMode = Enums.FormMode.Add,
 			RegistrantFormVM = new Registrant.FormVM()
@@ -243,7 +223,7 @@ public static class Reducers
 	{
 		return state with
 		{
-			VisibleComponent = Enums.VisibleComponent.AddEditForm,
+			//VisibleComponent = Enums.VisibleComponent.AddEditForm,
 			FormMode = Enums.FormMode.Edit,
 		};
 	}
@@ -254,40 +234,12 @@ public static class Reducers
 	{
 		return state with
 		{
-			VisibleComponent = Enums.VisibleComponent.DisplayCard
+			//VisibleComponent = Enums.VisibleComponent.DisplayCard
 		};
 	}
 
-	[ReducerMethod]
-	public static State On_Set_PageHeader_For_Index(
-	State state, Set_PageHeader_For_Index_Action action)
-	{
-		return state with
-		{
-			VisibleComponent = Enums.VisibleComponent.MasterList,
-			PageHeaderVM = Constants.GetPageHeaderForIndexVM()
-		};
-	}
 
-	[ReducerMethod]
-	public static State On_Set_PageHeader_For_Detail(
-		State state, Set_PageHeader_For_Detail_Action action)
-	{
-		return state with
-		{
-			PageHeaderVM = new PageHeaderVM { Title = action.Title, Icon = action.Icon, Color = action.Color, Id = action.Id }
-		};
-	}
 
-	[ReducerMethod]
-	public static State On_Set_DetailPageHeader(
-		State state, Set_DetailPageHeader_Action action)
-	{
-		return state with
-		{
-			DetailPageHeaderVM = new DetailPageHeaderVM { Label = action.Label, Value = action.Value }
-		};
-	}
 
 
 }

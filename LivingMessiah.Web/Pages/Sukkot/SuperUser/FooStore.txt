@@ -4,14 +4,16 @@ using System.Threading.Tasks;
 using System;
 using LivingMessiah.Web.Pages.Sukkot.Data;
 
-namespace LivingMessiah.Web.Pages.Sukkot.SuperUser.Donations;
+namespace LivingMessiah.Web.Pages.Sukkot.SuperUser.Foo;
 
 // 1. Action
 public record Add_Action(FormVM FormVM);
 public record Form_Prep_Action(int RegistrationId, string? FullName);
 
+
+
 // 2. State
-public record DonationState
+public record FooState
 {
 	public FormVM? FormVM { get; init; }
 	public int RegistrationId { get; init; }
@@ -20,13 +22,13 @@ public record DonationState
 
 
 // 3. Feature
-public class FeatureImplementation : Feature<DonationState>
+public class FeatureImplementation : Feature<FooState>
 {
 	public override string GetName() => "DonationStore";
 
-	protected override DonationState GetInitialState()
+	protected override FooState GetInitialState()
 	{
-		return new DonationState
+		return new FooState
 		{
 			FormVM = new FormVM()
 		};
@@ -39,7 +41,7 @@ public static class Reducers
 {
 
 	[ReducerMethod]
-	public static DonationState On_Donation(DonationState state, Form_Prep_Action action)
+	public static FooState On_Donation(FooState state, Form_Prep_Action action)
 	{
 		return state with
 		{
@@ -83,7 +85,6 @@ public class Effects
 			{
 				dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Success, $"{sprocTuple.Item3}"));
 				dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Info, $"{Constants.Effects.RepopulateMessage}"));
-
 			}
 			else
 			{
@@ -96,10 +97,6 @@ public class Effects
 		{
 			Logger.LogError(ex, string.Format("...Inside catch of {0}", inside));
 			dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Failure, $"{Constants.Effects.ResponseMessageFailure}."));
-
-			//ToDo: General design question, in the exception branch of an EffectMethod,
-			//      is it responsible to change which visible component to show, or showing the Toast is sufficient
-			//dispatcher.Dispatch(new Set_VisibleComponent_Action(VisibleComponent.MasterList));
 		}
 	}
 
