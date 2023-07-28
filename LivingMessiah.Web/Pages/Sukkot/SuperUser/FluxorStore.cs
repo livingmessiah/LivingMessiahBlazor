@@ -459,7 +459,7 @@ public class Effects
 				formVM!.Status = RegistrationSteps.Enums.Status.FromValue(formVM!.StatusId);
 
 				dispatcher.Dispatch(new Set_Registrant_FormVM_Action(formVM));
-				dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Info, $"Got {formVM!.FamilyName!}"));
+				//dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Info, $"Got {formVM!.FamilyName!}"));
 				dispatcher.Dispatch(new Edit_Action(action.Id));
 			}
 		}
@@ -561,7 +561,7 @@ public class Effects
 				}
 
 				dispatcher.Dispatch(new Set_ReportVM_Action(reportVM));
-				dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Info, $"Got {reportVM!.FullName(false)}"));
+				//dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Info, $"Got {reportVM!.FullName(false)}"));
 				dispatcher.Dispatch(new Display_Action(action.Id));
 			}
 		}

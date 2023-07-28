@@ -65,7 +65,7 @@ public class Repository : BaseRepositoryAsync, IRepository
 	{
 		Sql = $@"
 SELECT Id, EMail, FullName, StatusId, Phone, Notes
-, TotalDonation
+, TotalDonation, DonationRowCount
 , IdHra
 FROM Sukkot.vwSuperUser 
 ORDER BY FullName

@@ -91,6 +91,8 @@ public class vwSuperUser
 		}
 	}
 
+	public int DonationRowCount { get; set; }
+
 
 	public string? Phone { get; set; }
 	public string? Notes { get; set; }

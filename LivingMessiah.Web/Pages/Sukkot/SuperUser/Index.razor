@@ -27,15 +27,14 @@
 
 		@if (State!.Value.VisibleComponent == Enums.VisibleComponent.MasterList)
 		{
-
 			<LivingMessiah.Web.Pages.Sukkot.HouseRulesAgreement.SuperUserAgreementForm />
 
 			<div class="@MediaQuery.XsOrSm.DivClass">
-				<MasterList IsXsOrSm="true" />
+				<SimpleMasterList IsXsOrSm="true" />
 			</div>
 
 			<div class="@MediaQuery.MdOrLgOrXl.DivClass">
-				<MasterList IsXsOrSm="false" />
+				<SimpleMasterList IsXsOrSm="false" />
 			</div>
 		}
 		else

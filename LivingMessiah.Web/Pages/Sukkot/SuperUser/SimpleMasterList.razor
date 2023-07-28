@@ -1,0 +1,87 @@
+﻿@using LivingMessiah.Web.Pages.Sukkot.RegistrationSteps
+@using LivingMessiah.Web.Shared
+@using System.Threading.Tasks
+
+@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+
+@if (IsXsOrSm)
+{
+	<div class="mb-1">
+		<RepopulateButton />
+	</div>
+
+	<LoadingComponent IsLoading="State!.Value.vwSuperUserList == null">
+
+		@foreach (var item in State!.Value.vwSuperUserList!)
+		{
+			<div class="card text-dark bg-light mb-5">
+				<div class="card-header">
+					@((MarkupString)GetCardHeader(item.FullName ?? string.Empty, item.EMail!))
+				</div>
+				<div class="card-body">
+					<ul>
+						<li>Ph. @item.Phone</li>
+						<li><p>StatusId: @item.StatusId: @item.StatusName</p></li>
+					</ul>
+					<p><small>Notes: @item.Notes</small></p>
+
+				</div>
+
+				<div class="card-footer">
+					<ActionButtonGroup IsXsOrSm=true
+												 IdHra="@item.IdHra"
+												 Id="@item.Id"
+												 EMail="@item.EMail"
+												 FullName="@item.FullName"
+												 DonationRowCount="@item.DonationRowCount"
+												 StatusId="@item.StatusId" />
+				</div>
+
+			</div>
+		}
+	</LoadingComponent>
+}
+else
+{
+	<span class="float-end mb-1">
+		<RepopulateButton />
+	</span>
+
+	<TableTemplate Items="State!.Value.vwSuperUserList"
+							 HeaderCSS="table table-light table-hover">
+		<TableHeader>
+			<th>Full Name</th>
+			<th>Email</th>
+			<th>Next Step</th>
+			<th>Notes</th>
+			<th class="text-start">$</th>
+			<th class="text-center">Actions</th>
+		</TableHeader>
+
+		<RowTemplate>
+			<td class="@context.FullNameOrNAColor">@context.FullNameOrNA</td>
+			<td>@context.EMail </td>
+			<td>@context.StatusName</td>
+			<td><small>@context.Notes</small></td>
+			<td class="@context.TotalDonationClass">
+				@context.TotalDonationNoCents
+			</td>
+			<td class="text-center">
+				<div class="btn-group">
+					<ActionButtonGroup IsXsOrSm=false
+													 IdHra="@context.IdHra"
+													 Id="@context.Id"
+													 EMail="@context.EMail"
+													 FullName="@context.FullName"
+													 DonationRowCount="@context.DonationRowCount"
+													 StatusId="@context.StatusId" />
+				</div>
+			</td>
+
+		</RowTemplate>
+
+	</TableTemplate>
+
+}
+
+<StatusInlineUL />

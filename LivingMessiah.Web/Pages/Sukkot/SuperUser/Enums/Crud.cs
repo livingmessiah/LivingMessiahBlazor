@@ -8,23 +8,21 @@ public abstract class Crud : SmartEnum<Crud>
 	private static class Id
 	{
 		internal const int AddRegistration = 1;
-		internal const int Edit = 2;
-		internal const int Display = 3;
-		internal const int DeleteRegistration = 4;
-		internal const int DeleteHRA = 5;
-		internal const int Repopulate = 6;
-		internal const int Donation = 7;
+		internal const int DeleteHRA = 2;
+		internal const int Edit = 3;
+		internal const int Donation = 4;
+		internal const int Display = 5;
+		internal const int DeleteRegistration = 6;
 	}
 	#endregion
 
 	#region  Declared Public Instances
 	public static readonly Crud AddRegistration = new AddRegistrationSE();
+	public static readonly Crud DeleteHRA = new DeleteHRASE();
 	public static readonly Crud Edit = new EditSE();
+	public static readonly Crud Donation = new DonationSE();
 	public static readonly Crud Display = new DisplaySE();
 	public static readonly Crud DeleteRegistration = new DeleteRegistrationSE();
-	public static readonly Crud DeleteHRA = new DeleteHRASE();
-	public static readonly Crud Repopulate = new RepopulateSE();
-	public static readonly Crud Donation = new DonationSE();
 	#endregion
 
 	private Crud(string name, int value) : base(name, value)  // Constructor
@@ -36,6 +34,8 @@ public abstract class Crud : SmartEnum<Crud>
 	public abstract string Icon { get; }
 	public abstract string Color { get; }
 	public abstract string ButtonColor { get; }
+	public abstract int Sort { get; }
+	public abstract bool IsStartRegistration { get; }
 	#endregion
 
 	#region Private Instantiation
@@ -47,33 +47,8 @@ public abstract class Crud : SmartEnum<Crud>
 		public override string Icon => "fas fa-plus";
 		public override string Color => "text-success";
 		public override string ButtonColor => "btn btn-outline-success";
-	}
-
-	private sealed class EditSE : Crud
-	{
-		public EditSE() : base($"{nameof(Id.Edit)}", Id.Edit) { }
-		public override string Text => "Edit";
-		public override string Icon => "fas fa-pencil-alt";
-		public override string Color => "text-primary";
-		public override string ButtonColor => "btn btn-outline-primary";
-	}
-
-	private sealed class DisplaySE : Crud
-	{
-		public DisplaySE() : base($"{nameof(Id.Display)}", Id.Display) { }
-		public override string Text => "Display";
-		public override string Icon => "fa fa-binoculars";
-		public override string Color => "text-info";
-		public override string ButtonColor => "btn btn-outline-info";
-	}
-
-	private sealed class DeleteRegistrationSE : Crud
-	{
-		public DeleteRegistrationSE() : base($"{nameof(Id.DeleteRegistration)}", Id.DeleteRegistration) { }
-		public override string Text => "Delete Reg.";
-		public override string Icon => "fa fa-times";
-		public override string Color => "text-danger";
-		public override string ButtonColor => "btn btn-outline-danger";
+		public override int Sort => 1;
+		public override bool IsStartRegistration => true;
 	}
 
 	private sealed class DeleteHRASE : Crud
@@ -83,25 +58,52 @@ public abstract class Crud : SmartEnum<Crud>
 		public override string Icon => "fa fa-times";
 		public override string Color => "text-danger";
 		public override string ButtonColor => "btn btn-outline-danger";
+		public override int Sort => 2;
+		public override bool IsStartRegistration => true;
 	}
 
-	private sealed class RepopulateSE : Crud
+	private sealed class EditSE : Crud
 	{
-		public RepopulateSE() : base($"{nameof(Id.Repopulate)}", Id.Repopulate) { }
-		public override string Text => "Re-populate";
-		public override string Icon => "fas fa-retweet";
-		public override string Color => "text-warning";
-		public override string ButtonColor => "btn btn-outline-warning";
+		public EditSE() : base($"{nameof(Id.Edit)}", Id.Edit) { }
+		public override string Text => "Edit";
+		public override string Icon => "fas fa-pencil-alt";
+		public override string Color => "text-primary";
+		public override string ButtonColor => "btn btn-outline-primary";
+		public override int Sort => 1;
+		public override bool IsStartRegistration => false;
 	}
 
 	private sealed class DonationSE : Crud
 	{
 		public DonationSE() : base($"{nameof(Id.Donation)}", Id.Donation) { }
-		public override string Text => "Donation(s)";
+		public override string Text => "Donations";
 		public override string Icon => "fas fa-dollar-sign"; 
 		public override string Color => "text-success";
 		public override string ButtonColor => "btn btn-outline-success";
+		public override int Sort => 2;
+		public override bool IsStartRegistration => false;
 	}
 
+	private sealed class DisplaySE : Crud
+	{
+		public DisplaySE() : base($"{nameof(Id.Display)}", Id.Display) { }
+		public override string Text => "Display";
+		public override string Icon => "fa fa-binoculars";
+		public override string Color => "text-info";
+		public override string ButtonColor => "btn btn-outline-info";
+		public override int Sort => 3;
+		public override bool IsStartRegistration => false;
+	}
+
+	private sealed class DeleteRegistrationSE : Crud
+	{
+		public DeleteRegistrationSE() : base($"{nameof(Id.DeleteRegistration)}", Id.DeleteRegistration) { }
+		public override string Text => "Delete Reg.";
+		public override string Icon => "fa fa-times";
+		public override string Color => "text-danger";
+		public override string ButtonColor => "btn btn-outline-danger";
+		public override int Sort => 4;
+		public override bool IsStartRegistration => false;
+	}
 	#endregion
 }
