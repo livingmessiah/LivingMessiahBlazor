@@ -8,10 +8,10 @@ namespace LivingMessiah.Web.Pages.Sukkot.SuperUser.Registrant;
 public partial class Form
 {
 	[Inject] public ILogger<Form>? Logger { get; set; }
-	[Inject] private IState<LivingMessiah.Web.Pages.Sukkot.SuperUser.State>? State { get; set; }
+	[Inject] private IState<RegistrantState>? State { get; set; }
 	[Inject] public IDispatcher? Dispatcher { get; set; }
 
-	private FormVM? VM => State!.Value.RegistrantFormVM;
+	private FormVM? VM => State!.Value.FormVM;
 
 	protected override void OnInitialized()
 	{
@@ -36,7 +36,7 @@ public partial class Form
 	{
 		Logger!.LogDebug(string.Format("Inside {0}, FormMode: {1}"
 			, nameof(Form) + "!" + nameof(HandleValidSubmit), State!.Value.FormMode!.Name));
-		Dispatcher!.Dispatch(new Submitting_Request_Action(State!.Value.RegistrantFormVM!, State!.Value.FormMode!));
+		Dispatcher!.Dispatch(new AddOrEdit_Action(State!.Value.FormVM!, State!.Value.FormMode!));
 		Dispatcher!.Dispatch(new Get_List_Action());
 		Dispatcher!.Dispatch(new ParentState.Set_PageHeader_For_Index_Action(SuperUser.Constants.GetPageHeaderForIndexVM()));
 	}

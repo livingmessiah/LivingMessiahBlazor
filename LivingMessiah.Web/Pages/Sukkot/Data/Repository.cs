@@ -28,7 +28,7 @@ public interface IRepository
 
 	// Used by FluxorStore
 	Task<List<SuperUser.Data.vwSuperUser>> GetAll();
-	Task<SuperUser.Registrant.FormVM> GetAddOrEditId(int id);
+	Task<SuperUser.Registrant.FormVM> Get(int id);
 	Task<Tuple<int, int, string>> CreateRegistration(SuperUser.Registrant.FormVM formVM);
 	Task<Tuple<int, int, string>> UpdateRegistration(SuperUser.Registrant.FormVM formVM);
 	Task<Tuple<int, int, string>> DeleteRegistration(int id);
@@ -77,7 +77,7 @@ ORDER BY FullName
 		});
 	}
 
-	public async Task<SuperUser.Registrant.FormVM> GetAddOrEditId(int id)
+	public async Task<SuperUser.Registrant.FormVM> Get(int id)
 	{
 		Parms = new DynamicParameters(new { Id = id });
 		Sql = $@"

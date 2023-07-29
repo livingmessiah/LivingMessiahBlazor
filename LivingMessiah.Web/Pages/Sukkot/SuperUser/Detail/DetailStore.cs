@@ -1,10 +1,12 @@
-﻿
-using LivingMessiah.Web.Pages.Sukkot.SuperUser.Enums;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 using System;
+
+using LivingMessiah.Web.Pages.Sukkot.SuperUser.Enums;
 using LivingMessiah.Web.Pages.Sukkot.Data;
 using LivingMessiah.Web.Pages.Sukkot.Enums;
+using ParentState = LivingMessiah.Web.Pages.Sukkot.SuperUser.Index;
+
 using System.Linq;
 
 namespace LivingMessiah.Web.Pages.Sukkot.SuperUser.Detail;
@@ -14,7 +16,6 @@ public record Add_Action(ReportVM ReportVM);
 public record Get_Action(int Id);
 public record Set_ReportVM_Action(ReportVM? ReportVM);
 
-
 // 2. State
 public record DetailState
 {
@@ -22,7 +23,6 @@ public record DetailState
 	public int RegistrationId { get; init; }
 	public string? FullName { get; init; }
 }
-
 
 // 3. Feature
 public class FeatureImplementation : Feature<DetailState>
@@ -44,8 +44,7 @@ public static class Reducers
 {
 
 	[ReducerMethod]
-	public static DetailState On_Set_ReportVM(
-	DetailState state, Set_ReportVM_Action action)
+	public static DetailState On_Set_ReportVM(DetailState state, Set_ReportVM_Action action)
 	{
 		return state with
 		{
@@ -104,7 +103,6 @@ public class Effects
 
 				dispatcher.Dispatch(new Set_ReportVM_Action(reportVM));
 				//dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Info, $"Got {reportVM!.FullName(false)}"));
-				dispatcher.Dispatch(new Display_Action(action.Id));
 			}
 		}
 		catch (Exception ex)
