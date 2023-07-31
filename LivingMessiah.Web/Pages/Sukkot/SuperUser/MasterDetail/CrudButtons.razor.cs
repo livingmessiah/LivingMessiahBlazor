@@ -7,7 +7,6 @@ namespace LivingMessiah.Web.Pages.Sukkot.SuperUser.MasterDetail;
 public partial class CrudButtons
 {
 	[Parameter, EditorRequired] public Crud? ParmCrud { get; set; }
-	[Parameter, EditorRequired] public bool IsXsOrSm { get; set; } // was used by GetBr() 
 
 	[Parameter] public string? EMail { get; set; } // Required for Add
 	[Parameter, EditorRequired] public int Id { get; set; } // Use 0 for Add and Repopulate

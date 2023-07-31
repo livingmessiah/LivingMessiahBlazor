@@ -14,14 +14,14 @@ public partial class AgreementButtons
 	{
 		Logger!.LogDebug(string.Format("Event: {0} clicked"
 			, nameof(AgreementButtons) + "!" + nameof(DoNotAgree_ButtonClick)));
-		Dispatcher!.Dispatch(new Set_HRA_FormState_Action(HRA_FormState.DidNotAgree));
+		Dispatcher!.Dispatch(new Form_Prep_Action(HRA_FormState.DidNotAgree));
 	}
 
 	protected void Agree_ButtonClick()
 	{
 		Logger!.LogDebug(string.Format("Event: {0} clicked"
 			, nameof(AgreementButtons) + "!" + nameof(Agree_ButtonClick)));
-		Dispatcher!.Dispatch(new Set_HRA_FormState_Action(HRA_FormState.Agreed));
+		Dispatcher!.Dispatch(new Form_Prep_Action(HRA_FormState.Agreed));
 	}
 
 }

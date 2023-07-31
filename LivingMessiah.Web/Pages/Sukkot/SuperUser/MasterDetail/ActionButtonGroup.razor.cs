@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 using ParentState = LivingMessiah.Web.Pages.Sukkot.SuperUser.Index;
+using HRA_State = LivingMessiah.Web.Pages.Sukkot.HouseRulesAgreement;
 
 namespace LivingMessiah.Web.Pages.Sukkot.SuperUser.MasterDetail;
 
@@ -15,7 +16,6 @@ public partial class ActionButtonGroup
 	//[Inject] private IState<State>? State { get; set; }
 	[Inject] public IDispatcher? Dispatcher { get; set; }
 
-	[Parameter] public bool IsXsOrSm { get; set; }
 	[Parameter] public string? EMail { get; set; } 
 	[Parameter] public int Id { get; set; }
 	[Parameter] public int IdHra { get; set; }
@@ -57,7 +57,7 @@ public partial class ActionButtonGroup
 
 				if (await IsModalConfirmed("Registration", "Name", args.FullName) == true)
 				{
-					Dispatcher!.Dispatch(new Delete_Registration_Action(args.Id));
+					Dispatcher!.Dispatch(new HRA_State.Delete_Registration_Action(args.Id));
 					Dispatcher!.Dispatch(new GetAll_Action());
 				}
 				break;
@@ -65,7 +65,7 @@ public partial class ActionButtonGroup
 			case nameof(Enums.Crud.DeleteHRA):
 				if (await IsModalConfirmed("HRA", "e-mail", args.EMail) == true)
 				{
-					Dispatcher!.Dispatch(new Delete_HRA_Action(args.Id));
+					Dispatcher!.Dispatch(new HRA_State.Delete_HRA_Action(args.Id));
 					Dispatcher!.Dispatch(new GetAll_Action());
 				}
 				break;

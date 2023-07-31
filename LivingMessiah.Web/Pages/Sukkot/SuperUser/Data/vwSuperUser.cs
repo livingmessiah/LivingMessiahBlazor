@@ -91,6 +91,31 @@ public class vwSuperUser
 		}
 	}
 
+	public string TotalDonationBadgeCSS
+	{
+		get
+		{
+			if (StatusId == Status.StartRegistration) return "badge bg-secondary text-white";
+
+			if (TotalDonation == RegistrationMeta.RegistrationFee)
+			{
+				return "badge bg-success text-white";
+			}
+			else
+			{
+				if (TotalDonation > RegistrationMeta.RegistrationFee)
+				{
+					return "badge bg-primary text-white";
+				}
+				else
+				{
+					return "badge bg-danger text-white";
+				}
+			}
+
+		}
+	}
+
 	public int DonationRowCount { get; set; }
 
 

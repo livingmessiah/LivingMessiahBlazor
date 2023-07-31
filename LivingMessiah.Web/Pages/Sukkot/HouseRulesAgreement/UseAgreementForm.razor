@@ -29,7 +29,7 @@
 	@* <div class="mb-3"> <EditForm Model="VM"*@
 	<div class="">
 
-		<EditForm Model="@State.Value.HRA_FormVM"
+		<EditForm Model="@State.Value.FormVM"
 						OnValidSubmit="HandleValidSubmit"
 						class="card card-body bg-light mt-0">
 			<FluentValidationValidator @ref="_fluentValidationValidator" DisableAssemblyScanning="@true" />
@@ -38,8 +38,8 @@
 			<div class="row mt-n2 align-items-center">
 
 				<div class="col-sm-8">
-					<InputText id="eMail" placeholder="Email" class="form-control" @bind-Value="@State.Value.HRA_FormVM!.EMail" />
-					<ValidationMessage For="@(() => @State.Value.HRA_FormVM)" />
+					<InputText id="eMail" placeholder="Email" class="form-control" @bind-Value="@State.Value.FormVM!.EMail" />
+					<ValidationMessage For="@(() => @State.Value.FormVM)" />
 				</div>
 
 				<div class="col-sm-4">

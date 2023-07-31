@@ -1,5 +1,4 @@
-﻿using Syncfusion.Blazor.RichTextEditor;
-using System;
+﻿using System;
 
 namespace LivingMessiah.Web.Pages.Sukkot.SuperUser.Data;
 
@@ -20,6 +19,5 @@ public class vwDonationDetail
 			return String.Format("{0:C0}", Amount);
 		}
 	}
-
 
 }

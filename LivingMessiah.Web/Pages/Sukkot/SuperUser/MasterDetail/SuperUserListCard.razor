@@ -11,41 +11,52 @@
 				@if (item.StatusId != @RegistrationSteps.Enums.Status.StartRegistration)
 				{
 					<div class="row  @item.FullNameOrNAColor">
-						<div class="col-6 text-end">Name: </div>
-						<div class="col-6 text-start">@item.FullNameOrNA</div>
+						<div class="col-3 text-end"><b>Name</b>: </div>
+						<div class="col-9 text-start">@item.FullNameOrNA</div>
 					</div>
 				}
 
 				<div class="row">
-					<div class="col-6 text-end"><b>Email</b>: </div>
-					<div class="col-6 text-start"> @item.EMail</div>
+					<div class="col-3 text-end"><b>Email</b>: </div>
+					<div class="col-9 text-start"> @item.EMail</div>
 				</div>
-			</div>
 
-			<div class="row">
-				<div class="col-6 text-end"><b>Status</b>: </div>
-				<div class="col-6 text-start"> @item.StatusName</div>
-			</div>
+				<div class="row">
+					<div class="col-3 text-end"><b>Status</b>: </div>
+					<div class="col-9 text-start"> @item.StatusName</div>
+				</div>
 
+			</div>
 
 			<div class="card-body">
+				@if (!String.IsNullOrEmpty(item.Notes))
+				{
+					<div class="row">
+						<div class="col-3 text-end"><b>Notes</b>: </div>
+						<div class="col-9 text-start">@item.Notes</div>
+					</div>
+				}
+
 				@if (item.StatusId != @RegistrationSteps.Enums.Status.StartRegistration)
 				{
 					<div class="row">
-						<div class="col-6 text-end"><b>Total Donations</b>: </div>
-						<div class="col-6 text-start @item.TotalDonationClass"> @item.TotalDonationNoCents</div>
+						<div class="col-3 text-end"><b>Donations</b>: </div>
+						<div class="col-9 text-start"><span class="@item.TotalDonationBadgeCSS">@item.TotalDonationNoCents</span></div>
 					</div>
 				}
+
 			</div>
 
 			<div class="card-footer">
-				<ActionButtonGroup IsXsOrSm=true
-												 IdHra="@item.IdHra"
-												 Id="@item.Id"
-												 EMail="@item.EMail"
-												 FullName="@item.FullName"
-												 DonationRowCount="@item.DonationRowCount"
-												 StatusId="@item.StatusId" />
+
+				<div class="d-grid gap-1 d-flex justify-content-end">
+					<ActionButtonGroup IdHra="@item.IdHra"
+													 Id="@item.Id"
+													 EMail="@item.EMail"
+													 FullName="@item.FullName"
+													 DonationRowCount="@item.DonationRowCount"
+													 StatusId="@item.StatusId" />
+				</div>
 			</div>
 
 		</div>
@@ -61,5 +72,5 @@
 
 	[Parameter] public List<Data.vwSuperUser>? SuperUserList { get; set; }
 		*/
-	
+
 }
