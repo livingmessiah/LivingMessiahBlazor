@@ -24,23 +24,21 @@
 			<PageHeader IsXsOrSm="false" />
 		</div>
 
-		<p><b>State!.Value.VisibleComponent:</b> @State!.Value.VisibleComponent</p>
-
 		@if (State!.Value.VisibleComponent == Enums.VisibleComponent.MasterList)
 		{
 			<LivingMessiah.Web.Pages.Sukkot.HouseRulesAgreement.SuperUserAgreementForm />
 
 			<div class="@MediaQuery.XsOrSm.DivClass">
-				<SimpleMasterList IsXsOrSm="true" />
+				<LivingMessiah.Web.Pages.Sukkot.SuperUser.MasterDetail.MasterList IsXsOrSm="true" />
 			</div>
 
 			<div class="@MediaQuery.MdOrLgOrXl.DivClass">
-				<SimpleMasterList IsXsOrSm="false" />
+				<LivingMessiah.Web.Pages.Sukkot.SuperUser.MasterDetail.MasterList IsXsOrSm="false" />
 			</div>
 		}
 		else
 		{
-			<ShowMasterIndex />
+			<ShowMasterIndexButton />
 			<DetailPageHeader />
 
 			@if (State!.Value.VisibleComponent == Enums.VisibleComponent.AddEditForm)

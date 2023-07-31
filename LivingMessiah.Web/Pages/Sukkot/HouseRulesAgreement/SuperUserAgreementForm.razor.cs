@@ -4,7 +4,6 @@ using LivingMessiah.Web.Pages.Sukkot.SuperUser;
 using Microsoft.Extensions.Logging;
 using System;
 
-
 namespace LivingMessiah.Web.Pages.Sukkot.HouseRulesAgreement;
 
 public partial class SuperUserAgreementForm
@@ -20,7 +19,7 @@ public partial class SuperUserAgreementForm
 		Logger!.LogDebug(string.Format("Inside {0}", nameof(SuperUserAgreementForm) + "!" + nameof(HandleValidSubmit)));
 		Dispatcher!.Dispatch(new Add_HRA_Action(State!.Value.HRA_FormVM!, GetLocalTimeZone()));
 		Dispatcher!.Dispatch(new ReSet_HRA_Action(new HouseRulesAgreement.FormVM(), HRA_FormState.Start));
-		Dispatcher!.Dispatch(new Get_List_Action());
+		Dispatcher!.Dispatch(new SuperUser.MasterDetail.GetAll_Action());
 	}
 
 	private string GetLocalTimeZone()

@@ -19,7 +19,7 @@ public partial class UseAgreementForm
 		Logger!.LogDebug(string.Format("Inside {0}", nameof(FormVM) + "!" + nameof(HandleValidSubmit)));
 		Dispatcher!.Dispatch(new Add_HRA_Action(State!.Value.HRA_FormVM!, GetLocalTimeZone()));
 		Dispatcher!.Dispatch(new ReSet_HRA_Action(new HouseRulesAgreement.FormVM(), HRA_FormState.Start));
-		Dispatcher!.Dispatch(new Get_List_Action());
+		Dispatcher!.Dispatch(new SuperUser.MasterDetail.GetAll_Action());
 	}
 
 	private string GetLocalTimeZone()

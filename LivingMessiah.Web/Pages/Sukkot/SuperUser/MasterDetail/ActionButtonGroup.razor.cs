@@ -7,7 +7,7 @@ using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 using ParentState = LivingMessiah.Web.Pages.Sukkot.SuperUser.Index;
 
-namespace LivingMessiah.Web.Pages.Sukkot.SuperUser;
+namespace LivingMessiah.Web.Pages.Sukkot.SuperUser.MasterDetail;
 
 public partial class ActionButtonGroup
 {
@@ -58,7 +58,7 @@ public partial class ActionButtonGroup
 				if (await IsModalConfirmed("Registration", "Name", args.FullName) == true)
 				{
 					Dispatcher!.Dispatch(new Delete_Registration_Action(args.Id));
-					Dispatcher!.Dispatch(new Get_List_Action());
+					Dispatcher!.Dispatch(new GetAll_Action());
 				}
 				break;
 
@@ -66,7 +66,7 @@ public partial class ActionButtonGroup
 				if (await IsModalConfirmed("HRA", "e-mail", args.EMail) == true)
 				{
 					Dispatcher!.Dispatch(new Delete_HRA_Action(args.Id));
-					Dispatcher!.Dispatch(new Get_List_Action());
+					Dispatcher!.Dispatch(new GetAll_Action());
 				}
 				break;
 

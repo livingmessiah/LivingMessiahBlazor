@@ -1,4 +1,4 @@
-﻿namespace LivingMessiah.Web.Pages.Sukkot.SuperUser;
+﻿namespace LivingMessiah.Web.Pages.Sukkot.SuperUser.MasterDetail;
 
 public struct CrudAndIdArgs
 {

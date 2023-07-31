@@ -1,0 +1,65 @@
+﻿@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+@inject IState<MasterDetailState>? State
+
+<LoadingComponent IsLoading="State!.Value.SuperUserList == null">
+
+	@foreach (var item in State!.Value.SuperUserList!)
+	{
+		<div class="card text-dark bg-light mb-3">
+			<div class="card-header">
+
+				@if (item.StatusId != @RegistrationSteps.Enums.Status.StartRegistration)
+				{
+					<div class="row  @item.FullNameOrNAColor">
+						<div class="col-6 text-end">Name: </div>
+						<div class="col-6 text-start">@item.FullNameOrNA</div>
+					</div>
+				}
+
+				<div class="row">
+					<div class="col-6 text-end"><b>Email</b>: </div>
+					<div class="col-6 text-start"> @item.EMail</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-6 text-end"><b>Status</b>: </div>
+				<div class="col-6 text-start"> @item.StatusName</div>
+			</div>
+
+
+			<div class="card-body">
+				@if (item.StatusId != @RegistrationSteps.Enums.Status.StartRegistration)
+				{
+					<div class="row">
+						<div class="col-6 text-end"><b>Total Donations</b>: </div>
+						<div class="col-6 text-start @item.TotalDonationClass"> @item.TotalDonationNoCents</div>
+					</div>
+				}
+			</div>
+
+			<div class="card-footer">
+				<ActionButtonGroup IsXsOrSm=true
+												 IdHra="@item.IdHra"
+												 Id="@item.Id"
+												 EMail="@item.EMail"
+												 FullName="@item.FullName"
+												 DonationRowCount="@item.DonationRowCount"
+												 StatusId="@item.StatusId" />
+			</div>
+
+		</div>
+	}
+</LoadingComponent>
+
+@code {
+	/*
+	<SuperUserListCard SuperUserList="@State!.Value.SuperUserList
+
+	<LoadingComponent IsLoading="SuperUserList == null">
+	foreach (var item in SuperUserList!)
+
+	[Parameter] public List<Data.vwSuperUser>? SuperUserList { get; set; }
+		*/
+	
+}

@@ -1,12 +1,11 @@
 ﻿using Fluxor;
-using LivingMessiah.Web.Pages.Sukkot.SuperUser.Enums;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System;
 using LivingMessiah.Web.Pages.Sukkot.Enums;
 using LivingMessiah.Web.Pages.Sukkot.Data;
-using System.Linq;
+using LivingMessiah.Web.Pages.Sukkot.SuperUser.Enums;
 using ParentState = LivingMessiah.Web.Pages.Sukkot.SuperUser.Index;
 
 //using LivingMessiah.Web.Pages.Sukkot.SuperUser.Index;
@@ -20,52 +19,24 @@ namespace LivingMessiah.Web.Pages.Sukkot.SuperUser;
 
 #region 1. Action
 
-// 1.0 Common actions
-
-
-// 1.1 GetList() actions
-public record Get_List_Action();  // used by EffectMethod db!.GetAll, There is no ReducerMethod.
-public record Set_Data_MasterList_Action(List<Data.vwSuperUser> vwSuperUserList);
-
-// ToDo: "Submitting_Request" is to generic because I have two forms one for HRA and one for Registration
-// 1.3 Actions related to Form Submission
-
-
 public record Set_BypassAgreement_Action(bool BypassAgreement); // HouseRulesAgreement.FormVM FormVM 
 public record Set_HRA_FormState_Action(HouseRulesAgreement.HRA_FormState HRA_FormState);
-
-//public record Add_HRA_Action(string? EMail, string TimeZone);  // db.InsertHouseRulesAgreement, do I need this
 public record Add_HRA_Action(HouseRulesAgreement.FormVM FormVM, string TimeZone);
 public record ReSet_HRA_Action(HouseRulesAgreement.FormVM HRA_FormVM, HouseRulesAgreement.HRA_FormState HRA_FormState);
-
-// 1.4 Actions related to MasterList
-
-
-// 1.5 Delete() actions
 public record Delete_Registration_Action(int Id);
 public record Delete_HRA_Action(int Id);
 
-
 public record Response_Message_Action(ResponseMessage MessageType, string Message);
-
 #endregion
 
 
 // 2. State
 public record State
 {
-	
-	
 	public string? FullName { get; init; }
-
-	
 	public HouseRulesAgreement.FormVM? HRA_FormVM { get; init; }
 	public bool BypassAgreement { get; init; }
 	public HouseRulesAgreement.HRA_FormState? HRA_FormState { get; init; }  
-	
-
-	
-	public List<Data.vwSuperUser>? vwSuperUserList { get; init; }
 }
 
 
@@ -124,18 +95,6 @@ public static class Reducers
 	}
 
 
-	[ReducerMethod]
-	public static State On_Set_Data_MasterList(
-		State state, Set_Data_MasterList_Action action)
-	{
-		return state with
-		{
-			vwSuperUserList = action.vwSuperUserList
-		};
-	}
-
-
-
 	// Add_HRA_Action is used by Reg. FormVM!HandleValidSubmit and [EffectMethod]  AddHra(
 	[ReducerMethod]
 	public static State On_Add_HRA(
@@ -145,14 +104,6 @@ public static class Reducers
 		return state with { HRA_FormVM = action.FormVM };
 	}
 
-
-
-
-
-
-
-
-
 }
 
 // 5. Effects
@@ -161,60 +112,13 @@ public class Effects
 	#region Constructor and DI
 	private readonly ILogger Logger;
 	private readonly IRepository db;
-	private readonly IRepositoryNoBase dbNoBase;
 
 	public Effects(ILogger<Effects> logger, IRepository repository, IRepositoryNoBase repositoryNoBase)
 	{
 		Logger = logger;
 		db = repository;
-		dbNoBase = repositoryNoBase;
 	}
 	#endregion
-
-	[EffectMethod]
-	public async Task GetList(Get_List_Action action, IDispatcher dispatcher) // action is never used
-	{
-		string inside = nameof(Effects) + "!" + nameof(GetList) + "!" + nameof(Get_List_Action);
-
-		Logger.LogDebug(string.Format("Inside {0}", inside));
-		dispatcher.Dispatch(new ParentState.Set_VisibleComponent_Action(VisibleComponent.MasterList));
-
-		try
-		{
-			List<Data.vwSuperUser> vwSuperUserList = new();
-			vwSuperUserList = await db!.GetAll();
-
-			if (vwSuperUserList is not null)
-			{
-				dispatcher.Dispatch(new Set_Data_MasterList_Action(vwSuperUserList));
-				//dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Success, "Some Registrations Found"));
-			}
-			else
-			{
-				Logger.LogWarning(string.Format("...{0}; {1} is null", inside, nameof(vwSuperUserList)));
-				dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Warning, "No Registrations Found"));
-			}
-		}
-		catch (Exception ex)
-		{
-			Logger.LogError(ex, string.Format("...Inside catch of {0}", inside));
-			//dispatcher.Dispatch(new Get_List_Failure_Action("An invalid operation occurred, contact your administrator."));
-			dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Failure, Constants.Effects.ResponseMessageFailure));
-		}
-
-		/*
-		Question: 
-			regardless if vwSuperUserList ends up having data, no data, or an exception occurred, 
-			should I always do a dispatch Set_Data_MasterList_Action(vwSuperUserList) ??
-
-		finally 
-		{
-			dispatcher.Dispatch(new Set_Data_MasterList_Action(vwSuperUserList));
-		}
-		*/
-	}
-
-
 
 	[EffectMethod]
 	public async Task AddHra(Add_HRA_Action action, IDispatcher dispatcher)
@@ -245,7 +149,6 @@ public class Effects
 	}
 
 
-
 	[EffectMethod]
 	public async Task DeleteHRA(Delete_HRA_Action action, IDispatcher dispatcher)
 	{
@@ -263,9 +166,6 @@ public class Effects
 			dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Failure, Constants.Effects.ResponseMessageFailure));
 		}
 	}
-
-
-
 
 }
 
