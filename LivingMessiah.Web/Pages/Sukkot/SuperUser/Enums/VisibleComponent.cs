@@ -11,6 +11,7 @@ public abstract class VisibleComponent : SmartEnum<VisibleComponent>
 		internal const int AddEditForm = 2;
 		internal const int DisplayCard = 3;
 		internal const int DonationForm = 4;
+		internal const int HRA_Form = 5;
 	}
 	#endregion
 
@@ -19,6 +20,7 @@ public abstract class VisibleComponent : SmartEnum<VisibleComponent>
 	public static readonly VisibleComponent AddEditForm = new AddEditFormSE();
 	public static readonly VisibleComponent DisplayCard = new DisplayCardSE();  // Rename DisplayCard to just Display
 	public static readonly VisibleComponent DonationForm = new DonationFormSE();
+	public static readonly VisibleComponent HRA_Form = new HRA_FormSE();
 	#endregion
 
 	private VisibleComponent(string name, int value) : base(name, value)  // Constructor
@@ -52,5 +54,11 @@ public abstract class VisibleComponent : SmartEnum<VisibleComponent>
 		public DonationFormSE() : base($"{nameof(Id.DonationForm)}", Id.DonationForm) { }
 	}
 
+	private sealed class HRA_FormSE : VisibleComponent
+	{
+		public HRA_FormSE() : base($"{nameof(Id.HRA_Form)}", Id.HRA_Form) { }
+	}
+
 	#endregion
 }
+// Ignore Spelling: HRA

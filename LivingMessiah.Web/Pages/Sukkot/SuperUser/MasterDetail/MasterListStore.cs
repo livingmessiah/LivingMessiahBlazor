@@ -3,20 +3,20 @@ using System.Threading.Tasks;
 using System;
 using System.Collections.Generic;
 
-using LivingMessiah.Web.Pages.Sukkot.SuperUser.Enums;
 using LivingMessiah.Web.Pages.Sukkot.Data;
+using LivingMessiah.Web.Pages.Sukkot.SuperUser.Enums;
 using ParentState = LivingMessiah.Web.Pages.Sukkot.SuperUser.Index;
 
 namespace LivingMessiah.Web.Pages.Sukkot.SuperUser.MasterDetail;
 
 // 1. Action
-public record Set_Data_MasterList_Action(List<Data.vwSuperUser> SuperUserList);
-public record GetAll_Action();  // was called Get_List_Action used by EffectMethod db!.GetAll, There is no ReducerMethod.
+public record Set_Data_MasterList_Action(List<vwSuperUser> SuperUserList);
+public record GetAll_Action();  
 
 // 2. State
 public record MasterDetailState
 {
-	public List<Data.vwSuperUser>? SuperUserList { get; init; }
+	public List<vwSuperUser>? SuperUserList { get; init; }
 }
 
 
@@ -76,7 +76,7 @@ public class Effects
 
 		try
 		{
-			List<Data.vwSuperUser> vwSuperUserList = new();
+			List<vwSuperUser> vwSuperUserList = new();
 			vwSuperUserList = await db!.GetAll();
 
 			if (vwSuperUserList is not null)

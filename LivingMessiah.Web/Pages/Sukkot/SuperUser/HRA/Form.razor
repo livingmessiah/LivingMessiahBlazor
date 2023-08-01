@@ -1,0 +1,49 @@
+﻿@using LivingMessiah.Web.SmartEnums
+@using Blazored.FluentValidation;
+
+<div class="card card-body bg-light mt-0 mb-2">
+	<div class="@MediaQuery.Xs.DivClass">
+		<div class="card mt-0 mb-3">
+			<div class="card-body bg-light">
+				<LivingMessiah.Web.Pages.Sukkot.RegistrationSteps.AgreementParagraph IsXs="true" />
+			</div>
+		</div>
+	</div>
+	<div class="@MediaQuery.SmMdOrLgOrXl.DivClass">
+		<LivingMessiah.Web.Pages.Sukkot.RegistrationSteps.AgreementParagraph IsXs="false" />
+	</div>
+</div>
+
+<EditForm Model="@State!.Value.FormVM"
+					class="card card-body bg-light mt-0">
+	<FluentValidationValidator @ref="_fluentValidationValidator" DisableAssemblyScanning="@true" />
+	<ValidationSummary />
+
+	<div class="row mt-n2 align-items-center">
+
+		<div class="col-12">
+			<InputText id="eMail" placeholder="Email" class="form-control" @bind-Value="@State.Value.FormVM!.EMail" />
+			<ValidationMessage For="@(() => @State.Value.FormVM)" />
+		</div>
+
+	</div>
+
+	<div class="row col-12 mt-2">
+		<div class="mb-0">
+
+			@*ToDo: make these two buttons use Constants.cs*@
+			<button @onclick="@(() => DoNotAgree_ButtonClick())"
+							class="btn btn-danger">
+				<i class="far fa-hand-paper"></i> No, I Do NOT Agree
+			</button>
+
+			<button @onclick="@(() => Agree_ButtonClick())"
+				class="btn btn-success">
+				<i class="fas fa-check"></i> Yes, I Agree
+			</button>
+
+		</div>
+	</div>
+
+
+</EditForm>

@@ -5,7 +5,6 @@
 @using LivingMessiah.Web.Shared.Sukkot
 @using LivingMessiah.Web.SmartEnums
 
-@using LivingMessiah.Web.Pages.Sukkot.HouseRulesAgreement
 @using LoginLink = LivingMessiah.Web.Links.Account
 
 @inherits Fluxor.Blazor.Web.Components.FluxorComponent
@@ -26,8 +25,6 @@
 
 		@if (State!.Value.VisibleComponent == Enums.VisibleComponent.MasterList)
 		{
-			<LivingMessiah.Web.Pages.Sukkot.HouseRulesAgreement.SuperUserAgreementForm />
-
 			<div class="@MediaQuery.XsOrSm.DivClass">
 				<LivingMessiah.Web.Pages.Sukkot.SuperUser.MasterDetail.MasterList IsXsOrSm="true" />
 			</div>
@@ -47,16 +44,23 @@
 			}
 			else
 			{
-				@if (State!.Value.VisibleComponent == Enums.VisibleComponent.DonationForm)
+				@if (State!.Value.VisibleComponent == Enums.VisibleComponent.HRA_Form)
 				{
-					<LivingMessiah.Web.Pages.Sukkot.SuperUser.Donations.Index RegistrationId="@State!.Value.RegistrationId" />
+					<LivingMessiah.Web.Pages.Sukkot.SuperUser.HRA.Form />
 				}
 				else
 				{
-					@* FN: 1 *@
-					<div class="card border-primary my-3 p-2">
-						<LivingMessiah.Web.Pages.Sukkot.SuperUser.Detail.Report />
-					</div>
+					@if (State!.Value.VisibleComponent == Enums.VisibleComponent.DonationForm)
+					{
+						<LivingMessiah.Web.Pages.Sukkot.SuperUser.Donations.Index RegistrationId="@State!.Value.PageHeaderVM!.Id" />
+					}
+					else
+					{
+						@* FN: 1 *@
+						<div class="card border-primary my-3 p-2">
+							<LivingMessiah.Web.Pages.Sukkot.SuperUser.Detail.Report />
+						</div>
+					}
 				}
 			}
 		}

@@ -34,4 +34,26 @@ public static class Constants
 		public const string RepopulateMessage = " *** CLICK THE REPOPULATE BUTTON! ***";
 	}
 
+	public static class HRA
+	{
+		public static class ShowButton
+		{
+			public const string Icon = "fas fa-signature";
+			public const string Text = "Show HRA Form";
+			public const string ButtonColor = "btn btn-outline-danger";
+		}
+		public static class PageHeader
+		{
+			public const string Icon = "fas fa-signature";
+			public const string Text = "Add HRA";
+			public const string Color = "text-danger";
+		}
+		public static class DidNotAgreeButton
+		{
+			public const string Text = "Not agreeing to the House Rules Agreement terminates the Registration Process";
+			public const string Color = "text-danger";
+		}
+	}
+
+
 }

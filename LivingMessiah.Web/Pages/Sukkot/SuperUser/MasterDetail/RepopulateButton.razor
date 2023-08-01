@@ -1,12 +1,9 @@
 ﻿@inherits Fluxor.Blazor.Web.Components.FluxorComponent
 @inject IDispatcher Dispatcher
 
-<div class="float-end mb-1">
-</div>
-
 <div class="row mb-3">
 	<div class="col-12">
-		<button onclick="@RepopulateHandler" title="Re-populate the list"
+		<button @onclick="RepopulateHandler" title="Re-populate the list"
 						type="button" class="text-warning btn-sm  float-end">
 			<i class="fas fa-retweet"></i>
 			<small>Re-populate</small>

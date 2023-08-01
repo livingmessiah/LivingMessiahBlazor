@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 using ParentState = LivingMessiah.Web.Pages.Sukkot.SuperUser.Index;
-using HRA_State = LivingMessiah.Web.Pages.Sukkot.HouseRulesAgreement;
+using HRA_State = LivingMessiah.Web.Pages.Sukkot.SuperUser.HRA;
 
 namespace LivingMessiah.Web.Pages.Sukkot.SuperUser.MasterDetail;
 

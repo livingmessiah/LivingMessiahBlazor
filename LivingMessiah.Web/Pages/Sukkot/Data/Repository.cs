@@ -16,8 +16,8 @@ using LivingMessiah.Web.Pages.SukkotAdmin.Donations.Data;
 using LivingMessiah.Web.Pages.Sukkot.NormalUser;
 using Serilog.Core;
 using System.Data.SqlClient;
+using LivingMessiah.Web.Pages.Sukkot.SuperUser.MasterDetail;
 
-//using LivingMessiah.Web.Pages.SukkotAdmin.Donations.Data;
 //using LivingMessiah.Web.Pages.SukkotAdmin.Donations.Domain;
 
 namespace LivingMessiah.Web.Pages.Sukkot.Data;
@@ -27,7 +27,7 @@ public interface IRepository
 	string BaseSqlDump { get; }
 
 	// Used by FluxorStore
-	Task<List<SuperUser.Data.vwSuperUser>> GetAll();
+	Task<List<vwSuperUser>> GetAll();
 	Task<SuperUser.Registrant.FormVM> Get(int id);
 	Task<Tuple<int, int, string>> CreateRegistration(SuperUser.Registrant.FormVM formVM);
 	Task<Tuple<int, int, string>> UpdateRegistration(SuperUser.Registrant.FormVM formVM);
@@ -44,7 +44,6 @@ public interface IRepository
 	Task<EntryFormVM> GetById2(int id);   //ViewModel_RE_DELETE
 	Task<Tuple<int, int, string>> Create(DTO registration);
 	Task<Tuple<int, int, string>> Update(DTO registration);
-
 }
 
 
@@ -61,7 +60,7 @@ public class Repository : BaseRepositoryAsync, IRepository
 
 	#region Registration used by FluxorStore
 
-	public async Task<List<SuperUser.Data.vwSuperUser>> GetAll()
+	public async Task<List<vwSuperUser>> GetAll()
 	{
 		Sql = $@"
 SELECT Id, EMail, FullName, StatusId, Phone, Notes
@@ -72,7 +71,7 @@ ORDER BY FullName
 ";
 		return await WithConnectionAsync(async connection =>
 		{
-			var rows = await connection.QueryAsync<SuperUser.Data.vwSuperUser>(sql: Sql);
+			var rows = await connection.QueryAsync<vwSuperUser>(sql: Sql);
 			return rows.ToList();
 		});
 	}

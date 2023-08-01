@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace LivingMessiah.Web.Pages.Sukkot.HouseRulesAgreement;
+namespace LivingMessiah.Web.Pages.Sukkot.SuperUser.HRA;
 
 public class FormVMValidator : AbstractValidator<FormVM>
 {

@@ -27,7 +27,8 @@ public partial class PreviousDonationsTable
 
 	protected override async Task OnInitializedAsync()
 	{
-		Logger!.LogDebug(string.Format("Inside {0}", nameof(PreviousDonationsTable) + "!" + nameof(OnInitialized)));
+		Logger!.LogDebug(string.Format("Inside {0}; RegistrationId: {1}"
+			, nameof(PreviousDonationsTable) + "!" + nameof(OnInitialized), RegistrationId));
 		await PopulateTable();
 	}
 

@@ -1,0 +1,37 @@
+﻿@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+@inject IDispatcher Dispatcher
+@using ParentState = LivingMessiah.Web.Pages.Sukkot.SuperUser.Index
+@using HRA = LivingMessiah.Web.Pages.Sukkot.SuperUser.HRA
+
+ @*btn-sm  float-end*@
+
+<div class="mb-2 d-grid gap-1 d-flex justify-content-end">
+	<button @onclick="ShowHRAHandler" title="Show the House Rules Agreement form"
+					type="button" class="@Constants.HRA.ShowButton.ButtonColor">
+		<i class="@Constants.HRA.ShowButton.Icon"></i>
+		@Constants.HRA.ShowButton.Text
+	</button>
+
+	<button @onclick="RepopulateHandler" title="Re-populate the list"
+					type="button" class="text-warning">
+		<i class="fas fa-retweet"></i>
+		Re-populate
+	</button>
+</div>
+
+
+@code {
+	void ShowHRAHandler()
+	{ 
+		Dispatcher!.Dispatch(new ParentState.Set_PageHeader_For_Detail_Action(
+			Constants.HRA.PageHeader.Text, Constants.HRA.PageHeader.Icon, Constants.HRA.PageHeader.Color, 0));
+		Dispatcher!.Dispatch(new ParentState.Set_DetailPageHeader_Empty_Action());  
+		Dispatcher!.Dispatch(new HRA.ClearForm_Action());
+		Dispatcher!.Dispatch(new ParentState.Set_VisibleComponent_Action(Enums.VisibleComponent.HRA_Form));
+	}
+
+	void RepopulateHandler()
+	{
+		Dispatcher!.Dispatch(new GetAll_Action());
+	}
+}

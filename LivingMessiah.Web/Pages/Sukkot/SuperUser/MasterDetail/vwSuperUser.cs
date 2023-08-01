@@ -2,7 +2,7 @@
 using LivingMessiah.Web.Pages.Sukkot.RegistrationSteps.Enums;
 using System;
 
-namespace LivingMessiah.Web.Pages.Sukkot.SuperUser.Data;
+namespace LivingMessiah.Web.Pages.Sukkot.SuperUser.MasterDetail;
 
 public class vwSuperUser
 {
@@ -29,12 +29,12 @@ public class vwSuperUser
 	}
 
 	public int StatusId { get; set; }
-	
+
 	public string StatusName
 	{
 		get
 		{
-			return $"{RegistrationSteps.Enums.Status.FromValue(StatusId).StepNumber}. {RegistrationSteps.Enums.Status.FromValue(StatusId).Text}";
+			return $"{Status.FromValue(StatusId).StepNumber}. {Status.FromValue(StatusId).Text}";
 		}
 	}
 
@@ -46,7 +46,7 @@ public class vwSuperUser
 		get
 		{
 			if (StatusId == Status.StartRegistration) return "N/A";
-			
+
 			if (TotalDonation == RegistrationMeta.RegistrationFee)
 			{
 				return "✓";
@@ -55,14 +55,14 @@ public class vwSuperUser
 			{
 				if (TotalDonation > RegistrationMeta.RegistrationFee)
 				{
-					return $"+{String.Format("{0:C0}", TotalDonation - RegistrationMeta.RegistrationFee)}";
+					return $"+{string.Format("{0:C0}", TotalDonation - RegistrationMeta.RegistrationFee)}";
 				}
 				else
 				{
-					return $"-{String.Format("{0:C0}", RegistrationMeta.RegistrationFee-TotalDonation)}";
+					return $"-{string.Format("{0:C0}", RegistrationMeta.RegistrationFee - TotalDonation)}";
 				}
 			}
-			
+
 		}
 	}
 
@@ -80,14 +80,14 @@ public class vwSuperUser
 			{
 				if (TotalDonation > RegistrationMeta.RegistrationFee)
 				{
-					return "bg-primary text-end text-white";  
+					return "bg-primary text-end text-white";
 				}
 				else
 				{
 					return "bg-danger text-end text-white";
 				}
 			}
-			
+
 		}
 	}
 

@@ -1,4 +1,4 @@
-﻿namespace LivingMessiah.Web.Pages.Sukkot.HouseRulesAgreement;
+﻿namespace LivingMessiah.Web.Pages.Sukkot.SuperUser.HRA;
 
 public class FormVM
 {

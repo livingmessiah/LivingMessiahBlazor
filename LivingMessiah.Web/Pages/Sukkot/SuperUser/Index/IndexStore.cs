@@ -5,6 +5,7 @@ public record Set_VisibleComponent_Action(Enums.VisibleComponent VisibleComponen
 public record Set_PageHeader_For_Index_Action(PageHeaderVM PageHeaderVM);  
 public record Set_PageHeader_For_Detail_Action(string Title, string Icon, string Color, int Id);
 public record Set_DetailPageHeader_Action(string Label, string Value);
+public record Set_DetailPageHeader_Empty_Action();
 
 // 2. State
 public record IndexState
@@ -12,7 +13,6 @@ public record IndexState
 	public Enums.VisibleComponent? VisibleComponent { get; init; }
 	public PageHeaderVM? PageHeaderVM { get; init; }
 	public DetailPageHeaderVM? DetailPageHeaderVM { get; init; }
-	public int RegistrationId { get; init; }
 }
 
 
@@ -35,7 +35,6 @@ public class FeatureImplementation : Feature<IndexState>
 // 4. Reducers
 public static class Reducers
 {
-
 	[ReducerMethod]
 	public static IndexState On_Set_VisibleComponent(
 		IndexState state, Set_VisibleComponent_Action action)
@@ -76,7 +75,16 @@ public static class Reducers
 		};
 	}
 
+	[ReducerMethod]
+	public static IndexState On_Set_DetailPageHeader_Empty(IndexState state, Set_DetailPageHeader_Empty_Action action)
+	{
+		return state with
+		{
+			DetailPageHeaderVM = null
+		};
+	}
 
+	//
 
 }
 
