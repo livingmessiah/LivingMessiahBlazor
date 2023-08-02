@@ -12,11 +12,11 @@
 		@Constants.HRA.ShowButton.Text
 	</button>
 
-	<button @onclick="RepopulateHandler" title="Re-populate the list"
-					type="button" class="text-warning">
-		<i class="fas fa-retweet"></i>
-		Re-populate
+	<button @onclick="@(() => RepopulateHandler())" title="Re-populate the list"
+					type="button" class="@Constants.RepopulateButton.ButtonColor">
+		<i class="@Constants.RepopulateButton.Icon"></i>@Constants.RepopulateButton.Text
 	</button>
+
 </div>
 
 

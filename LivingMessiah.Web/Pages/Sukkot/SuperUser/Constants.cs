@@ -15,6 +15,14 @@ public static class Constants
 		};
 	}
 
+	public static class RepopulateButton
+	{
+		public const string Icon = "fas fa-retweet";
+		public const string Text = " Re-populate";
+		public const string Color = "text-danger";
+		public const string ButtonColor = "btn btn-outline-warning";  //text-warning btn-sm  float-end
+	}
+
 	public static class SaveButton
 	{
 		public const string Icon = "fas fa-save";
@@ -36,24 +44,37 @@ public static class Constants
 
 	public static class HRA
 	{
+
 		public static class ShowButton
 		{
 			public const string Icon = "fas fa-signature";
 			public const string Text = "Show HRA Form";
 			public const string ButtonColor = "btn btn-outline-danger";
 		}
+
 		public static class PageHeader
 		{
 			public const string Icon = "fas fa-signature";
 			public const string Text = "Add HRA";
 			public const string Color = "text-danger";
 		}
+
+		public static class AgreeButton
+		{
+			public const string Icon = "fas fa-thumbs-up"; 
+			public const string Text = " Yes, I Agree";
+			public const string Color = "text-danger";
+			public const string ButtonColor = "btn btn-outline-success";  
+		}
+
 		public static class DidNotAgreeButton
 		{
-			public const string Text = "Not agreeing to the House Rules Agreement terminates the Registration Process";
+			public const string Icon = "far fa-hand-paper";
+			public const string Text = " No, I Do NOT Agree";
 			public const string Color = "text-danger";
+			public const string ButtonColor = "btn btn-outline-danger";
+			public const string ResponseMsg = "Not agreeing to the House Rules Agreement terminates the Registration Process";
 		}
 	}
-
-
 }
+// Ignore Spelling: HRA

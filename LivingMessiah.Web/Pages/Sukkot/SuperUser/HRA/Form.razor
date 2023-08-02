@@ -31,15 +31,14 @@
 	<div class="row col-12 mt-2">
 		<div class="mb-0">
 
-			@*ToDo: make these two buttons use Constants.cs*@
 			<button @onclick="@(() => DoNotAgree_ButtonClick())"
-							class="btn btn-danger">
-				<i class="far fa-hand-paper"></i> No, I Do NOT Agree
+							class="@Constants.HRA.DidNotAgreeButton.ButtonColor">
+				<i class="@Constants.HRA.DidNotAgreeButton.Icon"></i> @Constants.HRA.DidNotAgreeButton.Text
 			</button>
 
 			<button @onclick="@(() => Agree_ButtonClick())"
-				class="btn btn-success">
-				<i class="fas fa-check"></i> Yes, I Agree
+							class="@Constants.HRA.AgreeButton.ButtonColor">
+				<i class="@Constants.HRA.AgreeButton.Icon"></i>@Constants.HRA.AgreeButton.Text
 			</button>
 
 		</div>

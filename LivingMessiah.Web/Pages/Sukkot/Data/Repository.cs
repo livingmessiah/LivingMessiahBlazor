@@ -18,6 +18,10 @@ using Serilog.Core;
 using System.Data.SqlClient;
 using LivingMessiah.Web.Pages.Sukkot.SuperUser.MasterDetail;
 
+using OneOf;
+using OneOf.Types;
+using LivingMessiah.Web.Pages.Sukkot.SuperUser.Registrant;
+
 //using LivingMessiah.Web.Pages.SukkotAdmin.Donations.Domain;
 
 namespace LivingMessiah.Web.Pages.Sukkot.Data;
@@ -29,7 +33,13 @@ public interface IRepository
 	// Used by FluxorStore
 	Task<List<vwSuperUser>> GetAll();
 	Task<SuperUser.Registrant.FormVM> Get(int id);
+
+
+	Task<OneOf<SprocInsert, int, string>> CreateRegistrationOneOf(SuperUser.Registrant.FormVM formVM);
+
 	Task<Tuple<int, int, string>> CreateRegistration(SuperUser.Registrant.FormVM formVM);
+	
+	
 	Task<Tuple<int, int, string>> UpdateRegistration(SuperUser.Registrant.FormVM formVM);
 	Task<Tuple<int, int, string>> DeleteRegistration(int id);
 
@@ -96,6 +106,15 @@ WHERE Id = @Id";
 			var rows = await connection.QueryAsync<SuperUser.Registrant.FormVM>(sql: Sql, param: Parms);
 			return rows.SingleOrDefault()!;
 		});
+	}
+
+	// public async Task<Tuple<int, int, string>> CreateRegistration(SuperUser.Registrant.FormVM formVM)
+
+
+
+	public Task<OneOf<SprocInsert, int, string>> CreateRegistrationOneOf(FormVM formVM)
+	{
+		throw new NotImplementedException();
 	}
 
 	public async Task<Tuple<int, int, string>> CreateRegistration(SuperUser.Registrant.FormVM formVM)
@@ -551,6 +570,7 @@ WHERE Id = @Id";
 			return new Tuple<int, int, string>(RowsAffected, SprocReturnValue, ReturnMsg);
 		});
 	}
+
 
 	#endregion
 

@@ -1,7 +1,7 @@
 ﻿@inherits Fluxor.Blazor.Web.Components.FluxorComponent
 @inject IState<MasterDetailState>? State
 
-<LoadingComponent IsLoading="State!.Value.SuperUserList == null">
+<LoadingComponent IsLoading="State!.Value.SuperUserList! == null">
 
 	@foreach (var item in State!.Value.SuperUserList!)
 	{
@@ -63,14 +63,4 @@
 	}
 </LoadingComponent>
 
-@code {
-	/*
-	<SuperUserListCard SuperUserList="@State!.Value.SuperUserList
 
-	<LoadingComponent IsLoading="SuperUserList == null">
-	foreach (var item in SuperUserList!)
-
-	[Parameter] public List<Data.vwSuperUser>? SuperUserList { get; set; }
-		*/
-
-}

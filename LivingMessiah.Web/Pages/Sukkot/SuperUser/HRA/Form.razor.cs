@@ -20,7 +20,7 @@ public partial class Form
 	{
 		Logger!.LogDebug(string.Format("Event: {0} clicked", nameof(Form) + "!" + nameof(DoNotAgree_ButtonClick)));
 		Dispatcher!.Dispatch(new ParentState.Set_PageHeader_For_Index_Action(SuperUser.Constants.GetPageHeaderForIndexVM()));
-		Dispatcher!.Dispatch(new Response_Message_Action(ResponseMessage.Warning, Constants.HRA.DidNotAgreeButton.Text));
+		Dispatcher!.Dispatch(new Response_Message_Action(ResponseMessage.Warning, Constants.HRA.DidNotAgreeButton.ResponseMsg));
 	}
 
 	protected void Agree_ButtonClick()
