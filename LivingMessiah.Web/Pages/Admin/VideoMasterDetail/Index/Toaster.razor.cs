@@ -1,10 +1,10 @@
 ﻿using Blazored.Toast.Services;
-using LivingMessiah.Web.Pages.Sukkot.SuperUser.Enums;
+using LivingMessiah.Web.Pages.Admin.VideoMasterDetail.Enums;
 using Microsoft.AspNetCore.Components;
 
-namespace LivingMessiah.Web.Pages.Sukkot.SuperUser.Index;
+namespace LivingMessiah.Web.Pages.Admin.VideoMasterDetail.Index;
 
-public partial class ToasterSuperUser
+public partial class Toaster
 {
 	[Inject] public IToastService? Toast { get; set; }
 	protected override void OnInitialized()

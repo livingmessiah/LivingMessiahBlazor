@@ -8,6 +8,7 @@ using Syncfusion.Blazor;
 using Blazored.Toast;
 using Blazored.Modal;
 using LivingMessiah.Web.Settings;
+using LivingMessiah.Web.Shared.Database;
 
 namespace LivingMessiah.Web;
 
@@ -34,6 +35,7 @@ public class Startup
 				});
 
 		services.AddDataStores();
+		services.AddDatabaseStores();
 		services.AddSession();
 		services.AddBlazoredToast();
 		services.AddBlazoredModal();

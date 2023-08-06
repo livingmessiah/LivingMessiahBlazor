@@ -35,7 +35,7 @@ public partial class ActionButtonGroup
 			case nameof(Enums.Crud.AddRegistration):
 				Dispatcher!.Dispatch(new Registrant.Add_Registration_Action(args.EMail));
 				Dispatcher!.Dispatch(new ParentState.Set_VisibleComponent_Action(VisibleComponent.AddEditForm));
-				Dispatcher!.Dispatch(new ParentState.Set_PageHeader_For_Detail_Action(args.Crud.Text, args.Crud!.Text, args.Crud!.Color, args.Id));
+				Dispatcher!.Dispatch(new ParentState.Set_PageHeader_For_Detail_Action(args.Crud.Text, args.Crud!.Icon, args.Crud!.Color, args.Id));
 				Dispatcher!.Dispatch(new ParentState.Set_DetailPageHeader_Action("Email", args.EMail));
 				break;
 

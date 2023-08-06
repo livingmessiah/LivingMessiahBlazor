@@ -54,6 +54,14 @@ public static class Account
 
 public static class Admin
 {
+	public static class VideoMasterDetail
+	{
+		public const string Index = "/Admin/VideoMasterDetail/";
+		public const string Redirect = "/Admin/VideoMasterDetail";
+		public const string Title = "Admin Video";
+		public const string Icon = "fab fa-teamspeak";
+	}
+
 	public static class AudioVisual
 	{
 		public const string Index = "/Admin/AudioVisual/";
@@ -191,6 +199,27 @@ public static class DashBoard
 	public const string Index = "/Admin/Dashboard/Index";
 	public const string Title = "DashBoard";
 	public const string Icon = "fas fa-tachometer-alt";
+}
+
+public static class Database
+{
+	public static class Error
+	{
+		public const string Log = "/Database/ErrorLog";
+		public const string Title = "Error Log";
+		public const string Icon = "fas fa-bomb";
+		//public const string Title = "Database Error Log"; // append db name
+
+		//public static class LivingMessiah
+		//{
+		//}
+		//public static class Sukkot
+		//{
+		//}
+
+	}
+
+
 }
 
 
@@ -360,7 +389,6 @@ public static class Podcast
 	public const string Icon = "fas fa-podcast";
 }
 
-
 public static class ShabbatService
 {
 	public const string Index = "/ShabbatService";
@@ -419,7 +447,6 @@ public static class Store
 	}
 }
 
-
 public static class Sukkot
 {
 	public static class RegistrationSteps
@@ -477,10 +504,10 @@ public static class Sukkot
 
 	public static class Errors
 	{
-		public const string LogErrorTest = "/SukkotAdmin/LogErrorTest";
 		public const string ErrorLog = "/SukkotAdmin/ErrorLog";
 		public const string ErrorLogTitle = "Sukkot Admin ErrorLog";
-		public const string ErrorLogEmpty = "/SukkotAdmin/ErrorLogEmpty";
+		//public const string LogErrorTest = "/SukkotAdmin/LogErrorTest";
+		//public const string ErrorLogEmpty = "/SukkotAdmin/ErrorLogEmpty";
 	}
 
 	public static class LegalAgreementVerbiage

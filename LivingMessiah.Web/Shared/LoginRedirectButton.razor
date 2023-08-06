@@ -1,0 +1,16 @@
+﻿@using Link = LivingMessiah.Web.Links.Account
+@inject NavigationManager? NavigationManager
+
+<button @onclick="@(() => RedirectToLoginClick())"
+				type="button" class="btn-primary btn-sm">
+	Login <i class='fas fa-sign-in-alt'></i>
+</button>
+
+@code {
+	[Parameter] public string? ReturnUrl { get; set; }
+
+	void RedirectToLoginClick()
+	{
+		NavigationManager!.NavigateTo($"{Link.Login}?returnUrl={ReturnUrl}", true);
+	}
+}

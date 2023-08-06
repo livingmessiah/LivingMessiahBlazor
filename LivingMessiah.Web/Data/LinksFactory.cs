@@ -25,6 +25,8 @@ public class LinksFactory : ILinksFactory
 	{
 		return new List<LinkBasic>
 			{
+				new LinkBasic {Index = Database.Error.Log, Title = Database.Error.Title, Icon = Database.Error.Icon, },
+				new LinkBasic {Index = Admin.VideoMasterDetail.Index, Title = Admin.VideoMasterDetail.Title, Icon = Admin.VideoMasterDetail.Icon, },
 				new LinkBasic {Index = WeeklyVideos.Index, Title = WeeklyVideos.Title, Icon = WeeklyVideos.Icon, },
 				new LinkBasic {Index = Admin.AudioVisual.Add.Index, Title = Admin.AudioVisual.Add.Title, Icon = Admin.AudioVisual.Add.Icon, },
 				new LinkBasic {Index = KeyDatesEdit.Index, Title = KeyDatesEdit.Title, Icon = KeyDatesEdit.Icon, }

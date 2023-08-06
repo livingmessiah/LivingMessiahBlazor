@@ -1,0 +1,69 @@
+﻿@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+@inject IState<MasterDetailState>? State
+
+<LoadingComponent IsLoading="State!.Value.YouTubeList! == null">
+
+	@foreach (var item in State!.Value.YouTubeList!)
+	{
+		<!-- IsXsOrSm="true" -->
+		<div class="d-md-none mb-3">
+			<div class="card bg-light mb-3">
+				<img src='https://img.youtube.com/vi/@item.YouTubeId/mqdefault.jpg' class="card-img-top" alt="@item.Title">
+				<div class="card-body">
+					<h5 class="card-title"><sup class="text-black-50"> @item.Id</sup> <b>Title</b>: @item.Title</h5>
+
+					<p class="card-text"><b>Publish Date</b>: @item.PublishDate.Date.ToShortDateString()</p>
+				</div>
+
+				<div class="card-footer">
+
+					<div class="d-grid gap-1 d-flex justify-content-end">
+						<ActionButtonGroup Id="@item.Id"
+														 YouTubeId="@item.YouTubeId" 
+														 PublishDate="@item.PublishDate"
+														 Title="@item.Title" />
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+		<!-- IsXsOrSm="false" -->
+		<div class="d-none d-md-block mt-3">
+
+
+			<div class="row mb-2">
+				<div class="col-4">
+					<a href="https://www.youtube.com/watch?v=@item.YouTubeId" target="_blank" title="@item.YouTubeId">
+						<img src='https://img.youtube.com/vi/@item.YouTubeId/mqdefault.jpg' class='img-thumbnail' />
+					</a>
+				</div>
+
+				<div class="col-8">
+					<div class="card">
+
+						<div class="card-body">
+							<p class="mb-1"><sup class="text-black-50"> @item.Id</sup> <b>Title</b>: @item.Title</p>
+							<p class="mb-1"><b>Publish Date</b>: @item.PublishDate.Date.ToShortDateString()</p>
+						</div>
+
+						<div class="card-footer">
+							<div class="d-grid gap-1 d-flex justify-content-end">
+								<ActionButtonGroup Id="@item.Id"
+																 YouTubeId="@item.YouTubeId"
+																 PublishDate="@item.PublishDate"
+																 Title="@item.Title" />
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+	}
+
+</LoadingComponent>
+
+

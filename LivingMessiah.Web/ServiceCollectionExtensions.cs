@@ -8,11 +8,17 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 
 using LivingMessiah.Data;
+
+using VideoMasterDetailData = LivingMessiah.Web.Pages.Admin.VideoMasterDetail.Data;
 using LivingMessiah.Web.Pages.Admin.AudioVisual;
 using LivingMessiah.Web.Pages.Admin.AudioVisual.Services;
+
 using LivingMessiah.Web.Pages.Contacts.Data;
 using LivingMessiah.Web.Pages.KeyDates.Data;
-using LivingMessiah.Web.Pages.Sukkot.Data;
+
+//using LivingMessiah.Web.Pages.Sukkot.Data;
+using SukkotData = LivingMessiah.Web.Pages.Sukkot.Data;
+
 using LivingMessiah.Web.Pages.Sukkot.Services;
 using LivingMessiah.Web.Pages.SukkotAdmin.Data;
 using LivingMessiah.Web.Pages.SukkotAdmin.Donations.Data;
@@ -44,14 +50,18 @@ public static class ServiceCollectionExtensions
 			.AddTransient<ISpecialEventGridDataAdaptor, SpecialEventGridDataAdaptor>()
 
 			.AddSingleton<IKeyDateRepository, KeyDateRepository>()
+
+			.AddTransient<VideoMasterDetailData.IRepository, VideoMasterDetailData.Repository>()
 			.AddTransient<IWeeklyVideosRepository, WeeklyVideosRepository>()
+			.AddTransient<IValidator<Pages.Admin.VideoMasterDetail.AddEdit.FormVM>, Pages.Admin.VideoMasterDetail.AddEdit.FormVMValidator>()
+
 			.AddTransient<ISecurityClaimsService, SecurityClaimsService>()
 
 			.AddTransient<ISukkotService, SukkotService>()
 
 			.AddTransient<IService, Service>()        //Pages.Sukkot.Services;
-			.AddTransient<IRepository, Repository>()  //Pages.Sukkot.Data;
-			.AddTransient<IRepositoryNoBase, RepositoryNoBase>()  //Pages.Sukkot.Data;
+			.AddTransient<SukkotData.IRepository, SukkotData.Repository>() 
+			.AddTransient<SukkotData.IRepositoryNoBase, SukkotData.RepositoryNoBase>()  
 
 			.AddTransient<IValidator<Pages.Sukkot.SuperUser.HRA.FormVM>, Pages.Sukkot.SuperUser.HRA.FormVMValidator>()
 			.AddTransient<IValidator<Pages.Sukkot.NormalUser.EntryFormVM>, Pages.Sukkot.NormalUser.EntryFormVMValidator>()
@@ -62,7 +72,7 @@ public static class ServiceCollectionExtensions
 			.AddTransient<ISukkotAdminService, SukkotAdminService>()
 			.AddTransient<IContactRepository, ContactRepository>()
 
-			.AddTransient<ISukkotRepository, SukkotRepository>()
+			.AddTransient<SukkotData.ISukkotRepository, SukkotData.SukkotRepository>()
 			.AddTransient<ISukkotAdminRepository, SukkotAdminRepository>()
 			.AddSingleton<ISmartEnumServiceForSfDropDownList, SmartEnumServiceForSfDropDownList>()
 			.AddScoped<AppState>()

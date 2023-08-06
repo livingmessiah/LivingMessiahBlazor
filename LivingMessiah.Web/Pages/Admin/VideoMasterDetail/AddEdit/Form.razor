@@ -1,0 +1,89 @@
+﻿@using Blazored.FluentValidation;
+@using ParentState = LivingMessiah.Web.Pages.Admin.VideoMasterDetail.MasterDetail
+@using LivingMessiah.Web.SmartEnums
+
+@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+
+<img src='https://img.youtube.com/vi/@VM.YouTubeId/mqdefault.jpg' class='img-thumbnail' />
+
+	<EditForm Model="VM"
+						OnValidSubmit="HandleValidSubmit"
+						class="card card-body bg-light mt-1">
+		<FluentValidationValidator @ref="_fluentValidationValidator" DisableAssemblyScanning="@true" />
+		<ValidationSummary />
+
+		<div class="mb-3 row">
+
+
+			@if ((State!.Value.ShabbatWeekList != null) && (State!.Value.ShabbatWeekList.Any()))
+			{
+				<label for="shabbatWeekId" class="col-md-3 col-form-label">Shabbat Week Id:</label>
+				<div class="col-md-9">
+					<InputSelect id="shabbatWeekId" @bind-Value="VM!.ShabbatWeekId" class="form-control">
+						@foreach (var item in State!.Value.ShabbatWeekList!)
+						{
+							<option value="@item.Id">@item.ShabbatDate.ToShortDateString() [@item.Id]</option>
+						}
+					</InputSelect>
+				</div>
+			}
+			else
+			{
+				<p class="text-warning">ShabbatWeekList is null or empty</p>
+			}
+		</div>
+
+		<div class="mb-3 row">
+			<label for="youTubeId" class="col-md-3 col-form-label">YouTube Id:</label>
+			<div class="col-md-9">
+				<InputText id="youTubeId" class="form-control" @bind-Value="VM!.YouTubeId" />
+				<ValidationMessage For="@(() => VM.YouTubeId)" />
+			</div>
+		</div>
+
+		<div class="mb-3 row">
+			<label for="title" class="col-md-3 col-form-label">Title:</label>
+			<div class="col-md-9">
+				<InputText id="title" class="form-control" @bind-Value="VM.Title" />
+				<ValidationMessage For="@(() => VM.Title)" />
+			</div>
+		</div>
+
+		<div class="mb-3 row">
+			<label for="type" class="col-md-3 col-form-label">Type</label>
+			<div class="col-md-9">
+				<InputSelect id="type" @bind-Value="VM.WeeklyVideoTypeId" class="form-control">
+					@foreach (var item in WeeklyVideoType.List.ToList())
+					{
+						<option value="@item.Value">@item.Name</option>
+					}
+				</InputSelect>
+			</div>
+
+		</div>
+
+
+
+		<div class="row">
+			<div class="col-sm-6">
+				<div class="my-2">
+
+					<button type="submit" class="@VideoMasterDetail.Constants.SaveButton.Color">
+						<i class="@VideoMasterDetail.Constants.SaveButton.Icon"></i> @State!.Value.FormMode!.SubmitText
+					</button>
+
+					@*
+					Cancel button has to be a div (ie not a button) thereby not triggering validation which is what I want
+					[Blazor Modal Form Validation: You have to click the cancel button twice to close the modal when you delete a form field](https://stackoverflow.com/a/67737357/41106)
+					*@
+					<div @onclick="@(e => CancelActionHandler())" class="@VideoMasterDetail.Constants.CancelButton.Color">
+						<i class="@VideoMasterDetail.Constants.CancelButton.Icon"></i> @VideoMasterDetail.Constants.CancelButton.Text
+					</div>
+
+				</div>
+			</div>
+			<div class="col-sm-6"></div>
+		</div>
+
+	</EditForm>
+
