@@ -5,10 +5,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using LivingMessiah.Web.Pages.Admin.AudioVisual.Services;
-using LivingMessiah.Web.SmartEnums;
 using Microsoft.AspNetCore.Authorization;
 using static LivingMessiah.Web.Services.Auth0;
 using Blazored.Toast.Services;
+using LivingMessiah.Web.Pages.Admin.Video.Enums;
 
 namespace LivingMessiah.Web.Pages.Admin.AudioVisual;
 

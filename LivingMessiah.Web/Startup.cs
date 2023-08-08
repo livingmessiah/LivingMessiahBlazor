@@ -10,6 +10,8 @@ using Blazored.Modal;
 using LivingMessiah.Web.Settings;
 using LivingMessiah.Web.Shared.Database;
 
+using LivingMessiah.Web.Pages.Admin.Video.DI;
+
 namespace LivingMessiah.Web;
 
 public class Startup
@@ -36,6 +38,9 @@ public class Startup
 
 		services.AddDataStores();
 		services.AddDatabaseStores();
+
+		services.AddAdminVideo();
+
 		services.AddSession();
 		services.AddBlazoredToast();
 		services.AddBlazoredModal();

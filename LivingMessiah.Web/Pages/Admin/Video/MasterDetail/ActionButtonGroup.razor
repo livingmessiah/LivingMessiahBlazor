@@ -1,0 +1,8 @@
+﻿
+@foreach (var item in Enums.Crud.List
+				.OrderBy(o => o.Sort))
+{
+	<CrudButtons OnCrudActionSelected="@ReturnedCrud"
+						 CurrentCrudButton="Enums.Crud.FromValue(item)"  
+						 YouTubeFeed="YouTubeFeed" />
+}

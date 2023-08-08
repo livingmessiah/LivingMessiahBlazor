@@ -1,0 +1,20 @@
+﻿@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+@inject IDispatcher Dispatcher
+@using ParentState = LivingMessiah.Web.Pages.Admin.Video.Index
+
+<div class="mb-2 d-grid gap-1 d-flex justify-content-end">
+
+	<button @onclick="@(() => RepopulateHandler())" title="Re-populate the list"
+					type="button" class="@Constants.RepopulateButton.ButtonColor">
+		<i class="@Constants.RepopulateButton.Icon"></i>@Constants.RepopulateButton.Text
+	</button>
+
+</div>
+
+
+@code {
+	void RepopulateHandler()
+	{
+		Dispatcher!.Dispatch(new Get_Action());
+	}
+}

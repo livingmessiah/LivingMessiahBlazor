@@ -1,0 +1,5 @@
+﻿<button @onclick="@OnButtonClicked" title="@TitleFormated"
+				type="button" class="@CurrentCrudButton!.ButtonColor btn-sm @GetDisabled()">
+	<i class="@CurrentCrudButton!.Icon"></i>
+	@CurrentCrudButton.Text
+</button>

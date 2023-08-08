@@ -1,4 +1,16 @@
 ﻿
 
-		To disable a button, just add disabled="" I guess
-		type="button" class="btn btn-outline-danger" disabled="">
+<p>
+To disable a button, just concatenate the literal disabled to the class attribute
+</p>
+
+<button @onclick="@OnButtonClicked" title="@TitleFormated"
+				type="button" class="@ParmCrud!.ButtonColor btn-sm @disabled">
+	<i class="@ParmCrud!.Icon"></i>
+	@ParmCrud.Text
+</button>
+
+@code {
+	private bool ysnShouldBeDisabled = true;
+	private string disabled => ysnShouldBeDisabled ? "disabled" : "";
+}

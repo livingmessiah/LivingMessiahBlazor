@@ -54,10 +54,10 @@ public static class Account
 
 public static class Admin
 {
-	public static class VideoMasterDetail
+	public static class Video
 	{
-		public const string Index = "/Admin/VideoMasterDetail/";
-		public const string Redirect = "/Admin/VideoMasterDetail";
+		public const string Index = "/Admin/Video/";
+		public const string Redirect = "/Admin/Video";
 		public const string Title = "Admin Video";
 		public const string Icon = "fab fa-teamspeak";
 	}

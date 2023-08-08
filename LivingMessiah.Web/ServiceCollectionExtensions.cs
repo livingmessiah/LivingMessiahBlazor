@@ -9,14 +9,12 @@ using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 
 using LivingMessiah.Data;
 
-using VideoMasterDetailData = LivingMessiah.Web.Pages.Admin.VideoMasterDetail.Data;
 using LivingMessiah.Web.Pages.Admin.AudioVisual;
 using LivingMessiah.Web.Pages.Admin.AudioVisual.Services;
 
 using LivingMessiah.Web.Pages.Contacts.Data;
 using LivingMessiah.Web.Pages.KeyDates.Data;
 
-//using LivingMessiah.Web.Pages.Sukkot.Data;
 using SukkotData = LivingMessiah.Web.Pages.Sukkot.Data;
 
 using LivingMessiah.Web.Pages.Sukkot.Services;
@@ -51,9 +49,7 @@ public static class ServiceCollectionExtensions
 
 			.AddSingleton<IKeyDateRepository, KeyDateRepository>()
 
-			.AddTransient<VideoMasterDetailData.IRepository, VideoMasterDetailData.Repository>()
 			.AddTransient<IWeeklyVideosRepository, WeeklyVideosRepository>()
-			.AddTransient<IValidator<Pages.Admin.VideoMasterDetail.AddEdit.FormVM>, Pages.Admin.VideoMasterDetail.AddEdit.FormVMValidator>()
 
 			.AddTransient<ISecurityClaimsService, SecurityClaimsService>()
 

@@ -1,8 +1,9 @@
 ﻿@page "/Admin/AudioVisual/WeeklyVideoUpdateForm/{Id:int?}"
-@using LivingMessiah.Web.SmartEnums
+@*@using LivingMessiah.Web.SmartEnums*@
 @using Page = LivingMessiah.Web.Links.Admin.AudioVisual.Update
 @using PageBackAdd = LivingMessiah.Web.Links.Admin.AudioVisual.Add
 @using PageBack = LivingMessiah.Web.Links.Admin.AudioVisual
+@using EnumWVT = LivingMessiah.Web.Pages.Admin.Video.Enums
 
 <PageTitle>@Page.Title</PageTitle>
 <div class="pb-2 mt-4 mb-2 border-bottom">
@@ -58,7 +59,7 @@
 			<label for="type" class="col-md-3 col-form-label">Type</label>
 			<div class="col-md-9">
 				<InputSelect id="type" @bind-Value="vm.WeeklyVideoTypeId" class="form-control">
-					@foreach (var item in WeeklyVideoType.List.ToList())
+					@foreach (var item in EnumWVT.WeeklyVideoType.List.ToList())
 					{
 						<option value="@item.Value">@item.Name</option>
 					}
