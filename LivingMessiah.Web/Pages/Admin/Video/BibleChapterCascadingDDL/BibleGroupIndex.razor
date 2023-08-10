@@ -1,0 +1,85 @@
+﻿@page "/BibleGroup"
+
+@using Page = LivingMessiah.Web.Links.Admin.BibleGroup
+@using BibleEnum = LivingMessiah.Web.Enums
+
+<PageTitle>@Page.Title</PageTitle>
+
+<EditForm Model="@VM"
+					OnValidSubmit="@FormSubmitted"
+					class="card card-body bg-light mt-1">
+	<DataAnnotationsValidator />
+	<ValidationSummary />
+	<div class="row mt-n2">
+		<label for="Name" class="col-md-3 col-form-label">Name:</label>
+		<div class="col-md-9">
+			<InputText id="youTubeId" class="form-control" @bind-Value="VM!.Name" />
+			<ValidationMessage For="@(() => VM.Name)" />
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-4">
+			<label for="BibleGroups">Bible Groups</label>
+			<InputSelectNumber class="form-control"
+									 ValueChanged="@((int value) => BibleGroupIdHasChanged(value))"
+									 ValueExpression="@(() => bibleGroupId)"
+									 Value="@bibleGroupId">
+				<option value="0">---Select a Bible Group---</option>
+
+				@foreach (var item in BibleEnum.BibleGroup.List.OrderBy(o => o.Value).ToList())
+				{
+					@if (item.Value == bibleGroupId)
+					{
+						<option selected value="@item.Value">@item.Name</option>
+					}
+					else
+					{
+						<option value="@item.Value">@item.Name</option>
+					}
+
+				}
+			</InputSelectNumber>
+			<ValidationMessage For="@(() => VM.BibleGroupId)" />
+
+		</div>
+
+		<div class="col-4">
+			<label for="Book">Book</label>
+
+			<InputSelectNumber class="form-control" @bind-Value=VM.BookId>
+
+				<option value="0">---Select a Book---</option>
+
+				@foreach (var item in Books)
+				{
+					@if (item.Value == VM.BookId)
+					{
+						<option selected value="@item.Value">@item.Title</option>
+					}
+					else
+					{
+						<option value="@item.Value">@item.Title</option>
+					}
+
+				}
+
+			</InputSelectNumber>
+			<ValidationMessage For="@(() => VM.BookId)" />
+
+		</div>
+
+		<div class="col-2">
+			<div class="mt-4">
+
+				<button type="submit" class="btn btn-outline-success btn-sm">
+					<i class="fas fa-football-ball"></i> Submit
+				</button>
+
+			</div>
+		</div>
+
+	</div>
+
+
+</EditForm>

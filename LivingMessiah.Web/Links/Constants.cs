@@ -61,6 +61,27 @@ public static class Admin
 		public const string Title = "Admin Video";
 		public const string Icon = "fab fa-teamspeak";
 	}
+	public static class CascadingDropdownList
+	{
+		public const string Index = "/Admin/CascadingDropdownList/";
+		public const string Title = "Cascading Dropdown List";
+		public const string Icon = "fas fa-tachometer-alt";
+	}
+
+	public static class BibleChapterCascadingDDL
+	{
+		public const string Index = "/Admin/BibleChapterCascadingDDL/";
+		public const string Title = "Bible Cascading Dropdown List";
+		public const string Icon = "fas fa-tachometer-alt";
+	}
+
+	public static class BibleGroup
+	{
+		public const string Index = "/Admin/BibleGroup/";
+		public const string Title = "Bible Group DDL";
+		public const string Icon = "fas fa-tachometer-alt";
+	}
+
 
 	public static class AudioVisual
 	{

@@ -1,0 +1,67 @@
+﻿@page "/BibleChapterCascadingDDL"
+
+@using Page = LivingMessiah.Web.Links.Admin.BibleChapterCascadingDDL
+@using BibleEnum = LivingMessiah.Web.Enums
+
+<PageTitle>@Page.Title</PageTitle>
+
+<EditForm Model="@IndexVM"
+					OnValidSubmit="@FormSubmitted"
+					class="card card-body bg-light mt-1">
+	<ValidationSummary />
+
+	<div class="row mt-n2">
+		<div class="col-4">
+			<label for="Books">Books</label>
+			<InputSelect id="Books" class="form-control"
+									 @bind-Value="IndexVM.BookId">
+				<option value="0">---Select a Book---</option>
+
+				@foreach (var item in BibleEnum.BibleBook.List.OrderBy(o => o.Value).ToList())
+				{
+					<option value="@item.Value">@item.Title</option>
+				}
+			</InputSelect>
+			<ValidationMessage For="@(() => IndexVM.BookId)" />
+
+		</div>
+
+		<div class="col-4">
+			<label for="Chapter">Chapter</label>
+
+			@if (IndexVM.BookId != 0)
+			{
+				<InputSelect id="Chapter" class="form-control" @bind-Value="IndexVM.ChapterId">
+					<option value="0">---Select a Chapter---</option>
+					@for (int i = 1; i <= BibleEnum.BibleBook.FromValue(IndexVM.BookId).LastChapter; i++)
+					{
+						<option value="@i">@i</option>
+					}
+
+				</InputSelect>
+				<ValidationMessage For="@(() => IndexVM.ChapterId)" />
+
+			}
+
+			@*<option selected value="@i">@i</option>*@
+
+		</div>
+
+		<div class="col-2">
+			<div class="mt-4">
+
+				@if (IndexVM.ChapterId != 0)
+				{
+					<button type="submit" class="btn btn-outline-success btn-sm">
+						<i class="fas fa-football-ball"></i> Submit
+					</button>
+
+				}
+
+			</div>
+		</div>
+
+	</div>
+
+
+</EditForm>

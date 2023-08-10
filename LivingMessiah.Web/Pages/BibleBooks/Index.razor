@@ -20,8 +20,8 @@
 			<dd class="col-6">@BibleBook.Deuteronomy</dd>
 		</dl>
 		<dl class="row">
-			<dt class="col-6"><span class="float-end"><code>BibleBook.Proverbs</code> | <code>BibleBook.Proverbs.BookGroupEnum</code>:</span></dt>
-			<dd class="col-6">@BibleBook.Proverbs | @BibleBook.Proverbs.BookGroupEnum</dd>
+			<dt class="col-6"><span class="float-end"><code>BibleBook.Proverbs</code> | <code>BibleBook.Proverbs.BibleGroup.Name</code>:</span></dt>
+			<dd class="col-6">@BibleBook.Proverbs | @BibleBook.Proverbs.BibleGroup.Name</dd>
 		</dl>
 
 	</div>
@@ -61,7 +61,7 @@
 				<td>@context.Value</td>
 				<td>@context.Name</td>
 				<td>@context.Abrv</td>
-				<td>@context.BookGroupEnum</td>
+				<td>@context.BibleGroup.Name</td>
 			</RowTemplate>
 		</TableTemplate>
 	</div>
@@ -85,12 +85,14 @@
 	</div>
 </div>
 
+@*<TableTemplate Items="BibleBook.List.Where(x => x.BibleGroup.Name == Enums.BibleGroup.Poetry.Name).ToList()">*@
+
 <div class="card mb-3 border-warning">
 	<div class="card-header">
-		<h4 class="card-title text-center"><code>BibleBook.List.ToList() Where BookGroupEnum == Poetry</code></h4>
+		<h4 class="card-title text-center"><code>BibleBook.List.ToList() Where BibleGroup.Name == Poetry</code></h4>
 	</div>
 	<div class="card-body">
-		<TableTemplate Items="BibleBook.List.Where(x => x.BookGroupEnum == Enums.BookGroupEnum.Poetry).ToList()">
+		<TableTemplate Items="BibleBook.List.Where(x => x.BibleGroup.Value == BibleGroup.Poetry.Value).ToList()">
 			<TableHeader>
 				<th class="text-info">Id</th>
 				<th class="text-primary">Name</th>
@@ -101,7 +103,7 @@
 				<td>@context.Value</td>
 				<td>@context.Name</td>
 				<td>@context.Abrv</td>
-				<td>@context.BookGroupEnum</td>
+				<td>@context.BibleGroup.Name</td>
 			</RowTemplate>
 		</TableTemplate>
 	</div>

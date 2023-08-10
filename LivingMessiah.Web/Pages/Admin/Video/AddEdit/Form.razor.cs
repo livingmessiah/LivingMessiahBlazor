@@ -28,6 +28,18 @@ public partial class Form
 
 	private FluentValidationValidator? _fluentValidationValidator;
 
+	//protected HandleBookChapterVisibility()
+
+	private void HandleBookChapterVisibility(ChangeEventArgs e)
+	{
+		string? selectedWVT = e.Value!.ToString();
+		Logger!.LogDebug(string.Format("...{0}; selectedWVT {1}", nameof(HandleBookChapterVisibility), selectedWVT ?? "null"));
+
+		// 
+		//ShowOtherControl = selectedValue == "option1"; // Set to true for Option 1, false otherwise
+	}
+
+
 	protected void HandleValidSubmit()
 	{
 		Logger!.LogDebug(string.Format("Inside {0}, FormMode: {1}"

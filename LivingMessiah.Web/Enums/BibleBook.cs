@@ -2,19 +2,6 @@
 
 namespace LivingMessiah.Web.Enums;
 
-public enum BookGroupEnum
-{
-	Torah = 1,
-	History = 2,
-	Poetry = 3,
-	MajorProphets = 4,
-	MinorProphets = 5,
-	Gospels = 6,
-	PaulsEpistles = 7,
-	GeneralEpistles = 8,
-	Apocalypse = 9,
-}
-
 public enum BookEnum
 {
 	Genesis = 1,
@@ -169,7 +156,7 @@ public abstract class BibleBook : SmartEnum<BibleBook>
 	#region Extra Fields
 	public abstract string Title { get; }
 	public abstract string Abrv { get; }
-	public abstract BookGroupEnum BookGroupEnum { get; }
+	public abstract BibleGroup BibleGroup { get; }
 	public abstract BookEnum BookEnum { get; }
 	public abstract int LastChapter { get; }
 	public abstract string TransliterationInHebrew { get; }
@@ -178,7 +165,7 @@ public abstract class BibleBook : SmartEnum<BibleBook>
 	{
 		get
 		{
-			return $" {this.Value}-{this.Abrv}-{this.Name}-{this.BookGroupEnum}";
+			return $" {this.Value}-{this.Abrv}-{this.Name}";  //{this.BookGroupEnum}";
 		}
 	}
 	#endregion
@@ -190,7 +177,7 @@ public abstract class BibleBook : SmartEnum<BibleBook>
 		public GenesisSE() : base("Genesis", 1) { }
 		public override string Title => "Genesis";
 		public override string Abrv => "Gen";
-		public override BookGroupEnum BookGroupEnum => BookGroupEnum.Torah;
+		public override BibleGroup BibleGroup => BibleGroup.Torah;
 		public override BookEnum BookEnum => BookEnum.Genesis;
 		public override int LastChapter => 50;
 		public override string TransliterationInHebrew => "Beresheeth";
@@ -201,7 +188,7 @@ public abstract class BibleBook : SmartEnum<BibleBook>
 		public ExodusSE() : base("Exodus", 2) { }
 		public override string Title => "Exodus";
 		public override string Abrv => "Exo";
-		public override BookGroupEnum BookGroupEnum => BookGroupEnum.Torah;
+		public override BibleGroup BibleGroup => BibleGroup.Torah;
 		public override BookEnum BookEnum => BookEnum.Exodus;
 		public override int LastChapter => 40;
 		public override string TransliterationInHebrew => "Shemoth";
@@ -212,7 +199,7 @@ public abstract class BibleBook : SmartEnum<BibleBook>
 		public LeviticusSE() : base("Leviticus", 3) { }
 		public override string Title => "Leviticus";
 		public override string Abrv => "Lev";
-		public override BookGroupEnum BookGroupEnum => BookGroupEnum.Torah;
+		public override BibleGroup BibleGroup => BibleGroup.Torah;
 		public override BookEnum BookEnum => BookEnum.Leviticus;
 		public override int LastChapter => 27;
 		public override string TransliterationInHebrew => "Vayiqra";
@@ -223,7 +210,7 @@ public abstract class BibleBook : SmartEnum<BibleBook>
 		public NumbersSE() : base("Numbers", 4) { }
 		public override string Title => "Numbers";
 		public override string Abrv => "Num";
-		public override BookGroupEnum BookGroupEnum => BookGroupEnum.Torah;
+		public override BibleGroup BibleGroup => BibleGroup.Torah;
 		public override BookEnum BookEnum => BookEnum.Numbers;
 		public override int LastChapter => 36;
 		public override string TransliterationInHebrew => "Bamidbar";
@@ -234,7 +221,7 @@ public abstract class BibleBook : SmartEnum<BibleBook>
 		public DeuteronomySE() : base("Deuteronomy", 5) { }
 		public override string Title => "Deuteronomy";
 		public override string Abrv => "Deu";
-		public override BookGroupEnum BookGroupEnum => BookGroupEnum.Torah;
+		public override BibleGroup BibleGroup => BibleGroup.Torah;
 		public override BookEnum BookEnum => BookEnum.Deuteronomy;
 		public override int LastChapter => 34;
 		public override string TransliterationInHebrew => "Devarim";
@@ -245,7 +232,7 @@ public abstract class BibleBook : SmartEnum<BibleBook>
 		public JoshuaSE() : base("Joshua", 6) { }
 		public override string Title => "Joshua";
 		public override string Abrv => "Jos";
-		public override BookGroupEnum BookGroupEnum => BookGroupEnum.History;
+		public override BibleGroup BibleGroup => BibleGroup.History;
 		public override BookEnum BookEnum => BookEnum.Joshua;
 		public override int LastChapter => 24;
 		public override string TransliterationInHebrew => "Yahoshua";
@@ -256,7 +243,7 @@ public abstract class BibleBook : SmartEnum<BibleBook>
 		public JudgesSE() : base("Judges", 7) { }
 		public override string Title => "Judges";
 		public override string Abrv => "Jdg";
-		public override BookGroupEnum BookGroupEnum => BookGroupEnum.History;
+		public override BibleGroup BibleGroup => BibleGroup.History;
 		public override BookEnum BookEnum => BookEnum.Judges;
 		public override int LastChapter => 21;
 		public override string TransliterationInHebrew => "Shophtim";
@@ -267,7 +254,7 @@ public abstract class BibleBook : SmartEnum<BibleBook>
 		public RuthSE() : base("Ruth", 8) { }
 		public override string Title => "Ruth";
 		public override string Abrv => "Rut";
-		public override BookGroupEnum BookGroupEnum => BookGroupEnum.History;
+		public override BibleGroup BibleGroup => BibleGroup.History;
 		public override BookEnum BookEnum => BookEnum.Ruth;
 		public override int LastChapter => 4;
 		public override string TransliterationInHebrew => "Root";
@@ -278,7 +265,7 @@ public abstract class BibleBook : SmartEnum<BibleBook>
 		public FirstSamuelSE() : base("FirstSamuel", 9) { }
 		public override string Title => "1Samuel";
 		public override string Abrv => "1Sa";
-		public override BookGroupEnum BookGroupEnum => BookGroupEnum.History;
+		public override BibleGroup BibleGroup => BibleGroup.History;
 		public override BookEnum BookEnum => BookEnum.FirstSamuel;
 		public override int LastChapter => 31;
 		public override string TransliterationInHebrew => "Schmuel Alef";
@@ -289,7 +276,7 @@ public abstract class BibleBook : SmartEnum<BibleBook>
 		public SecondSamuelSE() : base("SecondSamuel", 10) { }
 		public override string Title => "2Samuel";
 		public override string Abrv => "2Sa";
-		public override BookGroupEnum BookGroupEnum => BookGroupEnum.History;
+		public override BibleGroup BibleGroup => BibleGroup.History;
 		public override BookEnum BookEnum => BookEnum.SecondSamuel;
 		public override int LastChapter => 24;
 		public override string TransliterationInHebrew => "Schmuel Bet";
@@ -300,7 +287,7 @@ public abstract class BibleBook : SmartEnum<BibleBook>
 		public FirstKingsSE() : base("FirstKings", 11) { }
 		public override string Title => "1Kings";
 		public override string Abrv => "1Ki";
-		public override BookGroupEnum BookGroupEnum => BookGroupEnum.History;
+		public override BibleGroup BibleGroup => BibleGroup.History;
 		public override BookEnum BookEnum => BookEnum.FirstKings;
 		public override int LastChapter => 22;
 		public override string TransliterationInHebrew => "Melechim Alef";
@@ -311,7 +298,7 @@ public abstract class BibleBook : SmartEnum<BibleBook>
 		public SecondKingsSE() : base("SecondKings", 12) { }
 		public override string Title => "2Kings";
 		public override string Abrv => "2Ki";
-		public override BookGroupEnum BookGroupEnum => BookGroupEnum.History;
+		public override BibleGroup BibleGroup => BibleGroup.History;
 		public override BookEnum BookEnum => BookEnum.SecondKings;
 		public override int LastChapter => 25;
 		public override string TransliterationInHebrew => "Melechim Bet";
@@ -322,7 +309,7 @@ public abstract class BibleBook : SmartEnum<BibleBook>
 		public FirstChroniclesSE() : base("FirstChronicles", 13) { }
 		public override string Title => "1Chronicles";
 		public override string Abrv => "1Ch";
-		public override BookGroupEnum BookGroupEnum => BookGroupEnum.History;
+		public override BibleGroup BibleGroup => BibleGroup.History;
 		public override BookEnum BookEnum => BookEnum.FirstChronicles;
 		public override int LastChapter => 29;
 		public override string TransliterationInHebrew => "Divre HaYamim Alef";
@@ -333,7 +320,7 @@ public abstract class BibleBook : SmartEnum<BibleBook>
 		public SecondChroniclesSE() : base("SecondChronicles", 14) { }
 		public override string Title => "2Chronicles";
 		public override string Abrv => "2Ch";
-		public override BookGroupEnum BookGroupEnum => BookGroupEnum.History;
+		public override BibleGroup BibleGroup => BibleGroup.History;
 		public override BookEnum BookEnum => BookEnum.SecondChronicles;
 		public override int LastChapter => 36;
 		public override string TransliterationInHebrew => "Divre HaYamim Bet";
@@ -344,7 +331,7 @@ public abstract class BibleBook : SmartEnum<BibleBook>
 		public EzraSE() : base("Ezra", 15) { }
 		public override string Title => "Ezra";
 		public override string Abrv => "Ezr";
-		public override BookGroupEnum BookGroupEnum => BookGroupEnum.History;
+		public override BibleGroup BibleGroup => BibleGroup.History;
 		public override BookEnum BookEnum => BookEnum.Ezra;
 		public override int LastChapter => 10;
 		public override string TransliterationInHebrew => "Ezrah";
@@ -355,7 +342,7 @@ public abstract class BibleBook : SmartEnum<BibleBook>
 		public NehemiahSE() : base("Nehemiah", 16) { }
 		public override string Title => "Nehemiah";
 		public override string Abrv => "Neh";
-		public override BookGroupEnum BookGroupEnum => BookGroupEnum.History;
+		public override BibleGroup BibleGroup => BibleGroup.History;
 		public override BookEnum BookEnum => BookEnum.Nehemiah;
 		public override int LastChapter => 13;
 		public override string TransliterationInHebrew => "Nechemyah";
@@ -366,7 +353,7 @@ public abstract class BibleBook : SmartEnum<BibleBook>
 		public EstherSE() : base("Esther", 17) { }
 		public override string Title => "Esther";
 		public override string Abrv => "Est";
-		public override BookGroupEnum BookGroupEnum => BookGroupEnum.History;
+		public override BibleGroup BibleGroup => BibleGroup.History;
 		public override BookEnum BookEnum => BookEnum.Esther;
 		public override int LastChapter => 10;
 		public override string TransliterationInHebrew => "Hadasah";
@@ -377,7 +364,7 @@ public abstract class BibleBook : SmartEnum<BibleBook>
 		public JobSE() : base("Job", 18) { }
 		public override string Title => "Job";
 		public override string Abrv => "Job";
-		public override BookGroupEnum BookGroupEnum => BookGroupEnum.Poetry;
+		public override BibleGroup BibleGroup => BibleGroup.Poetry;
 		public override BookEnum BookEnum => BookEnum.Job;
 		public override int LastChapter => 42;
 		public override string TransliterationInHebrew => "Iyov";
@@ -388,7 +375,7 @@ public abstract class BibleBook : SmartEnum<BibleBook>
 		public PsalmsSE() : base("Psalms", 19) { }
 		public override string Title => "Psalms";
 		public override string Abrv => "Psa";
-		public override BookGroupEnum BookGroupEnum => BookGroupEnum.Poetry;
+		public override BibleGroup BibleGroup => BibleGroup.Poetry;
 		public override BookEnum BookEnum => BookEnum.Psalms;
 		public override int LastChapter => 150;
 		public override string TransliterationInHebrew => "Tehillim";
@@ -399,7 +386,7 @@ public abstract class BibleBook : SmartEnum<BibleBook>
 		public ProverbsSE() : base("Proverbs", 20) { }
 		public override string Title => "Proverbs";
 		public override string Abrv => "Pro";
-		public override BookGroupEnum BookGroupEnum => BookGroupEnum.Poetry;
+		public override BibleGroup BibleGroup => BibleGroup.Poetry;
 		public override BookEnum BookEnum => BookEnum.Proverbs;
 		public override int LastChapter => 31;
 		public override string TransliterationInHebrew => "Mishle";
@@ -410,7 +397,7 @@ public abstract class BibleBook : SmartEnum<BibleBook>
 		public EcclesiastesSE() : base("Ecclesiastes", 21) { }
 		public override string Title => "Ecclesiastes";
 		public override string Abrv => "Ecc";
-		public override BookGroupEnum BookGroupEnum => BookGroupEnum.Poetry;
+		public override BibleGroup BibleGroup => BibleGroup.Poetry;
 		public override BookEnum BookEnum => BookEnum.Ecclesiastes;
 		public override int LastChapter => 12;
 		public override string TransliterationInHebrew => "Koheleth";
@@ -421,7 +408,7 @@ public abstract class BibleBook : SmartEnum<BibleBook>
 		public SongofSolomonSE() : base("SongofSolomon", 22) { }
 		public override string Title => "SongofSolomon";
 		public override string Abrv => "Song";
-		public override BookGroupEnum BookGroupEnum => BookGroupEnum.Poetry;
+		public override BibleGroup BibleGroup => BibleGroup.Poetry;
 		public override BookEnum BookEnum => BookEnum.SongofSolomon;
 		public override int LastChapter => 8;
 		public override string TransliterationInHebrew => "Shir HaShirim";
@@ -432,7 +419,7 @@ public abstract class BibleBook : SmartEnum<BibleBook>
 		public IsaiahSE() : base("Isaiah", 23) { }
 		public override string Title => "Isaiah";
 		public override string Abrv => "Isa";
-		public override BookGroupEnum BookGroupEnum => BookGroupEnum.MajorProphets;
+		public override BibleGroup BibleGroup => BibleGroup.MajorProphets;
 		public override BookEnum BookEnum => BookEnum.Isaiah;
 		public override int LastChapter => 66;
 		public override string TransliterationInHebrew => "Yeshayahu";
@@ -443,7 +430,7 @@ public abstract class BibleBook : SmartEnum<BibleBook>
 		public JeremiahSE() : base("Jeremiah", 24) { }
 		public override string Title => "Jeremiah";
 		public override string Abrv => "Jer";
-		public override BookGroupEnum BookGroupEnum => BookGroupEnum.MajorProphets;
+		public override BibleGroup BibleGroup => BibleGroup.MajorProphets;
 		public override BookEnum BookEnum => BookEnum.Jeremiah;
 		public override int LastChapter => 52;
 		public override string TransliterationInHebrew => "Yirmeyahu";
@@ -454,7 +441,7 @@ public abstract class BibleBook : SmartEnum<BibleBook>
 		public LamentationsSE() : base("Lamentations", 25) { }
 		public override string Title => "Lamentations";
 		public override string Abrv => "Lam";
-		public override BookGroupEnum BookGroupEnum => BookGroupEnum.MajorProphets;
+		public override BibleGroup BibleGroup => BibleGroup.MajorProphets;
 		public override BookEnum BookEnum => BookEnum.Lamentations;
 		public override int LastChapter => 5;
 		public override string TransliterationInHebrew => "Echah";
@@ -465,7 +452,7 @@ public abstract class BibleBook : SmartEnum<BibleBook>
 		public EzekielSE() : base("Ezekiel", 26) { }
 		public override string Title => "Ezekiel";
 		public override string Abrv => "Eze";
-		public override BookGroupEnum BookGroupEnum => BookGroupEnum.MajorProphets;
+		public override BibleGroup BibleGroup => BibleGroup.MajorProphets;
 		public override BookEnum BookEnum => BookEnum.Ezekiel;
 		public override int LastChapter => 48;
 		public override string TransliterationInHebrew => "Yechezkel";
@@ -476,7 +463,7 @@ public abstract class BibleBook : SmartEnum<BibleBook>
 		public DanielSE() : base("Daniel", 27) { }
 		public override string Title => "Daniel";
 		public override string Abrv => "Dan";
-		public override BookGroupEnum BookGroupEnum => BookGroupEnum.MajorProphets;
+		public override BibleGroup BibleGroup => BibleGroup.MajorProphets;
 		public override BookEnum BookEnum => BookEnum.Daniel;
 		public override int LastChapter => 12;
 		public override string TransliterationInHebrew => "Daniyel";
@@ -487,7 +474,7 @@ public abstract class BibleBook : SmartEnum<BibleBook>
 		public HoseaSE() : base("Hosea", 28) { }
 		public override string Title => "Hosea";
 		public override string Abrv => "Hos";
-		public override BookGroupEnum BookGroupEnum => BookGroupEnum.MinorProphets;
+		public override BibleGroup BibleGroup => BibleGroup.MinorProphets;
 		public override BookEnum BookEnum => BookEnum.Hosea;
 		public override int LastChapter => 14;
 		public override string TransliterationInHebrew => "Hoshea";
@@ -498,7 +485,7 @@ public abstract class BibleBook : SmartEnum<BibleBook>
 		public JoelSE() : base("Joel", 29) { }
 		public override string Title => "Joel";
 		public override string Abrv => "Joe";
-		public override BookGroupEnum BookGroupEnum => BookGroupEnum.MinorProphets;
+		public override BibleGroup BibleGroup => BibleGroup.MinorProphets;
 		public override BookEnum BookEnum => BookEnum.Joel;
 		public override int LastChapter => 3;
 		public override string TransliterationInHebrew => "Yoel";
@@ -509,7 +496,7 @@ public abstract class BibleBook : SmartEnum<BibleBook>
 		public AmosSE() : base("Amos", 30) { }
 		public override string Title => "Amos";
 		public override string Abrv => "Amo";
-		public override BookGroupEnum BookGroupEnum => BookGroupEnum.MinorProphets;
+		public override BibleGroup BibleGroup => BibleGroup.MinorProphets;
 		public override BookEnum BookEnum => BookEnum.Amos;
 		public override int LastChapter => 9;
 		public override string TransliterationInHebrew => "Ahmos";
@@ -520,7 +507,7 @@ public abstract class BibleBook : SmartEnum<BibleBook>
 		public ObadiahSE() : base("Obadiah", 31) { }
 		public override string Title => "Obadiah";
 		public override string Abrv => "Oba";
-		public override BookGroupEnum BookGroupEnum => BookGroupEnum.MinorProphets;
+		public override BibleGroup BibleGroup => BibleGroup.MinorProphets;
 		public override BookEnum BookEnum => BookEnum.Obadiah;
 		public override int LastChapter => 1;
 		public override string TransliterationInHebrew => "Ovadyah";
@@ -531,7 +518,7 @@ public abstract class BibleBook : SmartEnum<BibleBook>
 		public JonahSE() : base("Jonah", 32) { }
 		public override string Title => "Jonah";
 		public override string Abrv => "Jon";
-		public override BookGroupEnum BookGroupEnum => BookGroupEnum.MinorProphets;
+		public override BibleGroup BibleGroup => BibleGroup.MinorProphets;
 		public override BookEnum BookEnum => BookEnum.Jonah;
 		public override int LastChapter => 4;
 		public override string TransliterationInHebrew => "Yonah";
@@ -542,7 +529,7 @@ public abstract class BibleBook : SmartEnum<BibleBook>
 		public MicahSE() : base("Micah", 33) { }
 		public override string Title => "Micah";
 		public override string Abrv => "Mic";
-		public override BookGroupEnum BookGroupEnum => BookGroupEnum.MinorProphets;
+		public override BibleGroup BibleGroup => BibleGroup.MinorProphets;
 		public override BookEnum BookEnum => BookEnum.Micah;
 		public override int LastChapter => 7;
 		public override string TransliterationInHebrew => "Micha";
@@ -553,7 +540,7 @@ public abstract class BibleBook : SmartEnum<BibleBook>
 		public NahumSE() : base("Nahum", 34) { }
 		public override string Title => "Nahum";
 		public override string Abrv => "Nah";
-		public override BookGroupEnum BookGroupEnum => BookGroupEnum.MinorProphets;
+		public override BibleGroup BibleGroup => BibleGroup.MinorProphets;
 		public override BookEnum BookEnum => BookEnum.Nahum;
 		public override int LastChapter => 3;
 		public override string TransliterationInHebrew => "Nachum";
@@ -564,7 +551,7 @@ public abstract class BibleBook : SmartEnum<BibleBook>
 		public HabakkukSE() : base("Habakkuk", 35) { }
 		public override string Title => "Habakkuk";
 		public override string Abrv => "Hab";
-		public override BookGroupEnum BookGroupEnum => BookGroupEnum.MinorProphets;
+		public override BibleGroup BibleGroup => BibleGroup.MinorProphets;
 		public override BookEnum BookEnum => BookEnum.Habakkuk;
 		public override int LastChapter => 3;
 		public override string TransliterationInHebrew => "Chabakook";
@@ -575,7 +562,7 @@ public abstract class BibleBook : SmartEnum<BibleBook>
 		public ZephaniahSE() : base("Zephaniah", 36) { }
 		public override string Title => "Zephaniah";
 		public override string Abrv => "Zep";
-		public override BookGroupEnum BookGroupEnum => BookGroupEnum.MinorProphets;
+		public override BibleGroup BibleGroup => BibleGroup.MinorProphets;
 		public override BookEnum BookEnum => BookEnum.Zephaniah;
 		public override int LastChapter => 3;
 		public override string TransliterationInHebrew => "Tzephanyah";
@@ -586,7 +573,7 @@ public abstract class BibleBook : SmartEnum<BibleBook>
 		public HaggaiSE() : base("Haggai", 37) { }
 		public override string Title => "Haggai";
 		public override string Abrv => "Hag";
-		public override BookGroupEnum BookGroupEnum => BookGroupEnum.MinorProphets;
+		public override BibleGroup BibleGroup => BibleGroup.MinorProphets;
 		public override BookEnum BookEnum => BookEnum.Haggai;
 		public override int LastChapter => 2;
 		public override string TransliterationInHebrew => "Chaggai";
@@ -597,7 +584,7 @@ public abstract class BibleBook : SmartEnum<BibleBook>
 		public ZechariahSE() : base("Zechariah", 38) { }
 		public override string Title => "Zechariah";
 		public override string Abrv => "Zec";
-		public override BookGroupEnum BookGroupEnum => BookGroupEnum.MinorProphets;
+		public override BibleGroup BibleGroup => BibleGroup.MinorProphets;
 		public override BookEnum BookEnum => BookEnum.Zechariah;
 		public override int LastChapter => 14;
 		public override string TransliterationInHebrew => "Zecharyah";
@@ -608,7 +595,7 @@ public abstract class BibleBook : SmartEnum<BibleBook>
 		public MalachiSE() : base("Malachi", 39) { }
 		public override string Title => "Malachi";
 		public override string Abrv => "Mal";
-		public override BookGroupEnum BookGroupEnum => BookGroupEnum.MinorProphets;
+		public override BibleGroup BibleGroup => BibleGroup.MinorProphets;
 		public override BookEnum BookEnum => BookEnum.Malachi;
 		public override int LastChapter => 4;
 		public override string TransliterationInHebrew => "Malachi";
@@ -619,7 +606,7 @@ public abstract class BibleBook : SmartEnum<BibleBook>
 		public MatthewSE() : base("Matthew", 40) { }
 		public override string Title => "Matthew";
 		public override string Abrv => "Mat";
-		public override BookGroupEnum BookGroupEnum => BookGroupEnum.Gospels;
+		public override BibleGroup BibleGroup => BibleGroup.Gospels;
 		public override BookEnum BookEnum => BookEnum.Matthew;
 		public override int LastChapter => 28;
 		public override string TransliterationInHebrew => "Mattityahu";
@@ -630,7 +617,7 @@ public abstract class BibleBook : SmartEnum<BibleBook>
 		public MarkSE() : base("Mark", 41) { }
 		public override string Title => "Mark";
 		public override string Abrv => "Mar";
-		public override BookGroupEnum BookGroupEnum => BookGroupEnum.Gospels;
+		public override BibleGroup BibleGroup => BibleGroup.Gospels;
 		public override BookEnum BookEnum => BookEnum.Mark;
 		public override int LastChapter => 16;
 		public override string TransliterationInHebrew => "Yochanan-Moshe";
@@ -641,7 +628,7 @@ public abstract class BibleBook : SmartEnum<BibleBook>
 		public LukeSE() : base("Luke", 42) { }
 		public override string Title => "Luke";
 		public override string Abrv => "Luk";
-		public override BookGroupEnum BookGroupEnum => BookGroupEnum.Gospels;
+		public override BibleGroup BibleGroup => BibleGroup.Gospels;
 		public override BookEnum BookEnum => BookEnum.Luke;
 		public override int LastChapter => 24;
 		public override string TransliterationInHebrew => "Luka";
@@ -652,7 +639,7 @@ public abstract class BibleBook : SmartEnum<BibleBook>
 		public JohnSE() : base("John", 43) { }
 		public override string Title => "John";
 		public override string Abrv => "Joh";
-		public override BookGroupEnum BookGroupEnum => BookGroupEnum.Gospels;
+		public override BibleGroup BibleGroup => BibleGroup.Gospels;
 		public override BookEnum BookEnum => BookEnum.John;
 		public override int LastChapter => 21;
 		public override string TransliterationInHebrew => "Yochanan";
@@ -663,7 +650,7 @@ public abstract class BibleBook : SmartEnum<BibleBook>
 		public ActsSE() : base("Acts", 44) { }
 		public override string Title => "Acts";
 		public override string Abrv => "Act";
-		public override BookGroupEnum BookGroupEnum => BookGroupEnum.Gospels;
+		public override BibleGroup BibleGroup => BibleGroup.Gospels;
 		public override BookEnum BookEnum => BookEnum.Acts;
 		public override int LastChapter => 28;
 		public override string TransliterationInHebrew => "Maaseh Shlichim";  // Emissaries Acts
@@ -674,7 +661,7 @@ public abstract class BibleBook : SmartEnum<BibleBook>
 		public RomansSE() : base("Romans", 45) { }
 		public override string Title => "Romans";
 		public override string Abrv => "Rom";
-		public override BookGroupEnum BookGroupEnum => BookGroupEnum.PaulsEpistles;
+		public override BibleGroup BibleGroup => BibleGroup.PaulsEpistles;
 		public override BookEnum BookEnum => BookEnum.Romans;
 		public override int LastChapter => 16;
 		public override string TransliterationInHebrew => "Romiyah";
@@ -685,7 +672,7 @@ public abstract class BibleBook : SmartEnum<BibleBook>
 		public FirstCorinthiansSE() : base("FirstCorinthians", 46) { }
 		public override string Title => "1Corinthians";
 		public override string Abrv => "1Co";
-		public override BookGroupEnum BookGroupEnum => BookGroupEnum.PaulsEpistles;
+		public override BibleGroup BibleGroup => BibleGroup.PaulsEpistles;
 		public override BookEnum BookEnum => BookEnum.FirstCorinthians;
 		public override int LastChapter => 16;
 		public override string TransliterationInHebrew => "Qorintyah Alef";
@@ -696,7 +683,7 @@ public abstract class BibleBook : SmartEnum<BibleBook>
 		public SecondCorinthiansSE() : base("SecondCorinthians", 47) { }
 		public override string Title => "2Corinthians";
 		public override string Abrv => "2Co";
-		public override BookGroupEnum BookGroupEnum => BookGroupEnum.PaulsEpistles;
+		public override BibleGroup BibleGroup => BibleGroup.PaulsEpistles;
 		public override BookEnum BookEnum => BookEnum.SecondCorinthians;
 		public override int LastChapter => 13;
 		public override string TransliterationInHebrew => "Qorintyah Bet";
@@ -707,7 +694,7 @@ public abstract class BibleBook : SmartEnum<BibleBook>
 		public GalatiansSE() : base("Galatians", 48) { }
 		public override string Title => "Galatians";
 		public override string Abrv => "Gal";
-		public override BookGroupEnum BookGroupEnum => BookGroupEnum.PaulsEpistles;
+		public override BibleGroup BibleGroup => BibleGroup.PaulsEpistles;
 		public override BookEnum BookEnum => BookEnum.Galatians;
 		public override int LastChapter => 6;
 		public override string TransliterationInHebrew => "Galutyah";
@@ -718,7 +705,7 @@ public abstract class BibleBook : SmartEnum<BibleBook>
 		public EphesiansSE() : base("Ephesians", 49) { }
 		public override string Title => "Ephesians";
 		public override string Abrv => "Eph";
-		public override BookGroupEnum BookGroupEnum => BookGroupEnum.PaulsEpistles;
+		public override BibleGroup BibleGroup => BibleGroup.PaulsEpistles;
 		public override BookEnum BookEnum => BookEnum.Ephesians;
 		public override int LastChapter => 6;
 		public override string TransliterationInHebrew => "Ephsiyah";
@@ -729,7 +716,7 @@ public abstract class BibleBook : SmartEnum<BibleBook>
 		public PhilippiansSE() : base("Philippians", 50) { }
 		public override string Title => "Philippians";
 		public override string Abrv => "Php";
-		public override BookGroupEnum BookGroupEnum => BookGroupEnum.PaulsEpistles;
+		public override BibleGroup BibleGroup => BibleGroup.PaulsEpistles;
 		public override BookEnum BookEnum => BookEnum.Philippians;
 		public override int LastChapter => 4;
 		public override string TransliterationInHebrew => "Phylypsiyah";
@@ -740,7 +727,7 @@ public abstract class BibleBook : SmartEnum<BibleBook>
 		public ColossiansSE() : base("Colossians", 51) { }
 		public override string Title => "Colossians";
 		public override string Abrv => "Col";
-		public override BookGroupEnum BookGroupEnum => BookGroupEnum.PaulsEpistles;
+		public override BibleGroup BibleGroup => BibleGroup.PaulsEpistles;
 		public override BookEnum BookEnum => BookEnum.Colossians;
 		public override int LastChapter => 4;
 		public override string TransliterationInHebrew => "Qolesayah";
@@ -751,7 +738,7 @@ public abstract class BibleBook : SmartEnum<BibleBook>
 		public FirstThessaloniansSE() : base("FirstThessalonians", 52) { }
 		public override string Title => "1Thessalonians";
 		public override string Abrv => "1Th";
-		public override BookGroupEnum BookGroupEnum => BookGroupEnum.PaulsEpistles;
+		public override BibleGroup BibleGroup => BibleGroup.PaulsEpistles;
 		public override BookEnum BookEnum => BookEnum.FirstThessalonians;
 		public override int LastChapter => 5;
 		public override string TransliterationInHebrew => "Tesloniqyah Alef";
@@ -762,7 +749,7 @@ public abstract class BibleBook : SmartEnum<BibleBook>
 		public SecondThessaloniansSE() : base("SecondThessalonians", 53) { }
 		public override string Title => "2Thessalonians";
 		public override string Abrv => "2Th";
-		public override BookGroupEnum BookGroupEnum => BookGroupEnum.PaulsEpistles;
+		public override BibleGroup BibleGroup => BibleGroup.PaulsEpistles;
 		public override BookEnum BookEnum => BookEnum.SecondThessalonians;
 		public override int LastChapter => 3;
 		public override string TransliterationInHebrew => "Tesloniqyah Bet";
@@ -773,7 +760,7 @@ public abstract class BibleBook : SmartEnum<BibleBook>
 		public FirstTimothySE() : base("FirstTimothy", 54) { }
 		public override string Title => "1Timothy";
 		public override string Abrv => "1Ti";
-		public override BookGroupEnum BookGroupEnum => BookGroupEnum.PaulsEpistles;
+		public override BibleGroup BibleGroup => BibleGroup.PaulsEpistles;
 		public override BookEnum BookEnum => BookEnum.FirstTimothy;
 		public override int LastChapter => 6;
 		public override string TransliterationInHebrew => "Timtheous Alef";
@@ -784,7 +771,7 @@ public abstract class BibleBook : SmartEnum<BibleBook>
 		public SecondTimothySE() : base("SecondTimothy", 55) { }
 		public override string Title => "2Timothy";
 		public override string Abrv => "2Ti";
-		public override BookGroupEnum BookGroupEnum => BookGroupEnum.PaulsEpistles;
+		public override BibleGroup BibleGroup => BibleGroup.PaulsEpistles;
 		public override BookEnum BookEnum => BookEnum.SecondTimothy;
 		public override int LastChapter => 4;
 		public override string TransliterationInHebrew => "Timtheous Bet";
@@ -795,7 +782,7 @@ public abstract class BibleBook : SmartEnum<BibleBook>
 		public TitusSE() : base("Titus", 56) { }
 		public override string Title => "Titus";
 		public override string Abrv => "Tit";
-		public override BookGroupEnum BookGroupEnum => BookGroupEnum.PaulsEpistles;
+		public override BibleGroup BibleGroup => BibleGroup.PaulsEpistles;
 		public override BookEnum BookEnum => BookEnum.Titus;
 		public override int LastChapter => 3;
 		public override string TransliterationInHebrew => "Teitus";
@@ -806,7 +793,7 @@ public abstract class BibleBook : SmartEnum<BibleBook>
 		public PhilemonSE() : base("Philemon", 57) { }
 		public override string Title => "Philemon";
 		public override string Abrv => "Phm";
-		public override BookGroupEnum BookGroupEnum => BookGroupEnum.PaulsEpistles;
+		public override BibleGroup BibleGroup => BibleGroup.PaulsEpistles;
 		public override BookEnum BookEnum => BookEnum.Philemon;
 		public override int LastChapter => 1;
 		public override string TransliterationInHebrew => "Phileymon";
@@ -817,7 +804,7 @@ public abstract class BibleBook : SmartEnum<BibleBook>
 		public HebrewsSE() : base("Hebrews", 58) { }
 		public override string Title => "Hebrews";
 		public override string Abrv => "Heb";
-		public override BookGroupEnum BookGroupEnum => BookGroupEnum.GeneralEpistles;
+		public override BibleGroup BibleGroup => BibleGroup.GeneralEpistles;
 		public override BookEnum BookEnum => BookEnum.Hebrews;
 		public override int LastChapter => 13;
 		public override string TransliterationInHebrew => "Ivrim";
@@ -828,7 +815,7 @@ public abstract class BibleBook : SmartEnum<BibleBook>
 		public JamesSE() : base("James", 59) { }
 		public override string Title => "James";
 		public override string Abrv => "Jam";
-		public override BookGroupEnum BookGroupEnum => BookGroupEnum.GeneralEpistles;
+		public override BibleGroup BibleGroup => BibleGroup.GeneralEpistles;
 		public override BookEnum BookEnum => BookEnum.James;
 		public override int LastChapter => 5;
 		public override string TransliterationInHebrew => "Yaakov";
@@ -839,7 +826,7 @@ public abstract class BibleBook : SmartEnum<BibleBook>
 		public FirstPeterSE() : base("FirstPeter", 60) { }
 		public override string Title => "1Peter";
 		public override string Abrv => "1Pe";
-		public override BookGroupEnum BookGroupEnum => BookGroupEnum.GeneralEpistles;
+		public override BibleGroup BibleGroup => BibleGroup.GeneralEpistles;
 		public override BookEnum BookEnum => BookEnum.FirstPeter;
 		public override int LastChapter => 5;
 		public override string TransliterationInHebrew => "Kepha Alef";
@@ -850,7 +837,7 @@ public abstract class BibleBook : SmartEnum<BibleBook>
 		public SecondPeterSE() : base("SecondPeter", 61) { }
 		public override string Title => "2Peter";
 		public override string Abrv => "2Pe";
-		public override BookGroupEnum BookGroupEnum => BookGroupEnum.GeneralEpistles;
+		public override BibleGroup BibleGroup => BibleGroup.GeneralEpistles;
 		public override BookEnum BookEnum => BookEnum.SecondPeter;
 		public override int LastChapter => 3;
 		public override string TransliterationInHebrew => "Kepha Bet";
@@ -861,7 +848,7 @@ public abstract class BibleBook : SmartEnum<BibleBook>
 		public FirstJohnSE() : base("FirstJohn", 62) { }
 		public override string Title => "1John";
 		public override string Abrv => "1Jo";
-		public override BookGroupEnum BookGroupEnum => BookGroupEnum.GeneralEpistles;
+		public override BibleGroup BibleGroup => BibleGroup.GeneralEpistles;
 		public override BookEnum BookEnum => BookEnum.FirstJohn;
 		public override int LastChapter => 5;
 		public override string TransliterationInHebrew => "Yochanan Alef";
@@ -872,7 +859,7 @@ public abstract class BibleBook : SmartEnum<BibleBook>
 		public SecondJohnSE() : base("SecondJohn", 63) { }
 		public override string Title => "2John";
 		public override string Abrv => "2Jo";
-		public override BookGroupEnum BookGroupEnum => BookGroupEnum.GeneralEpistles;
+		public override BibleGroup BibleGroup => BibleGroup.GeneralEpistles;
 		public override BookEnum BookEnum => BookEnum.SecondJohn;
 		public override int LastChapter => 1;
 		public override string TransliterationInHebrew => "Yochanan Bet";
@@ -883,7 +870,7 @@ public abstract class BibleBook : SmartEnum<BibleBook>
 		public ThirdJohnSE() : base("ThirdJohn", 64) { }
 		public override string Title => "3John";
 		public override string Abrv => "3Jo";
-		public override BookGroupEnum BookGroupEnum => BookGroupEnum.GeneralEpistles;
+		public override BibleGroup BibleGroup => BibleGroup.GeneralEpistles;
 		public override BookEnum BookEnum => BookEnum.ThirdJohn;
 		public override int LastChapter => 1;
 		public override string TransliterationInHebrew => "Yochanan Gimel";
@@ -894,7 +881,7 @@ public abstract class BibleBook : SmartEnum<BibleBook>
 		public JudeSE() : base("Jude", 65) { }
 		public override string Title => "Jude";
 		public override string Abrv => "Jud";
-		public override BookGroupEnum BookGroupEnum => BookGroupEnum.GeneralEpistles;
+		public override BibleGroup BibleGroup => BibleGroup.GeneralEpistles;
 		public override BookEnum BookEnum => BookEnum.Jude;
 		public override int LastChapter => 1;
 		public override string TransliterationInHebrew => "Yahudah";
@@ -905,7 +892,7 @@ public abstract class BibleBook : SmartEnum<BibleBook>
 		public RevelationSE() : base("Revelation", 66) { }
 		public override string Title => "Revelation";
 		public override string Abrv => "Rev";
-		public override BookGroupEnum BookGroupEnum => BookGroupEnum.Apocalypse;
+		public override BibleGroup BibleGroup => BibleGroup.Apocalypse;
 		public override BookEnum BookEnum => BookEnum.Revelation;
 		public override int LastChapter => 22;
 		public override string TransliterationInHebrew => "Gilyahna";
