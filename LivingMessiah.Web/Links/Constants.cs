@@ -68,21 +68,6 @@ public static class Admin
 		public const string Icon = "fas fa-tachometer-alt";
 	}
 
-	public static class BibleChapterCascadingDDL
-	{
-		public const string Index = "/Admin/BibleChapterCascadingDDL/";
-		public const string Title = "Bible Cascading Dropdown List";
-		public const string Icon = "fas fa-tachometer-alt";
-	}
-
-	public static class BibleGroup
-	{
-		public const string Index = "/Admin/BibleGroup/";
-		public const string Title = "Bible Group DDL";
-		public const string Icon = "fas fa-tachometer-alt";
-	}
-
-
 	public static class AudioVisual
 	{
 		public const string Index = "/Admin/AudioVisual/";
@@ -159,6 +144,24 @@ public static class AudioVisual
 	//public const string Icon2 = "fas fa-theater-masks";
 	//public const string Icon3 = "fas fa-broadcast-tower";
 }
+
+public static class Bible
+{
+	public static class BibleBooks
+	{
+		public const string Index = "/BibleBooks/";  // /SmartEnums/BibleBooks
+		public const string Title = "Bible Books";  // <PageTitle>SmartEnums | BibleBooks</PageTitle>
+		public const string Icon = "fas fa-tachometer-alt";
+	}
+
+	public static class BibleCascadingDDL
+	{
+		public const string Index = "/BibleCascadingDDL/";
+		public const string Title = "Bible Cascading Dropdown List";
+		public const string Icon = "fas fa-tachometer-alt";
+	}
+}
+
 
 //ToDo use the link in WindmillRanch
 public static class BiblicalPermaculture

@@ -1,5 +1,6 @@
 ﻿@using Blazored.FluentValidation;
 @using ParentState = LivingMessiah.Web.Pages.Admin.Video.MasterDetail
+@using BibleEnum = LivingMessiah.Web.Enums
 
 @inherits Fluxor.Blazor.Web.Components.FluxorComponent
 
@@ -13,15 +14,25 @@
 
 	<div class="mb-3 row">
 
+		@*ToDo: I should have to check this; if this is null than the form can't be added/edited*@
 
 		@if ((State!.Value.ShabbatWeekList != null) && (State!.Value.ShabbatWeekList.Any()))
 		{
-			<label for="shabbatWeekId" class="col-md-3 col-form-label">Shabbat Week Id:</label>
-			<div class="col-md-9">
+			<div class="col-sm-6">
+				<label for="shabbatWeekId" class="control-label">Shabbat Week Id:</label>
 				<InputSelect id="shabbatWeekId" @bind-Value="VM!.ShabbatWeekId" class="form-control">
+					<option value="0">---Select a Shabbat Week---</option>
 					@foreach (var item in State!.Value.ShabbatWeekList!)
 					{
-						<option value="@item.Id">@item.ShabbatDate.ToShortDateString() [@item.Id]</option>
+						@if (item.Id == VM.ShabbatWeekId)
+						{
+							<option value="@item.Id">@item.ShabbatDate.ToShortDateString() [@item.Id]</option>
+						}
+						else
+						{
+							<option value="@item.Id">@item.ShabbatDate.ToShortDateString() [@item.Id]</option>
+						}
+						
 					}
 				</InputSelect>
 			</div>
@@ -30,14 +41,13 @@
 		{
 			<p class="text-warning">ShabbatWeekList is null or empty</p>
 		}
-	</div>
 
-	<div class="mb-3 row">
-		<label for="youTubeId" class="col-md-3 col-form-label">YouTube Id:</label>
-		<div class="col-md-9">
+		<div class="col-sm-6">
+			<label for="youTubeId" class="control-label">YouTube Id:</label>
 			<InputText id="youTubeId" class="form-control" @bind-Value="VM!.YouTubeId" />
 			<ValidationMessage For="@(() => VM.YouTubeId)" />
 		</div>
+
 	</div>
 
 	<div class="mb-3 row">
@@ -51,8 +61,8 @@
 	<div class="mb-3 row">
 		<label for="type" class="col-md-3 col-form-label">Type</label>
 		<div class="col-md-9">
-			<InputSelect id="type" @bind-Value="VM.WeeklyVideoTypeId" class="form-control"
-									 onchange="HandleBookChapterVisibility">
+			<InputSelect id="type" @bind-Value="VM.WeeklyVideoTypeId"
+									 class="form-control">
 				@foreach (var item in Enums.WeeklyVideoType.List.ToList())
 				{
 					<option value="@item.Value">@item.Name</option>
@@ -64,21 +74,60 @@
 
 	@if (VM.WeeklyVideoTypeId > 2)
 	{
-		<div class="mb-3 row">
-			<label for="book" class="col-md-3 col-form-label">Book:</label>
-			<div class="col-md-9">
-				<InputNumber id="book" class="form-control" @bind-Value="VM.Book" />
-				<ValidationMessage For="@(() => VM.Book)" />
-			</div>
-		</div>
+		<fieldset class="mt-3">
+			<legend class="text-primary">Book / Chapter</legend>
 
-		<div class="mb-3 row">
-			<label for="chapter" class="col-md-3 col-form-label">Chapter:</label>
-			<div class="col-md-9">
-				<InputNumber id="chapter" class="form-control" @bind-Value="VM.Chapter" />
-				<ValidationMessage For="@(() => VM.Chapter)" />
+			<div class="row">
+				<div class="col-sm-6">
+					<label for="book" class="control-label">Book:</label>
+					<InputSelect class="form-control"
+										 ValueChanged="@((int value) => BookHasChanged(value))"
+										 ValueExpression="@(() => bookId)"
+										 Value="@bookId">
+						<option value="0">---Select a Bible Book---</option>
+						@foreach (var item in BibleEnum.BibleBook.List.OrderBy(o => o.Value).ToList())
+						{
+							@if (item.Value == bookId)
+							{
+								<option selected value="@item.Value">@item.Name</option>
+							}
+							else
+							{
+								<option value="@item.Value">@item.Name</option>
+							}
+
+						}
+					</InputSelect>
+					<ValidationMessage For="@(() => VM!.Book)" />
+
+				</div>
+
+				<div class="col-sm-6">
+					<label for="Chapter">Chapter</label>
+					<InputSelect class="form-control" @bind-Value=VM.Chapter>
+						<option value="0">---Select a Chapter---</option>
+						@foreach (var item in Chapters)
+						{
+							@if (item == VM.Chapter)
+							{
+								<option selected value="@item">@item</option>
+							}
+							else
+							{
+								<option value="@item">@item</option>
+							}
+
+						}
+
+					</InputSelect>
+					<ValidationMessage For="@(() => VM.Chapter)" />
+
+				</div>
+
 			</div>
-		</div>
+
+		</fieldset>
+
 	}
 	else
 	{
@@ -87,23 +136,21 @@
 
 
 
-	<div class="row">
+	<div class="row mt-4 mb-2">
 		<div class="col-sm-6">
-			<div class="my-2">
 
-				<button type="submit" class="@Video.Constants.SaveButton.Color">
-					<i class="@Video.Constants.SaveButton.Icon"></i> @State!.Value.FormMode!.SubmitText
-				</button>
+			<button type="submit" class="@Video.Constants.SaveButton.Color">
+				<i class="@Video.Constants.SaveButton.Icon"></i> @State!.Value.FormMode!.SubmitText
+			</button>
 
-				@*
-				Cancel button has to be a div (ie not a button) thereby not triggering validation which is what I want
-				[Blazor Modal Form Validation: You have to click the cancel button twice to close the modal when you delete a form field](https://stackoverflow.com/a/67737357/41106)
-				*@
-				<div @onclick="@(e => CancelActionHandler())" class="@Video.Constants.CancelButton.Color">
-					<i class="@Video.Constants.CancelButton.Icon"></i> @Video.Constants.CancelButton.Text
-				</div>
-
+			@*
+			Cancel button has to be a div (ie not a button) thereby not triggering validation which is what I want
+			[Blazor Modal Form Validation: You have to click the cancel button twice to close the modal when you delete a form field](https://stackoverflow.com/a/67737357/41106)
+			*@
+			<div @onclick="@(e => CancelActionHandler())" class="@Video.Constants.CancelButton.Color">
+				<i class="@Video.Constants.CancelButton.Icon"></i> @Video.Constants.CancelButton.Text
 			</div>
+
 		</div>
 		<div class="col-sm-6"></div>
 	</div>

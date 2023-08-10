@@ -120,6 +120,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Pages\Admin\Video\BibleChapterCascadingDDL\" />
     <Folder Include="Pages\Sukkot\RegistrationSteps\Data\" />
   </ItemGroup>
 

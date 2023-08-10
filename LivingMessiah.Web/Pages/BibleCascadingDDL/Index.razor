@@ -1,6 +1,6 @@
-﻿@page "/BibleGroup"
+﻿@page "/BibleCascadingDDL"
 
-@using Page = LivingMessiah.Web.Links.Admin.BibleGroup
+@using Page = LivingMessiah.Web.Links.Bible.BibleCascadingDDL
 @using BibleEnum = LivingMessiah.Web.Enums
 
 <PageTitle>@Page.Title</PageTitle>
@@ -10,7 +10,8 @@
 					class="card card-body bg-light mt-1">
 	<DataAnnotationsValidator />
 	<ValidationSummary />
-	<div class="row mt-n2">
+
+	<div class="row mb-2">
 		<label for="Name" class="col-md-3 col-form-label">Name:</label>
 		<div class="col-md-9">
 			<InputText id="youTubeId" class="form-control" @bind-Value="VM!.Name" />
@@ -21,10 +22,10 @@
 	<div class="row">
 		<div class="col-4">
 			<label for="BibleGroups">Bible Groups</label>
-			<InputSelectNumber class="form-control"
-									 ValueChanged="@((int value) => BibleGroupIdHasChanged(value))"
-									 ValueExpression="@(() => bibleGroupId)"
-									 Value="@bibleGroupId">
+			<InputSelect class="form-control"
+												 ValueChanged="@((int value) => BibleGroupIdHasChanged(value))"
+												 ValueExpression="@(() => bibleGroupId)"
+												 Value="@bibleGroupId">
 				<option value="0">---Select a Bible Group---</option>
 
 				@foreach (var item in BibleEnum.BibleGroup.List.OrderBy(o => o.Value).ToList())
@@ -39,7 +40,7 @@
 					}
 
 				}
-			</InputSelectNumber>
+			</InputSelect>
 			<ValidationMessage For="@(() => VM.BibleGroupId)" />
 
 		</div>
@@ -47,7 +48,7 @@
 		<div class="col-4">
 			<label for="Book">Book</label>
 
-			<InputSelectNumber class="form-control" @bind-Value=VM.BookId>
+			<InputSelect class="form-control" @bind-Value=VM.BookId>
 
 				<option value="0">---Select a Book---</option>
 
@@ -64,7 +65,7 @@
 
 				}
 
-			</InputSelectNumber>
+			</InputSelect>
 			<ValidationMessage For="@(() => VM.BookId)" />
 
 		</div>
