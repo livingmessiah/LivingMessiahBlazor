@@ -19,7 +19,7 @@ public interface IRepository
 	Task<List<Models.ShabbatWeek>> GetShabbatWeekList(int top);
 	Task<List<Models.WeeklyVideoTable>> GetWeeklyVideoTableList(int top);
 
-	Task<AddEdit.FormVM_DTO> Get(int id);
+	Task<AddEdit.FormVM> Get(int id);
 	Task<Tuple<int, int, string>> WeeklyVideoInsert(Video.AddEdit.FormVM formVM);
 	Task<Tuple<int, int, string>> WeeklyVideoUpdate(Video.AddEdit.FormVM formVM);
 	Task<Tuple<int, int, string>> WeeklyVideoDelete(int id);
@@ -70,6 +70,7 @@ SELECT
 , wv.ShabbatWeekId,	wv.WeeklyVideoTypeId
 ,	wv.YouTubeId
 , wv.Title
+, wv.Book, wv.Chapter
 --, LAG(wv.ShabbatWeekId, 1, 0) OVER (ORDER BY ShabbatDate DESC, tvf.WeeklyVideoTypeId) AS PrevShabbatWeekId
 FROM tvfShabbatWeekCrossWeeklyVideoTypeByTop(@Top) tvf
 LEFT OUTER JOIN WeeklyVideo wv 
@@ -86,7 +87,7 @@ ORDER BY ShabbatDate DESC, tvf.WeeklyVideoTypeId
 	}
 
 
-	public async Task<AddEdit.FormVM_DTO> Get(int id)
+	public async Task<AddEdit.FormVM> Get(int id)
 	{
 		base.Parms = new DynamicParameters(new { Id = id });
 		base.Sql = $@"
@@ -105,7 +106,7 @@ WHERE Id = @Id
 ";
 		return await WithConnectionAsync(async connection =>
 		{
-			var row = await connection.QueryAsync<AddEdit.FormVM_DTO>(sql: base.Sql, base.Parms);
+			var row = await connection.QueryAsync<AddEdit.FormVM>(sql: base.Sql, base.Parms);
 			return row.SingleOrDefault()!;
 		});
 	}

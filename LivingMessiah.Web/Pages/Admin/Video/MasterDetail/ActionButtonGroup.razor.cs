@@ -31,8 +31,7 @@ public partial class ActionButtonGroup
 		{
 			case nameof(Enums.Crud.Add):
 				Dispatcher!.Dispatch(new AddEdit.DB_Populate_ShabbatWeekList());
-				// ToDo: I think I should call
-				Dispatcher!.Dispatch(new AddEdit.Load_FormVM_Action(args.YouTubeFeed!)); 
+				Dispatcher!.Dispatch(new AddEdit.Load_YouTubeFeed_Action(args.YouTubeFeed!)); 
 				Dispatcher!.Dispatch(new ParentState.Set_VisibleComponent_Action(VisibleComponent.AddEditForm));
 				Dispatcher!.Dispatch(new ParentState.Set_PageHeader_For_Detail_Action(args.Crud, args.YouTubeFeed!.Id_Zero_If_Null));  
 				Dispatcher!.Dispatch(new ParentState.Set_DetailPageHeader_Action("Publish Date", args.YouTubeFeed!.PublishDate.Date.ToShortDateString()));
@@ -42,7 +41,6 @@ public partial class ActionButtonGroup
 				Dispatcher!.Dispatch(new AddEdit.DB_Populate_ShabbatWeekList());
 				Dispatcher!.Dispatch(new AddEdit.DB_Get_Action(args.YouTubeFeed!.Id_Zero_If_Null, Enums.FormMode.Edit)); 
 				
-				//Dispatcher!.Dispatch(new AddEdit.Load_FormVM_Action(args.Id ?? 0, args.YouTubeId, args.Title));
 				Dispatcher!.Dispatch(new ParentState.Set_VisibleComponent_Action(VisibleComponent.AddEditForm));
 				Dispatcher!.Dispatch(new ParentState.Set_PageHeader_For_Detail_Action(args.Crud, args.YouTubeFeed!.Id_Zero_If_Null));
 				Dispatcher!.Dispatch(new ParentState.Set_DetailPageHeader_Action("Publish Date", args.YouTubeFeed!.PublishDate.Date.ToShortDateString()));

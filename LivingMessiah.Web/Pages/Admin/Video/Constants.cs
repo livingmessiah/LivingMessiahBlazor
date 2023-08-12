@@ -23,6 +23,22 @@ public static class Constants
 		public const string ButtonColor = "btn btn-outline-warning";  //text-warning btn-sm  float-end
 	}
 
+	public static class ShowTableButton
+	{
+		public const string Icon = "fas fa-table";
+		public const string Text = "Show Table";
+		public const string ButtonColor = "btn btn-outline-danger";
+		
+		public static class PageHeader
+		{
+			public const string Icon = ShowTableButton.Icon;
+			public const string Text = "Weekly Videos";
+			public const string Color = "text-danger";
+		}
+	}
+
+
+
 	public static class SaveButton
 	{
 		public const string Icon = "fas fa-save";

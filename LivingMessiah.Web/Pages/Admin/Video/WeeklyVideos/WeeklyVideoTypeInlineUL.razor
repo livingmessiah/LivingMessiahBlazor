@@ -1,0 +1,26 @@
+﻿
+<div class="row bg-light">
+	<div class="col-6">
+		<p class="mt-2 mb-0 text-black-50">WVT (Weekly Video Type)...</p>
+
+		<ol class="">
+			@foreach (var item in Enums.WeeklyVideoType.List
+			.OrderBy(o => o.Value).ToList())
+			{
+				<li class=""><small><b>@item.Abrv:</b> @item.Name</small></li>
+			}
+		</ol>
+			@* <ul class="list-inline"> 	<li class="list-inline-item  *@
+
+	</div>
+	<div class="col-6">
+		<div class="mt-2 d-flex justify-content-end">
+			<Anchor Href="https://www.youtube.com/results?search_query=living+messiah"
+							Descr="YouTube Search" UsePrefixIcon="false">
+			</Anchor>
+		</div>
+
+	</div>
+</div>
+
+

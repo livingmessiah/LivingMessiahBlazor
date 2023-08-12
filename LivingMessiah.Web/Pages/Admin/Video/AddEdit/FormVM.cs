@@ -9,11 +9,4 @@ public class FormVM
 	public string? Title { get; set; }
 	public int Book { get; set; } //= 0;
 	public int Chapter { get; set; } // = 0;
-
-	public FormVM(int id, string youTubeId, string title)
-	{
-		Id = id;
-		YouTubeId = youTubeId;
-		Title = title;
-	}
 }

@@ -5,7 +5,11 @@ namespace LivingMessiah.Web.Pages.Admin.Video.Index;
 // 1. Action
 public record Set_VisibleComponent_Action(Enums.VisibleComponent VisibleComponent);
 public record Set_PageHeader_For_Index_Action(PageHeaderVM PageHeaderVM);  
-public record Set_PageHeader_For_Detail_Action(Enums.Crud Crud, int Id);  //string Title, string Icon, string Color
+
+// ToDo can this two be merged?
+public record Set_PageHeader_For_Detail_Action(Enums.Crud Crud, int Id);
+public record Set_PageHeader_For_Table_Action(string Title, string Icon, string Color, int Id);
+
 public record Set_DetailPageHeader_Action(string Label, string Value);
 public record Set_DetailPageHeader_Empty_Action();
 
@@ -64,6 +68,18 @@ public static class Reducers
 		{
 			// For Title, if Add, use Crud.Text, if  Edit, use Crud.Name
 			PageHeaderVM = new PageHeaderVM { Title = action.Crud.Name, Icon = action.Crud.Icon, Color = action.Crud.Color, Id = action.Id }
+		};
+	}
+
+
+
+	[ReducerMethod]
+	public static IndexState On_Set_PageHeader_For_Table(
+		IndexState state, Set_PageHeader_For_Table_Action action)
+	{
+		return state with
+		{
+			PageHeaderVM = new PageHeaderVM { Title = action.Title, Icon = action.Icon, Color = action.Color, Id = action.Id }
 		};
 	}
 

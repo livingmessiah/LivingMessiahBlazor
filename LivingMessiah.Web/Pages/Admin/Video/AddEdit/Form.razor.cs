@@ -6,6 +6,7 @@ using ParentState = LivingMessiah.Web.Pages.Admin.Video.Index;
 using LivingMessiah.Web.Enums;
 using System.Collections.Generic;
 using System.Linq;
+using LivingMessiah.Web.Pages.Admin.Video.Models;
 
 namespace LivingMessiah.Web.Pages.Admin.Video.AddEdit;
 
@@ -16,19 +17,26 @@ public partial class Form
 	[Inject] public IDispatcher? Dispatcher { get; set; }
 
 	private FormVM? VM => State!.Value.FormVM; // Should this be a Parameter?
-	
+	private YouTubeFeed? YouTubeFeed  => State!.Value.YouTubeFeed;
+
 	private FluentValidationValidator? _fluentValidationValidator;
 
 	private int bookId = 0;
 	private List<BibleBook> Books = new();
 	private List<int> Chapters = new();
 	
-	//string parameters = $"ShabbatWeekId: {formVM.ShabbatWeekId}, WeeklyVideoTypeId: {formVM.WeeklyVideoTypeId}";
 	string inside = $"Inside Admin.Video.AddEdit!{nameof(Form)}";
 
 	protected override void OnInitialized()
 	{
 		Logger!.LogDebug(string.Format("{0}!{1}", inside, nameof(OnInitialized)));
+
+		if (State!.Value.FormMode!.Value == Enums.FormMode.Add)
+		{
+			VM!.YouTubeId = YouTubeFeed!.YouTubeId;
+			VM!.Title = YouTubeFeed!.Title;
+		}
+
 		if (State!.Value.ShabbatWeekList is null)
 		{
 			Logger!.LogDebug(string.Format("...Call {0} because ShabbatWeekList is null", nameof(DB_Populate_ShabbatWeekList)));

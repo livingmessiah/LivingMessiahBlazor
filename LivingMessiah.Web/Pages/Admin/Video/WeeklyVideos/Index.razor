@@ -1,0 +1,68 @@
+﻿@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+@using LivingMessiah.Web.Infrastructure
+
+<LoadingComponent IsLoading="State!.Value.WeekVideoList==null">
+	<TableTemplate Items="State!.Value.WeekVideoList">
+		<TableHeader>
+			<th>Id</th>
+			<th>Shabbat Week</th>
+			<th>WVT</th>
+			<th>YouTube Id</th>
+			<th>B/C</th>
+			<th>Title</th>
+		</TableHeader>
+		<RowTemplate>
+			<td>
+				<button @onclick="@(e => Edit_ButtonClick(context.Id))" type="button"
+								title="Weekly Video Edit" class="@Enums.Crud.Edit.ButtonColor btn-sm">
+					<sup class="text-black-50">@context.Id</sup> <i class="@Enums.Crud.Edit.Icon"></i>
+				</button>
+			</td>
+
+			<td>
+				<small><sup class="text-black-50">@context.ShabbatWeekId</sup></small> @context.ShabbatDate.ToShortDateString()
+			</td>
+			<td>
+				<small><sup class="text-black-50">@context.WeeklyVideoTypeId</sup></small> @Enums.WeeklyVideoType.FromValue(context.WeeklyVideoTypeId).Abrv
+			</td>
+			<td>
+				@if (context.YouTubeId != null)
+				{
+					<a href="@context.Url()" target="_blank"
+					 title="@context.Url()">
+						<u>@context.YouTubeId</u>
+						<i class="fas fa-external-link-square-alt"></i>
+					</a>
+				}
+				else
+				{
+					<p class="text-info"><i>Missing</i></p>
+				}
+			</td>
+			<td>
+				@if (context.Book != 0)
+				{
+					<a href="@context.BC" target="_blank"
+					 title="@context.BC">
+						<u>MHB</u>
+						<i class="fas fa-external-link-square-alt"></i>
+					</a>
+				}
+			</td>
+
+			<td>
+				@StringExtensions.Truncate(@context.Title!, 20)
+			</td>
+
+
+
+		</RowTemplate>
+	</TableTemplate>
+</LoadingComponent>
+
+<WeeklyVideoTypeInlineUL />
+
+@*@code {
+
+}
+*@

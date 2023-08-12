@@ -15,7 +15,7 @@ namespace LivingMessiah.Web.Pages.Admin.Video.AddEdit;
 
 public record Set_FormVM_Action(FormVM? FormVM);
 public record Set_FormMode_To_Edit_Action(int Id);
-public record Load_FormVM_Action(YouTubeFeed YouTubeFeed);  
+public record Load_YouTubeFeed_Action(YouTubeFeed YouTubeFeed);  
 public record Set_ShabbatWeeks_Action(List<Models.ShabbatWeek> ShabbatWeekList);
 public record DB_InsertOrUpdate_Action(FormVM FormVM, Enums.FormMode? FormMode);
 public record DB_Delete_Action(int Id);
@@ -27,6 +27,7 @@ public record AddEditState
 {
 	public Enums.FormMode? FormMode { get; init; }
 	public FormVM? FormVM { get; init; }
+	public YouTubeFeed? YouTubeFeed { get; init; }
 	public List<Models.ShabbatWeek>? ShabbatWeekList { get; init; }
 }
 
@@ -40,8 +41,7 @@ public class FeatureImplementation : Feature<AddEditState>
 	{
 		return new AddEditState
 		{
-			//FormVM = new FormVM()
-			FormVM = new FormVM(0, "", "")
+			FormVM = new FormVM()
 		};
 	}
 }
@@ -62,13 +62,15 @@ public static class Reducers
 		}
 	
 	[ReducerMethod]
-	public static AddEditState On_Load_FormVM(AddEditState state, Load_FormVM_Action action)
+	public static AddEditState On_Load_YouTubeFeed(AddEditState state, Load_YouTubeFeed_Action action)
 	{
 		return state with
 		{
 			FormMode = Enums.FormMode.Add,
 			//ToDo: I think I need to change FormMV so it doesn't have a constructor.
-			FormVM = new AddEdit.FormVM(action.YouTubeFeed.Id_Zero_If_Null, action.YouTubeFeed.YouTubeId ?? "???", action.YouTubeFeed.Title ?? "???")
+			//FormVM = new AddEdit.FormVM(action.YouTubeFeed.Id_Zero_If_Null, action.YouTubeFeed.YouTubeId ?? "???", action.YouTubeFeed.Title ?? "???")
+			YouTubeFeed = action.YouTubeFeed,
+			FormVM = new AddEdit.FormVM()
 		};
 	}
 
@@ -130,36 +132,15 @@ public class Effects
 		Logger.LogDebug(string.Format("Inside {0}", inside));
 		try
 		{
+			AddEdit.FormVM? formVM = await db!.Get(action.Id);
 
-			//AddEdit.FormVM? formVM = new();
-			//formVM = await db!.Get(action.Id);
-
-			//FormVM_DTO dto = new();
-			//dto.Id = action.Id;
-			/*
-			*/
-
-			//AddEdit.FormVM? formVM = await db!.Get(action.Id);
-			FormVM_DTO? dto = await db!.Get(action.Id);
-
-			//if (formVM is null)
-			if (dto is null)
+			if (formVM is null)
 			{
-				Logger.LogWarning(string.Format("...{0}; {1} is null", inside, nameof(dto)));
+				Logger.LogWarning(string.Format("...{0}; {1} is null", inside, nameof(formVM)));
 				dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Warning, $"Video Not Found; Id: {action.Id}"));
 			}
 			else
 			{
-				FormVM formVM = new(0, "", "");
-				formVM.Id = dto.Id;
-				formVM.WeeklyVideoTypeId = dto.WeeklyVideoTypeId;
-				formVM.ShabbatWeekId = dto.ShabbatWeekId;
-				formVM.YouTubeId = dto.YouTubeId;
-				formVM.Title = dto.Title;
-				formVM.Book = dto.Book;
-				formVM.Chapter = dto.Chapter;
-
-
 				dispatcher.Dispatch(new Set_FormVM_Action(formVM));
 				//dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Info, $"Got {formVM!.FamilyName!}"));
 				//dispatcher.Dispatch(new Edit_Action(action.Id));

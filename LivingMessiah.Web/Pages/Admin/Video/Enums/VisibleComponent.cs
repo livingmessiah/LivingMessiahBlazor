@@ -10,7 +10,7 @@ public abstract class VisibleComponent : SmartEnum<VisibleComponent>
 		internal const int MasterList = 1;  
 		internal const int AddEditForm = 2;
 		internal const int DisplayCard = 3;
-
+		internal const int WeeklyVideosTable = 4;
 	}
 	#endregion
 
@@ -18,6 +18,7 @@ public abstract class VisibleComponent : SmartEnum<VisibleComponent>
 	public static readonly VisibleComponent MasterList = new MasterListSE();
 	public static readonly VisibleComponent AddEditForm = new AddEditFormSE();
 	public static readonly VisibleComponent DisplayCard = new DisplayCardSE();  // Rename DisplayCard to just Display
+	public static readonly VisibleComponent WeeklyVideosTable = new WeeklyVideosTableSE();
 	#endregion
 
 	private VisibleComponent(string name, int value) : base(name, value)  // Constructor
@@ -45,6 +46,13 @@ public abstract class VisibleComponent : SmartEnum<VisibleComponent>
 	{
 		public DisplayCardSE() : base($"{nameof(Id.DisplayCard)}", Id.DisplayCard) { }
 	}
+
+
+	private sealed class WeeklyVideosTableSE : VisibleComponent
+	{
+		public WeeklyVideosTableSE() : base($"{nameof(Id.WeeklyVideosTable)}", Id.WeeklyVideosTable) { }
+	}
+
 
 	#endregion
 }

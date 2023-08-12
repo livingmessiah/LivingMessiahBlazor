@@ -34,9 +34,18 @@
 		{
 			<ShowMasterIndexButton />
 			<DetailPageHeader />
-
+		}
+		@if (State!.Value.VisibleComponent == Enums.VisibleComponent.AddEditForm)
+		{
 			<LivingMessiah.Web.Pages.Admin.Video.AddEdit.Form />
-	
+		}
+		else
+		{
+			@if (State!.Value.VisibleComponent == Enums.VisibleComponent.WeeklyVideosTable)
+			{
+				<LivingMessiah.Web.Pages.Admin.Video.WeeklyVideos.Index />
+			}
+			@*else{ THIS SHOULDN'T HAPPEN}*@
 		}
 
 	</Authorized>
