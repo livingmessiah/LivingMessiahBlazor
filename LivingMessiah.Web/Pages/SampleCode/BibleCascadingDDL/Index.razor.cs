@@ -1,11 +1,11 @@
 ﻿using Blazored.Toast.Services;
 using Microsoft.AspNetCore.Components;
 using System.Collections.Generic;
-using Page = LivingMessiah.Web.Links.Bible.BibleCascadingDDL;
+using Page = LivingMessiah.Web.Links.SampleCode.BibleCascadingDDL;
 using BibleEnum = LivingMessiah.Web.Enums;
 using System.Linq;
 
-namespace LivingMessiah.Web.Pages.BibleCascadingDDL;
+namespace LivingMessiah.Web.Pages.SampleCode.BibleCascadingDDL;
 
 public partial class Index
 {

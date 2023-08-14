@@ -68,35 +68,6 @@ public static class Admin
 		public const string Icon = "fas fa-tachometer-alt";
 	}
 
-	public static class AudioVisual
-	{
-		public const string Index = "/Admin/AudioVisual/";
-		public const string Redirect = "/Admin/AudioVisual";
-		public const string Title = "Audio Visual";
-		public const string Icon = "fab fa-teamspeak";
-
-		public static class Add
-		{
-			public const string Index = "/Admin/AudioVisual/WeeklyVideoAddForm/";
-			public const string Title = "Weekly Video Add";
-			public const string Icon = "fas fa-plus";
-		}
-
-		public static class AddMultiForms
-		{
-			public const string Index = "/Admin/AudioVisual/WeeklyVideoAddMultiForms/";
-			public const string Title = "Weekly Video Add Multi Forms";
-			public const string Icon = "fas fa-plus";
-		}
-
-
-		public static class Update
-		{
-			public const string Index = "/Admin/AudioVisual/WeeklyVideoUpdateForm/";
-			public const string Title = "Weekly Video Update";
-			public const string Icon = "fas fa-pencil-alt";
-		}
-	}
 }
 
 
@@ -136,47 +107,12 @@ public static class Articles
 
 }
 
-public static class AudioVisual
-{
-	public const string Index = "/Admin/AudioVisual/";
-	public const string Title = "Audio Visual";
-	public const string Icon = "fab fa-teamspeak";
-	//public const string Icon2 = "fas fa-theater-masks";
-	//public const string Icon3 = "fas fa-broadcast-tower";
-}
-
-public static class Bible
-{
-	public static class BibleBooks
-	{
-		public const string Index = "/BibleBooks/";  // /SmartEnums/BibleBooks
-		public const string Title = "Bible Books";  // <PageTitle>SmartEnums | BibleBooks</PageTitle>
-		public const string Icon = "fas fa-tachometer-alt";
-	}
-
-	public static class BibleCascadingDDL
-	{
-		public const string Index = "/BibleCascadingDDL/";
-		public const string Title = "Bible Cascading Dropdown List";
-		public const string Icon = "fas fa-tachometer-alt";
-	}
-}
-
-
 //ToDo use the link in WindmillRanch
 public static class BiblicalPermaculture
 {
 	public const string Index = "/WindmillRanch/Permaculture";
 	public const string Title = "Biblical Permaculture";
 	public const string Icon = "fas fa-tractor";
-}
-
-
-public static class BibleSearch
-{
-	public const string Index = "/BibleSearch";
-	public const string Title = "Bible Search";
-	public const string Icon = "fas fa-search";  //fas fa-bible
 }
 
 public static class BloodMoons
@@ -413,6 +349,42 @@ public static class Podcast
 	public const string Icon = "fas fa-podcast";
 }
 
+public static class SampleCode
+{
+	public const string Index = "/SampleCode";
+	public const string Title = "Sample Code";
+	public const string Icon = "fas fa-vial";
+
+	public static class BibleCascadingDDL
+	{
+		public const string Index = "/BibleCascadingDDL/";
+		public const string Title = "Bible Cascading Dropdown List";
+		public const string Icon = "fas fa-tachometer-alt";
+	}
+
+	public static class BibleSearch
+	{
+		public const string Index = "/BibleSearch";
+		public const string Title = "Bible Search";
+		public const string Icon = "fas fa-search";  //fas fa-bible
+	}
+
+	public static class SyncfusionSfDropDownList
+	{
+		public const string Index = "/BBCP";
+		public const string Title = "Bible Book Chapter | Syncfusion DDL";
+		public const string Icon = "fas fa-search";
+	}
+
+	public static class BibleBooks
+	{
+		public const string Index = "/BibleBooks/";  // /SmartEnums/BibleBooks
+		public const string Title = "Bible Books";  // <PageTitle>SmartEnums | BibleBooks</PageTitle>
+		public const string Icon = "fas fa-tachometer-alt";
+	}
+
+}
+
 public static class ShabbatService
 {
 	public const string Index = "/ShabbatService";
@@ -591,13 +563,6 @@ public static class UpcomingEventsAdmin
 		public const string Icon = "fas fa-pencil-alt";
 	}
 
-	public static class EditMarkdown
-	{
-		public const string Page = "/UpcomingEventsAdminEditMarkdown";
-		public const string Title = "Edit Upcoming Events Markdown ";
-		public const string Icon = "fab fa-markdown";
-		public const string Icon2 = "fas fa-pencil-alt";
-	}
 
 	public static class Form
 	{
@@ -620,49 +585,24 @@ public static class UpcomingEventsAdmin
 		public const string Icon = "fas fa-table";
 	}
 
+	public static class EditMarkdown
+	{
+		public const string Page = "/UpcomingEventsAdminEditMarkdown"; // ToDo: URL doesn't work but the class is referenced ???
+		public const string Title = "Edit Upcoming Events Markdown ";
+		public const string Icon = "fab fa-markdown";
+		public const string Icon2 = "fas fa-pencil-alt";
+	}
+
 	public static class UploadImage
 	{
-		public const string Page = "/UpcomingEventsAdminUploadImage";
+		public const string Page = "/UpcomingEventsAdminUploadImage"; // URL Doesn't work but the class is referenced ???
 		public const string Title = "Upload Upcoming Events Image ";
 		public const string Icon = "fas fa-cloud-upload-alt";
 		public const string Icon2 = "fas fa-image";
 	}
+
 }
 
-// Deprecated
-public static class WeeklyVideos
-{
-	public const string Index = "/Admin/WeeklyVideos";
-	public const string Title = "Weekly Videos";
-	public const string Icon = "fab fa-youtube";
-
-	public const string AddIcon = "fas fa-plus";
-	public const string AddButtonColor = "btn btn-success";
-	public const string AddText = "Add";
-	public const string AddModalText = "Save";
-
-	public const string EditIcon = "fas fa-pencil-alt";
-	public const string EditButtonColor = "btn btn-primary";
-	public const string EditText = "Edit";
-	public const string EditModalText = "Update";
-
-	public const string DeleteIcon = "fa fa-times";
-	public const string DeleteButtonColor = "btn btn-danger";
-	public const string DeleteText = "Delete";
-
-	public const string SaveIcon = "fas fa-save";
-
-	public const string CancelIcon = "fas fa-window-close"; //"far fa-window-close";
-}
-
-
-public static class WeeklyVideosEditGrid
-{
-	//public const string Index = "/Admin/WeeklyVideosEditGrid";
-	public const string Redirect = "/Admin/AudioVisual";
-	public const string Title = "Weekly Videos Edit Grid";
-	public const string Icon = "fab fa-youtube";
-}
 
 public static class Wirecast
 {
@@ -670,10 +610,11 @@ public static class Wirecast
 	public const string Index = "/Wirecast";
 	public const string Title = "Wirecast Link for Translators";
 
-	public static class Edit
+	public static class Admin
 	{
-		public const string Page = "/Wirecast/Edit";
+		public const string Index = "/Wirecast/Edit";
 		public const string Title = "Wirecast Edit";
 		public const string Icon = "fas fa-pencil-alt ";  // fa-pencil-alt-square-o
 	}
+
 }

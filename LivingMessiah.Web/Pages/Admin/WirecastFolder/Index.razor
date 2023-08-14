@@ -1,31 +1,26 @@
-﻿@page "/Admin/KeyDatesEdit"
+﻿@page "/Wirecast/Edit/"
 @using static LivingMessiah.Web.Services.Auth0
 
-@using Page = LivingMessiah.Web.Links.KeyDatesEdit
+@using Page = LivingMessiah.Web.Links.Wirecast.Admin
 <PageTitle>@Page.Title</PageTitle>
 
-<div class="pb-1 mt-4 mb-1 border-bottom border-info">
+<div class="pb-1 mt-4 mb-5 border-bottom border-info">
 	<h2><i class="@Page.Icon"></i> @Page.Title</h2>
 </div>
 
-<AuthorizeView Roles="@Roles.AdminOrAnnouncements">
-
+<AuthorizeView Roles="@Roles.AdminOrAudiovisual">
+	
 	<Authorized>
-		<KeyDateSettingsList />
-		<EditGrid />
+		<WirecastEdit />
 	</Authorized>
 
 	<NotAuthorized>
-
 		<div class="card border-warning my-5">
 			<div class="card-header">Not Authorized</div>
-
 			<div class="card-body">
 				<h5 class="">To view <b>@Page.Title</b> you need to be logged in.</h5>
 				<LoginRedirectButton ReturnUrl="@Page.Index" />
 			</div>
 		</div>
-
 	</NotAuthorized>
-
 </AuthorizeView>

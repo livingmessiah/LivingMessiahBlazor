@@ -1,20 +1,21 @@
 ﻿@using static LivingMessiah.Web.Services.Auth0
 
 <section id="main">
+
 	<AuthorizeView Roles=@Roles.Admin>
-		<Admin></Admin>
+		<AdminList />
 	</AuthorizeView>
 
-	<AuthorizeView Roles=@Roles.AdminOrAudiovisual>
-		<AudioVisualButton></AudioVisualButton>
+	<AuthorizeView Roles=@Roles.AudioVisual>
+		<AdminWirecastButton />
 	</AuthorizeView>
 
 	<AuthorizeView Roles=@Roles.Sukkot>
-		<SukkotAdminButton></SukkotAdminButton>
+		<SukkotAdminButton />
 	</AuthorizeView>
 
-	<AuthorizeView Roles=@Roles.AdminOrKeyDates>
-		@*<KeyDatesEditButton></KeyDatesEditButton>*@
+	<AuthorizeView Roles=@Roles.KeyDates>
+		<KeyDatesEditButton />
 	</AuthorizeView>
 
 	<AuthorizeView Roles=@Roles.Admin>

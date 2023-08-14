@@ -4,7 +4,7 @@ using LivingMessiah.Web.Domain;
 
 namespace LivingMessiah.Web.Pages.Home;
 
-public partial class Admin
+public partial class AdminList
 {
 	[Inject] public Services.ILinkService? LinkService { get; set; }
 

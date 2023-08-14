@@ -1,11 +1,4 @@
-﻿@page "/Wirecast/Edit/"
-
-@using Page = LivingMessiah.Web.Links.Wirecast
-<PageTitle>@Page.Edit.Title</PageTitle>
-
-<h2 class="mt-2">
-	<i class="@Page.Edit.Icon"></i> @Page.Edit.Title
-</h2>
+﻿
 
 <LoadingComponent IsLoading="Wirecast==null">
 	<EditForm Model="@Wirecast"
@@ -42,8 +35,6 @@
 
 	</EditForm>
 </LoadingComponent>
-
-
 
 <LoadingComponent IsLoading="ScratchPad==null">
 	<EditForm Model="@ScratchPad"

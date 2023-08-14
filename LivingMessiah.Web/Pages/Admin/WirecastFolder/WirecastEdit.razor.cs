@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Authorization;
-using static LivingMessiah.Web.Services.Auth0;
 using System.Threading.Tasks;
 using LivingMessiah.Data;
 using LivingMessiah.Domain;
@@ -9,9 +8,8 @@ using System;
 using Blazored.Toast.Services;
 using Page = LivingMessiah.Web.Links.Wirecast;
 
-namespace LivingMessiah.Web.Pages.Admin.AudioVisual;
+namespace LivingMessiah.Web.Pages.Admin.WirecastFolder;
 
-[Authorize(Roles = Roles.AdminOrAudiovisual)]
 public partial class WirecastEdit
 {
 	[Inject] public IShabbatWeekRepository? db { get; set; }
@@ -26,7 +24,7 @@ public partial class WirecastEdit
 	protected override async Task OnInitializedAsync()
 	{
 		Logger!.LogDebug(string.Format("Inside Page: {0}, Class!Method: {1}"
-		, Page.Edit.Page, nameof(WirecastEdit) + "!" + nameof(OnInitializedAsync)));
+		, Page.Admin.Index, nameof(WirecastEdit) + "!" + nameof(OnInitializedAsync)));
 
 		try
 		{

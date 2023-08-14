@@ -1,9 +1,12 @@
 ﻿@page "/BibleCascadingDDL"
 
-@using Page = LivingMessiah.Web.Links.Bible.BibleCascadingDDL
+@using Page = LivingMessiah.Web.Links.SampleCode.BibleCascadingDDL
 @using BibleEnum = LivingMessiah.Web.Enums
 
 <PageTitle>@Page.Title</PageTitle>
+<div class="pb-2 mt-4 mb-2 border-bottom">
+	<h2><i class="@Page.Icon"></i> @Page.Title</h2>
+</div>
 
 <EditForm Model="@VM"
 					OnValidSubmit="@FormSubmitted"

@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using LivingMessiah.Web.Domain;
 using LivingMessiah.Web.Links;
-
+using LivingMessiah.Web.Pages.Admin.WirecastFolder;
+using LivingMessiah.Web.Pages.Home;
 using PageFeast = LivingMessiah.Web.Pages.Feasts.LinkSmartEnums.FeastLinks;
 using PageParasha = LivingMessiah.Web.Pages.Parasha.LinkSmartEnums.ParashaLinks;
 using PageWindmillRanch = LivingMessiah.Web.Pages.WindmillRanch.LinkSmartEnums.WindmillRanchLinks;
@@ -26,9 +27,8 @@ public class LinksFactory : ILinksFactory
 		return new List<LinkBasic>
 			{
 				new LinkBasic {Index = Admin.Video.Index, Title = Admin.Video.Title, Icon = Admin.Video.Icon, },
+				new LinkBasic {Index = Wirecast.Admin.Index, Title = Wirecast.Admin.Title, Icon = Wirecast.Admin.Icon, },
 				new LinkBasic {Index = Database.Error.Log, Title = Database.Error.Title, Icon = Database.Error.Icon, },
-				new LinkBasic {Index = WeeklyVideos.Index, Title = WeeklyVideos.Title, Icon = WeeklyVideos.Icon, },
-				new LinkBasic {Index = Admin.AudioVisual.Add.Index, Title = Admin.AudioVisual.Add.Title, Icon = Admin.AudioVisual.Add.Icon, },
 				new LinkBasic {Index = KeyDatesEdit.Index, Title = KeyDatesEdit.Title, Icon = KeyDatesEdit.Icon, }
  			};
 	}
@@ -63,9 +63,9 @@ public class LinksFactory : ILinksFactory
 			{
 				new Link
 				{
-					Index = IntroductionAndWelcome.Index,
-					Title = IntroductionAndWelcome.Title,
-					Icon = IntroductionAndWelcome.Icon,
+					Index = LivingMessiah.Web.Links.IntroductionAndWelcome.Index,
+					Title = LivingMessiah.Web.Links.IntroductionAndWelcome.Title,
+					Icon = LivingMessiah.Web.Links.IntroductionAndWelcome.Icon,
 					HomeSidebarUsage=true,  // if XsOrSm == true 
 					HomeFloatRightHebrew = "שָׁלוֹם",
 					HomeTitleSuffix = " Shalom  H7695",
@@ -221,9 +221,9 @@ public class LinksFactory : ILinksFactory
 				},
 				new Link
 				{
-					Index = BibleSearch.Index,
-					Title = BibleSearch.Title,
-					Icon = BibleSearch.Icon,
+					Index = SampleCode.BibleSearch.Index,
+					Title = SampleCode.BibleSearch.Title,
+					Icon = SampleCode.BibleSearch.Icon,
 					HomeSidebarUsage=false,
 					HomeFloatRightHebrew="בָּקַר",
 					HomeTitleSuffix=" bāqar H1239",
@@ -339,11 +339,20 @@ public class LinksFactory : ILinksFactory
 				},
 				new Link
 				{
+					Index = SampleCode.Index,
+					Title = SampleCode.Title,
+					Icon = SampleCode.Icon,
+					HomeSidebarUsage=false,
+					SortOrder=26,
+					SitemapUsage=true
+				},
+				new Link
+				{
 					Index = Links.ShowLow.Index,
 					Title = Links.ShowLow.Title,
 					Icon = Links.ShowLow.Icon,
 					HomeSidebarUsage=false,
-					SortOrder=26,
+					SortOrder=27,
 					SitemapUsage=true
 				},
 				new Link
@@ -352,7 +361,7 @@ public class LinksFactory : ILinksFactory
 					Title = Links.Mishpocha.Title,
 					Icon = Links.Mishpocha.Icon,
 					HomeSidebarUsage=false,
-					SortOrder=27,
+					SortOrder=28,
 					SitemapUsage=true
 				},
 				new Link
@@ -361,7 +370,7 @@ public class LinksFactory : ILinksFactory
 					Title = Links.Community.Title,
 					Icon = Links.Community.Icon,
 					HomeSidebarUsage=false,
-					SortOrder=28,
+					SortOrder=29,
 					SitemapUsage=true
 				},
 				new Link
@@ -370,7 +379,7 @@ public class LinksFactory : ILinksFactory
 					Title = Links.Gallery.Title,
 					Icon = Links.Gallery.Icon,
 					HomeSidebarUsage=false,
-					SortOrder=29,
+					SortOrder=30,
 					SitemapUsage=true
 				}
 

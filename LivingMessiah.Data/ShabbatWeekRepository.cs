@@ -28,9 +28,6 @@ public interface IShabbatWeekRepository
 	// Weekly Videos
 	Task<IReadOnlyList<vwCurrentWeeklyVideo>> GetCurrentWeeklyVideos(int daysOld);
 	Task<IReadOnlyList<WeeklyVideoIndex>> GetTopWeeklyVideos(int top);
-	Task<int> WeeklyVideoAdd(WeeklyVideoModel dto);
-	Task<int> WeeklyVideoUpdate(WeeklyVideoModel dto);
-	Task<int> WeeklyVideoDelete(int id);
 
 
 	#region ToDo: Move somewhere else
@@ -324,81 +321,6 @@ ORDER BY ShabbatDate DESC, tvf.WeeklyVideoTypeId
 		});
 	}
 
-	public async Task<int> WeeklyVideoAdd(WeeklyVideoModel dto)
-	{
-		base.Parms = new DynamicParameters(new
-		{
-			dto.ShabbatWeekId,
-			dto.WeeklyVideoTypeId,
-			dto.YouTubeId,
-			dto.Title,
-			dto.Book,
-			dto.Chapter
-		});
-		//dto.GraphicFileRoot,dto.NotesFileRoot, ... GraphicFile, NotesFile ... , @GraphicFile, @NotesFile
-		base.Sql = $@"
-INSERT INTO WeeklyVideo
-(ShabbatWeekId, WeeklyVideoTypeId, YouTubeId, Title, Book, Chapter)
-VALUES (@ShabbatWeekId, @WeeklyVideoTypeId, @YouTubeId, @Title, @Book, @Chapter)
-; SELECT CAST(SCOPE_IDENTITY() as int)
-";
-		int newId;
-		return await WithConnectionAsync(async connection =>
-		{
-			//var count = await connection.ExecuteAsync(sql: base.Sql, param: base.Parms, commandType: System.Data.CommandType.Text);
-			//return count;
-			//var returnId = this.db.Query<int>(sql, dto).SingleOrDefault();
-			newId = await connection.ExecuteScalarAsync<int>(base.Sql, base.Parms);
-			return newId;
-
-		});
-	}
-
-	public async Task<int> WeeklyVideoUpdate(WeeklyVideoModel dto)
-	{
-		base.Parms = new DynamicParameters(new
-		{
-			dto.Id,
-			dto.ShabbatWeekId,
-			dto.WeeklyVideoTypeId,
-			dto.YouTubeId,
-			dto.Title,
-			//dto.GraphicFileRoot,
-			//dto.NotesFileRoot,
-			dto.Book,
-			dto.Chapter
-
-		});
-		base.Sql = $@"
-UPDATE WeeklyVideo SET
-  ShabbatWeekId = @ShabbatWeekId
-, WeeklyVideoTypeId = @WeeklyVideoTypeId
-, YouTubeId = @YouTubeId
-, Title = @Title
---, GraphicFile = @GraphicFile
---, NotesFile = @NotesFile
-, Book = @Book
-, Chapter = @Chapter
-WHERE Id = @Id
-";
-
-		return await WithConnectionAsync(async connection =>
-		{
-			var affectedrows = await connection.ExecuteAsync(sql: base.Sql, param: base.Parms);
-			return affectedrows;
-		});
-	}
-
-	public async Task<int> WeeklyVideoDelete(int id)
-	{
-		base.Sql = "DELETE FROM WeeklyVideo WHERE Id = @id";
-		base.Parms = new DynamicParameters(new { Id = id });
-		return await WithConnectionAsync(async connection =>
-		{
-			var affectedrows = await connection.ExecuteAsync(sql: base.Sql, param: base.Parms);
-			return affectedrows;
-		});
-	}
 	#endregion
 
 

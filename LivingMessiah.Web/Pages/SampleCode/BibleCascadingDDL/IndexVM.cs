@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace LivingMessiah.Web.Pages.BibleCascadingDDL;
+namespace LivingMessiah.Web.Pages.SampleCode.BibleCascadingDDL;
 
 public class IndexVM
 {

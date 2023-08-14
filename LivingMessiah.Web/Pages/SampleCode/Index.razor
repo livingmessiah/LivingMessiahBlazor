@@ -1,0 +1,26 @@
+﻿@page "/SampleCode"
+
+@using Page = LivingMessiah.Web.Links.SampleCode
+@using PageBibleCascadingDDL = LivingMessiah.Web.Links.SampleCode.BibleCascadingDDL
+@using PageBibleSearch = LivingMessiah.Web.Links.SampleCode.BibleSearch
+@using PageSyncfusionSfDropDownList = LivingMessiah.Web.Links.SampleCode.SyncfusionSfDropDownList
+
+<PageTitle>@Page.Title</PageTitle>
+<div class="pb-1 mt-4 mb-1 border-bottom border-info">
+	<h2><i class="@Page.Icon"></i> @Page.Title</h2>
+</div>
+
+<div class="card bg-light mt-3">
+	<div class="card-body">
+		@((MarkupString)Html!)
+	</div>
+</div>
+
+
+
+<h3 class="mt-3">Links</h3>
+<ul>
+	<li><a href="@PageBibleCascadingDDL.Index">@PageBibleCascadingDDL.Title</a></li>
+	<li><a href="@PageBibleSearch.Index">@PageBibleSearch.Title</a></li>
+	<li><a href="@PageSyncfusionSfDropDownList.Index">@PageSyncfusionSfDropDownList.Title</a></li>
+</ul>

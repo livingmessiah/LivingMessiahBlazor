@@ -8,7 +8,7 @@ using System;
 using Blazored.Toast.Services;
 using Page = LivingMessiah.Web.Links.Wirecast;
 
-namespace LivingMessiah.Web.Pages.Admin.AudioVisual;
+namespace LivingMessiah.Web.Pages.Admin.WirecastFolder;
 
 [AllowAnonymous]
 public partial class WirecastDisplay

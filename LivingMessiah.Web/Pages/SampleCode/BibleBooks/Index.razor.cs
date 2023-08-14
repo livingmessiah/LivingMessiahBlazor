@@ -1,6 +1,6 @@
 ﻿using LivingMessiah.Web.Enums;
 
-namespace LivingMessiah.Web.Pages.BibleBooks;
+namespace LivingMessiah.Web.Pages.SampleCode.BibleBooks;
 
 public partial class Index
 {
