@@ -1,19 +1,16 @@
-﻿@page "/Contact/"
-@using Page = LivingMessiah.Web.Links.Contact
-@using static LivingMessiah.Web.Services.Auth0
+﻿@page "/account/profile"
 
+@using Page = LivingMessiah.Web.Links.Account.Profile
 <PageTitle>@Page.Title</PageTitle>
 
-@*border-bottom border-info*@
-<div class="pb-2 mt-4 mb-4">
+<div class="pb-2 mt-4 mb-4 border-bottom border-info">
 	<h3><i class="@Page.Icon"></i> @Page.Title</h3>
 </div>
 
-
-<AuthorizeView Roles="@Roles.AdminOrElder">
+<AuthorizeView>
 	
 	<Authorized>
-		<ReportGrid />
+		<Claims />
 	</Authorized>
 
 	<NotAuthorized>

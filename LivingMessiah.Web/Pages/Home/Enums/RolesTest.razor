@@ -1,0 +1,81 @@
+﻿@page "/RolesTest"
+
+@*  @using static LivingMessiah.Web.Services.Auth0 *@
+
+@using Page = LivingMessiah.Web.Links.Home.Roles
+<PageTitle>@Page.Title</PageTitle>
+<div class="pb-2 mt-4 mb-4 border-bottom border-info">
+	<h3><i class="@Page.Icon"></i> @Page.Title</h3>
+</div>
+
+<h4><code>SmartFlagEnum[Roles]</code></h4>
+<h4>ToDo: incorporate MyNotes.md (\repos\flexible-aspnetcore-authorization)</h4>
+
+<ul>
+	<li>Role: @Role</li>
+	<li>admin: @All</li>
+	<li>none: @None</li>
+	<li>one: @One</li>
+	<li>three: @Three</li>
+	<li>thirty_two: @thirty_two</li>
+	<li>thirty_two: @sixty_three</li>
+	<li>admin_sukkot: @admin_sukkot</li>
+	<li>admin_sukkot_int: @admin_sukkot_int</li>
+</ul>
+
+<h5 class="mt-5 mb-1">BitWiseOrOperator</h5>
+<p class="bg-light m-2">
+	The <code>FromValue()</code> methods allow the Or ( <code>|</code> ) operator to be used to add enum values together 
+	and provide multiple values at once.
+</p>
+<p class="bg-light m-2">
+	<code>var roleElderSukkot = Enums.Roles.FromValue(Enums.Roles.Elder | Enums.Roles.Sukkot);</code>
+	<br /><br />
+	<code>foreach (var item in roleElderSukkot) {	bitWise += item.Name; }</code>
+	<br /><br />
+	<b>bitWise</b>: @bitWise
+</p>
+
+
+@code {
+	public string? Role { get; set; }
+	private string? All;
+	private string? None;
+	private string? One;
+	private string? Three;
+	private string? thirty_two;
+	private string? sixty_three;
+	private string? admin_sukkot;
+	private int admin_sukkot_int;
+
+	private string? bitWise;
+
+	protected override void OnInitialized()
+	{
+		All = Roles.FromValueToString(-1);
+		None = Roles.FromValueToString(0);
+		One = Roles.FromValueToString(1);
+		Three = Roles.FromValueToString(3);
+		thirty_two = Roles.FromValueToString(32);
+		sixty_three = Roles.FromValueToString(63);
+		base.OnInitialized();
+
+		//var AdminOrSukkot = Enums.Roles.FromName("Admin", "Sukkot");  //admin, sukkot
+
+		if (Enums.Roles.TryFromName("Admin, Sukkot", true, out var myFlagEnums))
+		{
+			foreach (var item in myFlagEnums) 
+			{ 
+				admin_sukkot += item.Name;   //SukkotAdmin
+				admin_sukkot_int += item.Value; //66=64+2
+			}
+		}
+
+		var roleElderSukkot = Enums.Roles.FromValue(Enums.Roles.Elder | Enums.Roles.Sukkot);
+		foreach (var item in roleElderSukkot)
+		{
+			bitWise += item.Name;
+		}
+	}
+
+}

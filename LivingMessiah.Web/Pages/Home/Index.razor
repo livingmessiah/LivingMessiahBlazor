@@ -4,12 +4,10 @@
 @using LivingMessiah.Web.SmartEnums
 
 <PageTitle>@Page.PageTitle</PageTitle>
-
 <HomeImage></HomeImage>
 
-
 <div class="@MediaQuery.XsOrSm.DivClass">
-	<SectionMain />
+	<RoleBasedLinks />
 	<br />
 
 	<SidebarButtons IsXsOrSm="true" />
@@ -23,7 +21,7 @@
 <div class="@MediaQuery.Md.DivClass">
 	<div class="row">
 		<div class="col-7">
-			<SectionMain />
+			<RoleBasedLinks />
 			<AuthorizeView Roles="@Roles.AdminOrElder">
 				<NotAuthorized>
 					<IntroductionAndWelcome MediaQuery="MediaQuery.Md" />
@@ -45,7 +43,7 @@
 	<div class="row">
 
 		<div class="col-8">
-			<SectionMain />
+			<RoleBasedLinks />
 			<AuthorizeView Roles="@Roles.AdminOrElder">
 				<NotAuthorized>
 					<IntroductionAndWelcome MediaQuery="MediaQuery.Lg" />

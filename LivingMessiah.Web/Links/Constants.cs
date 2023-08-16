@@ -28,7 +28,6 @@ public static class Account
 	public const string Login = "/Account/Login";
 	public const string Logout = "/Account/Logout";
 	public const string LogoutAction = "Account/LogOut";
-	public const string Profile = "/Account/Profile";
 
 	public const string TitleAccessDenied = "Access Denied.";
 	public const string TitleLogin = "Log in";
@@ -48,6 +47,13 @@ public static class Account
 		public const string Title = " Password Changed Successfully";
 		public const string PageTitle = " Password Changed";
 		public const string Icon = "fas fa-key";
+	}
+
+	public static class Profile
+	{
+		public const string Index = "/account/profile";
+		public const string Title = " Profile";
+		public const string Icon = "fab fa-superpowers";
 	}
 }
 
@@ -211,6 +217,14 @@ public static class Home
 	public const string PageTitle = "Home | LMM";
 	public const string Icon = "fas fa-home";
 	public const string Error = "/Error";
+	
+	public static class Roles
+	{
+		public const string Index = "/RolesTest";
+		public const string Title = "Roles Test";
+		public const string Icon = "fas fa-ruler";
+	}
+	
 }
 
 public static class ImportantLinks

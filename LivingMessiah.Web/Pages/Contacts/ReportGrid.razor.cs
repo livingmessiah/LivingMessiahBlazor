@@ -1,34 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using LivingMessiah.Web.Pages.Contacts.Data;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
-
-using static LivingMessiah.Web.Services.Auth0;
-using Microsoft.AspNetCore.Authorization;
-
-using Syncfusion.Blazor.Grids;
 using Blazored.Toast.Services;
 
+using LivingMessiah.Web.Pages.Contacts.Data;
 using Page = LivingMessiah.Web.Links.Contact;
 
 namespace LivingMessiah.Web.Pages.Contacts;
 
-[Authorize(Roles = Roles.AdminOrElder)]
-public partial class Index
+public partial class ReportGrid
 {
-	private const string Message = $"Failed to load page {Page.Index},  Class!Method:{nameof(Index)}!{nameof(OnInitializedAsync)}";
+	readonly string inside = $"page {Page.Index}; class: {nameof(ReportGrid)}; ";
 
-	[Inject] public ILogger<Index>? Logger { get; set; }
+	[Inject] public ILogger<ReportGrid>? Logger { get; set; }
 	[Inject] public IContactRepository? db { get; set; }
 	[Inject] public IToastService? Toast { get; set; }
 
-	public IEnumerable<Domain.ContactVM>? Contacts { get; set; }
+	public IEnumerable<ContactVM>? Contacts { get; set; }
 
 	protected override async Task OnInitializedAsync()
 	{
-		Logger!.LogDebug(Message);
+		Logger!.LogDebug(string.Format("...Inside {0}; {1}", inside, nameof(OnInitializedAsync)));
 		try
 		{
 			Contacts = await db!.GetAll();
@@ -39,10 +33,12 @@ public partial class Index
 		}
 		catch (Exception ex)
 		{
-			Logger!.LogError(ex, Message);
-			Toast!.ShowError($"Error reading database. {Message}");
+			Logger!.LogError(ex, string.Format("...Inside catch of {0}"
+				, inside + "!" + nameof(OnInitializedAsync)));
+			Toast!.ShowError($"{Global.ToastShowError}");
 		}
 		StateHasChanged();
 	}
+
 
 }

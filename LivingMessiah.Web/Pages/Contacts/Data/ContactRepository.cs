@@ -11,7 +11,7 @@ namespace LivingMessiah.Web.Pages.Contacts.Data;
 public interface IContactRepository
 {
 	string BaseSqlDump { get; }
-	Task<List<Domain.ContactVM>> GetAll();
+	Task<List<ContactVM>> GetAll();
 }
 
 public class ContactRepository : BaseRepositoryAsync, IContactRepository
@@ -25,7 +25,7 @@ public class ContactRepository : BaseRepositoryAsync, IContactRepository
 		get { return base.SqlDump; }
 	}
 
-	public async Task<List<Domain.ContactVM>> GetAll()  // bool selectAll
+	public async Task<List<ContactVM>> GetAll()  // bool selectAll
 	{
 		//const string TOP = "TOP 500 "; //SELECT {TOP} ...
 		//base.Parms = new DynamicParameters(new { Top = top });
@@ -39,7 +39,7 @@ ORDER BY FirstName
 
 		return await WithConnectionAsync(async connection =>
 		{
-			var rows = await connection.QueryAsync<Domain.ContactVM>(sql: base.Sql);  //, param: base.Parms
+			var rows = await connection.QueryAsync<ContactVM>(sql: base.Sql);  //, param: base.Parms
 			return rows.ToList();
 		});
 	}

@@ -1,0 +1,52 @@
+﻿@using static LivingMessiah.Web.Services.Auth0
+
+<section id="main">
+
+	@if (Role != "" && Role != @Roles.User)
+	{
+		@if (Role == @Roles.Admin)
+		{
+			<div class="list-group">
+				<div class="card mb-3 bg-warning">
+					<div class="card-body">
+						<ul class="nav flex-column">
+							@foreach (var item in Enums.Nav.List.OrderBy(o => o.Sort))
+							{
+								<li class="nav-item">
+									<i class="@item!.Icon" aria-hidden="true"></i>
+									<a href="@item!.Index" title="@item!.Text">
+										@item!.Text
+									</a>
+
+								</li>
+							}
+						</ul>
+					</div>
+				</div>
+			</div>
+		}
+		else
+		{
+			<div class="list-group">
+				<div class="card mb-3 bg-warning">
+					<div class="card-body">
+						<ul class="nav flex-column">
+							@foreach (var item in Enums.Nav.List.Where(w => w.Role == @Role).OrderBy(o => o.Sort))
+							{
+								<li class="nav-item">
+									<i class="@item!.Icon" aria-hidden="true"></i>
+									<a href="@item!.Index" title="@item!.Text">
+										@item!.Text
+									</a>
+
+								</li>
+							}
+						</ul>
+					</div>
+				</div>
+			</div>
+		}
+	}
+
+
+</section>

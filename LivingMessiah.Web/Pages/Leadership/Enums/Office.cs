@@ -127,11 +127,11 @@ public abstract class Office : SmartEnum<Office>
 		public override string ImageFile => "elder-2.jpg";
 		public override string IconFile => "elder-2-icon.jpg";
 		public override string IconFile2 => "icon-2-blank.jpg";
-		public override bool IsFilled => false;
-		public override string OfficeHolderName => "Vacant";
+		public override bool IsFilled => true;
+		public override string OfficeHolderName => "Mike Naranjo";
 		public override string Email => "Info@livingmessiah.com";
 		public override string ImgClassSmMdLg => "w-50 p-3";
-		public override int Sort => 99;
+		public override int Sort => 7;
 	}
 
 	private sealed class Elder3SE : Office

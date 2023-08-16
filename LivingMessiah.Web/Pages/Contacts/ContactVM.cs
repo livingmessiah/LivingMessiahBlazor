@@ -1,4 +1,4 @@
-﻿namespace LivingMessiah.Web.Pages.Contacts.Domain;
+﻿namespace LivingMessiah.Web.Pages.Contacts;
 
 public class ContactVM
 {

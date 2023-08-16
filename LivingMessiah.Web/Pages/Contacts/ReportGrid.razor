@@ -1,0 +1,58 @@
+﻿
+<div class="col-lg-12 control-section">
+	<div class="content-wrapper">
+		<div class="row mt-4">
+
+			<SfGrid ID="Grid"
+							DataSource="@Contacts"
+							AllowSelection="true" AllowFiltering="true" AllowSorting="true">
+				<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+
+				@*  CommandClicked="OnSaveClicked"
+				@ref="Grid"
+				*@
+
+				<GridSortSettings>
+					<GridSortColumns>
+						<GridSortColumn Field="@nameof(ContactVM.FirstName)" Direction="SortDirection.Ascending" />
+					</GridSortColumns>
+				</GridSortSettings>
+
+				@*<GridEvents TValue="Domain.Contact" QueryCellInfo="CustomizeCell"></GridEvents>*@
+				@* ... RowSelected="RowSelectHandler" RowDeselected="RowDeSelectHandler" />*@
+
+				<GridColumns>
+
+					@* <GridColumn Field=@nameof(ContactVM.Id) HeaderText="Id" Visible="false" IsPrimaryKey="true" Width="30" AllowSorting="false" AllowFiltering="false"> </GridColumn>*@
+
+					<GridColumn Field=@nameof(ContactVM.Id) Visible="false" IsPrimaryKey="true"></GridColumn>
+
+					<GridColumn Field=@nameof(ContactVM.Name) HeaderText="Name" Width="70" AllowSorting="true" AllowFiltering="true"></GridColumn>
+
+					<GridColumn Field=@nameof(ContactVM.OtherNames) HeaderText="Other Names" Width="90" AllowSorting="false" AllowFiltering="true"></GridColumn>
+
+					@*<GridColumn Field=@nameof(ContactVM.FamilyName) HeaderText="Last" Width="50" AllowSorting="true">
+					</GridColumn>
+
+					<GridColumn Field=@nameof(ContactVM.SpouseName) HeaderText="Spouse" Width="50" AllowSorting="false" AllowFiltering="false">
+					</GridColumn>*@
+
+					<GridColumn Field=@nameof(ContactVM.EMail) HeaderText="Email" Width="80" AllowSorting="false" AllowFiltering="true"></GridColumn>
+
+					<GridColumn Field=@nameof(ContactVM.Phone) HeaderText="Phone" Width="50" AllowSorting="false" AllowFiltering="false"></GridColumn>
+
+					<GridColumn Field=@nameof(ContactVM.SukkotAttendanceCSV) HeaderText="Sukkots" Width="50" AllowSorting="false" AllowFiltering="false"></GridColumn>
+
+					<GridColumn Field=@nameof(ContactVM.Notes) HeaderText="Notes" Width="70" AllowSorting="false" AllowFiltering="true"></GridColumn>
+
+					@*<GridColumn Field=@nameof(ContactVM.SukkotAttendanceCSV) HeaderText="Sukkots" Width="70"
+					FilterSettings="@(new FilterSettings { Type = Syncfusion.Blazor.Grids.FilterType.CheckBox })">
+					</GridColumn>*@
+
+				</GridColumns>
+
+			</SfGrid>
+		</div>
+	</div>
+</div>
+
