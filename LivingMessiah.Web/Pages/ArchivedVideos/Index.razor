@@ -8,11 +8,11 @@
 
 @switch (_status)
 {
-	case Status.Loading:
+	case LoadingStatusEnum.Loading:
 		<p class="text-warning"><em>Loading...</em></p>
 		break;
 
-	case Status.Loaded:
+	case LoadingStatusEnum.Loaded:
 
 		<table class="table table-striped table-sm">
 			<thead>
@@ -89,7 +89,7 @@
 
 		break;
 
-	case Status.Error:
+	case LoadingStatusEnum.Error:
 			<p class="text-danger"><em>Could not load because of an Error</em></p>
 		break;
 

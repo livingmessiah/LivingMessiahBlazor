@@ -18,7 +18,7 @@ public partial class Index
 
 	private int bibleGroupId = 0;
 
-	readonly string inside = $"page {Page.Index}; class: {nameof(Index)}; ";
+	readonly string inside = $"page {Page.Index}; class: {nameof(Index)}";
 
 	/*
 	[Parameter] public IndexVM VM { get; set; }

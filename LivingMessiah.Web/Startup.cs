@@ -13,6 +13,7 @@ using LivingMessiah.Web.Shared.Database;
 using LivingMessiah.Web.Pages.Admin.Video.DI;
 using LivingMessiah.Web.Pages.ArchivedVideos;
 using LivingMessiah.Web.Pages.Contacts.DI;
+using LivingMessiah.Web.Pages.PsalmsAndProverbs;
 
 namespace LivingMessiah.Web;
 
@@ -43,6 +44,7 @@ public class Startup
 
 		services.AddAdminVideo();
 		services.AddArchivedVideo();
+		services.AddPsalmsAndProverbs();
 		services.AddAdminContacts();
 
 		services.AddSession();

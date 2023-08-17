@@ -35,8 +35,6 @@ public static class ServiceCollectionExtensions
 	{
 		services
 			.AddSingleton<ILinkService, LinkService>()
-
-			.AddSingleton<IShabbatWeekService, ShabbatWeekService>()
 			.AddSingleton<IShabbatWeekCacheService, ShabbatWeekCacheService>()
 			.AddSingleton<IShabbatWeekRepository, ShabbatWeekRepository>()
 

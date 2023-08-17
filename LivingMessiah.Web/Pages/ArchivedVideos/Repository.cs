@@ -64,7 +64,7 @@ SELECT
 , wv.Book
 , wv.Chapter
 FROM tvfShabbatWeekCrossWeeklyVideoTypeByTop(@Top) tvf
-LEFT OUTER JOIN Weekly wv 
+LEFT OUTER JOIN WeeklyVideo wv 
 	ON tvf.ShabbatWeekId = wv.ShabbatWeekId AND
 	   tvf.WeeklyVideoTypeId = wv.WeeklyVideoTypeId
 ORDER BY ShabbatDate DESC, tvf.WeeklyVideoTypeId

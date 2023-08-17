@@ -29,7 +29,7 @@ public class ShabbatWeekCacheService : IShabbatWeekCacheService
 	public ShabbatWeekCacheService(
 		LivingMessiah.Data.IShabbatWeekRepository dbRepository
 		, IMemoryCache cache
-		, ILogger<ShabbatWeekService> logger
+		, ILogger<ShabbatWeekCacheService> logger
 		)
 	{
 		db = dbRepository;

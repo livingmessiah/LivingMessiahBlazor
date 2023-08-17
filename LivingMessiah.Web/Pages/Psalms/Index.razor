@@ -10,11 +10,11 @@
 
 @switch (_status)
 {
-	case Status.Loading:
+	case LoadingStatusEnum.Loading:
 		<p class="text-warning"><em>Loading...</em></p>
 		break;
 
-	case Status.Loaded:
+	case LoadingStatusEnum.Loaded:
 
 		<table class="table">
 			<thead>
@@ -50,7 +50,7 @@
 		<h6 class="mt-0"><b>wc:</b> Whole Chapter</h6>
 		break;
 
-	case Status.Error:
+	case LoadingStatusEnum.Error:
 		<p class="text-danger"><em>Could not load because of an Error</em></p>
 		<p class="p-2">@_msg</p>
 		break;

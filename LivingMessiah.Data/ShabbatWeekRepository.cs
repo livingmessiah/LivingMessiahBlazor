@@ -21,7 +21,6 @@ public interface IShabbatWeekRepository
 
 	// Psalms and Proverbs
 	Task<PsalmAndProverb> GetCurrentPsalmAndProverb();
-	Task<List<vwPsalmsAndProverbs>> GetPsalmsAndProverbsList();
 	Task<List<PsalmsVM>> GetPsalms();
 
 
@@ -176,34 +175,6 @@ WHERE ShabbatDate = dbo.udfGetNextShabbatDate()
 		{
 			var rows = await connection.QueryAsync<PsalmAndProverb>(sql: base.Sql, param: base.Parms);
 			return rows.SingleOrDefault()!;
-		});
-	}
-
-	public async Task<List<vwPsalmsAndProverbs>> GetPsalmsAndProverbsList()
-	{
-		var datesTuple = CurrentShabbatDate();
-		bool isDayOfWeekSaturday = datesTuple.Item2;
-
-		string Where = $" WHERE ShabbatDate >= '{datesTuple.Item1}' ";
-
-		base.Sql = $@"
-SELECT 
-  ShabbatWeekId, ShabbatDate, ShabbatDateYMD
-, PsalmsBCV, PsalmsChapter, PslamsVerseCount, IsWholeChapter
---, PsalmsKJVHtmlConcat
-, PsalmsUrl, PsalmsTitle
-, ProverbsBCV, ProverbsChapter, ProverbsVerseCount
---, ProverbsKJVHtmlConcat
-, ProverbsUrl
-, TotalVerseCount
-FROM Bible.vwPsalmsAndProverbs v 
- {Where}
-ORDER BY ShabbatWeekId
-";
-		return await WithConnectionAsync(async connection =>
-		{
-			var rows = await connection.QueryAsync<vwPsalmsAndProverbs>(sql: base.Sql);
-			return rows.ToList();
 		});
 	}
 

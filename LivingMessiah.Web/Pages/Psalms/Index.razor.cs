@@ -5,6 +5,7 @@ using LivingMessiah.Domain;
 using Microsoft.Extensions.Logging;
 using System;
 using LivingMessiah.Data;
+using LivingMessiah.Web.Shared;
 
 namespace LivingMessiah.Web.Pages.Psalms;
 
@@ -13,7 +14,7 @@ public partial class Index
 	[Inject] public IShabbatWeekRepository? db { get; set; }
 	[Inject] public ILogger<Index>? Logger { get; set; }
 
-	protected Status _status;
+	protected LoadingStatusEnum _status;
 	protected string _msg = string.Empty;
 
 	protected List<PsalmsVM>? PsalmsList;
@@ -22,13 +23,13 @@ public partial class Index
 	{
 		try
 		{
-			_status = Status.Loading;
+			_status = LoadingStatusEnum.Loading;
 			PsalmsList = await db!.GetPsalms();
-			_status = Status.Loaded;
+			_status = LoadingStatusEnum.Loaded;
 		}
 		catch (Exception ex)
 		{
-			_status = Status.Error;
+			_status = LoadingStatusEnum.Error;
 			_msg = $"Error calling {nameof(db.GetPsalms)}"; 
 			Logger!.LogError(ex, $"Failed to load page {nameof(Index)}");
 		}

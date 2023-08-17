@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Blazored.Toast.Services;
 using Page = LivingMessiah.Web.Links.ArchivedVideos;
+using LivingMessiah.Web.Shared;
 
 namespace LivingMessiah.Web.Pages.ArchivedVideos;
 
@@ -16,17 +17,17 @@ public partial class Index
 	[Parameter]	public int Top { get; set; } = 10;
 
 	protected IReadOnlyList<WeeklyVideoIndex>? ArchivedVideos;
-	protected Status _status;
+	protected LoadingStatusEnum _status;
 
-	readonly string inside = $"page {Page.Index}; class: {nameof(Index)}; ";
+	readonly string inside = $"page {Page.Index}; class: {nameof(Index)}";
 
 	protected override async Task OnInitializedAsync()
 	{
 		try
 		{
-			_status = Status.Loading;
+			_status = LoadingStatusEnum.Loading;
 			ArchivedVideos = await db!.GetTopWeeklyVideos(Top);
-			_status = Status.Loaded;
+			_status = LoadingStatusEnum.Loaded;
 
 			if (ArchivedVideos == null)
 			{
@@ -35,10 +36,10 @@ public partial class Index
 		}
 		catch (System.Exception ex)
 		{
-			_status = Status.Error;
+			_status = LoadingStatusEnum.Error;
 			Logger!.LogError(ex, string.Format("...Inside catch of {0}"
 				, inside + "!" + nameof(OnInitializedAsync)));
-			Toast!.ShowError($"{Global.ToastShowError}");
+			Toast!.ShowError($"{Global.ToastShowError}; inside: {inside}!{nameof(OnInitializedAsync)}");
 		}
 
 	}

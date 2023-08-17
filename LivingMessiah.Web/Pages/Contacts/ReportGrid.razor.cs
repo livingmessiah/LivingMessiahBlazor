@@ -12,7 +12,7 @@ namespace LivingMessiah.Web.Pages.Contacts;
 
 public partial class ReportGrid
 {
-	readonly string inside = $"page {Page.Index}; class: {nameof(ReportGrid)}; ";
+	readonly string inside = $"page {Page.Index}; class: {nameof(ReportGrid)}";
 
 	[Inject] public ILogger<ReportGrid>? Logger { get; set; }
 	[Inject] public IContactRepository? db { get; set; }
@@ -33,9 +33,8 @@ public partial class ReportGrid
 		}
 		catch (Exception ex)
 		{
-			Logger!.LogError(ex, string.Format("...Inside catch of {0}"
-				, inside + "!" + nameof(OnInitializedAsync)));
-			Toast!.ShowError($"{Global.ToastShowError}");
+			Logger!.LogError(ex, string.Format("...Inside catch of {0}", inside + "!" + nameof(OnInitializedAsync)));
+			Toast!.ShowError($"{Global.ToastShowError}; inside: {inside}!{nameof(OnInitializedAsync)}");
 		}
 		StateHasChanged();
 	}
