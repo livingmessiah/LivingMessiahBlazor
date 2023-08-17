@@ -2,35 +2,43 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using System;
-using LivingMessiah.Web.Services;
-using LivingMessiah.Domain;
+using Blazored.Toast.Services;
+using Page = LivingMessiah.Web.Links.ArchivedVideos;
 
 namespace LivingMessiah.Web.Pages.ArchivedVideos;
 
 public partial class Index
 {
-	[Inject] public IShabbatWeekService? svc { get; set; }
+	[Inject] public IRepository? db { get; set; }
 	[Inject] public ILogger<Index>? Logger { get; set; }
+	[Inject] public IToastService? Toast { get; set; }
 
 	[Parameter]	public int Top { get; set; } = 10;
 
-	protected bool ReadOperationFailed = false;
 	protected IReadOnlyList<WeeklyVideoIndex>? ArchivedVideos;
+	protected Status _status;
 
+	readonly string inside = $"page {Page.Index}; class: {nameof(Index)}; ";
 
 	protected override async Task OnInitializedAsync()
 	{
 		try
 		{
-			ReadOperationFailed = false;
-			ArchivedVideos = await svc!.GetTopWeeklyVideos(Top);
-		}
+			_status = Status.Loading;
+			ArchivedVideos = await db!.GetTopWeeklyVideos(Top);
+			_status = Status.Loaded;
 
+			if (ArchivedVideos == null)
+			{
+				Toast!.ShowWarning("Archived Videos NOT FOUND");
+			}
+		}
 		catch (System.Exception ex)
 		{
-			ReadOperationFailed = true;
-			Logger!.LogError(ex, $"<br /><br /> {nameof(OnInitializedAsync)}");
+			_status = Status.Error;
+			Logger!.LogError(ex, string.Format("...Inside catch of {0}"
+				, inside + "!" + nameof(OnInitializedAsync)));
+			Toast!.ShowError($"{Global.ToastShowError}");
 		}
 
 	}

@@ -7,9 +7,6 @@ namespace LivingMessiah.Web.Services;
 public interface IShabbatWeekService
 {
 	Task<List<vwPsalmsAndProverbs>> GetPsalmsAndProverbsList();
-
-	// Weekly Videos
-	Task<IReadOnlyList<WeeklyVideoIndex>> GetTopWeeklyVideos(int top);
 }
 
 
@@ -35,13 +32,6 @@ public class ShabbatWeekService : IShabbatWeekService
 		return await db.GetPsalmsAndProverbsList();
 	}
 
-	#region Weekly Videos
-
-	public async Task<IReadOnlyList<WeeklyVideoIndex>> GetTopWeeklyVideos(int top)
-	{
-		return await db.GetTopWeeklyVideos(top);
-	}
-	#endregion
 
 }
 
