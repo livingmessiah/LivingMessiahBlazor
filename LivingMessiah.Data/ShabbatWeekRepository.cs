@@ -19,15 +19,6 @@ public interface IShabbatWeekRepository
 	Task<Wirecast> GetCurrentWirecast();
 	Task<ScratchPad> GetScratchPadWireCast();
 
-	// Psalms and Proverbs
-	Task<PsalmAndProverb> GetCurrentPsalmAndProverb();
-	Task<List<PsalmsVM>> GetPsalms();
-
-
-	// Weekly Videos
-	Task<IReadOnlyList<vwCurrentWeeklyVideo>> GetCurrentWeeklyVideos(int daysOld);
-
-
 	#region ToDo: Move somewhere else
 
 	// ToDo Why are these here? It needs to be pulled out of here and ISukkotAdminRepository
@@ -147,99 +138,39 @@ WHERE sw.ShabbatDate >= @CompareDate
 
 	#region PsalmsAndProverbs
 
-	public async Task<PsalmAndProverb> GetCurrentPsalmAndProverb()
-	{
-		var datesTuple = CurrentShabbatDate();
-		bool isDayOfWeekSaturday = datesTuple.Item2;
+	// moved to LivingMessiah.Web.Components.ShabbatWeek.Repository
+//	public async Task<PsalmAndProverb> GetCurrentPsalmAndProverb()
+//	{
+//		var datesTuple = CurrentShabbatDate();
+//		bool isDayOfWeekSaturday = datesTuple.Item2;
 
-		string Where = $" WHERE ShabbatDate >= '{datesTuple.Item1}' ";
+//		string Where = $" WHERE ShabbatDate >= '{datesTuple.Item1}' ";
 
-		base.Sql = $@"
-SELECT 
-  ShabbatWeekId, ShabbatDate
-, PsalmsBCV, PsalmsChapter
-, PsalmsKJVHtmlConcat
-, PsalmsUrl, PsalmsTitle
-, ProverbsBCV, ProverbsChapter
-, ProverbsKJVHtmlConcat
-, ProverbsUrl
-FROM Bible.vwPsalmsAndProverbs v 
-WHERE ShabbatDate = dbo.udfGetNextShabbatDate()
-";
+//		base.Sql = $@"
+//SELECT 
+//  ShabbatWeekId, ShabbatDate
+//, PsalmsBCV, PsalmsChapter
+//, PsalmsKJVHtmlConcat
+//, PsalmsUrl, PsalmsTitle
+//, ProverbsBCV, ProverbsChapter
+//, ProverbsKJVHtmlConcat
+//, ProverbsUrl
+//FROM Bible.vwPsalmsAndProverbs v 
+//WHERE ShabbatDate = dbo.udfGetNextShabbatDate()
+//";
 
-		log.LogDebug(String.Format("Inside {0}, Sql={1}"
-			, nameof(ShabbatWeekRepository) + "!" + nameof(GetCurrentPsalmAndProverb), base.Sql));
+//		log.LogDebug(String.Format("Inside {0}, Sql={1}"
+//			, nameof(ShabbatWeekRepository) + "!" + nameof(GetCurrentPsalmAndProverb), base.Sql));
 
 
-		return await WithConnectionAsync(async connection =>
-		{
-			var rows = await connection.QueryAsync<PsalmAndProverb>(sql: base.Sql, param: base.Parms);
-			return rows.SingleOrDefault()!;
-		});
-	}
+//		return await WithConnectionAsync(async connection =>
+//		{
+//			var rows = await connection.QueryAsync<PsalmAndProverb>(sql: base.Sql, param: base.Parms);
+//			return rows.SingleOrDefault()!;
+//		});
+//	}
 
-	public async Task<List<PsalmsVM>> GetPsalms()
-	{
-		base.Sql = $@"
-SELECT 
-  ps.Id, ps.BegVerse, ps.EndVerse, ps.EndVerse-ps.BegVerse + 1 AS VerseCount, ps.IsWholeChapter
-, 'Psalms ' + CAST (ps.Chapter AS varchar(10)) + ':' + CAST (ps.BegVerse AS varchar(10)) + '-' + CAST (ps.EndVerse AS varchar(10)) AS BCV
-, ps.Chapter
-, ps.KJVHtmlConcat
-, sw.Id AS ShabbatWeekId, CONVERT(VARCHAR(10), sw.ShabbatDate, 111) AS ShabbatDateYMD
-FROM Bible.Psalms ps
-	LEFT OUTER JOIN ShabbatWeek sw
-		ON sw.PsalmsId = ps.Id
-	INNER JOIN Bible.BookChapter bc 
-		ON ps.BookId = bc.BookId AND ps.Chapter = bc.Chapter
-ORDER BY ps.Chapter, ps.BegVerse
-";
-		return await WithConnectionAsync(async connection =>
-		{
-			var rows = await connection.QueryAsync<PsalmsVM>(sql: base.Sql);
-			return rows.ToList();
-		});
-	}
 
-	#endregion
-
-	#region Weekly Video
-
-	public async Task<IReadOnlyList<vwCurrentWeeklyVideo>> GetCurrentWeeklyVideos(int daysOld)
-	{
-		base.Parms = new DynamicParameters(new { DaysOld = daysOld });
-		base.Sql = $@"
---Declare @DaysOld int=12
-SELECT
-Id
-, ShabbatWeekId
-, WvtId
-, ShabbatDate
-, YouTubeId
-, YouTubeUrl
-, Title
-, GraphicFile
-, NotesFile
-, WvtDescr
-, WvtIcon
-, BookChapterTitle
-, Chapter
-, BookTitle
-, HebrewTitle
-, HebrewName
-, ParashaName
-, BiblicalUrlReference
-FROM dbo.vwCurrentWeeklyVideo
-WHERE DATEADD(d, -@DaysOld, GETUTCDATE()) <= ShabbatDate
-ORDER BY ShabbatWeekId DESC, wvtId
-		";
-		return await WithConnectionAsync(async connection =>
-		{
-			var rows = await connection.QueryAsync<vwCurrentWeeklyVideo>(sql: base.Sql, param: base.Parms);
-			return rows.ToList();
-		});
-	}
-	/**/
 
 	#endregion
 

@@ -197,7 +197,7 @@ WHERE Id = @Id";
 			AttendanceBitwise = Helper.GetDaysBitwise(formVM.AttendanceDateList!, formVM.AttendanceDateList2ndMonth!, DateRangeType.Attendance),
 			formVM.StatusId,
 			formVM.LmmDonation,
-			Notes = DTOHelper.Scrub(formVM.Notes),
+			Notes = LivingMessiah.Web.Data.Helper.Scrub(formVM.Notes),
 			Avatar = string.Empty
 		});
 
@@ -532,7 +532,7 @@ WHERE Id = @Id";
 			registration.AttendanceBitwise,
 			registration.StatusId,
 			registration.LmmDonation,
-			Notes = DTOHelper.Scrub(registration.Notes),
+			Notes = LivingMessiah.Web.Data.Helper.Scrub(registration.Notes),
 			registration.Avatar
 		});
 

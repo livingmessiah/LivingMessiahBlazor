@@ -1,5 +1,4 @@
-﻿@using LivingMessiah.Web.Pages.UpcomingEvents.Enums;
-@using Syncfusion.Blazor.RichTextEditor
+﻿@using Syncfusion.Blazor.RichTextEditor
 
 @inherits Fluxor.Blazor.Web.Components.FluxorComponent
 
@@ -35,7 +34,7 @@ else
 				<div class="col-sm-6">
 					<label for="eventTypeEnum" class="control-label">Event Type</label>
 					<InputSelect id="type" @bind-Value="VM.SpecialEventTypeId" class="form-control">
-						@foreach (var item in SpecialEventType.List.ToList())
+						@foreach (var item in Enums.SpecialEventType.List.ToList())
 						{
 							<option value="@item.Value">@item.Descr</option>
 						}

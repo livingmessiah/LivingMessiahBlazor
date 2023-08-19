@@ -9,7 +9,6 @@ using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 
 using LivingMessiah.Data;
 
-using LivingMessiah.Web.Pages.Contacts.Data;
 using LivingMessiah.Web.Pages.KeyDates.Data;
 
 using SukkotData = LivingMessiah.Web.Pages.Sukkot.Data;
@@ -18,13 +17,11 @@ using LivingMessiah.Web.Pages.Sukkot.Services;
 using LivingMessiah.Web.Pages.SukkotAdmin.Data;
 using LivingMessiah.Web.Pages.SukkotAdmin.Donations.Data;
 using LivingMessiah.Web.Pages.SukkotAdmin.Services;
-using LivingMessiah.Web.Pages.UpcomingEvents.Data;
 using LivingMessiah.Web.Services;
 using FluentValidation;
 using LivingMessiah.Web.Pages.Sukkot.Components;
 using LivingMessiah.Web.Pages.Parasha.Services;
 using LivingMessiah.Web.Pages.Parasha.Data;
-using LivingMessiah.Web.Pages.UpcomingEventsAdmin.Edit;
 using LivingMessiah.Web.Links;
 
 namespace LivingMessiah.Web;
@@ -35,12 +32,7 @@ public static class ServiceCollectionExtensions
 	{
 		services
 			.AddSingleton<ILinkService, LinkService>()
-			.AddSingleton<IShabbatWeekCacheService, ShabbatWeekCacheService>()
 			.AddSingleton<IShabbatWeekRepository, ShabbatWeekRepository>()
-
-			.AddTransient<IUpcomingEventsRepository, UpcomingEventsRepository>()
-			.AddTransient<IGridDataRepository, GridDataRepository>()
-			.AddTransient<ISpecialEventGridDataAdaptor, SpecialEventGridDataAdaptor>()
 
 			.AddSingleton<IKeyDateRepository, KeyDateRepository>()
 

@@ -1,5 +1,7 @@
 ﻿@page "/TorahTuesday"
 @using LivingMessiah.Web.Pages.Parasha
+@using WVT_Enums = LivingMessiah.Web.Pages.Admin.Video.Enums.WeeklyVideoType
+@using LivingMessiah.Web.Shared.YouTube
 
 @using Page = LivingMessiah.Web.Links.TorahTuesday
 <PageTitle>@Page.Title</PageTitle>
@@ -14,9 +16,7 @@
 
 @if (ShowLatestVideo)
 {
-	<YouTubeWeeklyVideo WeeklyVideoType="LivingMessiah.Domain.WeeklyVideoType.TorahTuesday">
-
-	</YouTubeWeeklyVideo>
+	<Card WeeklyVideoTypeValue="WVT_Enums.TorahTuesday.Value"></Card>
 }
 
 @* ToDo: is this a better way  @onclick="@(e => ChangeContent(e, PartialViewEnum.Intro))"> *@

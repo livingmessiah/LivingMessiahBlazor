@@ -5,14 +5,14 @@
 {
 	<hr class="warning" />
 
-	<LoadingComponent IsLoading="SpecialEvents == null">
+	<LoadingComponent IsLoading="VM == null">
 
 		<button @onclick="@(() => AddActionHandler())"
 					type="button" class="@ActionButtons.AddButtonColor btn-sm">
 			<i class="@ActionButtons.AddIcon"></i> @ActionButtons.AddText
 		</button>
 
-		<TableTemplate Items="SpecialEvents">
+		<TableTemplate Items="VM">
 			<TableHeader>
 				<th class="text-info">Event Date</th>
 				<th class="text-info">Type</th>

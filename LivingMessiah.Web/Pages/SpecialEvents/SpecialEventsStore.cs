@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Components;
 
 using Microsoft.Extensions.Logging;
-using LivingMessiah.Web.Pages.UpcomingEvents.Data;
+using LivingMessiah.Web.Pages.SpecialEvents.Data;
 using Blazored.Toast.Services;
 using System;
 
@@ -103,11 +103,11 @@ public class SpecialEventsEffects
 {
 	#region Constructor and DI
 	private readonly ILogger Logger;
-	private IUpcomingEventsRepository db;
+	private IRepository db;
 	private IToastService? Toast;
 
 	public SpecialEventsEffects(
-		ILogger<SpecialEventsEffects> logger, IUpcomingEventsRepository repository, IToastService toast)
+		ILogger<SpecialEventsEffects> logger, IRepository repository, IToastService toast)
 	{
 		Logger = logger;
 		db = repository;

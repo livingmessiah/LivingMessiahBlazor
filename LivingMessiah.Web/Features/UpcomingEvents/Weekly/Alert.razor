@@ -1,0 +1,27 @@
+﻿
+@if (ShowMessage)
+{
+	<div class="card bg-dark text-white my-2">
+		<div class="card-body">
+			<h2 class="card-text">
+				Torah Tuesday will be postponed until January 2022
+			</h2>
+		</div>
+	</div>
+}
+
+@code {
+	[Parameter] public DateTime AlertExpiration { get; set; }
+	
+	protected bool ShowMessage = false;
+
+	protected override void OnInitialized()
+	{
+		System.DateTime cur = System.DateTime.Now;
+
+		if (cur < AlertExpiration)
+		{
+			ShowMessage = true;
+		}
+	}
+}

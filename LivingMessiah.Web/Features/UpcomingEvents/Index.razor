@@ -1,0 +1,16 @@
+﻿@page "/upcomingevents"
+@using Markdig
+@using Page = LivingMessiah.Web.Links.UpcomingEvents
+<PageTitle>@Page.Title</PageTitle>
+
+<div class="pb-2 mt-4 mb-2 border-bottom">
+	<h2><i class="@Page.Icon"></i> @Page.Title</h2>
+</div>
+
+@if (ShowCurrentWeeklyVideos)
+{
+	<LivingMessiah.Web.Features.UpcomingEvents.Weekly.Videos />
+}
+
+<LivingMessiah.Web.Pages.SpecialEvents.Card.SpecialEventCard />
+

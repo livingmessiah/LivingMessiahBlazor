@@ -1,26 +1,24 @@
-﻿using System;
+﻿using Blazored.Toast.Services;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using LivingMessiah.Web.Pages.UpcomingEvents.Data;
-using LivingMessiah.Web.Pages.UpcomingEvents.Queries;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 
 using LivingMessiah.Web.Pages.SpecialEvents.Stores;
-using Blazored.Toast.Services;
 
 namespace LivingMessiah.Web.Pages.SpecialEvents;
 
 public partial class Table
 {
-	[Inject] public IUpcomingEventsRepository? db { get; set; }
+	[Inject] public Data.IRepository? db { get; set; }
 	[Inject] public ILogger<Table>? Logger { get; set; }
 	[Inject] public IToastService? Toast { get; set; }
 
 	[Inject] private IState<MainState>? MainState { get; set; }
 	[Inject] public IDispatcher? Dispatcher { get; set; }
 
-	protected List<SpecialEvent>? SpecialEvents;
+	protected List<Models.SpecialEventVM>? VM;
 
 	protected override async Task OnInitializedAsync()
 	{
@@ -41,7 +39,7 @@ public partial class Table
 	{
 		Logger!.LogDebug(string.Format("Inside {0}, DateBegin:{1}, DateEnd:{2}"
 		, nameof(Table) + "!" + nameof(PopulateTable), dateBegin.ToShortDateString(), dateEnd.ToShortDateString() ));
-		SpecialEvents = await db!.GetEventsByDateRange(dateBegin, dateEnd);
+		VM = await db!.GetEventsByDateRange(dateBegin, dateEnd);
 	}
 
 	void AddActionHandler()

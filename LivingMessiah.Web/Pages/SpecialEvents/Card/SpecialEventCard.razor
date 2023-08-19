@@ -1,0 +1,100 @@
+﻿
+<LoadingComponent IsLoading="VM==null" TurnSpinnerOff="@TurnSpinnerOff">
+	@foreach (var item in VM!)
+	{
+		<div class="card  border-primary my-5">
+
+			<div class="card-header">
+
+				<div class="row">
+					<div class="col-6">
+						<h4>
+							<i class="far fa-calendar"></i>
+							<span class='badge bg-primary'>@item.EventDate.Date.ToString(DateFormat.ddd_mm_dd)</span>
+						</h4>
+					</div>
+					<div class="col-6">
+						<h4>
+							<span class="float-end"><i>@Enums.SpecialEventType.FromValue(item.SpecialEventTypeId)!.Descr</i></span>
+						</h4>
+					</div>
+				</div>
+
+			</div>
+
+			<div class="card-body">
+				<h3 class="card-text text-center">
+					@item.Title
+				</h3>
+			</div>
+
+			<div class="card-body">
+				@if (!String.IsNullOrEmpty(@item.ImageUrl))
+				{
+					<CascadingValue Value="@false">
+						<ImageDisplayOption>
+							<img src='@Blobs.UrlOther(item.@ImageUrl)' alt="@item.Title" class="img-fluid rounded mt-4" />
+						</ImageDisplayOption>
+					</CascadingValue>
+				}
+			</div>
+
+			<div class="card-body">
+
+
+				@if (!String.IsNullOrEmpty(@item.YouTubeId))
+				{
+					@if (ShowVideo)
+					{
+						<YouTubeSpecialEvent YouTubeId="@item.YouTubeId"
+																 Title="@item.Title">
+						</YouTubeSpecialEvent>
+
+						<div class="row">
+							<div class="col">
+								<button class="my-3 btn btn-xlarge btn-primary"
+								@onclick="@(e => ShowVideo_Button_Click())">
+									@((MarkupString)OppositeIcon!) @OppositeToggleMsg
+								</button>
+							</div>
+						</div>
+					}
+				}
+
+				@if (!String.IsNullOrEmpty(@item.SubTitle))
+				{
+					<h4 class="card-title">@item.SubTitle</h4>
+				}
+
+				@if (!String.IsNullOrEmpty(@item.WebsiteUrl))
+				{
+					<Anchor Href="@item.WebsiteUrl" TargetIsBlank="true" Descr="@item.WebsiteDescr">
+					</Anchor>
+				}
+			</div>
+		</div>
+
+	}
+</LoadingComponent>
+
+@*
+
+	The folder in Pages/UpcomingEventsAdmin was deleted because it wasn't being used (for the most part)
+	- To implement, see (C:\Source\LivingeMessiahBlazorBackup\133-Delete-UpcomingEventsAdmin\Pages) where it's backed up
+
+	using LinkEditMarkdown = LivingMessiah.Web.Links.UpcomingEventsAdmin.EditMarkdown
+
+	<div class="card-body">
+		<p class="pb-2 border-success">
+			@((MarkupString)Description!)
+		</p>
+		<button @onclick="@(e => Edit_ButtonClick(@Id))"
+						class="btn-default btn-sm" title="@LinkEditMarkdown.Title Id: @Id">
+			<i class="@LinkEditMarkdown.Icon2"></i>&nbsp;<i class="@LinkEditMarkdown.Icon"></i>
+		</button>
+	</div>
+
+	*@
+
+
+

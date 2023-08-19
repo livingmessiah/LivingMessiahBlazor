@@ -1,5 +1,4 @@
-﻿using LivingMessiah.Web.Pages.UpcomingEvents.Enums;
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace LivingMessiah.Web.Pages.SpecialEvents;
@@ -40,7 +39,7 @@ public class FormVM
 
 	public FormVM()
 	{
-		SpecialEventTypeId = SpecialEventType.Other.Value;
+		SpecialEventTypeId = Enums.SpecialEventType.Other.Value;
 		EventDate = DateTime.Now.AddDays(35);
 		ShowBeginDate = DateTime.Now.AddMonths(1);
 		ShowEndDate = DateTime.Now.AddDays(40);

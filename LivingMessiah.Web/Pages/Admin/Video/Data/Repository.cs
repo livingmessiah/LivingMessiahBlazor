@@ -170,7 +170,7 @@ WHERE Id = @Id
 			formVM.WeeklyVideoTypeId,
 			formVM.ShabbatWeekId,
 			formVM.YouTubeId,
-			//Title = DTOHelper.Scrub(formVM.Title),
+			//Title = Helper.Scrub(formVM.Title),
 			formVM.Title,
 			formVM.Book,
 			formVM.Chapter,

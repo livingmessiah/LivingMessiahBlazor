@@ -1,0 +1,11 @@
+﻿@using LivingMessiah.Web.Shared.YouTube
+
+<Alert AlertExpiration="@AlertExpiration" />
+
+<LoadingComponent IsLoading="CurrentWeeklyVideos is null" TurnSpinnerOff="@TurnSpinnerOff">
+	@foreach (var item in CurrentWeeklyVideos!)
+	{
+		<Card WeeklyVideoTypeValue="item.WvtId"></Card>
+	}
+</LoadingComponent>
+

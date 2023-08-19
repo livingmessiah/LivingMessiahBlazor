@@ -1,16 +1,16 @@
-﻿using LivingMessiah.Domain;
-using LivingMessiah.Web.Services;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
 using static LivingMessiah.Web.Links.ShabbatService.LiveFeed;
+
+using WVT_Enums = LivingMessiah.Web.Pages.Admin.Video.Enums.WeeklyVideoType;
 
 namespace LivingMessiah.Web.Pages.ShabbatService;
 
-//public partial class ShabbatServiceYouTube : BaseSection
 public partial class ShabbatServiceYouTube
 {
-	[Inject] public IShabbatWeekCacheService? Svc { get; set; }
+	[Inject] public LivingMessiah.Web.Features.UpcomingEvents.Weekly.ICacheService? svc { get; set; }
+
 	[Inject] public ILogger<ShabbatServiceYouTube>? Logger { get; set; }
 
 	[Parameter]	public bool ShowSpanish { get; set; }
@@ -19,11 +19,10 @@ public partial class ShabbatServiceYouTube
 
 	protected const string SubTitle = "Watch the video when it is live";
 
-
 	protected string? Url { get; set; }
 	protected string? Heading;
 	protected bool LoadFailed = false;
-	public vwCurrentWeeklyVideo? CurrentWeeklyVideo;
+	public LivingMessiah.Web.Features.UpcomingEvents.Weekly.vwCurrentWeeklyVideo? CurrentWeeklyVideo;
 
 	protected override async Task OnInitializedAsync()
 	{
@@ -31,11 +30,13 @@ public partial class ShabbatServiceYouTube
 		{
 			LoadFailed = false;
 			Logger!.LogDebug($"Inside {nameof(ShabbatServiceYouTube)}!{nameof(OnInitializedAsync)}, ShowSpanish:{ShowSpanish} ");
+			#pragma warning disable CS8602 // Dereference of a possibly null reference.
+						CurrentWeeklyVideo = await svc!.GetCurrentWeeklyVideoByTypeId(
+											(ShowSpanish) ?
+											WVT_Enums.MainServiceSpanish.Value :
+											WVT_Enums.MainServiceEnglish.Value);
+			#pragma warning restore CS8602 // Dereference of a possibly null reference.
 
-#pragma warning disable CS8602 // Dereference of a possibly null reference.
-			CurrentWeeklyVideo = await Svc!.GetCurrentWeeklyVideoByTypeId(
-				(ShowSpanish) ? (int)WeeklyVideoType.MainServiceSpanish : (int)WeeklyVideoType.MainServiceEnglish);
-#pragma warning restore CS8602 // Dereference of a possibly null reference.
 
 			if (CurrentWeeklyVideo != null)
 			{

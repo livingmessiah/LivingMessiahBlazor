@@ -130,7 +130,7 @@ public abstract class Office : SmartEnum<Office>
 		public override bool IsFilled => true;
 		public override string OfficeHolderName => "Mike Naranjo";
 		public override string Email => "Info@livingmessiah.com";
-		public override string ImgClassSmMdLg => "w-50 p-3";
+		public override string ImgClassSmMdLg => "w-75 p-3";
 		public override int Sort => 7;
 	}
 
