@@ -171,8 +171,8 @@ public static class Database
 {
 	public static class Error
 	{
-		public const string Log = "/Database/ErrorLog";
-		public const string Title = "Error Log";
+		public const string Index = "/Database/ErrorLog";  // /Admin/
+		public const string Title = "Error Log"; //public const string Log = "/Database/ErrorLog";
 		public const string Icon = "fas fa-bomb";
 		//public const string Title = "Database Error Log"; // append db name
 

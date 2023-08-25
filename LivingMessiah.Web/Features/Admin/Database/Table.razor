@@ -1,0 +1,23 @@
+﻿
+
+
+	<TableTemplate Items="ErrorLogs">
+		<TableHeader>
+			<th>SPROC</th>
+			<th>#</th>
+			<th>Line</th>
+			<th>Error Message</th>
+			<th>Id</th>
+			<th>How Old</th>
+		</TableHeader>
+		<RowTemplate>
+			<td>@context.ErrorProcedure</td>
+			<td>@context.ErrorNumber</td>
+			<td>@context.ErrorLine</td>
+			<td>@context.ErrorMessage</td>
+			<td>@context.ErrorLogID</td>
+			<td>@((MarkupString)context.ErrorTime2!)</td>
+		</RowTemplate>
+	</TableTemplate>
+
+

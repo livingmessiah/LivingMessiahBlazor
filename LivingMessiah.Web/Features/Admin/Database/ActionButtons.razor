@@ -1,0 +1,16 @@
+﻿<div class="row">
+  <div class="col-12 my-2">
+    <button @onclick="@(e => OnButtonClicked(Enums.Action.TestInsert))"
+            title="Action on @CurrentDatabase database"
+      class="btn btn-success btn-sm ">
+      <i class="fas fa-plus"></i> Test Insert
+    </button>
+    <button @onclick="@(e => OnButtonClicked(Enums.Action.EmptyLog))"
+            title="Action on @CurrentDatabase database"
+      class="btn btn-danger btn-sm">
+      <i class="fas fa-times"></i> Empty Log
+    </button>
+  </div>
+</div>
+
+

@@ -5,17 +5,19 @@ using System.Linq;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
-namespace LivingMessiah.Web.Shared.Database;
-public interface IRepositoryLivingMessiah
+namespace LivingMessiah.Web.Features.Admin.Database.LM;
+
+public interface IRepository
 {
 	Task<int> LogErrorTest();
 	Task<List<zvwErrorLog>> GetzvwErrorLog();
 	Task<int> EmptyErrorLog();
 }
 
-public class RepositoryLivingMessiah : BaseRepositoryAsync, IRepositoryLivingMessiah
+public class Repository : BaseRepositoryAsync, IRepository
 {
-	public RepositoryLivingMessiah(IConfiguration config, ILogger<RepositoryLivingMessiah> logger) : base(config, logger)
+	public Repository(IConfiguration config, ILogger<Repository> logger) 
+		: base(config, logger, Enums.Database.LivingMessiah.ConnectionStringKey)
 	{
 	}
 

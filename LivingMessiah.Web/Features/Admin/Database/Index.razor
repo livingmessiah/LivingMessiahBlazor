@@ -1,0 +1,59 @@
+﻿@page "/Database/ErrorLog/"
+
+@using static LivingMessiah.Web.Services.Auth0
+@using Page = LivingMessiah.Web.Links.Database.Error
+<PageTitle>@Page.Title</PageTitle>
+
+<div class="pb-1 mt-4 mb-1 border-bottom border-info">
+	<h2><i class="@Page.Icon"></i> @Page.Title</h2>
+</div>
+
+@*
+<DatabaseSelectorButton 
+		CurrentDatabase="CurrentDatabase" 
+		OnDatabaseSelected="ReturnedDatabase" />
+
+<ActionButtons 
+	CurrentDatabase="CurrentDatabase"   
+	OnActionSelected="@ReturnedAction"   />
+
+<LoadingComponent IsLoading="ErrorLogs == null">
+	<Table ErrorLogs="ErrorLogs" />
+</LoadingComponent>
+
+*@	
+
+
+ <AuthorizeView Roles="@Roles.Admin">
+
+	<Authorized>
+
+<DatabaseSelectorButton 
+		CurrentDatabase="CurrentDatabase" 
+		OnDatabaseSelected="ReturnedDatabase" />
+
+<ActionButtons 
+	CurrentDatabase="CurrentDatabase"   
+	OnActionSelected="@ReturnedAction"   />
+
+<LoadingComponent IsLoading="ErrorLogs == null">
+	<Table ErrorLogs="ErrorLogs" />
+</LoadingComponent>
+
+	</Authorized>
+
+	<NotAuthorized>
+
+		<div class="card border-warning my-5">
+			<div class="card-header">Not Authorized</div>
+
+			<div class="card-body">
+				<h5 class="">To view <b>@Page.Title</b> you need to be logged in.</h5>
+				<LoginRedirectButton ReturnUrl="@Page.Index" />
+			</div>
+		</div>
+
+	</NotAuthorized>
+
+</AuthorizeView>
+ 

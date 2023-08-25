@@ -8,7 +8,7 @@ using Syncfusion.Blazor;
 using Blazored.Toast;
 using Blazored.Modal;
 using LivingMessiah.Web.Settings;
-using LivingMessiah.Web.Shared.Database;
+using LivingMessiah.Web.Features.Admin.Database;
 
 using LivingMessiah.Web.Pages.Admin.Video.DI;
 using LivingMessiah.Web.Pages.ArchivedVideos;

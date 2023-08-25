@@ -1,13 +1,14 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace LivingMessiah.Web.Shared.Database;
+namespace LivingMessiah.Web.Features.Admin.Database;
 
 public static class ServiceCollectionExtensions
 {
 	public static IServiceCollection AddDatabaseStores(this IServiceCollection services)
 	{
 		services
-			.AddTransient<IRepositoryLivingMessiah, RepositoryLivingMessiah>();
+			.AddTransient<LM.IRepository, LM.Repository>()
+			.AddTransient<Sukkot.IRepository, Sukkot.Repository>();
 		return services;
 	}
 }

@@ -1,0 +1,13 @@
+﻿<div class="row mb-3">
+	<div class="col-12">
+		@foreach (var item in Enums.Database.List)
+		{
+			<button @onclick="@(e =>  OnButtonClicked(item))"
+							title="Filter by @item.Title"
+							class="btn btn-outline-secondary float-end btn-sm @ActiveFilter(item)">
+				@item.Title &nbsp;<i class="fas fa-chevron-circle-right"></i>
+			</button>
+		}
+	</div>
+</div>
+
