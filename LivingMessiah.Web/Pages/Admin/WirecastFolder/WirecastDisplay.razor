@@ -3,18 +3,18 @@
 
 <PageTitle>@Page.Title</PageTitle>
 
-<LoadingComponent IsLoading="Wirecast==null">
+<LoadingComponent IsLoading="WirecastVM==null">
 
 	<ul class="list-inline float-end">
-		<li class="list-inline-item">Id: @Wirecast!.Id</li>
-		<li class="list-inline-item">Date: @Wirecast.ShabbatDate.ToString("MMMM dd")</li>
+		<li class="list-inline-item">Id: @WirecastVM!.Id</li>
+		<li class="list-inline-item">Date: @WirecastVM.ShabbatDate.ToString("MMMM dd")</li>
 	</ul>
 
-	<a href="@Wirecast.WirecastLink"
+	<a href="@WirecastVM.WirecastLink"
 		 class="btn btn-success" title="Link to Wirecast">
 		<i class="fas fa-podcast fa-fw fa-3x" aria-hidden="true"></i>
 	</a>
-	<p><small>@Wirecast.WirecastLink</small></p>
+	<p><small>@WirecastVM.WirecastLink</small></p>
 
 	<hr class="warning" />
 

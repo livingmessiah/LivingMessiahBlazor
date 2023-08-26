@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Dapper;
+using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
-using Dapper;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
@@ -10,14 +10,14 @@ namespace LivingMessiah.Web.Data;
 
 public abstract class BaseRepositoryAsync
 {
-	const string configationConnectionKey = "ConnectionStrings:LivingMessiah";
-
+	private readonly string ConnectionStringsKey;
 	private readonly IConfiguration config;
 	protected readonly ILogger log;
-	protected BaseRepositoryAsync(IConfiguration config, ILogger<BaseRepositoryAsync> logger)
+	protected BaseRepositoryAsync(IConfiguration config, ILogger<BaseRepositoryAsync> logger, string connectionStringsKey)
 	{
 		this.config = config;
-		this.log = logger;
+		log = logger;
+		ConnectionStringsKey = connectionStringsKey;
 	}
 
 	/// <summary>
@@ -30,21 +30,21 @@ public abstract class BaseRepositoryAsync
 	/// <returns>Task of type T - we'll be using this to build and execute our query</returns>
 	protected async Task<T> WithConnectionAsync<T>(Func<IDbConnection, Task<T>> getData)
 	{
-		string connectionString = config[configationConnectionKey]!;
+		string connectionString = config[ConnectionStringsKey]!;
 		string errMsg = "";
 
 		try
 		{
 			if (string.IsNullOrEmpty(connectionString))
 			{
-				string err = $"Inside {GetType().FullName}.{nameof(WithConnectionAsync)}; Connection string is null or empty.  configationConnectionKey={configationConnectionKey}";
+				string err = $"Inside {GetType().FullName}.{nameof(WithConnectionAsync)}; Connection string is null or empty; ConnectionStringsKey={ConnectionStringsKey}";
 				throw new ArgumentException(err);
 			}
 
 			using (var connect = new SqlConnection(connectionString))
 			{
 				await connect.OpenAsync();
-				return await getData(connect);
+				return await getData(connect);  // name of the `Func of T, see above
 			}
 		}
 		catch (TimeoutException ex)
@@ -92,6 +92,4 @@ public abstract class BaseRepositoryAsync
 		}
 	}
 
-
 }
-

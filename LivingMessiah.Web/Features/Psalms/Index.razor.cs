@@ -1,10 +1,8 @@
+using System;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Components;
-using LivingMessiah.Domain;
 using Microsoft.Extensions.Logging;
-using System;
-using LivingMessiah.Data;
 using LivingMessiah.Web.Shared;
 
 namespace LivingMessiah.Web.Features.Psalms;

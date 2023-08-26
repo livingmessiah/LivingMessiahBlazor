@@ -1,5 +1,4 @@
 ﻿using Blazored.Toast.Services;
-using LivingMessiah.Web.Pages.SukkotAdmin.ErrorLog;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
@@ -64,13 +63,7 @@ public partial class Index
 	}
 
 	#region DatabaseAction
-	/*
-	ToDo: maybe...
-		1) maybe this could be a service, it could be an abstract base class where you have to pass 
-			LM.IRepository or Sukkot.IRepository
-		2) maybe change the back-end to procs and return `DatabaseTuple`
-		3) maybe split up DatabaseTuple into Queries and Commands
-	*/
+
 	private int AffectedRows { get; set; } = 0;
 
 	private async Task LogErrorTest()
@@ -120,7 +113,7 @@ public partial class Index
 	private async Task PopulateTable()
 	{
 		Logger!.LogDebug(string.Format("Inside {0}; {1}", inside, nameof(PopulateTable)));
-		await Task.Delay(1500);
+		await Task.Delay(500);
 		try
 		{
 			if (CurrentDatabase == Enums.Database.LivingMessiah)

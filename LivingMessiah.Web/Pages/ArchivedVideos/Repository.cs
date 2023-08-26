@@ -4,7 +4,9 @@ using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
-using LivingMessiah.Data;
+
+using EnumsDatabase = LivingMessiah.Web.Features.Admin.Database.Enums.Database;
+using LivingMessiah.Web.Data;
 
 namespace LivingMessiah.Web.Pages.ArchivedVideos;
 
@@ -16,13 +18,14 @@ public interface IRepository
 
 public class Repository : BaseRepositoryAsync, IRepository
 {
-	public Repository(IConfiguration config, ILogger<Repository> logger) : base(config, logger)
+	public Repository(IConfiguration config, ILogger<Repository> logger)
+		: base(config, logger, EnumsDatabase.LivingMessiah.ConnectionStringKey)
 	{
 	}
 
 	public string BaseSqlDump
 	{
-		get { return base.SqlDump; }
+		get { return base.SqlDump ?? ""; }
 	}
 
 

@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
 
 using LivingMessiah.Web.Data;
+using EnumsDatabase = LivingMessiah.Web.Features.Admin.Database.Enums.Database;
 
 namespace LivingMessiah.Web.Components.ShabbatWeek;
 
@@ -17,13 +18,14 @@ public interface IRepository
 
 public class Repository : BaseRepositoryAsync, IRepository
 {
-	public Repository(IConfiguration config, ILogger<Repository> logger) : base(config, logger)
+	public Repository(IConfiguration config, ILogger<Repository> logger)
+		: base(config, logger, EnumsDatabase.LivingMessiah.ConnectionStringKey)
 	{
 	}
 
 	public string BaseSqlDump
 	{
-		get { return base.SqlDump!; }
+		get { return base.SqlDump ?? ""; }
 	}
 
 

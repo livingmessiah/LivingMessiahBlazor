@@ -5,9 +5,11 @@ using System.Threading.Tasks;
 using System.Linq;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
-using LivingMessiah.Domain;
 
-namespace LivingMessiah.Data;
+using LivingMessiah.Web.Data;
+using EnumsDatabase = LivingMessiah.Web.Features.Admin.Database.Enums.Database;
+
+namespace LivingMessiah.Web.Pages.Admin.WirecastFolder;
 
 public interface IShabbatWeekRepository
 {
@@ -16,17 +18,10 @@ public interface IShabbatWeekRepository
 	// Wirecast
 	Task<int> UpdateWirecastLink(int id, string wireCastLink);
 	Task<int> UpdateScratchpad(string scratchPad);
-	Task<Wirecast> GetCurrentWirecast();
+	Task<WirecastVM> GetCurrentWirecast();
 	Task<ScratchPad> GetScratchPadWireCast();
 
 	#region ToDo: Move somewhere else
-
-	// ToDo Why are these here? It needs to be pulled out of here and ISukkotAdminRepository
-	// and put into something like LivingMessiahAdmin
-	Task<int> LogErrorTest();
-	Task<List<zvwErrorLog>> GetzvwErrorLog();
-	Task<int> EmptyErrorLog();
-
 
 	// ToDo does this go with LivingMessiahAdmin as well
 	Task<int> UpdateContactSukkotInviteDate(int id);
@@ -37,13 +32,14 @@ public interface IShabbatWeekRepository
 
 public class ShabbatWeekRepository : BaseRepositoryAsync, IShabbatWeekRepository
 {
-	public ShabbatWeekRepository(IConfiguration config, ILogger<ShabbatWeekRepository> logger) : base(config, logger)
+	public ShabbatWeekRepository(IConfiguration config, ILogger<ShabbatWeekRepository> logger)
+		: base(config, logger, EnumsDatabase.LivingMessiah.ConnectionStringKey)
 	{
 	}
 
 	public string BaseSqlDump
 	{
-		get { return base.SqlDump; }
+		get { return base.SqlDump ?? ""; }
 	}
 
 
@@ -61,7 +57,7 @@ public class ShabbatWeekRepository : BaseRepositoryAsync, IShabbatWeekRepository
 
 
 	#region Wirecast
-	public async Task<Wirecast> GetCurrentWirecast()
+	public async Task<WirecastVM> GetCurrentWirecast()
 	{
 		var datesTuple = CurrentShabbatDate();
 		log.LogDebug(String.Format("Inside {0}, CompareDate={1}; IsDayOfWeekSaturday={2}"
@@ -80,7 +76,7 @@ WHERE sw.ShabbatDate >= @CompareDate AND sw.ShabbatDate <= @CompareDate
 ";
 			return await WithConnectionAsync(async connection =>
 			{
-				var rows = await connection.QueryAsync<Wirecast>(sql: base.Sql, param: base.Parms);
+				var rows = await connection.QueryAsync<WirecastVM>(sql: base.Sql, param: base.Parms);
 				return rows.SingleOrDefault()!;
 			});
 		}
@@ -94,7 +90,7 @@ WHERE sw.ShabbatDate >= @CompareDate
 ";
 			return await WithConnectionAsync(async connection =>
 			{
-				var rows = await connection.QueryAsync<Wirecast>(sql: base.Sql, param: base.Parms);
+				var rows = await connection.QueryAsync<WirecastVM>(sql: base.Sql, param: base.Parms);
 				return rows.First();
 			});
 		}
@@ -136,43 +132,6 @@ WHERE sw.ShabbatDate >= @CompareDate
 	}
 	#endregion
 
-	#region PsalmsAndProverbs
-
-	// moved to LivingMessiah.Web.Components.ShabbatWeek.Repository
-//	public async Task<PsalmAndProverb> GetCurrentPsalmAndProverb()
-//	{
-//		var datesTuple = CurrentShabbatDate();
-//		bool isDayOfWeekSaturday = datesTuple.Item2;
-
-//		string Where = $" WHERE ShabbatDate >= '{datesTuple.Item1}' ";
-
-//		base.Sql = $@"
-//SELECT 
-//  ShabbatWeekId, ShabbatDate
-//, PsalmsBCV, PsalmsChapter
-//, PsalmsKJVHtmlConcat
-//, PsalmsUrl, PsalmsTitle
-//, ProverbsBCV, ProverbsChapter
-//, ProverbsKJVHtmlConcat
-//, ProverbsUrl
-//FROM Bible.vwPsalmsAndProverbs v 
-//WHERE ShabbatDate = dbo.udfGetNextShabbatDate()
-//";
-
-//		log.LogDebug(String.Format("Inside {0}, Sql={1}"
-//			, nameof(ShabbatWeekRepository) + "!" + nameof(GetCurrentPsalmAndProverb), base.Sql));
-
-
-//		return await WithConnectionAsync(async connection =>
-//		{
-//			var rows = await connection.QueryAsync<PsalmAndProverb>(sql: base.Sql, param: base.Parms);
-//			return rows.SingleOrDefault()!;
-//		});
-//	}
-
-
-
-	#endregion
 
 
 	#region ToDo: Move somewhere else
@@ -205,36 +164,6 @@ WHERE sw.ShabbatDate >= @CompareDate
 		{
 			var rows = await connection.QueryAsync<Download>(sql: base.Sql);
 			return rows.ToList();
-		});
-	}
-
-	public async Task<int> LogErrorTest()
-	{
-		base.Sql = "dbo.stpLogErrorTest ";
-		return await WithConnectionAsync(async connection =>
-		{
-			var count = await connection.ExecuteAsync(sql: base.Sql, commandType: System.Data.CommandType.StoredProcedure);
-			return count;
-		});
-	}
-
-	public async Task<List<zvwErrorLog>> GetzvwErrorLog()
-	{
-		base.Sql = $@"SELECT TOP 75 * FROM zvwErrorLog ORDER BY ErrorLogID DESC";
-		return await WithConnectionAsync(async connection =>
-		{
-			var rows = await connection.QueryAsync<zvwErrorLog>(sql: base.Sql);
-			return rows.ToList();
-		});
-	}
-
-	public async Task<int> EmptyErrorLog()
-	{
-		base.Sql = "dbo.stpLogErrorEmpty";
-		return await WithConnectionAsync(async connection =>
-		{
-			var affectedrows = await connection.ExecuteAsync(sql: base.Sql, commandType: System.Data.CommandType.StoredProcedure);
-			return affectedrows;
 		});
 	}
 

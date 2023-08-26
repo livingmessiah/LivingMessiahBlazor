@@ -2,12 +2,12 @@
 using System.Threading.Tasks;
 using System.Linq;
 using System.Data;
-using System.Collections.Generic;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
 using LivingMessiah.Web.Pages.Sukkot.Domain;
-using LivingMessiah.Web.Pages.SukkotAdmin.Data;
+using LivingMessiah.Web.Data;
+using EnumsDatabase = LivingMessiah.Web.Features.Admin.Database.Enums.Database;
 
 namespace LivingMessiah.Web.Pages.Sukkot.Data;
 
@@ -24,13 +24,14 @@ public interface ISukkotRepository
 
 public class SukkotRepository : BaseRepositoryAsync, ISukkotRepository
 {
-	public SukkotRepository(IConfiguration config, ILogger<SukkotRepository> logger) : base(config, logger)
+	public SukkotRepository(IConfiguration config, ILogger<SukkotRepository> logger)
+		: base(config, logger, EnumsDatabase.Sukkot.ConnectionStringKey)
 	{
 	}
 
 	public string BaseSqlDump
 	{
-		get { return base.SqlDump!; }
+		get { return base.SqlDump ?? ""; }
 	}
 
 	public async Task<vwRegistration> ById(int id)

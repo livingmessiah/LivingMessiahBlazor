@@ -1,28 +1,24 @@
-﻿using System;
+﻿using Dapper;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
-using Dapper;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
 using LivingMessiah.Web.Pages.Sukkot.Services; // needed for DTO.cs
-
 using LivingMessiah.Web.Pages.Sukkot.Enums;
-using LivingMessiah.Web.Pages.SukkotAdmin.Data; // for BaseRepositoryAsync
 using LivingMessiah.Web.Pages.Sukkot.SuperUser.Data;
 using LivingMessiah.Web.Pages.SukkotAdmin.Donations.Data;
 using LivingMessiah.Web.Pages.Sukkot.NormalUser;
-using Serilog.Core;
-using System.Data.SqlClient;
 using LivingMessiah.Web.Pages.Sukkot.SuperUser.MasterDetail;
-
-using OneOf;
-using OneOf.Types;
 using LivingMessiah.Web.Pages.Sukkot.SuperUser.Registrant;
 
-//using LivingMessiah.Web.Pages.SukkotAdmin.Donations.Domain;
+using LivingMessiah.Web.Data;
+using EnumsDatabase = LivingMessiah.Web.Features.Admin.Database.Enums.Database;
+
+using OneOf;
 
 namespace LivingMessiah.Web.Pages.Sukkot.Data;
 
@@ -34,11 +30,9 @@ public interface IRepository
 	Task<List<vwSuperUser>> GetAll();
 	Task<SuperUser.Registrant.FormVM> Get(int id);
 
-
 	Task<OneOf<SprocInsert, int, string>> CreateRegistrationOneOf(SuperUser.Registrant.FormVM formVM);
 
 	Task<Tuple<int, int, string>> CreateRegistration(SuperUser.Registrant.FormVM formVM);
-	
 	
 	Task<Tuple<int, int, string>> UpdateRegistration(SuperUser.Registrant.FormVM formVM);
 	Task<Tuple<int, int, string>> DeleteRegistration(int id);
@@ -59,7 +53,8 @@ public interface IRepository
 
 public class Repository : BaseRepositoryAsync, IRepository
 {
-	public Repository(IConfiguration config, ILogger<Repository> logger) : base(config, logger)
+	public Repository(IConfiguration config, ILogger<Repository> logger)
+		: base(config, logger, EnumsDatabase.Sukkot.ConnectionStringKey)
 	{
 	}
 
@@ -132,7 +127,7 @@ WHERE Id = @Id";
 			formVM.ChildBig,
 			formVM.ChildSmall,
 			formVM.StatusId,
-			AttendanceBitwise = Helper.GetDaysBitwise(formVM.AttendanceDateList!, formVM.AttendanceDateList2ndMonth!, DateRangeType.Attendance),
+			AttendanceBitwise = Enums.Helper.GetDaysBitwise(formVM.AttendanceDateList!, formVM.AttendanceDateList2ndMonth!, DateRangeType.Attendance),
 			LmmDonation = 0,
 			formVM.Notes,
 			Avatar = string.Empty
@@ -194,7 +189,7 @@ WHERE Id = @Id";
 			formVM.Adults,
 			formVM.ChildBig,
 			formVM.ChildSmall,
-			AttendanceBitwise = Helper.GetDaysBitwise(formVM.AttendanceDateList!, formVM.AttendanceDateList2ndMonth!, DateRangeType.Attendance),
+			AttendanceBitwise = Enums.Helper.GetDaysBitwise(formVM.AttendanceDateList!, formVM.AttendanceDateList2ndMonth!, DateRangeType.Attendance),
 			formVM.StatusId,
 			formVM.LmmDonation,
 			Notes = LivingMessiah.Web.Data.Helper.Scrub(formVM.Notes),

@@ -7,8 +7,7 @@ using HtmlAgilityPack;
 using System.Linq;
 
 using LivingMessiah.Web.Components.ShabbatWeek;
-//using LivingMessiah.Web.Services;
-//using LivingMessiah.Domain;
+
 
 namespace LivingMessiah.Web.Components.ShabbatWeek;
 
@@ -19,12 +18,12 @@ public partial class PsalmAndProverbCurrent
 	[Parameter] public bool PerformHtmlValidation { get; set; } = true;
 
 	protected PsalmAndProverbCurrentVM? VM;
-	protected string?  ShabbatDateYMD;
+	protected string? ShabbatDateYMD;
 
-	protected string?  PsalmsHeading;
-	protected string?  PsalmsVerses;
-	protected string?  ProverbsHeading;
-	protected string?  ProverbsVerses;
+	protected string? PsalmsHeading;
+	protected string? PsalmsVerses;
+	protected string? ProverbsHeading;
+	protected string? ProverbsVerses;
 
 	protected bool LoadFailed;
 

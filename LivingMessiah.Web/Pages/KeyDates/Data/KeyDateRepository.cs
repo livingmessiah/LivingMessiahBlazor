@@ -6,7 +6,9 @@ using Dapper;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
-using LivingMessiah.Data;                   // ToDo: Move this to LivingMessiah.Web.Data
+using LivingMessiah.Web.Data;
+using EnumsDatabase = LivingMessiah.Web.Features.Admin.Database.Enums.Database;
+
 using LivingMessiah.Web.Pages.KeyDates.Queries;
 
 namespace LivingMessiah.Web.Pages.KeyDates.Data;
@@ -22,13 +24,14 @@ public interface IKeyDateRepository
 }
 public class KeyDateRepository : BaseRepositoryAsync, IKeyDateRepository
 {
-	public KeyDateRepository(IConfiguration config, ILogger<KeyDateRepository> logger) : base(config, logger)
+	public KeyDateRepository(IConfiguration config, ILogger<KeyDateRepository> logger)
+		: base(config, logger, EnumsDatabase.LivingMessiah.ConnectionStringKey)
 	{
 	}
 
 	public string BaseSqlDump
 	{
-		get { return base.SqlDump; }
+		get { return base.SqlDump ?? ""; }
 	}
 
 	public async Task<List<LivingMessiah.Web.Pages.Calendar.CalendarVM>> GetPlannerVM(int yearId, LivingMessiah.Web.Pages.Calendar.Enums.DateTypeFilter filter)

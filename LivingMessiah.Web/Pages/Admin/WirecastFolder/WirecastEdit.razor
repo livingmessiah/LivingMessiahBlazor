@@ -1,7 +1,7 @@
 ﻿
 
-<LoadingComponent IsLoading="Wirecast==null">
-	<EditForm Model="@Wirecast"
+<LoadingComponent IsLoading="WirecastVM==null">
+	<EditForm Model="@WirecastVM"
 						OnValidSubmit="UpdateWirecastLink"
 						class="card card-body bg-light mt-5">
 		<DataAnnotationsValidator />
@@ -15,8 +15,8 @@
 				<div class="col-sm-4">
 					<div class="mb-3">
 						<label for="wirecast" class="control-label">Wirecast Link</label>
-						<InputText id="wirecast" class="form-control" @bind-Value="Wirecast!.WirecastLink" />
-						<ValidationMessage For="@(() => Wirecast.WirecastLink)" />
+						<InputText id="wirecast" class="form-control" @bind-Value="WirecastVM!.WirecastLink" />
+						<ValidationMessage For="@(() => WirecastVM.WirecastLink)" />
 					</div>
 				</div>
 

@@ -1,11 +1,9 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Blazored.Toast.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
-using LivingMessiah.Data;
-using LivingMessiah.Domain;
 using System;
-using Blazored.Toast.Services;
 using Page = LivingMessiah.Web.Links.Wirecast;
 
 namespace LivingMessiah.Web.Pages.Admin.WirecastFolder;
@@ -17,7 +15,7 @@ public partial class WirecastDisplay
 	[Inject] public ILogger<WirecastDisplay>? Logger { get; set; }
 	[Inject] public IToastService? Toast { get; set; }
 
-	public Wirecast? Wirecast { get; set; }
+	public WirecastVM? WirecastVM { get; set; }
 
 	protected override async Task OnInitializedAsync()
 	{
@@ -26,8 +24,8 @@ public partial class WirecastDisplay
 
 		try
 		{
-			Wirecast = await db!.GetCurrentWirecast();
-			if (Wirecast == null)
+			WirecastVM = await db!.GetCurrentWirecast();
+			if (WirecastVM == null)
 			{
 				string s = $"Wirecast is null after calling {nameof(db.GetCurrentWirecast)}";
 				Logger!.LogWarning(string.Format("...{0}, Sql:{1}", s, db.BaseSqlDump));

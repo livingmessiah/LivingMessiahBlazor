@@ -1,12 +1,15 @@
-﻿using System;
+﻿using Dapper;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
-using Dapper;
+
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+
 using LivingMessiah.Web.Data;
+using EnumsDatabase = LivingMessiah.Web.Features.Admin.Database.Enums.Database;
 
 namespace LivingMessiah.Web.Pages.SpecialEvents.Data;
 
@@ -27,7 +30,8 @@ public interface IRepository
 
 public class Repository : BaseRepositoryAsync, IRepository
 {
-	public Repository(IConfiguration config, ILogger<Repository> logger) : base(config, logger)
+	public Repository(IConfiguration config, ILogger<Repository> logger)
+		: base(config, logger, EnumsDatabase.LivingMessiah.ConnectionStringKey)
 	{
 	}
 

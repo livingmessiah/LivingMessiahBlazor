@@ -2,11 +2,13 @@
 using System.Threading.Tasks;
 using System.Linq;
 using System;
+using System.Collections.Generic;
+
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
 
 using LivingMessiah.Web.Data;
-using System.Collections.Generic;
+using EnumsDatabase = LivingMessiah.Web.Features.Admin.Database.Enums.Database;
 
 namespace LivingMessiah.Web.Features.UpcomingEvents.Weekly;
 
@@ -18,7 +20,8 @@ public interface IRepository
 
 public class Repository : BaseRepositoryAsync, IRepository
 {
-	public Repository(IConfiguration config, ILogger<Repository> logger) : base(config, logger)
+	public Repository(IConfiguration config, ILogger<Repository> logger)
+		: base(config, logger, EnumsDatabase.LivingMessiah.ConnectionStringKey)
 	{
 	}
 

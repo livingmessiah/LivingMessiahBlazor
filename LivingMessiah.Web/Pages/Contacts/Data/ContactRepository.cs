@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using Dapper;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Dapper;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using LivingMessiah.Data;
+
+using EnumsDatabase = LivingMessiah.Web.Features.Admin.Database.Enums.Database;
+using LivingMessiah.Web.Data;
 
 namespace LivingMessiah.Web.Pages.Contacts.Data;
 
@@ -16,13 +18,14 @@ public interface IContactRepository
 
 public class ContactRepository : BaseRepositoryAsync, IContactRepository
 {
-	public ContactRepository(IConfiguration config, ILogger<ContactRepository> logger) : base(config, logger)
+	public ContactRepository(IConfiguration config, ILogger<ContactRepository> logger) 
+		: base(config, logger, EnumsDatabase.LivingMessiah.ConnectionStringKey)
 	{
 	}
 
 	public string BaseSqlDump
 	{
-		get { return base.SqlDump; }
+		get { return base.SqlDump ?? ""; }
 	}
 
 	public async Task<List<ContactVM>> GetAll()  // bool selectAll

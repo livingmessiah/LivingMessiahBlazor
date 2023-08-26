@@ -6,7 +6,6 @@ using Microsoft.Extensions.Logging;
 using LivingMessiah.Web.Pages.Sukkot.Domain;
 using LivingMessiah.Web.Pages.SukkotAdmin.Data;
 using LivingMessiah.Web.Pages.SukkotAdmin.RegistrationNotes.Domain;
-using LivingMessiah.Web.Pages.SukkotAdmin.ErrorLog.Domain;
 using LivingMessiah.Web.Services;
 
 namespace LivingMessiah.Web.Pages.SukkotAdmin.Services;
@@ -14,11 +13,8 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Services;
 public interface ISukkotAdminService
 {
 	string UserInterfaceMessage { get; set; }
-
 	Task<List<vwRegistration>> GetAll(EnumsOld.RegistrationSortEnum sort, bool isAscending);
 	Task<List<Notes>> GetNotes(EnumsOld.RegistrationSortEnum sort);
-
-	Task<int> EmptyErrorLog();
 }
 
 public class SukkotAdminService : ISukkotAdminService
@@ -79,24 +75,6 @@ public class SukkotAdminService : ISukkotAdminService
 			throw new InvalidOperationException(UserInterfaceMessage);
 		}
 		return vm;
-	}
-
-
-	public async Task<int> EmptyErrorLog()
-	{
-		int count = 0;
-		try
-		{
-			count = await db.EmptyErrorLog();
-		}
-		catch (Exception ex)
-		{
-			LogExceptionMessage = $"Inside {nameof(SukkotAdminService)}!{nameof(EmptyErrorLog)}, db.{nameof(db.EmptyErrorLog)}";
-			Logger.LogError(ex, LogExceptionMessage);
-			LogExceptionMessage += ex.Message ?? "-- ex.Message was null --";
-			throw new InvalidOperationException(LogExceptionMessage);
-		}
-		return count;
 	}
 
 }

@@ -1,14 +1,16 @@
-﻿using System;
+﻿using Dapper;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
-using Dapper;
-using LivingMessiah.Web.Pages.SukkotAdmin.Donations.Domain;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using  LivingMessiah.Web.Pages.SukkotAdmin.Data;
+
+using LivingMessiah.Web.Pages.SukkotAdmin.Donations.Domain;
 using LivingMessiah.Web.Pages.SukkotAdmin.Donations.Enums;
+using LivingMessiah.Web.Data;
+using EnumsDatabase = LivingMessiah.Web.Features.Admin.Database.Enums.Database;
 
 namespace LivingMessiah.Web.Pages.SukkotAdmin.Donations.Data;
 
@@ -25,13 +27,13 @@ public interface IDonationRepository
 }
 public class DonationRepository : BaseRepositoryAsync, IDonationRepository
 {
-
 	public string BaseSqlDump
 	{
-		get { return base.SqlDump!; }
+		get { return base.SqlDump ?? ""; }
 	}
 
-	public DonationRepository(IConfiguration config, ILogger<DonationRepository> logger) : base(config, logger)
+	public DonationRepository(IConfiguration config, ILogger<DonationRepository> logger)
+		: base(config, logger, EnumsDatabase.Sukkot.ConnectionStringKey)
 	{
 	}
 

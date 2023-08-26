@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Linq;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using LivingMessiah.Web.Data;
 
 namespace LivingMessiah.Web.Features.Admin.Database.Sukkot;
 

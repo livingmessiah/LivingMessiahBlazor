@@ -1,11 +1,14 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Dapper;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
-using Dapper;
-using LivingMessiah.Data;
+
+using LivingMessiah.Web.Data;
+using EnumsDatabase = LivingMessiah.Web.Features.Admin.Database.Enums.Database;
+
 using LivingMessiah.Web.Pages.Parasha.ListByBook;
 
 namespace LivingMessiah.Web.Pages.Parasha.Data;
@@ -19,13 +22,14 @@ public interface IParashaRepository
 
 public class ParashaRepository : BaseRepositoryAsync, IParashaRepository
 {
-	public ParashaRepository(IConfiguration config, ILogger<ParashaRepository> logger) : base(config, logger)
+	public ParashaRepository(IConfiguration config, ILogger<ParashaRepository> logger)
+		: base(config, logger, EnumsDatabase.LivingMessiah.ConnectionStringKey)
 	{
 	}
 
 	public string BaseSqlDump
 	{
-		get { return base.SqlDump; }
+		get { return base.SqlDump ?? ""; }
 	}
 
 	public async Task<CurrentParasha?> GetCurrentParasha()

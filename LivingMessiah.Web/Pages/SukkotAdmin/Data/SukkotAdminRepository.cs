@@ -6,10 +6,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
 using LivingMessiah.Web.Pages.SukkotAdmin.Attendance.Domain;
-using LivingMessiah.Web.Pages.SukkotAdmin.ErrorLog.Domain;
 using LivingMessiah.Web.Pages.SukkotAdmin.RegistrationNotes.Domain;
 using LivingMessiah.Web.Pages.Sukkot.Domain;
-//using LivingMessiah.Web.Pages.SukkotAdmin.Enums;
+
+using LivingMessiah.Web.Data;
+using EnumsDatabase = LivingMessiah.Web.Features.Admin.Database.Enums.Database;
 
 namespace LivingMessiah.Web.Pages.SukkotAdmin.Data;
 
@@ -17,10 +18,6 @@ public interface ISukkotAdminRepository
 {
 	Task<List<vwRegistration>> GetAll(EnumsOld.RegistrationSortEnum sort, bool isAscending);
 	Task<List<Notes>> GetNotes(EnumsOld.RegistrationSortEnum sort);
-
-	Task<int> LogErrorTest();
-	Task<List<zvwErrorLog>> GetzvwErrorLog();
-	Task<int> EmptyErrorLog();
 
 	Task<List<vwAttendanceAllFeastDays>> GetAttendanceAllFeastDays();
 	Task<vwAttendancePeopleSummary> GetAttendancePeopleSummary();
@@ -30,7 +27,8 @@ public interface ISukkotAdminRepository
 public class SukkotAdminRepository : BaseRepositoryAsync, ISukkotAdminRepository
 {
 
-	public SukkotAdminRepository(IConfiguration config, ILogger<SukkotAdminRepository> logger) : base(config, logger)
+	public SukkotAdminRepository(IConfiguration config, ILogger<SukkotAdminRepository> logger)
+		: base(config, logger, EnumsDatabase.Sukkot.ConnectionStringKey)
 	{
 	}
 
@@ -72,7 +70,6 @@ ORDER BY {sortField}
 
 	}
 
-
 	public async Task<List<Notes>> GetNotes(EnumsOld.RegistrationSortEnum sort)
 	{
 		string sortField = (sort == EnumsOld.RegistrationSortEnum.LastName) ? "FamilyName" : "Id";
@@ -87,37 +84,6 @@ ORDER BY {sortField}
 		{
 			var rows = await connection.QueryAsync<Notes>(sql: base.Sql, param: base.Parms);
 			return rows.ToList();
-		});
-	}
-
-
-	public async Task<int> LogErrorTest()
-	{
-		base.Sql = "dbo.stpLogErrorTest ";
-		return await WithConnectionAsync(async connection =>
-		{
-			var count = await connection.ExecuteAsync(sql: base.Sql, commandType: System.Data.CommandType.StoredProcedure);
-			return count;
-		});
-	}
-
-	public async Task<List<zvwErrorLog>> GetzvwErrorLog()
-	{
-		base.Sql = $@"SELECT TOP 75 * FROM zvwErrorLog ORDER BY ErrorLogID DESC";
-		return await WithConnectionAsync(async connection =>
-		{
-			var rows = await connection.QueryAsync<zvwErrorLog>(sql: base.Sql);
-			return rows.ToList();
-		});
-	}
-
-	public async Task<int> EmptyErrorLog()
-	{
-		base.Sql = "dbo.stpLogErrorEmpty";
-		return await WithConnectionAsync(async connection =>
-		{
-			var affectedrows = await connection.ExecuteAsync(sql: base.Sql, commandType: System.Data.CommandType.StoredProcedure);
-			return affectedrows;
 		});
 	}
 

@@ -1,11 +1,10 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using Blazored.Toast.Services;
+using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Authorization;
 using System.Threading.Tasks;
-using LivingMessiah.Data;
-using LivingMessiah.Domain;
 using System;
-using Blazored.Toast.Services;
+
 using Page = LivingMessiah.Web.Links.Wirecast;
 
 namespace LivingMessiah.Web.Pages.Admin.WirecastFolder;
@@ -16,7 +15,7 @@ public partial class WirecastEdit
 	[Inject] public ILogger<WirecastEdit>? Logger { get; set; }
 	[Inject] public IToastService? Toast { get; set; }
 
-	public Wirecast? Wirecast { get; set; }
+	public WirecastVM? WirecastVM { get; set; }
 	public ScratchPad? ScratchPad { get; set; }
 
 	protected int RowCount { get; set; } = 0;
@@ -28,8 +27,8 @@ public partial class WirecastEdit
 
 		try
 		{
-			Wirecast = await db!.GetCurrentWirecast();
-			if (Wirecast == null)
+			WirecastVM = await db!.GetCurrentWirecast();
+			if (WirecastVM == null)
 			{
 				string s = $"Wirecast is null after calling {nameof(db.GetCurrentWirecast)}";
 				Logger!.LogWarning(string.Format("...{0}, Sql:{1}", s, db.BaseSqlDump));
@@ -57,7 +56,7 @@ public partial class WirecastEdit
 		RowCount = 0;
 		try
 		{
-			RowCount = await db!.UpdateWirecastLink(Wirecast!.Id, Wirecast.WirecastLink!);
+			RowCount = await db!.UpdateWirecastLink(WirecastVM!.Id, WirecastVM.WirecastLink!);
 			Toast!.ShowInfo($"Updated wirecast link, RowCount: {RowCount}");
 		}
 		catch (Exception ex)

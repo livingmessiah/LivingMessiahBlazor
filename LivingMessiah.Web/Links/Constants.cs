@@ -512,14 +512,6 @@ public static class Sukkot
 		public const string CreateDonation = "/SukkotAdmin/CreateDonation";
 	}
 
-	public static class Errors
-	{
-		public const string ErrorLog = "/SukkotAdmin/ErrorLog";
-		public const string ErrorLogTitle = "Sukkot Admin ErrorLog";
-		//public const string LogErrorTest = "/SukkotAdmin/LogErrorTest";
-		//public const string ErrorLogEmpty = "/SukkotAdmin/ErrorLogEmpty";
-	}
-
 	public static class LegalAgreementVerbiage
 	{
 		public const string Index = "/SukkotAdmin/LegalAgreementVerbiage";

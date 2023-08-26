@@ -1,12 +1,12 @@
 ﻿using Dapper;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Configuration;
 using System.Linq;
 using System;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Configuration;
 using LivingMessiah.Web.Data;
-
+using EnumsDatabase = LivingMessiah.Web.Features.Admin.Database.Enums.Database;
 
 namespace LivingMessiah.Web.Features.PsalmsAndProverbs;
 
@@ -19,13 +19,14 @@ public interface IRepository
 
 public class Repository : BaseRepositoryAsync, IRepository
 {
-	public Repository(IConfiguration config, ILogger<Repository> logger) : base(config, logger)
+	public Repository(IConfiguration config, ILogger<Repository> logger)
+		: base(config, logger, EnumsDatabase.LivingMessiah.ConnectionStringKey)
 	{
 	}
 
 	public string BaseSqlDump
 	{
-		get { return base.SqlDump!; }
+		get { return base.SqlDump ?? ""; }
 	}
 
 
