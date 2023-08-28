@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Linq;
 
 using LivingMessiah.Web.Data;
-using EnumsDatabase = LivingMessiah.Web.Features.Admin.Database.Enums.Database;
+using DataEnumsDatabase = LivingMessiah.Web.Data.Enums.Database;
 
 using LivingMessiah.Web.Pages.Parasha.ListByBook;
 
@@ -23,7 +23,7 @@ public interface IParashaRepository
 public class ParashaRepository : BaseRepositoryAsync, IParashaRepository
 {
 	public ParashaRepository(IConfiguration config, ILogger<ParashaRepository> logger)
-		: base(config, logger, EnumsDatabase.LivingMessiah.ConnectionStringKey)
+		: base(config, logger, DataEnumsDatabase.LivingMessiah.ConnectionStringKey)
 	{
 	}
 

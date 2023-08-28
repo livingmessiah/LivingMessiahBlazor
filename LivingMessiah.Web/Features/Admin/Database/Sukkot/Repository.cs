@@ -1,12 +1,12 @@
-﻿// Ignore Spelling: CSK
-
-using Dapper;
+﻿using Dapper;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+
 using LivingMessiah.Web.Data;
+using DataEnumsDatabase = LivingMessiah.Web.Data.Enums.Database;
 
 namespace LivingMessiah.Web.Features.Admin.Database.Sukkot;
 
@@ -21,7 +21,7 @@ public class Repository : BaseRepositoryAsync, IRepository
 {
 
 	public Repository(IConfiguration config, ILogger<Repository> logger) 
-		: base(config, logger, Enums.Database.Sukkot.ConnectionStringKey)
+		: base(config, logger, DataEnumsDatabase.Sukkot.ConnectionStringKey)
 	{
 	}
 
@@ -56,3 +56,4 @@ public class Repository : BaseRepositoryAsync, IRepository
 	}
 
 }
+

@@ -16,7 +16,7 @@ public partial class Index
 	[Inject] public Sukkot.IRepository? dbSukkot { get; set; }
 	[Inject] public ILogger<Index>? Logger { get; set; }
 
-	protected Enums.Database? CurrentDatabase { get; set; }
+	protected Data.Enums.Database? CurrentDatabase { get; set; }
 	private string inside = $"page {Page.Index}; class: {nameof(Index)}";
 	public List<zvwErrorLog>? ErrorLogs { get; set; }
 
@@ -24,14 +24,14 @@ public partial class Index
 	{
 		if (CurrentDatabase is null)
 		{
-			CurrentDatabase = Enums.Database.LivingMessiah;
+			CurrentDatabase = Data.Enums.Database.LivingMessiah;
 			Logger!.LogDebug(string.Format("Inside {0}; {1}, CurrentDatabase is null so calling {2}; CurrentDatabase: {3}"
 				, inside, nameof(OnInitializedAsync), nameof(PopulateTable), CurrentDatabase));
 			await PopulateTable();
 		}
 	}
 
-	private async Task ReturnedDatabase(Enums.Database database)
+	private async Task ReturnedDatabase(Data.Enums.Database database)
 	{
 		Logger!.LogDebug(string.Format("Inside {0}; {1}, action: {2}", inside, nameof(ReturnedDatabase), database.Name));
 		CurrentDatabase = database;
@@ -71,7 +71,7 @@ public partial class Index
 		Logger!.LogDebug(string.Format("Inside {0}; {1}", inside, nameof(LogErrorTest)));
 		try
 		{
-			if (CurrentDatabase == Enums.Database.LivingMessiah)
+			if (CurrentDatabase == Data.Enums.Database.LivingMessiah)
 			{
 				AffectedRows = await dbLivingMessiah!.LogErrorTest();
 			}
@@ -93,7 +93,7 @@ public partial class Index
 		Logger!.LogDebug(string.Format("Inside {0}; {1}", inside, nameof(EmptyErrorLog)));
 		try
 		{
-			if (CurrentDatabase == Enums.Database.LivingMessiah)
+			if (CurrentDatabase == Data.Enums.Database.LivingMessiah)
 			{
 				AffectedRows = await dbLivingMessiah!.EmptyErrorLog();
 			}
@@ -116,7 +116,7 @@ public partial class Index
 		await Task.Delay(500);
 		try
 		{
-			if (CurrentDatabase == Enums.Database.LivingMessiah)
+			if (CurrentDatabase == Data.Enums.Database.LivingMessiah)
 			{
 				ErrorLogs = await dbLivingMessiah!.GetzvwErrorLog();
 			}

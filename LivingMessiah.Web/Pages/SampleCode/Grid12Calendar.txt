@@ -1,0 +1,141 @@
+
+
+
+
+<div class="row">
+	<div class="col-1"></div>
+	<div class="col-10">
+		<div class="progress" style="height: 40px;">
+			<div class="progress-bar bg-success fs-4" role="progressbar" style="width: 20%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100">Sep</div>
+			<div class="progress-bar bg-warning fs-4" role="progressbar" style="width: 80%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">Oct</div>
+		</div>
+	</div>
+	<div class="col-1"></div>
+</div>
+
+
+
+<div class="row g-0 text-center">
+	<div class="col-1"></div>
+	<div class="col-1">T<sub>h</sub></div>
+	<div class="col-1">F<sub>r</sub></div>
+	<div class="col-1">S<sub>a</sub></div>
+	<div class="col-1">S<sub>u</sub></div>
+	<div class="col-1">M<sub>o</sub></div>
+	<div class="col-1">T<sub>u</sub></div>
+	<div class="col-1">W<sub>e</sub></div>
+	<div class="col-1">T<sub>h</sub></div>
+	<div class="col-1">F<sub>r</sub></div>
+	<div class="col-1">S<sub>a</sub></div>
+	<div class="col-1"></div>
+</div>
+
+
+<div class="row text-center g-0">
+	<div class="col-1"></div>
+	<div class="col-1 fs-4 bg-primary text-white">29</div>
+	<div class="col-1 fs-4 bg-primary text-white">30</div>
+	<div class="col-1 fs-4 bg-primary text-white">01</div>
+	<div class="col-1 fs-4 bg-primary text-white">02</div>
+	<div class="col-1 fs-4 border-white text-black-50">03</div>
+	<div class="col-1 fs-4 bg-primary text-white">04</div>
+	<div class="col-1 fs-4 bg-primary text-white">05</div>
+	<div class="col-1 fs-4 bg-primary text-white">06</div>
+	<div class="col-1 fs-4 bg-primary text-white">07</div>
+	<div class="col-1 fs-4 bg-info text-white">08</div>
+	<div class="col-1"></div>
+</div>
+
+
+<hr />
+
+
+
+@* 
+	<div class="row no-gutters"> 
+		<div class="row g-0">
+	*@
+
+@* <div class="row g-0 bg-info">
+	<div class="col-3 float-end text-white fs-2">Sep</div>
+	<div class="col-9 float-start text-white fs-2">Oct</div>
+</div> *@
+
+@* <div class="row g-1 bg-info">
+	<div class="col-3"><span class="float-end text-white fs-2"></span></div>
+	<div class="col-9"><span class="float-start text-white fs-2"></span></div>
+</div> *@
+
+@* <div class="row bg-secondary g-0">
+	<div class="col-3 fs-2 text-white text-end">Sep.</div>
+	<div class="col-9 fs-2 text-white text-start">Oct.</div>
+</div> *@
+
+@* 
+<div class="row bg-secondary g-0">
+	<div class="col-3 ps-2 fs-2 text-white">Sep.</div>
+	<div class="col-9 ps-2 fs-2 text-white">Oct.</div>
+</div>
+ *@
+
+@* <div class="row bg-secondary g-0">
+	<div class="col-1"></div>
+	<div class="col-2 ps-2 fs-4 text-white">Sep.</div>
+	<div class="col-8 ps-2 fs-4 text-white">Oct.</div>
+	<div class="col-1"></div>
+</div>
+ *@
+
+@* 
+<div class="row">
+	<div class="col-1"></div>
+	<div class="col-2">Sep.</div>
+	<div class="col-8">Oct.</div>
+	<div class="col-1"></div>
+</div> 
+*@
+
+
+
+<div class="row text-center g-0">
+	<div class="col-1 fs-6 bg-light text-black-50">28</div>
+	<div class="col-1 fs-4 ">
+		<span class="bg-light">2</span>
+		<span class="bg-primary text-white">9</span>
+	</div>
+	<div class="col-1 fs-4 bg-primary text-white">30</div>
+	<div class="col-1 fs-4 bg-primary text-white">01</div>
+	<div class="col-1 fs-4 bg-primary text-white">02</div>
+	<div class="col-1 fs-4 border-white text-black-50">03</div>
+	<div class="col-1 fs-4 bg-primary text-white">04</div>
+	<div class="col-1 fs-4 bg-primary text-white">05</div>
+	<div class="col-1 fs-4 bg-primary text-white">06</div>
+	<div class="col-1 fs-4 bg-primary text-white">07</div>
+	<div class="col-1 fs-4 bg-info text-white">08</div> 
+	<div class="col-1 fs-6 bg-light text-black-50">09</div>
+</div>
+
+
+
+
+
+
+ 
+	<div class="row g-0 text-center">
+	<div class="col-1 fs-6">1</div>
+	<div class="col-1 fs-6">2</div>
+	<div class="col-1 fs-6">3</div>
+	<div class="col-1 fs-6">4</div>
+	<div class="col-1 fs-6">5</div>
+	<div class="col-1 fs-6">6</div>
+	<div class="col-1 fs-6">7</div>
+	<div class="col-1 fs-6">8</div>
+	<div class="col-1 fs-6">9</div>
+	<div class="col-1 fs-6">10</div>
+	<div class="col-1 fs-6">11</div>
+	<div class="col-1 fs-6">12</div>
+</div>
+
+@code {
+	//Grid12Calendar.razor.cs
+}

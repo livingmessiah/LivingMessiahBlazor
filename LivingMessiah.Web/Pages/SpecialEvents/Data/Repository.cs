@@ -9,7 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
 using LivingMessiah.Web.Data;
-using EnumsDatabase = LivingMessiah.Web.Features.Admin.Database.Enums.Database;
+using DataEnumsDatabase = LivingMessiah.Web.Data.Enums.Database;
 
 namespace LivingMessiah.Web.Pages.SpecialEvents.Data;
 
@@ -31,7 +31,7 @@ public interface IRepository
 public class Repository : BaseRepositoryAsync, IRepository
 {
 	public Repository(IConfiguration config, ILogger<Repository> logger)
-		: base(config, logger, EnumsDatabase.LivingMessiah.ConnectionStringKey)
+		: base(config, logger, DataEnumsDatabase.LivingMessiah.ConnectionStringKey)
 	{
 	}
 

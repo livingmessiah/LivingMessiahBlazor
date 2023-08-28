@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
-using EnumsDatabase = LivingMessiah.Web.Features.Admin.Database.Enums.Database;
+using DataEnumsDatabase = LivingMessiah.Web.Data.Enums.Database;
 using LivingMessiah.Web.Data;
 
 namespace LivingMessiah.Web.Pages.Contacts.Data;
@@ -19,7 +19,7 @@ public interface IContactRepository
 public class ContactRepository : BaseRepositoryAsync, IContactRepository
 {
 	public ContactRepository(IConfiguration config, ILogger<ContactRepository> logger) 
-		: base(config, logger, EnumsDatabase.LivingMessiah.ConnectionStringKey)
+		: base(config, logger, DataEnumsDatabase.LivingMessiah.ConnectionStringKey)
 	{
 	}
 

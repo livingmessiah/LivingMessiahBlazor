@@ -9,7 +9,7 @@ public partial class ActionButtons
 {
 	[Inject] public ILogger<ActionButtons>? Logger { get; set; }
 
-	[Parameter, EditorRequired] public Enums.Database? CurrentDatabase { get; set; }
+	[Parameter, EditorRequired] public Data.Enums.Database? CurrentDatabase { get; set; }
 	[Parameter] public EventCallback<Enums.Action> OnActionSelected { get; set; }
 
 	readonly string inside = $"page {Page.Index}; class: {nameof(ActionButtons)}";

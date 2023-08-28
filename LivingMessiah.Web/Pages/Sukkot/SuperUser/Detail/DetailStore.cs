@@ -3,11 +3,11 @@ using System.Threading.Tasks;
 using System;
 
 using LivingMessiah.Web.Pages.Sukkot.SuperUser.Enums;
-using LivingMessiah.Web.Pages.Sukkot.Data;
 using LivingMessiah.Web.Pages.Sukkot.Enums;
 using ParentState = LivingMessiah.Web.Pages.Sukkot.SuperUser.Index;
 
 using System.Linq;
+using LivingMessiah.Web.Data;
 
 namespace LivingMessiah.Web.Pages.Sukkot.SuperUser.Detail;
 
@@ -87,7 +87,7 @@ public class Effects
 			}
 			else
 			{
-				var tuple = Helper.GetAttendanceDatesArray(reportVM!.AttendanceBitwise);
+				var tuple = Sukkot.Enums.Helper.GetAttendanceDatesArray(reportVM!.AttendanceBitwise);
 				reportVM!.AttendanceDateList = tuple.week1;
 				reportVM!.AttendanceDateList2ndMonth = tuple.week2!;
 				Logger.LogDebug(string.Format("...FullName: {0}", reportVM!.FullName(false)));

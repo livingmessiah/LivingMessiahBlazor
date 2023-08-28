@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
 
-using EnumsDatabase = LivingMessiah.Web.Features.Admin.Database.Enums.Database;
+using DataEnumsDatabase = LivingMessiah.Web.Data.Enums.Database;
 using LivingMessiah.Web.Data;
 
 namespace LivingMessiah.Web.Pages.ArchivedVideos;
@@ -19,7 +19,7 @@ public interface IRepository
 public class Repository : BaseRepositoryAsync, IRepository
 {
 	public Repository(IConfiguration config, ILogger<Repository> logger)
-		: base(config, logger, EnumsDatabase.LivingMessiah.ConnectionStringKey)
+		: base(config, logger, DataEnumsDatabase.LivingMessiah.ConnectionStringKey)
 	{
 	}
 

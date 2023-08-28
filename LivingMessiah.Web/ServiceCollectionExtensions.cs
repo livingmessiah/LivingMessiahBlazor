@@ -21,6 +21,7 @@ using LivingMessiah.Web.Pages.Parasha.Services;
 using LivingMessiah.Web.Pages.Parasha.Data;
 using LivingMessiah.Web.Links;
 using LivingMessiah.Web.Pages.Admin.WirecastFolder;
+using LivingMessiah.Web.Data;
 
 namespace LivingMessiah.Web;
 
@@ -40,7 +41,7 @@ public static class ServiceCollectionExtensions
 
 			.AddTransient<IService, Service>()        //Pages.Sukkot.Services;
 			.AddTransient<SukkotData.IRepository, SukkotData.Repository>()
-			.AddTransient<SukkotData.IRepositoryNoBase, SukkotData.RepositoryNoBase>()
+			.AddTransient<IRepositoryNoBase, RepositoryNoBase>()
 
 			.AddTransient<IValidator<Pages.Sukkot.SuperUser.HRA.FormVM>, Pages.Sukkot.SuperUser.HRA.FormVMValidator>()
 			.AddTransient<IValidator<Pages.Sukkot.NormalUser.EntryFormVM>, Pages.Sukkot.NormalUser.EntryFormVMValidator>()

@@ -10,7 +10,7 @@ using Microsoft.Extensions.Logging;
 using LivingMessiah.Web.Pages.SukkotAdmin.Donations.Domain;
 using LivingMessiah.Web.Pages.SukkotAdmin.Donations.Enums;
 using LivingMessiah.Web.Data;
-using EnumsDatabase = LivingMessiah.Web.Features.Admin.Database.Enums.Database;
+using DataEnumsDatabase = LivingMessiah.Web.Data.Enums.Database;
 
 namespace LivingMessiah.Web.Pages.SukkotAdmin.Donations.Data;
 
@@ -33,7 +33,7 @@ public class DonationRepository : BaseRepositoryAsync, IDonationRepository
 	}
 
 	public DonationRepository(IConfiguration config, ILogger<DonationRepository> logger)
-		: base(config, logger, EnumsDatabase.Sukkot.ConnectionStringKey)
+		: base(config, logger, DataEnumsDatabase.Sukkot.ConnectionStringKey)
 	{
 	}
 

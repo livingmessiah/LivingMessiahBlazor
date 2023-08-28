@@ -5,6 +5,7 @@ using System.Linq;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using LivingMessiah.Web.Data;
+using DataEnumsDatabase = LivingMessiah.Web.Data.Enums.Database;
 
 namespace LivingMessiah.Web.Features.Admin.Database.LM;
 
@@ -18,7 +19,7 @@ public interface IRepository
 public class Repository : BaseRepositoryAsync, IRepository
 {
 	public Repository(IConfiguration config, ILogger<Repository> logger) 
-		: base(config, logger, Enums.Database.LivingMessiah.ConnectionStringKey)
+		: base(config, logger, DataEnumsDatabase.LivingMessiah.ConnectionStringKey)
 	{
 	}
 

@@ -1,6 +1,4 @@
-﻿// Ignore Spelling: Parms Sql
-
-using Dapper;
+﻿using Dapper;
 using System;
 using System.Linq;
 using System.Collections.Generic;
@@ -10,15 +8,15 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
-using LivingMessiah.Web.Pages.Sukkot.SuperUser.Detail;
 using LivingMessiah.Web.Pages.Sukkot.SuperUser.Data;
 
-namespace LivingMessiah.Web.Pages.Sukkot.Data;
+using ReportVM = LivingMessiah.Web.Pages.Sukkot.SuperUser.Detail.ReportVM;
 
+namespace LivingMessiah.Web.Data;
 
 public interface IRepositoryNoBase
 {
-	Task<SuperUser.Detail.ReportVM?> GetDisplayAndDonationsById(int id);
+	Task<ReportVM?> GetDisplayAndDonationsById(int id);
 }
 
 public class RepositoryNoBase : IRepositoryNoBase
@@ -32,14 +30,14 @@ public class RepositoryNoBase : IRepositoryNoBase
 	public RepositoryNoBase(IConfiguration config, ILogger<RepositoryNoBase> logger)
 	{
 		this.config = config;
-		this.log = logger;
+		log = logger;
 	}
 	#endregion
 
 	public DynamicParameters? MyParms { get; set; }
 	public string? MySql { get; set; }
 
-	public async Task<SuperUser.Detail.ReportVM?> GetDisplayAndDonationsById(int id)
+	public async Task<ReportVM?> GetDisplayAndDonationsById(int id)
 	{
 		string connectionString = config[configationConnectionKey]!;
 
@@ -93,6 +91,7 @@ ORDER BY Detail
 
 }
 
+// Ignore Spelling: Parms Sql
 
 /*
 

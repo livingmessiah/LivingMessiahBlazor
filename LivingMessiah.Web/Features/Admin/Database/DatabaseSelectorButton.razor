@@ -1,6 +1,8 @@
-﻿<div class="row mb-3">
+﻿@using DataEnumsDatabase = LivingMessiah.Web.Data.Enums.Database
+
+<div class="row mb-3">
 	<div class="col-12">
-		@foreach (var item in Enums.Database.List)
+		@foreach (var item in DataEnumsDatabase.List)
 		{
 			<button @onclick="@(e =>  OnButtonClicked(item))"
 							title="Filter by @item.Title"

@@ -6,6 +6,7 @@ using System;
 
 using LivingMessiah.Web.Pages.Sukkot.Data;
 using LivingMessiah.Web.Pages.Sukkot.SuperUser.Enums;
+using LivingMessiah.Web.Data;
 
 namespace LivingMessiah.Web.Pages.Sukkot.SuperUser.HRA;
 
@@ -63,7 +64,7 @@ public class Effects
 	private readonly ILogger Logger;
 	private readonly IRepository db;
 
-	public Effects(ILogger<Effects> logger, IRepository repository, IRepositoryNoBase repositoryNoBase)
+	public Effects(ILogger<Effects> logger, IRepository repository)
 	{
 		Logger = logger;
 		db = repository;

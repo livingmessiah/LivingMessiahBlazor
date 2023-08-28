@@ -7,7 +7,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
 
 using LivingMessiah.Web.Data;
-using EnumsDatabase = LivingMessiah.Web.Features.Admin.Database.Enums.Database;
+using DataEnumsDatabase = LivingMessiah.Web.Data.Enums.Database;
 
 namespace LivingMessiah.Web.Pages.Admin.WirecastFolder;
 
@@ -33,7 +33,7 @@ public interface IShabbatWeekRepository
 public class ShabbatWeekRepository : BaseRepositoryAsync, IShabbatWeekRepository
 {
 	public ShabbatWeekRepository(IConfiguration config, ILogger<ShabbatWeekRepository> logger)
-		: base(config, logger, EnumsDatabase.LivingMessiah.ConnectionStringKey)
+		: base(config, logger, DataEnumsDatabase.LivingMessiah.ConnectionStringKey)
 	{
 	}
 

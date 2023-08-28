@@ -16,7 +16,7 @@ using LivingMessiah.Web.Pages.Sukkot.SuperUser.MasterDetail;
 using LivingMessiah.Web.Pages.Sukkot.SuperUser.Registrant;
 
 using LivingMessiah.Web.Data;
-using EnumsDatabase = LivingMessiah.Web.Features.Admin.Database.Enums.Database;
+using DataEnumsDatabase = LivingMessiah.Web.Data.Enums.Database;
 
 using OneOf;
 
@@ -54,7 +54,7 @@ public interface IRepository
 public class Repository : BaseRepositoryAsync, IRepository
 {
 	public Repository(IConfiguration config, ILogger<Repository> logger)
-		: base(config, logger, EnumsDatabase.Sukkot.ConnectionStringKey)
+		: base(config, logger, DataEnumsDatabase.Sukkot.ConnectionStringKey)
 	{
 	}
 
