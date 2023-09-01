@@ -49,7 +49,7 @@ public abstract class NavButton : SmartEnum<NavButton>
 		public override string Title => "Registration View";
 		public override string Icon => "fas fa-info";
 		public override string Css => "btn btn-outline-info";
-		public override string Route => Link.Details;
+		public override string Route => Link.Details.Index;
 		public override string RouteSuffix => "/false";
 	}
 
@@ -60,7 +60,7 @@ public abstract class NavButton : SmartEnum<NavButton>
 		public override string Title => "Registration Print";
 		public override string Icon => "fas fa-print";
 		public override string Css => "btn btn-outline-info";
-		public override string Route => Link.Details;
+		public override string Route => Link.Details.Index;
 		public override string RouteSuffix => "/true";
 	}
 
@@ -79,10 +79,10 @@ public abstract class NavButton : SmartEnum<NavButton>
 	{
 		public DonationSE() : base($"{nameof(Id.Donation)}", Id.Donation) { }
 		public override string Label => "Donation";
-		public override string Title => "Donation";
-		public override string Icon => "fab fa-paypal";
+		public override string Title => Link.Stripe.Payment.Title;   
+		public override string Icon => Links.Donate.Icon; 
 		public override string Css => "btn btn-warning";  // btn-sm
-		public override string Route => Link.Links2.Payment;
+		public override string Route => Link.Stripe.Payment.Index;  
 		public override string RouteSuffix => "";
 	}
 

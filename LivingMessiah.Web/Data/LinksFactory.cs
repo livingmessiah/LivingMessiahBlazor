@@ -210,9 +210,9 @@ public class LinksFactory : ILinksFactory
 
 				new Link
 				{
-					Index = PayPal.Donate.Index,
-					Title = PayPal.Donate.Title,
-					Icon = PayPal.Donate.Icon,
+					Index = Donate.Index,
+					Title = Donate.Title,
+					Icon = Donate.Icon,
 					HomeSidebarUsage=true,
 					HomeFloatRightHebrew="מוֹעֲדָי",
 					HomeTitleSuffix=" tzedakah H6666",

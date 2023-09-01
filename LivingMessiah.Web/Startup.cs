@@ -59,6 +59,7 @@ public class Startup
 		services.AddCustomAuthentication(Configuration);
 		services.Configure<AppSettings>(options => Configuration.GetSection("AppSettings").Bind(options));
 		services.Configure<SukkotSettings>(options => Configuration.GetSection("SukkotSettings").Bind(options));
+		services.Configure<DonationSettings>(options => Configuration.GetSection("DonationSettings").Bind(options));
 
 		services.AddFluxor(x => x
 				.ScanAssemblies(typeof(Startup).Assembly)

@@ -1,0 +1,79 @@
+﻿@page "/donate"
+
+@using Page = LivingMessiah.Web.Links.Donate
+<PageTitle>@Page.Title</PageTitle>
+
+<h2><span class="text-primary @Page.Icon mb-3"></span> @Page.Title</h2>
+
+
+<div class="card bg-light mb-3 text-center">
+	<div class="card-body">
+		<h4 class="card-header">
+			<sup><small><i class="far fa-heart text-muted"></i></small></sup> We greatly appreciate your support of this ministry <sup><small><i class="far fa-heart text-muted"></i></small></sup>
+		</h4>
+		<h5 class="card-title mt-2">Option for making a donation.</h5>
+		<ul class="list-unstyled list-inline">
+			<li class="list-inline-item"><i class="badge bg-primary">1</i> Stripe</li>
+			<li class="list-inline-item"><i class="badge bg-primary">2</i> Zelle</li>
+			<li class="list-inline-item"><i class="badge bg-primary">3</i> Check</li>
+		</ul>
+
+	</div>
+</div>
+
+
+<div class="card mb-3 border-primary">
+	<div class="row g-0">
+
+		<div class="col-sm-8">
+			<div class="card-body">
+				<h3 class="card-title"><span class="badge bg-primary">1. Stripe</span></h3>
+				<p class="card-text">We use <b>Stripe</b> for processing Living Messiah Ministries donations on-line</p>
+				<p class="card-text"><small class="text-muted">By clicking the donate button you will temporarily be redirected to their website.</small></p>
+
+				<stripe-buy-button buy-button-id="@StripeBuyButtonId"
+													 publishable-key="@StripePublishableKey">
+				</stripe-buy-button>
+
+			</div>
+		</div>
+
+		<div class="col-sm-4 p-2">
+			<img src="/Images/@QRC_Image" class="img-fluid" alt="Stripe QR Code" />
+		</div>
+
+	</div>
+</div>
+
+
+<div class="card-group mt-3">
+
+	<div class="card border-primary">
+		<div class="card-body">
+			<h3><span class="badge bg-primary">2. Zelle</span></h3>
+			<p class="card-text">
+				Or, you could send donations via <b>Zelle Pay</b> with the <b>Donations@LivingMessiah.com</b> email.
+			</p>
+			<p class="card-text"><small class="text-muted"></small></p>
+		</div>
+		<img src="/images/donate-zelle.jpg" class="card-img-bottom p-2" alt="Zelle" />
+	</div>
+
+	<div class="card border-primary">
+		<div class="card-body">
+			<h3><span class="badge bg-primary">3. Check</span></h3>
+			<p class="card-text">
+				Or mail Living Messiah Ministries a check...
+				<Address />
+			</p>
+			<p class="card-text"><small class="text-muted"></small></p>
+		</div>
+		<img src="/images/donate-blank-check.jpg" class="card-img-bottom p-2" alt="Check" />
+	</div>
+</div>
+
+
+
+@code {
+
+}

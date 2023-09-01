@@ -1,0 +1,117 @@
+﻿@page "/Sukkot/Payment/{Id:int}"
+
+@using LivingMessiah.Web.Shared.Sukkot
+@using LivingMessiah.Web.Pages.Sukkot.Components
+
+@using Page = LivingMessiah.Web.Links.Sukkot.Stripe.Payment
+
+<PageTitle>@Page.Title</PageTitle>
+<h2 class="mb-3"><span class="text-primary @Page.Icon"></span> @Page.Title</h2>
+
+
+@if (AttemptingToGetRecord == true)
+{
+	<div class="spinner-border"></div>
+	<span style="display: inline-block; vertical-align: super">Loading...</span>
+}
+else
+{
+	@if (!String.IsNullOrWhiteSpace(AttemptingToGetRecordMsg))
+	{
+		<p class="text-danger"><em>@AttemptingToGetRecordMsg</em></p>
+	}
+	else
+	{
+		<h4 class="text-center">Registration Id: @RegistrationSummary!.Id, Family: @RegistrationSummary.FamilyName</h4>
+
+		<div class="d-none d-sm-block">
+			<div class="card border-primary mb-3">
+				<div class="card-body">
+					<PaymentSummary RegistrationSummary="@RegistrationSummary"></PaymentSummary>
+				</div>
+			</div>
+		</div>
+
+		<div class="d-block d-sm-none">
+			<div class="card border-primary mb-4">
+				<div class="card-body">
+					<PaymentSummaryXs RegistrationSummary="@RegistrationSummary"></PaymentSummaryXs>
+				</div>
+			</div>
+		</div>
+
+
+		<p class="lead text-primary">
+			We look forward to seeing you during Sukkot, it is going to be awesome!
+		</p>
+
+		<div class="card border-primary">
+			<div class="row g-0">
+
+				<div class="col-md-6 col-lg-8">
+					<div class="card-body">
+						<p class="card-text">
+							We are currently using <b>Stripe Payment Links</b> for processing Living Messiah Ministry Sukkot donations.
+						</p>
+						<p class="card-text">
+							The table above is to help you in determining the amount.
+						</p>
+						<h4 class="card-title mt-2"><span class="badge bg-secondary text-white">Instructions</span></h4>
+						<p class="card-text">
+							1. By our calculations, the remaining amount is <b>@RegistrationSummary.RemainingCost.ToString("C0")</b>
+							If you need to enter a different, amount click the <small><u>Change amount</u></small>
+						</p>
+						<p class="card-text">
+							2. By clicking the <span class="badge bg-primary"><b>Donation</b></span> button
+							, you will be redirected to a <b>second tab</b> on your browser so that you can complete the process.
+						</p>
+						<p class="card-text">
+							<img src="/Images/second-tab.jpg" class="img-fluid" alt="second tab created by Stipe" />
+						</p>
+						<p class="card-text">
+							Before going there, read the <span class="badge bg-warning">Link Warning</span> verbiage below.
+						</p>
+						<p class="card-text">
+							3. Fill out the normal credit card / debit card processing and submit the form.
+						</p>
+						<p class="card-text">
+							4. Close the browser tab that the Stripe payment processing was in.
+							Click the <span class="badge bg-info"> <i class="far fa-arrow-alt-circle-left">&nbsp;</i>Back to Registration Steps</span> Button.
+							Your payment on your registration will be reflected some time later.
+						</p>
+
+					</div>
+				</div>
+
+				<div class="col-md-6 col-lg-4">
+					<div class="card-body text-center">
+						<stripe-buy-button buy-button-id="@StripeBuyButtonId"
+															 publishable-key="@StripePublishableKey">
+						</stripe-buy-button>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+		<div class="card border-warning mt-3">
+			<div class="card-body">
+				<h4 class="card-title mt-2"><span class="badge bg-warning">Link Warning</span></h4>
+				<img src="/Images/save-info-credentials-with-link.jpg" class="img-fluid float-end p-3" alt="Link Screen Shot" />
+				<p class="card-text">
+					To save your credentials on-line, <b>Stripe Payment Links</b> uses a service called <a href="https:/link.com//"><b>Link</b></a> (see the image).
+					This is <b>OPTIONAL!</b>, and if you <b>DO NOT</b> want that option, then <b>YOU</b> must Un-check it.
+				</p>
+				<p class="card-text">
+					Living Messiah Leadership has not used this service before so we can not vouch for it <b>NOR DO WE ENDORCE IT</b>.
+					It may be a fine and reputable service but that determination is <b>YOURS</b> and <b>YOURS ALONE</b>.
+					Use of <a href="https:/link.com/"><b>Link</b></a> absolves Living Messiah Ministries, it's elders, Living Messiah Ministries Inc. and it's directors
+					of any legal liability or any injuries or damages suffered from the use of the <a href="https:/link.com/"><b>Link</b></a> service.
+				</p>
+			</div>
+		</div>
+
+	}
+}
+
+<RegistrationStepsLink BackwardDirection="true" />

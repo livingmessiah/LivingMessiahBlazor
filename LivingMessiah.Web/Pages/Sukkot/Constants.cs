@@ -13,9 +13,8 @@ public static class RegistrationClosedEmail
 	public const string Email = "ralphie@livingmessiah.com";
 }
 
-public static class PayPal
+public static class Stripe
 {
-	public const string HostedButton = "7S848U88V95UA";
 	public static string ItemMessage { get; set; } = $"Sukkot {Year.String} Payment";
 	public const string PaymentQuestionsEmail = "mailto:peribeth@livingmessiah.com";
 }
@@ -59,7 +58,7 @@ public static class PostActions
 public static class PDFs
 {
 	public const string RegistrationWalkThrough = "sukkot-registration-walkthrough-users-manual.pdf";
-	public const string PayPalWalkThrough = "sukkot-making-a-payment-with-paypal.pdf";
+	public const string StripeWalkThrough = "sukkot-making-a-payment-with-stripe.pdf";  // ToDo: these needs to be updated
 	public const string Schedule = "sukkot-2023-schedule.pdf";
 	public const string LiabilityWaiver = "sukkot-2022-liability-waiver.pdf"; // NOT DONE YET
 	public const string HouseRules = "sukkot-2023-house-rules.pdf";

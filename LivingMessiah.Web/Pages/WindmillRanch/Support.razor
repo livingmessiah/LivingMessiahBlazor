@@ -1,6 +1,7 @@
 ﻿@page "/WindmillRanch/Support"
 
 @using LivingMessiah.Web.Pages.WindmillRanch.Components
+@using PageDonate = LivingMessiah.Web.Links.Donate
 
 @using Page = LivingMessiah.Web.Pages.WindmillRanch.LinkSmartEnums.WindmillRanchLinks.Support
 <PageTitle>@Page.Title</PageTitle>
@@ -23,10 +24,10 @@
 
 
 <p class="mt-3">
-	<a href="@LivingMessiah.Web.Links.PayPal.Donate.Index"
-		 title="@LivingMessiah.Web.Links.PayPal.Donate.Title" class="btn btn-primary btn-xlarge">
-		<i class="@LivingMessiah.Web.Links.PayPal.Donate.Icon" aria-hidden="true"></i>
-		<b>@LivingMessiah.Web.Links.PayPal.Donate.Title</b>
+	<a href="@PageDonate.Index"
+		 title="@PageDonate.Title" class="btn btn-primary btn-xlarge">
+		<i class="@PageDonate.Icon" aria-hidden="true"></i>
+		<b>@PageDonate.Title</b>
 	</a>
 </p>
 

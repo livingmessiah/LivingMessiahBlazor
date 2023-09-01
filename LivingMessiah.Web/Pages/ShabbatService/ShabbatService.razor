@@ -6,6 +6,7 @@
 <PageTitle>@Page.Title</PageTitle>
 
 @using PageParasha = LivingMessiah.Web.Pages.Parasha.LinkSmartEnums.ParashaLinks;
+@using PageDonate = LivingMessiah.Web.Links.Donate
 
 <div class="d-print-none float-end">
 	<a class="btn btn-sm btn-default" href="@LivingMessiah.Web.Links.ShabbatService.Index"
@@ -425,10 +426,10 @@ else
 						<span class="text-warning"><i class="fa-li fas fa-caret-right"></i></span>
 						Your giving helps meet the needs that come before this fellowship. You may also give online by clicking here
 
-						<a href="@PayPal.Donate.Index"
-							 title="@PayPal.Donate.Title" class="btn btn-primary btn-sm">
-							<i class="@PayPal.Donate.Icon" aria-hidden="true"></i>
-							<b>@PayPal.Donate.Title</b>
+						<a href="@PageDonate.Index"
+							 title="@PageDonate.Title" class="btn btn-primary btn-sm">
+							<i class="@PageDonate.Icon" aria-hidden="true"></i>
+							<b>@PageDonate.Title</b>
 						</a>
 
 						Back to Wellness	- Bags of Kindness
@@ -696,10 +697,10 @@ else
 				Your giving helps meet the needs that come before this fellowship.
 				You may also give online by clicking here
 
-				<a href="Donate"
-					 title="Donate" class="btn btn-primary btn-sm">
-					<i class="fab fa-paypal" aria-hidden="true"></i>
-					<b>Donate</b>
+				<a href="@PageDonate.Index"
+					 title="@PageDonate.Title" class="btn btn-primary btn-sm">
+					<i class="@PageDonate.Icon" aria-hidden="true"></i>
+					<b>@PageDonate.Title</b>
 				</a>
 			</p>
 		}
@@ -707,7 +708,7 @@ else
 		{
 			<p class="lead">
 				Your giving helps meet the needs that come before this fellowship.
-				You may also give online by going to <b>www.LivingMessia.com/donate</b>
+				You may also give online by going to <b>@PageDonate.WWW</b>
 			</p>
 		}
 	</div>

@@ -1,9 +1,7 @@
 ﻿namespace LivingMessiah.Web.Settings;
 
-public class SukkotSettings
+public class DonationSettings
 {
-	public bool SukkotIsOpen { get; set; }
-	public bool IsRegistrationClosed { get; set; }
 	public string? StripeBuyButtonId { get; set; }
 	public string? StripePublishableKey { get; set; }
 }

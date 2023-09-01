@@ -18,5 +18,6 @@ public class DonationDetail
 /*
 Notes:
 	1: IX_Sukkot.Donation_Unqiue (RegistrationId ASC, Detail ASC) 
-	2: This is a number that can be traced back to if from PayPal.  If it''s a manual entry, put in the User.Email '
+	2: This is a number that can be traced back to if from Stripe.  If it's a manual entry, put in the User.Email. 
+			ToDo: Determine how Stripe does this
 */

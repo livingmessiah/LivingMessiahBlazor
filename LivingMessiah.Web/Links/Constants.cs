@@ -188,6 +188,28 @@ public static class Database
 
 }
 
+public static class Donate
+{
+	public const string Index = "/donate";
+	public const string Title = "Donate";
+	public const string TitleLMM = "Living Messiah Ministries";
+	public const string Icon = "fas fa-donate";
+	public const string WWW = "www.LivingMessia.com/donate.com";
+
+	public static class Cancel
+	{
+		public const string Index = "/cancel_donation.html";
+		public const string Title = "Donation Canceled";
+		public const string Icon = "fab fa-cc-stripe";
+	}
+	public static class Confirm
+	{
+		public const string Index = "/confirm_donation.html";
+		public const string Title = "Donation Confirmed";
+		public const string Icon = "fab fa-cc-stripe";
+	}
+
+}
 
 public static class FurtherStudies
 {
@@ -217,14 +239,14 @@ public static class Home
 	public const string PageTitle = "Home | LMM";
 	public const string Icon = "fas fa-home";
 	public const string Error = "/Error";
-	
+
 	public static class Roles
 	{
 		public const string Index = "/RolesTest";
 		public const string Title = "Roles Test";
 		public const string Icon = "fas fa-ruler";
 	}
-	
+
 }
 
 public static class ImportantLinks
@@ -302,30 +324,6 @@ public static class NavigationSearch
 	public const string Index = "/NavigationSearch";
 	public const string Title = "Navigation Search";
 	public const string Icon = "fas fa-compass"; //  fas fa-search
-}
-
-public static class PayPal
-{
-	public static class Donate
-	{
-		public const string Index = "/donate";
-		public const string Title = "Donate";
-		public const string TitleLMM = "Living Messiah Ministries";
-		public const string Icon = "fas fa-donate";
-	}
-	public static class CancelDonation
-	{
-		public const string Index = "/cancel_donation.html";
-		public const string Title = "Donation Cancelation";
-		public const string Icon = "fab fa-paypal";
-	}
-	public static class ConfirmDonation
-	{
-		public const string Index = "/confirm_donation.html";
-		public const string Title = "Donation Confirmation";
-		public const string Icon = "fab fa-paypal";
-	}
-
 }
 
 // ToDo maybe make an SmartEnum of Articles
@@ -457,8 +455,15 @@ public static class Store
 	}
 }
 
+
 public static class Sukkot
 {
+	public static class Details
+	{
+		public const string Index = "/Sukkot/Details";
+		public const string Title = "Sukkot Details";
+	}
+
 	public static class RegistrationSteps
 	{
 		public const string Index = "/Sukkot/RegistrationSteps";
@@ -468,6 +473,29 @@ public static class Sukkot
 		public const string StartButtonIcon = "fas fa-caret-right";
 		public const string BackToButtonText = "Back to Registration Steps";
 		public const string BackToButtonIcon = "fas fa-campground";
+	}
+
+	public static class Stripe
+	{
+		public static class Payment
+		{
+			public const string Index = "/Sukkot/Payment";
+			public const string Title = "Donations Earmarked for Sukkot";
+			public const string Icon = "fab fa-cc-stripe";
+		}
+
+		public static class CancelRegistration
+		{
+			public const string Index = "/cancel_donation.html";
+			public const string Title = "Sukkot Registration Canceled";
+			public const string Icon = "fab fa-cc-stripe"; // fab fa-cc-stripe fab fa-stripe-s fab fa-stripe
+		}
+		public static class ConfirmRegistration
+		{
+			public const string Index = "/confirm_donation.html";
+			public const string Title = "Sukkot Registration Confirmed";
+			public const string Icon = "fab fa-cc-stripe";
+		}
 	}
 
 	public static class SuperUser
@@ -484,8 +512,6 @@ public static class Sukkot
 	public const string Title = "Sukkot";
 	public const string Icon = "fas fa-campground";
 
-	public const string Details = "/Sukkot/Details";
-	public const string DetailsTitle = "Sukkot Details";
 
 	public const string DeleteConfirmation = "/Sukkot/DeleteConfirmation";
 	public const string DeleteConfirmationTitle = "Delete Sukkot Registration?";
@@ -519,12 +545,7 @@ public static class Sukkot
 		public const string Icon = "fas fa-balance-scale";  // "fas fa-handshake" "far fa-handshake"
 	}
 
-	public static class Links2
-	{
-		public const string Details = "/Sukkot/Details";
-		public const string Payment = "/Sukkot/Payment";
-		public const string PaymentTitle = "Donations Earmarked for Sukkot";
-	}
+
 }
 
 public static class ThankYou
