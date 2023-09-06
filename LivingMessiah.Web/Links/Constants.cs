@@ -194,7 +194,9 @@ public static class Donate
 	public const string Title = "Donate";
 	public const string TitleLMM = "Living Messiah Ministries";
 	public const string Icon = "fas fa-donate";
-	public const string WWW = "www.LivingMessia.com/donate.com";
+	public const string WWW = "www.LivingMessiah.com/donate.com";
+	public const string QRC_Image = Features.Donations.Constants.QRC_Image;
+	
 
 	public static class Cancel
 	{

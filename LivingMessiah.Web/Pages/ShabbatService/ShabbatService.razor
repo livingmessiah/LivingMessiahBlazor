@@ -10,7 +10,7 @@
 
 <div class="d-print-none float-end">
 	<a class="btn btn-sm btn-default" href="@LivingMessiah.Web.Links.ShabbatService.Index"
-		 @onclick="@PrintFriendly_Button_Click">
+	@onclick="@PrintFriendly_Button_Click">
 		@((MarkupString)_oppositeIcon!) @_oppositeToggleMsg
 	</a>
 </div>
@@ -689,33 +689,51 @@ else
 					IsPrinterFriendly="@_isPrinterFriendly"
 					LoadQuickly="@LoadQuickly">
 
-	<div class="card-body">
-		<h5 class="text-warning"><b>Prayers and Contributions</b></h5>
-		@if (!_isPrinterFriendly)
-		{
-			<p class="lead">
-				Your giving helps meet the needs that come before this fellowship.
-				You may also give online by clicking here
 
-				<a href="@PageDonate.Index"
-					 title="@PageDonate.Title" class="btn btn-primary btn-sm">
-					<i class="@PageDonate.Icon" aria-hidden="true"></i>
-					<b>@PageDonate.Title</b>
-				</a>
-			</p>
-		}
-		else
-		{
-			<p class="lead">
-				Your giving helps meet the needs that come before this fellowship.
-				You may also give online by going to <b>@PageDonate.WWW</b>
-			</p>
-		}
+	<div class="row g-0">
+
+		<div class="col-sm-8">
+			<div class="card-body">
+				<h5 class="text-warning"><b>Prayers and Contributions</b></h5>
+				@if (!_isPrinterFriendly)
+				{
+					<p class="lead">
+						Your giving helps meet the needs that come before this fellowship.
+						You may also give online by clicking here
+
+						<a href="@PageDonate.Index"
+							 title="@PageDonate.Title" class="btn btn-primary btn-sm">
+							<i class="@PageDonate.Icon" aria-hidden="true"></i>
+							<b>@PageDonate.Title</b>
+						</a>
+					</p>
+				}
+				else
+				{
+					<p class="lead">
+						Your giving helps meet the needs that come before this fellowship.
+						You may also give online by going to <b>@PageDonate.WWW</b>
+					</p>
+				}
+			</div>
+
+			<div class="card-body bg-light ms-2">
+				<b>Thanksgiving and Praises</b> to <span class="hebrew">יְהוָה</span> for providing us a place to gather, worship, study and fellowship together!
+				By His hand of provision, He provides for the needs of this community.
+				May His great name be praised.
+				<b>Thank you</b> <span class="hebrew">יְהוָה</span> for all your provisions and for supplying our daily bread.
+				You have done great things for us!
+			</div>
+		</div>
+		<div class="col-sm mt-4 p-2 text-center">
+			<img src="/Images/@PageDonate.QRC_Image" class="img-fluid" alt="Stripe QR Code" />
+			<p class="fs-6 mt-1"><sup>Living Messiah QR Code</sup></p>
+		</div>
 	</div>
 
 	<div class="card-body">
-
-		<ul class="size14">
+		<h4 class="card-title mt-2"><span class="badge bg-secondary text-white">More Information</span></h4>
+		<ul class="fs-5">
 
 			<li>
 				Living Messiah is <b>NOT</b> an IRS recognized 501c3 organization
@@ -740,13 +758,6 @@ else
 				<strong>Elders</strong> are a group of individuals who serve this community by dedicating time to fast and pray for our leadership team and the entire fellowship.
 				They are available to offer words of wisdom to the fellowship.
 				If you would like to speak with them, contact <a href="mailto:info@livingmessiah.com">info@livingmessiah.com</a>.
-			</li>
-			<li>
-				<b>Thanksgiving and Praises</b> to <span class="hebrew">יְהוָה</span> for providing us a place to gather, worship, study and fellowship together!
-				By His hand of provision, He provides for the needs of this community.
-				May His great name be praised.
-				<b>Thank you</b> <span class="hebrew">יְהוָה</span> for all your provisions and for supplying our daily bread.
-				You have done great things for us!
 			</li>
 		</ul>
 

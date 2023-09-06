@@ -14,16 +14,12 @@
 	<base href="~/" />
 
 	<link href="_content/Syncfusion.Blazor.Themes/bootstrap5.css" rel="stylesheet" />
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-				integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-				crossorigin="anonymous">
-	<link href="css/site.css" rel="stylesheet" />
-	<link href="LivingMessiah.Web.styles.css" rel="stylesheet" />
 
-	<!-- 
-		<link href="_content/Blazored.Toast/blazored-toast.min.css" rel="stylesheet" /> 
-		<link href="_content/Blazored.Toast/blazored-toast.css" rel="stylesheet" /> 
-	-->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+				rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+				crossorigin="anonymous">
+
+	<link href="css/site.css" rel="stylesheet" />
 
 	<link href="_content/Blazored.Typeahead/blazored-typeahead.css" rel="stylesheet" />
 	<link href="css/syncfusion-blazor-icons.css" rel="stylesheet" />
@@ -47,14 +43,14 @@
 		<a class="dismiss">🗙</a>
 	</div>
 
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+					integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+					crossorigin="anonymous">
+	</script>
+
 	<script src="_content/Blazored.Typeahead/blazored-typeahead.js"></script>
 	<script src="_framework/blazor.server.js"></script>
 
-	<!--
-		This js is needed for Shared/AnchorNavigation
-		ToDo: can this be changed leverage JavaScript isolation?
-		https://www.meziantou.net/javascript-isolation-in-blazor-components.htm
-	-->
 	<script>
 		function BlazorScrollToId(id) {
 				const element = document.getElementById(id);

@@ -1,0 +1,46 @@
+﻿@using PageConfirmation = LivingMessiah.Web.Links.Donate.Confirm
+
+<div class="card">
+	<div class="row g-0">
+
+		<div class="col-md-6 col-lg-8">
+			<div class="card-body">
+				<h3 class="card-title"><span class="badge bg-primary">1. Stripe</span></h3>
+				<p class="card-text">
+					We are currently using <b>Stripe Payment Links</b> for processing Living Messiah donations online.
+				</p>
+				<h4 class="card-title mt-2"><span class="badge bg-secondary text-white">Instructions</span></h4>
+				<p class="card-text">
+					1. Decide the <b>recurring option</b> or the <b>one-time option</b>.
+				</p>
+				<p class="card-text">
+					2. By clicking the <span class="badge bg-primary"><b>Donation</b></span> button
+					, you will be redirected to a <b>second tab</b> on your browser so that you can complete the process.
+				</p>
+				<p class="card-text">
+					<img src="/Images/donate-second-tab.jpg" class="img-fluid" alt="second tab created by Stripe" />
+				</p>
+				<p class="card-text">
+					3. Fill out the normal credit card / debit card processing and submit the form.
+				</p>
+				<p class="card-text">
+					4. After the payment processing is completed the second tab will show "<b>@PageConfirmation.Title</b>".
+					You can now close that second tab.
+				</p>
+
+				<br />
+				<QrcModal />
+
+			</div>
+		</div>
+
+		<div class="col-md-6 col-lg-4">
+			<div class="card-body text-center">
+				<stripe-buy-button buy-button-id="@StripeBuyButtonId"
+													 publishable-key="@StripePublishableKey">
+				</stripe-buy-button>
+			</div>
+		</div>
+
+	</div>
+</div>

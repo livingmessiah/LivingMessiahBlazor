@@ -1,0 +1,58 @@
+﻿@if (ModalIsNotShownToggle)
+{
+	<button type="button" class="btn btn-primary btn-lg"
+	@onclick="() => ShowModal()">
+		<i class="fas fa-qrcode"></i> Show Donation QRC
+	</button>
+}
+else
+{
+	<div class="@modalClass" style="display:@(modalOpen?"block":"none");">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header bg-light">
+
+					<h5 class="modal-title">Living Messiah QR Code</h5>
+
+					<button type="button" class="close" @onclick="CloseModal">
+						<span>&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="text-center">
+						<img src="/Images/@Constants.QRC_Image" class="img-fluid" alt="Stripe QR Code" />
+					</div>
+				</div>
+				<div class="modal-footer bg-light">
+					<button type="button" class="btn btn-primary" @onclick="CloseModal">
+						Cancel
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+}
+
+
+
+@code {
+
+	bool modalOpen = false;
+	string modalClass = "modal";
+	bool ModalIsNotShownToggle = true;
+
+	void ShowModal()
+	{
+		modalOpen = true;
+		ModalIsNotShownToggle = false;
+		modalClass += " show";
+		StateHasChanged();
+	}
+
+	void CloseModal()
+	{
+		modalOpen = false;
+		ModalIsNotShownToggle = true;
+		modalClass = "modal";
+	}
+}

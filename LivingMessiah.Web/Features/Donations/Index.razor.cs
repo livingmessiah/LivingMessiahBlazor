@@ -1,21 +1,29 @@
-﻿using LivingMessiah.Web.Settings;
-using Microsoft.AspNetCore.Components;
-using Microsoft.Extensions.Options;
-
-namespace LivingMessiah.Web.Features.Donations;
+﻿namespace LivingMessiah.Web.Features.Donations;
 
 public partial class Index
 {
-	[Inject] public IOptions<DonationSettings>? DonationSettings { get; set; }
+	protected Enums.NavItem currentNavItem = Enums.NavItem.Stripe;
 
-	private string? StripeBuyButtonId;
-	private string? StripePublishableKey;
-	const string? QRC_Image = "qr_donation_14kfZN4jYc0r1cQ4gh.jpg";
+	private const string navTabType = " nav-tabs";  //  nav-underlines,  nav-pills
 
-	protected override void OnInitialized()
+	private void OnButtonClicked(Enums.NavItem tabItem)
 	{
-		base.OnInitialized();
-		StripeBuyButtonId = DonationSettings!.Value.StripeBuyButtonId;
-		StripePublishableKey = DonationSettings!.Value.StripePublishableKey;
+		currentNavItem = tabItem;
+		StateHasChanged();
+	}
+
+	string AriaActive(Enums.NavItem navItem)
+	{
+		return currentNavItem == navItem ? "true" : "false";
+	}
+
+	string NavLinkActive(Enums.NavItem navItem)
+	{
+		return currentNavItem == navItem ? " active" : "";
+	}
+
+	string TabPageActive(Enums.NavItem navItem)
+	{
+		return currentNavItem == navItem ? " show active" : "";
 	}
 }

@@ -4,6 +4,7 @@
 @using LivingMessiah.Web.Pages.Sukkot.Components
 
 @using Page = LivingMessiah.Web.Links.Sukkot.Stripe.Payment
+@using PageConfirmation = LivingMessiah.Web.Links.Sukkot.Stripe.ConfirmRegistration
 
 <PageTitle>@Page.Title</PageTitle>
 <h2 class="mb-3"><span class="text-primary @Page.Icon"></span> @Page.Title</h2>
@@ -58,7 +59,7 @@ else
 						</p>
 						<h4 class="card-title mt-2"><span class="badge bg-secondary text-white">Instructions</span></h4>
 						<p class="card-text">
-							1. By our calculations, the remaining amount is <b>@RegistrationSummary.RemainingCost.ToString("C0")</b>
+							1. By our calculations, the remaining amount is <b>@RegistrationSummary.RemainingCost.ToString("C0")</b>.
 							If you need to enter a different, amount click the <small><u>Change amount</u></small>
 						</p>
 						<p class="card-text">
@@ -66,16 +67,14 @@ else
 							, you will be redirected to a <b>second tab</b> on your browser so that you can complete the process.
 						</p>
 						<p class="card-text">
-							<img src="/Images/second-tab.jpg" class="img-fluid" alt="second tab created by Stipe" />
-						</p>
-						<p class="card-text">
-							Before going there, read the <span class="badge bg-warning">Link Warning</span> verbiage below.
+							<img src="/Images/second-tab.jpg" class="img-fluid" alt="second tab created by Stripe" />
 						</p>
 						<p class="card-text">
 							3. Fill out the normal credit card / debit card processing and submit the form.
 						</p>
 						<p class="card-text">
-							4. Close the browser tab that the Stripe payment processing was in.
+							4. After the payment processing is completed the second tab will show "<b>@PageConfirmation.Title</b>". 
+							You can now close that second tab.
 							Click the <span class="badge bg-info"> <i class="far fa-arrow-alt-circle-left">&nbsp;</i>Back to Registration Steps</span> Button.
 							Your payment on your registration will be reflected some time later.
 						</p>
@@ -91,23 +90,6 @@ else
 					</div>
 				</div>
 
-			</div>
-		</div>
-
-		<div class="card border-warning mt-3">
-			<div class="card-body">
-				<h4 class="card-title mt-2"><span class="badge bg-warning">Link Warning</span></h4>
-				<img src="/Images/save-info-credentials-with-link.jpg" class="img-fluid float-end p-3" alt="Link Screen Shot" />
-				<p class="card-text">
-					To save your credentials on-line, <b>Stripe Payment Links</b> uses a service called <a href="https:/link.com//"><b>Link</b></a> (see the image).
-					This is <b>OPTIONAL!</b>, and if you <b>DO NOT</b> want that option, then <b>YOU</b> must Un-check it.
-				</p>
-				<p class="card-text">
-					Living Messiah Leadership has not used this service before so we can not vouch for it <b>NOR DO WE ENDORCE IT</b>.
-					It may be a fine and reputable service but that determination is <b>YOURS</b> and <b>YOURS ALONE</b>.
-					Use of <a href="https:/link.com/"><b>Link</b></a> absolves Living Messiah Ministries, it's elders, Living Messiah Ministries Inc. and it's directors
-					of any legal liability or any injuries or damages suffered from the use of the <a href="https:/link.com/"><b>Link</b></a> service.
-				</p>
 			</div>
 		</div>
 
