@@ -6,45 +6,29 @@
 <div class="d-print-none">
 	<h2><i class="@Page.Icon"></i> @Page.Title</h2>
 </div>
-<hr class="warning" />
 
-
-<h3 class="mt-5 mb-3">
-	<span class="text-danger"><i class="fab fa-youtube"></i></span> Videos
-</h3>
-
-@foreach (var item in VideoRecords!)
+<LoadingComponent IsLoading="VideoRecords==null">
+	@foreach (var item in VideoRecords!)
 	{
-	<YouTubeHeavensDeclare 
-		UrlId="@item.UrlId"
-		Title="@item.Title"
-		Description=@item.Description>
-	</YouTubeHeavensDeclare>
-	}
-
-
-
-@*<h1>Thumbnails</h1>
-@foreach (var item in Videos)
-{
-	<div class="row">
-		<div class="col-12">
-			<div class="card">
-				<img src="https://img.youtube.com/vi/@item.UrlId/hqdefault.jpg" />
-				<div class="card-body">
-					<h5 class="card-title">@item.Title</h5>
-					<a href="https://www.youtube.com/watch?v=@item.UrlId" target="_blank">
-						<i class="fab fa-youtube"></i>
-						<u>@item.UrlId @item.Title</u>
-						<i class="fas fa-external-link-square-alt"></i>
-					</a>
-				</div>
+		<div class="card border-primary mb-3">
+			<img src="https://img.youtube.com/vi/@item.UrlId/hqdefault.jpg" />
+			<div class="card-body">
+				<h5 class="card-title">@item.Title</h5>
+				<a href="https://www.youtube.com/watch?v=@item.UrlId"
+					 class="btn btn-danger btn-lg"
+					 target="_blank">
+					<i class="fab fa-youtube"></i>
+				</a>
 			</div>
 		</div>
-	</div>
-}*@
+	}
+</LoadingComponent>
 
-
-
-
-
+@code {
+	protected List<VideoRecord>? VideoRecords;
+	protected override void OnInitialized()
+	{
+		VideoRecords = new List<VideoRecord>();
+		VideoRecords = Data.GetAllRecords();
+	}
+}
