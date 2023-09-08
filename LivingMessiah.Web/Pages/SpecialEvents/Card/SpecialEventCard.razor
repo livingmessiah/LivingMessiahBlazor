@@ -71,7 +71,27 @@
 					<Anchor Href="@item.WebsiteUrl" TargetIsBlank="true" Descr="@item.WebsiteDescr">
 					</Anchor>
 				}
+
 			</div>
+
+
+			@if (!String.IsNullOrEmpty(@item.Description))
+			{
+				<div class="card-body">
+					<p class="pb-2 border-success">
+						@((MarkupString)GetDescriptionMdPipeline(item.Description!))
+
+					</p>
+@* 					
+						<button @onclick="@(e => Edit_ButtonClick(@Id))"
+									class="btn-default btn-sm" title="@LinkEditMarkdown.Title Id: @Id">
+							<i class="@LinkEditMarkdown.Icon2"></i>&nbsp;<i class="@LinkEditMarkdown.Icon"></i>
+						</button> 
+*@
+				</div>
+			}
+
+
 		</div>
 
 	}

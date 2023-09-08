@@ -1,5 +1,4 @@
-﻿
-using Blazored.Toast.Services;
+﻿using Blazored.Toast.Services;
 using Markdig;
 using System;
 using System.Collections.Generic;
@@ -17,8 +16,6 @@ public partial class SpecialEventCard
 
 	protected List<Models.SpecialEventVM>? VM;
 
-	protected MarkdownPipeline? pipeline { get; set; }
-
 	private const int DaysPast = -5;  //
 	private const int DaysAhead = 100;  //
 	private int RowCnt = 0;
@@ -35,12 +32,11 @@ public partial class SpecialEventCard
 			Logger!.LogDebug(string.Format("Inside {0} i:{1}"
 				, nameof(SpecialEventCard) + "!" + nameof(OnInitializedAsync), 0));
 
-			VM = await db!.GetEvents(daysAhead: DaysAhead, daysPast: DaysPast);  //daysPast: -3
+			VM = await db!.GetCurrentEvents();  //daysPast: -3
 			if (VM is not null)
 			{
 				RowCnt = VM.Count;
 				Logger!.LogDebug(string.Format("...UpcomingEventList.Count:{0}", RowCnt));
-				pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().Build();
 			}
 			else
 			{
@@ -62,6 +58,19 @@ public partial class SpecialEventCard
 		}
 
 
+	}
+
+	protected string GetDescriptionMdPipeline(string? description)
+	{
+		MarkdownPipeline pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().Build();
+		if (description is null)
+		{
+			return "null";
+		}
+		else
+		{
+			return Markdig.Markdown.ToHtml(description, pipeline);
+		}
 	}
 
 	public bool ShowVideo { get; set; } = false;

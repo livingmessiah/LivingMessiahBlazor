@@ -20,9 +20,8 @@ public interface IRepository
 	//ToDo: should this be in `SpecialEventsStore.cs`
 
 	// Commands
-
-	Task<List<Models.SpecialEventVM>> GetEvents(int daysAhead, int daysPast);
 	Task<List<Models.SpecialEventVM>> GetEventsByDateRange(DateTime dateBegin, DateTime dateEnd);
+	Task<List<Models.SpecialEventVM>> GetCurrentEvents();
 
 	Task<int> UpdateDescription(int id, string description);
 	Task<(int NewId, int SprocReturnValue, string ReturnMsg)> CreateSpecialEvent(SpecialEvents.FormVM formVM);
@@ -38,43 +37,6 @@ public class Repository : BaseRepositoryAsync, IRepository
 	public string BaseSqlDump
 	{
 		get { return SqlDump!; }
-	}
-
-
-	// Invalid cast from 'System.Int32' to 'LivingMessiah.Web.Pages.SpecialEvents.Enums.SpecialEventType'.
-	public async Task<List<Models.SpecialEventVM>> GetEvents(int daysAhead, int daysPast)
-	{
-		base.Parms = new DynamicParameters(new
-		{
-			DaysAhead = daysAhead,
-			DaysPast = daysPast
-		});
-
-		base.Sql = $@"
---Description is modified because MarkDig doesn't like nulls
---DECLARE @DaysAhead int =100, @DaysPast int =-3
-SELECT
-  Id, EventDate
-, SpecialEventTypeId
-, DaysDiff, DaysDiffDescr
-, Title, SubTitle, ImageUrl, WebsiteUrl, WebsiteDescr, YouTubeId
-, ISNULL(Description, '') AS Description 
-, ShowBeginDate, ShowEndDate
-FROM SpecialEvent.vwSpecialEvent
-WHERE DATEADD(d, @DaysAhead, GETUTCDATE()) >= EventDate
-  AND DATEADD(d, @DaysPast, GETUTCDATE()) <= EventDate
-ORDER BY EventDate
-";
-		var inside = "Repository!GetEvents";
-		var dump = base.Sql;
-		var whereclause = $"WHERE DATEADD(d, {@daysAhead}, GETUTCDATE()) >= EventDate AND DATEADD(d, {@daysPast}, GETUTCDATE()) <= EventDate";
-		base.log.LogDebug("Inside {@Inside}, Sql: {@Sql}, WhereClause: {@WhereClause}", inside, dump, whereclause);
-
-		return await WithConnectionAsync(async connection =>
-		{
-			var rows = await connection.QueryAsync<Models.SpecialEventVM>(sql: base.Sql, param: base.Parms);
-			return rows.ToList();
-		});
 	}
 
 	public async Task<List<Models.SpecialEventVM>> GetEventsByDateRange(DateTime dateBegin, DateTime dateEnd)
@@ -106,6 +68,27 @@ ORDER BY EventDate
 		});
 	}
 
+	public async Task<List<Models.SpecialEventVM>> GetCurrentEvents()
+	{
+		Sql = $@"
+SELECT
+  Id, EventDate
+, ShowBeginDate, ShowEndDate
+, SpecialEventTypeId
+, DaysDiff, DaysDiffDescr
+, Title, SubTitle, ImageUrl, WebsiteUrl, WebsiteDescr, YouTubeId
+, ISNULL(Description, '') AS Description 
+FROM SpecialEvent.vwSpecialEvent
+WHERE DATEADD(d, -1, ShowBeginDate) <= GETUTCDATE() AND  
+			DATEADD(d, 1, ShowEndDate)		>= GETUTCDATE()
+ORDER BY EventDate
+";
+		return await WithConnectionAsync(async connection =>
+		{
+			var rows = await connection.QueryAsync<Models.SpecialEventVM>(sql: Sql);
+			return rows.ToList();
+		});
+	}
 
 	public async Task<(int NewId, int SprocReturnValue, string ReturnMsg)> CreateSpecialEvent(SpecialEvents.FormVM formVM)
 	{
