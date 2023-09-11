@@ -31,7 +31,7 @@ public record SpecialEventsState
 // 3. Feature
 public class SpecialEventsStateFeature : Feature<SpecialEventsState>
 {
-	public override string GetName() => "SpecialEvents";
+	public override string GetName() => "SpecialEventsOLD";
 
 	protected override SpecialEventsState GetInitialState()
 	{

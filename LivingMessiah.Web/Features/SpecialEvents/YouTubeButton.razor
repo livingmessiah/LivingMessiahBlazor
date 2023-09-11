@@ -1,0 +1,25 @@
+﻿@if (YouTubeId is not null)
+{
+	if (IsXsOrSm)
+	{
+		<span class="float-end">
+			<button href="https://www.youtube.com/watch?v=@YouTubeId"
+					class="btn btn-outline-danger btn-sm"
+					type="button" target="_blank" title="@YouTubeId">
+				<i class="fab fa-youtube"></i>
+				<br><small>@YouTubeId</small>
+			</button>
+		</span>
+	}
+	else
+	{
+		<a href="https://www.youtube.com/watch?v=@YouTubeId" target="_blank" title="@YouTubeId">
+			<span class="btn btn-danger btn-sm"><i class="fab fa-youtube"></i></span>
+		</a>
+	}
+}
+
+@code {
+	[Parameter, EditorRequired] public string? YouTubeId { get; set; }
+	[Parameter, EditorRequired] public bool IsXsOrSm { get; set; }
+}

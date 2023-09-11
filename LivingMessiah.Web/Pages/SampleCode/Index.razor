@@ -3,6 +3,8 @@
 @using Page = LivingMessiah.Web.Links.SampleCode
 @using PageBibleCascadingDDL = LivingMessiah.Web.Links.SampleCode.BibleCascadingDDL
 @using PageBibleSearch = LivingMessiah.Web.Links.SampleCode.BibleSearch
+@using PageGrid12Calendar = LivingMessiah.Web.Links.SampleCode.Grid12Calendar
+@using PageMarkDown = LivingMessiah.Web.Links.SampleCode.MarkDown
 @using PageSyncfusionSfDropDownList = LivingMessiah.Web.Links.SampleCode.SyncfusionSfDropDownList
 
 <PageTitle>@Page.Title</PageTitle>
@@ -22,5 +24,26 @@
 <ul>
 	<li><a href="@PageBibleCascadingDDL.Index">@PageBibleCascadingDDL.Title</a></li>
 	<li><a href="@PageBibleSearch.Index">@PageBibleSearch.Title</a></li>
+	<li><a href="@PageGrid12Calendar.Index">@PageGrid12Calendar.Title</a></li>
+	<li><a href="@PageMarkDown.Index">@PageMarkDown.Title</a></li>
 	<li><a href="@PageSyncfusionSfDropDownList.Index">@PageSyncfusionSfDropDownList.Title</a></li>
 </ul>
+
+
+<h4 class="mt-4">Links</h4>
+<p><small><code>d-grid gap-2 d-md-flex</code></small></p>
+<div class="d-grid gap-2 d-md-flex">
+	<a class="btn btn-info" href="@PageBibleCascadingDDL.Index">
+		@PageBibleCascadingDDL.Title
+	</a>
+	<a class="btn btn-info" href="@PageBibleSearch.Index">@PageBibleSearch.Title</a>
+	<a class="btn btn-info" href="@PageGrid12Calendar.Index">@PageGrid12Calendar.Title</a>
+	<a class="btn btn-info" href="@PageMarkDown.Index">@PageMarkDown.Title</a>
+	<a class="btn btn-info" href="@PageSyncfusionSfDropDownList.Index">@PageSyncfusionSfDropDownList.Title</a>
+
+
+	@* 	<button  class="btn btn-info" @onclick="@OnShowHtml">
+	Info Toast with HTML
+	</button>
+	*@
+</div>

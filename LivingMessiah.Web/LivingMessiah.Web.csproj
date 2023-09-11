@@ -29,6 +29,15 @@
 
   <ItemGroup>
     <None Include="..\.editorconfig" Link=".editorconfig" />
+    <None Include="Features\SpecialEvents\ActionButtons.razor" />
+    <None Include="Features\SpecialEvents\DisplayCard.razor" />
+    <None Include="Features\SpecialEvents\Form.razor" />
+    <None Include="Features\SpecialEvents\Index.razor" />
+    <None Include="Features\SpecialEvents\MasterList.razor" />
+    <None Include="Features\SpecialEvents\PageHeader.razor" />
+    <None Include="Features\SpecialEvents\ShowMasterIndex.razor" />
+    <None Include="Features\SpecialEvents\ToasterSpecialEvents.razor" />
+    <None Include="Features\SpecialEvents\YouTubeButton.razor" />
     <!--<None Include="Pages\KeyDates\Obsolete\Index.razor" />-->
     <None Include="Shared\EnvComponent.razor" />
     <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css.map" />

@@ -13,8 +13,11 @@ using LivingMessiah.Web.Features.Admin.Database;
 using LivingMessiah.Web.Pages.Admin.Video.DI;
 using LivingMessiah.Web.Pages.ArchivedVideos;
 using LivingMessiah.Web.Pages.Contacts.DI;
-using LivingMessiah.Web.Pages.SpecialEvents.DI;
 using LivingMessiah.Web.Features.PsalmsAndProverbs;
+
+using LivingMessiah.Web.Features.SpecialEvents.Data;
+using LivingMessiah.Web.Pages.SpecialEvents.DI;  // OLD
+
 using LivingMessiah.Web.Components.ShabbatWeek;
 using LivingMessiah.Web.Features.UpcomingEvents.Weekly;
 
@@ -48,10 +51,14 @@ public class Startup
 		services.AddAdminVideo();
 		services.AddArchivedVideo();
 		services.AddPsalmsAndProverbs();
+		
+		services.AddSpecialEvents();
+		services.AddSpecialEventsOLD();
+		
 		services.AddUpcomingEvents();
 		services.AddShabbatWeek();
 		services.AddAdminContacts();
-		services.AddSpecialEvents();
+		
 
 		services.AddSession();
 		services.AddBlazoredToast();

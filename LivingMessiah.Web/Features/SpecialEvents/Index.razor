@@ -1,0 +1,67 @@
+﻿@page "/SpecialEvents"
+
+@using LivingMessiah.Web.SmartEnums
+@using LoginLink = LivingMessiah.Web.Links.Account
+@using static LivingMessiah.Web.Services.Auth0;
+
+@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+
+<p class="text-primary"></p>
+
+<div class="@MediaQuery.XsOrSm.DivClass">
+	<PageHeader IsXsOrSm="true" />
+</div>
+
+<div class="@MediaQuery.MdOrLgOrXl.DivClass">
+	<PageHeader IsXsOrSm="false" />
+</div>
+
+@if (State!.Value.VisibleComponent == Enums.VisibleComponent.MasterList)
+{
+	<div class="@MediaQuery.XsOrSm.DivClass">
+		<MasterList IsXsOrSm="true" />
+	</div>
+
+	<div class="@MediaQuery.MdOrLgOrXl.DivClass">
+		<MasterList IsXsOrSm="false" />
+	</div>
+}
+else
+{
+	<ShowMasterIndex />
+
+	@if (State!.Value.VisibleComponent == Enums.VisibleComponent.AddEditForm)
+	{
+		<Form />
+	}
+	else
+	{
+		<DisplayCard />
+	}
+}
+
+
+
+<AuthorizeView Roles="@Roles.AdminOrAnnouncements">
+	<Authorized>
+		<p>ToDo: Insert Components</p>
+	</Authorized>
+	<NotAuthorized>
+		@*
+		ToDo: add the Login logic
+		<div class="card border-warning my-5">
+		  <div class="card-header">Not Authorized</div>
+
+		<div class="card-body">
+		  <h5 class="">To view <b>@Page.Title</b> you need to be logged in.</h5>
+		    <button @onclick="@(() => RedirectToLoginClick(Page.Index))"
+		      type="button" class="btn-primary btn-sm">
+		      Login <i class='fas fa-sign-in-alt'></i>
+		    </button>
+		  </div>
+		</div>
+		*@
+	</NotAuthorized>
+</AuthorizeView>
+
+<ToasterSpecialEvents />	

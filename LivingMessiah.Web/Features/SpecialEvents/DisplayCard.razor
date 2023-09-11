@@ -1,0 +1,97 @@
+﻿@using LinkEditMarkdown = LivingMessiah.Web.Links.UpcomingEventsAdmin.EditMarkdown
+
+@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+
+<div class="card  border-primary my-1">
+
+	<div class="card-header">
+
+		<div class="row">
+			<div class="col-6">
+				<h4>
+					<i class="far fa-calendar"></i>
+					<span class='badge bg-primary'>@FormVM!.EventDate.ToString(DateFormat.ddd_mm_dd)</span>
+				</h4>
+			</div>
+			<div class="col-6 text-end">
+				Type: @Enums.SpecialEventType.FromValue(FormVM.SpecialEventTypeId).Descr
+			</div>
+		</div>
+
+	</div>
+
+	<div class="card-body">
+		<h3 class="card-text text-center">
+			@FormVM.Title
+		</h3>
+	</div>
+
+	<div class="card-body">
+		@if (!String.IsNullOrEmpty(@FormVM.ImageUrl))
+		{
+			<p class="">@FormVM.ImageUrl</p>
+			@*
+		<img src='@Blobs.UrlShabbatService(Section!.GraphicUrl)' alt="@Section.Title" class="img-fluid rounded mt-4" />
+		*@
+		}
+	</div>
+
+	<div class="card-body">
+
+		@if (!String.IsNullOrEmpty(@FormVM.YouTubeId))
+		{
+			<a href="https://www.youtube.com/watch?v=@FormVM.YouTubeId" target="_blank" title="@FormVM.YouTubeId">
+				<img src='https://img.youtube.com/vi/@FormVM.YouTubeId/mqdefault.jpg' class='mt-4' /> <br>  @FormVM.Title
+			</a>
+		}
+
+
+		@if (!String.IsNullOrEmpty(@FormVM.SubTitle))
+		{
+			<h4 class="card-title">@FormVM.SubTitle</h4>
+		}
+
+		@if (!String.IsNullOrEmpty(@FormVM.WebsiteUrl))
+		{
+			<Anchor Href="@FormVM.WebsiteUrl" TargetIsBlank="true" Descr="@FormVM.WebsiteDescr">
+			</Anchor>
+		}
+	</div>
+
+
+	<div class="row">
+		<div class="col-6">
+
+			<div class="card-body">
+				<p class="pb-2 border-success">
+					@FormVM.Description
+				</p>
+				<button @onclick="@(e => Edit_ButtonClick(@FormVM.Id))"
+								class="btn-default btn-sm" title="@LinkEditMarkdown.Title Id: @FormVM.Id">
+					<i class="@LinkEditMarkdown.Icon2"></i>&nbsp;<i class="@LinkEditMarkdown.Icon"></i>
+				</button>
+			</div>
+
+		</div>
+
+		<div class="col-6">
+			<div class="card-body">
+				@if (!String.IsNullOrEmpty(@FormVM.Description))
+				{
+					<p class="pb-2 border-success">
+						@((MarkupString)GetDescriptionMdPipeline(FormVM.Description!))
+					</p>
+				}
+				else
+				{
+					<p class="pb-2 border-warning">
+						null
+					</p>
+
+				}
+			</div>
+		</div>
+
+	</div>
+
+</div>

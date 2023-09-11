@@ -1,0 +1,20 @@
+﻿@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+
+<div class="row mb-3">
+	<div class="col-12">
+		<button @onclick="@(e => ShowListClick())"
+						class="btn btn-outline-secondary float-end">
+			<i class="fas fa-chevron-up"></i> Show List
+		</button>
+	</div>
+</div>
+
+@code {
+
+	[Inject] public IDispatcher? Dispatcher { get; set; }
+
+	void ShowListClick()
+	{
+		Dispatcher!.Dispatch(new Set_PageHeader_For_Index_Action(Constants.GetPageHeaderForIndexVM()));
+	}
+}

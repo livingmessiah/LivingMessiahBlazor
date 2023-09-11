@@ -369,6 +369,13 @@ public static class SampleCode
 	public const string Title = "Sample Code";
 	public const string Icon = "fas fa-vial";
 
+	public static class BibleBooks
+	{
+		public const string Index = "/BibleBooks/";  // /SmartEnums/BibleBooks
+		public const string Title = "Bible Books";  // <PageTitle>SmartEnums | BibleBooks</PageTitle>
+		public const string Icon = "fas fa-tachometer-alt";
+	}
+
 	public static class BibleCascadingDDL
 	{
 		public const string Index = "/BibleCascadingDDL/";
@@ -383,18 +390,25 @@ public static class SampleCode
 		public const string Icon = "fas fa-search";  //fas fa-bible
 	}
 
+	public static class Grid12Calendar
+	{
+		public const string Index = "/Grid12Calendar";  
+		public const string Title = "Grid 12 Calendar"; 
+		public const string Icon = "fas fa-grip-horizontal"; 
+	}
+
+	public static class MarkDown
+	{
+		public const string Index = "/MarkdownTest"; 
+		public const string Title = "Mark Down"; 
+		public const string Icon = "fab fa-markdown"; 
+	}
+
 	public static class SyncfusionSfDropDownList
 	{
 		public const string Index = "/BBCP";
 		public const string Title = "Bible Book Chapter | Syncfusion DDL";
 		public const string Icon = "fas fa-search";
-	}
-
-	public static class BibleBooks
-	{
-		public const string Index = "/BibleBooks/";  // /SmartEnums/BibleBooks
-		public const string Title = "Bible Books";  // <PageTitle>SmartEnums | BibleBooks</PageTitle>
-		public const string Icon = "fas fa-tachometer-alt";
 	}
 
 }
@@ -566,11 +580,17 @@ public static class TorahTuesday
 	public const string Icon = "fas fa-torah";
 }
 
-
 public static class SpecialEvents
 {
 	public const string Index = "/SpecialEvents/";
 	public const string Title = "Special Events";
+	public const string Icon = "far fa-clock";
+}
+
+public static class SpecialEventsOLD
+{
+	public const string Index = "/SpecialEventsOLD/";
+	public const string Title = "Special Events OLD";
 	public const string Icon = "far fa-clock";
 }
 
@@ -580,6 +600,17 @@ public static class UpcomingEvents
 	public const string Index = "/UpcomingEvents/";
 	public const string Title = "Upcoming Events";
 	public const string Icon = "far fa-clock";
+}
+
+public static class UpcomingEventsAdmin
+{
+	public static class EditMarkdown
+	{
+		public const string Page = "/UpcomingEventsAdminEditMarkdown";
+		public const string Title = "Edit Upcoming Events Markdown ";
+		public const string Icon = "fab fa-markdown";
+		public const string Icon2 = "fas fa-pencil-alt";
+	}
 }
 
 public static class Wirecast

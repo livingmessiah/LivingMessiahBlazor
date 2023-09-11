@@ -1,0 +1,18 @@
+﻿@page "/MarkdownTest"
+
+@using Page = LivingMessiah.Web.Links.SampleCode.MarkDown
+@using LivingMessiah.Web.Components.MD
+
+<PageTitle>@Page.Title</PageTitle>
+<div class="pb-1 mt-4 mb-1 border-bottom border-info">
+	<h2><i class="@Page.Icon"></i> @Page.Title</h2>
+</div>
+
+<p>The extended markdig pipeline does not currently work</p>
+<Editor_MD></Editor_MD>
+
+@code {
+	//https://www.puresourcecode.com/dotnet/blazor/markdown-editor-component-for-blazor/
+	//https://github.com/erossini/BlazorMarkdownEditor
+	//https://www.daveabrock.com/2021/02/18/copy-to-clipboard-markdown-editor/
+}
