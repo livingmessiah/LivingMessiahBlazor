@@ -47,7 +47,6 @@ public record State
 	public Enums.VisibleComponent? VisibleComponent { get; init; }
 	public Enums.FormMode? FormMode { get; init; }
 	public FormVM? FormVM { get; init; }
-	public EditMarkdownVM? EditMarkdownVM { get; init; }
 	public List<Data.vwSpecialEvent>? SpecialEventList { get; init; }
 	public PageHeaderVM? PageHeaderVM { get; init; }
 }
@@ -64,8 +63,7 @@ public class FeatureImplementation : Feature<State>
 			FormMode = null,
 			VisibleComponent = Enums.VisibleComponent.MasterList,
 			PageHeaderVM = Constants.GetPageHeaderForIndexVM(),
-			FormVM = new FormVM(),
-			EditMarkdownVM = new EditMarkdownVM()
+			FormVM = new FormVM()
 		};
 	}
 }
@@ -123,8 +121,7 @@ public static class Reducers
 		{
 			VisibleComponent = Enums.VisibleComponent.AddEditForm,
 			FormMode = Enums.FormMode.Add,
-			FormVM = new FormVM(),
-			EditMarkdownVM = new EditMarkdownVM()
+			FormVM = new FormVM()
 		};
 	}
 
@@ -313,7 +310,7 @@ public class Effects
 				};
 
 				dispatcher.Dispatch(new Set_FormVM_Action(formVM));
-				dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Info, $"Got {formVM!.Title!}"));
+				//dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Info, $"Got {formVM!.Title!}"));
 
 				if (action.FormMode == Enums.FormMode.Edit)
 				{

@@ -16,7 +16,6 @@ using LivingMessiah.Web.Pages.Contacts.DI;
 using LivingMessiah.Web.Features.PsalmsAndProverbs;
 
 using LivingMessiah.Web.Features.SpecialEvents.Data;
-using LivingMessiah.Web.Pages.SpecialEvents.DI;  // OLD
 
 using LivingMessiah.Web.Components.ShabbatWeek;
 using LivingMessiah.Web.Features.UpcomingEvents.Weekly;
@@ -53,8 +52,6 @@ public class Startup
 		services.AddPsalmsAndProverbs();
 		
 		services.AddSpecialEvents();
-		services.AddSpecialEventsOLD();
-		
 		services.AddUpcomingEvents();
 		services.AddShabbatWeek();
 		services.AddAdminContacts();

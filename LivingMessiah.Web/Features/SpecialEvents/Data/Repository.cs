@@ -20,15 +20,11 @@ public interface IRepository
 
 	Task<List<vwSpecialEvent>> GetEventsByDateRange(DateTimeOffset? dateBegin, DateTimeOffset? dateEnd);
 	Task<vwSpecialEvent?> GetEventById(int id);
-	Task<List<vwSpecialEvent>> GetCurrentEvents();  //Models.SpecialEventVM
+	Task<List<vwSpecialEvent>> GetCurrentEvents();  // ToDo:  NOT REFERENCED 
 
 	Task<(int NewId, int SprocReturnValue, string ReturnMsg)> CreateSpecialEvent(FormVM formVM);
 	Task<(int Affectedrows, string ReturnMsg)> UpdateSpecialEvent(SpecialEvents.FormVM formVM);
 	Task<int> RemoveSpecialEvent(int id);
-
-	// ToDo: 
-	Task<EditMarkdownVM?> GetDescription(int id);
-	Task<int> UpdateDescription(int id, string description);
 }
 
 public class Repository : BaseRepositoryAsync, IRepository
@@ -161,37 +157,6 @@ public class Repository : BaseRepositoryAsync, IRepository
 				, nameof(Repository) + "!" + nameof(UpdateSpecialEvent), id));
 			var affectedrows = await connection.ExecuteAsync(sql: base.Sql, param: base.Parms);
 			return affectedrows;
-		});
-	}
-
-
-	public async Task<EditMarkdownVM?> GetDescription(int id)
-	{
-		base.Parms = new DynamicParameters(new { Id = id });
-
-		base.Sql = $@"
---DECLARE @Id int=
-SELECT Id, Title 
-, ISNULL(Description, '') AS Description
-FROM KeyDate.UpcomingEvent
-WHERE Id = @Id
-";
-		return await WithConnectionAsync(async connection =>
-		{
-			var rows = await connection.QueryAsync<EditMarkdownVM>(sql: base.Sql, param: base.Parms);
-			return rows.SingleOrDefault();
-		});
-	}
-
-	public async Task<int> UpdateDescription(int id, string description)
-	{
-		base.Parms = new DynamicParameters(new { Id = id, Description = description });
-		base.Sql = $"UPDATE KeyDate.UpcomingEvent SET Description = @Description WHERE Id=@Id; ";
-		return await WithConnectionAsync(async connection =>
-		{
-			log.LogDebug($"base.Sql: {base.Sql}, base.Parms:{base.Parms}");
-			var count = await connection.ExecuteAsync(sql: base.Sql, param: base.Parms);
-			return count;
 		});
 	}
 

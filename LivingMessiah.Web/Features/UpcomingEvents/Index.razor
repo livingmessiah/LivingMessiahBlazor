@@ -1,6 +1,10 @@
 ﻿@page "/upcomingevents"
 @using Markdig
 @using Page = LivingMessiah.Web.Links.UpcomingEvents
+
+@using LivingMessiah.Web.Features.SpecialEvents 
+@using LivingMessiah.Web.Features.UpcomingEvents.Weekly
+
 <PageTitle>@Page.Title</PageTitle>
 
 <div class="pb-2 mt-4 mb-2 border-bottom">
@@ -9,8 +13,11 @@
 
 @if (ShowCurrentWeeklyVideos)
 {
-	<LivingMessiah.Web.Features.UpcomingEvents.Weekly.Videos />
+	<Videos />
 }
 
-<LivingMessiah.Web.Pages.SpecialEvents.Card.SpecialEventCard />
+@* ToDo: THIS IS NOT GOING TO WORK IN ITS CURRENT STATE *@
+@* Maybe this need to be in Components/ *@
+<DisplayCard />
+
 

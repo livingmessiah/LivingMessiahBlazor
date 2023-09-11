@@ -6,36 +6,48 @@
 
 <div class="pb-1 mt-4 mb-2">
 
-	@if (IsXsOrSm)
+	@if (ShowLoginRedirectOnly)
 	{
-		<h3>
-			<i class="@Page.Icon"></i> @Page.Title
-			<span class="@State!.Value.PageHeaderVM!.Color float-end">
-				<i class="@State!.Value.PageHeaderVM!.Icon"></i>
-				@State!.Value.PageHeaderVM!.Title
-			</span>
-		</h3>
+		<div class="pb-1 mt-4 mb-1 border-bottom border-info">
+			<h2><i class="@Page.Icon"></i> @Page.Title</h2>
+		</div>
+
+		<div class="card border-warning my-5">
+			<div class="card-body">
+				<h5 class="">To view <b>@Page.Title</b> you need to be logged in.</h5>
+				<LoginRedirectButton ReturnUrl="@Page.Index" />
+			</div>
+		</div>
 	}
 	else
 	{
-		<h1>
-			<i class="@Page.Icon"></i> @Page.Title
-			<span class="@State!.Value.PageHeaderVM!.Color float-end">
-				<i class="@State!.Value.PageHeaderVM!.Icon"></i>
-				@State!.Value.PageHeaderVM!.Title
-			</span>
-		</h1>
+		<div class="pb-1 mt-4 mb-1 border-bottom border-info">
+			@if (IsXsOrSm)
+			{
+				<h3>
+					<i class="@Page.Icon"></i> @Page.Title
+					<span class="@State!.Value.PageHeaderVM!.Color float-end d-print-none">
+						<i class="@State!.Value.PageHeaderVM!.Icon"></i>
+						@State!.Value.PageHeaderVM!.Title
+					</span>
+				</h3>
+			}
+			else
+			{
+				<h1>
+					<i class="@Page.Icon"></i> @Page.Title
+					<span class="@State!.Value.PageHeaderVM!.Color float-end d-print-none">
+						<i class="@State!.Value.PageHeaderVM!.Icon"></i>
+						@State!.Value.PageHeaderVM!.Title
+					</span>
+				</h1>
+			}
+		</div>
 	}
-
 </div>
 
 @code {
-		[Inject] private IState<State>? State { get; set; }
-		[Parameter, EditorRequired] public bool IsXsOrSm { get; set; }
+	[Inject] private IState<State>? State { get; set; }
+	[Parameter, EditorRequired] public bool IsXsOrSm { get; set; }
+	[Parameter, EditorRequired] public bool ShowLoginRedirectOnly { get; set; }
 }
-
-
-@*
-	<DRC.Index />
-	<LivingMessiah.Web.Features.SpecialEvents.DateRangeComponent.Component />
-*@

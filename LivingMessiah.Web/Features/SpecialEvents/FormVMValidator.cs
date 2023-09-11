@@ -21,8 +21,7 @@ public class FormVMValidator : AbstractValidator<FormVM>
 		RuleFor(p => p.WebsiteUrl).MaximumLength(150).WithMessage("Website Url cannot be longer than 150 characters");
 		RuleFor(p => p.WebsiteDescr).MaximumLength(150).WithMessage("Website description cannot be longer than 150 characters");
 		RuleFor(p => p.YouTubeId).MaximumLength(25).WithMessage("YouTube Id cannot be longer than 25 characters");
-		//public int Id [Required][Key]
-		//			.Must(uri => Uri.TryCreate(uri, UriKind.Absolute, out _)).When(x => !string.IsNullOrEmpty(x.ImageUrl))
+		RuleFor(p => p.Description).MaximumLength(5000).WithMessage("Description cannot be longer than 5,000 characters");
 	}
 }
 

@@ -1,6 +1,19 @@
 ﻿@using LinkEditMarkdown = LivingMessiah.Web.Links.UpcomingEventsAdmin.EditMarkdown
+@using Syncfusion.Blazor.RichTextEditor
 
 @inherits Fluxor.Blazor.Web.Components.FluxorComponent
+
+<div class="d-print-none">
+	<div class="row">
+		<div class="col-12 d-flex justify-content-end">
+
+			<a href="javascript:window.print()">
+				<i class="fa fa-print"></i> Print
+			</a>
+		</div>
+	</div>
+</div>
+
 
 <div class="card  border-primary my-1">
 
@@ -58,40 +71,13 @@
 		}
 	</div>
 
-
-	<div class="row">
-		<div class="col-6">
-
-			<div class="card-body">
-				<p class="pb-2 border-success">
-					@FormVM.Description
-				</p>
-				<button @onclick="@(e => Edit_ButtonClick(@FormVM.Id))"
-								class="btn-default btn-sm" title="@LinkEditMarkdown.Title Id: @FormVM.Id">
-					<i class="@LinkEditMarkdown.Icon2"></i>&nbsp;<i class="@LinkEditMarkdown.Icon"></i>
-				</button>
-			</div>
+	<div class="row mt-n2 mb-3">
+		<div class="col-12">
+			<SfRichTextEditor Readonly="true" @bind-Value="@FormVM.Description"> 
+				<RichTextEditorToolbarSettings Enable="false"></RichTextEditorToolbarSettings>
+			</SfRichTextEditor>
 
 		</div>
-
-		<div class="col-6">
-			<div class="card-body">
-				@if (!String.IsNullOrEmpty(@FormVM.Description))
-				{
-					<p class="pb-2 border-success">
-						@((MarkupString)GetDescriptionMdPipeline(FormVM.Description!))
-					</p>
-				}
-				else
-				{
-					<p class="pb-2 border-warning">
-						null
-					</p>
-
-				}
-			</div>
-		</div>
-
 	</div>
 
 </div>

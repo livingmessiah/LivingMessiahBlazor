@@ -587,14 +587,6 @@ public static class SpecialEvents
 	public const string Icon = "far fa-clock";
 }
 
-public static class SpecialEventsOLD
-{
-	public const string Index = "/SpecialEventsOLD/";
-	public const string Title = "Special Events OLD";
-	public const string Icon = "far fa-clock";
-}
-
-
 public static class UpcomingEvents
 {
 	public const string Index = "/UpcomingEvents/";
