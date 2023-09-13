@@ -16,8 +16,11 @@
 	<Videos />
 }
 
-@* ToDo: THIS IS NOT GOING TO WORK IN ITS CURRENT STATE *@
-@* Maybe this need to be in Components/ *@
-<DisplayCard />
+@foreach (var item in SpecialEvents)
+{
+	<DisplayCard FormVM="item" />
+}
+
+
 
 

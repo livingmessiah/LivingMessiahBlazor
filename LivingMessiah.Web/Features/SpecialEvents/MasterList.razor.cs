@@ -43,12 +43,15 @@ public partial class MasterList
 
 			case nameof(Enums.Crud.Edit):
 				Dispatcher!.Dispatch(new Set_PageHeader_For_Detail_Action(args.Crud.Name, args.Crud!.Icon, args.Crud!.Color, args.Id));
-				Dispatcher!.Dispatch(new Get_Item_Action(args.Id, Enums.FormMode.Edit));
+				Dispatcher!.Dispatch(new Get_EditItem_Action(args.Id));
+				Dispatcher!.Dispatch(new Edit_Action(args.Id));
 				break;
 
 			case nameof(Enums.Crud.Display):
-				Dispatcher!.Dispatch(new Get_Item_Action(args.Id, Enums.FormMode.Display));
 				Dispatcher!.Dispatch(new Set_PageHeader_For_Detail_Action(args.Crud.Name, args.Crud!.Icon, args.Crud!.Color, args.Id));
+				Dispatcher!.Dispatch(new Set_Display_Item_Action(args.Id));
+				Dispatcher!.Dispatch(new Display_Action(args.Id));
+
 				break;
 
 			case nameof(Enums.Crud.Delete):

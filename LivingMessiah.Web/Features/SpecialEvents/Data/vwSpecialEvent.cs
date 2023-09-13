@@ -1,7 +1,4 @@
-﻿// Ignore Spelling: Diff Descr
-
-using LivingMessiah.Web.Features.SpecialEvents.Enums;
-using Markdig;
+﻿using LivingMessiah.Web.Features.SpecialEvents.Enums;
 using Microsoft.AspNetCore.Components;
 using System;
 
@@ -28,9 +25,7 @@ public class vwSpecialEvent
 	public string? YouTubeId { get; set; }
 	public string? WebsiteUrl { get; set; }
 	public string? WebsiteDescr { get; set; }
-	public string? Description { get; set; }  // ToDo: md?, probably going to be Component Body
-
-	//public string DescriptionMD => Markdown.ToHtml(Description);
+	public string? Description { get; set; } 
 
 	public MarkupString DaysAheadMU
 	{
@@ -76,7 +71,6 @@ public class vwSpecialEvent
 		}
 	}
 
-
 	public override string ToString()
 	{
 		return $"EventDate: {EventDate}, SpecialEventTypeId: {SpecialEventTypeId}";
@@ -97,5 +91,6 @@ public class vwSpecialEvent
 		return EventDate.ToString("MMMM");
 	}
 
-
 }
+// Ignore Spelling: Diff Descr
+// Ignore Spelling: vw

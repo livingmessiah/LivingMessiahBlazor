@@ -4,8 +4,8 @@ namespace LivingMessiah.Web.Features.SpecialEvents;
 
 public partial class DisplayCard
 {
-	[Inject] private IState<State>? State { get; set; }
-	FormVM? FormVM => State!.Value.FormVM;
+	[Parameter, EditorRequired] public FormVM? FormVM { get; set; }
+	[Parameter] public bool ShowPrintAnchor { get; set; } = false;
 }
 
 

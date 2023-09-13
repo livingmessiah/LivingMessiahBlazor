@@ -16,7 +16,7 @@ public record Get_List_Action();
 public record Set_Data_MasterList_Action(List<Data.vwSpecialEvent> vwSpecialEvent);
 
 // 1.2 GetItem() actions
-public record Get_Item_Action(int Id, Enums.FormMode? FormMode);
+public record Get_EditItem_Action(int Id);
 public record Set_FormVM_Action(FormVM? FormVM);
 
 public record Edit_Action(int Id);
@@ -25,16 +25,12 @@ public record Display_Action(int Id);
 // 1.3 Actions related to Form Submission
 public record Submitting_Request_Action(FormVM FormVM, Enums.FormMode? FormMode);
 
-// 1.4 Actions related to MasterList
 public record Add_Action();
-
-// 1.5 Delete() actions
 public record Delete_Action(int Id);
 
-// 1.6 Delete() actions
 public record Set_PageHeader_For_Index_Action(PageHeaderVM PageHeaderVM);
 public record Set_PageHeader_For_Detail_Action(string Title, string Icon, string Color, int Id);
-
+public record Set_Display_Item_Action(int Id);
 
 // 1.7 Toaster stuff
 public record Response_Message_Action(ResponseMessage MessageType, string Message);
@@ -45,7 +41,9 @@ public record Response_Message_Action(ResponseMessage MessageType, string Messag
 public record State
 {
 	public Enums.VisibleComponent? VisibleComponent { get; init; }
+
 	public Enums.FormMode? FormMode { get; init; }
+	public int EditItemId { get; init; }
 	public FormVM? FormVM { get; init; }
 	public List<Data.vwSpecialEvent>? SpecialEventList { get; init; }
 	public PageHeaderVM? PageHeaderVM { get; init; }
@@ -75,35 +73,52 @@ public static class Reducers
 	[ReducerMethod]
 	public static State On_Set_VisibleComponent(State state, Set_VisibleComponent_Action action)
 	{
-		return state with {	VisibleComponent = action.VisibleComponent	};
+		return state with { VisibleComponent = action.VisibleComponent };
 	}
 
 
 	[ReducerMethod]
 	public static State On_Set_Data_MasterList(State state, Set_Data_MasterList_Action action)
 	{
-		return state with	{	SpecialEventList = action.vwSpecialEvent};
+		return state with { SpecialEventList = action.vwSpecialEvent };
 	}
 
-	//ToDo: Get_Item_Action should be split into Get_EditItem_Action and Get_DisplayItem_Action 
 	[ReducerMethod]
-	public static State On_Get_Item(State state, Get_Item_Action action)
+	public static State On_Get_EditItem(State state, Get_EditItem_Action action)
 	{
-		return state with { FormMode = action.FormMode };
+		return state with { EditItemId = action.Id };
 	}
+		
+	[ReducerMethod]
+	public static State On_Set_Display_Item(State state, Set_Display_Item_Action action)
+	{
+		Data.vwSpecialEvent? se = new();
+		se = state.SpecialEventList!.Where(w => w.Id == action.Id).SingleOrDefault();
 
-	/*
-	[ReducerMethod]
-	public static State On_Set_DisplayVM(State state, Set_DisplayVM_Action action)
-	{
-		return state with	{	DisplayVM = action.DisplayVM	};
+		if (se is null) return state with { FormVM = null };
+
+		FormVM formVM = new FormVM
+		{
+			Id = se!.Id,
+			ShowBeginDate = se.ShowBeginDate,
+			ShowEndDate = se.ShowEndDate,
+			EventDate = se.EventDate,
+			SpecialEventTypeId = se.SpecialEventTypeId,
+			Title = se.Title,
+			SubTitle = se.SubTitle,
+			ImageUrl = se.ImageUrl,
+			YouTubeId = se.YouTubeId,
+			WebsiteUrl = se.WebsiteUrl,
+			WebsiteDescr = se.WebsiteDescr,
+			Description = se.Description
+		};
+		return state with { FormVM = formVM };
 	}
-	*/
 
 	[ReducerMethod]
 	public static State On_Set_FormVM(State state, Set_FormVM_Action action)
 	{
-		return state with {	FormVM = action.FormVM };
+		return state with { FormVM = action.FormVM };
 	}
 
 
@@ -135,6 +150,7 @@ public static class Reducers
 		};
 	}
 
+
 	[ReducerMethod]
 	public static State OnDisplay(State state, Display_Action action)
 	{
@@ -143,6 +159,7 @@ public static class Reducers
 			VisibleComponent = Enums.VisibleComponent.DisplayCard
 		};
 	}
+
 
 	[ReducerMethod]
 	public static State OnDelete(State state, Delete_Action action)
@@ -271,55 +288,29 @@ public class Effects
 	}
 
 
-	//ToDo: Get_Item_Action should be split into Get_EditItem_Action and Get_DisplayItem_Action
-
 	[EffectMethod]
-	public async Task GetItem(Get_Item_Action action, IDispatcher dispatcher)
+	public async Task GetItem(Get_EditItem_Action action, IDispatcher dispatcher)
 	{
-		string inside = $"{nameof(Effects)}!{nameof(GetItem)};  Action: {nameof(action.FormMode.Name)}; Id: {action.Id}";
+		string inside = $"{nameof(Effects)}!{nameof(GetItem)};  action.Id: {action.Id}";
 
 		Logger.LogDebug(string.Format("Inside {0}", inside));
 		try
 		{
-			Data.vwSpecialEvent? specialEvent = new();
-			specialEvent = await db!.GetEventById(action.Id);
+			FormVM? FormVM = new();
+			FormVM = await db!.GetEventById(action.Id); 
 
-			if (specialEvent is null)
+			if (FormVM is null)
 			{
-				Logger.LogWarning(string.Format("...{0}; {1} is null", inside, nameof(specialEvent)));
+				Logger.LogWarning(string.Format("...{0}; {1} is null", inside, nameof(FormVM)));
 				//dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Warning, $"Special Event Not Found; Id: {action.Id}"));
 				// dispatcher.Dispatch(new Set_FormVM_Action(null)); ToDo: should I make FormVM null?
 			}
 			else
 			{
-				Logger.LogDebug(string.Format("...Title: {0}", specialEvent!.Title));
-				FormVM formVM = new FormVM
-				{
-					Id = specialEvent.Id,
-					ShowBeginDate = specialEvent.ShowBeginDate,
-					ShowEndDate = specialEvent.ShowEndDate,
-					EventDate = specialEvent.EventDate,
-					SpecialEventTypeId = specialEvent.SpecialEventTypeId,
-					Title = specialEvent.Title,
-					SubTitle = specialEvent.SubTitle,
-					ImageUrl = specialEvent.ImageUrl,
-					YouTubeId = specialEvent.YouTubeId,
-					WebsiteUrl = specialEvent.WebsiteUrl,
-					WebsiteDescr = specialEvent.WebsiteDescr,
-					Description = specialEvent.Description
-				};
+				Logger.LogDebug(string.Format("...Title: {0}", FormVM!.Title));
+				dispatcher.Dispatch(new Set_FormVM_Action(FormVM));
+				//dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Info, $"Got {FormVM!.Title!}"));
 
-				dispatcher.Dispatch(new Set_FormVM_Action(formVM));
-				//dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Info, $"Got {formVM!.Title!}"));
-
-				if (action.FormMode == Enums.FormMode.Edit)
-				{
-					dispatcher.Dispatch(new Edit_Action(action.Id));
-				}
-				else
-				{
-					dispatcher.Dispatch(new Display_Action(action.Id));
-				}
 			}
 		}
 		catch (Exception ex)

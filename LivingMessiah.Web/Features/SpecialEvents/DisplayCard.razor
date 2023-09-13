@@ -3,17 +3,19 @@
 
 @inherits Fluxor.Blazor.Web.Components.FluxorComponent
 
-<div class="d-print-none">
-	<div class="row">
-		<div class="col-12 d-flex justify-content-end">
+@if (ShowPrintAnchor)
+{
+	<div class="d-print-none">
+		<div class="row">
+			<div class="col-12 d-flex justify-content-end">
 
-			<a href="javascript:window.print()">
-				<i class="fa fa-print"></i> Print
-			</a>
+				<a href="javascript:window.print()">
+					<i class="fa fa-print"></i> Print
+				</a>
+			</div>
 		</div>
 	</div>
-</div>
-
+}
 
 <div class="card  border-primary my-1">
 
@@ -73,7 +75,7 @@
 
 	<div class="row mt-n2 mb-3">
 		<div class="col-12">
-			<SfRichTextEditor Readonly="true" @bind-Value="@FormVM.Description"> 
+			<SfRichTextEditor Readonly="true" @bind-Value="@FormVM.Description">
 				<RichTextEditorToolbarSettings Enable="false"></RichTextEditorToolbarSettings>
 			</SfRichTextEditor>
 

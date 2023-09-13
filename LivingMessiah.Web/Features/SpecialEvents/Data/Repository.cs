@@ -19,8 +19,8 @@ public interface IRepository
 	string BaseSqlDump { get; }
 
 	Task<List<vwSpecialEvent>> GetEventsByDateRange(DateTimeOffset? dateBegin, DateTimeOffset? dateEnd);
-	Task<vwSpecialEvent?> GetEventById(int id);
-	Task<List<vwSpecialEvent>> GetCurrentEvents();  // ToDo:  NOT REFERENCED 
+	Task<FormVM?> GetEventById(int id);
+	Task<List<FormVM>> GetCurrentEvents();  
 
 	Task<(int NewId, int SprocReturnValue, string ReturnMsg)> CreateSpecialEvent(FormVM formVM);
 	Task<(int Affectedrows, string ReturnMsg)> UpdateSpecialEvent(SpecialEvents.FormVM formVM);
@@ -60,7 +60,6 @@ public class Repository : BaseRepositoryAsync, IRepository
 		Parms.Add("@NewId", dbType: DbType.Int32, direction: ParameterDirection.Output);
 		Parms.Add(ReturnValueParm, dbType: DbType.Int32, direction: ParameterDirection.ReturnValue);
 
-
 		base.Parms.Add("@NewId", dbType: DbType.Int32, direction: ParameterDirection.Output);
 		base.Parms.Add(ReturnValueParm, dbType: DbType.Int32, direction: ParameterDirection.ReturnValue);
 
@@ -74,36 +73,7 @@ public class Repository : BaseRepositoryAsync, IRepository
 				$", {nameof(formVM.Title)}; about to execute SPROC: {base.Sql}");
 			var affectedrows = await connection.ExecuteAsync(
 				sql: Sql, param: base.Parms, commandType: System.Data.CommandType.StoredProcedure);
-
-
-			/*
-			System.Collections.Generic.KeyNotFoundException: The given key 'NewId' was not present in the dictionary.
-			This F***ing thing doesn't work
-			int? x = Parms!.Get<int?>("NewId"); 
-
-
-			if (x == null)
-			{
-				if (sprocReturnValue == ReturnValueViolationInUniqueIndex)
-				{
-					returnMsg = $"Database call did not insert a new record because it caused a Unique Index Violation; registration.EMail: {formVM.Title}; ";
-					base.log.LogWarning($"...returnMsg: {returnMsg}; {Environment.NewLine} {base.Sql}");
-				}
-				else
-				{
-					returnMsg = $"Database call failed; registration.EMail: {formVM.Title}; SprocReturnValue: {sprocReturnValue}";
-					base.log.LogWarning($"...returnMsg: {returnMsg}; {Environment.NewLine} {base.Sql}");
-				}
-			}
-			else
-			{
-				newId = int.TryParse(x.ToString(), out newId) ? newId : 0;
-				returnMsg = $"Special Event created for {formVM.Title}; NewId={newId}";
-				base.log.LogDebug($"...Return newId:{newId}, Affected Rows: {affectedrows}");
-			}
-			*/
-
-			// by passing the crap above.
+			// int? x = Parms!.Get<int?>("NewId");   FN:1
 			returnMsg = $"Special Event created for {formVM.Title}; NewId=YOUR GUESS IS AS GOOD AS MINE";
 			base.log.LogDebug($"...Return newId:{newId}, Affected Rows: {affectedrows}");
 
@@ -160,7 +130,7 @@ public class Repository : BaseRepositoryAsync, IRepository
 		});
 	}
 
-	public async Task<vwSpecialEvent?> GetEventById(int id)
+	public async Task<FormVM?> GetEventById(int id)
 	{
 		base.Parms = new DynamicParameters(new { Id = id });
 
@@ -178,12 +148,12 @@ WHERE Id=@Id
 ";
 		return await WithConnectionAsync(async connection =>
 		{
-			var row = await connection.QueryAsync<vwSpecialEvent>(base.Sql, base.Parms);
+			var row = await connection.QueryAsync<FormVM>(base.Sql, base.Parms);
 			return row.SingleOrDefault();
 		});
 	}
-
-	public async Task<List<vwSpecialEvent>> GetCurrentEvents()  // Models.SpecialEventVM
+	
+	public async Task<List<FormVM>> GetCurrentEvents()  // Models.SpecialEventVM
 	{
 		Sql = $@"
 SELECT
@@ -200,7 +170,7 @@ ORDER BY EventDate
 ";
 		return await WithConnectionAsync(async connection =>
 		{
-			var rows = await connection.QueryAsync<vwSpecialEvent>(sql: Sql);  //Models.SpecialEventVM
+			var rows = await connection.QueryAsync<FormVM>(sql: Sql);  //Models.SpecialEventVM
 			return rows.ToList();
 		});
 	}
@@ -236,3 +206,34 @@ ORDER BY EventDate
 	}
 
 }
+
+
+/*
+# Footnotes
+
+## FN:1
+int? x = Parms!.Get<int?>("NewId");   
+	// Why doesn't this WORK?!
+	// System.Collections.Generic.KeyNotFoundException: The given key 'NewId' was not present in the dictionary.
+
+
+if (x == null)
+{
+	if (sprocReturnValue == ReturnValueViolationInUniqueIndex)
+	{
+		returnMsg = $"Database call did not insert a new record because it caused a Unique Index Violation; registration.EMail: {formVM.Title}; ";
+		base.log.LogWarning($"...returnMsg: {returnMsg}; {Environment.NewLine} {base.Sql}");
+	}
+	else
+	{
+		returnMsg = $"Database call failed; registration.EMail: {formVM.Title}; SprocReturnValue: {sprocReturnValue}";
+		base.log.LogWarning($"...returnMsg: {returnMsg}; {Environment.NewLine} {base.Sql}");
+	}
+}
+else
+{
+	newId = int.TryParse(x.ToString(), out newId) ? newId : 0;
+	returnMsg = $"Special Event created for {formVM.Title}; NewId={newId}";
+	base.log.LogDebug($"...Return newId:{newId}, Affected Rows: {affectedrows}");
+}
+*/
