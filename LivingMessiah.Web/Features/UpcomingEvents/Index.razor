@@ -1,8 +1,6 @@
 ﻿@page "/upcomingevents"
-@using Markdig
-@using Page = LivingMessiah.Web.Links.UpcomingEvents
 
-@using LivingMessiah.Web.Features.SpecialEvents 
+@using Page = LivingMessiah.Web.Links.UpcomingEvents
 @using LivingMessiah.Web.Features.UpcomingEvents.Weekly
 
 <PageTitle>@Page.Title</PageTitle>
@@ -16,10 +14,7 @@
 	<Videos />
 }
 
-@foreach (var item in SpecialEvents)
-{
-	<DisplayCard FormVM="item" />
-}
+<DisplayCardList />
 
 
 
