@@ -115,6 +115,21 @@ public static class WindmillRanchLinks
 	}
 
 
+	public static class NewsLetter
+	{
+		public const string Page = "/Windmillranch/NewsLetter";
+		public const string Title = "Newsletter";
+		public const string Icon = "far fa-newspaper";
+
+		public static class SwaleCarousel
+		{
+			public const string Id = "swale-carousel";
+			public const string Project = "Big Rain Event Analysis";
+			public const string Descr = "Rain event on Sept 13, 2023";
+		}
+
+	}
+
 
 	public static class Support
 	{

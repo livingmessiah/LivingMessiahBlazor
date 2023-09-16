@@ -1,0 +1,54 @@
+﻿@page "/WindmillRanch/NewsLetter"
+@using LivingMessiah.Web.Pages.WindmillRanch.Components
+@using LivingMessiah.Web.SmartEnums
+@using LivingMessiah.Web.Pages.WindmillRanch.Enums
+
+@using Page = LivingMessiah.Web.Pages.WindmillRanch.LinkSmartEnums.WindmillRanchLinks.NewsLetter
+<PageTitle>@Page.Title</PageTitle>
+
+@* <Menubar /> *@
+
+<div class="d-print-none pb-2 mt-4 mb-2 border-bottom">
+	<h1><i class="@Page.Icon"></i> @Page.Title</h1>
+</div>
+
+<h2 id="@Page.SwaleCarousel.Id"><span class="badge bg-warning mt-4"><b>@Page.SwaleCarousel.Project</b></span></h2>
+<h4><span class=""><b>@Page.SwaleCarousel.Descr</b></span></h4>
+
+<div class="@MediaQuery.Xs.DivClass">
+	<NewsLetterCarousel mq="MediaQuery.Xs" />
+</div>
+<div class="@MediaQuery.Sm.DivClass">
+	<NewsLetterCarousel mq="MediaQuery.Sm" />
+</div>
+<div class="@MediaQuery.Md.DivClass">
+	<NewsLetterCarousel mq="MediaQuery.Md" />
+</div>
+<div class="@MediaQuery.Lg.DivClass">
+	<NewsLetterCarousel mq="MediaQuery.Lg" />
+</div>
+<div class="@MediaQuery.Xl.DivClass">
+	<NewsLetterCarousel mq="MediaQuery.Xl" />
+</div>
+
+<h3 class="mt-4 mb-1">Videos</h3>
+@foreach (var item in LivingMessiah.Web.Pages.WindmillRanch.Enums.NewsLetter
+	.List.Where(w => w.IsVideo).OrderBy(o => o.Value).ToList())
+{
+	<div class="card border-primary mb-3">
+		<img src='@Blobs.NewsLetter(item.Image)' alt="@item.Caption" />
+		<div class="card-body">
+			<h5 class="card-title">@item.Caption</h5>
+			<a href="@Blobs.NewsLetter(item.Video)"
+				 class="btn btn-info btn-lg"
+				 target="_blank">
+				<i class="fas fa-video"></i>
+			</a>
+		</div>
+	</div>
+}
+
+@* b 
+https://livingmessiahstorage.blob.core.windows.net/windmill-ranch/2023-09-13-Swale-Report/VID_20230913_0800-SW-End.jpg
+
+*@

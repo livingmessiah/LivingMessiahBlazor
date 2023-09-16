@@ -1,0 +1,15 @@
+﻿.img-container {
+	height: 100%;
+	margin: 0;
+}
+
+.img-caption {
+	color: #fff !important;
+	font-size: 1rem;
+	left: 1rem;
+	position: absolute;
+	bottom: 4rem;
+	margin-right: 1rem;
+	text-align: center;
+}
+
