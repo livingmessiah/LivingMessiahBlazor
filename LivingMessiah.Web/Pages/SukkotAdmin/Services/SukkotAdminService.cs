@@ -5,7 +5,6 @@ using Microsoft.Extensions.Logging;
 
 using LivingMessiah.Web.Pages.Sukkot.Domain;
 using LivingMessiah.Web.Pages.SukkotAdmin.Data;
-using LivingMessiah.Web.Pages.SukkotAdmin.RegistrationNotes.Domain;
 using LivingMessiah.Web.Services;
 
 namespace LivingMessiah.Web.Pages.SukkotAdmin.Services;
@@ -14,7 +13,6 @@ public interface ISukkotAdminService
 {
 	string UserInterfaceMessage { get; set; }
 	Task<List<vwRegistration>> GetAll(EnumsOld.RegistrationSortEnum sort, bool isAscending);
-	Task<List<Notes>> GetNotes(EnumsOld.RegistrationSortEnum sort);
 }
 
 public class SukkotAdminService : ISukkotAdminService
@@ -52,26 +50,6 @@ public class SukkotAdminService : ISukkotAdminService
 			LogExceptionMessage = $"Inside {nameof(SukkotAdminService)}!{nameof(GetAll)}, db.{nameof(db.GetAll)}";
 			Logger.LogError(ex, LogExceptionMessage, registrationSortEnum);
 			UserInterfaceMessage += "An invalid operation occurred getting list of registrations, contact your administrator";
-			throw new InvalidOperationException(UserInterfaceMessage);
-		}
-		return vm;
-	}
-
-	public async Task<List<Notes>> GetNotes(EnumsOld.RegistrationSortEnum registrationSortEnum)
-	{
-		Logger.LogDebug(string.Format("Inside {0} registrationSortEnum:{1}"
-			, nameof(SukkotAdminService) + "!" + nameof(GetNotes), registrationSortEnum));
-		
-		var vm = new List<Notes>();
-		try
-		{
-			vm = await db.GetNotes(registrationSortEnum);
-		}
-		catch (Exception ex)
-		{
-			LogExceptionMessage = $"Inside {nameof(SukkotAdminService)}, db.{nameof(db.GetNotes)}";
-			Logger.LogError(ex, LogExceptionMessage);
-			UserInterfaceMessage = "An invalid operation occurred getting registration notes, contact your administrator";
 			throw new InvalidOperationException(UserInterfaceMessage);
 		}
 		return vm;

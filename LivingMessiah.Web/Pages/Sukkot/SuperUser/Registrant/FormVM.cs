@@ -23,5 +23,7 @@ public class FormVM
 	public DateTime[]? AttendanceDateList2ndMonth { get; set; }
 
 	public string? Notes { get; set; }
+	public string? AdminNotes { get; set; }
+	public bool DidNotAttend { get; set; }
 	public Decimal LmmDonation { get; set; }
 }

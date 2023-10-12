@@ -7,151 +7,46 @@
 	<SukkotAdminMenubar></SukkotAdminMenubar>
 </AuthorizeView>
 
-@using Page = LivingMessiah.Web.Links.Sukkot
-<PageTitle>@Page.NotesTitle</PageTitle>
-
-<div class="d-print-none">
-	<a class="btn btn-sm btn-default float-end" href="javascript:window.print()">
-		<span class="fa fa-print"></span> Print
-	</a>
-</div>
-
-<div class="pb-2 mt-4 mb-2 border-bottom">
-	<h3> <span class="text-warning"><i class="fa fa-sticky-note"></i></span> @Page.NotesTitle</h3>
-	<div class="d-print-none">
-		<h5 class="text-muted">
-			Sorted by @MySort.Name
-		</h5>
-	</div>
-
-</div>
+@using Page = LivingMessiah.Web.Links.Sukkot.Notes
+<PageTitle>@Page.Title</PageTitle>
 
 
-<div class="d-print-none">
-	<div class="row">
 
-		@if (MySort.RegistrationSortEnum == EnumsOld.RegistrationSortEnum.LastName)
-		{
-			<div class="col-12">
+<AuthorizeView>
+	<Authorized>
+
+		<div class="d-print-none">
+			<a class="btn btn-sm btn-default float-end" href="javascript:window.print()">
+				<span class="fa fa-print"></span> Print
+			</a>
+		</div>
+
+		<div class="pb-2 mt-4 mb-2 border-bottom">
+			<h3> <span class="text-warning"><i class="fa fa-sticky-note"></i></span> @Page.Title</h3>
+		</div>
+
+		<Filter OnFilterSelected="@ReturnedFilter" />
+
+		<Card CurrentFilter="@currentFilter" />
+
+	</Authorized>
+	<NotAuthorized>
+		<div class="card border-warning my-5">
+			<div class="card-header">Not Authorized</div>
+			<div class="card-body">
+				<h5 class="">To view <b>@Page.Title</b> you need to be logged in.</h5>
+				<LoginRedirectButton ReturnUrl="@Page.Index" />
 			</div>
-		}
-		else
-		{
-			<div class="col-12">
-			</div>
-		}
-	</div>
-</div>
+		</div>
+	</NotAuthorized>
+</AuthorizeView>
 
-<LoadingComponent IsLoading="NotesList == null">
+@code{
+	protected Enums.NotesFilter currentFilter = Enums.NotesFilter.Admin;
 
-	@if (!NotesList!.Any())
+	private async Task ReturnedFilter(Enums.NotesFilter filter)
 	{
-		<h3 class="text-danger">No Registrations that have notes yet</h3>
+		await Task.Delay(0);
+		currentFilter = filter;
 	}
-	else
-	{
-		@foreach (var item in NotesList!)
-		{
-			rowCount += 1;
-
-			if (MySort.RegistrationSortEnum == EnumsOld.RegistrationSortEnum.LastName)
-			{
-				<div class="row">
-					<div class="col-6">
-						<p class="size14">
-							<b>@item.FirstName @item.FamilyName</b>
-
-							@*<a title="Registration View"
-									 asp-page="@LivingMessiah.Web.Pages.Anchors.Sukkot.Details" asp-route-id="@item.Id">
-									<sup><u>@item.Id</u></sup>
-								</a>*@
-
-						</p>
-					</div>
-
-					<div class="col-6">
-
-						<div class="d-block d-sm-none">
-							<a href="mailto:@item.EMail" title="@item.EMail"><i class="far fa-envelope"></i></a>
-							&nbsp;
-							@if (!string.IsNullOrEmpty(item.Phone))
-							{
-								<a href="tel:@item.Phone" title="@item.Phone"><i class="fa fa-phone"></i></a>
-							}
-						</div>
-
-						<div class="d-none d-sm-block">
-							<div class="row">
-								<div class="col-4">
-									<i class="fa fa-phone"></i> @item.Phone
-								</div>
-								<div class="col-8">
-									<i class="far fa-envelope"></i> @item.EMail
-								</div>
-							</div>
-
-						</div>
-
-					</div>
-
-				</div>
-
-			}
-			else
-			{
-				<div class="row">
-					<div class="col-6">
-						<p class="size14">
-
-							@*<a title="Registration View"
-									 asp-page="@LivingMessiah.Web.Pages.Anchors.Sukkot.Details"
-									 asp-route-id="@item.Id">
-									<b><u>@item.Id</u></b>
-								</a>*@
-
-							@item.FirstName @item.FamilyName
-						</p>
-					</div>
-
-					<div class="col-6">
-
-						<div class="d-block d-sm-none">
-							<a href="mailto:@item.EMail" title="@item.EMail"><i class="far fa-envelope"></i></a>
-							&nbsp;
-							@if (!string.IsNullOrEmpty(item.Phone))
-							{
-								<a href="tel:@item.Phone" title="@item.Phone"><i class="fa fa-phone"></i></a>
-							}
-						</div>
-
-						<div class="d-none d-sm-block">
-							<div class="row">
-								<div class="col-4">
-									<i class="fa fa-phone"></i> @item.Phone
-								</div>
-								<div class="col-8">
-									<i class="far fa-envelope"></i> @item.EMail
-								</div>
-							</div>
-
-						</div>
-
-					</div>
-				</div>
-			}
-
-			<div class="row">
-				<div class="col-1">
-					&nbsp;
-				</div>
-
-				<div class="col-11">
-					@item.UserNotes
-				</div>
-			</div>
-			<hr />
-		}
-	}
-
-</LoadingComponent>
+}

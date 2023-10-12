@@ -1,0 +1,41 @@
+﻿@using LivingMessiah.Web.Pages.SukkotAdmin.RegistrationNotes.Enums
+@using Microsoft.Extensions.Logging;
+
+@inject ILogger<Filter>? Logger
+
+<div class="d-print-none mb-2">
+
+	@foreach (var item in NotesFilter.List.OrderBy(o => o.Value))
+	{
+		<a @onclick="@(() => OnButtonClicked(item))" title="Filter by @item.Name"
+			 class="btn btn-outline-primary btn-sm @ActiveFilter(item)">
+			@item.Name &nbsp;<i class="fas fa-chevron-circle-right"></i>
+		</a>
+	}
+
+</div>
+
+@code {
+	[Parameter] public EventCallback<NotesFilter> OnFilterSelected { get; set; }
+	public NotesFilter CurrentFilter { get; set; } = NotesFilter.Admin;
+
+	private void OnButtonClicked(NotesFilter filter)
+	{
+		Logger!.LogInformation($"Inside {nameof(Filter)}; filter: {filter.Name}");
+		CurrentFilter = filter;
+		OnFilterSelected.InvokeAsync(filter);
+	}
+
+	public string ActiveFilter(NotesFilter filter)
+	{
+		if (filter == CurrentFilter)
+		{
+			return "active";
+		}
+		else
+		{
+			return "";
+		}
+	}
+
+}

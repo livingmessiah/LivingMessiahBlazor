@@ -158,12 +158,30 @@
 
 	</fieldset>
 
+
 	<fieldset class="mt-3">
-		<legend class="text-primary">Status</legend>
+		<legend class="text-warning">Admin</legend>
+		<div class="row mt-n2">
+			<div class="col-sm-12">
+				<div class="mb-3">
+					<label for="adminnotes" class="control-label"><small>Admin Notes</small></label>
+					<InputTextArea id="adminnotes" class="form-control" @bind-Value="VM.AdminNotes" />
+					<ValidationMessage For="@(() => VM.AdminNotes)" />
+
+				</div>
+			</div>
+		</div>
+
+	</fieldset>
+
+
+
+	<fieldset class="mt-3">
+		<legend class="text-warning">Status</legend>
 
 		<div class="row mt-n2">
 
-			<div class="col-sm-12">
+			<div class="col-sm-6">
 				<label for="statusEnum" class="control-label">Status Type</label>
 				<InputSelect id="type" @bind-Value="VM.StatusId" class="form-control">
 					@foreach (var item in Sukkot.RegistrationSteps.Enums.Status
@@ -175,6 +193,17 @@
 					}
 				</InputSelect>
 				<ValidationMessage For="@(() => VM.StatusId)" />
+			</div>
+
+			<div class="col-sm-6">
+				<div class="mb-3">
+
+					<div class="form-group form-check">
+						<label for="didNotAttend" class="control-label">Did Not Attend</label>
+						<InputCheckbox @bind-Value="VM.DidNotAttend" id="didNotAttend" />
+					</div>
+
+				</div>
 			</div>
 
 		</div>

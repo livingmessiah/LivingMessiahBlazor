@@ -1,0 +1,35 @@
+﻿
+<LoadingComponent IsLoading="NotesList == null" TurnSpinnerOff="@TurnSpinnerOff">
+
+	@if (!NotesList!.Any())
+	{
+		<h3 class="text-danger">No Registrations that have notes yet</h3>
+	}
+	else
+	{
+		@foreach (var item in NotesList!)
+		{
+			<div class="card text-dark bg-light mb-3">
+
+
+				<div class="card-header">
+
+					<div class="container d-flex justify-content-between">
+						<p><b>@item.FirstName @item.FamilyName</b></p>
+						<p><b>@item.Phone</b></p>
+						<p><b>@item.EMail</b></p>
+					</div>
+
+				</div>
+
+				<div class="card-body @CurrentFilter.CssBgColor">
+					<p class="card-text ms-5">@item.AdminOrUserNotes </p>
+				</div>
+
+
+
+			</div>
+		}
+	}
+
+</LoadingComponent>

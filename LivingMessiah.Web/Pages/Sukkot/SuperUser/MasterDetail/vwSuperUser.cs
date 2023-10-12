@@ -1,4 +1,5 @@
-﻿using LivingMessiah.Web.Pages.Sukkot.Constants;
+﻿using LivingMessiah.Web.Infrastructure;
+using LivingMessiah.Web.Pages.Sukkot.Constants;
 using LivingMessiah.Web.Pages.Sukkot.RegistrationSteps.Enums;
 using System;
 
@@ -35,6 +36,15 @@ public class vwSuperUser
 		get
 		{
 			return $"{Status.FromValue(StatusId).StepNumber}. {Status.FromValue(StatusId).Text}";
+		}
+	}
+
+	public bool DidNotAttend { get; set; }
+	public string NoShow
+	{
+		get
+		{
+			return DidNotAttend ? "✓" : ""; 
 		}
 	}
 
@@ -120,7 +130,18 @@ public class vwSuperUser
 
 
 	public string? Phone { get; set; }
-	public string? Notes { get; set; }
+	public string? Notes { get; set; } 
+	public string? AdminNotes { get; set; }
+
+
+	public string AdminNotesShort
+	{
+		get
+		{
+			return String.IsNullOrEmpty(AdminNotes) == true ? "" : AdminNotes!.Truncate(25); 
+		}
+	}
+
 	public int IdHra { get; set; }
 
 }

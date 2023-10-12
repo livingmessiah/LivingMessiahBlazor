@@ -28,10 +28,6 @@ public class FormVMValidator : AbstractValidator<FormVM>
 					.GreaterThanOrEqualTo(1).WithMessage("Number of adults must be greater than 1")
 					.LessThan(20).WithMessage("Number of adults cannot be greater than 20");
 
-			/*
-			RuleFor(p => p.StatusId)
-					.NotNull().WithMessage("You must select a Status Id");
-			*/
 		}
 
 	}

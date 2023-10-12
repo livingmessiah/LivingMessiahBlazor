@@ -522,6 +522,13 @@ public static class Sukkot
 		public const string Icon = "fas fa-mask";
 	}
 
+	public static class Notes
+	{
+		public const string Index = "/SukkotAdmin/Notes";
+		public const string Title = "Sukkot Registration Notes";
+		public const string IconText = "Notes";
+		//public const string Icon = "fas fa-mask";
+	}
 
 	public const LivingMessiah.Web.Pages.KeyDates.Enums.FeastDayEnum FeastDay = LivingMessiah.Web.Pages.KeyDates.Enums.FeastDayEnum.Tabernacles;
 	public const string Index = "/Sukkot";
@@ -538,10 +545,6 @@ public static class Sukkot
 
 	public const string RegistrationList = "/SukkotAdmin/RegistrationList";
 	public const string RegistrationListTitle = "Sukkot Admin Registration List";
-
-
-	public const string Notes = "/SukkotAdmin/Notes";
-	public const string NotesTitle = "Sukkot Admin Registration Notes";
 
 	public const string AttendanceAllFeastDays = "/SukkotAdmin/AttendanceAllFeastDays";
 	public const string AttendanceChart = "/SukkotAdmin/AttendanceChart";

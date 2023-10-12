@@ -28,12 +28,33 @@
 
 			</div>
 
+			@if (!String.IsNullOrEmpty(item.AdminNotes))
+			{
+				<div class="card-body bg-warning">
+					<div class="row">
+						<div class="col-3 text-end"><b>Admin Notes</b>: </div>
+						<div class="col-9 text-start">@item.AdminNotes</div>
+					</div>
+				</div>
+			}
+
+
+
 			<div class="card-body">
+
 				@if (!String.IsNullOrEmpty(item.Notes))
 				{
 					<div class="row">
 						<div class="col-3 text-end"><b>Notes</b>: </div>
 						<div class="col-9 text-start">@item.Notes</div>
+					</div>
+				}
+
+				@if (item.DidNotAttend)
+				{
+					<div class="row">
+						<div class="col-3 text-end"><b>Did Not Attend</b>: </div>
+						<div class="col-9 text-start">@item.NoShow</div>
 					</div>
 				}
 
@@ -51,11 +72,11 @@
 
 				<div class="d-grid gap-1 d-flex justify-content-end">
 					<ActionButtonGroup IdHra="@item.IdHra"
-													 Id="@item.Id"
-													 EMail="@item.EMail"
-													 FullName="@item.FullName"
-													 DonationRowCount="@item.DonationRowCount"
-													 StatusId="@item.StatusId" />
+														 Id="@item.Id"
+														 EMail="@item.EMail"
+														 FullName="@item.FullName"
+														 DonationRowCount="@item.DonationRowCount"
+														 StatusId="@item.StatusId" />
 				</div>
 			</div>
 

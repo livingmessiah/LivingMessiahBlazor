@@ -68,7 +68,7 @@ public class Repository : BaseRepositoryAsync, IRepository
 	public async Task<List<vwSuperUser>> GetAll()
 	{
 		Sql = $@"
-SELECT Id, EMail, FullName, StatusId, Phone, Notes
+SELECT Id, EMail, FullName, StatusId, Phone, Notes, AdminNotes, DidNotAttend
 , TotalDonation, DonationRowCount
 , IdHra
 FROM Sukkot.vwSuperUser 
@@ -91,7 +91,7 @@ Id, FamilyName, FirstName, SpouseName, OtherNames
 , EMail, Phone, Adults, ChildBig, ChildSmall
 , StatusId
 , AttendanceBitwise
-, Notes
+, Notes, AdminNotes, DidNotAttend
 , LmmDonation
 FROM Sukkot.Registration
 WHERE Id = @Id";
@@ -130,6 +130,8 @@ WHERE Id = @Id";
 			AttendanceBitwise = Enums.Helper.GetDaysBitwise(formVM.AttendanceDateList!, formVM.AttendanceDateList2ndMonth!, DateRangeType.Attendance),
 			LmmDonation = 0,
 			formVM.Notes,
+			formVM.AdminNotes,
+			formVM.DidNotAttend,
 			Avatar = string.Empty
 		});
 
@@ -193,6 +195,8 @@ WHERE Id = @Id";
 			formVM.StatusId,
 			formVM.LmmDonation,
 			Notes = LivingMessiah.Web.Data.Helper.Scrub(formVM.Notes),
+			AdminNotes = LivingMessiah.Web.Data.Helper.Scrub(formVM.AdminNotes),
+			formVM.DidNotAttend,
 			Avatar = string.Empty
 		});
 
@@ -207,6 +211,12 @@ WHERE Id = @Id";
 		{
 			string inside = $"{nameof(Repository)}!{nameof(UpdateRegistration)}, Id: {formVM.Id}; Email: {formVM.EMail}; about to execute SPROC: {Sql}";
 			log.LogDebug(string.Format("Inside {0}", inside));
+
+			log!.LogWarning($" Notes: {formVM.Notes}");
+			log!.LogWarning($" AdminNotes: {formVM.AdminNotes}");
+			log!.LogWarning($" DidNotAttend: {formVM.DidNotAttend}");
+
+
 			RowsAffected = await connection.ExecuteAsync(sql: Sql, param: Parms, commandType: CommandType.StoredProcedure);
 			SprocReturnValue = Parms.Get<int>("ReturnValue");
 

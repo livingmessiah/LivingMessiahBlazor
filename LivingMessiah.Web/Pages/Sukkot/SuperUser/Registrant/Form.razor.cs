@@ -35,6 +35,7 @@ public partial class Form
 	{
 		Logger!.LogDebug(string.Format("Inside {0}, FormMode: {1}"
 			, nameof(Form) + "!" + nameof(HandleValidSubmit), State!.Value.FormMode!.Name));
+
 		Dispatcher!.Dispatch(new AddOrEdit_Action(State!.Value.FormVM!, State!.Value.FormMode!));
 		Dispatcher!.Dispatch(new MasterDetail.GetAll_Action());
 		Dispatcher!.Dispatch(new ParentState.Set_PageHeader_For_Index_Action(SuperUser.Constants.GetPageHeaderForIndexVM()));
