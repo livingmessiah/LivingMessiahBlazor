@@ -10,9 +10,7 @@
 @using Page = LivingMessiah.Web.Links.Sukkot.Notes
 <PageTitle>@Page.Title</PageTitle>
 
-
-
-<AuthorizeView>
+<AuthorizeView Roles="@Roles.AdminOrSukkot">
 	<Authorized>
 
 		<div class="d-print-none">
