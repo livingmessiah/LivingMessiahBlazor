@@ -77,10 +77,9 @@ public abstract class Nav : SmartEnum<Nav>
 	private sealed class SukkotSE : Nav
 	{
 		public SukkotSE() : base($"{nameof(Id.Sukkot)}", Id.Sukkot) { }
-		public override string Index => "Sukkot/SuperUser";
-		public override string Text => "Super User Registration";
-		public override string Icon => "fas fa-mask";
-		//public const string IconText = "Super User";
+		public override string Index => Links.Sukkot.SuperUser.Index;
+		public override string Text => Links.Sukkot.SuperUser.Title;
+		public override string Icon => Links.Sukkot.SuperUser.Icon;
 		public override string Role => "sukkot";  //AdminOrSukkotOrElder
 		public override int Sort => 4;
 	}

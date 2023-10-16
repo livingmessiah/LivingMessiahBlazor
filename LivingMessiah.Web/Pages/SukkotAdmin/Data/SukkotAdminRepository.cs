@@ -6,12 +6,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
 using LivingMessiah.Web.Pages.SukkotAdmin.Attendance.Domain;
-using LivingMessiah.Web.Pages.SukkotAdmin.RegistrationNotes.Domain;
 using LivingMessiah.Web.Pages.Sukkot.Domain;
 
 using LivingMessiah.Web.Data;
 using DataEnumsDatabase = LivingMessiah.Web.Data.Enums.Database;
 using NotesEnum = LivingMessiah.Web.Pages.SukkotAdmin.RegistrationNotes.Enums.NotesFilter;
+using LivingMessiah.Web.Pages.SukkotAdmin.RegistrationNotes;
 
 namespace LivingMessiah.Web.Pages.SukkotAdmin.Data;
 
@@ -19,7 +19,6 @@ public interface ISukkotAdminRepository
 {
 	Task<List<vwRegistration>> GetAll(EnumsOld.RegistrationSortEnum sort, bool isAscending);
 	Task<List<Notes>> GetAdminOrUserNotes(NotesEnum filter);
-
 
 	Task<List<vwAttendanceAllFeastDays>> GetAttendanceAllFeastDays();
 	Task<vwAttendancePeopleSummary> GetAttendancePeopleSummary();
@@ -74,24 +73,12 @@ ORDER BY {sortField}
 
 	public async Task<List<Notes>> GetAdminOrUserNotes(NotesEnum filter) 
 	{
-		if (filter==NotesEnum.Admin)
-		{
-			base.Sql = $@"
-SELECT TOP 500 Id, FirstName, FamilyName, AdminNotes AS AdminOrUserNotes, Phone, EMail
+		base.Sql = $@"
+SELECT TOP 500 Id, FirstName, FamilyName, AdminNotes, Notes AS UserNotes, Phone, EMail
 FROM Sukkot.vwRegistration
-WHERE AdminNotes IS NOT NULL AND TRIM(AdminNotes) <> ''
-ORDER BY FamilyName
+{filter.SqlWhere}
+{filter.SqlOrder}
 ";
-		}
-		else
-		{
-			base.Sql = $@"
-SELECT TOP 500 Id, FirstName, FamilyName, Notes AdminOrUserNotes, Phone, EMail
-FROM Sukkot.vwRegistration
-WHERE Notes IS NOT NULL AND TRIM(Notes) <> ''
-ORDER BY FamilyName
-";
-		}
 
 		return await WithConnectionAsync(async connection =>
 		{
@@ -99,7 +86,6 @@ ORDER BY FamilyName
 			return rows.ToList();
 		});
 	}
-
 
 	public async Task<List<vwAttendanceAllFeastDays>> GetAttendanceAllFeastDays()
 	{

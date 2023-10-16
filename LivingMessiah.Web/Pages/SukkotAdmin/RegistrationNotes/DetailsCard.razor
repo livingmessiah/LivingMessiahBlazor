@@ -1,0 +1,81 @@
+﻿@using Microsoft.Extensions.Logging
+@using Page = LivingMessiah.Web.Links.Sukkot.Notes
+@inject ILogger<DetailsCard>? Logger
+@inject NavigationManager? NavigationManager
+
+@if (CurrentNotes is not null)
+{
+	<div class="card text-dark bg-light my-4">
+		<div class="card-header">
+
+			<div class="container d-flex justify-content-between">
+				<p><b>@CurrentNotes.FirstName @CurrentNotes.FamilyName</b></p>
+				<p>
+					<a href="tel:@CurrentNotes.Phone" title="@CurrentNotes.PhoneNumber">@CurrentNotes.PhoneNumber</a>&nbsp;<i class="fa fa-phone"></i>
+				</p>
+				<p>
+					<a href="mailto:@CurrentNotes.EMail" title="@CurrentNotes.EMail">@CurrentNotes.EMail</a>&nbsp;<i class="far fa-envelope"></i>
+				</p>
+			</div>
+
+		</div>
+
+		<div class="row">
+			<div class="col-sm-6">
+
+
+				@if (!String.IsNullOrEmpty(CurrentNotes.AdminNotes))
+				{
+					<div class="card-body @Enums.NotesFilter.Admin.CssBgColor">
+						<h4 class="mb-1"><b>Admin Notes</b></h4>
+						<p class="card-text">@CurrentNotes.AdminNotes </p>
+					</div>
+				}
+			</div>
+			<div class="col-sm-6">
+				@if (!String.IsNullOrEmpty(CurrentNotes.UserNotes))
+				{
+					<div class="card-body @Enums.NotesFilter.User.CssBgColor">
+						<h4 class="mb-1"><b>User Notes</b></h4>
+						<p class="card-text">@CurrentNotes.UserNotes </p>
+					</div>
+				}
+			</div>
+		</div>
+
+		<div class="d-print-none">
+			<div class="card-footer text-center">
+
+				<button @onclick="Close"
+								class="btn-primary btn">
+					Close <i class='fas fa-times'></i>
+				</button>
+			</div>
+		</div>
+
+	</div>
+
+}
+
+@code {
+
+	[Parameter, EditorRequired] public required Notes SelectedNote { get; set; }
+
+	protected Notes? CurrentNotes { get; set; }
+
+	protected override void OnParametersSet()
+	{
+		if (SelectedNote != null)
+		{
+			Logger!.LogDebug(string.Format("Inside {0}, SelectedNote.FamilyName: {1}"
+				, nameof(DetailsCard) + "!" + nameof(OnParametersSet), SelectedNote.FamilyName));
+
+			CurrentNotes = SelectedNote;
+		}
+	}
+
+	void Close()
+	{
+		NavigationManager!.NavigateTo($"{Page.Index}", true);  //?returnUrl={returnUrl}
+	}
+}

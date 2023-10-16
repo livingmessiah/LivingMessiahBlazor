@@ -23,9 +23,26 @@
 			<h3> <span class="text-warning"><i class="fa fa-sticky-note"></i></span> @Page.Title</h3>
 		</div>
 
-		<Filter OnFilterSelected="@ReturnedFilter" />
 
+
+		<div class="row">
+			<div class="col-sm-6">
+				<TypeaheadEditForm OnNoteSelected="@ReturnedNote" />
+			</div>
+			<div class="col-sm-6">
+				<Filter OnFilterSelected="@ReturnedFilter" ShowDetailCard=showDetailCard />
+			</div>
+		</div>
+
+		@if (showDetailCard)
+		{
+		<DetailsCard SelectedNote="currentNote" />
+		}
+		else
+		{
 		<Card CurrentFilter="@currentFilter" />
+		}
+
 
 	</Authorized>
 	<NotAuthorized>
@@ -39,12 +56,22 @@
 	</NotAuthorized>
 </AuthorizeView>
 
-@code{
-	protected Enums.NotesFilter currentFilter = Enums.NotesFilter.Admin;
+@code {
+	protected Enums.NotesFilter currentFilter = Enums.NotesFilter.All;
 
 	private async Task ReturnedFilter(Enums.NotesFilter filter)
 	{
 		await Task.Delay(0);
 		currentFilter = filter;
+	}
+
+	protected Notes? currentNote = default;
+	protected bool showDetailCard = false;
+
+	private async Task ReturnedNote(ReturnArgs returnArgs)
+	{
+		await Task.Delay(0);
+		currentNote = returnArgs.DetailNote;
+		showDetailCard = returnArgs.ShowDetailCard;
 	}
 }

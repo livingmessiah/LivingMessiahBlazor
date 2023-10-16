@@ -4,9 +4,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 using System.Collections.Generic;
-using System.Linq;
 using System;
-using LivingMessiah.Web.Enums;
 
 namespace LivingMessiah.Web.Pages.SukkotAdmin.RegistrationNotes;
 
@@ -18,7 +16,7 @@ public partial class Card
 
 	public const string ResponseMessageFailure = "An invalid operation occurred, contact your administrator";
 
-	protected List<Domain.Notes>? NotesList { get; set; }
+	protected List<Notes>? NotesList { get; set; }
 
 	[Parameter, EditorRequired] public required Enums.NotesFilter CurrentFilter { get; set; }
 
@@ -53,29 +51,4 @@ public partial class Card
 
 	}
 
-
-
-	#region Typeahead
-	
-	/*
-	private SearchValidation TypeaheadVM = new SearchValidation();
-
-	private void HandleFormSubmit()  // Used only by Form
-	{
-		// ToDo: maybe log books searched?
-	}
-
-	private async Task<IEnumerable<Domain.Notes>> SearchNotes(string searchText)
-	{
-		return await Task.FromResult(NotesList
-			.Where(x => x.FirstName.ToLower().Contains(searchText.ToLower()))
-			.OrderBy(o => o.FirstName));
-	}
-
-	public class SearchValidation
-	{
-		public string Name { get; set; }
-	}
-	*/
-	#endregion
 }

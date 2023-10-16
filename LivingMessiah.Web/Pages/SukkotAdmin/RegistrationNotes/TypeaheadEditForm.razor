@@ -1,0 +1,88 @@
+﻿@using System.Linq
+@using Microsoft.Extensions.Logging;
+@using LivingMessiah.Web.Pages.SukkotAdmin.Data
+
+@inject ILogger<TypeaheadEditForm>? Logger
+@inject ISukkotAdminRepository? db
+
+@*
+	[Inject] public IToastService? Toast { get; set; }
+ *@
+<div class="d-print-none">
+	<EditForm class="d-flex my-2" Model="TypeaheadEditFormVM"
+						OnValidSubmit="HandleFormSubmit">
+
+		<BlazoredTypeahead SearchMethod="SearchNotes"
+		@bind-Value="TypeaheadEditFormVM.SelectedNote"
+											 EnableDropDown="true"
+											 MaximumSuggestions="@MaxSug"
+											 MinimumLength="@MinLen"
+											 placeholder="Search name...">
+			<SelectedTemplate Context="contextNotes">
+				@contextNotes!.FirstName @contextNotes!.FamilyName
+			</SelectedTemplate>
+			<HelpTemplate>@HelpMsg</HelpTemplate>
+			<ResultTemplate Context="contextNotes">
+				@contextNotes.FirstName @contextNotes.FamilyName
+			</ResultTemplate>
+		</BlazoredTypeahead>
+		<ValidationMessage For="@(() => TypeaheadEditFormVM.SelectedNote)" />
+		<button class="btn btn-outline-primary btn-sm ms-1 me-2" type="submit"><i class="fas fa-search"></i></button>
+	</EditForm>
+</div>
+
+@code {
+
+	[Parameter] public EventCallback<ReturnArgs> OnNoteSelected { get; set; }
+
+	private TypeaheadEditFormVM TypeaheadEditFormVM = new TypeaheadEditFormVM();
+	protected List<Notes>? NotesList { get; set; }
+
+	protected override async Task OnParametersSetAsync()
+	{
+		Logger!.LogDebug(string.Format("Inside {0}", nameof(TypeaheadEditForm) + "!" + nameof(OnParametersSetAsync)));
+		try
+		{
+			NotesList = await db!.GetAdminOrUserNotes(Enums.NotesFilter.All);
+		}
+		catch (Exception ex)
+		{
+			Logger!.LogError(ex, string.Format("...Inside catch of {0}"
+				, nameof(Card) + "!" + nameof(OnParametersSetAsync)));
+			// Toast!.ShowError(ResponseMessageFailure);
+		}
+		// finally
+		// {
+		// 	TurnSpinnerOff = true;
+		// }
+	}
+
+	private async Task<IEnumerable<Notes>> SearchNotes(string searchText)
+	{
+		return await Task.FromResult(NotesList
+			.Where(x => x.FirstName.ToLower().Contains(searchText.ToLower()))
+			.OrderBy(o => o.FirstName));
+	}
+
+	private void HandleFormSubmit()
+	{
+		if (TypeaheadEditFormVM.SelectedNote is not null)
+		{
+			ReturnArgs args = new ReturnArgs
+				{
+					ShowDetailCard = true,
+					DetailNote = TypeaheadEditFormVM.SelectedNote
+				};
+			OnNoteSelected.InvokeAsync(args);
+		}
+		else
+		{
+			Logger!.LogInformation($"...{nameof(TypeaheadEditFormVM.SelectedNote)} is null");
+		}
+	}
+
+	private const int MinLen = 2;
+	private const int MaxSug = 5;
+	private string? HelpMsg = $"Please enter at least {MinLen} characters to perform a search.";
+
+}

@@ -1,26 +1,5 @@
-﻿@* 
-<EditForm class="d-flex" Model="TypeaheadVM" OnValidSubmit="HandleFormSubmit">
+﻿
 
-	<BlazoredTypeahead SearchMethod="SearchNotes"
-	@bind-Value="TypeaheadVM.Name"
-										 EnableDropDown="true"
-										 MaximumSuggestions="10"
-										 MinimumLength="2"
-										 placeholder="Search name...">
-		<SelectedTemplate Context="mycontext">
-			@mycontext.Name
-		</SelectedTemplate>
-		<HelpTemplate>
-			Please enter at least 2 characters to perform a search.
-		</HelpTemplate>
-		<ResultTemplate Context="mycontext">
-			@mycontext.FirstName  &nbsp; @mycontext.FamilyName
-		</ResultTemplate>
-	</BlazoredTypeahead>
-	 <ValidationMessage For="@(() => TypeaheadVM.SelectedBook)" /> 
-	<button class="btn btn-outline-primary btn-sm ms-1 me-2" type="submit"><i class="fas fa-search"></i></button>
-</EditForm>
- *@
 <LoadingComponent IsLoading="NotesList == null" TurnSpinnerOff="@TurnSpinnerOff">
 
 	@if (!NotesList!.Any())
@@ -29,6 +8,14 @@
 	}
 	else
 	{
+		<div class="row">
+			<div class="col-12">
+				<p class="text-black-50 float-end mt-3 mb-1"><small>Row Count: <b>@NotesList!.Count()</b></small></p>
+			</div>
+		</div>
+
+		
+
 		@foreach (var item in NotesList!)
 		{
 			<div class="card text-dark bg-light mb-3">
@@ -48,11 +35,55 @@
 
 				</div>
 
-				<div class="card-body @CurrentFilter.CssBgColor">
-					<p class="card-text ms-5">@item.AdminOrUserNotes </p>
-				</div>
+
+				@if (CurrentFilter == Enums.NotesFilter.All)
+				{
+					<div class="row">
+						<div class="col-sm-6">
+
+							@if (!String.IsNullOrEmpty(item.AdminNotes))
+							{
+								<div class="card-body @Enums.NotesFilter.Admin.CssBgColor">
+									@* <h4 class="mb-1"><b>Admin Notes</b></h4> *@
+									<p class="card-text">@item.AdminNotes </p>
+								</div>
+							}
+						</div>
+						<div class="col-sm-6">
+							@if (!String.IsNullOrEmpty(item.UserNotes))
+							{
+								<div class="card-body @Enums.NotesFilter.User.CssBgColor">
+									@* <h4 class="mb-1"><b>User Notes</b></h4> *@
+									<p class="card-text">@item.UserNotes </p>
+								</div>
+							}
+						</div>
+					</div>
+				}
+				else
+				{
+					@if (!String.IsNullOrEmpty(item.AdminNotes))
+					{
+						<div class="card-body @Enums.NotesFilter.Admin.CssBgColor">
+							<p class="card-text ms-5">@item.AdminNotes </p>
+						</div>
+					}
+
+					@if (!String.IsNullOrEmpty(item.UserNotes))
+					{
+						<div class="card-body @Enums.NotesFilter.User.CssBgColor">
+							<p class="card-text ms-5">@item.UserNotes </p>
+						</div>
+					}	
+				}
+
+
+
 
 			</div>
+
+
+
 		}
 	}
 
