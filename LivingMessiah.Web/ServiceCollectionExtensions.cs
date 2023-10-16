@@ -13,7 +13,6 @@ using SukkotData = LivingMessiah.Web.Pages.Sukkot.Data;
 using LivingMessiah.Web.Pages.Sukkot.Services;
 using LivingMessiah.Web.Pages.SukkotAdmin.Data;
 using LivingMessiah.Web.Pages.SukkotAdmin.Donations.Data;
-using LivingMessiah.Web.Pages.SukkotAdmin.Services;
 using LivingMessiah.Web.Services;
 using FluentValidation;
 using LivingMessiah.Web.Pages.Sukkot.Components;
@@ -49,7 +48,6 @@ public static class ServiceCollectionExtensions
 			.AddTransient<IValidator<Pages.Sukkot.SuperUser.Registrant.FormVM>, Pages.Sukkot.SuperUser.Registrant.FormVMValidator>()
 
 			.AddTransient<IDonationRepository, DonationRepository>()
-			.AddTransient<ISukkotAdminService, SukkotAdminService>()
 			
 			.AddTransient<SukkotData.ISukkotRepository, SukkotData.SukkotRepository>()
 			.AddTransient<ISukkotAdminRepository, SukkotAdminRepository>()

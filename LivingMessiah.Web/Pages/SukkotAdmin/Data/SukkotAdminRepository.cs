@@ -6,7 +6,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
 using LivingMessiah.Web.Pages.SukkotAdmin.Attendance.Domain;
-using LivingMessiah.Web.Pages.Sukkot.Domain;
 
 using LivingMessiah.Web.Data;
 using DataEnumsDatabase = LivingMessiah.Web.Data.Enums.Database;
@@ -17,9 +16,7 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.Data;
 
 public interface ISukkotAdminRepository
 {
-	Task<List<vwRegistration>> GetAll(EnumsOld.RegistrationSortEnum sort, bool isAscending);
 	Task<List<Notes>> GetAdminOrUserNotes(NotesEnum filter);
-
 	Task<List<vwAttendanceAllFeastDays>> GetAttendanceAllFeastDays();
 	Task<vwAttendancePeopleSummary> GetAttendancePeopleSummary();
 	Task<List<vwAttendanceChart>> GetAttendanceChart();
@@ -31,44 +28,6 @@ public class SukkotAdminRepository : BaseRepositoryAsync, ISukkotAdminRepository
 	public SukkotAdminRepository(IConfiguration config, ILogger<SukkotAdminRepository> logger)
 		: base(config, logger, DataEnumsDatabase.Sukkot.ConnectionStringKey)
 	{
-	}
-
-	public async Task<List<vwRegistration>> GetAll(EnumsOld.RegistrationSortEnum sort, bool isAscending)
-	{
-		base.log.LogDebug(string.Format("Inside {0} , sort:{1}, isAscending: {2}"
-				, nameof(SukkotAdminRepository) + "!" + nameof(GetAll), sort, isAscending));
-		string sortField = sort switch
-		{
-			EnumsOld.RegistrationSortEnum.Id => "Id",
-			EnumsOld.RegistrationSortEnum.LastName => "FamilyName",
-			EnumsOld.RegistrationSortEnum.FirstName => "FirstName",
-			_ => "Id",
-		};
-
-		sortField += isAscending ? "" : " DESC";
-
-		base.Sql = $@"
-SELECT TOP 500 Id, FamilyName, FirstName, SpouseName, OtherNames
-, EMail, Phone, Adults, ChildBig, ChildSmall
-, StatusId
-, Notes
-, RegistrationFeeAdjusted, LmmDonation
-, AttendanceBitwise, AttendanceTotal
-FROM Sukkot.vwRegistration
-ORDER BY {sortField}
-";
-		return await WithConnectionAsync(async connection =>
-		{
-			var rows = await connection.QueryAsync<vwRegistration>(sql: base.Sql, param: base.Parms);
-			return rows.ToList();
-		});
-
-		//https://stackoverflow.com/questions/17840526/dapper-order-by-parameters
-		//http://bobby-tables.com/
-		//https://xkcd.com/327/
-		//base.Parms = new DynamicParameters(new { SortField = sortField });
-		//ORDER BY @SortField
-
 	}
 
 	public async Task<List<Notes>> GetAdminOrUserNotes(NotesEnum filter) 
