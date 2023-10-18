@@ -1,7 +1,12 @@
 ﻿@page "/SukkotAdmin/Notes/"
 
+@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+@inject IDispatcher Dispatcher
+@inject IState<State>? State
+
 @using static LivingMessiah.Web.Services.Auth0
 @using LivingMessiah.Web.Shared.Sukkot
+@using LivingMessiah.Web.Pages.SukkotAdmin.RegistrationNotes.Enums
 
 <AuthorizeView Roles="@Roles.SukkotMenuBar">
 	<SukkotAdminMenubar></SukkotAdminMenubar>
@@ -23,26 +28,24 @@
 			<h3> <span class="text-warning"><i class="fa fa-sticky-note"></i></span> @Page.Title</h3>
 		</div>
 
-
-
 		<div class="row">
 			<div class="col-sm-6">
-				<TypeaheadEditForm OnNoteSelected="@ReturnedNote" />
+				<Typeahead OnNoteSelected="@ReturnedNote" />
 			</div>
 			<div class="col-sm-6">
-				<Filter OnFilterSelected="@ReturnedFilter" ShowDetailCard=showDetailCard />
+				<FilterButtons OnFilterSelected="@ReturnedFilter" 
+					ShowDetailCard=State!.Value.ShowDetailCard />
 			</div>
 		</div>
 
-		@if (showDetailCard)
+		@if (State!.Value.ShowDetailCard)
 		{
-		<DetailsCard SelectedNote="currentNote" />
+			<DetailsCard SelectedNote="currentNote" />
 		}
 		else
 		{
-		<Card CurrentFilter="@currentFilter" />
+			<ListCard />
 		}
-
 
 	</Authorized>
 	<NotAuthorized>
@@ -56,22 +59,31 @@
 	</NotAuthorized>
 </AuthorizeView>
 
+<ToasterRegistrationNotes />
+
 @code {
-	protected Enums.NotesFilter currentFilter = Enums.NotesFilter.All;
+
+	protected override void OnInitialized()
+	{ 
+		// ToDo: this gets called regardless of if the user has proper authority
+		// if claims.User == AdminOrSukkot then...
+		Dispatcher!.Dispatch(new Initialize_List_Action());
+		base.OnInitialized();
+	}
 
 	private async Task ReturnedFilter(Enums.NotesFilter filter)
 	{
 		await Task.Delay(0);
-		currentFilter = filter;
+		Dispatcher!.Dispatch(new Set_CurrentFilter_Action(filter));
+		Dispatcher!.Dispatch(new Set_ListFiltered_Action(filter));
 	}
 
 	protected Notes? currentNote = default;
-	protected bool showDetailCard = false;
 
 	private async Task ReturnedNote(ReturnArgs returnArgs)
 	{
 		await Task.Delay(0);
 		currentNote = returnArgs.DetailNote;
-		showDetailCard = returnArgs.ShowDetailCard;
+		State!.Value.ShowDetailCard = returnArgs.ShowDetailCard;
 	}
 }

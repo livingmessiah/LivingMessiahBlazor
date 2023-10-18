@@ -9,14 +9,11 @@ using LivingMessiah.Web.Pages.SukkotAdmin.Attendance.Domain;
 
 using LivingMessiah.Web.Data;
 using DataEnumsDatabase = LivingMessiah.Web.Data.Enums.Database;
-using NotesEnum = LivingMessiah.Web.Pages.SukkotAdmin.RegistrationNotes.Enums.NotesFilter;
-using LivingMessiah.Web.Pages.SukkotAdmin.RegistrationNotes;
 
 namespace LivingMessiah.Web.Pages.SukkotAdmin.Data;
 
 public interface ISukkotAdminRepository
 {
-	Task<List<Notes>> GetAdminOrUserNotes(NotesEnum filter);
 	Task<List<vwAttendanceAllFeastDays>> GetAttendanceAllFeastDays();
 	Task<vwAttendancePeopleSummary> GetAttendancePeopleSummary();
 	Task<List<vwAttendanceChart>> GetAttendanceChart();
@@ -24,26 +21,9 @@ public interface ISukkotAdminRepository
 
 public class SukkotAdminRepository : BaseRepositoryAsync, ISukkotAdminRepository
 {
-
 	public SukkotAdminRepository(IConfiguration config, ILogger<SukkotAdminRepository> logger)
 		: base(config, logger, DataEnumsDatabase.Sukkot.ConnectionStringKey)
 	{
-	}
-
-	public async Task<List<Notes>> GetAdminOrUserNotes(NotesEnum filter) 
-	{
-		base.Sql = $@"
-SELECT TOP 500 Id, FirstName, FamilyName, AdminNotes, Notes AS UserNotes, Phone, EMail
-FROM Sukkot.vwRegistration
-{filter.SqlWhere}
-{filter.SqlOrder}
-";
-
-		return await WithConnectionAsync(async connection =>
-		{
-			var rows = await connection.QueryAsync<Notes>(sql: base.Sql);
-			return rows.ToList();
-		});
 	}
 
 	public async Task<List<vwAttendanceAllFeastDays>> GetAttendanceAllFeastDays()

@@ -2,6 +2,7 @@
 
 namespace LivingMessiah.Web.Pages.SukkotAdmin.RegistrationNotes.Enums;
 
+// ToDo Rename as Filter
 public abstract class NotesFilter : SmartEnum<NotesFilter>
 {
 	#region Id's

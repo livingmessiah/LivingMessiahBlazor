@@ -2,7 +2,7 @@
 
 namespace LivingMessiah.Web.Pages.SukkotAdmin.RegistrationNotes;
 
-public class TypeaheadEditFormVM
+public class TypeaheadVM
 {
 	[Required]
 	public Notes? SelectedNote { get; set; }

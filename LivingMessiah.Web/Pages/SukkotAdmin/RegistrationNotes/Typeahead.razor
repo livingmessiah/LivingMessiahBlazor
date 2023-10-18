@@ -1,19 +1,17 @@
 ﻿@using System.Linq
 @using Microsoft.Extensions.Logging;
-@using LivingMessiah.Web.Pages.SukkotAdmin.Data
 
-@inject ILogger<TypeaheadEditForm>? Logger
-@inject ISukkotAdminRepository? db
+@inject ILogger<TypeaheadVM>? Logger
+@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+@inject IDispatcher Dispatcher
+@inject IState<State>? State 
 
-@*
-	[Inject] public IToastService? Toast { get; set; }
- *@
 <div class="d-print-none">
-	<EditForm class="d-flex my-2" Model="TypeaheadEditFormVM"
+	<EditForm class="d-flex my-2" Model="TypeaheadVM"
 						OnValidSubmit="HandleFormSubmit">
 
 		<BlazoredTypeahead SearchMethod="SearchNotes"
-		@bind-Value="TypeaheadEditFormVM.SelectedNote"
+		@bind-Value="TypeaheadVM.SelectedNote"
 											 EnableDropDown="true"
 											 MaximumSuggestions="@MaxSug"
 											 MinimumLength="@MinLen"
@@ -26,7 +24,7 @@
 				@contextNotes.FirstName @contextNotes.FamilyName
 			</ResultTemplate>
 		</BlazoredTypeahead>
-		<ValidationMessage For="@(() => TypeaheadEditFormVM.SelectedNote)" />
+		<ValidationMessage For="@(() => TypeaheadVM.SelectedNote)" />
 		<button class="btn btn-outline-primary btn-sm ms-1 me-2" type="submit"><i class="fas fa-search"></i></button>
 	</EditForm>
 </div>
@@ -34,50 +32,29 @@
 @code {
 
 	[Parameter] public EventCallback<ReturnArgs> OnNoteSelected { get; set; }
-
-	private TypeaheadEditFormVM TypeaheadEditFormVM = new TypeaheadEditFormVM();
-	protected List<Notes>? NotesList { get; set; }
-
-	protected override async Task OnParametersSetAsync()
-	{
-		Logger!.LogDebug(string.Format("Inside {0}", nameof(TypeaheadEditForm) + "!" + nameof(OnParametersSetAsync)));
-		try
-		{
-			NotesList = await db!.GetAdminOrUserNotes(Enums.NotesFilter.All);
-		}
-		catch (Exception ex)
-		{
-			Logger!.LogError(ex, string.Format("...Inside catch of {0}"
-				, nameof(Card) + "!" + nameof(OnParametersSetAsync)));
-			// Toast!.ShowError(ResponseMessageFailure);
-		}
-		// finally
-		// {
-		// 	TurnSpinnerOff = true;
-		// }
-	}
+	private TypeaheadVM TypeaheadVM = new TypeaheadVM();
 
 	private async Task<IEnumerable<Notes>> SearchNotes(string searchText)
 	{
-		return await Task.FromResult(NotesList
+		return await Task.FromResult(State!.Value.NotesList
 			.Where(x => x.FirstName.ToLower().Contains(searchText.ToLower()))
 			.OrderBy(o => o.FirstName));
 	}
 
 	private void HandleFormSubmit()
 	{
-		if (TypeaheadEditFormVM.SelectedNote is not null)
+		if (TypeaheadVM.SelectedNote is not null)
 		{
 			ReturnArgs args = new ReturnArgs
 				{
 					ShowDetailCard = true,
-					DetailNote = TypeaheadEditFormVM.SelectedNote
+					DetailNote = TypeaheadVM.SelectedNote
 				};
 			OnNoteSelected.InvokeAsync(args);
 		}
 		else
 		{
-			Logger!.LogInformation($"...{nameof(TypeaheadEditFormVM.SelectedNote)} is null");
+			Logger!.LogInformation($"...{nameof(TypeaheadVM.SelectedNote)} is null");
 		}
 	}
 

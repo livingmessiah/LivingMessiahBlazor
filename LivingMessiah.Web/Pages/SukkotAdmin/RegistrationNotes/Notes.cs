@@ -1,7 +1,9 @@
 ﻿using LivingMessiah.Web.Infrastructure;
+using System;
 
 namespace LivingMessiah.Web.Pages.SukkotAdmin.RegistrationNotes;
 
+// Rename NotesQuery
 public class Notes
 {
 	public int Id { get; set; }
@@ -12,13 +14,7 @@ public class Notes
 	public string? AdminNotes { get; set; }
 	public string? UserNotes { get; set; }
 
-	public string PhoneNumber
-	{
-		get
-		{
-			return (Phone ?? "").PhoneNumber();
-		}
-	}
-
-
+	public bool HasAdminNotes => !String.IsNullOrEmpty(AdminNotes);
+	public bool HasUserNotes => !String.IsNullOrEmpty(UserNotes);
+	public string PhoneNumber => (Phone ?? "").PhoneNumber();
 }

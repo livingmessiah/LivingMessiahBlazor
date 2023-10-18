@@ -1,7 +1,7 @@
 ﻿@using LivingMessiah.Web.Pages.SukkotAdmin.RegistrationNotes.Enums
 @using Microsoft.Extensions.Logging;
 
-@inject ILogger<Filter>? Logger
+@inject ILogger<FilterButtons>? Logger
 
 <div class="d-print-none mb-2">
 	<div class="container d-flex justify-content-end mt-2">
@@ -12,6 +12,7 @@
 				@item.Name &nbsp;<i class="fas fa-chevron-circle-right"></i>
 			</button>
 		}
+
 	</div>
 
 </div>
@@ -22,11 +23,12 @@
 
 	private string _disabled = "";
 
-	public NotesFilter? _selectedFilter = NotesFilter.All;
-
+	private NotesFilter? _selectedFilter = Constants.DefaultFilter; // NotesFilter.Admin;
 
 	protected override void OnParametersSet()
 	{
+		string inside = $"{nameof(FilterButtons)}!{nameof(OnParametersSet)}";
+		Logger!.LogDebug(string.Format("inside {0}; _disabled: {1}; _selectedFilter: {2} ", inside, _disabled, _selectedFilter!.Name));
 		if (ShowDetailCard)
 		{
 			_disabled = " disabled";
@@ -39,9 +41,10 @@
 
 	private void OnButtonClicked(NotesFilter filter)
 	{
-		Logger!.LogInformation($"Inside {nameof(Filter)}!{nameof(OnButtonClicked)}; filter: {filter.Name}");
+		Logger!.LogInformation($"Inside {nameof(FilterButtons)}!{nameof(OnButtonClicked)}; filter: {filter.Name}");
 		_selectedFilter = filter;
-		Logger!.LogInformation($"..._selectedFilter.Name: {_selectedFilter.Name}. Calling {nameof(OnFilterSelected.InvokeAsync)} next");
+
+		Logger!.LogInformation($"..._selectedFilter.Name: {_selectedFilter.Name}. Calling InvokeAsync of {nameof(OnFilterSelected)} next");
 		OnFilterSelected.InvokeAsync(filter);
 	}
 

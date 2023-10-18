@@ -1,0 +1,33 @@
+﻿@using Blazored.Toast.Services
+@inject IToastService? Toast
+@inherits FluxorComponent
+
+@code{
+	protected override void OnInitialized()
+	{
+		SubscribeToAction<Response_Message_Action>(Response_Message_Toast);
+		base.OnInitialized();
+	}
+
+	private void Response_Message_Toast(Response_Message_Action action)
+	{
+		switch (action.MessageType)
+		{
+			case Enums.ResponseMessage.Success:
+				Toast!.ShowSuccess(action.Message);
+				break;
+
+			case Enums.ResponseMessage.Warning:
+				Toast!.ShowWarning(action.Message);
+				break;
+
+			case Enums.ResponseMessage.Failure:
+				Toast!.ShowError(action.Message);
+				break;
+
+			case Enums.ResponseMessage.Info:
+				Toast!.ShowInfo(action.Message);
+				break;
+		}
+	}
+}
