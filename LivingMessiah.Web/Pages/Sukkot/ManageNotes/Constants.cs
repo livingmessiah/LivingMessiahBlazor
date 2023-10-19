@@ -1,4 +1,4 @@
-﻿namespace LivingMessiah.Web.Pages.SukkotAdmin.RegistrationNotes;
+﻿namespace LivingMessiah.Web.Pages.Sukkot.ManageNotes;
 
 public static class Constants
 {

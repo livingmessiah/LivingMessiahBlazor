@@ -3,9 +3,10 @@ using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 using System;
 using System.Linq;
-using ToasterEnums= LivingMessiah.Web.Pages.SukkotAdmin.RegistrationNotes.Toaster;
+using ToasterEnums = LivingMessiah.Web.Pages.Sukkot.ManageNotes.Toaster;
+using LivingMessiah.Web.Pages.Sukkot.ManageNotes.Data;
 
-namespace LivingMessiah.Web.Pages.SukkotAdmin.RegistrationNotes;
+namespace LivingMessiah.Web.Pages.Sukkot.ManageNotes;
 
 // 1. Action
 public record Initialize_List_Action();
@@ -120,9 +121,9 @@ public class Effects
 {
 	#region Constructor and DI
 	private readonly ILogger Logger;
-	private readonly Data.IRepository db;
+	private readonly IRepository db;
 
-	public Effects(ILogger<Effects> logger, Data.IRepository repository)
+	public Effects(ILogger<Effects> logger, IRepository repository)
 	{
 		Logger = logger;
 		db = repository;

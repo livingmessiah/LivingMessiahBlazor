@@ -1,7 +1,7 @@
 ﻿using LivingMessiah.Web.Infrastructure;
 using System;
 
-namespace LivingMessiah.Web.Pages.SukkotAdmin.RegistrationNotes;
+namespace LivingMessiah.Web.Pages.Sukkot.ManageNotes;
 
 public class NotesQuery
 {

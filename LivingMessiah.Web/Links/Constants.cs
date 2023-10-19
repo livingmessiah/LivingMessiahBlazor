@@ -522,7 +522,7 @@ public static class Sukkot
 		public const string Icon = "fas fa-mask";
 	}
 
-	public static class Notes
+	public static class ManageNotes
 	{
 		public const string Index = "/SukkotAdmin/Notes";
 		public const string Title = "Sukkot Registration Notes";

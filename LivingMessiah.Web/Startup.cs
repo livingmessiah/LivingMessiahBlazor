@@ -19,7 +19,7 @@ using LivingMessiah.Web.Features.SpecialEvents.Data;
 
 using LivingMessiah.Web.Components.ShabbatWeek;
 using LivingMessiah.Web.Features.UpcomingEvents.Weekly;
-using LivingMessiah.Web.Pages.SukkotAdmin.RegistrationNotes.Data;
+using LivingMessiah.Web.Pages.Sukkot.ManageNotes.Data;
 
 namespace LivingMessiah.Web;
 
@@ -57,7 +57,7 @@ public class Startup
 		services.AddShabbatWeek();
 		services.AddAdminContacts();
 
-		services.AddRegistrationNotes();
+		services.AddManageNotes();
 
 		services.AddSession();
 		services.AddBlazoredToast();

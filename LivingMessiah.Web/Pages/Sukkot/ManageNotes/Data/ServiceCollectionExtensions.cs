@@ -1,11 +1,11 @@
 ﻿using LivingMessiah.Web.Pages.SukkotAdmin.Data;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace LivingMessiah.Web.Pages.SukkotAdmin.RegistrationNotes.Data;
+namespace LivingMessiah.Web.Pages.Sukkot.ManageNotes.Data;
 
 public static class ServiceCollectionExtensions
-{	
-	public static IServiceCollection AddRegistrationNotes(this IServiceCollection services)
+{
+	public static IServiceCollection AddManageNotes(this IServiceCollection services)
 	{
 		services
 		.AddSingleton<IRepository, Repository>();
