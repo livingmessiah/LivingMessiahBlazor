@@ -34,8 +34,8 @@
 				<Typeahead SelectedNote="State!.Value.SelectedNote" />
 			</div>
 			<div class="col-sm-6">
-				<FilterButtons OnFilterSelected="@ReturnedFilter" 
-					ShowDetailCard=State!.Value.ShowDetailCard />
+				<FilterButtons CurrentFilter="State!.Value.CurrentFilter"
+											 CurrentShowDetailCard="State!.Value.ShowDetailCard" />
 			</div>
 		</div>
 
@@ -70,13 +70,6 @@
 		// if claims.User == AdminOrSukkot then...
 		Dispatcher!.Dispatch(new Initialize_List_Action());
 		base.OnInitialized();
-	}
-
-	private async Task ReturnedFilter(Enums.NotesFilter filter)
-	{
-		await Task.Delay(0);
-		Dispatcher!.Dispatch(new Set_CurrentFilter_Action(filter));
-		Dispatcher!.Dispatch(new Set_ListFiltered_Action(filter));
 	}
 
 }

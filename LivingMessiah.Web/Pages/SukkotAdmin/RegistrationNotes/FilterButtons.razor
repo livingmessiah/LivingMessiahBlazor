@@ -2,6 +2,8 @@
 @using Microsoft.Extensions.Logging;
 
 @inject ILogger<FilterButtons>? Logger
+@inject IDispatcher Dispatcher
+@inject IState<State>? State
 
 <div class="d-print-none mb-2">
 	<div class="container d-flex justify-content-end mt-2">
@@ -18,18 +20,21 @@
 </div>
 
 @code {
-	[Parameter] public EventCallback<NotesFilter> OnFilterSelected { get; set; }
-	[Parameter, EditorRequired] public bool ShowDetailCard { get; set; }
+	[Parameter, EditorRequired] public required NotesFilter? CurrentFilter { get; set; }
+	[Parameter, EditorRequired] public required bool CurrentShowDetailCard { get; set; }
 
-	private string _disabled = "";
-
-	private NotesFilter? _selectedFilter = Constants.DefaultFilter; // NotesFilter.Admin;
+	private string? _disabled; // = "";
+	private NotesFilter? _selectedFilter; // = Constants.DefaultFilter;
 
 	protected override void OnParametersSet()
 	{
 		string inside = $"{nameof(FilterButtons)}!{nameof(OnParametersSet)}";
-		Logger!.LogDebug(string.Format("inside {0}; _disabled: {1}; _selectedFilter: {2} ", inside, _disabled, _selectedFilter!.Name));
-		if (ShowDetailCard)
+		Logger!.LogDebug(string.Format("inside {0}", inside));
+		//Logger!.LogDebug(string.Format("inside {0}; _disabled: {1}; _selectedFilter: {2} ", inside, _disabled, _selectedFilter!.Name));
+		
+		_selectedFilter = CurrentFilter;
+
+		if (CurrentShowDetailCard)
 		{
 			_disabled = " disabled";
 		}
@@ -42,10 +47,8 @@
 	private void OnButtonClicked(NotesFilter filter)
 	{
 		Logger!.LogInformation($"Inside {nameof(FilterButtons)}!{nameof(OnButtonClicked)}; filter: {filter.Name}");
-		_selectedFilter = filter;
-
-		Logger!.LogInformation($"..._selectedFilter.Name: {_selectedFilter.Name}. Calling InvokeAsync of {nameof(OnFilterSelected)} next");
-		OnFilterSelected.InvokeAsync(filter);
+		Dispatcher!.Dispatch(new Set_CurrentFilter_Action(filter));
+		Dispatcher!.Dispatch(new Set_ListFiltered_Action(filter));
 	}
 
 	public string ActiveFilter(NotesFilter filter)
