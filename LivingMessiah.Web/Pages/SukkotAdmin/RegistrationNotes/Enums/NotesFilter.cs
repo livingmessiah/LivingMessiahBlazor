@@ -43,7 +43,7 @@ WHERE
 OR
 	(Notes IS NOT NULL AND TRIM(Notes) <> '')
 ";
-		public override string SqlOrder => " ORDER BY FamilyName";
+		public override string SqlOrder => " ORDER BY FirstName";
 	}
 	
 	private sealed class AdminSE : NotesFilter
@@ -52,7 +52,7 @@ OR
 		public override string CssBgColor => "bg-warning";
 		public override string CssTextColor => "btn-outline-warning";
 		public override string SqlWhere => " WHERE AdminNotes IS NOT NULL AND TRIM(AdminNotes) <> ''";
-		public override string SqlOrder => " ORDER BY FamilyName";
+		public override string SqlOrder => " ORDER BY FirstName";
 	}
 
 	private sealed class UserSE : NotesFilter
@@ -61,7 +61,7 @@ OR
 		public override string CssBgColor => "bg-info";
 		public override string CssTextColor => "btn-outline-primary";
 		public override string SqlWhere => " WHERE Notes IS NOT NULL AND TRIM(Notes) <> ''";
-		public override string SqlOrder => " ORDER BY FamilyName";
+		public override string SqlOrder => " ORDER BY FirstName";
 	}
 	#endregion
 

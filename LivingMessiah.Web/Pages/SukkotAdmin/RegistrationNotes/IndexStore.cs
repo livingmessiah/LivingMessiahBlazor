@@ -10,9 +10,6 @@ namespace LivingMessiah.Web.Pages.SukkotAdmin.RegistrationNotes;
 // 1. Action
 public record Initialize_List_Action();
 public record Set_ListFiltered_Action(Enums.NotesFilter notesFilter);
-
-// ToDo: why do I need to pass in notesFilter? 
-// This should be gotten once from and DB and Set_ListFiltered_Action should do a query from this list
 public record Set_NotesList_Action(List<Notes>? notesList);
 
 public record Set_ShowDetailCard_Action(bool toggle);
@@ -85,24 +82,24 @@ public static class Reducers
 	[ReducerMethod]
 	public static State On_Set_ListFiltered(State state, Set_ListFiltered_Action action)
 	{
-		List<Notes>? nf = new List<Notes>(); // default;
+		List<Notes>? filteredList = new List<Notes>(); // default;
 
 		switch (action.notesFilter.Name)
 		{
 			case nameof(NotesFilter.All):
-				nf = state.NotesList;
+				filteredList = state.NotesList!.OrderBy(o => o.FirstName).ToList();
 				break;
 
 			case nameof(NotesFilter.Admin):
-				nf = state.NotesList!.Where(w => w.HasAdminNotes).ToList();
+				filteredList = state.NotesList!.Where(w => w.HasAdminNotes).OrderBy(o => o.FirstName).ToList();
 				break;
 
 			case nameof(NotesFilter.User):
-				nf = state.NotesList!.Where(w => w.HasUserNotes).ToList();
+				filteredList = state.NotesList!.Where(w => w.HasUserNotes).OrderBy(o => o.FirstName).ToList();
 				break;
 		}
 
-		return state with { NotesListFiltered = nf! };
+		return state with { NotesListFiltered = filteredList! };
 	}
 
 
