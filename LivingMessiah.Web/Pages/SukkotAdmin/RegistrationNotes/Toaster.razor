@@ -13,21 +13,29 @@
 	{
 		switch (action.MessageType)
 		{
-			case Enums.ResponseMessage.Success:
+			case ResponseMessage.Success:
 				Toast!.ShowSuccess(action.Message);
 				break;
 
-			case Enums.ResponseMessage.Warning:
+			case ResponseMessage.Warning:
 				Toast!.ShowWarning(action.Message);
 				break;
 
-			case Enums.ResponseMessage.Failure:
+			case ResponseMessage.Failure:
 				Toast!.ShowError(action.Message);
 				break;
 
-			case Enums.ResponseMessage.Info:
+			case ResponseMessage.Info:
 				Toast!.ShowInfo(action.Message);
 				break;
 		}
+	}
+
+	public enum ResponseMessage
+	{
+		Success = 1,
+		Warning = 2,
+		Failure = 3,
+		Info = 4
 	}
 }

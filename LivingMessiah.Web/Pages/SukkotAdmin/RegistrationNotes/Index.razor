@@ -6,7 +6,6 @@
 
 @using static LivingMessiah.Web.Services.Auth0
 @using LivingMessiah.Web.Shared.Sukkot
-@using LivingMessiah.Web.Pages.SukkotAdmin.RegistrationNotes.Enums
 
 <AuthorizeView Roles="@Roles.SukkotMenuBar">
 	<SukkotAdminMenubar></SukkotAdminMenubar>
@@ -60,7 +59,7 @@
 	</NotAuthorized>
 </AuthorizeView>
 
-<ToasterRegistrationNotes />
+<Toaster />
 
 @code {
 

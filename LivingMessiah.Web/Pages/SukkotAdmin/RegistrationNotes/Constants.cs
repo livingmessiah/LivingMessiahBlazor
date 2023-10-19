@@ -2,7 +2,7 @@
 
 public static class Constants
 {
-	public static Enums.NotesFilter DefaultFilter = Enums.NotesFilter.Admin;
+	public static Enums.Filter DefaultFilter = Enums.Filter.Admin;
 	public static bool DefaultShowDetailCard = false;
 
 	public static class Effects

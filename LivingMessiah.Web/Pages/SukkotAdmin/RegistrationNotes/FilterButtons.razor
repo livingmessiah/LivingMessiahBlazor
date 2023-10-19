@@ -1,5 +1,4 @@
-﻿@using LivingMessiah.Web.Pages.SukkotAdmin.RegistrationNotes.Enums
-@using Microsoft.Extensions.Logging;
+﻿@using Microsoft.Extensions.Logging;
 
 @inject ILogger<FilterButtons>? Logger
 @inject IDispatcher Dispatcher
@@ -7,7 +6,7 @@
 
 <div class="d-print-none mb-2">
 	<div class="container d-flex justify-content-end mt-2">
-		@foreach (var item in NotesFilter.List.OrderBy(o => o.Value))
+		@foreach (var item in Enums.Filter.List.OrderBy(o => o.Value))
 		{
 			<button @onclick="@(() => OnButtonClicked(item))"
 							class="btn @item.CssTextColor btn-sm @_disabled @ActiveFilter(item)">
@@ -20,11 +19,11 @@
 </div>
 
 @code {
-	[Parameter, EditorRequired] public required NotesFilter? CurrentFilter { get; set; }
+	[Parameter, EditorRequired] public required Enums.Filter? CurrentFilter { get; set; }
 	[Parameter, EditorRequired] public required bool CurrentShowDetailCard { get; set; }
 
 	private string? _disabled; // = "";
-	private NotesFilter? _selectedFilter; // = Constants.DefaultFilter;
+	private Enums.Filter? _selectedFilter; // = Constants.DefaultFilter;
 
 	protected override void OnParametersSet()
 	{
@@ -44,14 +43,14 @@
 		}
 	}
 
-	private void OnButtonClicked(NotesFilter filter)
+	private void OnButtonClicked(Enums.Filter filter)
 	{
 		Logger!.LogInformation($"Inside {nameof(FilterButtons)}!{nameof(OnButtonClicked)}; filter: {filter.Name}");
 		Dispatcher!.Dispatch(new Set_CurrentFilter_Action(filter));
 		Dispatcher!.Dispatch(new Set_ListFiltered_Action(filter));
 	}
 
-	public string ActiveFilter(NotesFilter filter)
+	public string ActiveFilter(Enums.Filter filter)
 	{
 		if (filter == _selectedFilter)
 		{

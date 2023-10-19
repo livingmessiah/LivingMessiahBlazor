@@ -42,14 +42,14 @@
 		</div>
 
 
-		@if (State!.Value.CurrentFilter == Enums.NotesFilter.All)
+		@if (State!.Value.CurrentFilter == Enums.Filter.All)
 		{
 			<div class="row">
 				<div class="col-sm-6">
 
 					@if (!String.IsNullOrEmpty(item.AdminNotes))
 					{
-						<div class="card-body @Enums.NotesFilter.Admin.CssBgColor">
+						<div class="card-body @Enums.Filter.Admin.CssBgColor">
 							<p class="card-text">@item.AdminNotes </p>
 						</div>
 					}
@@ -57,7 +57,7 @@
 				<div class="col-sm-6">
 					@if (!String.IsNullOrEmpty(item.UserNotes))
 					{
-						<div class="card-body @Enums.NotesFilter.User.CssBgColor">
+						<div class="card-body @Enums.Filter.User.CssBgColor">
 							<p class="card-text">@item.UserNotes </p>
 						</div>
 					}
@@ -68,14 +68,14 @@
 		{
 			@if (!String.IsNullOrEmpty(item.AdminNotes))
 			{
-				<div class="card-body @Enums.NotesFilter.Admin.CssBgColor">
+				<div class="card-body @Enums.Filter.Admin.CssBgColor">
 					<p class="card-text ms-5">@item.AdminNotes </p>
 				</div>
 			}
 
 			@if (!String.IsNullOrEmpty(item.UserNotes))
 			{
-				<div class="card-body @Enums.NotesFilter.User.CssBgColor">
+				<div class="card-body @Enums.Filter.User.CssBgColor">
 					<p class="card-text ms-5">@item.UserNotes </p>
 				</div>
 			}

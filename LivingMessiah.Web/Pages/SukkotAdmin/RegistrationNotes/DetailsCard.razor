@@ -28,7 +28,7 @@
 
 				@if (!String.IsNullOrEmpty(CurrentNote.AdminNotes))
 				{
-					<div class="card-body @Enums.NotesFilter.Admin.CssBgColor">
+					<div class="card-body @Enums.Filter.Admin.CssBgColor">
 						<h4 class="mb-1"><b>Admin Notes</b></h4>
 						<p class="card-text">@CurrentNote.AdminNotes </p>
 					</div>
@@ -37,7 +37,7 @@
 			<div class="col-sm-6">
 				@if (!String.IsNullOrEmpty(CurrentNote.UserNotes))
 				{
-					<div class="card-body @Enums.NotesFilter.User.CssBgColor">
+					<div class="card-body @Enums.Filter.User.CssBgColor">
 						<h4 class="mb-1"><b>User Notes</b></h4>
 						<p class="card-text">@CurrentNote.UserNotes </p>
 					</div>
@@ -61,8 +61,8 @@
 
 @code {
 
-	[Parameter, EditorRequired] public required Notes? SelectedNote { get; set; }
-	protected Notes? CurrentNote { get; set; }
+	[Parameter, EditorRequired] public required NotesQuery? SelectedNote { get; set; }
+	protected NotesQuery? CurrentNote { get; set; }
 
 	protected override void OnParametersSet()
 	{

@@ -3,7 +3,7 @@
 namespace LivingMessiah.Web.Pages.SukkotAdmin.RegistrationNotes.Enums;
 
 // ToDo Rename as Filter
-public abstract class NotesFilter : SmartEnum<NotesFilter>
+public abstract class Filter : SmartEnum<Filter>
 {
 	#region Id's
 	private static class Id
@@ -16,13 +16,13 @@ public abstract class NotesFilter : SmartEnum<NotesFilter>
 	#endregion
 
 	#region Declared Public Instances
-	public static readonly NotesFilter All = new AllSE();
-	public static readonly NotesFilter Admin = new AdminSE();
-	public static readonly NotesFilter User = new UserSE();
+	public static readonly Filter All = new AllSE();
+	public static readonly Filter Admin = new AdminSE();
+	public static readonly Filter User = new UserSE();
 	// Note: SE=SmartEnum
 	#endregion
 
-	private NotesFilter(string name, int value) : base(name, value) { } // Constructor
+	private Filter(string name, int value) : base(name, value) { } // Constructor
 
 	#region Extra Fields
 	public abstract string CssBgColor { get; }
@@ -32,7 +32,7 @@ public abstract class NotesFilter : SmartEnum<NotesFilter>
 	#endregion
 
 	#region Private Instantiation
-	private sealed class AllSE : NotesFilter
+	private sealed class AllSE : Filter
 	{
 		public AllSE() : base($"{nameof(Id.All)}", Id.All) { }
 		public override string CssBgColor => "bg-warning";
@@ -46,7 +46,7 @@ OR
 		public override string SqlOrder => " ORDER BY FirstName";
 	}
 	
-	private sealed class AdminSE : NotesFilter
+	private sealed class AdminSE : Filter
 	{
 		public AdminSE() : base($"{nameof(Id.Admin)}", Id.Admin) { }
 		public override string CssBgColor => "bg-warning";
@@ -55,7 +55,7 @@ OR
 		public override string SqlOrder => " ORDER BY FirstName";
 	}
 
-	private sealed class UserSE : NotesFilter
+	private sealed class UserSE : Filter
 	{
 		public UserSE() : base($"{nameof(Id.User)}", Id.User) { }
 		public override string CssBgColor => "bg-info";

@@ -8,8 +8,6 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using LivingMessiah.Web.Data;
-using NotesEnum = LivingMessiah.Web.Pages.SukkotAdmin.RegistrationNotes.Enums.NotesFilter;
-using LivingMessiah.Web.Pages.SukkotAdmin.RegistrationNotes;
 using DataEnumsDatabase = LivingMessiah.Web.Data.Enums.Database;
 
 namespace LivingMessiah.Web.Pages.SukkotAdmin.RegistrationNotes.Data;
@@ -18,7 +16,7 @@ public interface IRepository
 {
 	string BaseSqlDump { get; }
 
-	Task<List<Notes>> GetAdminOrUserNotes(NotesEnum filter);
+	Task<List<NotesQuery>> GetAdminOrUserNotes(Enums.Filter filter);
 }
 
 
@@ -35,7 +33,7 @@ public class Repository : BaseRepositoryAsync, IRepository
 	}
 
 	// Only NotesEnum.All.SqlWhere and NotesEnum.All.SqlOrder are used
-	public async Task<List<Notes>> GetAdminOrUserNotes(NotesEnum filter)
+	public async Task<List<NotesQuery>> GetAdminOrUserNotes(Enums.Filter filter)
 	{
 		base.Sql = $@"
 SELECT TOP 500 Id, FirstName, FamilyName, AdminNotes, Notes AS UserNotes, Phone, EMail
@@ -46,7 +44,7 @@ FROM Sukkot.vwRegistration
 		
 		return await WithConnectionAsync(async connection =>
 		{
-			var rows = await connection.QueryAsync<Notes>(sql: base.Sql);
+			var rows = await connection.QueryAsync<NotesQuery>(sql: base.Sql);
 			return rows.ToList();
 		});
 	}

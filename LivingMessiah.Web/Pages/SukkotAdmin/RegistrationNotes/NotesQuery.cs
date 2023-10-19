@@ -3,8 +3,7 @@ using System;
 
 namespace LivingMessiah.Web.Pages.SukkotAdmin.RegistrationNotes;
 
-// Rename NotesQuery
-public class Notes
+public class NotesQuery
 {
 	public int Id { get; set; }
 	public string? FirstName { get; set; }

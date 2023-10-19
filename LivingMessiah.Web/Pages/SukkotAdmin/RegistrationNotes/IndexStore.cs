@@ -2,30 +2,30 @@
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 using System;
-using LivingMessiah.Web.Pages.SukkotAdmin.RegistrationNotes.Enums;
 using System.Linq;
+using ToasterEnums= LivingMessiah.Web.Pages.SukkotAdmin.RegistrationNotes.Toaster;
 
 namespace LivingMessiah.Web.Pages.SukkotAdmin.RegistrationNotes;
 
 // 1. Action
 public record Initialize_List_Action();
-public record Set_ListFiltered_Action(Enums.NotesFilter notesFilter);
-public record Set_NotesList_Action(List<Notes>? notesList);
+public record Set_ListFiltered_Action(Enums.Filter notesFilter);
+public record Set_NotesList_Action(List<NotesQuery>? notesList);
 
 public record Set_ShowDetailCard_Action(bool toggle);
-public record Set_CurrentFilter_Action(Enums.NotesFilter notesFilter);
-public record Set_SelectedNote_Action(Notes? selectedNote);
+public record Set_CurrentFilter_Action(Enums.Filter notesFilter);
+public record Set_SelectedNote_Action(NotesQuery? selectedNote);
 
-public record Response_Message_Action(Enums.ResponseMessage MessageType, string Message);
+public record Response_Message_Action(ToasterEnums.ResponseMessage MessageType, string Message);
 
 // 2. State
 public record State
 {
 	public bool ShowDetailCard { get; set; }
-	public Enums.NotesFilter? CurrentFilter { get; init; }
-	public Notes? SelectedNote { get; init; }
-	public List<Notes>? NotesList { get; set; }
-	public List<Notes>? NotesListFiltered { get; set; }
+	public Enums.Filter? CurrentFilter { get; init; }
+	public NotesQuery? SelectedNote { get; init; }
+	public List<NotesQuery>? NotesList { get; set; }
+	public List<NotesQuery>? NotesListFiltered { get; set; }
 }
 
 // 3. Feature
@@ -37,8 +37,8 @@ public class FeatureImplementation : Feature<State>  // <IndexState>
 	{
 		return new State
 		{
-			NotesList = new List<Notes>(),
-			NotesListFiltered = new List<Notes>(),
+			NotesList = new List<NotesQuery>(),
+			NotesListFiltered = new List<NotesQuery>(),
 			CurrentFilter = Constants.DefaultFilter, 
 			ShowDetailCard = Constants.DefaultShowDetailCard
 		};
@@ -82,19 +82,19 @@ public static class Reducers
 	[ReducerMethod]
 	public static State On_Set_ListFiltered(State state, Set_ListFiltered_Action action)
 	{
-		List<Notes>? filteredList = new List<Notes>(); // default;
+		List<NotesQuery>? filteredList = new List<NotesQuery>(); // default;
 
 		switch (action.notesFilter.Name)
 		{
-			case nameof(NotesFilter.All):
+			case nameof(Enums.Filter.All):
 				filteredList = state.NotesList!.OrderBy(o => o.FirstName).ToList();
 				break;
 
-			case nameof(NotesFilter.Admin):
+			case nameof(Enums.Filter.Admin):
 				filteredList = state.NotesList!.Where(w => w.HasAdminNotes).OrderBy(o => o.FirstName).ToList();
 				break;
 
-			case nameof(NotesFilter.User):
+			case nameof(Enums.Filter.User):
 				filteredList = state.NotesList!.Where(w => w.HasUserNotes).OrderBy(o => o.FirstName).ToList();
 				break;
 		}
@@ -137,26 +137,26 @@ public class Effects
 		Logger.LogDebug(string.Format("Inside {0}", inside));
 		try
 		{
-			List<Notes>? notesList = new List<Notes>();
-			notesList = await db!.GetAdminOrUserNotes(Enums.NotesFilter.All);
+			List<NotesQuery>? notesList = new List<NotesQuery>();
+			notesList = await db!.GetAdminOrUserNotes(Enums.Filter.All);
 
 			if (notesList is not null)
 			{
 				dispatcher.Dispatch(new Set_NotesList_Action(notesList));
-				dispatcher.Dispatch(new Set_ListFiltered_Action(Enums.NotesFilter.Admin));
-				dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Info, $"Got notesList from Database, RowCount {notesList.Count}"));
+				dispatcher.Dispatch(new Set_ListFiltered_Action(Enums.Filter.Admin));
+				dispatcher.Dispatch(new Response_Message_Action(ToasterEnums.ResponseMessage.Info, $"Got notesList from Database, RowCount {notesList.Count}"));
 				Logger.LogDebug(string.Format("...{0}; notesList.Count: {1} ", inside, notesList.Count));
 			}
 			else
 			{
 				Logger.LogWarning(string.Format("...{0}; {1} is null", inside, nameof(notesList)));
-				dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Warning, $"notesList is null"));
+				dispatcher.Dispatch(new Response_Message_Action(ToasterEnums.ResponseMessage.Warning, $"notesList is null"));
 			}
 		}
 		catch (Exception ex)
 		{
 			Logger.LogError(ex, string.Format("...Inside catch of {0}", inside));
-			dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Failure, Constants.Effects.ResponseMessageFailure));
+			dispatcher.Dispatch(new Response_Message_Action(ToasterEnums.ResponseMessage.Failure, Constants.Effects.ResponseMessageFailure));
 		}
 	}
 }

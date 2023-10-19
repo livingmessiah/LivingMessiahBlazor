@@ -9,8 +9,8 @@
 <div class="d-print-none">
 
 	<BlazoredTypeahead SearchMethod="SearchNotes"
-										 TValue="Notes"
-										 TItem="Notes"
+										 TValue="NotesQuery"
+										 TItem="NotesQuery"
 										 Value="CurrentNote"
 										 ValueChanged="SelectedResultChanged"
 										 ValueExpression="@(() => CurrentNote)"
@@ -31,8 +31,8 @@
 
 @code {
 
-	[Parameter, EditorRequired] public required Notes? SelectedNote { get; set; }
-	protected Notes? CurrentNote { get; set; }
+	[Parameter, EditorRequired] public required NotesQuery? SelectedNote { get; set; }
+	protected NotesQuery? CurrentNote { get; set; }
 
 	protected override void OnParametersSet()
 	{
@@ -41,14 +41,14 @@
 		CurrentNote = State!.Value.SelectedNote;
 	}
 
-	private async Task<IEnumerable<Notes>> SearchNotes(string searchText)
+	private async Task<IEnumerable<NotesQuery>> SearchNotes(string searchText)
 	{
 		return await Task.FromResult(State!.Value.NotesList!
 			.Where(x => x.FirstName!.ToLower().Contains(searchText.ToLower()))
 			.OrderBy(o => o.FirstName));
 	}
 
-	private void SelectedResultChanged(Notes selectedNote)
+	private void SelectedResultChanged(NotesQuery selectedNote)
 	{
 		// string inside = $"{nameof(Typeahead)}!{nameof(SelectedResultChanged)}";
 		// Logger!.LogError(string.Format("Inside {0}", inside));
