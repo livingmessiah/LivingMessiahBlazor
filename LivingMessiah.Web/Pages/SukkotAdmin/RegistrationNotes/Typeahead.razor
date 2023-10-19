@@ -1,65 +1,59 @@
 ﻿@using System.Linq
 @using Microsoft.Extensions.Logging;
 
-@inject ILogger<TypeaheadVM>? Logger
+@inject ILogger<Typeahead>? Logger
 @inherits Fluxor.Blazor.Web.Components.FluxorComponent
+@inject IState<State>? State
 @inject IDispatcher Dispatcher
-@inject IState<State>? State 
 
 <div class="d-print-none">
-	<EditForm class="d-flex my-2" Model="TypeaheadVM"
-						OnValidSubmit="HandleFormSubmit">
 
-		<BlazoredTypeahead SearchMethod="SearchNotes"
-		@bind-Value="TypeaheadVM.SelectedNote"
-											 EnableDropDown="true"
-											 MaximumSuggestions="@MaxSug"
-											 MinimumLength="@MinLen"
-											 placeholder="Search name...">
-			<SelectedTemplate Context="contextNotes">
-				@contextNotes!.FirstName @contextNotes!.FamilyName
-			</SelectedTemplate>
-			<HelpTemplate>@HelpMsg</HelpTemplate>
-			<ResultTemplate Context="contextNotes">
-				@contextNotes.FirstName @contextNotes.FamilyName
-			</ResultTemplate>
-		</BlazoredTypeahead>
-		<ValidationMessage For="@(() => TypeaheadVM.SelectedNote)" />
-		<button class="btn btn-outline-primary btn-sm ms-1 me-2" type="submit"><i class="fas fa-search"></i></button>
-	</EditForm>
+	<BlazoredTypeahead SearchMethod="SearchNotes"
+										 TValue="Notes"
+										 TItem="Notes"
+										 Value="CurrentNote"
+										 ValueChanged="SelectedResultChanged"
+										 ValueExpression="@(() => CurrentNote)"
+										 EnableDropDown="true"
+										 MaximumSuggestions="25"
+										 MinimumLength="2"
+										 placeholder="Search first name...">
+		<SelectedTemplate Context="contextNotes">
+			@contextNotes!.FirstName @contextNotes!.FamilyName [@contextNotes.Id]
+		</SelectedTemplate>
+		<HelpTemplate>Please enter at least 2 characters to perform a search on the first name</HelpTemplate>
+		<ResultTemplate Context="contextNotes">
+			@contextNotes.FirstName @contextNotes.FamilyName [@contextNotes.Id]
+		</ResultTemplate>
+	</BlazoredTypeahead>
+
 </div>
 
 @code {
 
-	[Parameter] public EventCallback<ReturnArgs> OnNoteSelected { get; set; }
-	private TypeaheadVM TypeaheadVM = new TypeaheadVM();
+	[Parameter, EditorRequired] public required Notes? SelectedNote { get; set; }
+	protected Notes? CurrentNote { get; set; }
+
+	protected override void OnParametersSet()
+	{
+		// string inside = $"{nameof(Typeahead)}!{nameof(OnParametersSet)}";
+		// Logger!.LogDebug(string.Format("Inside {0}", inside));
+		CurrentNote = State!.Value.SelectedNote;
+	}
 
 	private async Task<IEnumerable<Notes>> SearchNotes(string searchText)
 	{
-		return await Task.FromResult(State!.Value.NotesList
-			.Where(x => x.FirstName.ToLower().Contains(searchText.ToLower()))
+		return await Task.FromResult(State!.Value.NotesList!
+			.Where(x => x.FirstName!.ToLower().Contains(searchText.ToLower()))
 			.OrderBy(o => o.FirstName));
 	}
 
-	private void HandleFormSubmit()
+	private void SelectedResultChanged(Notes selectedNote)
 	{
-		if (TypeaheadVM.SelectedNote is not null)
-		{
-			ReturnArgs args = new ReturnArgs
-				{
-					ShowDetailCard = true,
-					DetailNote = TypeaheadVM.SelectedNote
-				};
-			OnNoteSelected.InvokeAsync(args);
-		}
-		else
-		{
-			Logger!.LogInformation($"...{nameof(TypeaheadVM.SelectedNote)} is null");
-		}
+		// string inside = $"{nameof(Typeahead)}!{nameof(SelectedResultChanged)}";
+		// Logger!.LogError(string.Format("Inside {0}", inside));
+		Dispatcher!.Dispatch(new Set_SelectedNote_Action(selectedNote));
+		Dispatcher!.Dispatch(new Set_ShowDetailCard_Action(true));
 	}
-
-	private const int MinLen = 2;
-	private const int MaxSug = 5;
-	private string? HelpMsg = $"Please enter at least {MinLen} characters to perform a search.";
-
 }
+

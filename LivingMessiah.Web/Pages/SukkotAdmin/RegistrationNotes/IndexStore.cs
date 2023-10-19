@@ -16,7 +16,8 @@ public record Set_ListFiltered_Action(Enums.NotesFilter notesFilter);
 public record Set_NotesList_Action(List<Notes>? notesList);
 
 public record Set_ShowDetailCard_Action(bool toggle);
-public record Set_CurrentFilter_Action(Enums.NotesFilter notesFilter); 
+public record Set_CurrentFilter_Action(Enums.NotesFilter notesFilter);
+public record Set_SelectedNote_Action(Notes? selectedNote);
 
 public record Response_Message_Action(Enums.ResponseMessage MessageType, string Message);
 
@@ -25,6 +26,7 @@ public record State
 {
 	public bool ShowDetailCard { get; set; }
 	public Enums.NotesFilter? CurrentFilter { get; init; }
+	public Notes? SelectedNote { get; init; }
 	public List<Notes>? NotesList { get; set; }
 	public List<Notes>? NotesListFiltered { get; set; }
 }
@@ -40,8 +42,8 @@ public class FeatureImplementation : Feature<State>  // <IndexState>
 		{
 			NotesList = new List<Notes>(),
 			NotesListFiltered = new List<Notes>(),
-			CurrentFilter = Constants.DefaultFilter, // Enums.NotesFilter.Admin,
-			ShowDetailCard=false
+			CurrentFilter = Constants.DefaultFilter, 
+			ShowDetailCard = Constants.DefaultShowDetailCard
 		};
 	}
 }
@@ -58,6 +60,27 @@ public static class Reducers
 			CurrentFilter = action.notesFilter
 		};
 	}
+
+
+	[ReducerMethod]
+	public static State On_Set_SelectedNote(State state, Set_SelectedNote_Action action)
+	{
+		return state with
+		{
+			SelectedNote = action.selectedNote
+		};
+	}
+
+	[ReducerMethod]
+	public static State On_Set_ShowDetailCard(State state, Set_ShowDetailCard_Action action)
+	{
+		return state with
+		{
+			ShowDetailCard = action.toggle
+		};
+	}
+
+	//
 
 	[ReducerMethod]
 	public static State On_Set_ListFiltered(State state, Set_ListFiltered_Action action)
@@ -79,8 +102,9 @@ public static class Reducers
 				break;
 		}
 
-		return state with	{	NotesListFiltered = nf!	};
+		return state with { NotesListFiltered = nf! };
 	}
+
 
 	[ReducerMethod]
 	public static State On_Set_NotesList(State state, Set_NotesList_Action action)
@@ -123,7 +147,7 @@ public class Effects
 			{
 				dispatcher.Dispatch(new Set_NotesList_Action(notesList));
 				dispatcher.Dispatch(new Set_ListFiltered_Action(Enums.NotesFilter.Admin));
-				//dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Info, $"Got notesList, RowCount {notesList.Count}"));
+				dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Info, $"Got notesList from Database, RowCount {notesList.Count}"));
 				Logger.LogDebug(string.Format("...{0}; notesList.Count: {1} ", inside, notesList.Count));
 			}
 			else

@@ -1,20 +1,23 @@
 ﻿@using Microsoft.Extensions.Logging
 @using Page = LivingMessiah.Web.Links.Sukkot.Notes
-@inject ILogger<DetailsCard>? Logger
-@inject NavigationManager? NavigationManager
 
-@if (CurrentNotes is not null)
+@inject ILogger<DetailsCard>? Logger
+@inject IDispatcher Dispatcher
+@inject IState<State>? State
+
+
+@if (CurrentNote is not null)
 {
 	<div class="card text-dark bg-light my-4">
 		<div class="card-header">
 
 			<div class="container d-flex justify-content-between">
-				<p><b>@CurrentNotes.FirstName @CurrentNotes.FamilyName</b></p>
+				<p><b>@CurrentNote.FirstName @CurrentNote.FamilyName</b></p>
 				<p>
-					<a href="tel:@CurrentNotes.Phone" title="@CurrentNotes.PhoneNumber">@CurrentNotes.PhoneNumber</a>&nbsp;<i class="fa fa-phone"></i>
+					<a href="tel:@CurrentNote.Phone" title="@CurrentNote.PhoneNumber">@CurrentNote.PhoneNumber</a>&nbsp;<i class="fa fa-phone"></i>
 				</p>
 				<p>
-					<a href="mailto:@CurrentNotes.EMail" title="@CurrentNotes.EMail">@CurrentNotes.EMail</a>&nbsp;<i class="far fa-envelope"></i>
+					<a href="mailto:@CurrentNote.EMail" title="@CurrentNote.EMail">@CurrentNote.EMail</a>&nbsp;<i class="far fa-envelope"></i>
 				</p>
 			</div>
 
@@ -23,20 +26,20 @@
 		<div class="row">
 			<div class="col-sm-6">
 
-				@if (!String.IsNullOrEmpty(CurrentNotes.AdminNotes))
+				@if (!String.IsNullOrEmpty(CurrentNote.AdminNotes))
 				{
 					<div class="card-body @Enums.NotesFilter.Admin.CssBgColor">
 						<h4 class="mb-1"><b>Admin Notes</b></h4>
-						<p class="card-text">@CurrentNotes.AdminNotes </p>
+						<p class="card-text">@CurrentNote.AdminNotes </p>
 					</div>
 				}
 			</div>
 			<div class="col-sm-6">
-				@if (!String.IsNullOrEmpty(CurrentNotes.UserNotes))
+				@if (!String.IsNullOrEmpty(CurrentNote.UserNotes))
 				{
 					<div class="card-body @Enums.NotesFilter.User.CssBgColor">
 						<h4 class="mb-1"><b>User Notes</b></h4>
-						<p class="card-text">@CurrentNotes.UserNotes </p>
+						<p class="card-text">@CurrentNote.UserNotes </p>
 					</div>
 				}
 			</div>
@@ -58,23 +61,28 @@
 
 @code {
 
-	[Parameter, EditorRequired] public required Notes SelectedNote { get; set; }
-
-	protected Notes? CurrentNotes { get; set; }
+	[Parameter, EditorRequired] public required Notes? SelectedNote { get; set; }
+	protected Notes? CurrentNote { get; set; }
 
 	protected override void OnParametersSet()
 	{
-		if (SelectedNote != null)
-		{
-			Logger!.LogDebug(string.Format("Inside {0}, SelectedNote.FamilyName: {1}"
-				, nameof(DetailsCard) + "!" + nameof(OnParametersSet), SelectedNote.FamilyName));
+		string inside = $"{nameof(DetailsCard)}!{nameof(OnParametersSet)}";
+		Logger!.LogDebug(string.Format("Inside {0}", inside));
 
-			CurrentNotes = SelectedNote;
+		if (State!.Value.SelectedNote is not null)
+		{
+			CurrentNote = State!.Value.SelectedNote;
+			Logger!.LogDebug(string.Format("...CurrentNote.FirstName: {0}", CurrentNote.FirstName));
+		}
+		else
+		{
+			Logger!.LogDebug(string.Format("State!.Value.SelectedNote IS null"));
 		}
 	}
 
 	void Close()
 	{
-		NavigationManager!.NavigateTo($"{Page.Index}", true);  //?returnUrl={returnUrl}
+		Dispatcher!.Dispatch(new Set_SelectedNote_Action(null));
+		Dispatcher!.Dispatch(new Set_ShowDetailCard_Action(false));
 	}
 }

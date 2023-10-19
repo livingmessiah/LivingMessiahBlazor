@@ -15,6 +15,7 @@
 @using Page = LivingMessiah.Web.Links.Sukkot.Notes
 <PageTitle>@Page.Title</PageTitle>
 
+
 <AuthorizeView Roles="@Roles.AdminOrSukkot">
 	<Authorized>
 
@@ -30,7 +31,7 @@
 
 		<div class="row">
 			<div class="col-sm-6">
-				<Typeahead OnNoteSelected="@ReturnedNote" />
+				<Typeahead SelectedNote="State!.Value.SelectedNote" />
 			</div>
 			<div class="col-sm-6">
 				<FilterButtons OnFilterSelected="@ReturnedFilter" 
@@ -40,7 +41,7 @@
 
 		@if (State!.Value.ShowDetailCard)
 		{
-			<DetailsCard SelectedNote="currentNote" />
+			<DetailsCard SelectedNote="State!.Value.SelectedNote" />
 		}
 		else
 		{
@@ -78,12 +79,4 @@
 		Dispatcher!.Dispatch(new Set_ListFiltered_Action(filter));
 	}
 
-	protected Notes? currentNote = default;
-
-	private async Task ReturnedNote(ReturnArgs returnArgs)
-	{
-		await Task.Delay(0);
-		currentNote = returnArgs.DetailNote;
-		State!.Value.ShowDetailCard = returnArgs.ShowDetailCard;
-	}
 }
