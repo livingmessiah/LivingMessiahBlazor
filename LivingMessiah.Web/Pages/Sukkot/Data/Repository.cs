@@ -9,16 +9,16 @@ using Microsoft.Extensions.Logging;
 
 using LivingMessiah.Web.Pages.Sukkot.Services; // needed for DTO.cs
 using LivingMessiah.Web.Pages.Sukkot.Enums;
-using LivingMessiah.Web.Pages.Sukkot.SuperUser.Data;
+using LivingMessiah.Web.Pages.Sukkot.ManageRegistration.Data;
 using LivingMessiah.Web.Pages.SukkotAdmin.Donations.Data;
 using LivingMessiah.Web.Pages.Sukkot.NormalUser;
-using LivingMessiah.Web.Pages.Sukkot.SuperUser.MasterDetail;
-using LivingMessiah.Web.Pages.Sukkot.SuperUser.Registrant;
+using LivingMessiah.Web.Pages.Sukkot.ManageRegistration.MasterDetail;
+using LivingMessiah.Web.Pages.Sukkot.ManageRegistration.Registrant;
 
 using LivingMessiah.Web.Data;
 using DataEnumsDatabase = LivingMessiah.Web.Data.Enums.Database;
 
-using OneOf;
+//using OneOf;
 
 namespace LivingMessiah.Web.Pages.Sukkot.Data;
 
@@ -27,21 +27,21 @@ public interface IRepository
 	string BaseSqlDump { get; }
 
 	// Used by FluxorStore
-	Task<List<vwSuperUser>> GetAll();
-	Task<SuperUser.Registrant.FormVM> Get(int id);
+	Task<List<ManageRegistrationQuery>> GetAll();
+	Task<ManageRegistration.Registrant.FormVM> Get(int id);
 
-	Task<OneOf<SprocInsert, int, string>> CreateRegistrationOneOf(SuperUser.Registrant.FormVM formVM);
+	//Task<OneOf<SprocInsert, int, string>> CreateRegistrationOneOf(ManageRegistration.Registrant.FormVM formVM);
 
-	Task<Tuple<int, int, string>> CreateRegistration(SuperUser.Registrant.FormVM formVM);
+	Task<Tuple<int, int, string>> CreateRegistration(ManageRegistration.Registrant.FormVM formVM);
 	
-	Task<Tuple<int, int, string>> UpdateRegistration(SuperUser.Registrant.FormVM formVM);
+	Task<Tuple<int, int, string>> UpdateRegistration(ManageRegistration.Registrant.FormVM formVM);
 	Task<Tuple<int, int, string>> DeleteRegistration(int id);
 
 	Task<Tuple<int, int, string>> InsertHouseRulesAgreement(string email, string timeZone);  // Also used by RegistrationSteps!AgreementButtons
 	Task<int> DeleteHRA(int id);  // stpHRADelete
 
-	Task<List<SuperUser.Data.vwDonationDetail>> GetByRegistrationId(int registrationId);
-	Task<Tuple<int, int, string>> InsertRegistrationDonation(SuperUser.Donations.FormVM donation); //SuperUser.Data.Donation donation
+	Task<List<ManageRegistration.Data.DonationDetailQuery>> GetByRegistrationId(int registrationId);
+	Task<Tuple<int, int, string>> InsertRegistrationDonation(ManageRegistration.Donations.FormVM donation); //ManageRegistration.Data.Donation donation
 	Task<int> DeleteDonationDetail(int id);
 
 	// Used by Services
@@ -65,23 +65,23 @@ public class Repository : BaseRepositoryAsync, IRepository
 
 	#region Registration used by FluxorStore
 
-	public async Task<List<vwSuperUser>> GetAll()
+	public async Task<List<ManageRegistrationQuery>> GetAll()
 	{
 		Sql = $@"
 SELECT Id, EMail, FullName, StatusId, Phone, Notes, AdminNotes, DidNotAttend
 , TotalDonation, DonationRowCount
 , IdHra
-FROM Sukkot.vwSuperUser 
+FROM Sukkot.vwManageRegistration
 ORDER BY FullName
 ";
 		return await WithConnectionAsync(async connection =>
 		{
-			var rows = await connection.QueryAsync<vwSuperUser>(sql: Sql);
+			var rows = await connection.QueryAsync<ManageRegistrationQuery>(sql: Sql);
 			return rows.ToList();
 		});
 	}
 
-	public async Task<SuperUser.Registrant.FormVM> Get(int id)
+	public async Task<ManageRegistration.Registrant.FormVM> Get(int id)
 	{
 		Parms = new DynamicParameters(new { Id = id });
 		Sql = $@"
@@ -98,21 +98,21 @@ WHERE Id = @Id";
 
 		return await WithConnectionAsync(async connection =>
 		{
-			var rows = await connection.QueryAsync<SuperUser.Registrant.FormVM>(sql: Sql, param: Parms);
+			var rows = await connection.QueryAsync<ManageRegistration.Registrant.FormVM>(sql: Sql, param: Parms);
 			return rows.SingleOrDefault()!;
 		});
 	}
 
-	// public async Task<Tuple<int, int, string>> CreateRegistration(SuperUser.Registrant.FormVM formVM)
+	// public async Task<Tuple<int, int, string>> CreateRegistration(ManageRegistration.Registrant.FormVM formVM)
 
 
 
-	public Task<OneOf<SprocInsert, int, string>> CreateRegistrationOneOf(FormVM formVM)
-	{
-		throw new NotImplementedException();
-	}
+	//public Task<OneOf<SprocInsert, int, string>> CreateRegistrationOneOf(FormVM formVM)
+	//{
+	//	throw new NotImplementedException();
+	//}
 
-	public async Task<Tuple<int, int, string>> CreateRegistration(SuperUser.Registrant.FormVM formVM)
+	public async Task<Tuple<int, int, string>> CreateRegistration(ManageRegistration.Registrant.FormVM formVM)
 	{
 		Sql = "Sukkot.stpRegistrationInsert";
 		Parms = new DynamicParameters(new
@@ -176,7 +176,7 @@ WHERE Id = @Id";
 		});
 	}
 
-	public async Task<Tuple<int, int, string>> UpdateRegistration(SuperUser.Registrant.FormVM formVM)
+	public async Task<Tuple<int, int, string>> UpdateRegistration(ManageRegistration.Registrant.FormVM formVM)
 	{
 		Sql = "Sukkot.stpRegistrationUpdate";
 		Parms = new DynamicParameters(new
@@ -349,7 +349,7 @@ WHERE Id = @Id";
 
 	#region Donation
 
-	public async Task<List<vwDonationDetail>> GetByRegistrationId(int registrationId)
+	public async Task<List<DonationDetailQuery>> GetByRegistrationId(int registrationId)
 	{
 		Sql = $@"
 -- DECLARE @registrationId int = 20
@@ -362,12 +362,12 @@ ORDER BY Detail
 
 		return await WithConnectionAsync(async connection =>
 		{
-			var rows = await connection.QueryAsync<vwDonationDetail>(sql: Sql, param: Parms);
+			var rows = await connection.QueryAsync<DonationDetailQuery>(sql: Sql, param: Parms);
 			return rows.ToList();
 		});
 	}
 
-	public async Task<Tuple<int, int, string>> InsertRegistrationDonation(SuperUser.Donations.FormVM donation)
+	public async Task<Tuple<int, int, string>> InsertRegistrationDonation(ManageRegistration.Donations.FormVM donation)
 	{
 		base.Sql = "Sukkot.stpDonationInsert ";
 		base.Parms = new DynamicParameters(new

@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Linq;
 
-namespace LivingMessiah.Web.Pages.Sukkot.NormalUser;
+namespace LivingMessiah.Web.Pages.Sukkot.ManageRegistration.Registrant;
 
-// copied from Sukkot.ViewModel_RE_DELETE
-public class EntryFormVM
+public class FormVM
 {
 	public int Id { get; set; }
 	public string? FamilyName { get; set; }
@@ -25,31 +23,7 @@ public class EntryFormVM
 	public DateTime[]? AttendanceDateList2ndMonth { get; set; }
 
 	public string? Notes { get; set; }
-	public string? Avatar { get; set; }
+	public string? AdminNotes { get; set; }
+	public bool DidNotAttend { get; set; }
 	public Decimal LmmDonation { get; set; }
-
-	/*
-	Logger!.LogDebug(string.Format("...attendance date, 1st Mo. {0}, 2nd Mo. {1}"
-		, VM.DumpAttendanceDates, VM.DumpAttendanceDates2ndMonth));
-	*/
-	public string DumpAttendanceDates
-	{
-		get
-		{
-			return this.AttendanceDateList is not null ?
-				String.Join(", ", this.AttendanceDateList.Select(date => date.ToString("yyyy-MM-dd")))
-				: "";
-		}
-	}
-
-	public string DumpAttendanceDates2ndMonth
-	{
-		get
-		{
-			return this.AttendanceDateList2ndMonth is not null ?
-				String.Join(", ", this.AttendanceDateList2ndMonth.Select(date => date.ToString("yyyy-MM-dd")))
-				: "";
-		}
-	}
-
 }

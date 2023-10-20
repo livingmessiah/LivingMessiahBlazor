@@ -172,9 +172,8 @@ public static class Database
 	public static class Error
 	{
 		public const string Index = "/Database/ErrorLog";  // /Admin/
-		public const string Title = "Error Log"; //public const string Log = "/Database/ErrorLog";
+		public const string Title = "Database Error Logs"; //public const string Log = "/Database/ErrorLog";
 		public const string Icon = "fas fa-bomb";
-		//public const string Title = "Database Error Log"; // append db name
 
 		//public static class LivingMessiah
 		//{
@@ -514,11 +513,11 @@ public static class Sukkot
 		}
 	}
 
-	public static class SuperUser
+	public static class ManageRegistration
 	{
-		public const string Index = "Sukkot/SuperUser";
-		public const string Title = "Sukkot Admin";
-		public const string IconText = "Sukkot Admin";
+		public const string Index = "Sukkot/ManageRegistration";
+		public const string Title = "Manage Registration";
+		public const string IconText = "Manage Registration";
 		public const string Icon = "fas fa-mask";
 	}
 

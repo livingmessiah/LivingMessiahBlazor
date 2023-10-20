@@ -12,7 +12,7 @@ public abstract class Roles : SmartFlagEnum<Roles>
 	{
 		internal const int All = -1;  // admin
 		internal const int None = 0;  // user
-		internal const int SuperUser = 1;
+		internal const int ManageRegistration = 1;
 		internal const int Sukkot = 2;
 		internal const int KeyDates = 4;
 		internal const int Elder = 8;
@@ -27,7 +27,7 @@ public abstract class Roles : SmartFlagEnum<Roles>
 		AdminOrSukkotOrElder = "admin, sukkot, elder";
 		AdminOrAudiovisual = "admin, audiovisual";
 		AdminOrKeyDates = "admin, keydates";
-		SukkotMenuBar = Elder + "," + Admin + "," + SuperUser + "," + Sukkot;
+		SukkotMenuBar = Elder + "," + Admin + "," + ManageRegistration + "," + Sukkot;
 		*/
 	}
 	#endregion
@@ -35,7 +35,7 @@ public abstract class Roles : SmartFlagEnum<Roles>
 	#region  Declared Public Instances
 	public static readonly Roles All = new AllSE();
 	public static readonly Roles None = new NoneSE();
-	public static readonly Roles SuperUser = new SuperUserSE();
+	public static readonly Roles ManageRegistration = new ManageRegistrationSE();
 	public static readonly Roles Sukkot = new SukkotSE();
 	public static readonly Roles KeyDates = new KeyDatesSE();
 	public static readonly Roles Elder = new ElderSE();
@@ -69,9 +69,9 @@ public abstract class Roles : SmartFlagEnum<Roles>
 		public NoneSE() : base($"{nameof(Id.None)}", Id.None) { }
 	}
 
-	private sealed class SuperUserSE : Roles
+	private sealed class ManageRegistrationSE : Roles
 	{
-		public SuperUserSE() : base($"{nameof(Id.SuperUser)}", Id.SuperUser) { }
+		public ManageRegistrationSE() : base($"{nameof(Id.ManageRegistration)}", Id.ManageRegistration) { }
 	}
 
 	private sealed class SukkotSE : Roles

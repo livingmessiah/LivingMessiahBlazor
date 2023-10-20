@@ -12,7 +12,7 @@ public abstract class Nav : SmartEnum<Nav>
 		internal const int Video = 1; // Admin Video
 		internal const int Wirecast = 2;  // AudioVisual
 		internal const int KeyDates = 3;
-		internal const int Sukkot = 4;  // SuperUser Registration
+		internal const int Sukkot = 4;  // Manage Registration
 		internal const int Contact = 5;
 		internal const int SpecialEvents = 6;
 		internal const int DatabaseError = 7;
@@ -77,9 +77,9 @@ public abstract class Nav : SmartEnum<Nav>
 	private sealed class SukkotSE : Nav
 	{
 		public SukkotSE() : base($"{nameof(Id.Sukkot)}", Id.Sukkot) { }
-		public override string Index => Links.Sukkot.SuperUser.Index;
-		public override string Text => Links.Sukkot.SuperUser.Title;
-		public override string Icon => Links.Sukkot.SuperUser.Icon;
+		public override string Index => Links.Sukkot.ManageRegistration.Index;
+		public override string Text => Links.Sukkot.ManageRegistration.Title;
+		public override string Icon => Links.Sukkot.ManageRegistration.Icon;
 		public override string Role => "sukkot";  //AdminOrSukkotOrElder
 		public override int Sort => 4;
 	}
@@ -108,7 +108,7 @@ public abstract class Nav : SmartEnum<Nav>
 	{
 		public DatabaseErrorSE() : base($"{nameof(Id.DatabaseError)}", Id.DatabaseError) { }
 		public override string Index => "/Database/ErrorLog";
-		public override string Text => "Error Log";
+		public override string Text => "Database Error Log";
 		public override string Icon => "fas fa-bomb";
 		public override string Role => "admin";
 		public override int Sort => 7;

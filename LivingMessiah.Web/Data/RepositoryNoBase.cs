@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
-using LivingMessiah.Web.Pages.Sukkot.SuperUser.Data;
+using LivingMessiah.Web.Pages.Sukkot.ManageRegistration.Data;
 
-using ReportVM = LivingMessiah.Web.Pages.Sukkot.SuperUser.Detail.ReportVM;
+using ReportVM = LivingMessiah.Web.Pages.Sukkot.ManageRegistration.Detail.ReportVM;
 
 namespace LivingMessiah.Web.Data;
 
@@ -80,7 +80,7 @@ ORDER BY Detail
 				reportVM = await multi.ReadSingleOrDefaultAsync<ReportVM>();
 				if (reportVM is not null)
 				{
-					var childItems = await multi.ReadAsync<vwDonationDetail>();
+					var childItems = await multi.ReadAsync<DonationDetailQuery>();
 					reportVM.Donations = childItems.ToList();
 				}
 				return reportVM!;
@@ -97,7 +97,7 @@ ORDER BY Detail
 
 var parent = await multi.ReadSingleOrDefaultAsync<ReportVM>(); //FirstAsync<ReportVM>
 
-					reportVM.Donations = await multi.ReadAsync<vwDonationDetail>(); //.ToList();
+					reportVM.Donations = await multi.ReadAsync<DonationDetailQuery>(); //.ToList();
 
 				using (var multi = connection.QueryMultiple(query, null))
 				{
@@ -108,7 +108,7 @@ var parent = await multi.ReadSingleOrDefaultAsync<ReportVM>(); //FirstAsync<Repo
 		return await WithConnectionAsync(async connection =>
 		{
 			//using (var multi = await connection.QueryMultipleAsync
-			var multi = await connection.QueryMultipleAsync<SuperUser.Detail.ReportVM>(MySql: Sql, param: MyParms); //sql: Sql, param: Parms
+			var multi = await connection.QueryMultipleAsync<ManageRegistration.Detail.ReportVM>(MySql: Sql, param: MyParms); //sql: Sql, param: Parms
 		return multi;
 		});
 
@@ -119,8 +119,8 @@ public RepositoryNoBase(IConfiguration config, ILogger<RepositoryNoBase> logger)
 		Sql = $@"
 
 
-public async Task<Tuple<SuperUser.Detail.ReportVM, int, string>> GetDisplayAndDonationsById(int id)
-return new Tuple<List<SuperUser.Detail.ReportVM>>, int, string>(reportVM, vwDonationDetail, DetailCount, SprocReturnValue, ReturnMsg);
+public async Task<Tuple<ManageRegistration.Detail.ReportVM, int, string>> GetDisplayAndDonationsById(int id)
+return new Tuple<List<ManageRegistration.Detail.ReportVM>>, int, string>(reportVM, DonationDetailQuery, DetailCount, SprocReturnValue, ReturnMsg);
 	int DetailCount = 0;
 int SprocReturnValue = 0;
 string ReturnMsg = "";

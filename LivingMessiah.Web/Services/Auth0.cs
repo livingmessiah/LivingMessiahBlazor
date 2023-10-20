@@ -24,7 +24,7 @@ public static class Auth0
 		{
 				public const string Admin = "admin";
 				public const string User = "user";
-				public const string SuperUser = "superuser";
+				public const string ManageRegistration = "superuser";
 				public const string Sukkot = "sukkot";
 				public const string KeyDates = "keydates";
 				public const string Elder = "elder";
@@ -36,7 +36,7 @@ public static class Auth0
 				public const string AdminOrSukkotOrElder = "admin, sukkot, elder";
 				public const string AdminOrAudiovisual = "admin, audiovisual";
 				public const string AdminOrKeyDates = "admin, keydates";
-				public const string SukkotMenuBar = Elder + "," + Admin + "," + SuperUser + "," + Sukkot;
+				public const string SukkotMenuBar = Elder + "," + Admin + "," + ManageRegistration + "," + Sukkot;
 
 		}
 

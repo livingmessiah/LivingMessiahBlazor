@@ -1,0 +1,13 @@
+﻿
+@*
+	ToDo: This probably needs to go Sukkot Reports
+	<LivingMessiah.Web.Pages.Sukkot.ManageRegistration.DonationFilter />
+*@
+
+<Form />
+<PreviousDonationsTable RegistrationId="@RegistrationId" />
+
+
+@code {
+	[Parameter, EditorRequired] public int RegistrationId { get; set; }
+}

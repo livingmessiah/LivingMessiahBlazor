@@ -1,0 +1,46 @@
+﻿@inherits FluxorComponent
+
+@using Blazored.Toast.Services
+@using LivingMessiah.Web.Pages.Sukkot.ManageRegistration.Enums
+@using Fluxor
+@using Fluxor.Blazor.Web.Components
+@inject IToastService? Toast 
+
+@code{
+
+	protected override void OnInitialized()
+	{
+		SubscribeToAction<Response_Message_Action>(Response_Message_Toast);
+		base.OnInitialized();
+	}
+
+	private void Response_Message_Toast(Response_Message_Action action)
+	{
+		switch (action.MessageType)
+		{
+			case ResponseMessage.Success:
+				Toast!.ShowSuccess(action.Message);
+				break;
+
+			case ResponseMessage.Warning:
+				Toast!.ShowWarning(action.Message);
+				break;
+
+			case ResponseMessage.Failure:
+				Toast!.ShowError(action.Message);
+				break;
+
+			case ResponseMessage.Info:
+				Toast!.ShowInfo(action.Message);
+				break;
+		}
+	}
+
+	// public enum ResponseMessage
+	// {
+	// 	Success = 1,
+	// 	Warning = 2,
+	// 	Failure = 3,
+	// 	Info = 4
+	// }
+}

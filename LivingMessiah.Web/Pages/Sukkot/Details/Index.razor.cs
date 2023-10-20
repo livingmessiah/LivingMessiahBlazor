@@ -1,7 +1,7 @@
 ﻿//ToDo: This needs to be DELETED!
 //  It's equivalent needs to be found in...
 //	- Pages\Sukkot\NormalUser\Index.razor
-//	- Pages\Sukkot\SuperUser\Index.razor
+//	- Pages\Sukkot\MasterDetail\Index.razor
 
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;

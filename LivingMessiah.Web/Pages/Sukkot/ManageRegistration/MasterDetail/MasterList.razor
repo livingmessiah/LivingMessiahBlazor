@@ -1,0 +1,19 @@
+﻿@using LivingMessiah.Web.Pages.Sukkot.RegistrationSteps
+@using LivingMessiah.Web.Shared
+@using System.Threading.Tasks
+
+@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+
+<DetailTopButtonGroup />
+
+@if (IsXsOrSm)
+{
+	<RegistrationListCard />
+}
+else
+{
+	<RegistrationListTable />
+}
+
+<StatusInlineUL />
+
