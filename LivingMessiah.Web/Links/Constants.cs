@@ -542,7 +542,6 @@ public static class Sukkot
 
 	public const string AttendanceAllFeastDays = "/SukkotAdmin/AttendanceAllFeastDays";
 	public const string AttendanceChart = "/SukkotAdmin/AttendanceChart";
-	public const string ReturnUrlSukkotRegistration = "/Sukkot/Registration";
 
 	public static class Donations
 	{

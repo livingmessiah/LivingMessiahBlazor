@@ -4,7 +4,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Components.Authorization;
 using System.Threading.Tasks;
 
-namespace LivingMessiah.Web.Pages.Sukkot;
+namespace LivingMessiah.Web.Pages.Sukkot.Index;
 
 public partial class Index
 {

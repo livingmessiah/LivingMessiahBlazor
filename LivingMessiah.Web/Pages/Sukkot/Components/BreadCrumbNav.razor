@@ -1,0 +1,44 @@
+﻿@using Home = LivingMessiah.Web.Links.Sukkot
+
+<div class="bg-light ps-2 pt-1 mb-3">
+
+	<nav aria-label="breadcrumb">
+		<ol class="breadcrumb fs-5 fst-italic">
+
+			<li class="breadcrumb-item @Page1Active">
+
+				@if (!String.IsNullOrEmpty(Page2Index))
+				{
+					<a href="@Page1Index">@Page1Title @Constants.Year.String</a>
+				}
+				else
+				{
+					@Page1Title @Constants.Year.String
+				}
+			</li>
+
+			@if (!String.IsNullOrEmpty(Page2Index))
+			{
+				@* border border-primary border - top *@
+				<li class="breadcrumb-item @Page2Active mb-2" aria-current="page">
+					@Page2Title
+				</li>
+			}
+
+		</ol>
+	</nav>
+
+</div>
+
+
+@code {
+
+	//<a href="@Page2Index">@Page2Title</a>
+	[Parameter] public string? Page1Index { get; set; } = Home.Index;
+	[Parameter] public string? Page1Title { get; set; } = Home.Title;
+	[Parameter] public string? Page1Active { get; set; } = "";
+
+	[Parameter] public string? Page2Index { get; set; }
+	[Parameter] public string? Page2Title { get; set; }
+	[Parameter] public string? Page2Active { get; set; }
+}

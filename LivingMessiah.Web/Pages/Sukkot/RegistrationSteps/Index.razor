@@ -18,6 +18,12 @@
 
 <PageTitle>@Page.Title</PageTitle>
 
+<LivingMessiah.Web.Pages.Sukkot.Components.BreadCrumbNav Page2Index="@Page.Index"
+																												 Page2Title="@Page.Title"
+																												 Page2Active=" active" />
+
+
+
 <AuthorizeView Roles="@Roles.SukkotMenuBar">
 	<SukkotAdminMenubar></SukkotAdminMenubar>
 </AuthorizeView>
@@ -79,13 +85,9 @@ else
 	
 }
 
-<div class="row my-2 pt-2 border-top">
-	<div class="col-12">
-		<a href="@PageHome.Index"
-			 title="Sukkot Introduction" class="btn btn-info btn-sm">
-			<i class="far fa-arrow-alt-circle-left"></i> Back to Introduction
-		</a>
-	</div>
-</div>
+<LivingMessiah.Web.Pages.Sukkot.Components.BreadCrumbNav Page2Index="@Page.Index"
+																												 Page2Title="@Page.Title"
+																												 Page2Active=" active" />
+
 
 
