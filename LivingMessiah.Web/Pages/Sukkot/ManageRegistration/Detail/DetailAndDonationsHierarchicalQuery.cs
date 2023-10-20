@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace LivingMessiah.Web.Pages.Sukkot.ManageRegistration.Detail;
 
-public class ReportVM
+public class DetailAndDonationsHierarchicalQuery
 {
 	public int Id { get; set; }
 	public string? FamilyName { get; set; }

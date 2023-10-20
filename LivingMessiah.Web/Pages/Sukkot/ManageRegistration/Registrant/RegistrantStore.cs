@@ -2,9 +2,9 @@
 using System.Threading.Tasks;
 using System;
 
-using LivingMessiah.Web.Pages.Sukkot.Data;
-using LivingMessiah.Web.Pages.Sukkot.Enums;
+using LivingMessiah.Web.Pages.Sukkot.ManageRegistration.Data;
 using LivingMessiah.Web.Pages.Sukkot.ManageRegistration.Enums;
+using SukkotEnumsHelper = LivingMessiah.Web.Pages.Sukkot.Enums.Helper;
 
 namespace LivingMessiah.Web.Pages.Sukkot.ManageRegistration.Registrant;
 
@@ -111,7 +111,6 @@ public static class Reducers
 }
 
 
-
 // 5. Effects
 public class Effects
 {
@@ -145,7 +144,7 @@ public class Effects
 			}
 			else
 			{
-				var tuple = Helper.GetAttendanceDatesArray(formVM!.AttendanceBitwise);
+				var tuple = SukkotEnumsHelper.GetAttendanceDatesArray(formVM!.AttendanceBitwise);
 				formVM!.AttendanceDateList = tuple.week1;
 				formVM!.AttendanceDateList2ndMonth = tuple.week2!;
 				formVM!.Status = RegistrationSteps.Enums.Status.FromValue(formVM!.StatusId);

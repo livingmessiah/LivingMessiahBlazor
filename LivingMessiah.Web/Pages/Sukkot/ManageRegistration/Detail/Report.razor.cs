@@ -5,5 +5,5 @@ namespace LivingMessiah.Web.Pages.Sukkot.ManageRegistration.Detail;
 public partial class Report
 {
 	[Inject] private IState<DetailState>? State { get; set; }
-	ReportVM? ReportVM => State!.Value.ReportVM;
+	DetailAndDonationsHierarchicalQuery? ReportVM => State!.Value.ReportVM;
 }

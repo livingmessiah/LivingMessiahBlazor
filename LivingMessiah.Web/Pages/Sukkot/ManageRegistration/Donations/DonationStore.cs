@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using System;
 
-using LivingMessiah.Web.Pages.Sukkot.Data;
+using LivingMessiah.Web.Pages.Sukkot.ManageRegistration.Data;
 using LivingMessiah.Web.Pages.Sukkot.ManageRegistration.Enums;
 
 namespace LivingMessiah.Web.Pages.Sukkot.ManageRegistration.Donations;

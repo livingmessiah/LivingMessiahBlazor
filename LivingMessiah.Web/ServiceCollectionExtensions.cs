@@ -40,12 +40,8 @@ public static class ServiceCollectionExtensions
 
 			.AddTransient<IService, Service>()        //Pages.Sukkot.Services;
 			.AddTransient<SukkotData.IRepository, SukkotData.Repository>()
-			.AddTransient<IRepositoryNoBase, RepositoryNoBase>()
 
-			.AddTransient<IValidator<Pages.Sukkot.ManageRegistration.HRA.FormVM>, Pages.Sukkot.ManageRegistration.HRA.FormVMValidator>()
 			.AddTransient<IValidator<Pages.Sukkot.NormalUser.EntryFormVM>, Pages.Sukkot.NormalUser.EntryFormVMValidator>()
-			.AddTransient<IValidator<Pages.Sukkot.ManageRegistration.Donations.FormVM>, Pages.Sukkot.ManageRegistration.Donations.FormVMValidator>()
-			.AddTransient<IValidator<Pages.Sukkot.ManageRegistration.Registrant.FormVM>, Pages.Sukkot.ManageRegistration.Registrant.FormVMValidator>()
 
 			.AddTransient<IDonationRepository, DonationRepository>()
 			

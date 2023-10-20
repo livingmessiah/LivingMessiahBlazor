@@ -3,24 +3,26 @@ using System.Threading.Tasks;
 using System;
 using System.Linq;
 
-using LivingMessiah.Web.Data;
+using LivingMessiah.Web.Pages.Sukkot.ManageRegistration.Data;
 using LivingMessiah.Web.Pages.Sukkot.ManageRegistration.Enums;
+using SukkotEnumsHelper = LivingMessiah.Web.Pages.Sukkot.Enums.Helper;
 
 namespace LivingMessiah.Web.Pages.Sukkot.ManageRegistration.Detail;
 
 // 1. Action
-public record Add_Action(ReportVM ReportVM);
+public record Add_Action(DetailAndDonationsHierarchicalQuery ReportVM);
 public record Get_Action(int Id);
-public record Set_ReportVM_Action(ReportVM? ReportVM);
+public record Set_ReportVM_Action(DetailAndDonationsHierarchicalQuery? ReportVM);
 
 
 // 2. State
 public record DetailState
 {
-	public ReportVM? ReportVM { get; init; } 
+	public DetailAndDonationsHierarchicalQuery? ReportVM { get; init; } 
 	public int RegistrationId { get; init; }
 	public string? FullName { get; init; }
 }
+
 
 // 3. Feature
 public class FeatureImplementation : Feature<DetailState>
@@ -31,7 +33,7 @@ public class FeatureImplementation : Feature<DetailState>
 	{
 		return new DetailState
 		{
-			ReportVM = new ReportVM()
+			ReportVM = new DetailAndDonationsHierarchicalQuery()
 		};
 	}
 }
@@ -58,9 +60,9 @@ public class Effects
 {
 	#region Constructor and DI
 	private readonly ILogger Logger;
-	private readonly IRepositoryNoBase dbNoBase;  // why is this being used
+	private readonly IRepositoryHierarchicalQuery dbNoBase;  
 
-	public Effects(ILogger<Effects> logger, IRepositoryNoBase repositoryNoBase)
+	public Effects(ILogger<Effects> logger, IRepositoryHierarchicalQuery repositoryNoBase)
 	{
 		Logger = logger;
 		dbNoBase = repositoryNoBase;
@@ -75,7 +77,7 @@ public class Effects
 		Logger.LogDebug(string.Format("Inside {0}", inside));
 		try
 		{
-			ReportVM? reportVM = new();
+			DetailAndDonationsHierarchicalQuery? reportVM = new();
 			reportVM = await dbNoBase!.GetDisplayAndDonationsById(action.Id);
 
 			if (reportVM is null)
@@ -85,7 +87,7 @@ public class Effects
 			}
 			else
 			{
-				var tuple = Sukkot.Enums.Helper.GetAttendanceDatesArray(reportVM!.AttendanceBitwise);
+				var tuple = SukkotEnumsHelper.GetAttendanceDatesArray(reportVM!.AttendanceBitwise);
 				reportVM!.AttendanceDateList = tuple.week1;
 				reportVM!.AttendanceDateList2ndMonth = tuple.week2!;
 				Logger.LogDebug(string.Format("...FullName: {0}", reportVM!.FullName(false)));
