@@ -30,12 +30,12 @@ public interface ISukkotService
 public class SukkotService : ISukkotService
 {
 	#region Constructor and DI
-	private readonly ISukkotRepository db;
+	private readonly ISukkotRepositoryUsedBySukkotService db;
 	private readonly ILogger Logger;
 	private readonly AuthenticationStateProvider AuthenticationStateProvider;
 
 	public SukkotService(
-		ISukkotRepository sukkotRepository, ILogger<SukkotService> logger, AuthenticationStateProvider authenticationStateProvider)
+		ISukkotRepositoryUsedBySukkotService sukkotRepository, ILogger<SukkotService> logger, AuthenticationStateProvider authenticationStateProvider)
 	{
 		db = sukkotRepository;
 		Logger = logger;

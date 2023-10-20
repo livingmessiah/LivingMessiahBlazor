@@ -45,7 +45,7 @@ public static class ServiceCollectionExtensions
 
 			.AddTransient<IDonationRepository, DonationRepository>()
 			
-			.AddTransient<SukkotData.ISukkotRepository, SukkotData.SukkotRepository>()
+			.AddTransient<SukkotData.ISukkotRepositoryUsedBySukkotService, SukkotData.SukkotRepositoryUsedBySukkotService>()
 			.AddTransient<ISukkotAdminRepository, SukkotAdminRepository>()
 			.AddSingleton<ISmartEnumServiceForSfDropDownList, SmartEnumServiceForSfDropDownList>()
 			.AddScoped<AppState>()

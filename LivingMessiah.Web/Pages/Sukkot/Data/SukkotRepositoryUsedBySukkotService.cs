@@ -11,20 +11,19 @@ using DataEnumsDatabase = LivingMessiah.Web.Data.Enums.Database;
 
 namespace LivingMessiah.Web.Pages.Sukkot.Data;
 
-public interface ISukkotRepository
+public interface ISukkotRepositoryUsedBySukkotService
 {
 	string BaseSqlDump { get; }
+
 	Task<vwRegistration> ById(int id);
 	Task<vwRegistrationStep> GetByEmail(string email);
-	Task<int> Create(RegistrationPOCO registration); // No references
-	Task<int> Update(RegistrationPOCO registration); // No references
 	Task<int> Delete(int id);
 	Task<RegistrationSummary> GetRegistrationSummary(int id);
 }
 
-public class SukkotRepository : BaseRepositoryAsync, ISukkotRepository
+public class SukkotRepositoryUsedBySukkotService : BaseRepositoryAsync, ISukkotRepositoryUsedBySukkotService
 {
-	public SukkotRepository(IConfiguration config, ILogger<SukkotRepository> logger)
+	public SukkotRepositoryUsedBySukkotService(IConfiguration config, ILogger<SukkotRepositoryUsedBySukkotService> logger)
 		: base(config, logger, DataEnumsDatabase.Sukkot.ConnectionStringKey)
 	{
 	}
@@ -63,77 +62,6 @@ WHERE EMail = @EMail
 		{
 			var rows = await connection.QueryAsync<vwRegistrationStep>(sql: base.Sql, param: base.Parms);
 			return rows.SingleOrDefault()!;
-		});
-	}
-
-	public async Task<int> Create(RegistrationPOCO registration)
-	{
-		base.Sql = "Sukkot.stpRegistrationInsert";
-		base.Parms = new DynamicParameters(new
-		{
-			FamilyName = registration.FamilyName,
-			FirstName = registration.FirstName,
-			SpouseName = registration.SpouseName,
-			OtherNames = registration.OtherNames,
-			Email = registration.EMail,
-			Phone = registration.Phone,
-			Adults = registration.Adults,
-			ChildBig = registration.ChildBig,
-			ChildSmall = registration.ChildSmall,
-			StatusId = registration.Status!.Value,
-			AttendanceBitwise = registration.AttendanceBitwise,
-			LmmDonation = 0,
-			Avatar = registration.Avatar,
-			Notes = registration.Notes,
-		});
-
-		base.Parms.Add("@NewId", dbType: DbType.Int32, direction: ParameterDirection.Output);
-
-		return await WithConnectionAsync(async connection =>
-		{
-			base.log.LogDebug($"Inside {nameof(SukkotRepository)}!{nameof(Create)}; About to execute sql:{base.Sql}");
-			var affectedrows = await connection.ExecuteAsync(sql: base.Sql, param: base.Parms, commandType: System.Data.CommandType.StoredProcedure);
-			int? x = base.Parms.Get<int?>("NewId");
-			if (x == null)
-			{
-				base.log.LogWarning($"NewId is null; returning as 0; Check dbo.ErrorLog for IX_Registration_EMail_Unique duplication Error; registration.EMail: {@registration.EMail}");
-				return 0;
-			}
-			else
-			{
-				int NewId = int.TryParse(x.ToString(), out NewId) ? NewId : 0;
-				base.log.LogDebug($"Return NewId:{NewId}");
-				return NewId;
-			}
-
-		});
-	}
-
-	public async Task<int> Update(RegistrationPOCO registration)
-	{
-		//ToDo: used this use base.Parm ?
-		base.Sql = $@"
-UPDATE Sukkot.Registration SET 
-	FamilyName = N'{registration.FamilyName}',
-	FirstName = N'{registration.FirstName}',
-	SpouseName = N'{registration.SpouseName}',
-	OtherNames = N'{registration.OtherNames}',
-	EMail = N'{registration.EMail}',
-	Phone = N'{registration.Phone}',
-	Adults = {registration.Adults},
-	ChildBig = {registration.ChildBig},
-	ChildSmall = {registration.ChildSmall},
-	AttendanceBitwise = {registration.AttendanceBitwise},
-	StatusId = {registration.Status!.Value},  
-	LmmDonation = {registration.LmmDonation},
-	Notes = N'{registration.NotesScrubbed}',
-	Avatar = N'{registration.Avatar}'
-WHERE Id = {registration.Id};
-";
-		return await WithConnectionAsync(async connection =>
-		{
-			var count = await connection.ExecuteAsync(sql: base.Sql);
-			return count;
 		});
 	}
 
