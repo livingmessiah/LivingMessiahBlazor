@@ -5,11 +5,19 @@ public static class Site
 		public const string BaseUrl = "https://livingmessiah.com/";
 }
 
+#region Calendar and Planner
 public static class CalendarCache
 {
-		public const string Key = "CalendarVM";
+		public const string Key = "CalendarQuery";
 		public const int FromMinutes = 30;
 }
+
+public static class PlannerCache
+{
+	public const string Key = "PlannerQuery"; 
+	public const int FromMinutes = 30;
+}
+#endregion
 
 public static class PsalmsAndProverbsCache
 {

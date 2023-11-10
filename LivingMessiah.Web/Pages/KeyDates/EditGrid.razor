@@ -2,25 +2,10 @@
 @using LivingMessiah.Web.Pages.KeyDates.Enums
 @using LivingMessiah.Web.Pages.KeyDates.Queries
 
-
-<div class="row mb-2 g-3 align-items-center">
-	<div class="col-auto">
-		<label for="keyDateYear" class="col-form-label">Year: </label>
-	</div>
-	<div class="col-auto">
-		<select class="form-select" @onchange="ChangingYearAsync" id="keyDateYear">
-			@foreach (var item in KeyDateYear.List.OrderBy(o => o.Value))
-			{
-				<option selected="@IsSelectedYear(item.Name)" value="@item">@item.Year (@item.Name)</option>
-			}
-		</select>
-	</div>
-</div>
-
 <SfGrid ID="Grid" @ref="Grid"
 				DataSource="@CalendarEntries"
 				Toolbar="@(new List<string>() { "Update", "Cancel" })"
-				AllowFiltering="true" AllowPaging="false">
+				AllowFiltering="false" AllowPaging="false">
 	<GridEvents TValue="@CalendarEntry" OnActionFailure="Failure"></GridEvents>
 	<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
 
@@ -30,14 +15,10 @@
 
 		<GridEvents OnBatchSave="OnSave" TValue="CalendarEntry" />
 
-		<GridColumn Field=@nameof(CalendarEntry.CalendarTemplateId) HeaderText="Id"
+		<GridColumn Field=@nameof(CalendarEntry.Detail) HeaderText="Id"
 								IsPrimaryKey="true" Visible="false"
 								AllowEditing="false" AllowFiltering="false"
 								Type="ColumnType.Number" Width="70" />
-
-		<GridColumn Field=@nameof(CalendarEntry.DateTypeEnum) HeaderText="Type" Width="60" AllowEditing="false"
-								FilterSettings="@(new FilterSettings { Type = Syncfusion.Blazor.Grids.FilterType.CheckBox })">
-		</GridColumn>
 
 		<GridColumn Field=@nameof(CalendarEntry.Date) HeaderText="Date" EditType="EditType.DefaultEdit" Format="d"
 								ValidationRules="@(new Syncfusion.Blazor.Grids.ValidationRules{ Required= true })"
@@ -45,7 +26,7 @@
 								Type="ColumnType.Date" TextAlign="TextAlign.Center" Width="80">
 		</GridColumn>
 
-		<GridColumn Field=@nameof(CalendarEntry.Descr) HeaderText="Description" Width="130"
+		<GridColumn Field=@nameof(CalendarEntry.Description) HeaderText="Description" Width="130"
 								AllowEditing="false" AllowFiltering="false" Type="ColumnType.String" />
 
 	</GridColumns>

@@ -39,7 +39,7 @@ public class CacheService : ICacheService
 	public async Task<Models.PsalmAndProverbVM>? GetCurrentPsalmAndProverb(bool useCache)
 	{
 		//var cacheKey = Settings.Constants.PsalmsAndProverbsCache.Key;
-		string cacheKey = "CalendarVM";
+		string cacheKey = "PsalmAndProverbVM"; 
 		string msg = $"Inside {nameof(CacheService)}!{nameof(GetCurrentPsalmAndProverb)}; cacheKey:{cacheKey};...";
 
 		if (!useCache)

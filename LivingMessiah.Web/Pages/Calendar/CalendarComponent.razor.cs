@@ -1,24 +1,20 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using Blazored.Toast.Services;
+
 using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.Linq;
 
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Caching.Memory;
 
 using Syncfusion.Blazor.Schedule;
 
-using LivingMessiah.Web.Settings;
 using static LivingMessiah.Web.Pages.Calendar.ScheduleData;
-
 using LivingMessiah.Web.Pages.KeyDates.Data;
-using LivingMessiah.Web.Pages.KeyDates.Enums;
-using System.Linq;
-
-using Microsoft.Extensions.Caching.Memory;
 using CacheSettings = LivingMessiah.Web.Settings.Constants.CalendarCache;
 using Page = LivingMessiah.Web.Links.Calendar;
-using Blazored.Toast.Services;
 
 namespace LivingMessiah.Web.Pages.Calendar;
 
@@ -33,13 +29,13 @@ public partial class CalendarComponent
 	[Parameter] public bool IsXsOrSm { get; set; }
 	[Parameter] public int YearId { get; set; }
 
-	protected PrintedCalendarEnum printedCalendarEnum = PrintedCalendarEnum.ReadyForSale;
+	protected PrintedCalendarEnum printedCalendarEnum = PrintedCalendarEnum.NotAvailable;
 
 	protected SfSchedule<ReadonlyEventsData>? ScheduleRef;
 
 	public DateTime CurrentDate = DateTime.Now;
 
-	protected List<CalendarVM>? CalendarVMs;
+	protected List<CalendarQuery>? CalendarQueries;
 
 	public List<ReadonlyEventsData>? AppointmentDataList { get; set; }
 
@@ -69,29 +65,36 @@ public partial class CalendarComponent
 		Logger!.LogDebug(string.Format("Inside Page: {0}, Class!Method: {1}, year:{2}"
 			, Page.Index, nameof(CalendarComponent) + "!" + nameof(PopulateCalendar), year));
 
-		CalendarVMs = Cache!.Get<List<CalendarVM>>(CacheSettings.Key);
-		if (CalendarVMs is null)
+		CalendarQueries = Cache!.Get<List<CalendarQuery>>(CacheSettings.Key);
+		if (CalendarQueries is null)
 		{
-			try
+		try
+		{
+			CalendarQueries = await db!.GetCalendarQuery(YearId);
+			if (CalendarQueries != null)
 			{
-				CalendarVMs = await db!.GetPlannerVM(YearId, Enums.DateTypeFilter.FullList);
-				if (CalendarVMs != null)
+				if (CalendarQueries.Any())
 				{
-					Logger!.LogDebug(string.Format("... Data gotten from DATABASE"));
-					Cache!.Set(CacheSettings.Key, CalendarVMs, TimeSpan.FromMinutes(CacheSettings.FromMinutes));
-					LoadAppointmentDataList();
+					Logger!.LogDebug(string.Format("... Data gotten from DATABASE; CalendarQueries.Count: {0}", CalendarQueries.Count));
 				}
 				else
 				{
-					Toast!.ShowWarning("CalendarEntries NOT FOUND");
+					Logger!.LogDebug(string.Format("... Data gotten from DATABASE BUT NO RECORDS RETURNED!"));
 				}
+				Cache!.Set(CacheSettings.Key, CalendarQueries, TimeSpan.FromMinutes(CacheSettings.FromMinutes));
+				LoadAppointmentDataList();
 			}
-			catch (Exception ex)
+			else
 			{
-				Logger!.LogError(ex, string.Format("...Inside catch of {0}"
-					, nameof(CalendarComponent) + "!" + nameof(PopulateCalendar)));
-				Toast!.ShowError("An invalid operation occurred, contact your administrator");
+				Toast!.ShowWarning("CalendarEntries NOT FOUND");
 			}
+		}
+		catch (Exception ex)
+		{
+			Logger!.LogError(ex, string.Format("...Inside catch of {0}"
+				, nameof(CalendarComponent) + "!" + nameof(PopulateCalendar)));
+			Toast!.ShowError("An invalid operation occurred, contact your administrator");
+		}
 		}
 		else
 		{
@@ -112,12 +115,14 @@ public partial class CalendarComponent
 			Enums.DateType dateType;
 			Enums.Season season;
 
-			foreach (var item in CalendarVMs!)
+			foreach (var item in CalendarQueries!)
 			{
+
 				dateType = Enums.DateType.FromValue(item.DateTypeId);
+
 				if (dateType.Value == Enums.DateType.Season)
 				{
-					season = Enums.Season.FromValue(item.Detail);
+					season = Enums.Season.FromValue(item.EnumId);
 					color = season.CalendarColor;
 				}
 				else
@@ -127,16 +132,19 @@ public partial class CalendarComponent
 
 				AppointmentDataList.Add(new ReadonlyEventsData
 				{
-					Id = item.Id,
-					Subject = item.Descr,
-					Description = item.Descr,
+					Id = item.Detail,
+					Subject = item.Description,
+					Description = item.Description,
 					StartTime = item.Date,
 					EndTime = item.Date,
-					CategoryColor = color, // item.DateTypeSmartEnum.CalendarColor,
+					CategoryColor = color, 
 					IsAllDay = true,
 					IsReadonly = true
 				}
-			);
+				);
+
+
+
 			}
 
 		}

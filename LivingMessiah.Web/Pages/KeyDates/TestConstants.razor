@@ -1,0 +1,35 @@
+﻿@page "/TestConstants"
+
+@inject Data.IKeyDateRepository? db
+
+<h3>TestConstants</h3>
+@if (KeyDateConstants is not null)
+{
+	<h3>KeyDate.Constants</h3>
+	<div class="row">
+
+		<div class="col-4">@KeyDateConstants.PreviousYear</div>
+		<div class="col-4">@KeyDateConstants.CurrentYear</div>
+		<div class="col-4">@KeyDateConstants.NextYear</div>
+	</div>
+}
+
+<KeyDateConstants ParamKeyDateConstants="KeyDateConstants" />
+
+@code {
+	protected Queries.KeyDateConstantsQuery? KeyDateConstants = new Queries.KeyDateConstantsQuery();
+
+	protected override async Task OnInitializedAsync()
+	{
+		//Logger!.LogDebug(string.Format("Inside {0}; {1}", inside, nameof(PopulateKeyDateConstants)));
+		try
+		{
+			KeyDateConstants = await db!.GetKeyDateConstants();
+		}
+		catch (Exception ex)
+		{
+			//Logger!.LogError(ex, string.Format("...Inside catch of {0}", inside + "!" + nameof(PopulateKeyDateConstants)));
+		}
+
+	}
+}

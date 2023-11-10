@@ -1,16 +1,11 @@
 ﻿using Ardalis.SmartEnum;
+using KeyDateEnum = LivingMessiah.Web.Pages.KeyDates.Enums.DateTypeEnum;
 
 namespace LivingMessiah.Web.Pages.Calendar.Enums;
 
 public abstract class DateTypeHeaderRow : SmartEnum<DateTypeHeaderRow>
 {
 	#region Id's
-	private static class Id
-	{
-		internal const int Month = 1;
-		internal const int Feast = 2;
-		internal const int Season = 3;
-	}
 	#endregion
 
 	#region  Declared Public Instances
@@ -25,28 +20,27 @@ public abstract class DateTypeHeaderRow : SmartEnum<DateTypeHeaderRow>
 	#region Extra Fields
 	public abstract string BadgeColor { get; }
 	public abstract string Icon { get; }
-	//public abstract string Title { get; } public override string Title => "far fa-moon";
 	#endregion
 
 	#region Private Instantiation
 
 	private sealed class MonthSE : DateTypeHeaderRow
 	{
-		public MonthSE() : base($"{nameof(Id.Month)}", Id.Month) { }
+		public MonthSE() : base($"{nameof(KeyDateEnum.Month)}", (int)KeyDateEnum.Month) { }
 		public override string BadgeColor => " bg-dark";
 		public override string Icon => "far fa-moon";
 	}
 
 	private sealed class FeastSE : DateTypeHeaderRow
 	{
-		public FeastSE() : base($"{nameof(Id.Feast)}", Id.Feast) { }
+		public FeastSE() : base($"{nameof(KeyDateEnum.Feast)}", (int)KeyDateEnum.Feast) { }
 		public override string BadgeColor => " bg-info";
 		public override string Icon => "fas fa-glass-cheers";
 	}
 
 	private sealed class SeasonWinterSE : DateTypeHeaderRow
 	{
-		public SeasonWinterSE() : base($"{nameof(Id.Season)}", Id.Season) { }
+		public SeasonWinterSE() : base($"{nameof(KeyDateEnum.Season)}", (int)KeyDateEnum.Season) { }
 		public override string BadgeColor => " bg-dark";
 		public override string Icon => "far fa-moon";
 	}

@@ -4,9 +4,10 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 using LivingMessiah.Web.Pages.KeyDates.Data;
-using CacheSettings = LivingMessiah.Web.Settings.Constants.CalendarCache;
+using CacheSettings = LivingMessiah.Web.Settings.Constants.PlannerCache;
 using Microsoft.Extensions.Caching.Memory;
 using Blazored.Toast.Services;
+using System.Linq;
 
 namespace LivingMessiah.Web.Pages.Calendar;
 
@@ -22,14 +23,15 @@ public partial class Planner
 
 	protected string? DateCSS;
 	protected string? DateFormat;
-	protected List<CalendarVM>? CalendarVMs;
+	protected List<PlannerQuery>? PlannerQueries;  
 
-	public Enums.DateTypeFilter CurrentFilter { get; set; } = Enums.DateTypeFilter.Feast;
+	public Enums.DateTypeFilter CurrentFilter { get; set; } = Enums.DateTypeFilter.All; 
 	protected async Task OnClickFilter(Enums.DateTypeFilter newFilter)
 	{
 		CurrentFilter = newFilter;
 		Logger!.LogDebug(string.Format("...Inside {0}, {1} is now the current filter"
 			, nameof(Planner) + "!" + nameof(OnClickFilter), newFilter.Name));
+		
 		await PopulatePlanner(YearId, CurrentFilter);
 	}
 
@@ -45,7 +47,6 @@ public partial class Planner
 		}
 	}
 
-
 	protected override async Task OnInitializedAsync()
 	{
 		Logger!.LogDebug(string.Format("Inside {0}, year={1}", nameof(Planner) + "!" + nameof(OnInitializedAsync), YearId));
@@ -56,19 +57,28 @@ public partial class Planner
 
 	private async Task PopulatePlanner(int year, Enums.DateTypeFilter filter)
 	{
+		Logger!.LogDebug(string.Format("...{0}", nameof(PopulatePlanner)));
 		try
 		{
-			CalendarVMs = Cache!.Get<List<CalendarVM>>(GetChacheKey());
+			PlannerQueries = Cache!.Get<List<PlannerQuery>>(GetChacheKey());
 
-			if (CalendarVMs is null)
+			if (PlannerQueries is null)
 			{
-				CalendarVMs = await db!.GetPlannerVM(YearId, filter);
+				PlannerQueries = await db!.GetPlannerQueries(YearId, filter);
 
-				if (CalendarVMs is not null)
+				if (PlannerQueries is not null)
 				{
-					PopulateDateTypesInList();
-					Logger!.LogDebug(string.Format("... Data gotten from DATABASE"));
-					Cache!.Set(GetChacheKey(), CalendarVMs, TimeSpan.FromMinutes(CacheSettings.FromMinutes));
+					if (PlannerQueries.Any())
+					{
+						Logger!.LogDebug(string.Format("... Data gotten from DATABASE; PlannerQueries.Count: {0}", PlannerQueries.Count));
+					}
+					else
+					{
+						Logger!.LogDebug(string.Format("... Data gotten from DATABASE BUT NO RECORDS RETURNED!"));
+					}
+
+					PopulateFeastDetailInList();
+					Cache!.Set(GetChacheKey(), PlannerQueries, TimeSpan.FromMinutes(CacheSettings.FromMinutes));
 				}
 				else
 				{
@@ -83,7 +93,7 @@ public partial class Planner
 		}
 		catch (Exception ex)
 		{
-			Logger!.LogError(ex, string.Format("...Error calling={0}", nameof(db.GetCalendarEntries)));
+			Logger!.LogError(ex, string.Format("...Error calling={0}", nameof(db.GetPlannerQueries)));
 			Toast!.ShowError($"Error reading database");
 		}
 	}
@@ -93,22 +103,14 @@ public partial class Planner
 		return CacheSettings.Key + CurrentFilter.Value;
 	}
 
-	void PopulateDateTypesInList()
+	
+	void PopulateFeastDetailInList()
 	{
-		foreach (var item in CalendarVMs!)
+		foreach (var item in PlannerQueries!)
 		{
-			if (item.DateTypeId == Enums.DateType.Month.Value)
-			{
-				item.LunarMonth = Enums.LunarMonth.FromValue(item.Detail);
-			}
-			else
-			{
-				item.LunarMonth = null;
-			}
-
 			if (item.DateTypeId ==  Enums.DateType.Feast.Value)
 			{
-				item.FeastDay = Enums.FeastDay.FromValue(item.Detail);
+				item.FeastDay = Enums.FeastDay.FromValue(item.EnumId);
 			}
 			else
 			{

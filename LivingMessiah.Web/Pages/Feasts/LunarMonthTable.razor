@@ -1,16 +1,13 @@
 ﻿@page "/LunarMonth"
 
-@using LivingMessiah.Web.Pages.Feasts.Components
 @using LivingMessiah.Web.Enums
-@using Page = LivingMessiah.Web.Pages.Feasts.LinkSmartEnums.FeastLinks
+@using Page = LivingMessiah.Web.Pages.Feasts.LinkSmartEnums.FeastLinks.LunarMonth
 
 <PageTitle>@Page.Title</PageTitle>
 
 <div class="pb-1 mt-4 mb-5 border-bottom border-info">
 	<h2><i class="@Page.Icon"></i> @Page.Title</h2>
 </div>
-
-<ReturnAnchor></ReturnAnchor>
 
 <div class="card border-primary mt-5">
 	<div class="card-header"><h5 class="text-center">@Page.Title References | Esther 9</h5></div>
@@ -44,20 +41,18 @@
 
 </div>
 
-<div class="card mb-3 border-warning">
+<div class="card my-3 border-warning">
 	<div class="card-header">
 		<h4 class="card-title text-center">Lunar Months</h4>
 	</div>
 	<div class="card-body">
 		<TableTemplate Items="Calendar.Enums.LunarMonth.List.Where(w => w.IsPreviousYear==false).OrderBy(o => o.Value).ToList()">
 			<TableHeader>
-				@*<th class="text-info">Id</th>*@
 				<th class="text-info">Name</th>
 				<th class="text-info">Hebrew</th>
 				<th class="text-info">Full Name</th>
 			</TableHeader>
 			<RowTemplate>
-				@*<td>@context.Value</td>*@
 				<td>@context.Name</td>
 				<td><span class="hebrew">@context.Hebrew</span> </td>
 				<td>@context.FullName</td>
@@ -67,6 +62,4 @@
 </div>
 
 <AlephBetFooter />
-
-@*<h4 class="card-title text-center"><code>Calendar.Enums.LunarMonth.List</code></h4>*@
 

@@ -5,14 +5,14 @@ namespace LivingMessiah.Web.Pages.Calendar;
 public partial class HeaderRow
 {
 	[Parameter] public int DateTypeId { get; set; }
-	[Parameter] public int Detail { get; set; }
+	[Parameter] public int EnumId { get; set; }
 	[Parameter] public string? Descr { get; set; }
 
 	public  string Badge()
 	{
 		if (DateTypeId == Enums.DateTypeHeaderRow.SeasonWinter.Value)
 		{
-			return $"badge {Enums.Season.FromValue(Detail).BadgeColor}";
+			return $"badge {Enums.Season.FromValue(EnumId).BadgeColor}";
 		}
 		else
 		{
@@ -25,7 +25,7 @@ public partial class HeaderRow
 	{
 		if (DateTypeId == Enums.DateTypeHeaderRow.SeasonWinter.Value)
 		{
-			return $"{Enums.Season.FromValue(Detail).Icon}";
+			return $"{Enums.Season.FromValue(EnumId).Icon}";
 		}
 		else
 		{
@@ -37,7 +37,7 @@ public partial class HeaderRow
 	{
 		if (DateTypeId == Enums.DateTypeHeaderRow.SeasonWinter.Value)
 		{
-			return $"{Enums.Season.FromValue(Detail).Name} {Enums.Season.FromValue(Detail).Type}";
+			return $"{Enums.Season.FromValue(EnumId).Name} {Enums.Season.FromValue(EnumId).Type}";
 		}
 		else
 		{

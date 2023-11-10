@@ -11,27 +11,25 @@
 		@foreach (var item in Enums.DateTypeFilter.List.OrderBy(o => o.Value))
 		{
 			<a @onclick="@(() => OnClickFilter(item))" title="Filter by @item.ButtonName"
-			 class="btn btn-outline-primary btn-sm @ActiveFilter(item)">
+				 class="btn btn-outline-primary btn-sm @ActiveFilter(item)">
 				@item.ButtonName &nbsp;<i class="fas fa-filter"></i>
 			</a>
 		}
 	</div>
 </div>
 
-
-<LoadingComponent IsLoading="CalendarVMs==null">
-	@* border-light*@
+<LoadingComponent IsLoading="PlannerQueries==null">
 	<div class="card bg-light p-2">
 
-		@foreach (var row in CalendarVMs!)
+		@foreach (var row in PlannerQueries!)
 		{
 			<div class=" row mb-3">
-				<div class="col-5">
+				<div class="col-md-6 col-lg-8">
 					<span class="@DateCSS">@row.Date.ToString(DateFormat)</span>
 				</div>
 
-				<div class="col-7">
-					<HeaderRow DateTypeId="@row.DateTypeId" Detail="@row.Detail" Descr="@row.Descr" />
+				<div class="col-md-6 col-lg-4">
+					<HeaderRow DateTypeId="@row.DateTypeId" EnumId="@row.EnumId" Descr="@row.Description" />
 				</div>
 			</div>
 
@@ -45,21 +43,29 @@
 		{
 			<div class="card-footer">
 				<a href="@PageFeast.Index"
-				 class="btn-primary btn-sm float-end">
+					 class="btn btn-primary btn-sm float-end">
 					@PageFeast.Title related verses <span class="fas fa-caret-right"></span>
 				</a>
 			</div>
 		}
-
-		@if (@CurrentFilter == Enums.DateTypeFilter.Month)
+		else
 		{
-			<div class="card-footer">
-				<a href="@PageMonth.Index"
-				 class="btn-primary btn-sm float-end">
-					@PageMonth.Title related verses <span class="fas fa-caret-right"></span>
-				</a>
-			</div>
+			@if (@CurrentFilter == Enums.DateTypeFilter.Month)
+			{
+				<div class="card-footer">
+					<a href="@PageMonth.Index"
+						 class="btn btn-primary btn-sm float-end">
+						@PageMonth.Title related verses <span class="fas fa-caret-right"></span>
+					</a>
+				</div>
+
+			}
 		}
+
 	</div>
 
 </LoadingComponent>
+
+
+
+

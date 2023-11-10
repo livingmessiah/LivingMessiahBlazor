@@ -22,7 +22,7 @@ public partial class Index
 		Logger!.LogDebug(string.Format("Inside Page: {0}, Class!Method: {1}, YearId:{2}"
 			, Page.Index, nameof(Index) + "!" + nameof(OnInitializedAsync), YearId));
 
-		printedCalendarEnum = PrintedCalendarEnum.ReadyForSale;
+		printedCalendarEnum = PrintedCalendarEnum.NotAvailable;
 	}
 
 }

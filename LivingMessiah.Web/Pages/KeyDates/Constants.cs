@@ -1,4 +1,6 @@
-﻿namespace LivingMessiah.Web.Pages.KeyDates.Constants;
+﻿using CalendarEnumDateTypeFilter = LivingMessiah.Web.Pages.Calendar.Enums.DateTypeFilter;
+
+namespace LivingMessiah.Web.Pages.KeyDates.Constants;
 
 /*
 ToDo: Delete
@@ -11,6 +13,7 @@ public static class Years
 	public const int Previous = 2022; 
 	public const int Current = 2023; 
 }
+	
 
 /*
 ToDo: Delete
@@ -38,6 +41,13 @@ public static class Omer
 				int days = (int)difference.TotalDays;
 				return days;
 		}
+}
+
+public static class Defaults
+{
+	public static CalendarEnumDateTypeFilter Filter = CalendarEnumDateTypeFilter.Feast;
+	public const int MonthLengthAverage = 29;
+	public const int SeasonLengthAverage = 91;
 }
 
 public static class Dates

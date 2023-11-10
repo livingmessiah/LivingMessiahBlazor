@@ -14,6 +14,7 @@ using LivingMessiah.Web.Pages.KeyDates.Queries;
 using Syncfusion.Blazor.Grids;
 using Blazored.Toast.Services;
 using LivingMessiah.Web.Pages.KeyDates.Enums;
+using CalendarEnumDateTypeFilter = LivingMessiah.Web.Pages.Calendar.Enums.DateTypeFilter;
 
 namespace LivingMessiah.Web.Pages.KeyDates;
 
@@ -24,68 +25,23 @@ public partial class EditGrid
 	[Inject] public ILogger<EditGrid>? Logger { get; set; }
 	[Inject] public IToastService? Toast { get; set; }
 
-	protected List<CalendarEntry>? CalendarEntries;
-
 	private SfGrid<CalendarEntry>? Grid;
 
-	#region SelectYearUI
-	private string? selectedYearName = KeyDateYear.Next.Name;
-	private int selectedYear = KeyDateYear.Next.Year;
+	protected List<CalendarEntry>? CalendarEntries;
+	[Parameter, EditorRequired] public List<CalendarEntry>? ParamCalendarEntries { get; set; }
+	[Parameter, EditorRequired] public int Year { get; set; }
 
-	private async Task ChangingYearAsync(ChangeEventArgs e)
-	{
-		selectedYearName = e.Value!.ToString();
-		selectedYear = KeyDateYear.FromName(selectedYearName).Year;
-		Logger!.LogDebug(string.Format("... {0}, new selectedYear: {1}"
-			, nameof(EditGrid) + "!" + nameof(ChangingYearAsync), selectedYear));
-		await PopulateGrid(selectedYear);
-	}
-	
-	private bool IsSelectedYear(string year)
-	{
-		return year == selectedYearName;
-	}
-	#endregion
-
-	private string UserInterfaceMessage  = "";
 	private string LogExceptionMessage = "";
 
+	protected string inside = $"{nameof(EditGrid)}";
 
-	protected override async Task OnInitializedAsync()
+	protected override void OnParametersSet()
 	{
-		Logger!.LogDebug(String.Format("Inside {0}, selectedYearValue: {1}"
-			, nameof(EditGrid) + "!" + nameof(OnInitializedAsync), selectedYear));
-
-		await PopulateGrid(selectedYear);
+		Logger!.LogDebug(string.Format("Inside {0}, ParamYear: {1}"
+			, nameof(EditGrid) + "!" + nameof(OnParametersSet), Year));
+		CalendarEntries = ParamCalendarEntries;
 	}
 
-	private async Task PopulateGrid(int year)
-	{
-		Logger!.LogDebug(String.Format("... {0}, year: {1}"
-			, nameof(EditGrid) + "!" + nameof(PopulateGrid), year));
-		try
-		{
-			CalendarEntries = await db!.GetCalendarEntries(year);
-			if (CalendarEntries == null)
-			{
-				UserInterfaceMessage = "CalendarEntries NOT FOUND";
-				Toast!.ShowWarning(UserInterfaceMessage);  // Service.UserInterfaceMessage
-			}
-			else
-			{
-				StateHasChanged();
-			}
-		}
-		catch (Exception ex)
-		{
-			UserInterfaceMessage = "An invalid operation occurred, contact your administrator";
-			LogExceptionMessage = string.Format("  Inside catch of {0}"
-				, nameof(EditGrid) + "!" + nameof(OnInitializedAsync));
-			Logger!.LogError(ex, LogExceptionMessage);
-			Toast!.ShowError(UserInterfaceMessage);
-		}
-
-	}
 
 	public async Task OnSave(BeforeBatchSaveArgs<CalendarEntry> Args)
 	{
@@ -94,22 +50,21 @@ public partial class EditGrid
 
 		if (BatchChanges.ChangedRecords.Count > 0)
 		{
-			Logger!.LogDebug($"Changed Records: {BatchChanges.ChangedRecords.Count}");
+			Logger!.LogDebug(string.Format("...Changed Records:{0}", BatchChanges.ChangedRecords.Count));
 			try
 			{
 				foreach (var item in BatchChanges.ChangedRecords)
 				{
-					rows += await db!.UpdateKeyDateCalendar(selectedYear, item.CalendarTemplateId, item.Date); // YearId
+					rows += await db!.UpdateKeyDateCalendar(Year, item.Detail, item.Date); 
 				}
 				Toast!.ShowInfo($"rows updated: {rows}");
 			}
 			catch (Exception ex)
 			{
-				UserInterfaceMessage = "An invalid operation occurred, contact your administrator";
 				LogExceptionMessage = string.Format("  Inside catch of {0}"
 					, nameof(EditGrid) + "!" + nameof(OnSave));
 				Logger!.LogError(ex, LogExceptionMessage);
-				Toast!.ShowError(UserInterfaceMessage);
+				Toast!.ShowError($"{Global.ToastShowError}; inside: {inside}!{nameof(OnSave)}");
 			}
 			Logger!.LogDebug(string.Format("...rows: {0}", rows));
 		}
@@ -120,7 +75,6 @@ public partial class EditGrid
 
 	void Failure(FailureEventArgs e)
 	{
-		UserInterfaceMessage = "An invalid operation occurred, contact your administrator";
 		LogExceptionMessage = string.Format("  Inside catch of {0}"
 			, nameof(EditGrid) + "!" + nameof(Failure));
 		Logger!.LogError(string.Format("Inside {0}; e.Error: {1}", nameof(EditGrid) + "!" + nameof(Failure), e.Error));

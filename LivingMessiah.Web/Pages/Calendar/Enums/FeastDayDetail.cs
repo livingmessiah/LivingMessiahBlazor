@@ -5,6 +5,11 @@ namespace LivingMessiah.Web.Pages.Calendar.Enums;
 public abstract class FeastDayDetail : SmartEnum<FeastDayDetail>
 {
 	#region Id's
+	/*
+	Note: there was an enum representation of this called `FeastDayDetailEnum` (in the same folder)
+	  but was deleted because it was not used. Backup...
+		"C:\Source\LivingeMessiahBlazorBackup\146-rename-SuperUser-to-ManageRegistration\Calendar, Enums\FeastDayDetailEnum.cs"
+	*/
 	private static class Id
 	{
 		internal const int SederMeal = 1;

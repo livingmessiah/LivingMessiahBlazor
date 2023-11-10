@@ -39,7 +39,10 @@ public abstract class FeastDay : SmartEnum<FeastDay>
 	public abstract string AddDaysDescr { get; }
 	public abstract int? AddDays { get; }
 	public abstract bool HasCalendarDetails { get; }
-	//		public abstract MarkupString HtmlTR { get; }
+
+	// This is a sanity check based on the idea for some feast days you can determine how many days are in between the dates
+	// E.g. There's 9 days between Trumpets and Yom Kippur, so if the difference between those dates is off then one of the dates is wrong.
+	public abstract int? DaysFromPrevFeast { get; }  
 	#endregion
 
 	#region Private Instantiation
@@ -53,7 +56,7 @@ public abstract class FeastDay : SmartEnum<FeastDay>
 		public override string AddDaysDescr => "Last day";
 		public override int? AddDays => 8;
 		public override bool HasCalendarDetails => false;
-		
+		public override int? DaysFromPrevFeast => null;  // This is the beginning of the year
 	}
 	private sealed class PurimSE : FeastDay
 	{
@@ -64,6 +67,7 @@ public abstract class FeastDay : SmartEnum<FeastDay>
 		public override string AddDaysDescr => "";
 		public override int? AddDays => 0;
 		public override bool HasCalendarDetails => false;
+		public override int? DaysFromPrevFeast => null;  // Hanukkah comes before and it's to fluid to track, so null
 	}
 	private sealed class PassoverSE : FeastDay
 	{
@@ -74,6 +78,7 @@ public abstract class FeastDay : SmartEnum<FeastDay>
 		public override string AddDaysDescr => "";
 		public override int? AddDays => 0;
 		public override bool HasCalendarDetails => true;
+		public override int? DaysFromPrevFeast => null;  // Purim comes before and it's to fluid to track, so null
 	}
 	private sealed class WeeksSE : FeastDay
 	{
@@ -84,6 +89,7 @@ public abstract class FeastDay : SmartEnum<FeastDay>
 		public override string AddDaysDescr => "";
 		public override int? AddDays => 0;
 		public override bool HasCalendarDetails => false;
+		public override int? DaysFromPrevFeast => 51;  // Pesach is before and so a hard business rule can be made ... I think ... why isn't it 50?
 	}
 	private sealed class TrumpetsSE : FeastDay
 	{
@@ -94,6 +100,7 @@ public abstract class FeastDay : SmartEnum<FeastDay>
 		public override string AddDaysDescr => "Blow trumpets sundown";
 		public override int? AddDays => -1;
 		public override bool HasCalendarDetails => true;
+		public override int? DaysFromPrevFeast => 113;  // Shavuot / Weeks is before and so a hard business rule can be made ... I think 
 	}
 	private sealed class YomKippurSE : FeastDay
 	{
@@ -104,6 +111,7 @@ public abstract class FeastDay : SmartEnum<FeastDay>
 		public override string AddDaysDescr => "Begins sundown";
 		public override int? AddDays => -1;
 		public override bool HasCalendarDetails => true;
+		public override int? DaysFromPrevFeast => 9;  // Trumpets is before and so a hard business rule can be made
 	}
 	private sealed class TabernaclesSE : FeastDay
 	{
@@ -114,6 +122,7 @@ public abstract class FeastDay : SmartEnum<FeastDay>
 		public override string AddDaysDescr => "";
 		public override int? AddDays => 0;
 		public override bool HasCalendarDetails => true;
+		public override int? DaysFromPrevFeast => 5;  // Yom Kippur is before and so a hard business rule can be made 
 	}
 	private sealed class HanukkahEOYSE : FeastDay
 	{
@@ -124,7 +133,9 @@ public abstract class FeastDay : SmartEnum<FeastDay>
 		public override string AddDaysDescr => "Last day";
 		public override int? AddDays => 8;
 		public override bool HasCalendarDetails => false;
+		public override int? DaysFromPrevFeast => null;  // Sukkot comes before but sense Hanukkah is to fluid to track, so its null
 	}
 	#endregion
+
 
 }

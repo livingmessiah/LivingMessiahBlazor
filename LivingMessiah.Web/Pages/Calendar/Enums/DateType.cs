@@ -1,17 +1,22 @@
 ﻿using Ardalis.SmartEnum;
+using KeyDateEnum = LivingMessiah.Web.Pages.KeyDates.Enums.DateTypeEnum;
 
 namespace LivingMessiah.Web.Pages.Calendar.Enums;
 
 public abstract class DateType : SmartEnum<DateType>
 {
 	#region Id's
+	/*
 	private static class Id
 	{
-		//LivingMessiah.Web.Pages.KeyDates.Enums.DateTypeEnum
+		ToDo: can I use DateTypeEnum's instead of these `internal const int`?
+		- DateTypeEnum location: LivingMessiah.Web.Pages.KeyDates.Enums.
+
 		internal const int Month = 1;
 		internal const int Feast = 2;
 		internal const int Season = 3;
 	}
+	*/
 	#endregion
 
 	#region  Declared Public Instances
@@ -33,7 +38,7 @@ public abstract class DateType : SmartEnum<DateType>
 	#region Private Instantiation
 	private sealed class MonthSE : DateType
 	{
-		public MonthSE() : base($"{nameof(Id.Month)}", Id.Month) { }
+		public MonthSE() : base($"{nameof(KeyDateEnum.Month)}", (int)KeyDateEnum.Month) { }
 		public override string BadgeColor => "bg-info";
 		public override string Icon => "far fa-moon";
 		public override string TextColor => "text-info";
@@ -42,7 +47,7 @@ public abstract class DateType : SmartEnum<DateType>
 
 	private sealed class FeastSE : DateType
 	{
-		public FeastSE() : base($"{nameof(Id.Feast)}", Id.Feast) { }
+		public FeastSE() : base($"{nameof(KeyDateEnum.Feast)}", (int)KeyDateEnum.Feast) { }
 		public override string BadgeColor => "bg-primary";
 		public override string Icon => "fas fa-glass-cheers";
 		public override string TextColor => "text-primary";
@@ -51,7 +56,7 @@ public abstract class DateType : SmartEnum<DateType>
 
 	private sealed class SeasonSE : DateType
 	{
-		public SeasonSE() : base($"{nameof(Id.Season)}", Id.Season) { }
+		public SeasonSE() : base($"{nameof(KeyDateEnum.Season)}", (int)KeyDateEnum.Season) { }
 		public override string BadgeColor => "bg-success";
 		public override string Icon => "fas fa-calendar-alt";  // See BaseSeasonSmartEnum
 		public override string TextColor => "text-success";

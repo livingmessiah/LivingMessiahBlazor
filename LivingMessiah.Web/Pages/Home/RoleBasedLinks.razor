@@ -6,45 +6,33 @@
 	{
 		@if (Role == @Roles.Admin)
 		{
+			<h4 class="mb-1 text-danger">Admin Role Links</h4>
 			<div class="list-group">
-				<div class="card mb-3 bg-warning">
-					<div class="card-body">
-						<ul class="nav flex-column">
-							@foreach (var item in Enums.Nav.List.OrderBy(o => o.Sort))
-							{
-								<li class="nav-item">
-									<i class="@item!.Icon" aria-hidden="true"></i>
-									<a href="@item!.Index" title="@item!.Text">
-										@item!.Text
-									</a>
-
-								</li>
-							}
-						</ul>
-					</div>
-				</div>
+				@foreach (var item in Enums.Nav.List.OrderBy(o => o.Sort))
+				{
+					<a href="@item!.Index" class="list-group-item" title="@item!.Text">
+						<div class="d-flex w-100 justify-content-between">
+							<h5 class="mb-1"><i class="@item!.Icon" aria-hidden="true"></i> @item!.Text</h5>
+						</div>
+					</a>
+				}
 			</div>
+
 		}
 		else
 		{
+			<h4 class="mb-1 text-warning">Elevated Role Links</h4>
 			<div class="list-group">
-				<div class="card mb-3 bg-warning">
-					<div class="card-body">
-						<ul class="nav flex-column">
-							@foreach (var item in Enums.Nav.List.Where(w => w.Role == @Role).OrderBy(o => o.Sort))
-							{
-								<li class="nav-item">
-									<i class="@item!.Icon" aria-hidden="true"></i>
-									<a href="@item!.Index" title="@item!.Text">
-										@item!.Text
-									</a>
-
-								</li>
-							}
-						</ul>
-					</div>
-				</div>
+				@foreach (var item in Enums.Nav.List.Where(w => w.Role == @Role).OrderBy(o => o.Sort))
+				{
+					<a href="@item!.Index" class="list-group-item" title="@item!.Text">
+						<div class="d-flex w-100 justify-content-between">
+							<h5 class="mb-1"><i class="@item!.Icon" aria-hidden="true"></i> @item!.Text</h5>
+						</div>
+					</a>
+				}
 			</div>
+
 		}
 	}
 

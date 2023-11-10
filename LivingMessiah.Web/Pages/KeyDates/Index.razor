@@ -1,5 +1,6 @@
 ﻿@page "/Admin/KeyDatesEdit"
 @using static LivingMessiah.Web.Services.Auth0
+@using CalendarEnumDateTypeFilter = LivingMessiah.Web.Pages.Calendar.Enums.DateTypeFilter
 
 @using Page = LivingMessiah.Web.Links.KeyDatesEdit
 <PageTitle>@Page.Title</PageTitle>
@@ -12,7 +13,72 @@
 
 	<Authorized>
 		<KeyDateSettingsList />
-		<EditGrid />
+
+		<FilterButtons CurrentFilter="@CurrentFilter"
+									 OnFilterSelected="@ReturnedFilter" />
+
+		<div class="row">
+			<div class="col-md-4">
+				@if (CalendarEntries is not null)
+				{
+					<div class="mt-4">
+						<EditGrid ParamCalendarEntries="CalendarEntriesFiltered" Year="_currentYear" />
+					</div>
+				}
+				else
+				{
+					<p>Calendar Entries is loading...</p>
+				}
+			</div>
+
+			<div class="col-md-8">
+
+				@if (CurrentFilter! == CalendarEnumDateTypeFilter.Feast)
+				{
+					<FeastAnalysisTable ParamFeastAnalysisList="@FeastAnalysisList" />
+				}
+				else
+				{
+					if (CurrentFilter! == CalendarEnumDateTypeFilter.Month)
+					{
+						<MonthAnalysisTable ParamMonthAnalysisList="@MonthAnalysisList" />
+					}
+					else
+					{
+						if (CurrentFilter! == CalendarEnumDateTypeFilter.Season)
+						{
+							<SeasonAnalysisTable ParamSeasonAnalysisList="@SeasonAnalysisList" />
+						}
+						else
+						{
+							<p>Ignoring CurrentFilter: @CurrentFilter!.Name ?? "null"</p>
+						}
+					}
+				}
+
+				<RefreshButtons CurrentFilter="@CurrentFilter"
+												OnRefreshSelected="@ReturnedRefresh" />
+
+			</div>
+		</div>
+
+		@if (KeyDateConstants is not null)
+		{
+			<h3 class="mt-5 text-warning">KeyDate.Constants</h3>
+			<div class="row">
+
+				<div class="col-4">Previous Year</div>
+				<div class="col-4">Current Year</div>
+				<div class="col-4">Next Year</div>
+			</div>
+
+			<div class="row">
+				<div class="col-4">@KeyDateConstants.PreviousYear</div>
+				<div class="col-4">@KeyDateConstants.CurrentYear</div>
+				<div class="col-4">@KeyDateConstants.NextYear</div>
+			</div>
+		}
+
 	</Authorized>
 
 	<NotAuthorized>
@@ -29,3 +95,5 @@
 	</NotAuthorized>
 
 </AuthorizeView>
+
+@* <Toaster /> *@
