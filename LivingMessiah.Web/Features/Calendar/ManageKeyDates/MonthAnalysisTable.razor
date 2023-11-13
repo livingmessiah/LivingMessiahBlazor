@@ -1,0 +1,35 @@
+﻿
+<div class="mt-4">
+	<TableTemplate Items="CurrentMonthAnalysisList" HeaderCSS="@HeaderCSS">
+		<TableHeader>
+			<th>Month</th>
+			<th>Previous Date</th>
+			<th>Date</th>
+			<th class="text-end">Actual <br /> Difference</th>
+			<th class="text-end fw-bolder">Acceptable Range</th>
+			<th></th>
+		</TableHeader>
+		<RowTemplate>
+			<td>@context.Month</td>
+			<td>@context.PreviousDate</td>
+			<td>@context.Date</td>
+			<td class="text-end">@context.ActualDifference</td>
+			<td class="text-end @context.ColorAndFontWeight">@context.AcceptableRange</td>
+			<td> <i class="@context.Icon"></i></td>
+		</RowTemplate>
+
+	</TableTemplate>
+</div>
+
+@code {
+	[Parameter, EditorRequired] public List<MonthAnalysisVM>? ParamMonthAnalysisList { get; set; }
+	protected string? HeaderCSS = "table table-sm fs-6 table-success table-hover";
+
+	protected List<MonthAnalysisVM>? CurrentMonthAnalysisList { get; set; }
+
+	protected override void OnParametersSet()
+	{
+		CurrentMonthAnalysisList = ParamMonthAnalysisList;
+	}
+
+}

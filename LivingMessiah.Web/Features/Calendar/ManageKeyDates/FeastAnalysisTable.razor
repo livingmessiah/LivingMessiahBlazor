@@ -1,0 +1,35 @@
+﻿
+<div class="mt-4">
+	<TableTemplate Items="CurrentFeastAnalysisList" HeaderCSS="@HeaderCSS">
+		<TableHeader>
+			<th>Event</th>
+			<th>Previous Date</th>
+			<th>Date</th>
+			<th class="text-end">Actual <br /> Difference</th>
+			<th class="text-end fw-bolder">Required <br /> Difference</th>
+			<th></th>
+		</TableHeader>
+		<RowTemplate>
+			<td>@context.Event</td>
+			<td>@context.PreviousDate</td>
+			<td>@context.Date</td>
+			<td class="text-end">@context.ActualDifference</td>
+			<td class="text-end @context.ColorAndFontWeight">@context.RequiredDifference</td>
+			<td> <i class="@context.Icon"></i></td>
+		</RowTemplate>
+
+	</TableTemplate>
+</div>
+
+@code {
+	[Parameter, EditorRequired] public List<FeastAnalysisVM>? ParamFeastAnalysisList { get; set; }
+	protected string? HeaderCSS = "table table-primary table-hover";
+	
+	protected List<FeastAnalysisVM>? CurrentFeastAnalysisList { get; set; }
+	
+	protected override void OnParametersSet()
+	{
+		CurrentFeastAnalysisList = ParamFeastAnalysisList;
+	}
+
+}

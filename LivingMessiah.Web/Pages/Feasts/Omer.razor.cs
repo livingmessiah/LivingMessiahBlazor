@@ -25,8 +25,8 @@ public partial class Omer
 			cur = DateTime.Now;
 		}
 
-		//using LivingMessiah.Web.Pages.KeyDates.Constants;
-		DateTime start = LivingMessiah.Web.Pages.KeyDates.Constants.Omer.Date;
+		//using LivingMessiah.Web.Features.Calendar.ManageKeyDates.Constants;
+		DateTime start = LivingMessiah.Web.Features.Calendar.ManageKeyDates.Constants.Omer.Date;
 		start = start.AddDays(-1);
 		TimeSpan difference = cur - start;
 		int days = (int)difference.TotalDays;

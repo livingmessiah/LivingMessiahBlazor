@@ -1,0 +1,108 @@
+﻿@page "/Admin/KeyDatesEdit"
+@using static LivingMessiah.Web.Services.Auth0
+@using CalendarEnumDateType = LivingMessiah.Web.Features.Calendar.Enums.DateType
+
+@using Page = LivingMessiah.Web.Links.KeyDatesEdit
+<PageTitle>@Page.Title</PageTitle>
+
+<div class="pb-1 mt-4 mb-1 border-bottom border-info">
+	<h2><i class="@Page.Icon"></i> @Page.Title</h2>
+</div>
+
+<AuthorizeView Roles="@Roles.AdminOrAnnouncements">
+
+	<Authorized>
+		<KeyDateSettingsList />
+
+		<FilterButtons CurrentFilter="@CurrentFilter"
+									 OnFilterSelected="@ReturnedFilter" />
+
+		<div class="row">
+			<div class="col-md-4">
+				@if (CalendarEntries is not null)
+				{
+					<div class="mt-4">
+						<EditGrid ParamCalendarEntries="CalendarEntriesFiltered" Year="_currentYear" />
+					</div>
+				}
+				else
+				{
+					<p>Calendar Entries is loading...</p>
+				}
+			</div>
+
+			<div class="col-md-8">
+
+				@if (CurrentFilter! == CalendarEnumDateType.Feast)
+				{
+					<FeastAnalysisTable ParamFeastAnalysisList="@FeastAnalysisList" />
+				}
+				else
+				{
+					if (CurrentFilter! == CalendarEnumDateType.Month)
+					{
+						<MonthAnalysisTable ParamMonthAnalysisList="@MonthAnalysisList" />
+					}
+					else
+					{
+						if (CurrentFilter! == CalendarEnumDateType.Season)
+						{
+							<SeasonAnalysisTable ParamSeasonAnalysisList="@SeasonAnalysisList" />
+						}
+						else
+						{
+							<p>Ignoring CurrentFilter: @CurrentFilter!.Name ?? "null"</p>
+						}
+					}
+				}
+
+				<RefreshButtons CurrentFilter="@CurrentFilter"
+												OnRefreshSelected="@ReturnedRefresh" />
+
+
+				@if (KeyDateConstants is not null)
+				{
+					<div class="card border-info  mt-3">
+						<div class="card-header">KeyDate.Constants</div>
+
+						<div class="card-body">
+
+							<div class="row">
+								<div class="col-4">Previous Year</div>
+								<div class="col-4">Current Year</div>
+								<div class="col-4">Next Year</div>
+							</div>
+
+							<div class="row">
+								<div class="col-4">@KeyDateConstants.PreviousYear</div>
+								<div class="col-4">@KeyDateConstants.CurrentYear</div>
+								<div class="col-4">@KeyDateConstants.NextYear</div>
+							</div>
+						</div>
+
+					</div>
+				}
+
+			</div>
+		</div>
+
+
+
+	</Authorized>
+
+	<NotAuthorized>
+
+		<div class="card border-warning my-5">
+			<div class="card-header">Not Authorized</div>
+
+			<div class="card-body">
+				<h5 class="">To view <b>@Page.Title</b> you need to be logged in.</h5>
+				<LoginRedirectButton ReturnUrl="@Page.Index" />
+			</div>
+		</div>
+
+	</NotAuthorized>
+
+</AuthorizeView>
+
+@* <Toaster /> *@

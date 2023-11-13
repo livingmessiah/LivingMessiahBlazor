@@ -1,0 +1,124 @@
+﻿@using static LivingMessiah.Web.Links.Store
+
+@* 
+	ToDo: This `using LivingMessiah.Web.Pages` needs to get moved
+	- Pages.Constants.cs
+	- Also used by Pages.OtherPages\Store.razor
+
+*@
+@using LivingMessiah.Web.Pages
+
+@switch (PrintedCalendarEnum)
+{
+	case PrintedCalendarEnum.CommingSoon:
+
+
+		@*
+				ToDo: This needs to be thought out, like it needs to have a button
+
+
+				<div class="d-print-none">
+				<div class="card">
+
+					<div class="card-body">
+						<h3 class="card-text text-center">
+							Living Messiah Calendar! Coming Soon
+						</h3>
+					</div>
+
+					<img src="@Blobs.UrlCalendar("lmm-calendar-2022-1020-1020.jpg")"
+							 class="card-img-top p-2"
+							 alt="@Items.TitleCalendar">
+
+				</div>
+			</div>*@
+
+		break;
+
+
+	case PrintedCalendarEnum.ReadyForSale:
+
+		<div class="card border-danger border-4 mb-3">
+			<div class="row mb-2">
+				<div class="col-12">
+
+					@if (IsCollapsed)
+					{
+						<Button @onclick="@(e => ToggleButtonClick(IsCollapsed))"
+										class="btn-primary btn-sm  float-end">
+							Details <i class='fas fa-chevron-down'></i>
+						</Button>
+					}
+					else
+					{
+						<Button @onclick="@(e => ToggleButtonClick(IsCollapsed))"
+										class="btn-primary btn-sm float-end">
+							Hide <i class='fas fa-chevron-up'></i>
+						</Button>
+					}
+
+					<div class="lead">
+						<span class="badge bg-warning m-2 p-3"><b>@Year</b> Living Messiah Calendar <b><u>Get It Now!</u></b></span>
+					</div>
+
+				</div>
+			</div>
+
+			@if (!IsCollapsed)
+			{
+
+				<div class="row my-2">
+					<div class="col-12">
+						@if (IsXsOrSm)
+						{
+
+							<img src="@Blobs.UrlCalendar(@LMMCalendar.ImageXSorSM)" class="card-img-top p-1"
+					 alt="@Items.TitleCalendar">
+						}
+						else
+						{
+							<img src="@Blobs.UrlCalendar(@LMMCalendar.Image)" class="card-img-top p-1"
+									 alt="@Items.TitleCalendar">
+						}
+
+						<div class="text-center my-2">
+							<a href="@LivingMessiah.Web.Links.Store.Index"
+								 title="@Items.TitleCalendar"
+								 class="btn btn-primary btn-lg">
+								Order Now
+								<i class="fas fa-chevron-right"></i>
+							</a>
+						</div>
+
+					</div>
+				</div>
+
+
+			}
+		</div>
+
+		break;
+
+
+	case PrintedCalendarEnum.NotAvailable:
+		break;
+
+
+	default:
+		break;
+}
+
+
+@code {
+	[Parameter] public PrintedCalendarEnum PrintedCalendarEnum { get; set; }
+	[Parameter] public bool IsXsOrSm { get; set; }
+	[Parameter] public int Year { get; set; }
+
+	public bool IsCollapsed { get; set; } = true;
+	protected void ToggleButtonClick(bool isCollapsed)
+	{
+		IsCollapsed = !isCollapsed;
+	}
+
+
+}

@@ -386,14 +386,13 @@ public class LinksFactory : ILinksFactory
 			};
 	}
 
-	/**/
 	public List<Link> GetFeastLinks()
 	{
 		return new List<Link>
 			{
 				new Link
 				{
-					FeastDay = LivingMessiah.Web.Pages.KeyDates.Enums.FeastDayEnum.Passover,
+					FeastDayValue = Features.Calendar.Enums.FeastDay.Passover.Value,
 					Index = Pesach.Index,
 					Title = Pesach.Title,
 					Icon = Pesach.Icon,
@@ -405,7 +404,7 @@ public class LinksFactory : ILinksFactory
 				},
 				new Link
 				{
-					FeastDay = LivingMessiah.Web.Pages.KeyDates.Enums.FeastDayEnum.Weeks,
+					FeastDayValue = Features.Calendar.Enums.FeastDay.Weeks.Value,
 					Index = Shavuot.Index,
 					Title = Shavuot.Title,
 					Icon = Shavuot.Icon,
@@ -417,7 +416,7 @@ public class LinksFactory : ILinksFactory
 				},
 				new Link
 				{
-					FeastDay = LivingMessiah.Web.Pages.KeyDates.Enums.FeastDayEnum.Tabernacles,
+					FeastDayValue = Features.Calendar.Enums.FeastDay.Tabernacles.Value,
 					Index = Links.Sukkot.Index,
 					Title = Links.Sukkot.Title,
 					Icon = Links.Sukkot.Icon,

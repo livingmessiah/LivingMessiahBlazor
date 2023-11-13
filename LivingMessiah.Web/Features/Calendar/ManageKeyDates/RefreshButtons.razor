@@ -1,0 +1,36 @@
+﻿@using Microsoft.Extensions.Logging;
+@using CalendarEnumDateType = LivingMessiah.Web.Features.Calendar.Enums.DateType
+
+@* @inject ILogger<RefreshButtons>? Logger *@
+
+<div class="d-print-none">
+	<div class="d-flex justify-content-end">
+		@foreach (var item in CalendarEnumDateType
+		.List
+		.Where(w => w.Value > CalendarEnumDateType.All.Value)
+		.OrderBy(o => o.Value))
+		{
+			if (item == CurrentFilter)
+			{
+				<button @onclick="@(() => OnButtonClicked(item))"
+								class="btn btn-warning btn">
+					Refresh &nbsp;<i class="fas fa-sync"></i>
+				</button>
+			}
+		}
+	</div>
+</div>
+
+@code {
+	[Parameter, EditorRequired]
+	public required CalendarEnumDateType? CurrentFilter { get; set; }
+
+	[Parameter, EditorRequired]
+	public EventCallback<CalendarEnumDateType> OnRefreshSelected { get; set; }
+
+	private void OnButtonClicked(CalendarEnumDateType filter)
+	{
+		//Logger!.LogDebug(string.Format("Inside {0}; {1}, action: {2}", inside, nameof(OnButtonClicked), filter.Name));
+		OnRefreshSelected.InvokeAsync(filter);
+	}
+}

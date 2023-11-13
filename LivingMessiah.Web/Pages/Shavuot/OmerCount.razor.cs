@@ -1,6 +1,5 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
-using LivingMessiah.Web.Pages.KeyDates.Constants;
 
 namespace LivingMessiah.Web.Pages.Shavuot;
 
@@ -16,6 +15,7 @@ public partial class OmerCount
 {
 	[Parameter] public bool IsXsOrSm { get; set; }
 	[Parameter] public int OverrideOmerCount { get; set; } = 0;
+	[Parameter, EditorRequired] public int YearId { get; set; }
 
 	protected OmerCountUI? UI;
 
@@ -46,3 +46,5 @@ public partial class OmerCount
 	}
 
 }
+
+// Ignore Spelling: Cnt

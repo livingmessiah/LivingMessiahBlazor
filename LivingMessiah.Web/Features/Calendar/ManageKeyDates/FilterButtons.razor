@@ -1,0 +1,55 @@
+﻿@using Microsoft.Extensions.Logging;
+@using CalendarEnumDateType = LivingMessiah.Web.Features.Calendar.Enums.DateType
+
+@inject ILogger<FilterButtons>? Logger
+
+<div class="d-print-none mb-2">
+	<div class="container d-flex justify-content-end mt-2">
+		@foreach (var item in CalendarEnumDateType
+		.List
+		.Where(w => w.Value > CalendarEnumDateType.All.Value)
+		.OrderBy(o => o.Value))
+		{
+			<button @onclick="@(() => OnButtonClicked(item))"
+							class="btn btn-outline-primary btn-sm @ActiveFilter(item)">
+				@item.Name &nbsp;<i class="fas fa-chevron-circle-right"></i>
+			</button>
+		}
+	</div>
+	<p class="text-black-50 mt-0 mb-0 me-2 text-end"><small>filter</small></p>
+
+</div>
+
+@code {
+	[Parameter, EditorRequired] public required CalendarEnumDateType? CurrentFilter { get; set; }
+	[Parameter] public EventCallback<CalendarEnumDateType> OnFilterSelected { get; set; }
+
+	private CalendarEnumDateType? _selectedFilter;
+
+	protected override void OnParametersSet()
+	{
+		string inside = $"{nameof(FilterButtons)}!{nameof(OnParametersSet)}";
+		Logger!.LogDebug(string.Format("inside {0}", inside));
+		_selectedFilter = CurrentFilter;
+
+	}
+
+	private void OnButtonClicked(CalendarEnumDateType filter)
+	{
+		//Logger!.LogDebug(string.Format("Inside {0}; {1}, action: {2}", inside, nameof(OnButtonClicked), filter.Name));
+		OnFilterSelected.InvokeAsync(filter);
+	}
+
+	public string ActiveFilter(CalendarEnumDateType filter)
+	{
+		if (filter == _selectedFilter)
+		{
+			return "active";
+		}
+		else
+		{
+			return "";
+		}
+	}
+
+}

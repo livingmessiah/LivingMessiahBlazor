@@ -1,0 +1,87 @@
+﻿@using static LivingMessiah.Web.Features.Calendar.ScheduleData
+@using Syncfusion.Blazor.Schedule
+@using Syncfusion.Blazor.Buttons
+@using Syncfusion.Blazor.SplitButtons;
+
+<div class="card bg-secondary text-white mb-0">
+
+	@if (IsXsOrSm)
+	{
+		<div class="row pl-3">
+
+			<div class="col-12 text-center ">
+				Living Messiah Calendar
+			</div>
+
+		</div>
+
+		<div class="row pr-2">
+			<div class="col-12">
+
+				<SfButton IconCss="fas fa-print" CssClass="title-bar-btn"
+								OnClick="OnPrintClick">Print</SfButton>
+
+				<SfDropDownButton Content="Export">
+					<DropDownMenuItems>
+						<DropDownMenuItem Text="iCalendar" IconCss="fas fa-file-download"></DropDownMenuItem>
+						<DropDownMenuItem Text="Excel" IconCss="far fa-file-excel"></DropDownMenuItem>
+					</DropDownMenuItems>
+					<DropDownButtonEvents ItemSelected="OnExportClick"></DropDownButtonEvents>
+				</SfDropDownButton>
+
+				<span class="float-end">Jerusalem @SystemTime.ToString("hh:mm:ss tt")</span>
+
+			</div>
+		</div>
+	}
+	else
+	{
+	<div class="card bg-secondary text-white mb-0">
+		<div class="row pl-3">
+
+			<div class="col-4">
+
+				<SfButton IconCss="fas fa-print" CssClass="title-bar-btn"
+									OnClick="OnPrintClick">Print</SfButton>
+
+				<SfDropDownButton Content="Export">
+					<DropDownMenuItems>
+						<DropDownMenuItem Text="iCalendar" IconCss="fas fa-file-download"></DropDownMenuItem>
+						<DropDownMenuItem Text="Excel" IconCss="far fa-file-excel"></DropDownMenuItem>
+					</DropDownMenuItems>
+					<DropDownButtonEvents ItemSelected="OnExportClick"></DropDownButtonEvents>
+				</SfDropDownButton>
+
+			</div>
+
+			<div class="col-4 ">
+				Living Messiah Calendar
+			</div>
+
+			<div class="col-4 text-center">
+				Jerusalem @SystemTime.ToString("hh:mm:ss tt")
+			</div>
+		</div>
+	</div>
+	}
+
+</div>
+
+<div id="ControlRegion">
+	<SfSchedule TValue="ReadonlyEventsData" @ref="ScheduleRef"
+							ShowQuickInfo="true"
+							Width="100%" Height="650px"
+							@bind-SelectedDate="@CurrentDate" @bind-CurrentView="@ViewNow">
+
+		<ScheduleEventSettings DataSource="@AppointmentDataList"></ScheduleEventSettings>
+		<ScheduleEvents TValue="ReadonlyEventsData"
+										EventRendered="OnEventRendered" />
+		<ScheduleViews>
+			<ScheduleView Option="View.Week"></ScheduleView>
+			<ScheduleView Option="View.Month"></ScheduleView>
+			<ScheduleView Option="View.Year"></ScheduleView>
+		</ScheduleViews>
+
+	</SfSchedule>
+
+</div>

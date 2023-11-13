@@ -7,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 
-using LivingMessiah.Web.Pages.KeyDates.Data;
+
 using SukkotData = LivingMessiah.Web.Pages.Sukkot.Data;
 
 using LivingMessiah.Web.Pages.Sukkot.Services;
@@ -31,8 +31,6 @@ public static class ServiceCollectionExtensions
 		services
 			.AddSingleton<ILinkService, LinkService>()
 			.AddSingleton<IShabbatWeekRepository, ShabbatWeekRepository>()
-
-			.AddSingleton<IKeyDateRepository, KeyDateRepository>()
 
 			.AddTransient<ISecurityClaimsService, SecurityClaimsService>()
 

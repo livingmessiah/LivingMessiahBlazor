@@ -1,18 +1,16 @@
-﻿@using LivingMessiah.Web.Pages.KeyDates.Constants
-
+﻿
 <div class="d-print-none">
 	<div class="float-end">
 		<BlankCalendarDownloadAnchor Title="Calendar Download"></BlankCalendarDownloadAnchor>
 	</div>
 </div>
 
-
 <div class="d-print-none">
-	<h1><span class="badge bg-warning">Shavuot @Years.Current</span></h1>
+	<h1><span class="badge bg-warning">Shavuot @YearId</span></h1>
 </div>
 
 <div class="d-none d-print-block">
-	<h3 class="text-center mt-0 mb-2 pt-0">Shavuot @Years.Current | Omer Count</h3>
+	<h3 class="text-center mt-0 mb-2 pt-0">Shavuot @YearId | Omer Count</h3>
 </div>
 
 <div class="d-print-none">
@@ -24,3 +22,7 @@
 <div class="d-print-none">
 	<CountingInstructions></CountingInstructions>
 </div>
+
+@code{
+	[Parameter, EditorRequired] 	public int YearId { get; set; }
+}

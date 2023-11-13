@@ -1,6 +1,4 @@
-﻿@using LivingMessiah.Web.Pages.KeyDates.Constants
-@using static LivingMessiah.Web.Pages.Shavuot.Domain.OmerGematriaFactory
-@*@using static LivingMessiah.Web.Links.Shavuot*@
+﻿@using static LivingMessiah.Web.Pages.Shavuot.Domain.OmerGematriaFactory
 
 @if (UI == null)
 {
@@ -12,7 +10,7 @@ else
 	{
 		<div class="card border-warning text-center mb-3">
 			<div class="card-header p-1 bg-warning">
-				<h2><span class="card-title mb-0">Omer Count @Years.Current</span></h2>
+				<h2><span class="card-title mb-0">Omer Count @YearId</span></h2>
 			</div>
 			<img src='@Blobs.UrlEvents("omer-count-card-image-398-161.jpg")' class="card-img-top" alt="Omer Count" />
 

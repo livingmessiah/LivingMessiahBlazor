@@ -11,7 +11,19 @@ public class Link
 	public string?  HomeFloatRightHebrew { get; set; }
 	public string?  HomeTitleSuffix { get; set; } // shaMayim H8064"
 
-	public LivingMessiah.Web.Pages.KeyDates.Enums.FeastDayEnum FeastDay { get; set; }
+	/*
+	In `LinksFactory!GetFeastLinks` `FeastDayValue` is populated with...
+
+	- Features.Calendar.Enums.FeastDay.Passover.Value
+	- Features.Calendar.Enums.FeastDay.Weeks.Value
+	- Features.Calendar.Enums.FeastDay.Tabernacles.Value
+
+	Called by `LinkService.GetHomeSidebarLinks`
+		- if (SukkotSettings.Value.SukkotIsOpen); Passover and Weeks are not used
+
+	*/
+	public int FeastDayValue { get; set; }
+	
 	public int SortOrder { get; set; }
 
 }

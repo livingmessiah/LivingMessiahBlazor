@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using LivingMessiah.Web.Pages.KeyDates.Constants;
+using LivingMessiah.Web.Features.Calendar.ManageKeyDates.Constants;
 
 namespace LivingMessiah.Web.Pages.Articles;
 

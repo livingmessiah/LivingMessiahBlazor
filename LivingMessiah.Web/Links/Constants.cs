@@ -433,7 +433,6 @@ public static class ShabbatService
 
 public static class Shavuot
 {
-	public const LivingMessiah.Web.Pages.KeyDates.Enums.FeastDayEnum FeastDay = LivingMessiah.Web.Pages.KeyDates.Enums.FeastDayEnum.Weeks;
 	public const string Index = "/Shavuot";
 	public const string Title = "Shavuot";
 	public const string Icon = "fab fa-creative-commons-zero";
@@ -529,7 +528,6 @@ public static class Sukkot
 		public const string Icon = "far fa-sticky-note";
 	}
 
-	public const LivingMessiah.Web.Pages.KeyDates.Enums.FeastDayEnum FeastDay = LivingMessiah.Web.Pages.KeyDates.Enums.FeastDayEnum.Tabernacles;
 	public const string Index = "/Sukkot";
 	public const string Title = "Sukkot";
 	public const string Icon = "fas fa-campground";
@@ -615,3 +613,10 @@ public static class Wirecast
 	}
 
 }
+
+// Ignore Spelling: Descr
+// Ignore Spelling: Chala
+// Ignore Spelling: QRC
+// Ignore Spelling: Indepth
+// Ignore Spelling: Syncfusion
+// Ignore Spelling: Challah

@@ -32,18 +32,19 @@ public class LinkService : ILinkService
 		LinksFactory links = new LinksFactory();
 		if (SukkotSettings.Value.SukkotIsOpen)
 		{
+
 			if (isXsOrSm)
 			{
 				return links.GetLinks()
 					.Where(x => x.HomeSidebarUsage == true)
-					.Union(links.GetFeastLinks().Where(z => z.FeastDay == LivingMessiah.Web.Pages.KeyDates.Enums.FeastDayEnum.Tabernacles))
+					.Union(links.GetFeastLinks().Where(z => z.FeastDayValue == Features.Calendar.Enums.FeastDay.Tabernacles))
 					.OrderBy(x => x.SortOrder).ToList();
 			}
 			else
 			{
 				return links.GetLinks()
 					.Where(x => x.HomeSidebarUsage == true & x.SortOrder != IntroductionAndWelcomeSortOder)
-					.Union(links.GetFeastLinks().Where(z => z.FeastDay == LivingMessiah.Web.Pages.KeyDates.Enums.FeastDayEnum.Tabernacles))
+					.Union(links.GetFeastLinks().Where(z => z.FeastDayValue == Features.Calendar.Enums.FeastDay.Tabernacles))
 					.OrderBy(x => x.SortOrder).ToList();
 			}
 
