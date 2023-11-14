@@ -8,17 +8,15 @@ public abstract class Season : SmartEnum<Season>
 	#region Id's
 	private static class Id
 	{
-		//internal const int FallPrevYear = 1;
-		internal const int Fall = 1;
-		internal const int Winter = 2;
-		internal const int Spring = 3;
-		internal const int Summer = 4;
+		internal const int Winter = 1;
+		internal const int Spring = 2;
+		internal const int Summer = 3;
+		internal const int Fall = 4;
 	}
 	#endregion
 
 
 	#region Declared Public Instances
-	//public static readonly Season FallPrevYear = new FallPrevYearSE();
 	public static readonly Season Winter = new WinterSE();
 	public static readonly Season Spring = new SpringSE();
 	public static readonly Season Summer = new SummerSE();
@@ -36,14 +34,6 @@ public abstract class Season : SmartEnum<Season>
 	#endregion
 
 	#region Private Instantiation
-	private sealed class FallSE : Season
-	{
-		public FallSE() : base("Fall", Id.Fall) { }
-		public override string Type => "Equinox";  // Equilux
-		public override string BadgeColor => "bg-warning";
-		public override string Icon => "fab fa-canadian-maple-leaf";
-		public override string CalendarColor => CalendarColors.Warning;
-	}
 	private sealed class WinterSE : Season
 	{
 		public WinterSE() : base($"{nameof(Id.Winter)}", Id.Winter) { }
@@ -67,6 +57,14 @@ public abstract class Season : SmartEnum<Season>
 		public override string BadgeColor => "bg-danger";
 		public override string Icon => "far fa-sun";
 		public override string CalendarColor => CalendarColors.Danger;
+	}
+	private sealed class FallSE : Season
+	{
+		public FallSE() : base("Fall", Id.Fall) { }
+		public override string Type => "Equinox";  // Equilux
+		public override string BadgeColor => "bg-warning";
+		public override string Icon => "fab fa-canadian-maple-leaf";
+		public override string CalendarColor => CalendarColors.Warning;
 	}
 	#endregion
 
