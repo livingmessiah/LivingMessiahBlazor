@@ -26,6 +26,18 @@ public static class StringExtensions
 		if (condition) builder.Append(value);
 		return builder;
 	}
+	
+	public static string Repeat(this string input, int count)
+	{
+		if (string.IsNullOrEmpty(input) || count <= 1)
+			return input;
+
+		var builder = new StringBuilder(input.Length * count);
+
+		for (var i = 0; i < count; i++) builder.Append(input);
+
+		return builder.ToString();
+	}
 
 	public static string Truncate(this string value, int maxLength)
 	{

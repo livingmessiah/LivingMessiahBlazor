@@ -33,6 +33,7 @@
 				</div>
 			</div>
 
+			@* ToDo: Only place that `HasCalendarDetails` is used, see if I dan delete this *@
 			@if (row.FeastDay is not null && row.FeastDay.HasCalendarDetails)
 			{
 				<FeastDayCalendarDetails FeastDay="row.FeastDay" Date="row.Date" />

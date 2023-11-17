@@ -8,7 +8,7 @@ public static class CalendarColors
 		public const string DarkBlue = "#00008b";
 		public const string Olive = "#7fa900";  // 808000
 		public const string Clay = "#ea7a57";
-		public const string Turqoise = "#00bdae";
+		public const string Turquoise = "#00bdae";
 		public const string Pumpkin = "#f57f17";
 		public const string Warning = "#ffc107";  // Fall
 		public const string Dark = "#343a40";

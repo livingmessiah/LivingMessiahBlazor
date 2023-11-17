@@ -110,23 +110,25 @@ public partial class CalendarSfSchedule
 		AppointmentDataList = new List<ReadonlyEventsData>();
 
 		string color = "";
+		//string details = "";
 		try
 		{
 			Enums.DateType dateType;
-			Enums.Season season;
+			//Enums.Season season;
 
 			foreach (var item in CalendarQueries!)
 			{
-
+				//details = "";
 				dateType = Enums.DateType.FromValue(item.DateTypeId);
 
 				if (dateType.Value == Enums.DateType.Season)
 				{
-					season = Enums.Season.FromValue(item.EnumId);
-					color = season.CalendarColor;
+					color =  Enums.Season.FromValue(item.EnumId).CalendarColor;
 				}
 				else
 				{
+					// if (dateType.Value == Enums.DateType.Feast) { details = Enums.FeastDay.FromValue(item.EnumId).AddDaysDescr;		}
+					//   HanukkahSE: "Last day"; TrumpetsSE: "Blow trumpets sundown"; YomKippurSE: "Begins sundown"
 					color = dateType.CalendarColor;
 				}
 
@@ -134,7 +136,7 @@ public partial class CalendarSfSchedule
 				{
 					Id = item.Detail,
 					Subject = item.Description,
-					Description = item.Description,
+					//Description = "",  // Description = details,
 					StartTime = item.Date,
 					EndTime = item.Date,
 					CategoryColor = color, 

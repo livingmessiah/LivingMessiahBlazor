@@ -46,16 +46,18 @@
 		<h4 class="card-title text-center">Lunar Months</h4>
 	</div>
 	<div class="card-body">
-		<TableTemplate Items="LivingMessiah.Web.Features.Calendar.Enums.LunarMonth.List.Where(w => w.IsPreviousYear==false).OrderBy(o => o.Value).ToList()">
+		<TableTemplate Items="LivingMessiah.Web.Features.Calendar.Enums.LunarMonth.List
+													.Where(w => w.IsPreviousYear==false)
+													.OrderBy(o => o.Value).ToList()">
 			<TableHeader>
 				<th class="text-info">Name</th>
 				<th class="text-info">Hebrew</th>
-				<th class="text-info">Full Name</th>
+				<th class="text-info">Description</th>
 			</TableHeader>
 			<RowTemplate>
 				<td>@context.Name</td>
 				<td><span class="hebrew">@context.Hebrew</span> </td>
-				<td>@context.FullName</td>
+				<td>@context.Description</td> 
 			</RowTemplate>
 		</TableTemplate>
 	</div>

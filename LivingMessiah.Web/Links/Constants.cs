@@ -140,7 +140,12 @@ public static class Calendar
 		public const string Title = "Feast Table";
 		public const string Icon = "fas fa-glass-cheers";
 	}
-
+	public static class FeastSfSchedule
+	{
+		public const string Index = "/FeastSfSchedule";
+		public const string Title = "Feast SfSchedule";
+		public const string Icon = "far fa-calendar";
+	}
 }
 
 public static class Contact

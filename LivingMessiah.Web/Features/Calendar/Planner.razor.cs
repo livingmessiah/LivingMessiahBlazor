@@ -25,7 +25,7 @@ public partial class Planner
 	protected string? DateFormat;
 	protected List<PlannerQuery>? PlannerQueries;  
 
-	public Enums.DateType CurrentFilter { get; set; } = Enums.DateType.All; 
+	public Enums.DateType CurrentFilter { get; set; } = Enums.DateType.Feast; 
 	protected async Task OnClickFilter(Enums.DateType newFilter)
 	{
 		CurrentFilter = newFilter;
