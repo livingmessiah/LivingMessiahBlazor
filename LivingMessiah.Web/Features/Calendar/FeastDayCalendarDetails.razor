@@ -1,10 +1,77 @@
-﻿<div class="card bg-white text-primary py-1 mb-4 ">
-	@foreach (var fdd in FeastDayDetails!)
+﻿@using LivingMessiah.Web.Features.Calendar.Enums
+
+<div class="card bg-white text-primary py-1 mb-4 ">
+
+	@if (FeastDay!.HasCalendarDetails)
+	{
+		@foreach (var fdd in FeastDayDetails!)
+		{
+			<div class=" row mt-1 mb-1">
+				<div class="col-1">&nbsp;</div>
+				<div class="col-4">@NotesFDD(fdd.AddDays)</div>
+				<div class="col-7">@fdd.Description</div>
+			</div>
+		}
+	}
+	else
 	{
 		<div class=" row mt-1 mb-1">
 			<div class="col-1">&nbsp;</div>
-			<div class="col-4">@NotesFDD(fdd.AddDays)</div>			
-			<div class="col-7">@fdd.Description</div>
+			<div class="col-4"></div>
+			<div class="col-7">@FeastDay!.Details</div>
 		</div>
 	}
 </div>
+
+@code{
+	[Parameter, EditorRequired] public FeastDay? FeastDay { get; set; }
+	[Parameter, EditorRequired] public DateTime Date { get; set; }
+
+	protected List<FeastDayDetail>? FeastDayDetails { get; set; }
+
+	protected override void OnInitialized()
+	{
+		if (FeastDay == FeastDay.Passover)
+		{
+			FeastDayDetails = FeastDayDetail.List.Where(w => w.ParentFeastDayId == FeastDay.Passover.Value).OrderBy(o => o.AddDays).ToList();
+		}
+		else
+		{
+			if (FeastDay == FeastDay.Trumpets)
+			{
+				FeastDayDetails = FeastDayDetail.List.Where(w => w.ParentFeastDayId == FeastDay.Trumpets.Value).OrderBy(o => o.AddDays).ToList();
+			}
+			else
+			{
+				if (FeastDay == FeastDay.YomKippur)
+				{
+					FeastDayDetails = FeastDayDetail.List.Where(w => w.ParentFeastDayId == FeastDay.YomKippur.Value).OrderBy(o => o.AddDays).ToList();
+				}
+				else
+				{
+					if (FeastDay == FeastDay.Tabernacles)
+					{
+						FeastDayDetails = FeastDayDetail.List.Where(w => w.ParentFeastDayId == FeastDay.Tabernacles.Value).OrderBy(o => o.AddDays).ToList();
+					}
+					else
+					{
+						if (FeastDay == FeastDay.Hanukkah)
+						{
+							FeastDayDetails = FeastDayDetail.List.Where(w => w.ParentFeastDayId == FeastDay.Hanukkah.Value).OrderBy(o => o.AddDays).ToList();
+						}
+						else
+						{
+							FeastDayDetails = FeastDayDetail.List.Where(w => w.ParentFeastDayId == FeastDay.Purim.Value).OrderBy(o => o.AddDays).ToList();
+						}
+					}
+				}
+			}
+		}
+	}
+
+	protected string NotesFDD(int addedDays)
+	{
+		double d = (double)addedDays;
+		return Date.AddDays(d).ToString(LivingMessiah.Web.DateFormat.ddd_mm_dd);
+	}
+}

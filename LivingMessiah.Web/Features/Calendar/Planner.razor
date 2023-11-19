@@ -2,6 +2,8 @@
 @using PageFeast = LivingMessiah.Web.Pages.Feasts.LinkSmartEnums.FeastLinks
 @using PageMonth = LivingMessiah.Web.Pages.Feasts.LinkSmartEnums.FeastLinks.LunarMonth
 
+@using LivingMessiah.Web.Features.Calendar.PlannerComponent
+
 <div class="pb-1 mt-5 mb-0 border-bottom border-info">
 	<h2><i class="far fa-map"></i> Planner</h2>
 </div>
@@ -18,55 +20,96 @@
 	</div>
 </div>
 
-<LoadingComponent IsLoading="PlannerQueries==null">
-	<div class="card bg-light p-2">
+<div class="card bg-light p-2">
 
-		@foreach (var row in PlannerQueries!)
+	@if (CurrentFilter == Enums.DateType.Feast)
+	{
+		@foreach (var feastDay in Enums.FeastDay.List.OrderBy(o => o.Date).ToList())
 		{
+
 			<div class=" row mb-3">
 				<div class="col-md-6 col-lg-8">
-					<span class="@DateCSS">@row.Date.ToString(DateFormat)</span>
+					@((MarkupString)MarkupLiterals.FormatedDate(true, feastDay.Date))
 				</div>
 
 				<div class="col-md-6 col-lg-4">
-					<HeaderRow DateTypeId="@row.DateTypeId" EnumId="@row.EnumId" Descr="@row.Description" />
+					@((MarkupString)MarkupLiterals.HeaderOther(feastDay.Date, Enums.DateType.Feast, feastDay.Name))
 				</div>
 			</div>
 
-			@* ToDo: Only place that `HasCalendarDetails` is used, see if I dan delete this *@
-			@if (row.FeastDay is not null && row.FeastDay.HasCalendarDetails)
-			{
-				<FeastDayCalendarDetails FeastDay="row.FeastDay" Date="row.Date" />
-			}
+			<FeastDayCalendarDetails FeastDay="feastDay" Date="feastDay.Date" />
+
 		}
 
-		@if (@CurrentFilter == Enums.DateType.Feast)
+		<div class="card-footer">
+			<a href="@PageFeast.Index"
+				 class="btn btn-primary btn-sm float-end">
+				@PageFeast.Title related verses <span class="fas fa-caret-right"></span>
+			</a>
+		</div>
+	}
+
+	@if (CurrentFilter == Enums.DateType.Season)
+	{
+		@foreach (var season in Enums.Season.List.OrderBy(o => o.Date).ToList())
 		{
-			<div class="card-footer">
-				<a href="@PageFeast.Index"
-					 class="btn btn-primary btn-sm float-end">
-					@PageFeast.Title related verses <span class="fas fa-caret-right"></span>
-				</a>
+
+			<div class=" row mb-3">
+				<div class="col-md-6 col-lg-8">
+					@((MarkupString)MarkupLiterals.FormatedDate(true, season.Date))
+				</div>
+
+				<div class="col-md-6 col-lg-4">
+					@((MarkupString)MarkupLiterals.HeaderSeason(season.Date, season))
+				</div>
 			</div>
+		}
+	}
+
+	@if (CurrentFilter == Enums.DateType.Month)
+	{
+		@foreach (var month in Enums.LunarMonth.List.OrderBy(o => o.Date).ToList())
+		{
+
+			<div class=" row mb-3">
+				<div class="col-md-6 col-lg-8">
+					@((MarkupString)MarkupLiterals.FormatedDate(true, month.Date))
+				</div>
+
+				<div class="col-md-6 col-lg-4">
+					@((MarkupString)MarkupLiterals.HeaderOther(month.Date, Enums.DateType.Month, month.Name))
+				</div>
+			</div>
+		}
+
+		<div class="card-footer">
+			<a href="@PageMonth.Index"
+				 class="btn btn-primary btn-sm float-end">
+				@PageMonth.Title related verses <span class="fas fa-caret-right"></span>
+			</a>
+		</div>
+	}
+
+</div>
+
+@code {
+	[Parameter] public bool IsXsOrSm { get; set; }
+
+	public Enums.DateType CurrentFilter { get; set; } = Enums.DateType.Feast;
+	protected void OnClickFilter(Enums.DateType newFilter)
+	{
+		CurrentFilter = newFilter;
+	}
+
+	public string ActiveFilter(Enums.DateType filter)
+	{
+		if (filter == CurrentFilter)
+		{
+			return "active";
 		}
 		else
 		{
-			@if (@CurrentFilter == Enums.DateType.Month)
-			{
-				<div class="card-footer">
-					<a href="@PageMonth.Index"
-						 class="btn btn-primary btn-sm float-end">
-						@PageMonth.Title related verses <span class="fas fa-caret-right"></span>
-					</a>
-				</div>
-
-			}
+			return "";
 		}
-
-	</div>
-
-</LoadingComponent>
-
-
-
-
+	}
+}

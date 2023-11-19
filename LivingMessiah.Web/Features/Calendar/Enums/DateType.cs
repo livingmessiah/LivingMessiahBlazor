@@ -50,7 +50,7 @@ public abstract class DateType : SmartEnum<DateType>
 	private sealed class MonthSE : DateType
 	{
 		public MonthSE() : base($"{nameof(Id.Month)}", Id.Month) { }
-		public override string BadgeColor => "bg-info";
+		public override string BadgeColor => "bg-secondary";
 		public override string Icon => "far fa-moon";
 		public override string TextColor => "text-info";
 		public override string CalendarColor => CalendarColors.Dark;

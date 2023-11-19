@@ -6,8 +6,7 @@
 
 @using Page = LivingMessiah.Web.Links.Calendar.FeastSfSchedule
 
-@* @using Microsoft.Extensions.Logging *@
-@* @inject ILogger<FeastSfSchedule>? Logger *@
+@inject Data.IService? svc
 
 <PageTitle>@Page.Title</PageTitle>
 
@@ -62,178 +61,12 @@
 			args.Data.CategoryColor!, args.Attributes, ViewNow);
 	}
 
-	//string inside = $"{nameof(FeastSfSchedule)}!{nameof(OnInitialized)}";
-	private int runningCount = 0;
-
 	protected override void OnInitialized()
 	{
 		AppointmentDataList = new List<ScheduleData.ReadonlyEventsData>();
-		//Logger!.LogDebug(string.Format("Inside {0}", inside));
-
-		LoadFeastDaysExceptHanukkah();
-		//Logger!.LogDebug(string.Format("...After {0} runningCount: {1}", nameof(LoadFeastDaysExceptHanukkah), runningCount));
-
-		LoadFeastDayDetails();
-		//Logger!.LogDebug(string.Format("...After {0} runningCount: {1}", nameof(LoadFeastDayDetails), runningCount));
-
-		LoadOmerDates();
-		//Logger!.LogDebug(string.Format("...After {0} runningCount: {1}", nameof(LoadOmerDates), runningCount));
-
-		LoadHanukkahDates();
-		//Logger!.LogDebug(string.Format("...After {0} runningCount: {1}", nameof(LoadHanukkahDates), runningCount));
-
-		LoadMonths();
-		//Logger!.LogDebug(string.Format("...After {0} runningCount: {1}", nameof(LoadMonths), runningCount));
-
-		LoadSeasons();
-		//Logger!.LogDebug(string.Format("...After {0} runningCount: {1}", nameof(LoadSeasons), runningCount));
-
+		AppointmentDataList = svc!.GetData();
 	}
 
-	private void LoadFeastDaysExceptHanukkah()
-	{
-		int i = 0;
-		foreach (var fd in Enums.FeastDay.List
-												.Where(w => w.Value != Enums.FeastDay.Hanukkah)
-												.OrderBy(o => o.Value).ToList())
-		{
-			i += 1;
-			AppointmentDataList!.Add(new ReadonlyEventsData
-				{
-					Id = i,
-					Subject = fd.Title,
-					Description = fd.Details,
-					StartTime = fd.Date, 
-					EndTime = fd.Date, 
-					CategoryColor = Enums.DateType.Feast.CalendarColor,  // ToDo: Use Turquoise for Passover cuz it's not a High Sabbath
-					IsAllDay = true,
-					IsReadonly = true
-				}
-			);
-		}
-		runningCount = runningCount + i;
-	}
-
-	private void LoadFeastDayDetails()
-	{
-		DateTime date;
-
-		int i = 0;
-		foreach (var item in Enums.FeastDayDetail.List.ToList())
-		{
-			i += 1;
-			date = Enums.FeastDay.FromValue(item.ParentFeastDayId).Date;
-			AppointmentDataList!.Add(new ReadonlyEventsData
-				{
-					Id = i + runningCount,
-					Subject = item.Title,
-					Description = item.Description,
-					StartTime = date.AddDays(item.AddDays),
-					EndTime = date.AddDays(item.AddDays),
-					CategoryColor = Enums.DateType.Feast.CalendarColor,
-					IsAllDay = true,
-					IsReadonly = true
-				}
-			);
-		}
-		runningCount = runningCount + i;
-	}
-
-	private void LoadOmerDates()
-	{
-		DateTime startDate = Enums.FeastDay.Passover.Date.AddDays(2);
-
-		int i = 0;
-		for (i = 1; i < 50; i++)
-		{
-			AppointmentDataList!.Add(new ReadonlyEventsData
-				{
-					Id = i + runningCount,
-					Subject = $"Omer {i} {GetHebrew(i)}",
-					Description = "Omer Count, Day " + i,
-					StartTime = startDate.AddDays(i-1),
-					EndTime = startDate.AddDays(i-1),
-					CategoryColor = CalendarColors.Info,
-					IsAllDay = true,
-					IsReadonly = true
-				}
-			);
-		}
-		runningCount = runningCount + i;
-
-	}
-
-	private void LoadHanukkahDates()
-	{
-		DateTime startDate = Calendar.Enums.FeastDay.Hanukkah.Date.AddDays(-8);
-		string candle = "🕯️";
-
-		int i = 0;
-		for (i = 1; i < 9; i++)
-		{
-			AppointmentDataList!.Add(new ReadonlyEventsData
-				{
-					Id = i + runningCount,
-					Subject = $"Hanukkah {candle.Repeat(i)}",
-					Description = "8 Days of Hanukkah; dates determined by Rabbinic sources",
-					StartTime = startDate.AddDays(i),
-					EndTime = startDate.AddDays(i),
-					CategoryColor = Enums.DateType.Feast.CalendarColor,
-					IsAllDay = true,
-					IsReadonly = true
-				}
-			);
-		}
-
-		runningCount = runningCount + i;
-	}
-
-	private void LoadMonths()
-	{
-		string moon = "🌙"; 
-
-		int i = 0;
-		foreach (var month in Enums.LunarMonth.List.ToList())
-		{
-			i += 1;
-			AppointmentDataList!.Add(new ReadonlyEventsData
-				{
-					Id = i + runningCount,
-					Subject = $"{moon} {month.FullName}",
-					Description = month.Description,
-					StartTime = month.Date,
-					EndTime = month.Date,
-					CategoryColor = Enums.DateType.Month.CalendarColor,
-					IsAllDay = true,
-					IsReadonly = true
-				}
-			);
-		}
-		runningCount = runningCount + i;
-
-	}
-
-	private void LoadSeasons()
-	{
-		int i = 0;
-		foreach (var season in Enums.Season.List.ToList())
-		{
-			i += 1;
-			AppointmentDataList!.Add(new ReadonlyEventsData
-				{
-					Id = i + runningCount,
-					Subject = $"{season.Emoji} {season.Name}",
-					Description = $"{season.Name} | {season.Type}",
-					StartTime = season.Date,
-					EndTime = season.Date,
-					CategoryColor = season.CalendarColor,
-					IsAllDay = true,
-					IsReadonly = true
-				}
-			);
-		}
-		runningCount = runningCount + i;
-	}
 
 
 }

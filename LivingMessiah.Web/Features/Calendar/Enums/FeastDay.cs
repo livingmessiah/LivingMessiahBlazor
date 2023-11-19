@@ -36,7 +36,8 @@ public abstract class FeastDay : SmartEnum<FeastDay>
 	public abstract string Transliteration { get; }
 	public abstract string Hebrew { get; }
 	public abstract string Details { get; }
-	public abstract string Title { get; }
+	public abstract string CalendarTitle { get; }
+	public abstract string PlannerTitle { get; }
 	// public abstract string Description { get; } // ToDo: include Details + Transliteration + Hebrew
 
 
@@ -56,8 +57,9 @@ public abstract class FeastDay : SmartEnum<FeastDay>
 		public override string Transliteration => "";
 		public override string Hebrew => "חֲנֻכָּה";
 		public override string Details => "Date determined by Rabbinic sources";
-		public override string Title => nameof(Id.Hanukkah);
-		public override bool HasCalendarDetails => true;
+		public override string CalendarTitle => nameof(Id.Hanukkah);
+		public override string PlannerTitle => nameof(Id.Hanukkah);
+		public override bool HasCalendarDetails => false;
 		public override int? DaysFromPrevFeast => null;  // This is the beginning of the year
 		public override DateTime Date => Convert.ToDateTime("2023-12-15"); // Hanukkah
 	}
@@ -68,8 +70,9 @@ public abstract class FeastDay : SmartEnum<FeastDay>
 		public override string Transliteration => "";
 		public override string Hebrew => "פוּרִים";
 		public override string Details => "Tradition is to read the book of Esther; date determined by Rabbinic sources";
-		public override string Title => $"➕ {nameof(Id.Purim)}"; 
-		public override bool HasCalendarDetails => true;
+		public override string CalendarTitle => $"➕ {nameof(Id.Purim)}";
+		public override string PlannerTitle => nameof(Id.Purim);
+		public override bool HasCalendarDetails => false;
 		public override int? DaysFromPrevFeast => null;  // Hanukkah comes before and it's to fluid to track, so null
 
 		public override DateTime Date => Convert.ToDateTime("2024-03-24"); // Purim
@@ -81,7 +84,8 @@ public abstract class FeastDay : SmartEnum<FeastDay>
 		public override string Transliteration => "Pesach";
 		public override string Hebrew => "פֶּסַח";
 		public override string Details => "The Seder Meal is prepared on the 14th of Aviv. As evening starts, the meal is eaten. Also, this becomes the first day of Unleavened bread";
-		public override string Title => nameof(Id.Passover);
+		public override string CalendarTitle => nameof(Id.Passover);
+		public override string PlannerTitle => nameof(Id.Passover);
 		public override bool HasCalendarDetails => true;
 		public override int? DaysFromPrevFeast => null;  // Purim comes before and it's to fluid to track, so null
 		public override DateTime Date => Convert.ToDateTime("2024-04-22"); // Passover
@@ -92,8 +96,9 @@ public abstract class FeastDay : SmartEnum<FeastDay>
 		public override string Transliteration => "Shavu'ot";
 		public override string Hebrew => "שָׁבוּעוֹת";
 		public override string Details => "The hight sabbath begins the evening before; This is also called Pentecost";
-		public override string Title => nameof(Id.Weeks);
-		public override bool HasCalendarDetails => false;
+		public override string CalendarTitle => nameof(Id.Weeks);
+		public override string PlannerTitle => nameof(Id.Weeks);
+		public override bool HasCalendarDetails => false;  // this is the only one that isn't true
 		public override int? DaysFromPrevFeast => 51;  // Pesach is before and so a hard business rule can be made ... I think ... why isn't it 50?
 		public override DateTime Date => Convert.ToDateTime("2024-06-12"); // Weeks
 	}
@@ -104,7 +109,8 @@ public abstract class FeastDay : SmartEnum<FeastDay>
 		public override string Transliteration => "Yom Teruah";
 		public override string Hebrew => "יוֹם תְּרוּעָה";
 		public override string Details => "A high holy day sabbath";
-		public override string Title => nameof(Id.Trumpets);
+		public override string CalendarTitle => nameof(Id.Trumpets);
+		public override string PlannerTitle => nameof(Id.Trumpets);
 		public override bool HasCalendarDetails => true;
 		public override int? DaysFromPrevFeast => 113;  // Shavuot / Weeks is before and so a hard business rule can be made ... I think 
 		public override DateTime Date => Convert.ToDateTime("2024-10-03"); // Trumpets
@@ -116,7 +122,8 @@ public abstract class FeastDay : SmartEnum<FeastDay>
 		public override string Transliteration => "Yom Kippur";
 		public override string Hebrew => "יוֹם כִּיפּוּר";
 		public override string Details => "In the afternoon we have our Yom Kippur service and break the fast after the sun sets";
-		public override string Title => "Yom Kippur";
+		public override string CalendarTitle => "Yom Kippur";
+		public override string PlannerTitle => CalendarTitle;
 		public override bool HasCalendarDetails => true;
 		public override int? DaysFromPrevFeast => 9;  // Trumpets is before and so a hard business rule can be made
 		public override DateTime Date => Convert.ToDateTime("2024-10-12"); // Yom Kippur
@@ -128,7 +135,8 @@ public abstract class FeastDay : SmartEnum<FeastDay>
 		public override string Transliteration => "Sukkot";
 		public override string Hebrew => "סֻּכּוֹת";
 		public override string Details => "Preparation Day, High Sabbath begins at sunset";
-		public override string Title => "Sukkot | Day 1";
+		public override string CalendarTitle => "Sukkot | Day 1";
+		public override string PlannerTitle => nameof(Id.Tabernacles);
 		public override bool HasCalendarDetails => true;
 		public override int? DaysFromPrevFeast => 5;  // Yom Kippur is before and so a hard business rule can be made 
 		public override DateTime Date => Convert.ToDateTime("2024-10-17"); // Tabernacles
