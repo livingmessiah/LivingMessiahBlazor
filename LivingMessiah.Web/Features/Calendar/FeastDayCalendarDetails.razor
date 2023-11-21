@@ -53,17 +53,6 @@
 					{
 						FeastDayDetails = FeastDayDetail.List.Where(w => w.ParentFeastDayId == FeastDay.Tabernacles.Value).OrderBy(o => o.AddDays).ToList();
 					}
-					else
-					{
-						if (FeastDay == FeastDay.Hanukkah)
-						{
-							FeastDayDetails = FeastDayDetail.List.Where(w => w.ParentFeastDayId == FeastDay.Hanukkah.Value).OrderBy(o => o.AddDays).ToList();
-						}
-						else
-						{
-							FeastDayDetails = FeastDayDetail.List.Where(w => w.ParentFeastDayId == FeastDay.Purim.Value).OrderBy(o => o.AddDays).ToList();
-						}
-					}
 				}
 			}
 		}

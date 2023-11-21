@@ -29,7 +29,6 @@ public class MarkupLiterals
 		return IsXsOrSm ?
 			(MarkupString)$"<span class='h6'>{date.ToString(DateFormat)}</span>" :
 			(MarkupString)$"<span class='h4'>{date.ToString(DateFormat)}</span>";
-
 	}
 
 	public static MarkupString HeaderSeason(DateTime date, Enums.Season enumValue)

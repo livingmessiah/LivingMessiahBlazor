@@ -56,12 +56,12 @@ public abstract class FeastDay : SmartEnum<FeastDay>
 		public HanukkahSE() : base($"{nameof(Id.Hanukkah)}", Id.Hanukkah) { }
 		public override string Transliteration => "";
 		public override string Hebrew => "חֲנֻכָּה";
-		public override string Details => "Date determined by Rabbinic sources";
+		public override string Details => "First day of Hanukkah; Date determined by Rabbinic sources";
 		public override string CalendarTitle => nameof(Id.Hanukkah);
 		public override string PlannerTitle => nameof(Id.Hanukkah);
 		public override bool HasCalendarDetails => false;
 		public override int? DaysFromPrevFeast => null;  // This is the beginning of the year
-		public override DateTime Date => Convert.ToDateTime("2023-12-15"); // Hanukkah
+		public override DateTime Date => Convert.ToDateTime("2023-12-08"); // Hanukkah
 	}
 
 	private sealed class PurimSE : FeastDay

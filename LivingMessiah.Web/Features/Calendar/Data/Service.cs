@@ -144,16 +144,16 @@ public class Service : IService
 	private static (int RunningCount, List<ReadonlyEventsData> DataList)
 		LoadHanukkahDates(int runningCount, List<ReadonlyEventsData> dataList)
 	{
-		DateTime startDate = Calendar.Enums.FeastDay.Hanukkah.Date.AddDays(-8);
+		DateTime startDate = Calendar.Enums.FeastDay.Hanukkah.Date.AddDays(0);
 		string candle = "🕯️";
 
 		int i;
-		for (i = 1; i < 9; i++)
+		for (i = 0; i < 8; i++)
 		{
 			dataList!.Add(new ReadonlyEventsData
 			{
 				Id = i + runningCount,
-				Subject = $"Hanukkah {candle.Repeat(i)}",
+				Subject = $"Hanukkah {candle.Repeat(i+1)}",
 				Description = "8 Days of Hanukkah; dates determined by Rabbinic sources",
 				StartTime = startDate.AddDays(i),
 				EndTime = startDate.AddDays(i),
