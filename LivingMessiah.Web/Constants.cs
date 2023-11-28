@@ -16,6 +16,7 @@ public static class DateFormat
 	public const string dd = "dd";
 	public const string dddd_dd_MMMM = "dddd, dd MMMM";
 	public const string dddd_MMMM_dd = "dddd, MMMM dd ";
+	public const string ddd_MMMM_dd_YYYY = "ddd, MMMM dd, yyyy";
 }
 
 public static class CurrencyFormat

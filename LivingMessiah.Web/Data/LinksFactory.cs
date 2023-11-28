@@ -3,7 +3,7 @@ using LivingMessiah.Web.Domain;
 using LivingMessiah.Web.Links;
 using LivingMessiah.Web.Pages.Admin.WirecastFolder;
 using LivingMessiah.Web.Pages.Home;
-using PageFeast = LivingMessiah.Web.Pages.Feasts.LinkSmartEnums.FeastLinks;
+using PageFeast = LivingMessiah.Web.Features.Feasts.FeastLinks;
 using PageParasha = LivingMessiah.Web.Pages.Parasha.LinkSmartEnums.ParashaLinks;
 using PageWindmillRanch = LivingMessiah.Web.Pages.WindmillRanch.LinkSmartEnums.WindmillRanchLinks;
 

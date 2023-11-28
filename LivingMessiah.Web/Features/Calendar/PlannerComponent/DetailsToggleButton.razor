@@ -1,0 +1,56 @@
+﻿@using CalendarEnums = LivingMessiah.Web.Features.Calendar.Enums
+
+@* DELETE *@
+
+<div class="card">
+	<div class="card-body">
+		<p class="card-text text-center pb-0 mb-0">@FeastDay!.Details</p>
+	</div>
+
+	<div class="card-body pt-0">
+
+		@if (IsCollapsed)
+		{
+			<Button @onclick="@(e => ToggleButtonClick(IsCollapsed))"
+							class="btn btn-outline-primary btn-sm float-end">
+				Details <i class='fas fa-chevron-down'></i>
+			</Button>
+		}
+		else
+		{
+			<Button @onclick="@(e => ToggleButtonClick(IsCollapsed))"
+							class="btn btn-outline-primary btn-sm float-end">
+				Hide <i class='fas fa-chevron-up'></i>
+			</Button>
+		}
+	</div>
+
+	@if (!IsCollapsed)
+	{
+		<div class="card-body">
+			<ul>
+
+				<li>
+					Translation: <b>@FeastDay!.Translation</b>
+				</li>
+				<li>
+					Hebrew: <span class="hebrew"><b>@FeastDay!.Hebrew</b></span>
+				</li>
+
+			</ul>
+		</div>
+
+	}
+
+</div>
+
+
+@code {
+	[Parameter, EditorRequired] public CalendarEnums.FeastDay? FeastDay { get; set; }
+
+	public bool IsCollapsed { get; set; } = true;
+	protected void ToggleButtonClick(bool isCollapsed)
+	{
+		IsCollapsed = !isCollapsed;
+	}
+}

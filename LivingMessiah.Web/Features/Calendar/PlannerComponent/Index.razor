@@ -1,0 +1,164 @@
+﻿@page "/Planner"
+@using CalendarEnums = LivingMessiah.Web.Features.Calendar.Enums
+@using LivingMessiah.Web.Features.Feasts.VerseReferenceCards
+
+@using Page = LivingMessiah.Web.Links.Calendar.Planner
+@* @using LivingMessiah.Web.SmartEnums *@
+
+<PageTitle>@Page.Title</PageTitle>
+
+<div class="pb-1 mt-4 mb-5 border-bottom border-info">
+		<h2><i class="@Page.Icon"></i> @Page.Title</h2>
+</div>
+
+<Introduction />
+
+	<!-- Hanukkah -->
+	<div class="card border-primary mt-3 p-2">
+		<Header FeastDay="CalendarEnums.FeastDay.Hanukkah" />
+
+		<h6 class="mt-1 mb-0"><span class="badge bg-info">Day 1</span></h6>
+		<EveningAndDay Date="CalendarEnums.FeastDay.Hanukkah.Date" />
+
+		<h6 class="mt-3 mb-0"><span class="badge bg-info">Day 8</span></h6>
+		<EveningAndDay Date="CalendarEnums.FeastDay.Hanukkah.Date.AddDays(7)" />
+
+		<div class="row mt-2">
+			<div class="col-12">
+				<ToggleButton>
+					<Joh_10_22 />
+				</ToggleButton>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- Purim -->
+	<div class="card border-primary mt-3 p-2">
+		<Header FeastDay="CalendarEnums.FeastDay.Purim" />
+		<EveningAndDay Date="CalendarEnums.FeastDay.Purim.Date" />
+
+		<div class="row mt-2">
+			<div class="col-12">
+					<ToggleButton>
+						<Est_9_24_32 />
+					</ToggleButton>
+			</div>
+		</div>
+
+	</div>
+
+
+	<!-- Passover Week -->
+	<div class="card border-primary mt-3 p-2">
+		<Header FeastDay="CalendarEnums.FeastDay.Passover" />
+
+		<h4 class="mt-1 mb-0">
+			<span class="badge bg-primary">Unleavened Bread | Day 1</span>
+		</h4>
+
+		<EveningAndDay Date="CalendarEnums.FeastDay.Passover.Date.AddDays(0)"
+									 FirstProgressBarDayLabel="Prepare the meal"
+									 FirstProgressBarErevLabel="Seder" />
+
+
+		<h6 class="mt-3 mb-0"><span class="badge bg-info">Start Omer Count</span></h6>
+		<EveningAndDay Date="CalendarEnums.FeastDay.Passover.Date.AddDays(1)" />
+
+		<h4 class="mt-3 mb-0">
+			<span class="badge bg-primary">Unleavened Bread | Day 7</span>
+		</h4>
+		<EveningAndDay Date="CalendarEnums.FeastDay.Passover.Date.AddDays(7)" />
+
+		<div class="row mt-2">
+			<div class="col-12">
+				<ToggleButton>
+					<Lev_23_04_08 />
+				</ToggleButton>
+			</div>
+		</div>
+	</div>
+
+
+
+<!-- Weeks -->
+	<div class="card border-primary mt-3 p-2">
+		<Header FeastDay="CalendarEnums.FeastDay.Weeks" />
+
+		<h6 class="mt-1 mb-0"><span class="badge bg-info">Finish Omer Count</span></h6>
+		<EveningAndDay Date="CalendarEnums.FeastDay.Weeks.Date.AddDays(-1)" />
+
+		<h4 class="mt-3 mb-0">
+			<span class="badge bg-primary">@CalendarEnums.FeastDay.Weeks.Transliteration</span>
+	</h4>
+	<EveningAndDay Date="CalendarEnums.FeastDay.Weeks.Date" />
+		
+	<div class="row mt-2">
+		<div class="col-12">
+			<ToggleButton>
+				<Lev_23_15_21 />
+			</ToggleButton>
+		</div>
+	</div>
+</div>
+
+
+<!-- Trumpets -->
+<div class="card border-primary mt-3 p-2">
+	<Header FeastDay="CalendarEnums.FeastDay.Trumpets" />
+	<EveningAndDay Date="CalendarEnums.FeastDay.Trumpets.Date" />
+	<div class="row mt-2">
+		<div class="col-12">
+			<ToggleButton>
+				<Lev_23_23_25 />
+			</ToggleButton>
+		</div>
+	</div>
+
+</div>
+
+
+<!-- Yom Kippur -->
+<div class="card border-primary mt-3 p-2">
+	<Header FeastDay="CalendarEnums.FeastDay.YomKippur" />
+	<EveningAndDay Date="CalendarEnums.FeastDay.YomKippur.Date" SecondProgressBarErevLabel="Break Fast" />
+	<div class="row mt-2">
+		<div class="col-12">
+			<ToggleButton>
+				<Lev_23_26_32 />
+			</ToggleButton>
+		</div>
+	</div>
+</div>
+
+
+<!-- Tabernacles -->
+<div class="card border-primary mt-3 p-2">
+	<Header FeastDay="CalendarEnums.FeastDay.Tabernacles" />
+
+	<h4 class="mt-1 mb-0"><span class="badge bg-primary">Day 1</span></h4>
+	<EveningAndDay Date="CalendarEnums.FeastDay.Tabernacles.Date"
+								 FirstProgressBarDayLabel="@CalendarEnums.FeastDayDetail.SukkotDay0.Title" />
+
+	<h4 class="mt-3 mb-0"><span class="badge bg-primary">Day 8</span></h4>
+	<EveningAndDay Date="CalendarEnums.FeastDay.Tabernacles.Date.AddDays(CalendarEnums.FeastDay.Tabernacles.EndOfWeekAddDays)" />
+
+	<h6 class="mt-3 mb-0"><span class="badge bg-info">@CalendarEnums.FeastDayDetail.SukkotEndsAtSundown.Title</span></h6>
+	<EveningAndDay Date="CalendarEnums.FeastDay.Tabernacles.Date.AddDays(CalendarEnums.FeastDay.Tabernacles.EndOfWeekAddDays+1)"
+								 SecondProgressBarDayLabel="@CalendarEnums.FeastDayDetail.SukkotEndsAtSundown.Title" />
+
+	<div class="row mt-2">
+		<div class="col-12">
+			<ToggleButton>
+				<Lev_23_33_44 />
+			</ToggleButton>
+		</div>
+	</div>
+
+</div>
+
+<Footer />
+
+
+@code {
+}

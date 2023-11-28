@@ -1,0 +1,18 @@
+﻿
+<div class="list-group">
+	@foreach (var item in Enums.Feast.List.OrderBy(o => o.Value).ToList())
+	{
+		<a href="@item.Page" title="@item.Hebrew.TitleSuffix @item.Hebrew.Strongs"
+			 class="list-group-item @item.ListGroupItemColor">
+			<i class="@item.Icon fa-fw fa-3x" aria-hidden="true"></i>
+			<span class="home-page-xs"><b>@item.Title</b></span>
+			<span class="float-end text-info">
+				<span class="hebrew">@item.Hebrew.FloatRightHebrew</span>
+			</span>
+		</a>
+	}
+</div>
+
+@code {
+
+}

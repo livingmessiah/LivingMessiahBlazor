@@ -1,0 +1,35 @@
+﻿@page "/Shabbat"
+@using ShabbatService = LivingMessiah.Web.Links.ShabbatService
+@using LivingMessiah.Web.Features.Feasts.Components
+@using LivingMessiah.Web.Features.Feasts.VerseReferenceCards
+
+@using Page = FeastLinks
+<PageTitle>@Page.Shabbat.Title</PageTitle>
+
+<ReturnAnchor />
+
+<div class="pb-1 mt-4 mb-5 border-bottom border-primary">
+	<h2><i class="@Page.Shabbat.Icon"></i> @Page.Shabbat.Title</h2>
+</div>
+
+@*<BibleReference Feast="@LinkSmartEnums.Feast.Shabbat"/>*@
+
+
+<div class="card border-primary mt-5">
+	<Gen_02_01_03 />
+</div>
+
+<div class="card border-primary mt-5">
+	<Lev_23_03 />
+</div>
+
+<AlephBetFooter />
+
+<a class="btn btn-outline-primary btn-sm mt-3"
+	 href="@ShabbatService.Index">
+	<i class="fas fa-link"></i> @ShabbatService.Title
+</a>
+
+
+
+

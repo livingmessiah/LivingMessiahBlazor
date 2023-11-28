@@ -1,0 +1,23 @@
+﻿@page "/Trumpets"
+
+@using LivingMessiah.Web.Features.Feasts.Components
+@using LivingMessiah.Web.Features.Feasts.VerseReferenceCards
+
+@using Page = FeastLinks
+<PageTitle>@Page.Trumpets.Title</PageTitle>
+
+	<ReturnAnchor />
+
+	<div class="pb-1 mt-4 mb-5 border-bottom border-primary">
+		<h2><i class="@Page.Trumpets.Icon"></i> @Page.Trumpets.Title</h2>
+</div>
+
+<div class="card border-primary mt-5">
+	<Lev_23_23_25 />
+</div>
+
+
+<AlephBetFooter />
+
+<img src="@Blobs.UrlEvents("yom-teruah-torn.jpeg")" alt="Yom Kippur" class="img-fluid rounded mt-4" />
+

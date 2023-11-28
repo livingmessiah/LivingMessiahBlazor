@@ -1,0 +1,17 @@
+﻿@page "/Feasts"
+@using Page = FeastLinks
+@using LivingMessiah.Web.Features.Feasts.VerseReferenceCards
+
+<PageTitle>@Page.Title</PageTitle>
+<div class="pb-2 mt-1 mb-2 ">
+	<h2><i class="@Page.Icon"></i> @Page.Title</h2>
+</div>
+
+<Introduction />
+<ListGroup />
+
+<div class="card border-primary mt-5">
+	<Lev_23_01_02 />
+</div>
+
+<AlephBetFooter />

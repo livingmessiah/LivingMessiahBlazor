@@ -1,8 +1,8 @@
 ﻿@page "/Shavuot"
 @using static LivingMessiah.Web.Pages.Shavuot.Domain.OmerGematriaFactory
-
+@using LivingMessiah.Web.Features.Feasts.VerseReferenceCards
 @using Page = LivingMessiah.Web.Links.Shavuot
-@using LivingMessiah.Web.Shared.BibleVerses
+
 
 <PageTitle>@Page.Title</PageTitle>
 
@@ -10,7 +10,9 @@
 
 <BodyTableOrGrid CurrentDay="CurrentDay" />
 
-<Lev_023_15_to_16 Header="Omer Counting Instructions" />
+<div class="card border-primary mt-5">
+	<Lev_23_15_16 />
+</div>
 
 <Footer/>
 <AlephBet/>

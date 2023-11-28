@@ -1,0 +1,29 @@
+﻿@page "/Weeks"
+@using Shavuot = LivingMessiah.Web.Links.Shavuot
+@using LivingMessiah.Web.Features.Feasts.Components
+@using LivingMessiah.Web.Features.Feasts.VerseReferenceCards
+
+@using Page = FeastLinks
+<PageTitle>@Page.Weeks.Title</PageTitle>
+
+<ReturnAnchor />
+
+<div class="pb-1 mt-4 mb-5 border-bottom border-primary">
+	<h2><i class="@Page.Weeks.Icon"></i> @Page.Weeks.Title</h2>
+</div>
+
+<div class="card border-primary mt-5">
+	<Lev_23_15_21 />
+</div>
+
+<AlephBetFooter />
+
+@*<BibleReference Feast="@LinkSmartEnums.Feast.Weeks"/>*@
+
+<a class="btn btn-outline-primary btn-sm mt-3"
+	 href="@Shavuot.Index">
+	<i class="fas fa-link"></i> @Shavuot.Title
+</a>
+
+
+

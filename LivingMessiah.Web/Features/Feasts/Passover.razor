@@ -1,0 +1,32 @@
+﻿@page "/Passover"
+@using Articles = LivingMessiah.Web.Links.Articles
+@using LivingMessiah.Web.Features.Feasts.Components
+@using LivingMessiah.Web.Features.Feasts.VerseReferenceCards
+
+@using Page = FeastLinks
+<PageTitle>@Page.Passover.Title</PageTitle>
+
+<ReturnAnchor></ReturnAnchor>
+
+<div class="pb-1 mt-4 mb-5 border-bottom border-primary">
+	<h2><i class="@Page.Passover.Icon"></i> @Page.Passover.Title</h2>
+</div>
+
+<div class="card border-primary mt-5">
+	<Lev_23_04_08 />
+</div>
+
+<AlephBetFooter />
+
+@*<BibleReference Feast="@LinkSmartEnums.Feast.Passover"/>*@
+
+<img src="@Blobs.UrlRoot("Pesach2016GraphicLg.png")" alt="Pesach" class="img-fluid rounded mt-4" />
+
+<div class="row">
+	<div class="col-12">
+		<a class="btn btn-outline-primary btn-sm mt-3"
+			 href="@Articles.Pesach.Index">
+			<i class="fas fa-link"></i> Pesach
+		</a>
+	</div>
+</div>

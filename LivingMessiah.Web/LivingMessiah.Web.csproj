@@ -24,7 +24,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\.editorconfig" Link=".editorconfig" />
     <None Include="Features\SpecialEvents\ActionButtons.razor" />
     <None Include="Features\SpecialEvents\DisplayCard.razor" />
     <None Include="Features\SpecialEvents\Form.razor" />
@@ -122,6 +121,11 @@
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Features\Feasts\LinkSmartEnums\" />
+    <Folder Include="Features\Feasts\Links\" />
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties appsettings_1development_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>

@@ -1,0 +1,27 @@
+﻿@page "/Purim"
+
+@*@using static LivingMessiah.Web.Pages.Shavuot.Domain.OmerGematriaFactory*@
+@using LivingMessiah.Web.Features.Feasts.Components
+@using LivingMessiah.Web.Features.Feasts.VerseReferenceCards
+
+@using Page = FeastLinks
+<PageTitle>@Page.Purim.Title</PageTitle>
+
+	<ReturnAnchor />
+
+<div class="pb-1 mt-4 mb-5 border-bottom border-primary">
+	<h2><i class="@Page.Purim.Icon"></i> @Page.Purim.Title</h2>
+</div>
+
+<div class="card border-primary mt-5">
+	<Est_9_24_32 />
+</div>
+
+<AlephBetFooter />
+
+@*<img src="@Blobs.UrlOther("purim-2020-03-09.jpg")" alt="Purim" class="img-fluid rounded mt-4" />*@
+
+@*<ol start="24">*@
+
+@*<BibleReference Feast="@LinkSmartEnums.Feast.Purim"/>*@
+

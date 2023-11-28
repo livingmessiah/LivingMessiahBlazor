@@ -146,6 +146,12 @@ public static class Calendar
 		public const string Title = "Feast SfSchedule";
 		public const string Icon = "far fa-calendar";
 	}
+	public static class Planner
+	{
+		public const string Index = "/Planner";
+		public const string Title = "Planner";
+		public const string Icon = "far fa-map";
+	}
 }
 
 public static class Contact

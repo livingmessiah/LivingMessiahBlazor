@@ -33,11 +33,14 @@ public abstract class FeastDay : SmartEnum<FeastDay>
 	private FeastDay(string name, int value) : base(name, value) { } // Constructor
 
 	#region Extra Fields
+	public abstract string Translation { get; }
 	public abstract string Transliteration { get; }
 	public abstract string Hebrew { get; }
 	public abstract string Details { get; }
 	public abstract string CalendarTitle { get; }
 	public abstract string PlannerTitle { get; }
+	public abstract bool IsHighSabbath { get; }
+	public abstract int EndOfWeekAddDays { get; }
 	// public abstract string Description { get; } // ToDo: include Details + Transliteration + Hebrew
 
 
@@ -54,11 +57,14 @@ public abstract class FeastDay : SmartEnum<FeastDay>
 	private sealed class HanukkahSE : FeastDay
 	{
 		public HanukkahSE() : base($"{nameof(Id.Hanukkah)}", Id.Hanukkah) { }
-		public override string Transliteration => "";
+		public override string Translation => "Feast of Lights";
+		public override string Transliteration => "Hanukkah";
 		public override string Hebrew => "חֲנֻכָּה";
 		public override string Details => "First day of Hanukkah; Date determined by Rabbinic sources";
 		public override string CalendarTitle => nameof(Id.Hanukkah);
-		public override string PlannerTitle => nameof(Id.Hanukkah);
+		public override string PlannerTitle => $"{nameof(Id.Hanukkah)} Week";
+		public override bool IsHighSabbath => false;
+		public override int EndOfWeekAddDays => 7;
 		public override bool HasCalendarDetails => false;
 		public override int? DaysFromPrevFeast => null;  // This is the beginning of the year
 		public override DateTime Date => Convert.ToDateTime("2023-12-08"); // Hanukkah
@@ -67,11 +73,14 @@ public abstract class FeastDay : SmartEnum<FeastDay>
 	private sealed class PurimSE : FeastDay
 	{
 		public PurimSE() : base($"{nameof(Id.Purim)}", Id.Purim) { }
-		public override string Transliteration => "";
+		public override string Translation => "Lots";
+		public override string Transliteration => "Purim";
 		public override string Hebrew => "פוּרִים";
 		public override string Details => "Tradition is to read the book of Esther; date determined by Rabbinic sources";
 		public override string CalendarTitle => $"➕ {nameof(Id.Purim)}";
 		public override string PlannerTitle => nameof(Id.Purim);
+		public override bool IsHighSabbath => false;
+		public override int EndOfWeekAddDays => 0;
 		public override bool HasCalendarDetails => false;
 		public override int? DaysFromPrevFeast => null;  // Hanukkah comes before and it's to fluid to track, so null
 
@@ -81,23 +90,30 @@ public abstract class FeastDay : SmartEnum<FeastDay>
 	private sealed class PassoverSE : FeastDay
 	{
 		public PassoverSE() : base($"{nameof(Id.Passover)}", Id.Passover) { }
+		public override string Translation => "Passover";
 		public override string Transliteration => "Pesach";
 		public override string Hebrew => "פֶּסַח";
 		public override string Details => "The Seder Meal is prepared on the 14th of Aviv. As evening starts, the meal is eaten. Also, this becomes the first day of Unleavened bread";
 		public override string CalendarTitle => nameof(Id.Passover);
-		public override string PlannerTitle => nameof(Id.Passover);
+		public override string PlannerTitle => $"{nameof(Id.Passover)} Week";
+		public override bool IsHighSabbath => true;
+		public override int EndOfWeekAddDays => 7;  // this is 7 not 6 because I'm starting from passover, not 1st day of unleavened bread
 		public override bool HasCalendarDetails => true;
 		public override int? DaysFromPrevFeast => null;  // Purim comes before and it's to fluid to track, so null
 		public override DateTime Date => Convert.ToDateTime("2024-04-22"); // Passover
 	}
+
 	private sealed class WeeksSE : FeastDay
 	{
 		public WeeksSE() : base($"{nameof(Id.Weeks)}", Id.Weeks) { }
+		public override string Translation => "Weeks";
 		public override string Transliteration => "Shavu'ot";
 		public override string Hebrew => "שָׁבוּעוֹת";
 		public override string Details => "The hight sabbath begins the evening before; This is also called Pentecost";
 		public override string CalendarTitle => nameof(Id.Weeks);
 		public override string PlannerTitle => nameof(Id.Weeks);
+		public override bool IsHighSabbath => true;
+		public override int EndOfWeekAddDays => 0;
 		public override bool HasCalendarDetails => false;  // this is the only one that isn't true
 		public override int? DaysFromPrevFeast => 51;  // Pesach is before and so a hard business rule can be made ... I think ... why isn't it 50?
 		public override DateTime Date => Convert.ToDateTime("2024-06-12"); // Weeks
@@ -106,11 +122,14 @@ public abstract class FeastDay : SmartEnum<FeastDay>
 	private sealed class TrumpetsSE : FeastDay
 	{
 		public TrumpetsSE() : base($"{nameof(Id.Trumpets)}", Id.Trumpets) { }
+		public override string Translation => "Trumpets";
 		public override string Transliteration => "Yom Teruah";
 		public override string Hebrew => "יוֹם תְּרוּעָה";
 		public override string Details => "A high holy day sabbath";
 		public override string CalendarTitle => nameof(Id.Trumpets);
 		public override string PlannerTitle => nameof(Id.Trumpets);
+		public override bool IsHighSabbath => true;
+		public override int EndOfWeekAddDays => 0;
 		public override bool HasCalendarDetails => true;
 		public override int? DaysFromPrevFeast => 113;  // Shavuot / Weeks is before and so a hard business rule can be made ... I think 
 		public override DateTime Date => Convert.ToDateTime("2024-10-03"); // Trumpets
@@ -119,11 +138,14 @@ public abstract class FeastDay : SmartEnum<FeastDay>
 	private sealed class YomKippurSE : FeastDay
 	{
 		public YomKippurSE() : base($"{nameof(Id.YomKippur)}", Id.YomKippur) { }
+		public override string Translation => "Day of Atonements";
 		public override string Transliteration => "Yom Kippur";
 		public override string Hebrew => "יוֹם כִּיפּוּר";
 		public override string Details => "In the afternoon we have our Yom Kippur service and break the fast after the sun sets";
 		public override string CalendarTitle => "Yom Kippur";
 		public override string PlannerTitle => CalendarTitle;
+		public override bool IsHighSabbath => true;
+		public override int EndOfWeekAddDays => 0;
 		public override bool HasCalendarDetails => true;
 		public override int? DaysFromPrevFeast => 9;  // Trumpets is before and so a hard business rule can be made
 		public override DateTime Date => Convert.ToDateTime("2024-10-12"); // Yom Kippur
@@ -132,11 +154,14 @@ public abstract class FeastDay : SmartEnum<FeastDay>
 	private sealed class TabernaclesSE : FeastDay
 	{
 		public TabernaclesSE() : base($"{nameof(Id.Tabernacles)}", Id.Tabernacles) { }
+		public override string Translation => "Booths"; // Tabernacle is latin and it comes from tavern
 		public override string Transliteration => "Sukkot";
 		public override string Hebrew => "סֻּכּוֹת";
 		public override string Details => "Preparation Day, High Sabbath begins at sunset";
 		public override string CalendarTitle => "Sukkot | Day 1";
-		public override string PlannerTitle => nameof(Id.Tabernacles);
+		public override string PlannerTitle => $"{nameof(Id.Tabernacles)} Week";
+		public override bool IsHighSabbath => true;
+		public override int EndOfWeekAddDays => 7;
 		public override bool HasCalendarDetails => true;
 		public override int? DaysFromPrevFeast => 5;  // Yom Kippur is before and so a hard business rule can be made 
 		public override DateTime Date => Convert.ToDateTime("2024-10-17"); // Tabernacles
