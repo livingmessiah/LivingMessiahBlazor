@@ -24,6 +24,7 @@ using LivingMessiah.Web.Components.ShabbatWeek;
 using LivingMessiah.Web.Pages.Sukkot.ManageNotes.Data;
 using LivingMessiah.Web.Pages.Sukkot.ManageRegistration.Data;
 using LivingMessiah.Web.Features.Calendar.ManageKeyDates.Data;
+using LivingMessiah.Web.Features.Calendar.ParashaCalendar;
 
 namespace LivingMessiah.Web;
 
@@ -57,6 +58,7 @@ public class Startup
 
 		services.AddCalendar();
 		services.AddManageKeyDates();
+		services.AddParashaCalendar();
 		services.AddPsalmsAndProverbs();
 		services.AddSpecialEvents();
 		services.AddUpcomingEvents();

@@ -302,6 +302,16 @@ public static class KeyDatesEdit
 	public const string Icon = "far fa-calendar-check";
 }
 
+
+public static class ParashaCalendar
+{
+	public const string Index = "/ParashaCalendar";
+	public const string Title = "Parasha Calendar";
+	public const string Icon = "fas fa-file-csv";  // far fa-file-excel 
+	public const string IconDownloadButton = "fas fa-file-download"; 
+}
+
+
 public static class Leadership
 {
 	public const string Index = "/Leadership";
@@ -625,9 +635,18 @@ public static class Wirecast
 
 }
 
+// Ignore Spelling: tshirt
+// Ignore Spelling: Torah
+// Ignore Spelling: pesach
+// Ignore Spelling: YouTube
+// Ignore Spelling: Permaculture
+// Ignore Spelling: Sitemap
+// Ignore Spelling: Shabbat
+// Ignore Spelling: Admin
 // Ignore Spelling: Descr
 // Ignore Spelling: Chala
 // Ignore Spelling: QRC
 // Ignore Spelling: Indepth
 // Ignore Spelling: Syncfusion
 // Ignore Spelling: Challah
+// Ignore Spelling: Parasha

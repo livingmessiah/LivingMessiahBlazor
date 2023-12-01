@@ -1,0 +1,52 @@
+﻿@page "/ParashaCalendar"
+@*
+@using static LivingMessiah.Web.Services.Auth0
+@using CalendarEnumDateType = LivingMessiah.Web.Features.Calendar.Enums.DateType
+*@
+
+@using Microsoft.Extensions.Logging;
+
+@inject IRepository? db
+@inject ILogger<Index>? Logger
+@inject IToastService? Toast
+
+@using Page = LivingMessiah.Web.Links.ParashaCalendar
+<PageTitle>@Page.Title</PageTitle>
+
+	<p class="float-end">
+		<a href="@Blobs.UrlCalendar("parasha-calendar-2024.csv")" target="_blank">
+			<b>CSV Download</b>
+		</a>
+		<i class="@Page.IconDownloadButton"></i>
+	</p>
+
+	<div class="pb-1 mt-4 mb-1 border-bottom border-info">
+		<h2><i class="@Page.Icon"></i> @Page.Title</h2>
+</div>
+
+
+<Table Data="Data"></Table>
+
+
+@code {
+	protected List<Query>? Data { get; set; } = new List<Query>();
+
+	protected int Year { get; set; } = 2024;
+
+	private string inside = $"page {Page.Index}; class: {nameof(Index)}";
+	protected override async Task OnInitializedAsync()
+	{
+		Logger!.LogDebug(string.Format("Inside {0}; {1}", inside, nameof(OnInitializedAsync)));
+		try
+		{
+			Data = await db!.GetQuery(Year);
+		}
+		catch (Exception ex)
+		{
+			Logger!.LogError(ex, string.Format("...Inside catch of {0}", inside + "!" + nameof(OnInitializedAsync)));
+			Toast!.ShowError($"{Global.ToastShowError}; inside: {inside}!{nameof(OnInitializedAsync)}");
+		}
+
+	}
+
+}
