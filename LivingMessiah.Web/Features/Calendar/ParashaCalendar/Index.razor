@@ -1,8 +1,4 @@
 ﻿@page "/ParashaCalendar"
-@*
-@using static LivingMessiah.Web.Services.Auth0
-@using CalendarEnumDateType = LivingMessiah.Web.Features.Calendar.Enums.DateType
-*@
 
 @using Microsoft.Extensions.Logging;
 
@@ -11,27 +7,62 @@
 @inject IToastService? Toast
 
 @using Page = LivingMessiah.Web.Links.ParashaCalendar
+
 <PageTitle>@Page.Title</PageTitle>
-
-	<p class="float-end">
-		<a href="@Blobs.UrlCalendar("parasha-calendar-2024.csv")" target="_blank">
-			<b>CSV Download</b>
-		</a>
-		<i class="@Page.IconDownloadButton"></i>
-	</p>
-
 	<div class="pb-1 mt-4 mb-1 border-bottom border-info">
 		<h2><i class="@Page.Icon"></i> @Page.Title</h2>
 </div>
 
 
-<Table Data="Data"></Table>
+<EditForm Model="@VM"
+					OnValidSubmit="@FormSubmitted"
+					class="card card-body bg-light mt-1">
 
+	<div class="row">
+		<div class="col-10">
+
+			<label for="year" class="control-label">Year:</label>
+			<InputSelect class="form-control" @bind-Value=VM.Year>
+				<option value="0">---Select a Year---</option>
+				@foreach (var item in Lookup!)
+				{
+					@if (item.Year == SelectedYear)
+					{
+						<option selected value="@item.Year">@item.Year [Row Count: @item.RowsPerYear]</option>
+					}
+					else
+					{
+						<option value="@item.Year">@item.Year [Row Count: @item.RowsPerYear]</option>
+					}
+				}
+			</InputSelect>
+		</div>
+		<div class="col-2">
+			<div class="mt-4">
+
+				<button type="submit" class="btn btn-outline-success btn-sm">
+					<i class="fas fa-football-ball"></i> Submit
+				</button>
+
+			</div>
+		</div>
+
+	</div>
+</EditForm>
+
+@if (Data is not null && Data.Any())
+{
+	<CsvExportGrid QueryParm="Data" />
+}
 
 @code {
 	protected List<Query>? Data { get; set; } = new List<Query>();
+	protected List<YearLookupQuery>? Lookup { get; set; } = new List<YearLookupQuery>();
 
-	protected int Year { get; set; } = 2024;
+	protected YearLookupQuery? SelectedLookup { get; set; }
+
+	protected int SelectedYear { get; set; } = 0;
+	private VM? VM = new VM();
 
 	private string inside = $"page {Page.Index}; class: {nameof(Index)}";
 	protected override async Task OnInitializedAsync()
@@ -39,14 +70,58 @@
 		Logger!.LogDebug(string.Format("Inside {0}; {1}", inside, nameof(OnInitializedAsync)));
 		try
 		{
-			Data = await db!.GetQuery(Year);
+			Lookup = (await db!.GetYearLookupQuery()).ToList();
+			if (Lookup.Any())
+			{
+				SelectedLookup = Lookup.Last();
+				SelectedYear = SelectedLookup.Year;
+				await Populate(); 
+			}
+			else
+			{
+				Toast!.ShowWarning($"No Lookup data gotten!");
+			}
 		}
 		catch (Exception ex)
 		{
-			Logger!.LogError(ex, string.Format("...Inside catch of {0}", inside + "!" + nameof(OnInitializedAsync)));
+			Logger!.LogError(ex, string.Format("Inside catch of {0}", inside + "!" + nameof(OnInitializedAsync)));
 			Toast!.ShowError($"{Global.ToastShowError}; inside: {inside}!{nameof(OnInitializedAsync)}");
 		}
 
+	}
+
+	private async Task Populate() 
+	{
+		try
+		{
+			Data = await db!.GetQuery(SelectedYear);
+			if (Data.Any())
+			{
+				StateHasChanged();
+				Toast!.ShowInfo($"Data updated for {SelectedYear}");
+			}
+			else
+			{
+				Toast!.ShowWarning($"No data gotten! Year={SelectedYear}");
+			}
+		}
+		catch (Exception ex)
+		{
+			Logger!.LogError(ex, string.Format("...Inside catch of {0}; year={1}"
+			, inside + "!" + nameof(Populate)), SelectedYear);  // , year
+			Toast!.ShowError($"{Global.ToastShowError}; inside: {inside}!{nameof(OnInitializedAsync)}");
+		}
+	}
+
+	protected async Task  FormSubmitted()
+	{
+		int i = 0;
+		i = int.TryParse(VM!.Year, out i) ? i : 0;
+		if (i !=0)
+		{
+			SelectedYear = i;
+			await Populate(); 
+		}
 	}
 
 }
