@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace LivingMessiah.Web.Features.Calendar.ParashaCalendar;
+namespace LivingMessiah.Web.Features.Calendar.ManageParashaCalendar;
 
 public class Query
 {

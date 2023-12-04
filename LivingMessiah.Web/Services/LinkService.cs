@@ -11,8 +11,6 @@ public interface ILinkService
 {
 	List<Link> GetSitemapLinks();
 	List<Link> GetHomeSidebarLinks(bool isXsOrSm);
-	List<LinkBasic> GetAdminLinks();
-	List<LinkBasic> GetDashboardLinks();
 	//List<Link> GetFeastLinks();
 	//List<LinkBasic> GetMarkdownLinks();
 }
@@ -71,31 +69,7 @@ public class LinkService : ILinkService
 		return links.GetLinks().Where(x => x.SitemapUsage == true).ToList();
 	}
 
-	public List<LinkBasic> GetAdminLinks()
-	{
-		LinksFactory links = new LinksFactory();
-		List<LinkBasic> feasts = new List<LinkBasic>();
 
-		//foreach (Link link in GetFeastLinks())
-		//{
-		//	feasts.Add(new LinkBasic() { Icon = link.Icon, Index = link.Index, Title = link.Title });
-		//}
-
-		if (feasts is not null)
-		{
-			return links.GetVideoProductionLinks().Union(links.GetEldersLinks()).Union(feasts).ToList();
-		}
-		else
-		{
-			return links.GetVideoProductionLinks().Union(links.GetEldersLinks()).ToList();
-		}
-	}
-
-	public List<LinkBasic> GetDashboardLinks()
-	{
-		LinksFactory links = new LinksFactory();
-		return links.GetDashboardLinks().ToList();
-	}
 
 	//public List<Link> GetFeastLinks()
 	//{

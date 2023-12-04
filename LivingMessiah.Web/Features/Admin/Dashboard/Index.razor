@@ -1,0 +1,109 @@
+﻿@page "/admin/dashboard"
+@using Microsoft.AspNetCore.Hosting
+@using Microsoft.Extensions.Hosting
+@using Microsoft.Extensions.Logging;
+
+@using static LivingMessiah.Web.Services.Auth0
+@using Page = LivingMessiah.Web.Pages.Home.Enums.Nav
+
+<PageTitle>@Page.Dashboard.Text</PageTitle>
+
+	<div class="pb-2 mt-4 mb-2 border-bottom">
+		<h2><i class="@Page.Dashboard.Icon"></i> @Page.Dashboard.Text</h2>
+</div>
+
+@inject IWebHostEnvironment Env
+@inject ILogger<Index>? Logger
+@inject IToastService? Toast
+
+<AuthorizeView Roles="@Roles.Admin">
+	<Authorized>
+		<div class="card-group">
+			<div class="card">
+				<div class="card-header">AuthorizeView Component</div>
+
+				<div class="card-body">
+					<h5 class="card-title">asp-authorize test</h5>
+					<p class="card-text">If you're logged in with <code>Admin</code> Role, you can see this section.</p>
+				</div>
+
+				<div class="card-body">
+					@if (Env.IsProduction() | Env.IsStaging())
+					{
+						<p>
+							HostingEnvironment.EnvironmentName is <strong><span class="text-danger">Staging or Production</span></strong>
+						</p>
+					}
+					else
+					{
+						<p>
+							HostingEnvironment.EnvironmentName is <strong><span class="text-warning">Development</span></strong>
+						</p>
+					}
+				</div>
+
+			</div>
+
+			<ApplicationSettings />
+
+			<div class="card">
+				<div class="card-header">Administrative Links</div>
+
+				<ul class="list-group list-group-flush">
+
+					<li class="list-group-item">
+						<button @onclick="@(e => ThrowException_ButtonClick())"
+										class="list-group-item list-group-item-warning">
+							<b>Throw Exception</b>
+							<i class="fas fa-chevron-right"></i>
+						</button>
+					</li>
+				</ul>
+			</div>
+
+		</div>
+	</Authorized>
+
+	<NotAuthorized>
+		<div class="card border-warning my-5">
+			<div class="card-header">Not Authorized</div>
+			<div class="card-body">
+				<h5 class="">To view <b>@Page.Dashboard.Text</b> you need to be logged in.</h5>
+				<LoginRedirectButton ReturnUrl="@Page.Dashboard.Index" />
+			</div>
+		</div>
+	</NotAuthorized>
+
+</AuthorizeView>
+
+
+
+@code
+{
+	// style="width: 18rem;"
+	// style="width: 25rem;"
+	void ThrowException_ButtonClick()
+	{
+		Logger!.LogDebug(string.Format("Inside {0}", nameof(Index) + "!" + nameof(ThrowException_ButtonClick)));
+		try
+		{
+			for (int i = 0; i < 10; i++)
+			{
+				if (i == 5)
+				{
+					throw new Exception("This is our demo exception");
+				}
+				else
+				{
+					Logger!.LogDebug($"The value of i is {i}");
+				}
+			}
+
+		}
+		catch (Exception ex)
+		{
+			Logger!.LogError(ex, "...Exception thrown");
+			Toast!.ShowError("...Exception thrown");
+		}
+	}
+}

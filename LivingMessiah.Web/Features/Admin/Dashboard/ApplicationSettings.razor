@@ -1,0 +1,20 @@
+﻿@using Microsoft.Extensions.Options
+@using LivingMessiah.Web.Settings
+
+
+@inject IOptions<AppSettings> AppSettings
+
+<div class="card">
+	<div class="card-header">AppSettings</div>
+	<div class="card-body my-1 pl-1 py-0">
+		<ul class="list-inline">
+			<li class="list-inline-item"><small>AppSettings.GoogleAnalytics: @AppSettings.Value.GoogleAnalytics</small></li>
+		</ul>
+	</div>
+</div>
+
+
+
+@code {
+	//<div class="card-group">
+}

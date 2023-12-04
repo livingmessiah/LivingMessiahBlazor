@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using LivingMessiah.Web.Domain;
 using LivingMessiah.Web.Links;
-using LivingMessiah.Web.Pages.Admin.WirecastFolder;
-using LivingMessiah.Web.Pages.Home;
+//using LivingMessiah.Web.Pages.Admin.WirecastFolder;
+//using LivingMessiah.Web.Pages.Home;
 using PageFeast = LivingMessiah.Web.Features.Feasts.FeastLinks;
 using PageParasha = LivingMessiah.Web.Pages.Parasha.LinkSmartEnums.ParashaLinks;
 using PageWindmillRanch = LivingMessiah.Web.Pages.WindmillRanch.LinkSmartEnums.WindmillRanchLinks;
@@ -13,9 +13,7 @@ public interface ILinksFactory
 {
 	List<Link> GetLinks();
 	List<Link> GetFeastLinks();
-	List<LinkBasic> GetDashboardLinks();
 	List<LinkBasic> GetVideoProductionLinks();
-	List<LinkBasic> GetEldersLinks();
 	//List<LinkBasic> GetMarkdownLinks();
 }
 
@@ -33,29 +31,8 @@ public class LinksFactory : ILinksFactory
  			};
 	}
 
-	public List<LinkBasic> GetEldersLinks()
-	{
-		return new List<LinkBasic>
-			{
-				new LinkBasic {Index = PsalmsAndProverbs.Index, Title = PsalmsAndProverbs.Title, Icon = PsalmsAndProverbs.Icon, },
-				new LinkBasic {Index = Contact.Index, Title = Contact.Title, Icon = Contact.Icon, },
-				new LinkBasic {Index = Sukkot.ManageRegistration.Index, Title = Sukkot.ManageRegistration.Title, Icon = Sukkot.ManageRegistration.Icon, },
-				new LinkBasic {Index = SpecialEvents.Index, Title = SpecialEvents.Title, Icon = SpecialEvents.Icon, },
- 			};  
-	}
+	
 
-	public List<LinkBasic> GetDashboardLinks()
-	{
-		return new List<LinkBasic>
-			{
-				new LinkBasic {Index = "/Admin/Dashboard/Index", Title = "Dashboard", Icon = "fas fa-tachometer-alt", },
-				new LinkBasic {Index = "/Admin/Dashboard/Dump", Title = "Dump", Icon = "fas fa-truck-monster", },
-				new LinkBasic {Index = "/Admin/Dashboard/FontAwesome", Title = "FontAwesome", Icon = "fab fa-font-awesome-flag", },
-				new LinkBasic {Index = "/Admin/Dashboard/PerformanceCompliance", Title = "Performance Compliance", Icon = "fas fa-rocket", },
-				new LinkBasic {Index = "/Admin/Dashboard/Routes", Title = "Routes", Icon = "fas fa-route", },
-				new LinkBasic {Index = "/Admin/Dashboard/ThrowException", Title = "Throw Exception", Icon = "fas fa-bomb", },
- 			};
-	}
 
 	public List<Link> GetLinks()
 	{

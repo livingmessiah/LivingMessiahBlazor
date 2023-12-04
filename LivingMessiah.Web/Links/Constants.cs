@@ -74,6 +74,9 @@ public static class Admin
 		public const string Icon = "fas fa-tachometer-alt";
 	}
 
+	// public static class ParashaCalendar See LivingMessiah.Web.Pages.Home.Enums.Nav
+	// public static class DashBoard See LivingMessiah.Web.Pages.Home.Enums.Nav
+
 }
 
 
@@ -169,13 +172,6 @@ public static class Community
 	public const string Descr = "Community Bulletin Board";
 	public const string Icon = "fas fa-chalkboard";
 	public const string Icon2 = "fas fa-city";
-}
-
-public static class DashBoard
-{
-	public const string Index = "/Admin/Dashboard/Index";
-	public const string Title = "DashBoard";
-	public const string Icon = "fas fa-tachometer-alt";
 }
 
 public static class Database
@@ -301,16 +297,6 @@ public static class KeyDatesEdit
 	public const string Title = "Key Dates Edit";
 	public const string Icon = "far fa-calendar-check";
 }
-
-
-public static class ParashaCalendar
-{
-	public const string Index = "/ParashaCalendar";
-	public const string Title = "Parasha Calendar";
-	public const string Icon = "fas fa-file-csv";  // far fa-file-excel 
-	public const string IconDownloadButton = "fas fa-file-download"; 
-}
-
 
 public static class Leadership
 {
