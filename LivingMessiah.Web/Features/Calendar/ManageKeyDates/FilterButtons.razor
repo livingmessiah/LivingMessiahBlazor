@@ -24,14 +24,12 @@
 	[Parameter, EditorRequired] public required CalendarEnumDateType? CurrentFilter { get; set; }
 	[Parameter] public EventCallback<CalendarEnumDateType> OnFilterSelected { get; set; }
 
-	private CalendarEnumDateType? _selectedFilter;
-
+	private CalendarEnumDateType? _SelectedFilter;
 	protected override void OnParametersSet()
 	{
 		string inside = $"{nameof(FilterButtons)}!{nameof(OnParametersSet)}";
 		Logger!.LogDebug(string.Format("inside {0}", inside));
-		_selectedFilter = CurrentFilter;
-
+		_SelectedFilter = CurrentFilter;
 	}
 
 	private void OnButtonClicked(CalendarEnumDateType filter)
@@ -42,14 +40,7 @@
 
 	public string ActiveFilter(CalendarEnumDateType filter)
 	{
-		if (filter == _selectedFilter)
-		{
-			return "active";
-		}
-		else
-		{
-			return "";
-		}
+		return filter == CurrentFilter ? "active" : "";
 	}
 
 }

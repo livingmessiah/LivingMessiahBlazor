@@ -155,6 +155,12 @@ public static class Calendar
 		public const string Title = "Planner";
 		public const string Icon = "far fa-map";
 	}
+	public static class FeastPlanner
+	{
+		public const string Index = "/PlannerV2";
+		public const string Title = "Feast Planner";  
+		public const string Icon = "fas fa-bread-slice";  
+	}
 }
 
 public static class Contact

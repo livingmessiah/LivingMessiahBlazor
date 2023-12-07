@@ -1,0 +1,45 @@
+﻿@using FeastDayType = LivingMessiah.Web.Features.Calendar.Enums.FeastDay
+
+<div class="d-print-none mb-2">
+
+	<div class=" row mt-4">
+		<div class="col-12">
+
+			<ul class="nav nav-pills justify-content-center">
+				@foreach (var item in Enums.FeastDay.List.OrderBy(o => o.Value))
+				{
+					<li class="nav-item">
+						<a @onclick="@(() => OnClickFilter(item))" title=""
+							 class="nav-link @ActiveFilter(item)">
+							@item.Name
+						</a>
+					</li>
+				}
+			</ul>
+
+		</div>
+	</div>
+
+</div>
+
+@code {
+	[Parameter, EditorRequired] public required FeastDayType? CurrentFilter { get; set; }
+	[Parameter] public EventCallback<FeastDayType> OnFilterSelected { get; set; }
+	
+	protected void OnClickFilter(Enums.FeastDay filter)
+	{
+		OnFilterSelected.InvokeAsync(filter);
+	}
+
+	private FeastDayType? _SelectedFilter;
+	protected override void OnParametersSet()
+	{
+		_SelectedFilter = CurrentFilter;
+	}
+
+	public string ActiveFilter(Enums.FeastDay filter)
+	{
+		return filter == CurrentFilter ? "active" : "";
+	}
+
+}

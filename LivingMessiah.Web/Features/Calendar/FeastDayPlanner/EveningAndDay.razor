@@ -1,0 +1,79 @@
+﻿@using LivingMessiah.Web.Features.Calendar.FeastDayPlanner.Constants
+
+@if (!String.IsNullOrEmpty(Description))
+{
+	<div class="row mt-0">
+		<div class="col-12">
+
+			@* mt-4 mb-0 *@
+			<h3 class="text-center mb-0"><span class="badge bg-warning-subtle text-dark">@Description</span></h3>
+		</div>
+	</div>
+
+}
+
+@* Gregorian Date *@
+<div class="row mt-0">
+	<div class="col-12">
+
+		<div class="progress-stacked" style="height: @Progress.Height">
+			<div class="progress" style="width: 49%; height: @Progress.Height">
+				<div class="progress-bar bg-secondary-subtle"><h6 class="text-dark">@GregorianDate1</h6></div>
+			</div>
+			<div class="progress" style="width: 2%; height: @Progress.Height">
+				<div class="progress-bar bg-dark-subtle"></div>
+			</div>
+			<div class="progress" style="width: 49%; height: @Progress.Height">
+				<div class="progress-bar bg-secondary-subtle"><h6 class="text-dark">@GregorianDate2</h6></div>
+			</div>
+		</div>
+
+	</div>
+</div>
+
+@* Hebrew Date *@
+<div class="row mt-1 mb-4">
+	<div class="col-12">
+
+		<div class="progress-stacked" style="height: @Progress.Height">
+			<div class="progress" style="width: 40%; height: @Progress.Height">
+				 <div class="progress-bar @BarColor.HebrewExtraBGColor"><h4 class="text-dark">@PreHebrewDate</h4></div> 
+			</div>
+
+			<div class="progress" style="width: 50%; height: @Progress.Height">
+				<div class="progress-bar @HebrewBGColor"><h4 class="@HebrewTextColor">@HebrewDate</h4></div>
+			</div>
+			<div class="progress" style="width: 10%; height: @Progress.Height">
+				<div class="progress-bar @BarColor.HebrewExtraBGColor"></div>
+			</div>
+		</div>
+
+	</div>
+</div>
+
+
+
+@code {
+	
+	
+	/*
+	
+	 */
+	
+	[Parameter] public string? Description { get; set; } = "";
+	[Parameter, EditorRequired] public string? GregorianDate1 { get; set; }
+	[Parameter, EditorRequired] public string? GregorianDate2 { get; set; }
+	[Parameter, EditorRequired] public string? PreHebrewDate { get; set; }
+	[Parameter, EditorRequired] public string? HebrewDate { get; set; }
+	[Parameter, EditorRequired] public string? HebrewBGColor { get; set; } 
+	[Parameter, EditorRequired] public string? HebrewTextColor { get; set; }  
+
+	// Passing day1 and day2 as the value of Description didn't work
+	const string candle = "🕯️";
+	string day1 = $"Day 1 {candle}";
+	// string day8 = $"Day 8 {candle.Repeat(8)}";
+
+	// ToDo: this works
+	//<div class="progress-bar @BarColor.HebrewExtraBGColor"><h4 class="text-dark">@candle</h4></div>
+
+}

@@ -1,0 +1,14 @@
+﻿@using LivingMessiah.Web.Features.Calendar.FeastDayPlanner.Constants
+
+<EveningAndDay GregorianDate1=@feastDay.Date.AddDays(-1).ToString(DateFormat.FeastDayPlanner)
+							 GregorianDate2="@feastDay.Date.ToString(DateFormat.FeastDayPlanner)"
+							 HebrewDate="Adar II 14 "
+							 HebrewBGColor="bg-info-subtle"
+							 HebrewTextColor="@BarColor.HebrewTextColor"
+							 PreHebrewDate="" />
+@* ToDo: adjust if HebrewYear is an Adar II, it is on '14 Adar II' else '14 Adar I' *@
+
+
+@code {
+	protected Enums.FeastDay feastDay = Enums.FeastDay.Purim;
+}

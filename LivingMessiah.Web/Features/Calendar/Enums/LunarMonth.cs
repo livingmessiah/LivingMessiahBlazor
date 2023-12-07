@@ -54,6 +54,8 @@ public abstract class LunarMonth : SmartEnum<LunarMonth>
 	//public abstract string Icon { get; }  //"far fa-moon" 
 
 	#region Extra Fields
+	public abstract int BabylonianSort { get; }  // From Nisan to Adar II
+	public abstract int HebrewSort { get; }  // From Nisan to Adar II
 	public abstract string FullName { get; }
 	public abstract string Hebrew { get; }
 	public abstract string BiblicalName { get; }
@@ -68,6 +70,8 @@ public abstract class LunarMonth : SmartEnum<LunarMonth>
 	private sealed class HeshvanPrevGregYrMonth : LunarMonth
 	{
 		public HeshvanPrevGregYrMonth() : base($"{nameof(Id.HeshvanPrevGregYr)}", Id.HeshvanPrevGregYr) { }
+		public override int BabylonianSort => 0; // 0 because IsPreviousYear == true
+		public override int HebrewSort => 0; // 0 because IsPreviousYear == true
 		public override string Hebrew => "חשון"; 
 		public override string BiblicalName => "Bul"; 
 		public override string BiblicalHebrew => "בּוּל";
@@ -80,6 +84,8 @@ public abstract class LunarMonth : SmartEnum<LunarMonth>
 	private sealed class KislevPrevGregYrMonth : LunarMonth
 	{
 		public KislevPrevGregYrMonth() : base($"{nameof(Id.KislevPrevGregYr)}", Id.KislevPrevGregYr) { }
+		public override int BabylonianSort => 0; // 0 because IsPreviousYear == true
+		public override int HebrewSort => 0; // 0 because IsPreviousYear == true
 		public override string Hebrew => "כסלו"; 
 		public override string BiblicalName => "9th"; 
 		public override string BiblicalHebrew => "";
@@ -92,6 +98,8 @@ public abstract class LunarMonth : SmartEnum<LunarMonth>
 	private sealed class TevetPrevGregYrMonth : LunarMonth
 	{
 		public TevetPrevGregYrMonth() : base($"{nameof(Id.TevetPrevGregYr)}", Id.TevetPrevGregYr) { }
+		public override int BabylonianSort => 0; // 0 because IsPreviousYear == true
+		public override int HebrewSort => 0; // 0 because IsPreviousYear == true
 		public override string Hebrew => "טבת"; 
 		public override string BiblicalName => "10th"; 
 		public override string BiblicalHebrew => "";
@@ -104,6 +112,8 @@ public abstract class LunarMonth : SmartEnum<LunarMonth>
 	private sealed class ShevatMonth : LunarMonth
 	{
 		public ShevatMonth() : base($"{nameof(Id.Shevat)}", Id.Shevat) { }
+		public override int BabylonianSort => 11;
+		public override int HebrewSort => 5; 
 		public override string Hebrew => "שבט"; 
 		public override string BiblicalName => "11th"; 
 		public override string BiblicalHebrew => "";
@@ -116,6 +126,8 @@ public abstract class LunarMonth : SmartEnum<LunarMonth>
 	private sealed class AdarMonth : LunarMonth
 	{
 		public AdarMonth() : base($"{nameof(Id.Adar)}", Id.Adar) { }
+		public override int BabylonianSort => 12;
+		public override int HebrewSort => 6; 
 		public override string Hebrew => "אדר א"; 
 		public override string BiblicalName => "12th"; 
 		public override string BiblicalHebrew => "";
@@ -128,6 +140,8 @@ public abstract class LunarMonth : SmartEnum<LunarMonth>
 	private sealed class Adar2Month : LunarMonth
 	{
 		public Adar2Month() : base($"{nameof(Id.Adar2)}", Id.Adar2) { }
+		public override int BabylonianSort => 13;
+		public override int HebrewSort => 6;  // ToDo: this is a duplicate and a bug waiting to happen
 		public override string Hebrew => "אדר ב"; 
 		public override string BiblicalName => "13th"; 
 		public override string BiblicalHebrew => "";
@@ -143,6 +157,8 @@ public abstract class LunarMonth : SmartEnum<LunarMonth>
 	private sealed class NissanMonth : LunarMonth
 	{
 		public NissanMonth() : base($"{nameof(Id.Nissan)}", Id.Nissan) { }
+		public override int BabylonianSort => 1;
+		public override int HebrewSort => 7;
 		public override string Hebrew => "ניסן"; 
 		public override string BiblicalName => "Abib"; 
 		public override string BiblicalHebrew => "הָאָבִיב";
@@ -155,6 +171,8 @@ public abstract class LunarMonth : SmartEnum<LunarMonth>
 	private sealed class IyarMonth : LunarMonth
 	{
 		public IyarMonth() : base($"{nameof(Id.Iyar)}", Id.Iyar) { }
+		public override int BabylonianSort => 2;
+		public override int HebrewSort => 8;
 		public override string Hebrew => "אייר"; 
 		public override string BiblicalName => "Ziv"; 
 		public override string BiblicalHebrew => "זִו";
@@ -167,6 +185,8 @@ public abstract class LunarMonth : SmartEnum<LunarMonth>
 	private sealed class SivanMonth : LunarMonth
 	{
 		public SivanMonth() : base($"{nameof(Id.Sivan)}", Id.Sivan) { }
+		public override int BabylonianSort => 3;
+		public override int HebrewSort => 9;
 		public override string Hebrew => "סיון"; 
 		public override string BiblicalName => "3rd"; 
 		public override string BiblicalHebrew => "";
@@ -179,6 +199,8 @@ public abstract class LunarMonth : SmartEnum<LunarMonth>
 	private sealed class TammuzMonth : LunarMonth
 	{
 		public TammuzMonth() : base($"{nameof(Id.Tammuz)}", Id.Tammuz) { }
+		public override int BabylonianSort => 4;
+		public override int HebrewSort => 10;
 		public override string Hebrew => "תמוז"; 
 		public override string BiblicalName => "4th"; 
 		public override string BiblicalHebrew => "";
@@ -191,6 +213,8 @@ public abstract class LunarMonth : SmartEnum<LunarMonth>
 	private sealed class AvMonth : LunarMonth
 	{
 		public AvMonth() : base($"{nameof(Id.Av)}", Id.Av) { }
+		public override int BabylonianSort => 5;
+		public override int HebrewSort => 11;
 		public override string Hebrew => "אב"; 
 		public override string BiblicalName => "5th"; 
 		public override string BiblicalHebrew => "";
@@ -203,6 +227,8 @@ public abstract class LunarMonth : SmartEnum<LunarMonth>
 	private sealed class ElulMonth : LunarMonth
 	{
 		public ElulMonth() : base($"{nameof(Id.Elul)}", Id.Elul) { }
+		public override int BabylonianSort => 6;
+		public override int HebrewSort => 12;
 		public override string Hebrew => "אלול"; 
 		public override string BiblicalName => "6th"; 
 		public override string BiblicalHebrew => "";
@@ -215,6 +241,8 @@ public abstract class LunarMonth : SmartEnum<LunarMonth>
 	private sealed class TishriMonth : LunarMonth
 	{
 		public TishriMonth() : base($"{nameof(Id.Tishri)}", Id.Tishri) { }
+		public override int BabylonianSort => 7;
+		public override int HebrewSort => 1;
 		public override string Hebrew => "תשרי"; 
 		public override string BiblicalName => "Ethanim"; 
 		public override string BiblicalHebrew => "הָאֵתָנִים";
@@ -225,10 +253,12 @@ public abstract class LunarMonth : SmartEnum<LunarMonth>
 	}
 
 
-
+	// also transliterated as Cheshvan
 	private sealed class HeshvanMonth : LunarMonth
 	{
 		public HeshvanMonth() : base($"{nameof(Id.Heshvan)}", Id.Heshvan) { }
+		public override int BabylonianSort => 8;
+		public override int HebrewSort => 2;
 		public override string Hebrew => "חשון"; 
 		public override string BiblicalName => "Bul";
 		public override string BiblicalHebrew => "בּוּל";
@@ -241,6 +271,8 @@ public abstract class LunarMonth : SmartEnum<LunarMonth>
 	private sealed class KislevMonth : LunarMonth
 	{
 		public KislevMonth() : base($"{nameof(Id.Kislev)}", Id.Kislev) { }
+		public override int BabylonianSort => 9;
+		public override int HebrewSort => 3;
 		public override string Hebrew => "כסלו"; 
 		public override string BiblicalName => "9th"; 
 		public override string BiblicalHebrew => "";
@@ -253,6 +285,8 @@ public abstract class LunarMonth : SmartEnum<LunarMonth>
 	private sealed class TevetMonth : LunarMonth
 	{
 		public TevetMonth() : base($"{nameof(Id.Tevet)}", Id.Tevet) { }
+		public override int BabylonianSort => 10;
+		public override int HebrewSort => 4;
 		public override string Hebrew => "טבת"; 
 		public override string BiblicalName => "10th";
 		public override string BiblicalHebrew => "";
