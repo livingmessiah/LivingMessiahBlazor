@@ -1,0 +1,82 @@
+﻿@using FeastDayType = LivingMessiah.Web.Features.Calendar.Enums.FeastDay
+@using LivingMessiah.Web.Features.Feasts.VerseReferenceCards
+
+<div class="d-print-none mb-2">
+	@* <div class="container d-flex justify-content-end mt-2"> *@
+
+	<div class="row mt-2">
+		<div class="col-12">
+
+			<ToggleButton ButtonLabel="Related Verses">
+
+				@* ToDo: this div shouldn't be here, but these deprecated components are using such that it assumes your need to wrap it
+					- PlannerComponent
+					- Feasts/Index (indirectly)
+				*@
+				<div class="card mt-1">
+
+					@if (FeastDayType == FeastDayType.Hanukkah)
+					{
+						<Joh_10_22 />
+					}
+					else
+					{
+						@if (FeastDayType == FeastDayType.Purim)
+						{
+							<Est_9_24_32 />
+						}
+						else
+						{
+							@if (FeastDayType == FeastDayType.Passover)
+							{
+								<Lev_23_04_08 />
+							}
+							else
+							{
+								@if (FeastDayType == FeastDayType.Weeks)
+								{
+									<Lev_23_15_21 />
+								}
+								else
+								{
+									@if (FeastDayType == FeastDayType.Trumpets)
+									{
+										<Lev_23_23_25 />
+									}
+									else
+									{
+										@if (FeastDayType == FeastDayType.YomKippur)
+										{
+											<Lev_23_26_32 />
+										}
+										else
+										{
+											@if (FeastDayType == FeastDayType.Tabernacles)
+											{
+												<Lev_23_33_44 />
+											}
+											else
+											{
+												<p class="display-1 bg-danger text-center m-5 p-5">ERROR!!!</p>
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+
+				</div>
+			</ToggleButton>
+
+		</div>
+	</div>
+
+	@* </div> *@
+</div>
+
+
+
+@code {
+	[Parameter, EditorRequired] public FeastDayType? FeastDayType { get; set; }
+}

@@ -14,3 +14,9 @@ public static class BarColor
 }
 
 
+public static class Test
+{
+	public static int AddDays = 0; // Default is 0
+
+}
+

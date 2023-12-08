@@ -139,8 +139,7 @@ WHERE sw.ShabbatDate >= @CompareDate
 
 	public async Task<int> UpdateContactSukkotInviteDate(int id)
 	{
-		const int ArizonaUtcMinus7 = -7;
-		DateTime azdt = DateTime.UtcNow.AddHours(ArizonaUtcMinus7);
+		DateTime azdt = DateTime.UtcNow.AddHours(Utc.ArizonaUtcMinus7);
 		base.Parms = new DynamicParameters(new { Id = id, SukkotInviteDate = azdt });
 		base.Sql = "UPDATE dbo.Contact SET SukkotInviteDate = @SukkotInviteDate WHERE Id=@id";
 

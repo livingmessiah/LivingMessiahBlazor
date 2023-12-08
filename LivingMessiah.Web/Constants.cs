@@ -7,6 +7,11 @@ public static class Global
 	public const string ToastShowError = "An invalid operation occurred, contact your administrator";
 }
 
+public static class Utc
+{
+	public const int ArizonaUtcMinus7 = -7;
+}
+
 public static class DateFormat
 {
 	public const string ddd_mm_dd = "ddd, MM/dd";  //ddd, MM/dd/yyyy

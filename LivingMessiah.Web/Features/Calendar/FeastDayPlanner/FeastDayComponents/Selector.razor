@@ -1,0 +1,77 @@
+﻿@using FeastDayType = LivingMessiah.Web.Features.Calendar.Enums.FeastDay
+@using PageFeasts = LivingMessiah.Web.Features.Feasts.FeastLinks
+@using LivingMessiah.Web.Features.Feasts.VerseReferenceCards
+
+@if (FeastDayType == FeastDayType.Hanukkah)
+{
+	<CardTemplate FeastDay="FeastDayType.Hanukkah">
+		<Hanukkah />
+	</CardTemplate>
+}
+else
+{
+	@if (FeastDayType == FeastDayType.Purim)
+	{
+		<CardTemplate FeastDay="FeastDayType.Purim">
+			<Purim />
+		</CardTemplate>
+	}
+	else
+	{
+		@if (FeastDayType == FeastDayType.Passover)
+		{
+			<CardTemplate FeastDay="FeastDayType.Passover">
+				<Passover />
+			</CardTemplate>
+		}
+		else
+		{
+			@if (FeastDayType == FeastDayType.Weeks)
+			{
+				<CardTemplate FeastDay="FeastDayType.Weeks">
+					<Weeks />
+				</CardTemplate>
+			}
+			else
+			{
+				@if (FeastDayType == FeastDayType.Trumpets)
+				{
+					<CardTemplate FeastDay="FeastDayType.Trumpets">
+						<Trumpets />
+					</CardTemplate>
+				}
+				else
+				{
+					@if (FeastDayType == FeastDayType.YomKippur)
+					{
+						<CardTemplate FeastDay="FeastDayType.YomKippur">
+							<YomKippur />
+						</CardTemplate>
+					}
+					else
+					{
+						@if (FeastDayType == FeastDayType.Tabernacles)
+						{
+							<CardTemplate FeastDay="FeastDayType.Tabernacles">
+								<Tabernacles />
+							</CardTemplate>
+						}
+						else
+						{
+							<p class="display-1 bg-danger text-center m-5 p-5">ERROR!!!</p>
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+@code {
+	//Selector.razor.cs
+
+
+	protected List<(Type type, Dictionary<string, object> parameters)>? components { get; set; }
+
+	[Parameter] public FeastDayType? FeastDayType { get; set; }
+}

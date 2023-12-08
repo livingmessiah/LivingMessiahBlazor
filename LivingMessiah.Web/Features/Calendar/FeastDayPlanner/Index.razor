@@ -1,8 +1,7 @@
 ﻿@page "/PlannerV2"
 
-@using FeastDayType = LivingMessiah.Web.Features.Calendar.Enums.FeastDay
 @using Page = LivingMessiah.Web.Links.Calendar.FeastPlanner
-@using PageFeasts = LivingMessiah.Web.Features.Feasts.FeastLinks
+@using LivingMessiah.Web.Features.Calendar.FeastDayPlanner.FeastDayComponents
 
 <PageTitle>@Page.Title</PageTitle>
 
@@ -10,135 +9,12 @@
 	<h2><i class="@Page.Icon"></i> @Page.Title</h2>
 </div>
 
-<div class="row">
-	<div class="col-6 text-info">
-		@DateTime.Now.ToString(DateFormat.FeastDayPlanner)<sup>@Infrastructure.DateUtil.GetDaySuffix(DateTime.Now.Day)</sup>
-	</div>
-	<div class="col-6 text-primary ">
-		<span class="float-end">@Infrastructure.DateUtil.ToTransliteratedHebrewDateString(DateTime.Now)<sup>@Infrastructure.DateUtil.GetDaySuffix(DateTime.Now.Day)</sup>
-		</span>
-		</div>
-</div>
-
 <FilterPills CurrentFilter="@CurrentFilter"
 						 OnFilterSelected="@ReturnedFilter" />
 
-@if (CurrentFilter == FeastDayType.Hanukkah)
-{
-	<div class="card border-primary mt-1">
+<Header FeastDayType="CurrentFilter" />
 
-		<div class="card-header text-center">
-			<h5><i class="@PageFeasts.Hanukkah.Icon"></i> @PageFeasts.Hanukkah.Title</h5>
-		</div>
+<Selector  FeastDayType="CurrentFilter" />
 
-		<div class="card-body text-center mb-0"><small>@GetSubTitle()</small></div>
-		<div class="card-body">
-			<Hanukkah />
-		</div>
-	</div>
-}
-else
-{
-	@if (CurrentFilter == FeastDayType.Purim)
-	{
-		<div class="card border-primary mt-1">
-			<div class="card-header text-center">
-				<h5><i class="@PageFeasts.Purim.Icon"></i> @PageFeasts.Purim.Title</h5>
-			</div>
-
-			<div class="card-body text-center mb-0"><small>@GetSubTitle()</small></div>
-			<div class="card-body">
-				<Purim />
-			</div>
-		</div>
-	}
-	else
-	{
-		@if (CurrentFilter == FeastDayType.Passover)
-		{
-			<div class="card border-primary mt-1">
-
-				<div class="card-header text-center">
-					<h5><i class="@PageFeasts.Passover.Icon"></i> @PageFeasts.Passover.Title</h5>
-				</div>
-
-				<div class="card-body text-center"><small>@GetSubTitle()</small></div>
-				<div class="card-body">
-					<Passover />
-				</div>
-			</div>
-		}
-		else
-		{
-			@if (CurrentFilter == FeastDayType.Weeks)
-			{
-				<div class="card border-primary mt-1">
-
-					<div class="card-header text-center">
-						<h5><i class="@PageFeasts.Weeks.Icon"></i> @PageFeasts.Weeks.Title</h5>
-					</div>
-
-					<div class="card-body text-center"><small>@GetSubTitle()</small></div>
-					<div class="card-body">
-						<Weeks />
-					</div>
-				</div>
-			}
-			else
-			{
-				@if (CurrentFilter == FeastDayType.Trumpets)
-				{
-					<div class="card border-primary mt-1">
-
-						<div class="card-header text-center">
-							<h5><i class="@PageFeasts.Trumpets.Icon"></i> @PageFeasts.Trumpets.Title</h5>
-						</div>
-
-						<div class="card-body text-center"><small>@GetSubTitle()</small></div>
-						<div class="card-body">
-							<Trumpets />
-						</div>
-					</div>
-				}
-				else
-				{
-					@if (CurrentFilter == FeastDayType.YomKippur)
-					{
-						<div class="card border-primary mt-1">
-
-							<div class="card-header text-center">
-								<h5><i class="@PageFeasts.YomKippur.Icon"></i> @PageFeasts.YomKippur.Title</h5>
-							</div>
-
-							<div class="card-body text-center"><small>@GetSubTitle()</small></div>
-							<div class="card-body">
-								<YomKippur />
-							</div>
-						</div>
-					}
-					else
-					{
-						@if (CurrentFilter == FeastDayType.Tabernacles)
-						{
-							<div class="card border-primary mt-1">
-
-								<div class="card-header text-center">
-									<h5><i class="@PageFeasts.Tabernacles.Icon"></i> @PageFeasts.Tabernacles.Title</h5>
-								</div>
-
-								<div class="card-body text-center"><small>@GetSubTitle()</small></div>
-								<div class="card-body">
-									<Tabernacles />
-								</div>
-							</div>
-						}
-						else
-						{
-							<p>ERROR</p>
-						}
-					}
-				}
-			}
-		}
-	}
-}
+<FooterVerses FeastDayType="CurrentFilter" />
+<Footer />

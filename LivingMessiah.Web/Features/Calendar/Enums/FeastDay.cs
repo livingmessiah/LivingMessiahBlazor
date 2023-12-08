@@ -39,6 +39,7 @@ public abstract class FeastDay : SmartEnum<FeastDay>
 	public abstract string Details { get; }
 	public abstract string CalendarTitle { get; }
 	public abstract string PlannerTitle { get; }
+	public abstract string Icon { get; }
 	public abstract bool IsHighSabbath { get; }
 	public abstract int EndOfWeekAddDays { get; }
 	// public abstract string Description { get; } // ToDo: include Details + Transliteration + Hebrew
@@ -63,6 +64,7 @@ public abstract class FeastDay : SmartEnum<FeastDay>
 		public override string Details => "First day of Hanukkah; Date determined by Rabbinic sources";
 		public override string CalendarTitle => nameof(Id.Hanukkah);
 		public override string PlannerTitle => $"{nameof(Id.Hanukkah)} Week";
+		public override string Icon => "fas fa-hanukiah";
 		public override bool IsHighSabbath => false;
 		public override int EndOfWeekAddDays => 7;
 		public override bool HasCalendarDetails => false;
@@ -77,8 +79,9 @@ public abstract class FeastDay : SmartEnum<FeastDay>
 		public override string Transliteration => "Purim";
 		public override string Hebrew => "פוּרִים";
 		public override string Details => "Tradition is to read the book of Esther; date determined by Rabbinic sources";
-		public override string CalendarTitle => $"➕ {nameof(Id.Purim)}";
+		public override string CalendarTitle => nameof(Id.Purim);
 		public override string PlannerTitle => nameof(Id.Purim);
+		public override string Icon => "far fa-square";
 		public override bool IsHighSabbath => false;
 		public override int EndOfWeekAddDays => 0;
 		public override bool HasCalendarDetails => false;
@@ -96,6 +99,7 @@ public abstract class FeastDay : SmartEnum<FeastDay>
 		public override string Details => "The Seder Meal is prepared on the 14th of Aviv. As evening starts, the meal is eaten. Also, this becomes the first day of Unleavened bread";
 		public override string CalendarTitle => nameof(Id.Passover);
 		public override string PlannerTitle => $"{nameof(Id.Passover)} Week";
+		public override string Icon => "fas fa-door-open";
 		public override bool IsHighSabbath => true;
 		public override int EndOfWeekAddDays => 7;  // this is 7 not 6 because I'm starting from passover, not 1st day of unleavened bread
 		public override bool HasCalendarDetails => true;
@@ -112,6 +116,7 @@ public abstract class FeastDay : SmartEnum<FeastDay>
 		public override string Details => "The hight sabbath begins the evening before; This is also called Pentecost";
 		public override string CalendarTitle => nameof(Id.Weeks);
 		public override string PlannerTitle => nameof(Id.Weeks);
+		public override string Icon => "fab fa-creative-commons-zero";
 		public override bool IsHighSabbath => true;
 		public override int EndOfWeekAddDays => 0;
 		public override bool HasCalendarDetails => false;  // this is the only one that isn't true
@@ -128,6 +133,7 @@ public abstract class FeastDay : SmartEnum<FeastDay>
 		public override string Details => "A high holy day sabbath";
 		public override string CalendarTitle => nameof(Id.Trumpets);
 		public override string PlannerTitle => nameof(Id.Trumpets);
+		public override string Icon => "fas fa-bullhorn";
 		public override bool IsHighSabbath => true;
 		public override int EndOfWeekAddDays => 0;
 		public override bool HasCalendarDetails => true;
@@ -144,6 +150,7 @@ public abstract class FeastDay : SmartEnum<FeastDay>
 		public override string Details => "In the afternoon we have our Yom Kippur service and break the fast after the sun sets";
 		public override string CalendarTitle => "Yom Kippur";
 		public override string PlannerTitle => CalendarTitle;
+		public override string Icon => "fas fa-hands-helping";
 		public override bool IsHighSabbath => true;
 		public override int EndOfWeekAddDays => 0;
 		public override bool HasCalendarDetails => true;
@@ -160,6 +167,7 @@ public abstract class FeastDay : SmartEnum<FeastDay>
 		public override string Details => "Preparation Day, High Sabbath begins at sunset";
 		public override string CalendarTitle => "Sukkot | Day 1";
 		public override string PlannerTitle => $"{nameof(Id.Tabernacles)} Week";
+		public override string Icon => "fas fa-campground";
 		public override bool IsHighSabbath => true;
 		public override int EndOfWeekAddDays => 7;
 		public override bool HasCalendarDetails => true;
