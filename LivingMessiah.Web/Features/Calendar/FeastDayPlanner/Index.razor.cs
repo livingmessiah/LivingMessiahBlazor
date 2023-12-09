@@ -47,4 +47,21 @@ public partial class Index
 		CurrentFilter = filter;
 	}
 
+	bool modalOpen = false;
+	string modalClass = "modal";
+	void ShowModal()
+	{
+		//SelectedPsalms = item;
+		modalOpen = true;
+		modalClass += " show";
+		StateHasChanged();
+	}
+
+	void CloseModal()
+	{
+		//SelectedPsalms = null; // I need to check for 
+		modalOpen = false;
+		modalClass = "modal";
+	}
+
 }
