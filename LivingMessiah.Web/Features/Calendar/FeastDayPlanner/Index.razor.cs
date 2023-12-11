@@ -44,24 +44,9 @@ public partial class Index
 
 	private void ReturnedFilter(FeastDayType filter)
 	{
+		Logger!.LogDebug(string.Format("...inside {0} filter: {1}"
+			, nameof(ReturnedFilter), filter));
 		CurrentFilter = filter;
-	}
-
-	bool modalOpen = false;
-	string modalClass = "modal";
-	void ShowModal()
-	{
-		//SelectedPsalms = item;
-		modalOpen = true;
-		modalClass += " show";
-		StateHasChanged();
-	}
-
-	void CloseModal()
-	{
-		//SelectedPsalms = null; // I need to check for 
-		modalOpen = false;
-		modalClass = "modal";
 	}
 
 }

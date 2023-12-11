@@ -2,85 +2,35 @@
 
 @using Page = LivingMessiah.Web.Links.Calendar.FeastPlanner
 @using LivingMessiah.Web.Features.Calendar.FeastDayPlanner.FeastDayComponents
+@using LivingMessiah.Web.SmartEnums
 
 <PageTitle>@Page.Title</PageTitle>
 
-	<div class="pb-1 mt-4 mb-2 border-bottom border-info">
-		<button type="button" class="btn btn-primary btn-xs float-end"
-						@onclick="() => ShowModal()">
-			<i class="fas fa-ellipsis-h"></i>
-		</button>
 
-		<h2><i class="@Page.Icon"></i> @Page.Title</h2>
+
+<div class="pb-1 mt-4 mb-2 border-bottom border-info">
+		<LearnMoreModal />
+	<h2><i class="@Page.Icon"></i> @Page.Title</h2>
+</div>
+@* 
+<div class="row mt-2">
+	<div class="col-12">
+		
+	</div>
+</div> *@
+
+<div class="@MediaQuery.XsOrSm.DivClass">
+	<HeaderXsSm CurrentFilter="CurrentFilter" OnFilterSelected="@ReturnedFilter" />
+	<Selector FeastDayType="CurrentFilter" IsXsOrSm=true />
 </div>
 
-<FilterPills CurrentFilter="@CurrentFilter"
-						 OnFilterSelected="@ReturnedFilter" />
+<div class="@MediaQuery.MdOrLgOrXl.DivClass">
 
-<Header FeastDayType="CurrentFilter" />
-
-<Selector FeastDayType="CurrentFilter" />
+	<FilterPills CurrentFilter="@CurrentFilter" OnFilterSelected="@ReturnedFilter" />
+	<Header FeastDayType="CurrentFilter" />
+	<Selector FeastDayType="CurrentFilter" IsXsOrSm=false />
+</div>
 
 <FooterVerses FeastDayType="CurrentFilter" />
-@* <Footer /> *@
 
 
-
-<div class="@modalClass" style="display:@(modalOpen?"block":"none");">
-	<div class="modal-dialog modal-xl">
-		<div class="modal-content">
-			<div class="modal-header bg-light">
-
-				<h5 class="modal-title">Planner Explanation</h5>
-				
-				<button type="button" class="close" @onclick="CloseModal">
-					<span>&times;</span>
-				</button>
-			</div>
-			<div class="modal-body">
-
-
-
-				<div class="card bg-light mt-1 mb-4">
-
-					<div class="card-header"><h5 class="text-center">Details</h5></div>
-					<div class="card-body">
-						<p class="card-text">
-							Mapping the Gregorian calendar with the Hebrew calendar is hard because the beginning and end of a date is different (midnight and evening respectively).
-							What that means is that to show a high Sabbath day, you need to spread it out over a pair of Gregorian days.
-						</p>
-
-						<p class="card-text mb-1">
-							<u>Planner Notes</u>
-						</p>
-						<ul class="card-text">
-							@* <li>The dates listed are the day</li> *@
-							<li><b>High Sabbaths</b> are shown in <span class="badge bg-danger">Red</span></li>
-							<li>Other days are shown in <span class="badge bg-info-subtle">turquoise</span></li>
-							<li><b>Hanukkah</b>, <b>Passover</b> and <b>Tabernacles</b> dates are spread out over a week and they have multiple dates</li>
-							<li>
-								In order to make the planner concise the weekly Sabbaths are not includes (even though it defined as a convocation <i>mikra</i>).
-							</li>
-						</ul>
-
-						@* 	
-							<p class="card-text">
-						At the bottom of the page are a few common Hebrew words that are related to the feasts.
-						</p> 
-						*@
-
-					</div>
-
-
-				</div>
-
-
-			</div>
-			<div class="modal-footer bg-light">
-				<button type="button" class="btn btn-primary" @onclick="CloseModal">
-					Cancel
-				</button>
-			</div>
-		</div>
-	</div>
-</div>

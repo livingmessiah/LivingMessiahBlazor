@@ -18,14 +18,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Remove="Features\Calendar\FeastDayPlanner\LearnMoreModal.razor" />
     <Content Remove="Pages\Parasha\AlephBetFooter.razor" />
     <!--<Content Remove="Pages\KeyDates\Obsolete\Index.razor" />-->
     <Content Remove="Shared\EnvComponent.razor" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Features\Calendar\FeastDayPlanner\LearnMoreModal.razor" />
     <None Include="Features\SpecialEvents\ActionButtons.razor" />
     <None Include="Features\SpecialEvents\DisplayCard.razor" />
     <None Include="Features\SpecialEvents\Form.razor" />
@@ -112,7 +110,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <_ContentIncludedByDefault Remove="Features\Calendar\FeastDayPlanner\LearnMoreModal.razor" />
     <_ContentIncludedByDefault Remove="Shared\EnvComponent.razor" />
   </ItemGroup>
 
@@ -132,10 +129,6 @@
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties appsettings_1development_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
-
-  <ItemGroup>
-    <UpToDateCheckInput Remove="Features\Calendar\FeastDayPlanner\LearnMoreModal.razor" />
-  </ItemGroup>
 
 
 </Project>

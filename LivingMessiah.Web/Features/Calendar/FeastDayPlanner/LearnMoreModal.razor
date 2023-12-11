@@ -1,1 +1,79 @@
-﻿<p>THIS DIDN"T WORK</p>
+﻿@using Microsoft.Extensions.Logging;
+@inject ILogger<LearnMoreModal>? Logger
+
+<button type="button" class="btn btn-primary btn-xs float-end" @onclick="() => ShowModal()">
+	Learn More	<i class="fas fa-ellipsis-h"></i>
+</button>
+
+
+<div class="@modalClass" style="display:@(modalOpen?"block":"none");">
+	<div class="modal-dialog modal-xl">
+		<div class="modal-content">
+			<div class="modal-header bg-light">
+
+				<h5 class="modal-title">Planner Explanation</h5>
+
+				<button type="button" class="close" @onclick="CloseModal">
+					<span class="text-primary"><i class="fas fa-times fa-fw fa-2x"></i></span>
+				</button>
+
+			</div>
+			<div class="modal-body">
+
+				<div class="card bg-light mt-1 mb-1">
+					<div class="card-body">
+						<p class="card-text">
+							Mapping the Gregorian calendar with the Hebrew calendar is hard because the beginning and end of a date is different (midnight and evening respectively).
+							What that means is that to show a high Sabbath day, you need to spread it out over a pair of Gregorian days.
+						</p>
+
+						<p class="card-text mb-1">
+							<u>Planner Notes</u>
+						</p>
+						<ul class="card-text">
+							<li><b>High Sabbaths</b> are shown in <span class="badge bg-danger">Red</span></li>
+							<li>Other days are shown in <span class="badge bg-info-subtle">turquoise</span></li>
+							<li><b>Hanukkah</b>, <b>Passover</b> and <b>Tabernacles</b> dates are spread out over a week and they have multiple dates</li>
+							<li>
+								In order to make the planner concise the weekly Sabbaths are not includes (even though it defined as a convocation <i>mikra</i>).
+							</li>
+						</ul>
+
+
+					</div>
+
+
+				</div>
+
+
+			</div>
+
+		</div>
+	</div>
+</div>
+
+
+
+
+@code {
+
+	bool modalOpen = false;
+	string modalClass = "modal";
+
+	void ShowModal()
+	{
+		Logger!.LogDebug(string.Format("Inside {0}", nameof(LearnMoreModal) + "!" + nameof(ShowModal)));
+		modalOpen = true;
+		modalClass += " show";
+		StateHasChanged();
+	}
+
+	
+	void CloseModal()
+	{
+		Logger!.LogDebug(string.Format("Inside {0}", nameof(LearnMoreModal) + "!" + nameof(CloseModal)));
+		modalOpen = false;
+		modalClass = "modal";
+	}
+
+}

@@ -1,77 +1,35 @@
 ﻿@using FeastDayType = LivingMessiah.Web.Features.Calendar.Enums.FeastDay
+@using LivingMessiah.Web.Features.Calendar.FeastDayPlanner.Constants
 @using PageFeasts = LivingMessiah.Web.Features.Feasts.FeastLinks
-@using LivingMessiah.Web.Features.Feasts.VerseReferenceCards
 
-@if (FeastDayType == FeastDayType.Hanukkah)
-{
-	<CardTemplate FeastDay="FeastDayType.Hanukkah">
-		<Hanukkah />
-	</CardTemplate>
-}
-else
-{
-	@if (FeastDayType == FeastDayType.Purim)
-	{
-		<CardTemplate FeastDay="FeastDayType.Purim">
-			<Purim />
-		</CardTemplate>
-	}
-	else
-	{
-		@if (FeastDayType == FeastDayType.Passover)
-		{
-			<CardTemplate FeastDay="FeastDayType.Passover">
-				<Passover />
-			</CardTemplate>
-		}
-		else
-		{
-			@if (FeastDayType == FeastDayType.Weeks)
+<div class="row mt-2">
+	<div class="col-12">
+
+		<div class="card border-primary mt-1">
+			@if (!IsXsOrSm)
 			{
-				<CardTemplate FeastDay="FeastDayType.Weeks">
-					<Weeks />
-				</CardTemplate>
+				<div class="card-header text-center">
+					<h5><i class="@FeastDayType!.Icon"></i> @FeastDayType!.PlannerTitle <span class="hebrew16"> @FeastDayType!.Hebrew</span></h5>
+				</div>
 			}
-			else
-			{
-				@if (FeastDayType == FeastDayType.Trumpets)
-				{
-					<CardTemplate FeastDay="FeastDayType.Trumpets">
-						<Trumpets />
-					</CardTemplate>
-				}
-				else
-				{
-					@if (FeastDayType == FeastDayType.YomKippur)
-					{
-						<CardTemplate FeastDay="FeastDayType.YomKippur">
-							<YomKippur />
-						</CardTemplate>
-					}
-					else
-					{
-						@if (FeastDayType == FeastDayType.Tabernacles)
-						{
-							<CardTemplate FeastDay="FeastDayType.Tabernacles">
-								<Tabernacles />
-							</CardTemplate>
-						}
-						else
-						{
-							<p class="display-1 bg-danger text-center m-5 p-5">ERROR!!!</p>
-						}
-					}
-				}
-			}
-		}
-	}
-}
+			<div class="card-body">
+				<DynamicComponent Type="SelectedFeastDayComponent" />
+			</div>
+		</div>
+
+	</div>
+</div>
 
 @code {
-	//Selector.razor.cs
 
+	[Parameter, EditorRequired] public FeastDayType? FeastDayType { get; set; }
+	[Parameter, EditorRequired] public bool IsXsOrSm { get; set; }
 
-	protected List<(Type type, Dictionary<string, object> parameters)>? components { get; set; }
+	protected Type? SelectedFeastDayComponent;
+	
+	protected override void OnParametersSet()
+	{
+		SelectedFeastDayComponent = Type.GetType($"{DynamicComponentPaths.FeastDayComponents}{FeastDayType!.Name}");
+	}
 
-	[Parameter] public FeastDayType? FeastDayType { get; set; }
 }

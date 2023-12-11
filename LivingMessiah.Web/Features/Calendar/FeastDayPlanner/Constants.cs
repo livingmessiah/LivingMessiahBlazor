@@ -14,9 +14,16 @@ public static class BarColor
 }
 
 
+public static class DynamicComponentPaths
+{
+	public static string FeastDayComponents = "LivingMessiah.Web.Features.Calendar.FeastDayPlanner.FeastDayComponents.";
+	public static string VerseReferenceCards =  "LivingMessiah.Web.Features.Calendar.FeastDayPlanner.VerseReferenceCards.";
+}
+
+
+
 public static class Test
 {
 	public static int AddDays = 0; // Default is 0
-
 }
 
