@@ -1,0 +1,18 @@
+﻿@using FeastDayType = LivingMessiah.Web.Features.Calendar.Enums.FeastDay
+@using LivingMessiah.Web.Features.Calendar.FeastDayPlanner.VerseReferenceCards
+@using LivingMessiah.Web.Features.Calendar.FeastDayPlanner.Constants
+
+<div class="d-print-none mb-2">
+	<DynamicComponent Type="SelectedVerseReferenceCard" />
+</div>
+
+@code {
+	[Parameter, EditorRequired] public FeastDayType? FeastDayType { get; set; }
+
+	protected Type? SelectedVerseReferenceCard;
+
+	protected override void OnParametersSet()
+	{
+		SelectedVerseReferenceCard = Type.GetType($"{DynamicComponentPaths.VerseReferenceCards}{FeastDayType!.VerseReferenceCard}");
+	}
+}

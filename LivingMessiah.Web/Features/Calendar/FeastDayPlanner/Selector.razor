@@ -2,7 +2,7 @@
 @using LivingMessiah.Web.Features.Calendar.FeastDayPlanner.Constants
 @using PageFeasts = LivingMessiah.Web.Features.Feasts.FeastLinks
 
-<div class="row mt-2">
+<div class="row">
 	<div class="col-12">
 
 		<div class="card border-primary mt-1">
@@ -13,7 +13,7 @@
 				</div>
 			}
 			<div class="card-body">
-				<DynamicComponent Type="SelectedFeastDayComponent" />
+				 <EveningAndDay FeastDayType="FeastDayType" />
 			</div>
 		</div>
 
@@ -25,11 +25,5 @@
 	[Parameter, EditorRequired] public FeastDayType? FeastDayType { get; set; }
 	[Parameter, EditorRequired] public bool IsXsOrSm { get; set; }
 
-	protected Type? SelectedFeastDayComponent;
-	
-	protected override void OnParametersSet()
-	{
-		SelectedFeastDayComponent = Type.GetType($"{DynamicComponentPaths.FeastDayComponents}{FeastDayType!.Name}");
-	}
 
 }
