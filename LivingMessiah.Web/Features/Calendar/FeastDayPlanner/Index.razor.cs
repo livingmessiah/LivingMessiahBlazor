@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using FeastDayType = LivingMessiah.Web.Features.Calendar.Enums.FeastDay;
 using Page = LivingMessiah.Web.Links.Calendar.FeastPlanner;
+using LivingMessiah.Web.Infrastructure;
 
 namespace LivingMessiah.Web.Features.Calendar.FeastDayPlanner;
 
@@ -24,22 +24,22 @@ public partial class Index
 
 	private void GetDefaultFeastDayType()
 	{
-		var today = DateOnly.FromDateTime(DateTime.Now.AddDays(Constants.Test.AddDays).AddHours(Utc.ArizonaUtcMinus7));
+		DateTime dateTimeWithoutTime = DateUtil.GetDateTimeWithoutTime(DateTime.Now.AddDays(Constants.Test.AddDays).AddHours(Utc.ArizonaUtcMinus7));
 
 		CurrentFilter = FeastDayType.List
-											.Where(w => DateOnly.FromDateTime(w.Date) >= today)
+											.Where(w => w.Range.Max >= dateTimeWithoutTime)
 											.OrderBy(o => o.Date)
 											.FirstOrDefault();
 
 		if (CurrentFilter is null)
 		{
 			Logger!.LogDebug(string.Format("...{0} is null, setting to {1}"
-			, nameof(CurrentFilter), nameof(FeastDayType.Hanukkah)));
+				, nameof(CurrentFilter), nameof(FeastDayType.Hanukkah)));
 			CurrentFilter = FeastDayType.Hanukkah;
 		}
 
-		Logger!.LogDebug(string.Format("...CurrentFilter.Name: {0}; today: {1}"
-			, CurrentFilter.Name, today.ToString("dd MMM yyyy")));
+		Logger!.LogDebug(string.Format("...CurrentFilter.Name: {0}; dateTimeWithoutTime: {1}; {2}"
+			, CurrentFilter.Name, dateTimeWithoutTime.ToString("dd MMM yyyy HH"), CurrentFilter.FirstAndLastDates ));
 	}
 
 	private void ReturnedFilter(FeastDayType filter)

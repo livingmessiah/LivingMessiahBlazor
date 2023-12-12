@@ -24,8 +24,6 @@ public static class HebrewYear
 	public static bool IsLeapYear = true;
 }
 
-
-
 public static class Test
 {
 	public static int AddDays = 0; // Default is 0

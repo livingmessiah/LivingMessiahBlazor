@@ -26,7 +26,8 @@
 			<div class="card bg-primary text-white">
 				<div class="card-body">
 					<h4 class=""><b>@_SelectedFilter!.PlannerTitle</b> </h4>
-					<small><span class="badge bg-warning-subtle text-dark fw-bold fs-6">@DaysFrom</span> @DaysFromNow</small>
+					<DaysIndicatorBadgeXsSm FeastDayType="CurrentFilter"
+																	Today="DateUtil.GetDateTimeWithoutTime(DateTime.Now.AddDays(Constants.Test.AddDays).AddHours(Utc.ArizonaUtcMinus7))" />
 				</div>
 			</div>
 
@@ -34,25 +35,24 @@
 
 		<div class="col-3 text-center mt-2">
 
-				@if (Next is not null)
-				{
-					<button @onclick="@(() => OnClickFilter(Next))"
+			@if (Next is not null)
+			{
+				<button @onclick="@(() => OnClickFilter(Next))"
 								class="btn btn-light btn-lg ">
-						<i class="fas fa-chevron-circle-right fa-fw fa-2x"></i>
-					</button>
-					<p class="mt-1"><small>@Next!.PlannerTitle</small></p>
-				}
-				else
-				{
+					<i class="fas fa-chevron-circle-right fa-fw fa-2x"></i>
+				</button>
+				<p class="mt-1"><small>@Next!.PlannerTitle</small></p>
+			}
+			else
+			{
 				<button class="btn btn-light btn-lg disabled">
-						<i class="fas fa-chevron-circle-right fa-fw fa-2x"></i>
-					</button>
-				}
+					<i class="fas fa-chevron-circle-right fa-fw fa-2x"></i>
+				</button>
+			}
 
-			
+
 		</div>
 	</div>
-
 
 </div>
 
@@ -73,9 +73,9 @@
 	{
 		_SelectedFilter = CurrentFilter;
 
-		if (_SelectedFilter!.Value != 1) 
+		if (_SelectedFilter!.Value != 1)
 		{
-			Prev = FeastDayType.FromValue(_SelectedFilter.Value -1);
+			Prev = FeastDayType.FromValue(_SelectedFilter.Value - 1);
 		}
 		else
 		{
@@ -91,16 +91,7 @@
 			Next = null;
 		}
 
-		GregorianDate = DateTime.Now.AddDays(Constants.Test.AddDays).ToString(DateFormat.FeastDayPlanner);
-		TimeSpan difference = CurrentFilter!.Date.AddDays(Constants.Test.AddDays) - DateTime.UtcNow.AddHours(Utc.ArizonaUtcMinus7);
-		DaysFrom = (int)difference.TotalDays;
-		DaysFromNow = $" days away";
-		HebrewDate = DateUtil.ToTransliteratedHebrewDateString(DateTime.Now.AddDays(Constants.Test.AddDays));
 	}
 
-	protected string? GregorianDate;
-	protected int DaysFrom = 0;
-	protected string? DaysFromNow;
-	protected string? HebrewDate;
 
 }

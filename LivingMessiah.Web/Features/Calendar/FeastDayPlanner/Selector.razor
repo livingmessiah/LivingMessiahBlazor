@@ -6,12 +6,6 @@
 	<div class="col-12">
 
 		<div class="card border-primary mt-1">
-			@if (!IsXsOrSm)
-			{
-				<div class="card-header text-center">
-					<h5><i class="@FeastDayType!.Icon"></i> @FeastDayType!.PlannerTitle <span class="hebrew16"> @FeastDayType!.Hebrew</span></h5>
-				</div>
-			}
 			<div class="card-body">
 				 <EveningAndDay FeastDayType="FeastDayType" />
 			</div>
@@ -24,6 +18,4 @@
 
 	[Parameter, EditorRequired] public FeastDayType? FeastDayType { get; set; }
 	[Parameter, EditorRequired] public bool IsXsOrSm { get; set; }
-
-
 }

@@ -2,10 +2,11 @@
 
 @using Page = LivingMessiah.Web.Links.Calendar.FeastPlanner
 @using LivingMessiah.Web.SmartEnums
+@using LivingMessiah.Web.Infrastructure
 
 <PageTitle>@Page.Title</PageTitle>
 
-<div class="pb-1 mt-4 mb-2 border-bottom border-info">
+	<div class="pb-1 mt-4 mb-2 border-bottom border-info">
 		<LearnMoreModal />
 		<h2><i class="@Page.Icon"></i> @Page.Title</h2>
 </div>
@@ -19,7 +20,8 @@
 <div class="@MediaQuery.MdOrLgOrXl.DivClass">
 
 	<FilterPills CurrentFilter="@CurrentFilter" OnFilterSelected="@ReturnedFilter" />
-	@* <Header FeastDayType="CurrentFilter" /> *@
+	<Header FeastDayType="CurrentFilter"
+					Today="DateUtil.GetDateTimeWithoutTime(DateTime.Now.AddDays(Constants.Test.AddDays).AddHours(Utc.ArizonaUtcMinus7))" />
 </div>
 
 

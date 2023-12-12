@@ -5,13 +5,14 @@
 	<div class=" row mt-4">
 		<div class="col-12">
 
-			<ul class="nav nav-pills justify-content-center">
+			@* nav-pills *@
+			<ul class="nav nav-tabs justify-content-center">
 				@foreach (var item in FeastDayType.List.OrderBy(o => o.Value))
 				{
 					<li class="nav-item">
 						<a @onclick="@(() => OnClickFilter(item))" title=""
 							 class="nav-link @ActiveFilter(item)">
-							@item.PlannerTitle
+							<small>@item.TabTitle</small>
 						</a>
 					</li>
 				}

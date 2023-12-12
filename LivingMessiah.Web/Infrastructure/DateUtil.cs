@@ -24,8 +24,9 @@ public static class DateUtil
 		{
 			monthName = hc.GetMonth(date).ToString();
 		}
-	
-		string hebrewDate = $" {hc.ToFourDigitYear(hc.GetYear(date))} / {monthName} / {hc.GetDayOfMonth(date)}";
+
+		//string hebrewDate = $" {hc.ToFourDigitYear(hc.GetYear(date))} / {monthName} / {hc.GetDayOfMonth(date)}";
+		string hebrewDate = $" {monthName} {hc.GetDayOfMonth(date)}, {hc.ToFourDigitYear(hc.GetYear(date))}";
 		return hebrewDate; 
 	}
 
@@ -55,6 +56,12 @@ public static class DateUtil
 		int daysToAdd = ((int)day - (int)start.DayOfWeek + 7) % 7;
 		return start.AddDays(daysToAdd);
 	}
+
+	public static DateTime GetDateTimeWithoutTime(DateTime dateTimeWithTime)
+	{
+		return dateTimeWithTime.Date;
+	}
+
 
 	public static int GetNextShabbatWeek()
 	{
