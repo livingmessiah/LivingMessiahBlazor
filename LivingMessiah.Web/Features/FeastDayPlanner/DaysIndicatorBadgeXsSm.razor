@@ -2,53 +2,22 @@
 @using LivingMessiah.Web.Infrastructure
 @using Microsoft.Extensions.Logging;
 
-@inject ILogger<DaysIndicatorBadgeXsSm>? Logger
-<span class="badge @BadgeColor text-dark fw-bold fs-6">@DaysDifferrentFormat</span> @SuffixDescription
-<p class="text-white my-1"><small>@GregorianDate | @HebrewDate</small></p>
+@* @inject ILogger<DaysIndicatorBadgeXsSm>? Logger *@
+@inject Data.IService? svc
+
+<span class="badge @vm!.BadgeColor text-dark fw-bold fs-6">@vm!.DaysDifferentFormat</span> @vm!.SuffixDescription
+<p class="text-white my-1"><small>@vm!.GregorianDate | @vm!.HebrewDate</small></p>
 
 @code {
 	[Parameter, EditorRequired] public FeastDayType? FeastDayType { get; set; }
-	[Parameter, EditorRequired] public DateTime? Today { get; set; }
 
-	protected string BadgeColor = "bg-warning-subtle";
-	protected int DaysDifferrent = 0;
-	protected string DaysDifferrentFormat = "";
-	protected string SuffixDescription = "Passed, Present or Future?";
-	protected string? GregorianDate;
-	protected string? HebrewDate;
-
+	HeaderServiceModel? vm = new();
 	protected override void OnParametersSet()
 	{
-		GregorianDate = Today!.Value.ToString(DateFormat.FeastDayPlanner);
-		HebrewDate = DateUtil.ToTransliteratedHebrewDateString(Today.Value);
+		vm = svc!.GetHeaderServiceModel(FeastDayType!);
+		// Logger!.LogDebug(string.Format("Inside DaysIndicatorBadge; FeastDayType: .Name: {0}; .FirstAndLastDates: {1}"
+		// , FeastDayType!.Name, FeastDayType!.FirstAndLastDates));
 
-		Logger!.LogDebug(string.Format("Inside DaysIndicatorBadge; FeastDayType.Name: {0}; today: {1}; {2}"
-		, FeastDayType!.Name, Today.Value.ToString("dd MMM yyyy HH"), FeastDayType!.FirstAndLastDates));
-
-		if (Today >= FeastDayType!.Range.Min && Today <= FeastDayType!.Range.Max)
-		{
-			BadgeColor = "bg-success-subtle";
-			SuffixDescription = $"day";
-			DaysDifferrent = (int)(Today.Value - FeastDayType!.Range.Min).TotalDays;
-			DaysDifferrentFormat = $"{DaysDifferrent}{DateUtil.GetDaySuffix(DaysDifferrent)}";
-		}
-		else
-		{
-			if (Today < FeastDayType!.Range.Min)
-			{
-				BadgeColor = "bg-warning-subtle";
-				SuffixDescription = "days ahead";
-					DaysDifferrent = (int)(FeastDayType!.Range.Min - Today.Value).TotalDays;
-				DaysDifferrentFormat = DaysDifferrent.ToString();
-			}
-			else
-			{
-				BadgeColor = "bg-danger-subtle";
-				SuffixDescription = "days in the past";
-				DaysDifferrent = (int)(Today.Value - FeastDayType!.Range.Max).TotalDays;
-				DaysDifferrentFormat = DaysDifferrent.ToString();
-			}
-		}
 	}
 
 }

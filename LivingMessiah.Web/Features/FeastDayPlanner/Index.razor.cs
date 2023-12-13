@@ -44,8 +44,7 @@ public partial class Index
 
 	private void ReturnedFilter(FeastDayType filter)
 	{
-		Logger!.LogDebug(string.Format("...inside {0} filter: {1}"
-			, nameof(ReturnedFilter), filter));
+		Logger!.LogDebug(string.Format("...inside {0}!{1}; filter: {2}", nameof(Index), nameof(ReturnedFilter), filter));
 		CurrentFilter = filter;
 	}
 

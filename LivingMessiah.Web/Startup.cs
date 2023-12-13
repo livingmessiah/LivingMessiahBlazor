@@ -9,22 +9,23 @@ using Blazored.Toast;
 using Blazored.Modal;
 using LivingMessiah.Web.Settings;
 
-using LivingMessiah.Web.Pages.Admin.Video.DI;
-using LivingMessiah.Web.Pages.ArchivedVideos;
-using LivingMessiah.Web.Pages.Contacts.DI;
+using LivingMessiah.Web.Components.ShabbatWeek;
 
 using LivingMessiah.Web.Features.Admin.Database;
 using LivingMessiah.Web.Features.PsalmsAndProverbs;
 using LivingMessiah.Web.Features.Calendar.Data;
+using LivingMessiah.Web.Features.Calendar.ManageKeyDates.Data;
+using LivingMessiah.Web.Features.Calendar.ManageParashaCalendar;
+using LivingMessiah.Web.Features.FeastDayPlanner.Data;
 using LivingMessiah.Web.Features.SpecialEvents.Data;
 using LivingMessiah.Web.Features.UpcomingEvents.Weekly;
 
-using LivingMessiah.Web.Components.ShabbatWeek;
 
+using LivingMessiah.Web.Pages.Admin.Video.DI;
+using LivingMessiah.Web.Pages.ArchivedVideos;
+using LivingMessiah.Web.Pages.Contacts.DI;
 using LivingMessiah.Web.Pages.Sukkot.ManageNotes.Data;
 using LivingMessiah.Web.Pages.Sukkot.ManageRegistration.Data;
-using LivingMessiah.Web.Features.Calendar.ManageKeyDates.Data;
-using LivingMessiah.Web.Features.Calendar.ManageParashaCalendar;
 
 namespace LivingMessiah.Web;
 
@@ -57,6 +58,7 @@ public class Startup
 		services.AddArchivedVideo();
 
 		services.AddCalendar();
+		services.AddFeastDayPlanner();
 		services.AddManageKeyDates();
 		services.AddManageParashaCalendar();
 		services.AddPsalmsAndProverbs();
