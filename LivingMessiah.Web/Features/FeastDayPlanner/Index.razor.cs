@@ -6,7 +6,7 @@ using FeastDayType = LivingMessiah.Web.Features.Calendar.Enums.FeastDay;
 using Page = LivingMessiah.Web.Links.Calendar.FeastPlanner;
 using LivingMessiah.Web.Infrastructure;
 
-namespace LivingMessiah.Web.Features.Calendar.FeastDayPlanner;
+namespace LivingMessiah.Web.Features.FeastDayPlanner;
 
 public partial class Index
 {

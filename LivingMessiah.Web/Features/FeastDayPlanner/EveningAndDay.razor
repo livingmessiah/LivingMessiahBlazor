@@ -1,5 +1,5 @@
 ﻿@using FeastDayType = LivingMessiah.Web.Features.Calendar.Enums.FeastDay
-@using LivingMessiah.Web.Features.Calendar.FeastDayPlanner.Constants
+@using LivingMessiah.Web.Features.FeastDayPlanner.Constants
 
 @foreach (var item in Enums.FeastDayDetail.List
 	.Where(w => w.ParentFeastDayId == FeastDayType!.Value)

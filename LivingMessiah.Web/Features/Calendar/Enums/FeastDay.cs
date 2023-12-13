@@ -1,6 +1,6 @@
 ﻿using Ardalis.SmartEnum;
 using System;
-using FDD = LivingMessiah.Web.Features.Calendar.FeastDayPlanner.Enums; //FeastDayDetail
+using FDD = LivingMessiah.Web.Features.FeastDayPlanner.Enums; //FeastDayDetail
 
 namespace LivingMessiah.Web.Features.Calendar.Enums;
 

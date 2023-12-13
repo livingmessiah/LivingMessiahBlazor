@@ -1,4 +1,4 @@
-﻿namespace LivingMessiah.Web.Features.Calendar.FeastDayPlanner.Constants;
+﻿namespace LivingMessiah.Web.Features.FeastDayPlanner.Constants;
 
 public static class Progress
 {
@@ -16,7 +16,7 @@ public static class BarColor
 
 public static class DynamicComponentPaths
 {
-	public static string VerseReferenceCards =  "LivingMessiah.Web.Features.Calendar.FeastDayPlanner.VerseReferenceCards.";
+	public static string VerseReferenceCards =  "LivingMessiah.Web.Features.FeastDayPlanner.VerseReferenceCards.";
 }
 
 public static class HebrewYear
