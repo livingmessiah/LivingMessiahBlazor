@@ -3,6 +3,8 @@
 public static class Progress
 {
 	public static string Height = "80px";
+	public static string HeightMedium = "50px";
+	public static string HeightSmall = "30px";
 }
 
 public static class BarColor

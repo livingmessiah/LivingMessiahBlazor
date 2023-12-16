@@ -1,0 +1,44 @@
+﻿@using Microsoft.Extensions.Logging;
+@using LunarMonthType = LivingMessiah.Web.Features.Calendar.Enums.LunarMonth
+
+@inject ILogger<FilterButtons>? Logger
+
+
+<div class="d-print-none mb-2">
+	<div class="container d-flex justify-content-end mt-2">
+
+		@foreach (var item in LunarMonthType.List.OrderBy(o => o.Value))
+		{
+			<button @onclick="@(() => OnButtonClicked(item))"
+							class="btn btn-outline-primary btn-sm @ActiveFilter(item)">
+				@item.Value<i class="fas fa-chevron-circle-right"></i>
+			</button>
+		}
+	</div>
+
+</div>
+
+@code {
+	[Parameter, EditorRequired] public required LunarMonthType? CurrentFilter { get; set; }
+	[Parameter] public EventCallback<LunarMonthType> OnFilterSelected { get; set; }
+
+	private LunarMonthType? _SelectedFilter;
+	protected override void OnParametersSet()
+	{
+		string inside = $"{nameof(FilterButtons)}!{nameof(OnParametersSet)}";
+		Logger!.LogDebug(string.Format("inside {0}", inside));
+		_SelectedFilter = CurrentFilter;
+	}
+
+	private void OnButtonClicked(LunarMonthType filter)
+	{
+		//Logger!.LogDebug(string.Format("Inside {0}; {1}, action: {2}", inside, nameof(OnButtonClicked), filter.Name));
+		OnFilterSelected.InvokeAsync(filter);
+	}
+
+	public string ActiveFilter(LunarMonthType filter)
+	{
+		return filter == CurrentFilter ? "active" : "";
+	}
+
+}
