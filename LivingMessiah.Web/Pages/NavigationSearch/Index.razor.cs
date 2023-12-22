@@ -10,17 +10,23 @@ namespace LivingMessiah.Web.Pages.NavigationSearch;
 public partial class Index
 {
 	[Inject] public Services.ILinkService? LinkService { get; set; }
-	[Inject] NavigationManager? NavigationManager { get; set; }
-	//[Inject] public ILogger<NavigationSearch> Logger { get; set; }
 
-	protected string? item;
-	public string? Msg { get; set; }
 
 	private IEnumerable<Link>? Links;
 	protected override void OnInitialized()
 	{
 		Links = LinkService!.GetSitemapLinks();
 	}
+
+	public string SearchText = "";
+	List<Link>? FilteredLinks => Links!.Where(w => w.Title!.ToLower().Contains(SearchText.ToLower())).ToList();
+
+	/*
+	[Inject] NavigationManager? NavigationManager { get; set; }
+	[Inject] public ILogger<NavigationSearch> Logger { get; set; }
+	
+	protected string? item;
+	public string? Msg { get; set; }
 
 	void SearchClicked()
 	{
@@ -47,9 +53,8 @@ public partial class Index
 
 		}
 	}
+	*/
 
-	public string SearchText = "";
-	List<Link>? FilteredLinks => Links!.Where(w => w.Title!.ToLower().Contains(SearchText.ToLower())).ToList();
 
 }
 

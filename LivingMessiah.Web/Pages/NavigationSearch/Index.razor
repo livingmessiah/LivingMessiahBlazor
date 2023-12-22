@@ -4,27 +4,30 @@
 
 <PageTitle>@Page.Title</PageTitle>
 
-<nav class="navbar navbar-light bg-light">
+@* <nav class="navbar navbar-light bg-light">
 	<div class="container-fluid">
 		<a class="navbar-brand">Navbar</a>
 		<form class="d-flex">
-			<input class="form-control me-2" @bind="item" type="search" aria-label="Search">
-			<button class="btn btn-outline-success" type="submit" @onclick="() => SearchClicked()">
+			<input class="form-control me-2" @bind="item" 
+				type="search" aria-label="Search">
+			<button class="btn btn-outline-success" 
+				type="submit" @onclick="() => SearchClicked()">
 				Search
 			</button>
 		</form>
 	</div>
-</nav>
+</nav> *@
 
-@if (Msg is not null)
+@* @if (Msg is not null)
 {
 	<p>@Msg</p>
-}
+} *@
 
 <hr />
 
 <input class="form-control me-2" @bind-value="SearchText"
-			 @bind-value:event="oninput" placeholder="Search by page" />
+			 @bind-value:event="oninput" 
+			 placeholder="Search by page" />
 
 @if (!Links!.Any())
 {
