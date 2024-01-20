@@ -114,6 +114,10 @@ public class Startup
 			endpoints.MapRazorPages();
 			endpoints.MapBlazorHub();
 			endpoints.MapFallbackToPage("/_Host");
+
+			//endpoints.MapFallbackToPage("/BlazorApp");
+			////https://stackoverflow.com/questions/63071255/blazor-webassembly-load-different-scripts-for-specific-environment
+
 		});
 	}
 }
