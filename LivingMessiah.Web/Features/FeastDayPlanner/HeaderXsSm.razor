@@ -1,0 +1,52 @@
+﻿@using FeastDayType = LivingMessiah.Web.Features.Calendar.Enums.FeastDay
+@using LivingMessiah.Web.Infrastructure
+@using Microsoft.Extensions.Logging
+
+@inject ILogger<HeaderXsSm>? Logger
+
+<div class="d-print-none mb-2">
+
+	<div class="row mt-3  gx-1">
+		<div class="col-3 text-center mt-2">
+
+			<PrevNextXsSmButtons CurrentFilter="CurrentFilter"
+													 OnFilterSelected="ReturnedFilter" IsPrev=true />
+
+		</div>
+
+		<div class="col-6 text-center">
+			<div class="card bg-primary text-white">
+				<div class="card-body">
+
+					<h4 class=""><b>@CurrentFilter!.PlannerTitle</b> </h4>
+					<DaysIndicatorBadgeXsSm FeastDayType="CurrentFilter" />
+
+
+				</div>
+			</div>
+
+		</div>
+
+		<div class="col-3 text-center mt-2">
+
+			<PrevNextXsSmButtons CurrentFilter="CurrentFilter"
+													 OnFilterSelected="ReturnedFilter"
+													 IsPrev=false />
+
+		</div>
+	</div>
+
+</div>
+
+
+@code {
+	[Parameter, EditorRequired] public required FeastDayType? CurrentFilter { get; set; }
+	[Parameter, EditorRequired] public EventCallback<FeastDayType> OnFilterSelected { get; set; }
+
+	private void ReturnedFilter(FeastDayType filter)
+	{
+		Logger!.LogDebug(string.Format("......inside {0}!{1}; filter: {2}", nameof(HeaderXsSm), nameof(ReturnedFilter), filter));
+		CurrentFilter = filter;
+	}
+
+}

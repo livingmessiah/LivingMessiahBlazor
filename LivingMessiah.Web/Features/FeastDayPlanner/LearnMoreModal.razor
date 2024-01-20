@@ -5,7 +5,6 @@
 	Learn More	<i class="fas fa-ellipsis-h"></i>
 </button>
 
-
 <div class="@modalClass" style="display:@(modalOpen?"block":"none");">
 	<div class="modal-dialog modal-xl">
 		<div class="modal-content">
@@ -31,29 +30,23 @@
 							<u>Planner Notes</u>
 						</p>
 						<ul class="card-text">
-							<li><b>High Sabbaths</b> are shown in <span class="badge bg-danger">Red</span></li>
-							<li>Other days are shown in <span class="badge bg-info-subtle">turquoise</span></li>
-							<li><b>Hanukkah</b>, <b>Passover</b> and <b>Tabernacles</b> dates are spread out over a week and they have multiple dates</li>
+							<li><b>High Sabbaths</b> dates are shown in <span class="badge bg-danger">Red</span>. The Related Verses are also shown in red</li>
+							<li>Other dates are shown in <span class="badge bg-info-subtle">turquoise</span></li>
+							<li>Some dates are a single dates and some are spread out multiple dates</li>
 							<li>
-								In order to make the planner concise the weekly Sabbaths are not includes (even though it defined as a convocation <i>mikra</i>).
+								In order to make the planner concise the weekly Sabbaths are not includes (even though it's defined as a convocation <i>mikra</i>).
 							</li>
 						</ul>
 
-
 					</div>
 
-
 				</div>
-
 
 			</div>
 
 		</div>
 	</div>
 </div>
-
-
-
 
 @code {
 
@@ -68,7 +61,6 @@
 		StateHasChanged();
 	}
 
-	
 	void CloseModal()
 	{
 		Logger!.LogDebug(string.Format("Inside {0}", nameof(LearnMoreModal) + "!" + nameof(CloseModal)));

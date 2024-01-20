@@ -1,0 +1,69 @@
+﻿@page "/LunarMonthV2"
+
+@using Page = LivingMessiah.Web.Links.Calendar.LunarMonth
+@using LivingMessiah.Web.Infrastructure
+@using LunarMonthType = LivingMessiah.Web.Features.Calendar.Enums.LunarMonth
+@using Service = LivingMessiah.Web.Features.FeastDayPlanner;
+
+@using Microsoft.Extensions.Logging
+
+@inject ILogger<Index>? Logger
+@inject Service.Data.IService? svc
+
+<PageTitle>@Page.Title</PageTitle>
+
+<div class="pb-1 mt-4 mb-2 border-bottom border-info">
+		<h2><i class="@Page.Icon"></i> @Page.Title</h2>
+</div>
+
+@*
+<FilterButtons CurrentFilter="CurrentFilter" OnFilterSelected="ReturnedFilter" />
+<Header LunarMonthType="CurrentFilter" />
+*@
+
+<ProgressBar LunarMonthType="CurrentFilter" VM="VM" />
+
+<FooterVerses />
+
+@code {
+	public LunarMonthType? CurrentFilter { get; set; }
+	protected LivingMessiah.Web.Features.LunarMonths.ProgressBarVM? VM = new();
+
+	protected override void OnInitialized()
+	{
+		base.OnInitialized();
+		string inside = $"page {Page.Index}; class: {nameof(Index)}";
+		Logger!.LogDebug(string.Format("{0}; {1}", inside, nameof(OnInitialized)));
+
+		GetDefaultLunarMonthType();
+		VM = svc!.GetHeaderServiceModelLunarMonth(CurrentFilter!);
+	}
+
+	private void GetDefaultLunarMonthType()
+	{
+		DateTime dateTimeWithoutTime = DateUtil.GetDateTimeWithoutTime(
+			DateTime.Now.AddDays(LivingMessiah.Web.Features.FeastDayPlanner.Constants.Test.AddDays).AddHours(Utc.ArizonaUtcMinus7));
+
+		CurrentFilter = LunarMonthType.List
+											.Where(w => w.Date >= dateTimeWithoutTime)
+											.OrderBy(o => o.Date)
+											.FirstOrDefault();
+
+		if (CurrentFilter is null)
+		{
+			Logger!.LogDebug(string.Format("...{0} is null, setting to {1}", nameof(CurrentFilter), nameof(LunarMonthType.Nissan)));
+			CurrentFilter = LunarMonthType.Nissan;
+		}
+
+		VM = svc!.GetHeaderServiceModelLunarMonth(CurrentFilter!);
+
+		Logger!.LogDebug(string.Format("...CurrentFilter.Name: {0}; dateTimeWithoutTime: {1}; Date: {2}"
+		, CurrentFilter.Name, dateTimeWithoutTime.ToString("dd MMM yyyy HH"), CurrentFilter.Date));
+	}
+
+	private void ReturnedFilter(LunarMonthType filter)
+	{
+		Logger!.LogDebug(string.Format("...inside {0}!{1}; filter: {2}", nameof(Index), nameof(ReturnedFilter), filter));
+		CurrentFilter = filter;
+	}
+}

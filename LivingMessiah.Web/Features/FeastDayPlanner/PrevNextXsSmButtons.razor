@@ -1,0 +1,79 @@
+﻿@using FeastDayType = LivingMessiah.Web.Features.Calendar.Enums.FeastDay
+
+@if (IsPrev)
+{
+	@if (Prev is not null)
+	{
+		<button @onclick="@(() => OnClickFilter(Prev))"
+						class="btn btn-light btn-lg ">
+			<i class="fas fa-chevron-circle-left fa-fw fa-2x"></i>
+		</button>
+		<p class="mt-1"><small>@Prev.PlannerTitle</small></p>
+	}
+	else
+	{
+		<button class="btn btn-light btn-lg disabled">
+			<i class="fas fa-chevron-circle-left fa-fw fa-2x"></i>
+		</button>
+	}
+}
+else
+{
+	@if (Next is not null)
+	{
+		<button @onclick="@(() => OnClickFilter(Next))"
+						class="btn btn-light btn-lg ">
+			<i class="fas fa-chevron-circle-right fa-fw fa-2x"></i>
+		</button>
+		<p class="mt-1"><small>@Next!.PlannerTitle</small></p>
+	}
+	else
+	{
+		<button class="btn btn-light btn-lg disabled">
+			<i class="fas fa-chevron-circle-right fa-fw fa-2x"></i>
+		</button>
+	}
+}
+
+@code {
+	[Parameter, EditorRequired] public required FeastDayType? CurrentFilter { get; set; }
+	[Parameter, EditorRequired] public required bool IsPrev { get; set; }
+	[Parameter, EditorRequired] public EventCallback<FeastDayType> OnFilterSelected { get; set; }
+
+
+	protected FeastDayType? Prev;
+	protected FeastDayType? Next;
+
+	protected override void OnParametersSet()
+	{
+		if (IsPrev)
+		{
+			if (CurrentFilter!.Value != 1)
+			{
+				Prev = FeastDayType.FromValue(CurrentFilter.Value - 1);
+			}
+			else
+			{
+				Prev = null;
+			}
+		}
+		else
+		{
+			if (CurrentFilter!.Value != 7) // 7th is the last FeastDay.ValueId
+			{
+				Next = FeastDayType.FromValue(CurrentFilter.Value + 1);
+			}
+			else
+			{
+				Next = null;
+			}
+		}
+
+	}
+
+	protected void OnClickFilter(FeastDayType filter)
+	{
+		OnFilterSelected.InvokeAsync(filter);
+	}
+
+}

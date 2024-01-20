@@ -1,0 +1,29 @@
+﻿@if (IsCollapsed)
+{
+	<Button @onclick="@(e => ToggleButtonClick(IsCollapsed))"
+					class="btn btn-outline-primary btn-sm">
+		@ButtonLabel <i class='fas fa-chevron-down'></i>
+	</Button>
+}
+else
+{
+	<Button @onclick="@(e => ToggleButtonClick(IsCollapsed))"
+					class="btn btn-outline-primary btn-sm">
+		Hide <i class='fas fa-chevron-up'></i>
+	</Button>
+
+	@ChildContent
+}
+
+@code {
+	[Parameter] public RenderFragment? ChildContent { get; set; }
+	[Parameter] public string ButtonLabel { get; set; } = "Details";
+
+	// class="btn btn-outline-primary btn-sm float-end">
+
+	public bool IsCollapsed { get; set; } = true;
+	protected void ToggleButtonClick(bool isCollapsed)
+	{
+		IsCollapsed = !isCollapsed;
+	}
+}

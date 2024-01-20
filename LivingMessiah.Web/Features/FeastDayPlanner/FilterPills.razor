@@ -5,13 +5,14 @@
 	<div class=" row mt-4">
 		<div class="col-12">
 
-			<ul class="nav nav-pills justify-content-center">
-				@foreach (var item in Enums.FeastDay.List.OrderBy(o => o.Value))
+			@* nav-pills *@
+			<ul class="nav nav-tabs justify-content-center">
+				@foreach (var item in FeastDayType.List.OrderBy(o => o.Value))
 				{
 					<li class="nav-item">
 						<a @onclick="@(() => OnClickFilter(item))" title=""
 							 class="nav-link @ActiveFilter(item)">
-							@item.Name
+							<small>@item.TabTitle</small>
 						</a>
 					</li>
 				}
@@ -26,7 +27,7 @@
 	[Parameter, EditorRequired] public required FeastDayType? CurrentFilter { get; set; }
 	[Parameter] public EventCallback<FeastDayType> OnFilterSelected { get; set; }
 	
-	protected void OnClickFilter(Enums.FeastDay filter)
+	protected void OnClickFilter(FeastDayType filter)
 	{
 		OnFilterSelected.InvokeAsync(filter);
 	}
@@ -37,7 +38,7 @@
 		_SelectedFilter = CurrentFilter;
 	}
 
-	public string ActiveFilter(Enums.FeastDay filter)
+	public string ActiveFilter(FeastDayType filter)
 	{
 		return filter == CurrentFilter ? "active" : "";
 	}

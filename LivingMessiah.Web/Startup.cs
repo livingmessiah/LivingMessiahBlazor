@@ -9,22 +9,24 @@ using Blazored.Toast;
 using Blazored.Modal;
 using LivingMessiah.Web.Settings;
 
-using LivingMessiah.Web.Pages.Admin.Video.DI;
-using LivingMessiah.Web.Pages.ArchivedVideos;
-using LivingMessiah.Web.Pages.Contacts.DI;
+using LivingMessiah.Web.Components.ShabbatWeek;
 
 using LivingMessiah.Web.Features.Admin.Database;
 using LivingMessiah.Web.Features.PsalmsAndProverbs;
 using LivingMessiah.Web.Features.Calendar.Data;
+using LivingMessiah.Web.Features.Calendar.ManageKeyDates.Data;
+using LivingMessiah.Web.Features.Calendar.ManageParashaCalendar;
+using LivingMessiah.Web.Features.Calendar.HealthChecks.Data;
+using LivingMessiah.Web.Features.FeastDayPlanner.Data;
 using LivingMessiah.Web.Features.SpecialEvents.Data;
 using LivingMessiah.Web.Features.UpcomingEvents.Weekly;
 
-using LivingMessiah.Web.Components.ShabbatWeek;
 
+using LivingMessiah.Web.Pages.Admin.Video.DI;
+using LivingMessiah.Web.Pages.ArchivedVideos;
+using LivingMessiah.Web.Pages.Contacts.DI;
 using LivingMessiah.Web.Pages.Sukkot.ManageNotes.Data;
 using LivingMessiah.Web.Pages.Sukkot.ManageRegistration.Data;
-using LivingMessiah.Web.Features.Calendar.ManageKeyDates.Data;
-using LivingMessiah.Web.Features.Calendar.ManageParashaCalendar;
 
 namespace LivingMessiah.Web;
 
@@ -57,8 +59,10 @@ public class Startup
 		services.AddArchivedVideo();
 
 		services.AddCalendar();
+		services.AddFeastDayPlanner();
 		services.AddManageKeyDates();
 		services.AddManageParashaCalendar();
+		services.AddCalendarHealthChecks();
 		services.AddPsalmsAndProverbs();
 		services.AddSpecialEvents();
 		services.AddUpcomingEvents();
@@ -110,6 +114,10 @@ public class Startup
 			endpoints.MapRazorPages();
 			endpoints.MapBlazorHub();
 			endpoints.MapFallbackToPage("/_Host");
+
+			//endpoints.MapFallbackToPage("/BlazorApp");
+			////https://stackoverflow.com/questions/63071255/blazor-webassembly-load-different-scripts-for-specific-environment
+
 		});
 	}
 }

@@ -1,22 +1,14 @@
-﻿@page "/LunarMonth"
-
+﻿@using LunarMonthType = LivingMessiah.Web.Features.Calendar.Enums.LunarMonth
 @using LivingMessiah.Web.Enums
-@using Page = FeastLinks.LunarMonth
 
-<PageTitle>@Page.Title</PageTitle>
-
-<div class="pb-1 mt-4 mb-5 border-bottom border-info">
-	<h2><i class="@Page.Icon"></i> @Page.Title</h2>
-</div>
-
-<div class="card border-primary mt-5">
-	<div class="card-header"><h5 class="text-center">@Page.Title References</h5></div>
+<div class="card border-primary mt-1">
+	<div class="card-header"><h5 class="text-center">Lunar Month References</h5></div>
 
 	<div class="card-body">
 		<h5 class="card-title">Isaiah 81:3</h5>
 		<blockquote>
 
-			<p class="fs-4">
+			<p class="fs-6">
 				<sup><b>3</b> [81:4]</sup>
 				Blow <span class="hebrew">תִּקְעוּ</span> <sup>tik'u</sup> up the trumpet <span class="hebrew">שׁוֹפָר</span> <sup>shofar</sup> in the new moon <span class="hebrew">בַחֹדֶשׁ</span> <sup>vachodesh</sup>,
 				in the time appointed <span class="hebrew">בַּכֵּסֶה</span> <sup>bakkeseh</sup>, on our solemn feast day <span class="hebrew">חַגֵּנוּ</span> <sup>chaggenu</sup>.
@@ -28,7 +20,7 @@
 	<div class="card-body">
 		<h5 class="card-title">Isaiah 66:23</h5>
 		<blockquote>
-			<p class="fs-4">
+			<p class="fs-6">
 				<sup><b>23</b></sup>
 				And it shall come to pass, that from one new moon <span class="hebrew">חֹדֶשׁ</span> <sup>chodesh</sup> to another <span class="hebrew">בְּחָדְשׁוֹ</span> <sup>bechadesho</sup>,
 				and from one sabbath <span class="hebrew">שַׁבָּת</span> <sup>shabbat</sup> to another <span class="hebrew">בְּשַׁבַּתּוֹ</span> <sup>beshabbatto</sup>,
@@ -46,22 +38,24 @@
 		<h4 class="card-title text-center">Lunar Months</h4>
 	</div>
 	<div class="card-body">
-		<TableTemplate Items="LivingMessiah.Web.Features.Calendar.Enums.LunarMonth.List
+		<TableTemplate Items="LunarMonthType.List
 													.Where(w => w.IsPreviousYear==false)
 													.OrderBy(o => o.Value).ToList()">
 			<TableHeader>
 				<th class="text-info">Name</th>
 				<th class="text-info">Hebrew</th>
-				<th class="text-info">Description</th>
+				<th class="text-info">Torah</th>
+				<th class="text-info">New Moon</th>
 			</TableHeader>
 			<RowTemplate>
-				<td>@context.Name</td>
-				<td><span class="hebrew">@context.Hebrew</span> </td>
-				<td>@context.Description</td> 
+				<td class="fs-5">@context.Name</td>
+				<td class="fs-5"><span class="hebrew">@context.Hebrew</span> </td>
+				<td class="fs-5">@context.Description</td>
+				<td class="fs-5">@context.Date.ToString(@DateFormat.YYYY_MM_DD)</td>
 			</RowTemplate>
 		</TableTemplate>
 	</div>
 </div>
 
-<AlephBetFooter />
+
 

@@ -19,7 +19,8 @@ public abstract class Nav : SmartEnum<Nav>
 		internal const int SpecialEvents = 6;
 		internal const int DatabaseError = 7;
 		internal const int ParashaCalendar = 8;
-		internal const int Dashboard = 9;
+		internal const int CalendarHealthCheck = 9;
+		internal const int Dashboard = 10;
 	}
 	#endregion
 
@@ -32,6 +33,7 @@ public abstract class Nav : SmartEnum<Nav>
 	public static readonly Nav SpecialEvents = new SpecialEventsSE();
 	public static readonly Nav DatabaseError = new DatabaseErrorSE();
 	public static readonly Nav ParashaCalendar = new ParashaCalendarSE();
+	public static readonly Nav CalendarHealthCheck = new CalendarHealthCheckSE();
 	public static readonly Nav Dashboard = new DashboardSE();
 	#endregion
 
@@ -124,14 +126,25 @@ public abstract class Nav : SmartEnum<Nav>
 	{
 		public ParashaCalendarSE() : base($"{nameof(Id.ParashaCalendar)}", Id.ParashaCalendar) { }
 		public override string Index =>  "/ParashaCalendar"; //Links.ParashaCalendar.Index;
-				
 		public override string Text => "Parasha Calendar"; //public const string Title = "Parasha Calendar";
-
 		public override string Icon => "fas fa-file-csv"; // far fa-file-excel 
 		
 		public override string Role => "admin";
 		public override int Sort => 8;
 	}
+
+	private sealed class CalendarHealthCheckSE : Nav
+	{
+		public CalendarHealthCheckSE() : base($"{nameof(Id.CalendarHealthCheck)}", Id.CalendarHealthCheck) { }
+		public override string Index => "/Calendar/HealthCheck"; 
+		public override string Text => "Calendar Health Check"; 
+		public override string Icon => "fas fa-heartbeat"; 
+
+		public override string Role => "admin";
+		public override int Sort => 9;
+	}
+
+	//
 
 	private sealed class DashboardSE : Nav
 	{
@@ -143,7 +156,7 @@ public abstract class Nav : SmartEnum<Nav>
 		public override string Icon => "fas fa-tachometer-alt"; 
 
 		public override string Role => "admin";
-		public override int Sort => 9;
+		public override int Sort => 10;
 	}
 
 	

@@ -59,7 +59,7 @@ public partial class GridSixWideSmMdLgXl
 				}
 				else
 				{
-						return $"<p class='ml-5'><span class='badge bg-info'>{omerCnt}</span></p>";
+						return $"<p class='ms-5'><span class='badge bg-info'>{omerCnt}</span></p>";
 				}
 		}
 }

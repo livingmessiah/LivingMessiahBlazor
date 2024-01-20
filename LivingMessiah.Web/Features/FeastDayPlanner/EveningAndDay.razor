@@ -1,0 +1,70 @@
+﻿@using FeastDayType = LivingMessiah.Web.Features.Calendar.Enums.FeastDay
+@using LivingMessiah.Web.Features.FeastDayPlanner.Constants
+
+@foreach (var item in Enums.FeastDayDetail.List
+	.Where(w => w.ParentFeastDayId == FeastDayType!.Value)
+	.OrderBy(o => o.Date))
+{
+	@if (!String.IsNullOrEmpty(item.Description))
+	{
+		<div class="row mt-0">
+			<div class="col-12">
+				<h3 class="text-center mb-0"><span class="badge bg-warning-subtle text-dark">@item.Description</span></h3>
+			</div>
+		</div>
+	}
+
+	@* Gregorian Date *@
+	<div class="row mt-0">
+		<div class="col-12">
+
+			<div class="progress-stacked" style="height: @Progress.Height">
+				<div class="progress" style="width: 49%; height: @Progress.Height">
+					<div class="progress-bar bg-secondary-subtle"><h6 class="text-dark">@item.Date.AddDays(-1).ToString(DateFormat.FeastDayPlanner)</h6></div>
+				</div>
+				<div class="progress" style="width: 2%; height: @Progress.Height">
+					<div class="progress-bar bg-dark-subtle"></div>
+				</div>
+				<div class="progress" style="width: 49%; height: @Progress.Height">
+					<div class="progress-bar bg-secondary-subtle"><h6 class="text-dark">@item.Date.ToString(DateFormat.FeastDayPlanner)</h6></div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	@* Hebrew Date *@
+	<div class="row mt-1 mb-4">
+		<div class="col-12">
+
+			<div class="progress-stacked" style="height: @Progress.Height">
+				<div class="progress" style="width: 40%; height: @Progress.Height">
+					<div class="progress-bar @BarColor.HebrewExtraBGColor"><h4 class="text-dark">@item.PreHebrewDate</h4></div>
+				</div>
+
+				<div class="progress" style="width: 50%; height: @Progress.Height">
+					<div class="progress-bar @item.HebrewBGColor"><h4 class="@item.HebrewTextColor">@item.HebrewDate</h4></div>
+				</div>
+				<div class="progress" style="width: 10%; height: @Progress.Height">
+					<div class="progress-bar @BarColor.HebrewExtraBGColor"></div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+}
+
+
+@code {
+	[Parameter, EditorRequired] public FeastDayType? FeastDayType { get; set; }
+
+	// Passing day1 and day2 as the value of Description didn't work
+	const string candle = "🕯️";
+	string day1 = $"Day 1 {candle}";
+	// string day8 = $"Day 8 {candle.Repeat(8)}";
+
+	// ToDo: this works
+	//<div class="progress-bar @BarColor.HebrewExtraBGColor"><h4 class="text-dark">@candle</h4></div>
+
+}

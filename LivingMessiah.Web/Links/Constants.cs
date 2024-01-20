@@ -155,6 +155,14 @@ public static class Calendar
 		public const string Title = "Planner";
 		public const string Icon = "far fa-map";
 	}
+
+	public static class LunarMonth
+	{
+		public const string Index = "/LunarMonthV2";
+		public const string Title = "Lunar Month";
+		public const string Icon = "fas fa-cloud-moon";
+	}
+
 	public static class FeastPlanner
 	{
 		public const string Index = "/PlannerV2";
