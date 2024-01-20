@@ -18,3 +18,8 @@ public static class CalendarColors
 		public const string Danger = "#dc3545";   // Summer 
 		public const string Unknown = "#1aaa55";  //
 }
+
+public static class CarouselSettings
+{
+	public const bool Display = false;
+}

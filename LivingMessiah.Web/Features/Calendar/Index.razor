@@ -6,11 +6,11 @@
 
 <PageTitle>@Page.Title</PageTitle>
 
-<div class="pb-1 mt-4 mb-5 border-bottom border-info">
-	<h2><i class="@Page.Icon"></i> @Page.Title</h2>
+	<div class="pb-1 mt-4 mb-5 border-bottom border-info">
+		<h2><i class="@Page.Icon"></i> @Page.Title</h2>
 </div>
 
-@if (printedCalendarEnum == PrintedCalendarEnum.ReadyForSale)
+@if (printedCalendarEnum == PrintedCalendarEnum.ReadyForSale | printedCalendarEnum == PrintedCalendarEnum.OnlyShowCover)
 {
 	<div class="@MediaQuery.XsOrSm.DivClass">
 		<LmmCalendarAdvertisement IsXsOrSm="true" PrintedCalendarEnum="@printedCalendarEnum" Year="@YearId" />
@@ -34,10 +34,10 @@
 <div class="mt-5">
 
 	<a href="@LivingMessiah.Web.Links.Calendar.FeastPlanner.Index"
-			 title="@LivingMessiah.Web.Links.Calendar.FeastPlanner.Title"
+		 title="@LivingMessiah.Web.Links.Calendar.FeastPlanner.Title"
 		 class="btn btn-warning btn-lg">
 		<i class="fas fa-star-of-life"></i> <i class="fas fa-star-of-life"></i>
-			See the new @LivingMessiah.Web.Links.Calendar.FeastPlanner.Title !!!
+		See the new @LivingMessiah.Web.Links.Calendar.FeastPlanner.Title !!!
 		<i class="fas fa-chevron-right"></i>
 	</a>
 
@@ -52,18 +52,22 @@
 </div>
 
 
-<div class="@MediaQuery.Xs.DivClass">
-	<Carousel mq="MediaQuery.Xs"/>
-</div>		
-<div class="@MediaQuery.Sm.DivClass">
-	<Carousel mq="MediaQuery.Sm"/>
-</div>	
-<div class="@MediaQuery.Md.DivClass">
-	<Carousel mq="MediaQuery.Md"/>
-</div>	
-<div class="@MediaQuery.Lg.DivClass">
-	<Carousel mq="MediaQuery.Lg"/>
-</div>	
-<div class="@MediaQuery.Xl.DivClass">
-	<Carousel mq="MediaQuery.Xl"/>
-</div>	
+@if (CarouselSettings.Display)
+{
+	<div class="@MediaQuery.Xs.DivClass">
+		<Carousel mq="MediaQuery.Xs" />
+	</div>
+	<div class="@MediaQuery.Sm.DivClass">
+		<Carousel mq="MediaQuery.Sm" />
+	</div>
+	<div class="@MediaQuery.Md.DivClass">
+		<Carousel mq="MediaQuery.Md" />
+	</div>
+	<div class="@MediaQuery.Lg.DivClass">
+		<Carousel mq="MediaQuery.Lg" />
+	</div>
+	<div class="@MediaQuery.Xl.DivClass">
+		<Carousel mq="MediaQuery.Xl" />
+	</div>
+}
+

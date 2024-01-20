@@ -1,6 +1,6 @@
 ﻿@using static LivingMessiah.Web.Links.Store
 
-@* 
+@*
 	ToDo: This `using LivingMessiah.Web.Pages` needs to get moved
 	- Pages.Constants.cs
 	- Also used by Pages.OtherPages\Store.razor
@@ -32,6 +32,65 @@
 
 				</div>
 			</div>*@
+
+		break;
+
+	case PrintedCalendarEnum.OnlyShowCover:
+		<div class="card border-danger border-4 mb-3">
+			<div class="row mb-2">
+				<div class="col-12">
+
+					@if (IsCollapsed)
+					{
+						<Button @onclick="@(e => ToggleButtonClick(IsCollapsed))"
+										class="btn-primary btn-sm  float-end">
+							Details <i class='fas fa-chevron-down'></i>
+						</Button>
+					}
+					else
+					{
+						<Button @onclick="@(e => ToggleButtonClick(IsCollapsed))"
+										class="btn-primary btn-sm float-end">
+							Hide <i class='fas fa-chevron-up'></i>
+						</Button>
+					}
+
+					<div class="lead">
+						<span class="badge bg-warning text-dark m-2 p-3">
+							<b>@Year</b> Living Messiah Calendar
+						</span>
+					</div>
+
+				</div>
+			</div>
+
+			@if (!IsCollapsed)
+			{
+
+				<div class="row my-2">
+					<div class="col-12">
+						@if (IsXsOrSm)
+						{
+
+							<img src="@Blobs.UrlCalendar(@LMMCalendar.ImageXSorSM)" class="card-img-top p-1"
+									 alt="@Items.TitleCalendar">
+						}
+						else
+						{
+							<img src="@Blobs.UrlCalendar(@LMMCalendar.Image)" class="card-img-top p-1"
+									 alt="@Items.TitleCalendar">
+						}
+
+					</div>
+					<p class="ms-2 text-black-50 text-center">
+						Ask leadership for a copy
+					</p>
+
+				</div>
+
+
+			}
+		</div>
 
 		break;
 
@@ -73,7 +132,7 @@
 						{
 
 							<img src="@Blobs.UrlCalendar(@LMMCalendar.ImageXSorSM)" class="card-img-top p-1"
-					 alt="@Items.TitleCalendar">
+									 alt="@Items.TitleCalendar">
 						}
 						else
 						{
@@ -98,7 +157,6 @@
 		</div>
 
 		break;
-
 
 	case PrintedCalendarEnum.NotAvailable:
 		break;
