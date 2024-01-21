@@ -10,8 +10,8 @@
 		<div class="col-3 text-center mt-2">
 
 			<PrevNextXsSmButtons CurrentFilter="CurrentFilter"
-													 OnFilterSelected="ReturnedFilter" IsPrev=true />
-
+													 OnFilterSelected="ReturnedGrandChildFilter" 
+													 IsPrev=true />
 		</div>
 
 		<div class="col-6 text-center">
@@ -21,16 +21,14 @@
 					<h4 class=""><b>@CurrentFilter!.PlannerTitle</b> </h4>
 					<DaysIndicatorBadgeXsSm FeastDayType="CurrentFilter" />
 
-
 				</div>
 			</div>
-
 		</div>
 
 		<div class="col-3 text-center mt-2">
 
 			<PrevNextXsSmButtons CurrentFilter="CurrentFilter"
-													 OnFilterSelected="ReturnedFilter"
+													 OnFilterSelected="ReturnedGrandChildFilter"
 													 IsPrev=false />
 
 		</div>
@@ -43,10 +41,14 @@
 	[Parameter, EditorRequired] public required FeastDayType? CurrentFilter { get; set; }
 	[Parameter, EditorRequired] public EventCallback<FeastDayType> OnFilterSelected { get; set; }
 
-	private void ReturnedFilter(FeastDayType filter)
+	/*
+	See "C:\Source\LivingMessiahWiki\Blazor\Blazor-PrevNext\FilterPrevNextButtons.md"
+	*/
+	private void ReturnedGrandChildFilter(FeastDayType filter)
 	{
-		Logger!.LogDebug(string.Format("......inside {0}!{1}; filter: {2}", nameof(HeaderXsSm), nameof(ReturnedFilter), filter));
-		CurrentFilter = filter;
+		Logger!.LogDebug("...inside {Class}!{Method}; filter: {Filter}"
+			, nameof(HeaderXsSm), nameof(ReturnedGrandChildFilter), filter);
+		OnFilterSelected.InvokeAsync(filter);
 	}
 
 }

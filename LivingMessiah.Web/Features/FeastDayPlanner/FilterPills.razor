@@ -32,12 +32,6 @@
 		OnFilterSelected.InvokeAsync(filter);
 	}
 
-	private FeastDayType? _SelectedFilter;
-	protected override void OnParametersSet()
-	{
-		_SelectedFilter = CurrentFilter;
-	}
-
 	public string ActiveFilter(FeastDayType filter)
 	{
 		return filter == CurrentFilter ? "active" : "";
