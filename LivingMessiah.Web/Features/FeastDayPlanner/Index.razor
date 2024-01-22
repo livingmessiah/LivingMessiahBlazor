@@ -12,16 +12,13 @@
 </div>
 
 <div class="@MediaQuery.XsOrSm.DivClass">
-
-	<HeaderXsSm CurrentFilter="CurrentFilter"
-							OnFilterSelected="@ReturnedFilter" />
-
+ 	<HeaderXsSm CurrentFilter="CurrentFilter"
+							OnFilterSelected="@ReturnedFilter" /> 
 	<Selector FeastDayType="CurrentFilter" IsXsOrSm=true />
 	<FooterVerses FeastDayType="CurrentFilter" />
 </div>
 
 <div class="@MediaQuery.MdOrLgOrXl.DivClass">
-
 	<FilterPills CurrentFilter="@CurrentFilter"
 							 OnFilterSelected="@ReturnedFilter" />
 	<Header FeastDayType="CurrentFilter" />

@@ -15,8 +15,7 @@ public partial class Index
 	protected override void OnInitialized()
 	{
 		base.OnInitialized();
-		string inside = $"page {Page.Index}; class: {nameof(Index)}";
-		Logger!.LogDebug(string.Format("{0}; {1}", inside, nameof(OnInitialized)));
+		Logger!.LogDebug("Inside: {Page}!{Class}!{Method}", Page.Index, nameof(Index), nameof(OnInitialized));
 		GetDefaultFeastDayType();
 	}
 
@@ -33,13 +32,14 @@ public partial class Index
 
 		if (CurrentFilter is null)
 		{
-			Logger!.LogDebug(string.Format("...{0} is null, setting to {1}"
-				, nameof(CurrentFilter), nameof(FeastDayType.Hanukkah)));
+			Logger!.LogDebug("...{CurrentFilter} is null, setting to {DefaultFilter}"
+				, nameof(CurrentFilter), nameof(FeastDayType.Hanukkah));
 			CurrentFilter = FeastDayType.Hanukkah;
 		}
-
-		Logger!.LogDebug(string.Format("...CurrentFilter.Name: {0}; dateTimeWithoutTime: {1}; {2}"
-			, CurrentFilter.Name, dateTimeWithoutTime.ToString("dd MMM yyyy HH"), CurrentFilter.FirstAndLastDates ));
+	
+		Logger!.LogDebug("...CurrentFilter.Name: {CurrentFilter}; CurrentDate: {CurrentDate}; FirstAndLastDates: {FirstAndLastDates}"
+			, CurrentFilter.Name, dateTimeWithoutTime.ToString("dd MMM yyyy HH"), CurrentFilter.FirstAndLastDates );
+	
 	}
 
 	private void ReturnedFilter(FeastDayType filter)
