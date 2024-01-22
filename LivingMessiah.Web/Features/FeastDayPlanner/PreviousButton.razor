@@ -1,0 +1,43 @@
+﻿@using FeastDayType = LivingMessiah.Web.Features.Calendar.Enums.FeastDay
+
+
+@* @if (Previous!.IsStartOfEdge) *@
+
+@if (Previous is null)
+{
+	<button class="btn btn-light btn-lg disabled">
+		<span class="text-black-50"><i class="fas fa-ban fa-fw fa-2x"></i></span>
+	</button>
+}
+else
+{
+	<button @onclick="@(() => OnClickFilter())"
+					class="btn btn-light btn-lg ">
+		<i class="fas fa-chevron-circle-left fa-fw fa-2x"></i>
+	</button>
+	<p class="mt-1 fw-bold"><small>@Previous!.PlannerTitle</small></p>
+}
+
+@code {
+	[Parameter, EditorRequired] public required FeastDayType? CurrentFilter { get; set; }
+	[Parameter, EditorRequired] public EventCallback<FeastDayType> OnFilterSelected { get; set; }
+	
+	FeastDayType? Previous;
+
+	protected override void OnParametersSet()
+	{
+		if (!CurrentFilter!.IsStartOfEdge)
+		{
+			Previous = FeastDayType.FromValue(CurrentFilter!.Value - 1);
+		}
+		else
+		{
+			Previous = null;
+		}
+	}
+
+	protected void OnClickFilter()
+	{
+		OnFilterSelected.InvokeAsync(Previous);
+	}
+}
