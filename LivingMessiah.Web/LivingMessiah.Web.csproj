@@ -7,18 +7,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Pages\SukkotAdmin\Donations\Services\**" />
-    <Compile Remove="Pages\Sukkot\RegistrationSteps\Data\**" />
-    <Content Remove="Pages\SukkotAdmin\Donations\Services\**" />
-    <Content Remove="Pages\Sukkot\RegistrationSteps\Data\**" />
-    <EmbeddedResource Remove="Pages\SukkotAdmin\Donations\Services\**" />
-    <EmbeddedResource Remove="Pages\Sukkot\RegistrationSteps\Data\**" />
-    <None Remove="Pages\SukkotAdmin\Donations\Services\**" />
-    <None Remove="Pages\Sukkot\RegistrationSteps\Data\**" />
+    <Compile Remove="Features\SukkotAdmin\Donations\Services\**" />
+    <Compile Remove="Features\Sukkot\RegistrationSteps\Data\**" />
+    <Content Remove="Features\SukkotAdmin\Donations\Services\**" />
+    <Content Remove="Features\Sukkot\RegistrationSteps\Data\**" />
+    <EmbeddedResource Remove="Features\SukkotAdmin\Donations\Services\**" />
+    <EmbeddedResource Remove="Features\Sukkot\RegistrationSteps\Data\**" />
+    <None Remove="Features\SukkotAdmin\Donations\Services\**" />
+    <None Remove="Features\Sukkot\RegistrationSteps\Data\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Remove="Pages\Parasha\AlephBetFooter.razor" />
+    <Content Remove="Features\Parasha\AlephBetFooter.razor" />
     <!--<Content Remove="Pages\KeyDates\Obsolete\Index.razor" />-->
     <Content Remove="Shared\EnvComponent.razor" />
   </ItemGroup>
@@ -126,6 +126,7 @@
   <ItemGroup>
     <Folder Include="Features\Feasts\LinkSmartEnums\" />
     <Folder Include="Features\Feasts\Links\" />
+    <Folder Include="Features\WindmillRanch\LinkSmartEnums\" />
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties appsettings_1development_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>

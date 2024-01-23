@@ -7,20 +7,16 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 
+using SukkotData = LivingMessiah.Web.Features.Sukkot.Data;
 
-using SukkotData = LivingMessiah.Web.Pages.Sukkot.Data;
-
-using LivingMessiah.Web.Pages.Sukkot.Services;
-using LivingMessiah.Web.Pages.SukkotAdmin.Data;
-using LivingMessiah.Web.Pages.SukkotAdmin.Donations.Data;
+using LivingMessiah.Web.Features.Sukkot.Services;
+using LivingMessiah.Web.Features.SukkotAdmin.Data;
+using LivingMessiah.Web.Features.SukkotAdmin.Donations.Data;
 using LivingMessiah.Web.Services;
 using FluentValidation;
-using LivingMessiah.Web.Pages.Sukkot.Components;
-using LivingMessiah.Web.Pages.Parasha.Services;
-using LivingMessiah.Web.Pages.Parasha.Data;
-using LivingMessiah.Web.Links;
-using LivingMessiah.Web.Pages.Admin.WirecastFolder;
-using LivingMessiah.Web.Data;
+using LivingMessiah.Web.Features.Parasha.Services;
+using LivingMessiah.Web.Features.Parasha.Data;
+using LivingMessiah.Web.Features.Admin.WirecastFolder;
 
 namespace LivingMessiah.Web;
 
@@ -39,7 +35,7 @@ public static class ServiceCollectionExtensions
 			.AddTransient<IService, Service>()        //Pages.Sukkot.Services;
 			.AddTransient<SukkotData.IRepository, SukkotData.Repository>()
 
-			.AddTransient<IValidator<Pages.Sukkot.NormalUser.EntryFormVM>, Pages.Sukkot.NormalUser.EntryFormVMValidator>()
+			.AddTransient<IValidator<Features.Sukkot.NormalUser.EntryFormVM>, Features.Sukkot.NormalUser.EntryFormVMValidator>()
 
 			.AddTransient<IDonationRepository, DonationRepository>()
 			

@@ -1,0 +1,153 @@
+﻿@using LivingMessiah.Web.SmartEnums
+@using LivingMessiah.Web.Features.Sukkot.ManageRegistration
+
+@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+
+@* General <div class="row"></div> *@
+<div class="d-print-none">
+	<div class="d-none d-sm-block">
+
+		<div class="row">
+			<div class="col-sm-12">
+				<small class="float-end">EMail: @ReportVM!.EMail, @ReportVM.Phone2 Status: @ReportVM!.StatusName</small>
+				<h4>General</h4>
+			</div>
+		</div>
+
+	</div>
+
+	<div class="d-block d-sm-none">
+
+		<div class="row">
+			<div class="col-2">
+				<h4>General</h4>
+			</div>
+			<div class="col-10">
+				<ul>
+					<li>Registration#: @ReportVM.Id</li>
+					<li>EMail: @ReportVM.EMail</li>
+					<li>Phone: @ReportVM.Phone</li>
+					<li>Status: @ReportVM.StatusName</li>
+				</ul>
+			</div>
+		</div>
+
+	</div>
+</div>
+
+<div class="row d-none d-print-block">
+	<div class="col-5">
+		<h3>General</h3>
+	</div>
+	<div class="col-7">
+		<ul>
+			<li>Registration#: @ReportVM.Id</li>
+			<li>EMail: @ReportVM.EMail</li>
+			<li>Phone: @ReportVM.Phone</li>
+			<li>Status: @ReportVM.StatusName</li>
+		</ul>
+	</div>
+</div>
+
+
+@* House Rules Agreement *@
+<hr class="warning d-print-none" />
+<div class="row">
+	<div class="col-sm-12">
+		<small class="float-end">Agreed on: @ReportVM.HouseRulesAgreementDate</small>
+		<h4>House Rules Agreement</h4>
+	</div>
+</div>
+
+
+@* Attendance *@
+<hr class="warning d-print-none" />
+
+<div class="row">
+	<div class="col-12">
+		<div class="float-end">
+			<ul class="list-inline">
+				<li class="list-inline-item">Adults: <span class="">@ReportVM.Adults</span></li>
+				<li class="list-inline-item">Child (Big):<span class="">@ReportVM.ChildBig</span></li>
+				<li class="list-inline-item">Child (Small):<span class="">@ReportVM.ChildSmall</span></li>
+			</ul>
+		</div>
+		<h4>Attendance</h4>
+	</div>
+</div>
+
+<div class="@MediaQuery.Xs.DivClass">
+	<AttendanceDateCalendar IsXs="true"
+													AttendanceDateList="ReportVM.AttendanceDateList"
+													AttendanceDateList2ndMonth="ReportVM.AttendanceDateList2ndMonth">
+	</AttendanceDateCalendar>
+</div>
+
+<div class="@MediaQuery.SmMdOrLgOrXl.DivClass">
+	<AttendanceDateCalendar IsXs="false"
+													AttendanceDateList="ReportVM.AttendanceDateList"
+													AttendanceDateList2ndMonth="ReportVM.AttendanceDateList2ndMonth">
+	</AttendanceDateCalendar>
+</div>
+
+@* Cost *@
+<hr class="warning d-print-none" />
+
+@* Cost Non-Print (hidden-xs) *@
+<div class="d-print-none">
+	<div class="d-none d-sm-block">
+		<CostAccountStyle ReportVM="@State!.Value.ReportVM"></CostAccountStyle>
+	</div>
+
+	@* Cost Non-Print (visible-xs) *@
+	<div class="d-block d-sm-none">
+		<div class="row">
+
+			<div class="col-2">
+				<h4>Cost</h4>
+			</div>
+			<div class="col-10">
+				<ul class="">
+					<li>Registration Cost: <span class="float-end">@ReportVM.RegistrationFeeAdjusted</span></li>
+				</ul>
+			</div>
+		</div>
+
+
+		@if (ReportVM.Donations is not null && ReportVM.Donations!.Any())
+		{
+			<div class="row">
+				<div class="col-12">
+					<DonationsPassParamTable DonationDetails="ReportVM.Donations.ToList()" />
+				</div>
+			</div>
+		}
+
+	</div>
+
+</div>
+
+@* Cost Print *@
+<div class="d-none d-print-block">
+	<CostAccountStyle ReportVM="@State!.Value.ReportVM"></CostAccountStyle>
+</div>
+
+@if (!String.IsNullOrEmpty(ReportVM.Notes))
+{
+	<hr class="warning d-print-none" />
+	<div class="row">
+		<div class="col-sm-2">
+			<h4>Notes</h4>
+		</div>
+		<div class="col-sm-10">
+			@ReportVM.Notes
+		</div>
+	</div>
+}
+
+<div class="row d-none d-print-block">
+	<br />
+	<div class="col-12">
+		<Address OnOneLine="true" UseLabel="true" />
+	</div>
+</div>

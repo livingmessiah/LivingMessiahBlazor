@@ -1,0 +1,54 @@
+﻿@page "/WindmillRanch/Projects"
+
+@using LivingMessiah.Web.Features.WindmillRanch.Components
+
+@using Page = Enums.WindmillRanchLinks.Projects
+<PageTitle>@Page.Title</PageTitle>
+
+<Menubar />
+
+<div class="pb-2 mt-4 mb-2 border-bottom">
+	<h2>@Page.Title</h2>
+</div>
+
+<h2 class="mt-5 mb-0"><span class="badge bg-warning">Projects to Develop</span></h2>
+
+<h5 class="text-warning">ToDo Review this list</h5>
+<ul class="lead">
+	<li>Community Center</li>
+	<li>Gardens / Greenhouses</li>
+	<li>Fruit Trees</li>
+	<li>Fish Pond</li>
+	<li>Livestock</li>
+</ul>
+
+<h3 class="mt-5 mb-0">Property Access | Roads</h3>
+<h5 class="text-warning">ToDo: Add picture of the Ridge for RV's</h5>
+
+
+		@* ToDo: This wasn't a very useful picture, but I do need one
+	<h2 class="mt-5 mb-0"><span class="badge bg-warning">Access Road</span></h2>
+	<img src='@Blobs.UrlWindmillRanch("access-road.jpeg")' class='img-fluid rounded mt-3' />
+		*@
+
+
+<h3 class="mt-5 mb-0">Water Retention Maps and Contours</h3>
+
+<h2 class="mt-5 mb-0"><span class="badge bg-warning">Contour lines to develop swells</span></h2>
+<img src='@Blobs.UrlWindmillRanch("bisbee-contour-2020-09-22.png")' class='img-fluid rounded mt-3' />
+
+<h2 class="mt-5 mb-0"><span class="badge bg-warning">Contour (bigger area)</span></h2>
+<img src='@Blobs.UrlWindmillRanch("contour-big.jpg")' class='img-fluid rounded mt-3' />
+
+<h2 class="mt-5 mb-0"><span class="badge bg-warning">Watershed to the N.E.</span></h2>
+<img src='@Blobs.UrlWindmillRanch("160-acres-adjacent.jpg")' class='img-fluid rounded mt-3' />
+
+<h2 class="mt-5 mb-0"><span class="badge bg-warning">Property Lines</span></h2>
+<img src='@Blobs.UrlWindmillRanch("arial.jpg")' class='img-fluid rounded mt-3' />
+
+
+<h2 class="mt-5 mb-0"><span class="badge bg-warning">Windmill, water storage and second well</span></h2>
+<p>Fix the <i>leathers</i> and get this well producing water.</p>
+<img src='@Blobs.UrlWindmillRanch("windmill-well-water-storage.jpeg")' class='img-fluid rounded mt-3' />
+
+<ReturnAnchor />

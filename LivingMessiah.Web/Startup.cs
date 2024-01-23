@@ -12,6 +12,8 @@ using LivingMessiah.Web.Settings;
 using LivingMessiah.Web.Components.ShabbatWeek;
 
 using LivingMessiah.Web.Features.Admin.Database;
+using LivingMessiah.Web.Features.Admin.Video.Data;
+using LivingMessiah.Web.Features.ArchivedVideos;
 using LivingMessiah.Web.Features.PsalmsAndProverbs;
 using LivingMessiah.Web.Features.Calendar.Data;
 using LivingMessiah.Web.Features.Calendar.ManageKeyDates.Data;
@@ -22,11 +24,9 @@ using LivingMessiah.Web.Features.SpecialEvents.Data;
 using LivingMessiah.Web.Features.UpcomingEvents.Weekly;
 
 
-using LivingMessiah.Web.Pages.Admin.Video.DI;
-using LivingMessiah.Web.Pages.ArchivedVideos;
-using LivingMessiah.Web.Pages.Contacts.DI;
-using LivingMessiah.Web.Pages.Sukkot.ManageNotes.Data;
-using LivingMessiah.Web.Pages.Sukkot.ManageRegistration.Data;
+using LivingMessiah.Web.Features.Sukkot.ManageNotes.Data;
+using LivingMessiah.Web.Features.Sukkot.ManageRegistration.Data;
+using LivingMessiah.Web.Features.Contacts.Data;
 
 namespace LivingMessiah.Web;
 

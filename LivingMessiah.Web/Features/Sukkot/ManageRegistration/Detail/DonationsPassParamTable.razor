@@ -1,0 +1,57 @@
+﻿@using LivingMessiah.Web.Features.Sukkot.ManageRegistration.Data
+
+<div class="mx-2">
+	<LoadingComponent IsLoading="DonationDetails == null">
+		<TableTemplate Items="DonationDetails"
+									 TableFooterColor="table-primary"
+									 HeaderCSS="table table-light table-hover">
+			<TableHeader>
+				<th>#</th>
+				<th>Reference Id</th>
+				@*<th>Notes</th>*@
+				<th>Created By</th>
+				<th>Creation</th>
+				<th class="text-center">$</th>
+			</TableHeader>
+
+			<RowTemplate>
+				<td>@context.Detail</td>
+				<td><small>@context.ReferenceId</small></td>
+				@*<td><small>@context.Notes</small></td>*@
+				<td>@context.CreatedBy</td>
+				<td>@context.CreateDate.ToString(DateFormat.MM_dd_hh_mm)</td>
+				<td class="text-end">@context.AmountNoCents</td>
+			</RowTemplate>
+
+
+			<TableFooter>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th class="text-end">Total</th>
+				<th class="text-end"><span class="border-bottom border-4 border-primary">@TotalNoCents</span></th>
+			</TableFooter>
+
+
+		</TableTemplate>
+
+	</LoadingComponent>
+</div>
+
+
+@code {
+	[Parameter, EditorRequired] public List<DonationDetailQuery>? DonationDetails { get; set; }
+
+	private decimal Total { get; set; } = 0;
+	private string TotalNoCents { get; set; } = string.Empty;
+
+	protected override void OnInitialized()
+	{
+		if (DonationDetails is not null)
+		{
+			Total = DonationDetails.Select(s => s.Amount).Sum();
+			TotalNoCents = String.Format("{0:C0}", Total);
+		}
+	}
+
+}

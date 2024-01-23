@@ -1,0 +1,136 @@
+﻿@using LivingMessiah.Web.Features.Sukkot.Enums;
+
+@*
+	MMM/dd
+	<i class="fas fa-times"></i>
+*@
+
+
+
+<p class="mb-0">
+<datehdr>Sun</datehdr><datehdr>Mon</datehdr><datehdr>Tue</datehdr><datehdr>Wed</datehdr><datehdr>Thu</datehdr><datehdr>Fri</datehdr><datehdr>Sat</datehdr>
+</p>
+
+<p class="my-1">
+<datex>&nbsp;<strike>24</strike></datex><datex>&nbsp;<strike>25</strike></datex><datex>&nbsp;<strike>26</strike></datex><datex>&nbsp;<strike>27</strike></datex><datex>&nbsp;<strike>28</strike></datex><date>&nbsp;29</date><date>&nbsp;30</date>
+</p>
+
+<p class="mt-1">
+<date>&nbsp;01</date><date>&nbsp;02</date><date> 03</date><date> 04</date><date> 05</date><date> 06</date><date> 07</date>
+</p>
+
+<h3 class="mt-3">Sukkot Two Week Calendar</h3>
+
+<div class="row">
+	<div class="col-3"></div>
+	<div class="col-9">
+		<div class="btn-group btn-group-sm">
+			<button type="button" class="btn btn-outline-light">
+				<span class="font-monospace">Sun</span>
+				<span class="font-monospace">Mon</span>
+				<span class="font-monospace">Tue</span>
+				<span class="font-monospace">Wed</span>
+				<span class="font-monospace">Thu</span>
+				<span class="font-monospace">Fri</span>
+				<span class="font-monospace">Sat</span>
+			</button>
+		</div>
+	</div>
+	
+</div>
+
+<div class="row">
+	<div class="col-3"><span class="badge bg-secondary text-white float-end">Week 1</span></div>
+	<div class="col-9">
+		<div class="btn-group btn-group-sm">
+
+			@for (int i = 1; i <= 7; i++)
+			{
+				if (@SukkotTwoWeekCalendar.FromValue(i).DateAttendance is null)
+				{
+					<button type="button" disabled class="btn btn-warning">
+						<span class="font-monospace"><strike>@SukkotTwoWeekCalendar.FromValue(i).Date.ToString("dd")</strike></span>
+					</button>
+				}
+				else
+				{
+					<button type="button" class="btn btn-outline-primary">
+						<span class="font-monospace">@SukkotTwoWeekCalendar.FromValue(i).Date.ToString("dd")</span>
+					</button>
+				}
+			}
+
+		</div>
+	</div>
+	
+</div>
+
+<div class="row">
+	<div class="col-3"><span class="badge bg-secondary text-white float-end">Week 2</span></div>
+	<div class="col-9">
+		<div class="btn-group btn-group-sm">
+			@for (int i = 8; i <= 14; i++)
+			{
+				if (@SukkotTwoWeekCalendar.FromValue(i).DateAttendance is null)
+				{
+					<button type="button" disabled class="btn btn-warning">
+						<span class="font-monospace"><strike>@SukkotTwoWeekCalendar.FromValue(i).Date.ToString("dd")</strike></span>
+					</button>
+				}
+				else
+				{
+					<button type="button" class="btn btn-outline-primary">
+						<span class="font-monospace">@SukkotTwoWeekCalendar.FromValue(i).Date.ToString("dd")</span>
+					</button>
+				}
+			}
+		</div>
+	</div>
+</div>
+
+<hr />
+
+<h3 class="mt-3">Sukkot Two Week Calendar</h3>
+<div class="row">
+	<div class="col-2"></div>
+	<div class="col-1"><span class="text-center"><u>Sun</u></span></div>
+	<div class="col-1"><span class="text-center"><u>Mon</u></span></div>
+	<div class="col-1"><span class="text-center"><u>Tue</u></span></div>
+	<div class="col-1"><span class="text-center"><u>Wed</u></span></div>
+	<div class="col-1"><span class="text-center"><u>Thu</u></span></div>
+	<div class="col-1"><span class="text-center"><u>Fri</u></span></div>
+	<div class="col-1"><span class="text-center"><u>Sat</u></span></div>
+</div>
+
+<div class="row">
+	<div class="col-2"><span class="badge bg-secondary text-white float-end">Week 1</span></div>
+
+	@for (int i = 1; i <= 7; i++)
+	{
+		<div class="col-1">
+			<button type="button" class="btn btn-primary">
+				<span class="font-monospace"><small>@SukkotTwoWeekCalendar.FromValue(i).Date.ToString("dd")</small></span>
+			</button>
+
+		</div>
+	}
+</div>
+
+<div class="row">
+	<div class="col-2"><span class="badge bg-secondary text-white float-end">Week 2</span></div>
+
+	<div class="col-10">
+		@for (int i = 8; i <= 14; i++)
+		{
+			<button type="button" class="btn btn-primary">
+				<span class="font-monospace"><small>@SukkotTwoWeekCalendar.FromValue(i).Date.ToString("dd")</small></span>
+			</button>
+		}
+	</div>
+</div>
+
+<hr />
+
+@code {
+
+}

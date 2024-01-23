@@ -1,0 +1,80 @@
+﻿@page "/WindmillRanch/Album"
+
+@using LivingMessiah.Web.Features.WindmillRanch.Components
+
+@using Page = Enums.WindmillRanchLinks
+<PageTitle>@Page.Title</PageTitle>
+
+<Menubar />
+
+<div class="pb-2 mt-4 mb-2 border-bottom">
+	<h2>@Page.Title</h2>
+</div>
+
+<h2 class="mt-5 mb-0"><span class="badge bg-warning">Picture Album</span></h2>
+
+
+<div class="ratio ratio-16x9">
+  <iframe src='@Blobs.UrlWindmillRanch("Flood_2021_07_02/VID_20210702_160944959.mp4")' title="The Deluge Begins" allowfullscreen></iframe>
+</div>
+
+
+
+<video width="320" height="240" controls>
+	<source src='@Blobs.UrlWindmillRanch("Flood_2021_07_02/VID_20210702_164844339.mp4")' title="on the road to the well"  type="video/mp4" />
+  @*<source src="https://livingmessiahstorage.blob.core.windows.net/windmill-ranch/Flood_2021_07_02/VID_20210702_164844339.mp4" type="video/mp4">
+  <source src="movie.ogg" type="video/ogg">*@
+  Your browser does not support the video tag.
+</video>
+
+
+<div class="ratio ratio-16x9">
+  <iframe src='@Blobs.UrlWindmillRanch("Flood_2021_07_02/VID_20210702_165141379.mp4")' title="The pond is floding" allowfullscreen></iframe>
+</div>
+
+
+<!-- Gallery -->
+@*https://mdbootstrap.com/docs/standard/extended/gallery/*@
+<!-- Gallery -->
+
+<p>ToDo: list the pictures in some sort of organized manner</p>
+		@*
+	10139008K-SEAVER-VICI-E-25-acres-SE-water-collection.jpg
+	160-acres-adjacent.jpg
+	40-acres-with-parcel-info.jpg
+	40-acres-with-parcel-info2.jpg
+	40-acres.jpg
+	AH Land Design.url
+	arizona-street-and-swan-road-intersection.png
+	Cochise County Open Data.url
+	Contour-with-ridgeline-for-road.jpg
+	Contour.jpg
+	Gulf-of-Mexico-as-crow-files-812.jpg
+	map-to-windmil-ranch-01.png
+	map-to-windmil-ranch-03.png
+	map-to-windmil-ranch-google-maps.png
+	map-to-windmil-ranch.docx
+	map-to-windmil-ranch.jpg
+	map-to-windmil-ranch.pdf
+	map-to-windmil-ranch.png
+	map-to-windmil-ranch.txt
+	Metro-Politan-area-El-Paso-TX-285.jpg
+	Metro-Politan-area-Las-Crusus-NM-243.jpg
+	Metro-Politan-area-Mesa-AZ-213.jpg
+	Metro-Politan-area-Tucson-AZ-100.jpg
+	Pacific-Gulf-of-Calif-as-crow-files-320-194.jpg
+	property-northwest-1.png
+	property-northwest-2.png
+	roof-sqare-feet-and-water-collection-potential.png
+	Sole Source Aquifers.url
+	SoleSourceAquafer1 - Copy.jpg
+	SoleSourceAquafer1.jpg
+	SoleSourceAquafer2 - Copy.jpg
+	SoleSourceAquafer2.jpg
+	SoleSourceAquafer3 - Copy.jpg
+	SoleSourceAquafer3.jpg
+	trailers-and-storage-units-zoomed-in.png
+		*@
+
+
+<ReturnAnchor />

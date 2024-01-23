@@ -1,0 +1,13 @@
+﻿@using static LivingMessiah.Web.Features.ImportantLinks.Constants.MyHebrewBible
+
+<h2 id="@Id"><span class="badge bg-warning">@Title</span></h2>
+<div class="card">
+	<img src="@Blobs.UrlImportantLinks(Image)" class="card-img-top" alt="@Title" />
+	<div class="card-body">
+		<p class="card-text">
+			This site is designed to enable people to have a stronger relationship with their Creator by intently and methodically studying his image which is the scriptures.
+			With emphasis on the Hebrew, it is based around the <i>parasha</i>, either the annual Torah cycle or the triennial Torah cycle (which is what <b>Living Messiah</b> follows).
+		</p>
+		<a href="@Url" target="_blank" class="btn btn-primary">@UrlSimple &nbsp;<i class="fas fa-external-link-square-alt"></i></a>
+	</div>
+</div>

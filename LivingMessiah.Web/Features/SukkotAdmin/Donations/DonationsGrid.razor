@@ -1,0 +1,74 @@
+﻿@page "/SukkotAdmin/DonationsGrid/"
+
+@using static LivingMessiah.Web.Services.Auth0
+@using LivingMessiah.Web.Shared.Sukkot
+@using LivingMessiah.Web.Features.SukkotAdmin.Donations.Domain
+@using LivingMessiah.Web.Features.SukkotAdmin.Donations.Enums
+@using Grid = Syncfusion.Blazor.Grids
+
+@using Page = LivingMessiah.Web.Links.Sukkot.Donations
+<PageTitle>@Page.GridTitle</PageTitle>
+
+<AuthorizeView Roles="@Roles.SukkotMenuBar">
+	<SukkotAdminMenubar></SukkotAdminMenubar>
+</AuthorizeView>
+
+<div class="pb-2 mt-4 mb-4 border-bottom">
+	<h3><i class="fas fa-dollar-sign"></i> Donations</h3>
+</div>
+
+<AddGrid></AddGrid>
+
+<hr class="warning my-4" />
+
+@foreach (var item in DonationStatusFilter.List.OrderBy(o => o.Value))
+{
+	<a @onclick="@(() => OnClickFilter(item))" title="Filter by @item.ButtonName"
+		 class="btn btn-outline-primary btn-sm @ActiveFilter(item)">
+		@item.ButtonName &nbsp;<i class="fas fa-chevron-circle-right"></i>
+	</a>
+}
+
+<div class="col-lg-12 control-section">
+	<div class="content-wrapper">
+		<div class="row mt-2">
+
+			<SfGrid ID="Grid" @ref="Grid"
+							DataSource="@DonationReportList"
+							Toolbar="@(new List<string>() { SyncFusionToolbar.Excel.Arg, SyncFusionToolbar.Csv.Arg, SyncFusionToolbar.Pdf.Arg, SyncFusionToolbar.Print.Arg })"
+							AllowExcelExport="true" AllowPdfExport="true"
+							AllowSorting="true">
+				<GridSortSettings>
+					<GridSortColumns>
+						<GridSortColumn Field="@nameof(DonationReport.FirstName)"
+														Direction="SortDirection.Ascending">
+						</GridSortColumn>
+					</GridSortColumns>
+				</GridSortSettings>
+				<GridEvents OnToolbarClick="ToolbarClickHandler"
+										TValue="DonationReport">
+				</GridEvents>
+				<GridColumns>
+					<GridColumn Field=@nameof(DonationReport.Id) HeaderText="Id" Width="35" AllowSorting="true"> </GridColumn>
+					<GridColumn Field=@nameof(DonationReport.FirstName) HeaderText="First Name" Width="70" AllowSorting="true"></GridColumn>
+					<GridColumn Field=@nameof(DonationReport.FamilyName) HeaderText="Last Name" Width="70" AllowSorting="true"></GridColumn>
+					<GridColumn Field=@nameof(DonationReport.EMail) HeaderText="Email" Width="80" AllowSorting="false"></GridColumn>
+					<GridColumn Field=@nameof(DonationReport.StatusId) HeaderText="SID" Width="40" AllowSorting="false"></GridColumn>
+					<GridColumn Field=@nameof(DonationReport.RegistrationFeeAdjusted) HeaderText="Reg. Fee" Width="60" Format="c0" TextAlign="TextAlign.Right" AllowSorting="false"></GridColumn>
+					<GridColumn Field=@nameof(DonationReport.TotalDonation) HeaderText="Ttl Don" Width="60" Format="c0" TextAlign="TextAlign.Right" AllowSorting="false"></GridColumn>
+					<GridColumn Field=@nameof(DonationReport.AmountDue) HeaderText="Amt Due" Width="70" Format="c0" TextAlign="TextAlign.Right" AllowSorting="false"></GridColumn>
+					<GridColumn Field=@nameof(DonationReport.FullyPaidIcon) HeaderText="FP" Width="30" TextAlign="TextAlign.Center" AllowSorting="false">
+						<HeaderTemplate>
+							<div>
+								<i class="fas fa-check"></i>
+							</div>
+						</HeaderTemplate>
+					</GridColumn>
+				</GridColumns>
+			</SfGrid>
+
+		</div>
+	</div>
+</div>
+
+<TableHeaderExplanation></TableHeaderExplanation>

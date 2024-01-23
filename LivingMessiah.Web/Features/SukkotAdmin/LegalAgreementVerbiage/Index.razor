@@ -1,0 +1,72 @@
+﻿@page "/SukkotAdmin/LegalAgreementVerbiage/"
+
+@using static LivingMessiah.Web.Services.Auth0
+@using LivingMessiah.Web.Features.Sukkot.RegistrationSteps
+@using LivingMessiah.Web.Shared.Sukkot
+
+@using Page = LivingMessiah.Web.Links.Sukkot.LegalAgreementVerbiage
+<PageTitle>@Page.Title</PageTitle>
+
+<AuthorizeView Roles="@Roles.SukkotMenuBar">
+	<SukkotAdminMenubar></SukkotAdminMenubar>
+</AuthorizeView>
+
+<div class="pb-2 mt-4 mb-2">
+	<h2><i class="@Page.Icon"></i> @Page.Title</h2>
+</div>
+
+
+<div class="card mt-0 mb-3">
+	<div class="card-body border-info">
+		<p>
+			This is a mock-up of the legal verbiage that is shown to new registrants.
+			This is <b>Step 3 - Sign Agreement</b> in the registration process.
+			It also includes the buttons to show the full process of compliance.
+			Note, clicking the buttons will not actually be recored.
+		</p>
+	</div>
+
+	<div class="card-body border-info">
+		<p>
+			Should something like this be included? <br />
+			<b>If a conflict arises the decisions will be made by the Elders and those decisions are final.</b>
+			<br /><br />
+			I think there should be a reference to the process of Matthew 18 included as well.
+		</p>
+	</div>
+
+</div>
+
+
+<h4 class="mb-3">To register for Sukkot, you must complete these steps</h4>
+
+<div class="d-block d-md-none">
+
+	<div class="card mt-0 mb-3">
+		<div class="card-body bg-light">
+			<AgreementParagraph IsXs="true"></AgreementParagraph>
+			<AgreementButtonsMockup EmailParm="FAKE@EMAIL" />
+		</div>
+	</div>
+</div>
+
+<div class="d-none d-md-block">
+	<AgreementParagraph IsXs="false"></AgreementParagraph>
+	<AgreementButtonsMockup EmailParm="FAKE@EMAIL" />
+</div>
+
+@*
+	<ul class="lead">
+	<li>
+	<b>alternative dispute resolution</b>:
+	It is like when people register to attend Living Messiah sponsored <i>Sukkot</i> gatherings where the registrant agrees to the rules defined in the registration form.
+	<b>If a conflict arises the decisions will be made by the Elders and those decisions are final.</b>
+	The church can not be a fully sovereign entity until is re-establishes its jurisdiction and create
+	<a href="https://myhebrewbible.com/Article/899/1Co-06-1-11-Legal-Matters-Between-The-Brethren-Courts-of-Ecclesia">Courts of Ecclesia <i class="fas fa-external-link-alt"></i></a>.
+	</li>
+	</ul>
+*@
+
+@code {
+
+}

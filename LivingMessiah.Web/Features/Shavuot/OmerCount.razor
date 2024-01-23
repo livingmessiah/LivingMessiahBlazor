@@ -1,0 +1,58 @@
+﻿@using static LivingMessiah.Web.Features.Shavuot.Domain.OmerGematriaFactory
+
+@if (UI == null)
+{
+	<p><em>Loading...</em></p>
+}
+else
+{
+	@if (UI.ShowOmer)
+	{
+		<div class="card border-warning text-center mb-3">
+			<div class="card-header p-1 bg-warning">
+				<h2><span class="card-title mb-0">Omer Count @YearId</span></h2>
+			</div>
+			<img src='@Blobs.UrlEvents("omer-count-card-image-398-161.jpg")' class="card-img-top" alt="Omer Count" />
+
+			<div class="row col-12">
+				<div class="card-body">
+
+
+					<p class="display-4 text-center mt-2 mb-0">
+						<strong>
+							<span class="text-danger">@UI.OmerCnt</span>
+						</strong>
+
+						<small>&nbsp;/&nbsp;</small>
+
+						<strong>
+							<span class="text-danger hebrew62"> @GetHebrew(UI.OmerCnt)</span>
+						</strong>
+					</p>
+
+					<p class="text-black-muted text-center mt-0 mb-2"><small>Current Count</small></p>
+
+				</div>
+			</div>
+
+			<div class="card-footer bg-warning mt-1">
+				<div class="row ">
+					<div class="col-6">
+						<a href="@LivingMessiah.Web.Links.Shavuot.Index"
+					 title="See all 50 omer counts checked off dynamically each day!"
+					 class="btn btn-primary btn-sm  px-1">
+							<b>Learn More</b> <i class="fas fa-caret-right"></i>
+						</a>
+						<p class="text-primary mt-0"><small><b>Count in Hebrew!</b></small></p>
+					</div>
+					<div class="col-6">
+						<BlankCalendarDownloadAnchor Title="Calendar Download"></BlankCalendarDownloadAnchor>
+					</div>
+				</div>
+
+			</div>
+
+		</div>
+	}
+}
+

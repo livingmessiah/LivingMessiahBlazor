@@ -74,8 +74,8 @@ public static class Admin
 		public const string Icon = "fas fa-tachometer-alt";
 	}
 
-	// public static class ParashaCalendar See LivingMessiah.Web.Pages.Home.Enums.Nav
-	// public static class DashBoard See LivingMessiah.Web.Pages.Home.Enums.Nav
+	// public static class ParashaCalendar See LivingMessiah.Web.Features.Home.Enums.Nav
+	// public static class DashBoard See LivingMessiah.Web.Features.Home.Enums.Nav
 
 }
 
@@ -459,14 +459,6 @@ public static class Shavuot
 	public const string Icon = "fab fa-creative-commons-zero";
 }
 
-public static class ShowLow
-{
-	public const string Index = "/ShowLow";
-	public const string Title = "ShowLow";
-	public const string Icon = "fas fa-tree"; //fas fa-ellipsis-h
-	public const string FragmentId = "ShowLow";
-	public const string Descr = "Show Low Arizona";
-}
 
 public static class Sitemap
 {

@@ -1,0 +1,104 @@
+﻿@page "/WindmillRanch/Garden"
+
+@using LivingMessiah.Web.Features.WindmillRanch.Components
+
+@using Page = Enums.WindmillRanchLinks.Garden
+<PageTitle>@Page.Title</PageTitle>
+
+<Menubar />
+
+<div class="pb-2 mt-4 mb-2 border-bottom">
+	<h2>@Page.Title</h2>
+</div>
+
+<h4><span class="badge bg-success"><b>Introduction</b></span></h4>
+<p>
+	We just planted a garden in the courtyard!!!
+</p>
+
+<div class="row">
+	<div class="col-sm-6">
+		<div class="card">
+			<img src='@Blobs.UrlWindmillRanchGarden("IMG_20220425_135301_garden-courtyard-01-prep-soil-flooding-1024.jpg")' class="card-img-top" alt="Prepping soil with flooding">
+			<div class="card-body">
+				<h5 class="card-title">Garden</h5>
+				<p class="card-text">Prepping soil with flooding</p>
+				<a href="@Blobs.UrlWindmillRanchGarden("IMG_20220425_135301_garden-courtyard-01-prep-soil-flooding.jpg")" target="_blank"
+					 class="btn btn-primary">
+					Full Size Image
+					<i class="fas fa-external-link-square-alt"></i>
+				</a>
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-6">
+		<div class="card">
+			<img src='@Blobs.UrlWindmillRanchGarden("IMG_20220426_0737_garden-courtyard-02-double-dig-mysterious-pipe-1024.jpg")' class="card-img-top" alt="Double Dig">
+			<div class="card-body">
+				<h5 class="card-title">Garden</h5>
+				<p class="card-text"><i>Double Dig</i> technique to help loosen the soil and remove rocks.</p>
+				<p class="card-text">Mysterious pipe</p>
+				<a href="@Blobs.UrlWindmillRanchGarden("IMG_20220426_0737_garden-courtyard-02-double-dig-mysterious-pipe.jpg")" target="_blank"
+					 class="btn btn-primary">
+					Full Size Image
+					<i class="fas fa-external-link-square-alt"></i>
+				</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+
+	<div class="col-md-3">
+		<div class="card my-2">
+			<div class="card-body">
+				<h5 class="card-title">Rototiller</h5>
+				<div class="ratio ratio-16x9">
+					<iframe src='@Blobs.UrlWindmillRanchGarden("VID_20220426_093026106-03-dan-with-solar-powered-rototiller.mp4")' title="Solar Powered Rototiller" allowfullscreen></iframe>
+				</div>
+				<p class="card-text">Solar Powered Rototiller! It's ok to rototill one time, but no more!</p>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-md-3">
+		<div class="card my-2">
+			<div class="card-body">
+				<h5 class="card-title">Mulch</h5>
+				<div class="ratio ratio-16x9">
+					<iframe src='@Blobs.UrlWindmillRanchGarden("VID_20220426_105047231-06-leaves-from-cherry.mp4")' title="leaf clippings from Cherry" allowfullscreen></iframe>
+				</div>
+				<p class="card-text">Leaf clippings from Cherry's House</p>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-md-3">
+		<div class="card my-2">
+			<div class="card-body">
+				<h5 class="card-title">Custom Trellises</h5>
+				<div class="ratio ratio-16x9">
+					<iframe src='@Blobs.UrlWindmillRanchGarden("VID_20220426_112235130-07-dan-making-cusom-trellises.mp4")' title="Dan making custom trellises" allowfullscreen></iframe>
+				</div>
+				<p class="card-text">Dan making custom trellises</p>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-md-3">
+		<div class="card my-2">
+			<div class="card-body">
+				<h5 class="card-title">How to Plant</h5>
+				<div class="ratio ratio-16x9">
+					<iframe src='@Blobs.UrlWindmillRanchGarden("VID_20220426_112800000-garden-courtyard-how-to-plant.mp4")' title="how to plant a tomato plant" allowfullscreen></iframe>
+				</div>
+				<p class="card-text">Deborah, the master gardener, showing Renee how to plant a tomato</p>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+<ReturnAnchor />
+

@@ -1,0 +1,34 @@
+﻿@using RegStatusEnums = LivingMessiah.Web.Features.Sukkot.RegistrationSteps.Enums
+
+@if (ParmCrud == Enums.Crud.Donation)
+{
+	<button @onclick="@OnButtonClicked" title="@Title"
+				type="button" class="@ParmCrud.ButtonColor btn-sm position-relative">
+		<i class="@ParmCrud!.Icon"></i>
+		@ParmCrud.Text
+		<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success">
+			@DonationRowCount
+			<span class="visually-hidden">Donation Row Count</span>
+		</span>
+	</button>
+}
+else
+{
+	@if (ParmCrud == Enums.Crud.DeleteRegistration && DonationRowCount != 0)
+	{
+		<button title="@Title"
+				type="button" disabled class="@ParmCrud.ButtonColor btn-sm">
+			<i class="fas fa-hand-paper"></i>
+			Cant Delete
+		</button>
+	}
+	else
+	{
+		<button @onclick="@OnButtonClicked" title="@Title"
+				type="button" class="@ParmCrud.ButtonColor btn-sm">
+			<i class="@ParmCrud!.Icon"></i>
+			@ParmCrud.Text
+		</button>
+	}
+
+}

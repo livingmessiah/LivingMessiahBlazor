@@ -1,0 +1,41 @@
+﻿@page  "/Parasha"
+@using Page = LivingMessiah.Web.Features.Parasha.Enums.ParashaLinks;
+@using LivingMessiah.Web.Features.Parasha.ListByBook
+
+<PageTitle>@Page.Title</PageTitle>
+@*
+	ToDo: figure out how to make this work
+	<HebrewDate></HebrewDate>
+*@
+
+<SubNavBar UseDarkMode="false" ActiveParashaEnum="@LivingMessiah.Web.Features.Parasha.Enums.Parasha.Current"/>
+<div class="pb-1 mt-4 mb-2">
+	<h1><i class="@Page.Icon"></i> @Page.Title</h1>
+</div>
+
+
+	<h6 class="m-2 bg-light">
+		We are currently studying the Torah on a three year cycle which allows us more time to delve deeper into His Word.
+	</h6>
+
+<LoadingComponent IsLoading="CurrentParasha==null" TurnSpinnerOff="@TurnSpinnerOff">
+	<div class="@SmartEnums.MediaQuery.XsOrSm.DivClass">
+		<CurrentParashaCard CurrentParasha="@CurrentParasha"
+												CssUlClass="h5 mt-2"
+												CssUlStyle="list-style-type:none"
+												IsXsOrSm="true">
+		</CurrentParashaCard>
+	</div>
+
+	<div class="@SmartEnums.MediaQuery.MdOrLgOrXl.DivClass">
+		<CurrentParashaCard CurrentParasha="@CurrentParasha"
+												CssUlClass="fa-ul h5 mt-3"
+												CssUlStyle=""
+												IsXsOrSm="false">
+		</CurrentParashaCard>
+	</div>
+
+</LoadingComponent>
+
+<AlephBetFooter />
+

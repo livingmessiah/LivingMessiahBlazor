@@ -1,0 +1,20 @@
+﻿@page "/Leadership"
+@using LivingMessiah.Web.Features.Leadership.Enums
+@using LivingMessiah.Web.SmartEnums
+
+@using Page = LivingMessiah.Web.Links.Leadership
+<PageTitle>@Page.Title</PageTitle>
+
+<Header />
+
+
+<div class="@MediaQuery.Xs.DivClass">
+	<AccordionXs />
+</div>	
+
+<div class="@MediaQuery.SmMdOrLgOrXl.DivClass">
+	<Card />
+</div>
+
+
+<Footer />

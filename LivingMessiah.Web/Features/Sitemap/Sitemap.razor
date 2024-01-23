@@ -1,0 +1,26 @@
+﻿@page "/Sitemap"
+@using Page = LivingMessiah.Web.Links.Sitemap
+@using LivingMessiah.Web.Domain;
+<PageTitle>@Page.Title</PageTitle>
+
+<div class="pb-2 mt-4 mb-2 border-bottom">
+	<h2><i class="@Page.Icon"></i> @Page.Title</h2>
+</div>
+
+<DataList Data="@Links" Type="LinkTypeEnum.Sitemap">
+	<span class="fa-li"><i class="@context.Icon"></i></span>
+	<a href="@context.Index">
+		@context.Title
+	</a>
+</DataList>
+
+@code {
+	[Inject] public Services.ILinkService? LinkService { get; set; }
+
+	private IEnumerable<Link>? Links;
+	protected override void OnInitialized()
+	{
+		base.OnInitialized();
+		Links = LinkService!.GetSitemapLinks();
+	}
+}
