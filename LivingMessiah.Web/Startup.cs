@@ -27,6 +27,7 @@ using LivingMessiah.Web.Features.UpcomingEvents.Weekly;
 using LivingMessiah.Web.Features.Sukkot.ManageNotes.Data;
 using LivingMessiah.Web.Features.Sukkot.ManageRegistration.Data;
 using LivingMessiah.Web.Features.Contacts.Data;
+using LivingMessiah.Web.Features.Admin.Wirecast.Data;
 
 namespace LivingMessiah.Web;
 
@@ -56,6 +57,7 @@ public class Startup
 		services.AddDatabaseStores();
 
 		services.AddAdminVideo();
+		services.AddAdminWirecast();
 		services.AddArchivedVideo();
 
 		services.AddCalendar();

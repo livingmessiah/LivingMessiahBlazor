@@ -16,7 +16,7 @@ using LivingMessiah.Web.Services;
 using FluentValidation;
 using LivingMessiah.Web.Features.Parasha.Services;
 using LivingMessiah.Web.Features.Parasha.Data;
-using LivingMessiah.Web.Features.Admin.WirecastFolder;
+using LivingMessiah.Web.Features.Admin.Wirecast;
 
 namespace LivingMessiah.Web;
 
@@ -26,10 +26,7 @@ public static class ServiceCollectionExtensions
 	{
 		services
 			.AddSingleton<ILinkService, LinkService>()
-			.AddSingleton<IShabbatWeekRepository, ShabbatWeekRepository>()
-
 			.AddTransient<ISecurityClaimsService, SecurityClaimsService>()
-
 			.AddTransient<ISukkotService, SukkotService>()
 
 			.AddTransient<IService, Service>()        //Pages.Sukkot.Services;

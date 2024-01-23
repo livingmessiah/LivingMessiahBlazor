@@ -1,6 +1,6 @@
 ﻿namespace LivingMessiah.Web.Features.Contacts;
 
-public class ContactVM
+public class ContactQuery
 {
 	public int Id { get; set; }
 	public string? FirstName { get; set; }

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace LivingMessiah.Web.Features.Admin.WirecastFolder;
+namespace LivingMessiah.Web.Features.Admin.Wirecast;
 
 public class ScratchPad
 {
