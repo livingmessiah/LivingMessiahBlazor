@@ -1,0 +1,35 @@
+﻿@using FeastDayType = LivingMessiah.Web.Features.Calendar.Enums.FeastDay
+
+<button @onclick="@(() => OnClickFilter())"
+				class="btn btn-light btn-lg ">
+	<i class="fas @icon fa-fw fa-2x"></i>
+</button>
+<p class="mt-1 fw-bold"><small>@feastDayType!.PlannerTitle</small></p>
+
+
+@code {
+	[Parameter, EditorRequired] public required FeastDayType? CurrentFilter { get; set; }
+	[Parameter, EditorRequired] public EventCallback<FeastDayType> OnFilterSelected { get; set; }
+	[Parameter, EditorRequired] public required bool IsPrevious { get; set; }
+
+	FeastDayType? feastDayType;
+	string? icon;
+	protected override void OnParametersSet()
+	{
+		if (IsPrevious)
+		{
+			icon = "fa-chevron-circle-left";
+			feastDayType = FeastDayType.FromValue(CurrentFilter!.Value - 1);
+		}
+		else
+		{
+			icon = "fa-chevron-circle-right";
+			feastDayType = FeastDayType.FromValue(CurrentFilter!.Value + 1);
+		}
+	}
+
+	protected void OnClickFilter()
+	{
+		OnFilterSelected.InvokeAsync(feastDayType);
+	}
+}

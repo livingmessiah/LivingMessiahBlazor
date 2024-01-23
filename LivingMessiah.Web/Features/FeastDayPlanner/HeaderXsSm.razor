@@ -8,8 +8,16 @@
 
 	<div class="row mt-3  gx-1">
 		<div class="col-3 text-center mt-2">
-			<PreviousButton CurrentFilter="CurrentFilter"
-											OnFilterSelected="ReturnedGrandChildFilter" />
+			@if (CurrentFilter!.IsStartOfEdge)
+			{
+				<OnEdgeButton />
+			}
+			else
+			{
+				<NavigationButton CurrentFilter="CurrentFilter"
+													OnFilterSelected="ReturnedGrandChildFilter"
+													IsPrevious=true />
+			}
 		</div>
 
 		<div class="col-6 text-center">
@@ -24,8 +32,16 @@
 		</div>
 
 		<div class="col-3 text-center mt-2">
-			<NextButton CurrentFilter="CurrentFilter"
-									OnFilterSelected="ReturnedGrandChildFilter" />
+			@if (CurrentFilter!.IsEndOfEdge)
+			{
+				<OnEdgeButton />
+			}
+			else
+			{
+				<NavigationButton CurrentFilter="CurrentFilter"
+													OnFilterSelected="ReturnedGrandChildFilter"
+													IsPrevious=false />
+			}
 		</div>
 	</div>
 
@@ -36,9 +52,6 @@
 	[Parameter, EditorRequired] public required FeastDayType? CurrentFilter { get; set; }
 	[Parameter, EditorRequired] public EventCallback<FeastDayType> OnFilterSelected { get; set; }
 
-	/*
-	See "C:\Source\LivingMessiahWiki\Blazor\Blazor-PrevNext\FilterPrevNextButtons.md"
-	*/
 	private void ReturnedGrandChildFilter(FeastDayType filter)
 	{
 		Logger!.LogDebug("...inside {Class}!{Method}; filter: {Filter}"

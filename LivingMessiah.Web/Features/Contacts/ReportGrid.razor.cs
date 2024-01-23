@@ -15,10 +15,10 @@ public partial class ReportGrid
 	readonly string inside = $"page {Page.Index}; class: {nameof(ReportGrid)}";
 
 	[Inject] public ILogger<ReportGrid>? Logger { get; set; }
-	[Inject] public IContactRepository? db { get; set; }
+	[Inject] public IRepository? db { get; set; }
 	[Inject] public IToastService? Toast { get; set; }
 
-	public IEnumerable<ContactVM>? Contacts { get; set; }
+	public IEnumerable<ContactQuery>? Contacts { get; set; }
 
 	protected override async Task OnInitializedAsync()
 	{

@@ -14,7 +14,7 @@
 
 				<GridSortSettings>
 					<GridSortColumns>
-						<GridSortColumn Field="@nameof(ContactVM.FirstName)" Direction="SortDirection.Ascending" />
+						<GridSortColumn Field="@nameof(ContactQuery.FirstName)" Direction="SortDirection.Ascending" />
 					</GridSortColumns>
 				</GridSortSettings>
 
@@ -23,29 +23,29 @@
 
 				<GridColumns>
 
-					@* <GridColumn Field=@nameof(ContactVM.Id) HeaderText="Id" Visible="false" IsPrimaryKey="true" Width="30" AllowSorting="false" AllowFiltering="false"> </GridColumn>*@
+					@* <GridColumn Field=@nameof(ContactQuery.Id) HeaderText="Id" Visible="false" IsPrimaryKey="true" Width="30" AllowSorting="false" AllowFiltering="false"> </GridColumn>*@
 
-					<GridColumn Field=@nameof(ContactVM.Id) Visible="false" IsPrimaryKey="true"></GridColumn>
+					<GridColumn Field=@nameof(ContactQuery.Id) Visible="false" IsPrimaryKey="true"></GridColumn>
 
-					<GridColumn Field=@nameof(ContactVM.Name) HeaderText="Name" Width="70" AllowSorting="true" AllowFiltering="true"></GridColumn>
+					<GridColumn Field=@nameof(ContactQuery.Name) HeaderText="Name" Width="70" AllowSorting="true" AllowFiltering="true"></GridColumn>
 
-					<GridColumn Field=@nameof(ContactVM.OtherNames) HeaderText="Other Names" Width="90" AllowSorting="false" AllowFiltering="true"></GridColumn>
+					<GridColumn Field=@nameof(ContactQuery.OtherNames) HeaderText="Other Names" Width="90" AllowSorting="false" AllowFiltering="true"></GridColumn>
 
-					@*<GridColumn Field=@nameof(ContactVM.FamilyName) HeaderText="Last" Width="50" AllowSorting="true">
+					@*<GridColumn Field=@nameof(ContactQuery.FamilyName) HeaderText="Last" Width="50" AllowSorting="true">
 					</GridColumn>
 
-					<GridColumn Field=@nameof(ContactVM.SpouseName) HeaderText="Spouse" Width="50" AllowSorting="false" AllowFiltering="false">
+					<GridColumn Field=@nameof(ContactQuery.SpouseName) HeaderText="Spouse" Width="50" AllowSorting="false" AllowFiltering="false">
 					</GridColumn>*@
 
-					<GridColumn Field=@nameof(ContactVM.EMail) HeaderText="Email" Width="80" AllowSorting="false" AllowFiltering="true"></GridColumn>
+					<GridColumn Field=@nameof(ContactQuery.EMail) HeaderText="Email" Width="80" AllowSorting="false" AllowFiltering="true"></GridColumn>
 
-					<GridColumn Field=@nameof(ContactVM.Phone) HeaderText="Phone" Width="50" AllowSorting="false" AllowFiltering="false"></GridColumn>
+					<GridColumn Field=@nameof(ContactQuery.Phone) HeaderText="Phone" Width="50" AllowSorting="false" AllowFiltering="false"></GridColumn>
 
-					<GridColumn Field=@nameof(ContactVM.SukkotAttendanceCSV) HeaderText="Sukkots" Width="50" AllowSorting="false" AllowFiltering="false"></GridColumn>
+					<GridColumn Field=@nameof(ContactQuery.SukkotAttendanceCSV) HeaderText="Sukkots" Width="50" AllowSorting="false" AllowFiltering="false"></GridColumn>
 
-					<GridColumn Field=@nameof(ContactVM.Notes) HeaderText="Notes" Width="70" AllowSorting="false" AllowFiltering="true"></GridColumn>
+					<GridColumn Field=@nameof(ContactQuery.Notes) HeaderText="Notes" Width="70" AllowSorting="false" AllowFiltering="true"></GridColumn>
 
-					@*<GridColumn Field=@nameof(ContactVM.SukkotAttendanceCSV) HeaderText="Sukkots" Width="70"
+					@*<GridColumn Field=@nameof(ContactQuery.SukkotAttendanceCSV) HeaderText="Sukkots" Width="70"
 					FilterSettings="@(new FilterSettings { Type = Syncfusion.Blazor.Grids.FilterType.CheckBox })">
 					</GridColumn>*@
 

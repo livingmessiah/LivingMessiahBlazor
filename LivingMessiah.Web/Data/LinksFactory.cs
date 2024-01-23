@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using LivingMessiah.Web.Domain;
 using LivingMessiah.Web.Links;
-//using LivingMessiah.Web.Features.Admin.WirecastFolder;
-//using LivingMessiah.Web.Features.Home;
 using PageFeast = LivingMessiah.Web.Features.Feasts.FeastLinks;
 using PageParasha = LivingMessiah.Web.Features.Parasha.Enums.ParashaLinks;
 using PageWindmillRanch = LivingMessiah.Web.Features.WindmillRanch.Enums.WindmillRanchLinks;
@@ -32,8 +30,6 @@ public class LinksFactory : ILinksFactory
 	}
 
 	
-
-
 	public List<Link> GetLinks()
 	{
 		return new List<Link>

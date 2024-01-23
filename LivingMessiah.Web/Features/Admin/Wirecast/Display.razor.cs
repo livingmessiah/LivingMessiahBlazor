@@ -6,26 +6,26 @@ using System.Threading.Tasks;
 using System;
 using Page = LivingMessiah.Web.Links.Wirecast;
 
-namespace LivingMessiah.Web.Features.Admin.WirecastFolder;
+namespace LivingMessiah.Web.Features.Admin.Wirecast;
 
 [AllowAnonymous]
-public partial class WirecastDisplay
+public partial class Display
 {
-	[Inject] public IShabbatWeekRepository? db { get; set; }
-	[Inject] public ILogger<WirecastDisplay>? Logger { get; set; }
+	[Inject] public Data.IRepository? db { get; set; }
+	[Inject] public ILogger<Display>? Logger { get; set; }
 	[Inject] public IToastService? Toast { get; set; }
 
-	public WirecastVM? WirecastVM { get; set; }
+	public WirecastQuery? VM { get; set; }
 
 	protected override async Task OnInitializedAsync()
 	{
 		Logger!.LogDebug(string.Format("Inside Page: {0}, Class!Method: {1}"
-		, Page.Index, nameof(WirecastDisplay) + "!" + nameof(OnInitializedAsync)));
+		, Page.Index, nameof(Display) + "!" + nameof(OnInitializedAsync)));
 
 		try
 		{
-			WirecastVM = await db!.GetCurrentWirecast();
-			if (WirecastVM == null)
+			VM = await db!.GetCurrentWirecast();
+			if (VM == null)
 			{
 				string s = $"Wirecast is null after calling {nameof(db.GetCurrentWirecast)}";
 				Logger!.LogWarning(string.Format("...{0}, Sql:{1}", s, db.BaseSqlDump));
@@ -36,7 +36,7 @@ public partial class WirecastDisplay
 		catch (Exception ex)
 		{
 			Logger!.LogError(ex, string.Format("...Inside catch of {0}"
-				, nameof(WirecastDisplay) + "!" + nameof(OnInitializedAsync)));
+				, nameof(Display) + "!" + nameof(OnInitializedAsync)));
 			Toast!.ShowError("An invalid operation occurred reading database, contact your administrator");
 		}
 	}
