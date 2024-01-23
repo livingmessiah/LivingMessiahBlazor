@@ -1,0 +1,9 @@
+﻿@using LivingMessiah.Web.Features.SukkotAdmin.Donations.Enums
+
+@foreach (var item in DonationStatusFilter.List.OrderBy(o => o.Value))
+{
+	<a @onclick="@(() => OnClickFilter(item))" title="Filter by @item.ButtonName"
+	 class="btn btn-outline-primary btn-sm @ActiveFilter(item)">
+		@item.ButtonName &nbsp;<i class="fas fa-chevron-circle-right"></i>
+	</a>
+}

@@ -1,0 +1,66 @@
+﻿@using static LivingMessiah.Web.Features.ImportantLinks.Constants.PhysicianHealThyself
+
+<h2 id="@Id"><span class="badge bg-warning">@Title</span></h2>
+<div class="card">
+	<img src="@Blobs.UrlImportantLinks(Image)" class="card-img-top" alt="@Title" />
+
+	<div class="card-body bg-light">
+		<p>
+			<BibleQuote Cite="Luke 4:23">
+				<p class="fs-5 text-primary">
+					And he said unto them, <br />
+					Ye will surely say unto me this proverb, <b>Physician, heal thyself</b>: <br />
+					whatsoever we have heard done in Capernaum, do also here in thy country.
+				</p>
+			</BibleQuote>
+		</p>
+	</div>
+
+	<div class="card-body">
+		<p class="lead">
+			It is debatable what Yeshua meant by stating <b>Physician, heal thyself</b>,
+			but in these trying times that we live in it has become very evident that we need to <b>take responsibility of our own health</b>.
+			Therefore it is incumbent upon us to take prudent steps to ward off contagious diseases.
+			This website <a href="@Url" target="_blank">@UrlSimple &nbsp;<i class="fas fa-external-link-square-alt"></i></a>
+			has a packet called <a href="@UrlPacketDownload" target="_blank" class="btn btn-outline-primary btn-sm"><b>Early Treatment</b> &nbsp;<i class="fas fa-file-pdf"></i></a>
+			that can be of great assistance.
+			Check it out and <b>be prepared</b>.
+		</p>
+		<a href="@Url" target="_blank" class="btn btn-primary">@UrlSimple &nbsp;<i class="fas fa-external-link-square-alt"></i></a>
+
+		<hr />
+
+		<p class="lead">
+			<b class="text-warning">Disclaimer:</b>
+			First, this linked resource does not mean the leadership agrees with everything that is found there.
+			None of the members that make up the leadership of Living Messiah Ministries are licensed medical professionals therefore ultimately
+			it is up to you to exercise good diligence and of course prayer as to its veracity.
+			Second, by including this link, it does not mean there may be other resources that are just as valuable.
+		</p>
+
+		<p class="lead">
+			It is the opinion of the leadership that far too many licensed medical professionals are failing in exercising their Hippocratic Oath
+		</p>
+
+		<div class="card-body bg-light">
+			<i class="fa fa-quote-left fa-2x fa-pull-left fa-border" aria-hidden="true"></i>
+			<blockquote class="blockquote">
+				Practice two things in your dealings with disease: either help or do not harm the patient.
+				<footer class="blockquote-footer"><cite title="Hippocratic Oath">Hippocratic Oath</cite></footer>
+			</blockquote>
+		</div>
+
+		<p class="lead">
+			The Living Messiah website shouldn’t have to provide a link like this, but, as stated above,
+			we live in trying times and we feel we must pick up the slack from those who appear to have abrogated their responsibilities.
+		</p>
+	</div>
+
+	
+</div>
+
+@code {
+
+	// An ounce of prevention is worth a pound of cure
+
+}

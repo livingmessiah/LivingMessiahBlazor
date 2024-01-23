@@ -1,0 +1,769 @@
+﻿@page "/shabbatservice"
+@using LivingMessiah.Web.Links;
+@inherits ShabbatServiceBase
+
+@using Page = LivingMessiah.Web.Links.ShabbatService
+<PageTitle>@Page.Title</PageTitle>
+
+@using PageParasha = LivingMessiah.Web.Features.Parasha.Enums.ParashaLinks;
+@using PageDonate = LivingMessiah.Web.Links.Donate
+
+<div class="d-print-none float-end">
+	<a class="btn btn-sm btn-default" href="@LivingMessiah.Web.Links.ShabbatService.Index"
+	@onclick="@PrintFriendly_Button_Click">
+		@((MarkupString)_oppositeIcon!) @_oppositeToggleMsg
+	</a>
+</div>
+
+@if (_isPrinterFriendly)
+{
+	<div class="d-print-none">
+		<a class="btn btn-sm btn-default" href="javascript:window.print()">
+			<span class="fas fa-print"></span> @_printMsg
+		</a>
+	</div>
+
+	<h4 class="text-center">
+		Living Messiah Ministries @Page.Title
+		@*Shabbat: @Html.GetNextShabbat()*@
+	</h4>
+}
+else
+{
+	<h2><i class="@LivingMessiah.Web.Links.ShabbatService.Icon"></i> @LivingMessiah.Web.Links.ShabbatService.Title</h2>
+	<ShabbatMeter IsMini="true"
+								Format="MMMM dd"
+								IsPrinterFriendly="@_isPrinterFriendly"
+								AdjustDaysOverride="0"></ShabbatMeter>
+	<ul class="list-inline">
+		<li><a href="@LivingMessiah.Web.Links.ShabbatService.Index"><small><b>@_printMsg</b></small></a></li>
+	</ul>
+}
+
+<Introduction SpanishUrlId="" IsSpanish="@_ShowSpanish"
+							OnLanguageSelection="LanguageSelectionChanged">
+</Introduction>
+
+@* IsPrinterFriendly="_isPrinterFriendly" *@
+
+<CardWithToggleVisiblity LoadQuickly="@LoadQuickly"
+												 CardCss="border-primary my-3"
+												 IsPrinterFriendly="_isPrinterFriendly"
+												 Section="@Section.FromEnum(SectionEnum.NewsFlash)">
+	<SubTitle>
+		<b>Important Message From Leadership</b>
+		<br />
+		Regarding Gatherings and Services
+	</SubTitle>
+
+	<ChildContent>
+		<div class="card-body  m-0 px-4">
+			<p class="lead">
+				Shalom Living Messiah Family,
+			</p>
+			<p class="">
+				First, I would like to say THANK YOU for your prayers and continued financial support of Living Messiah during these historic and challenging days we are walking through. The encouraging messages and words I have received from you have been a BLESSING!
+			</p>
+			<p class="card-text">
+				I am preparing to resume, in person gatherings for Living Messiah services on May 16th, 2020.
+			</p>
+			<p class="card-text">
+				Our leadership team has spent time over the past several weeks examining, discussing and considering the many different perspectives concerning current events.
+			</p>
+			<p class="card-text">
+				We understand that we may not all have the same view or same approach to the situation around us.
+			</p>
+			<p class="card-text">
+				Regardless of our perspectives of the COVID-19 pandemic, we ask everyone to maintain a heart of love and respect towards each other.
+			</p>
+			<p class="card-text">
+				We have been in continual prayer for guidance and direction for this community. Your safety is always of highest priority. We will continue to update you as necessary.
+			</p>
+			<p class="card-text">
+				<b>By attending services in person you assume all risks involved</b>. We ask you to keep these three guidelines in mind;
+			</p>
+			<ol>
+				<li>Display mutual respect at all times.</li>
+				<li>If you are experiencing any symptoms of allergies or illness please join us for services online.</li>
+				<li>Take responsibility for protecting yourself and others by practicing safe and healthy habits.</li>
+			</ol>
+			<p class="card-text">
+				We respect the decision of those that will continue to join us online rather than in person and we encourage you to do so if you or your family members are at high risk.
+			</p>
+			<p class="card-text">
+				We look forward to fellowship with each of you in YHWH’s perfect timing.
+			</p>
+			<p class="card-text">
+				May the insight we each gain and lessons we learn continue to prepare us for days ahead. May our light bring glory and honor to the King of Kings.
+			</p>
+			<p class="card-text">
+				Blessings,
+				<br />Mark Webb
+				<br />Servant Leader, Living Messiah Ministries
+				<br />Elder, B’ney Yosef North America
+			</p>
+		</div>
+	</ChildContent>
+
+</CardWithToggleVisiblity>
+
+
+<CardWithToggleVisiblity IsPrinterFriendly="_isPrinterFriendly"
+												 LoadQuickly="@LoadQuickly"
+												 Section="@Section.FromEnum(SectionEnum.CallToService)">
+	<SubTitle></SubTitle>
+	<ChildContent>
+		<div class="card-body">
+			<p class="lead">
+				Bringing the congregation into Shabbath Service by blowing the Shofar
+			</p>
+		</div>
+	</ChildContent>
+
+</CardWithToggleVisiblity>
+
+<Liturgy Section="@Section.FromEnum(SectionEnum.OpeningAdoration)"
+				 LoadQuickly="@LoadQuickly"
+				 IsPrinterFriendly="_isPrinterFriendly">
+
+	<div class="card-header"><h5 class="text-center">Opening Adoration</h5></div>
+	<div class="card-body">
+		<p class="lead text-center mb-4">
+			Blessed be He Who spoke and the world came into being ... blessed be He. Blessed is He Who maintains creation; blessed is He Who speaks and does; blessed is He Who decrees and fulfills; blessed is He Who has mercy on the earth; blessed is He Who has mercy on creatures; blessed is He Who gives goodly reward to those who fear Him;
+			<small><sup>1/2</sup></small>
+		</p>
+		<p class="lead text-center">
+			blessed is He Who lives forever and endures to eternity; blessed is He Who redeems and rescues ...
+			blessed is His Name! Blessed are You, <span class="hebrew">יהוה</span>, our God, King of the Universe,
+			the God, the merciful Father, Who is praised by the mouth of His people, praised and glorified by the tongues of His devout ones and His servants.
+			We shall laud You, <span class="hebrew">יהוה</span>, our God, with praises and songs!
+			<small><sup>2/2</sup></small>
+		</p>
+	</div>
+
+	<br />
+
+	<div class="card-header"><h5 class="text-center">Psalm 100</h5></div>
+	<div class="card-body">
+		<p class="lead text-center mb-4">
+			A Psalm for Thanksgiving! Shout joyfully to <span class="hebrew">יהוה</span>, all the earth!
+			Serve <span class="hebrew">יהוה</span> with gladness.
+			Come before Him with joyful singing.
+			Know that <span class="hebrew">יהוה</span> Himself is God; It is He Who has made us, and not we ourselves.
+			<small><sup>1/2</sup></small>
+		</p>
+		<p class="lead text-center">
+			We are His people and the sheep of His pasture. `A Enter His gates with thanksgiving and His courts with praise.
+			Give thanks to Him, bless His Name. For <span class="hebrew">יהוה</span> is good.
+			His loving kindness is everlasting and His faithfulness to all generations!
+			<small><sup>2/2</sup></small>
+		</p>
+	</div>
+
+</Liturgy>
+
+
+<CardWithToggleVisiblity IsPrinterFriendly="_isPrinterFriendly"
+												 LoadQuickly="@LoadQuickly"
+												 Section="@Section.FromEnum(SectionEnum.PraiseAndWorship)">
+	<SubTitle></SubTitle>
+	<ChildContent>
+		<div class="card-body">
+			<p class="lead">
+				Praise and Worship with David dancing our live band.
+				<br />
+				Come and magnify the King of Kings
+			</p>
+		</div>
+	</ChildContent>
+</CardWithToggleVisiblity>
+
+
+<Liturgy Section="@Section.FromEnum(SectionEnum.CommunityPrayer)"
+				 LoadQuickly="@LoadQuickly"
+				 IsPrinterFriendly="_isPrinterFriendly">
+
+	<div class="card-header"><h5 class="text-center">James 5:14-16</h5></div>
+	<div class="card-body">
+		<p class="lead text-center">
+			<sup><b class="text-primary">14</b></sup> Is anyone among you sick? 
+			Then he must call for the elders of the church and they are to pray over him, anointing him with oil in the name of the Lord; 
+			<sup><b class="text-primary">15</b></sup>  and the prayer offered in faith will restore the one who is sick, and the Lord will raise him up,
+			and if he has committed sins, they will be forgiven him.
+			<sup><b class="text-primary">16</b></sup>  Therefore, confess your sins to one another, and pray for one another so that you may be healed. 
+			The effective prayer of a righteous man can accomplish much. 
+		</p>
+	</div>
+
+
+	<br />
+
+	<div class="card-header"><h5 class="text-center">Ezekiel 9:4</h5></div>
+	<div class="card-body">
+		<p class="lead text-center">
+			<img src="@Blobs.UrlOther("ancient-tav.jpg")" alt="Ancient Tav" class="img-fluid rounded float-end" />
+			<sup><b class="text-primary">4</b></sup> And YHVH said unto him,
+			Go through the midst of the city,
+			through the midst of Jerusalem,
+			and set a mark <span class="hebrew at-red">תָּו</span> upon the foreheads of the men
+			that sigh and that cry for all the abominations
+			that be done in the midst thereof
+		</p>
+	</div>
+
+	<br />
+
+	<div class="card-header"><h5 class="text-center">Ezekiel 9:5-6</h5></div>
+	<div class="card-body">
+		<p class="lead text-center">
+			<sup><b class="text-primary">5</b></sup> And to the others he said in mine hearing, Go ye after him through the city,
+			and smite: let not your eye spare, neither have ye pity: 
+			<sup><b class="text-primary">6</b></sup> Slay utterly old and young, both maids, and little children, and women:
+			but come not near any man upon whom is the mark <span class="hebrew at-red">תָּו</span>; and begin at my sanctuary.
+		</p>
+	</div>
+
+
+</Liturgy>
+
+
+<Liturgy Section="@Section.FromEnum(SectionEnum.ChildrensBlessing)"
+				 LoadQuickly="@LoadQuickly"
+				 IsPrinterFriendly="_isPrinterFriendly">
+
+	<div class="card-header"><h5 class="text-center">Hine mah tov</h5></div>
+	<div class="card-body">
+		<p class="lead text-center">
+			Hine mah tov umah na'im<br />
+			shevet achim gam yachad <sup>2X</sup><br /><br />
+
+			Hine mah tov (Hineh mah tov)<br />
+			lai, lai, lai, lai, lai, lai, lai, lai, lai, lai <sup>2X</sup><br />
+
+			Behold how good and pleasant it is<br />
+			for brothers to dwell together <sup>2X</sup><br /><br />
+
+			in unity (in unity)<br />
+			lai, lai, lai, lai, lai, lai, lai, lai, lai, lai <sup>2X</sup>
+		</p>
+	</div>
+
+	<br />
+
+	<div class="card-header"><h5 class="text-center">Genesis 48:20</h5></div>
+	<div class="card-body">
+		<p class="lead text-center">
+			May God make the girls like the matriarchs Sarah, Rebecca, Rachel and Leah and the boys to be like Ephraim and Menashe.
+			And he blessed them that day, saying, In thee shall Israel bless, saying, God make thee as Ephraim and as Manasseh:
+			and he set Ephraim <span class="hebrew">אֶפְרַיִם</span> before Manasseh <span class="hebrew">מְנַשֶּׁה</span>
+		</p>
+	</div>
+
+
+
+</Liturgy>
+
+
+<Liturgy Section="@Section.FromEnum(SectionEnum.OsehShalom)"
+				 LoadQuickly="@LoadQuickly"
+				 IsPrinterFriendly="_isPrinterFriendly">
+
+
+	<div class="card-header">
+		<h5 class="text-center">Oseh Shalom</h5>
+		<p class="text-center"><small>May He who makes peace in His heights, make peace upon us and upon all Israel.</small></p>
+	</div>
+	<div class="card-body">
+		<p class="lead text-center">
+			<i class="fas fa-music"></i>
+			<br />Oseh shalom bimro-mav hu ya’aseh shalom
+			<br />aleinu V’al kol Israel V'imru imru amen. <sup class="text-black-50">x2</sup>
+			<br />Ya’aseh shalom ya’aseh shalom,
+			<br />shalom aleinu V’al kol Israel. <sup class="text-black-50">x2</sup>
+			<br />Ya’aseh shalom ya’aseh shalom,
+			<br />shalom aleinu V’al kol Israel. <sup class="text-black-50">x2</sup>
+		</p>
+	</div>
+
+	<br />
+
+	<div class="card-header"><h5 class="text-center">Sh'ma in Hebrew</h5></div>
+	<div class="card-body">
+		<p class="lead text-center">
+			<i class="fas fa-music"></i>
+			<br />Sh’ma Yisrael
+			<br /><span class="hebrew">יהוה</span> Elohaynu
+			<br /><span class="hebrew">יהוה</span> Echad
+			<br /><br />Barukh Shem k’vod
+			<br />Malkhuto
+			<br />L’olam Va-ed
+		</p>
+	</div>
+
+	<br />
+
+	<div class="card-header"><h5 class="text-center">Sh'ma in English</h5></div>
+	<div class="card-body">
+		<p class="lead text-center">
+			Hear, O Israel!
+			<br /><span class="hebrew">יהוה</span> is our God,
+			<br /><span class="hebrew">יהוה</span> is One!
+
+			<br /><br />Blessed is the Name
+			<br />of His Glorious Kingdom
+			<br />For all Eternity
+		</p>
+	</div>
+
+	<br />
+
+	<div class="card-header">
+		<h5 class="text-center">V’ahafta</h5>
+		<p class="hebrew text-center my-0">
+			וְאָהַבְתָּ <span class="at-red">אֵת</span> יְהוָה אֱלֹהֶיךָ
+		</p>
+	</div>
+	<div class="card-body">
+		<p class="lead text-center">
+			You shall love <span class="hebrew">יהוה</span>, your God,
+			with all your heart, with all your soul, and with all your resources.
+			Let these matters that I command you today be upon your heart.
+			Teach them thoroughly to your children
+			and speak of them while you sit in your
+			home, while you walk on the way, when
+			you retire, and when you arise.
+		</p>
+	</div>
+
+	<div class="card-body">
+		<p class="lead text-center">
+			Bind them as a sign upon your arm and let them be tefillin between your eyes.
+			And write them on the doorposts of your house and upon your gates….
+
+			<br /><br />And you shall love your neighbor as yourself.
+		</p>
+	</div>
+
+	<br />
+
+	<div class="card-header"><h5 class="text-center">What is the Greatest Commandment?</h5></div>
+	<div class="card-body">
+		<p class="lead text-center">
+			<sup><b class="text-primary">37</b></sup> Y’shua said unto him,
+			<br /><sup><i class='text-muted fas fa-quote-left'></i></sup>
+			<span class="text-danger">Thou shalt love YHVH Elohecha with all thy heart, and with all thy soul, and with all thy mind.</span>
+			<sup><b class="text-primary">38</b></sup> <span class="text-danger">This is the first and great commandment.</span>
+			<sup><b class="text-primary">39</b></sup> <span class="text-danger">And the second is like unto it, Thou shalt love thy neighbor as thyself.</span>
+			<sup><b class="text-primary">40</b></sup> <span class="text-danger">On these two commandments hang all the Torah and the prophets</span> <sup><i class='text-muted fa fa-quote-right'></i></sup>.
+		</p>
+		<blockquote class="blockquote">
+			<footer class="blockquote-footer">Messiah quoting Torah <cite title="Source Title"><b class="text-primary">Matthew 22:37-40</b></cite></footer>
+		</blockquote>
+	</div>
+
+</Liturgy>
+
+
+<CardWithToggleVisiblity IsPrinterFriendly="_isPrinterFriendly"
+												 LoadQuickly="@LoadQuickly"
+												 Section="@Section.FromEnum(SectionEnum.Announcements)">
+	<SubTitle></SubTitle>
+	<ChildContent>
+		<div class="card-body">
+			<div class="ms-2">
+
+				<ul class="fa-ul">
+					<li class="lead">
+						<span class="text-warning"><i class="fa-li fas fa-caret-right"></i></span>
+						Welcome First Time Guests and thanks for joining us in person or on-line
+					</li>
+					<li class="lead">
+						<span class="text-warning"><i class="fa-li fas fa-caret-right"></i></span>
+						Besides the website, see us on-line on YouTube, Facebook and see our
+						<a href="@Podcast.Index"
+							 title="@Podcast.Title2" class="btn btn-outline-primary btn-sm">
+							<i class="@Podcast.Icon" aria-hidden="true"></i>
+							&nbsp;<b>@Podcast.Title2</b>
+						</a>
+					</li>
+
+					<li class="lead">
+						<span class="text-warning"><i class="fa-li fas fa-caret-right"></i></span>
+						Reading the Psalms and Proverbs (see below)
+					</li>
+
+					<li class="lead">
+						<span class="text-warning"><i class="fa-li fas fa-caret-right"></i></span>
+						Please see
+						<a href="@UpcomingEvents.Index"
+							 title="@UpcomingEvents.Title" class="btn btn-outline-primary btn-sm">
+							<i class="@UpcomingEvents.Icon" aria-hidden="true"></i>
+							&nbsp;<b>@UpcomingEvents.Title</b>
+						</a>
+						for detail information about upcoming events like
+						<a href="@TorahTuesday.Index"
+							 title="@TorahTuesday.Title2" class="btn btn-outline-primary btn-sm">
+							<i class="@TorahTuesday.Icon" aria-hidden="true"></i>
+							&nbsp;<b>@TorahTuesday.Title2</b>
+						</a>
+
+					</li>
+					<li class="lead">
+						<span class="text-warning"><i class="fa-li fas fa-caret-right"></i></span>
+						We also have an
+						<LinkComponent LinkComponentEnum="LinkComponentEnum.InternalBtnSm"
+													 Index="@LivingMessiah.Web.Links.IndepthStudy.Index"
+													 Title="@LivingMessiah.Web.Links.IndepthStudy.Title"
+													 Icon="@LivingMessiah.Web.Links.IndepthStudy.Icon">
+						</LinkComponent>
+						which starts earlier at <i class="text-warning far fa-clock"></i> 1:30 - 2:15 pm
+					</li>
+
+					<!-- Back to Wellness	- Bags of Kindness -->
+
+
+					<li class="lead">
+						<span class="text-warning"><i class="fa-li fas fa-caret-right"></i></span>
+						Your giving helps meet the needs that come before this fellowship. You may also give online by clicking here
+
+						<a href="@PageDonate.Index"
+							 title="@PageDonate.Title" class="btn btn-primary btn-sm">
+							<i class="@PageDonate.Icon" aria-hidden="true"></i>
+							<b>@PageDonate.Title</b>
+						</a>
+
+						Back to Wellness	- Bags of Kindness
+						<!-- <a asp-fragment="@Fragments.ThankYouTopId">see below <i class="fas fa-share fa-rotate-90"></i></a> for more details. -->
+						see <i>Thank You</i> below <i class="fas fa-share fa-rotate-90"></i> for more details.
+					</li>
+
+				</ul>
+			</div>
+		</div>
+
+		<div class="card-body">
+			<OnegComponent OnegCanceled="false"></OnegComponent>
+		</div>
+
+	</ChildContent>
+</CardWithToggleVisiblity>
+
+<PsaAndProComponent Section="@Section.FromEnum(SectionEnum.PsalmsAndProverbs)"
+										IsPrinterFriendly="_isPrinterFriendly"
+										LoadQuickly="@LoadQuickly">
+	<LivingMessiah.Web.Components.ShabbatWeek.PsalmAndProverbCurrent PerformHtmlValidation="false" />
+</PsaAndProComponent>
+
+<Liturgy Section="@Section.FromEnum(SectionEnum.EtzChaim)"
+				 LoadQuickly="@LoadQuickly"
+				 IsPrinterFriendly="_isPrinterFriendly">
+
+	<div class="card-header"><h5 class="text-center">Siddur Prayer Torah Blessing</h5></div>
+	<div class="card-body">
+		<p class="lead text-center">
+			There is non like you among the Gods <span class="hebrew">יהוה</span>
+			<br />There is nothing like your works
+			<br />Your Kingdom is a Kingdom spanning all eternity
+			And your dominion is through out every generation
+			<br /><span class="hebrew">יהוה</span> reigns, <span class="hebrew">יהוה</span> has reigned, <span class="hebrew">יהוה</span> shall reign for all eternity
+			<br /><span class="hebrew">יהוה</span> will give might to his people, <span class="hebrew">יהוה</span> will bless his people with peace
+			<br />Father of compassion do good with Zion according to your will
+			Rebuild the walls of Yerushalayim for we trust in you alone
+			<br />O king, God, exhalted and uplifted master of worlds
+			<br />when the Ark would travel Moshe would say
+			<br /><sup><i class='text-muted fas fa-quote-left'></i></sup>Arise <span class="hebrew">יהוה</span> and let your enemies be scattered	Let those who hate you flee from you <sup><i class='text-muted fa fa-quote-right'></i></sup>
+			<br />For from Zion the Torah will come forth and the word of <span class="hebrew">יהוה</span> from Yerushalayim
+			<br />Blessed is he who gave the Torah to his people Israel in his holiness Amein and Amein.
+		</p>
+	</div>
+
+	<br />
+
+	<div class="card-header"><h5 class="text-center">Etz Chaim (In Hebrew)</h5></div>
+	<div class="card-body">
+		<p class="lead text-center">
+			<i class="fas fa-music"></i>
+			<br /> Eitz chaim hi lama-chazi-kim ba
+			<br /> Veto-o-me-che-yah me-e-u-ushar
+			<br /> Dera-a-che-e-yah darche no-o-am
+			<br /> Vechol netivoteiyah sha-a-a-a-lom
+			<br /> Ha-a-shi-i-veinu יהוה e-e-le-echa
+			<br /> Ve-na-shu-va
+			<br /> Chadeish chadeish yame-e-nu
+			<br /> Chadeish yame-e-nu ke-ke-e-dem
+		</p>
+	</div>
+
+	<br />
+
+	<div class="card-header">
+		<h5 class="text-center">Etz Chaim (In English)</h5>
+		<p class="text-center"><small>Proverbs 3:17-18;  Lamentations 5:21</small></p>
+	</div>
+	<div class="card-body">
+		<p class="lead text-center">
+			It is a tree of life
+			<br /> to those who grasp it
+			<br /> And those who support it are blessed
+			<br /> Its ways are pleasant ways
+			<br /> And all its paths are peace
+			<br /> Cause us to return to You יהוה
+			<br /> And we shall return
+			<br /> Renew our days as of old
+		</p>
+	</div>
+
+</Liturgy>
+
+<CardWithToggleVisiblity IsPrinterFriendly="_isPrinterFriendly"
+												 LoadQuickly="@LoadQuickly"
+												 Section="@Section.FromEnum(SectionEnum.TorahParahsa)">
+	<SubTitle></SubTitle>
+	<ChildContent>
+		<div class="card-body">
+			<p class="card-text">
+				Read the Torah Parasha (portion) for the week followed by a bible study midrash
+			</p>
+
+			<p class="lead">
+				Click
+				<a href="@PageParasha.Index"
+					 title="@PageParasha.Title" class="btn btn-outline-warning btn-sm">
+					<i class="@PageParasha.Icon" aria-hidden="true"></i>
+					&nbsp;<b>@PageParasha.Title</b>
+				</a>
+				to see the a list of the readings.
+			</p>
+
+		</div>
+
+	</ChildContent>
+
+</CardWithToggleVisiblity>
+
+
+<Liturgy Section="@Section.FromEnum(SectionEnum.Avinu)"
+				 LoadQuickly="@LoadQuickly"
+				 IsPrinterFriendly="_isPrinterFriendly">
+
+	<div class="card-header">
+		<h5 class="text-center">The Avinu Prayer</h5>
+		<p class="text-center">
+			<small>Hebrew Transliteration</small>
+		</p>
+	</div>
+	<div class="card-body">
+		<p class="lead text-center">
+			<br /> A-vee-noo she-ba-sha-mai-yeem Yeet-ka-desh sheem-kha
+			<br /> A-vee-noo she-ba-sha-mai-yeem Ve-yeet-ba-rekh mal-khoot-kha
+			<br /> Re-tson-kha yee-he-ye
+			<br /> a-sui ba-sha-mai-yeem u-va-a-rets
+			<br /> Ve-tee-tayn lakh-may-noo te-mee-deet
+			<br /> Oo-ma-khol la-noo kha-to-tay-noo
+			<br /> Ka-a-sher a-nakh-noo mo-kha-leem
+			<br /> La-khot-teem la-noo
+			<br /> Ve-al te-vee-ay-noo lee-day nees-sa-yon
+			<br /> Ve-shom-ray-noo mee-khol rah
+			<br /> Ve-shom-ray-noo mee-khol rah
+			<br /> Amen … Amen … Amen
+		</p>
+	</div>
+
+	<br />
+
+	<div class="card-header"><h5 class="text-center">Our Father in Heaven</h5></div>
+	<div class="card-body">
+		<p class="lead text-center">
+			<i class="fas fa-music"></i>
+			<br /> Our Father in Heaven
+			<br /> May Your Name be sanctified
+			<br /> Our Father in Heaven
+			<br /> May Your Kingdom be blessed
+			<br /> Your will shall be done in Heaven and on earth
+			<br /> Give us our bread continually
+			<br /> Forgive us the debt of our sins
+			<br /> As we forgive the debt
+			<br /> of those who sin against us
+			<br /> Do not bring us into the hands of a test
+			<br /> and protect us from all evil
+			<br /> and protect us from all evil
+			<br /> Amen … Amen … Amen
+		</p>
+	</div>
+
+</Liturgy>
+
+<Liturgy Section="@Section.FromEnum(SectionEnum.AhronicBlessing)"
+				 LoadQuickly="@LoadQuickly"
+				 IsPrinterFriendly="_isPrinterFriendly">
+
+	<div class="card-header">
+		<h5 class="text-center">Aharonic Blessing</h5>
+		<p class="text-center"><small>Numbers 6:22-27</small></p>
+	</div>
+
+	<div class="card-body">
+		<p class="lead text-center">
+			Then <span class="hebrew">יהוה</span> spoke to Moses saying speak to Aaron and his sons, saying, Thus you shall bless the sons Israel: you shall say to them, 
+
+			<br /><br />May <span class="hebrew">יהוה</span> bless you, and keep you
+			<br /><span class="hebrew"> יְבָרֶכְךָ יהוה, וְיִשְׁמְרֶךָ</span>
+			<br /><br />May <span class="hebrew">יהוה</span> make His face shine on you, and be gracious to you
+			<br /><span class="hebrew"> יָאֵר יהוה פָּנָיו אֵלֶיךָ, וִיחֻנֶּךָּ</span>
+			<br /><br />May <span class="hebrew">יהוה</span> lift up His countenance on you, and give to you peace
+			<br /><span class="hebrew"> יִשָּׂא יהוה פָּנָיו אֵלֶיךָ, וְיָשֵׂם לְךָ שָׁלוֹם</span>
+			<br /><br /> So they shall invoke my name on the sons of Israel and I than will bless them
+		</p>
+	</div>
+
+	<br />
+
+	<div class="card-header"><h5 class="text-center">Aharonic Blessing Transliteration</h5></div>
+	<div class="card-body">
+		<p class="lead text-center">
+			Yevhārēkh-khā Yahhua veyishmerēkhā
+			<br /><br />Yāʾēr Yahhua pānāw ēlekhā viḥunnékkā
+			<br />Yissā Yahhua pānāw ēlekhā veyāsēm lekhā shālōm
+			<br /> Amen
+		</p>
+	</div>
+
+</Liturgy>
+
+<Liturgy Section="@Section.FromEnum(SectionEnum.WineAndBread)"
+				 LoadQuickly="@LoadQuickly"
+				 IsPrinterFriendly="_isPrinterFriendly">
+
+	<div class="card-header">
+		<h5 class="text-center">Blessing over the Wine</h5>
+		<p class="text-center"><small>(The <i>Berakhah HaGafen</i>)</small></p>
+	</div>
+	<div class="card-body">
+		<p class="lead text-center">
+			Baruch atah, Adonai Eloheinu, Melech Haolam borei p'ri hagafen. (Amein).
+			<br /><br />Blessed are You, Lord, our God, King of the Universe, who creates the fruit of the vine.  (Amein)
+		</p>
+	</div>
+
+	<br />
+
+	<div class="card-header">
+		<h5 class="text-center">Blessing over the Bread</h5>
+		<p class="text-center"><small>(The <i>HaMotzi</i>)</small></p>
+	</div>
+	<div class="card-body">
+		<p class="lead text-center">
+			Baruch atah, Adonai Eloheinu, Melech Haolam, hamotzi lechem min ha'aretz. (Amein).
+			<br /><br />Blessed are You, Lord, our God, King of the Universe, Who brings forth bread from the earth,
+			And reminds us that Yahushua is The Word of God and the bread of life.
+		</p>
+	</div>
+
+</Liturgy>
+
+@if (_ShowSpanish)
+{
+	<ShabbatServiceYouTube IsPrinterFriendly="@_isPrinterFriendly"
+												 LoadQuickly="@LoadQuickly"
+												 ShowSpanish="true">
+	</ShabbatServiceYouTube>
+}
+else
+{
+	<ShabbatServiceYouTube IsPrinterFriendly="@_isPrinterFriendly"
+												 LoadQuickly="@LoadQuickly"
+												 ShowSpanish="false">
+	</ShabbatServiceYouTube>
+}
+
+
+@*
+	ToDo: the code below is better, but wont work unless I do something like
+	[Episode 15 - August 17, 2020 Application State](https://youtu.be/BB4lK2kfKf0)
+	<ShabbatServiceYouTube IsPrinterFriendly="@_isPrinterFriendly"
+												 ShowSpanish="@_ShowSpanish">
+	</ShabbatServiceYouTube>*@
+
+
+<ThankYou Section="@Section.FromEnum(SectionEnum.ThankYou)"
+					IsPrinterFriendly="@_isPrinterFriendly"
+					LoadQuickly="@LoadQuickly">
+
+
+	<div class="row g-0">
+
+		<div class="col-sm-8">
+			<div class="card-body">
+				<h5 class="text-warning"><b>Prayers and Contributions</b></h5>
+				@if (!_isPrinterFriendly)
+				{
+					<p class="lead">
+						Your giving helps meet the needs that come before this fellowship.
+						You may also give online by clicking here
+
+						<a href="@PageDonate.Index"
+							 title="@PageDonate.Title" class="btn btn-primary btn-sm">
+							<i class="@PageDonate.Icon" aria-hidden="true"></i>
+							<b>@PageDonate.Title</b>
+						</a>
+					</p>
+				}
+				else
+				{
+					<p class="lead">
+						Your giving helps meet the needs that come before this fellowship.
+						You may also give online by going to <b>@PageDonate.WWW</b>
+					</p>
+				}
+			</div>
+
+			<div class="card-body bg-light ms-2">
+				<b>Thanksgiving and Praises</b> to <span class="hebrew">יְהוָה</span> for providing us a place to gather, worship, study and fellowship together!
+				By His hand of provision, He provides for the needs of this community.
+				May His great name be praised.
+				<b>Thank you</b> <span class="hebrew">יְהוָה</span> for all your provisions and for supplying our daily bread.
+				You have done great things for us!
+			</div>
+		</div>
+		<div class="col-sm mt-4 p-2 text-center">
+			<img src="/Images/@PageDonate.QRC_Image" class="img-fluid" alt="Stripe QR Code" />
+			<p class="fs-6 mt-1"><sup>Living Messiah QR Code</sup></p>
+		</div>
+	</div>
+
+	<div class="card-body">
+		<h4 class="card-title mt-2"><span class="badge bg-secondary text-white">More Information</span></h4>
+		<ul class="fs-5">
+
+			<li>
+				Living Messiah is <b>NOT</b> an IRS recognized 501c3 organization
+				<ul>
+					<li>
+						If you have questions about keeping record of your contributions
+						contact <a href="mailto:peribeth@livingmessiah.com?Subject=Tax%20Information">peribeth@livingmessiah.com</a>
+					</li>
+				</ul>
+			</li>
+			<li>
+				If you would like to be added to our email list, fill out a visitor card during Shabbat service or
+				contact <a href="mailto:mark@livingmessiah.com?Subject=Email%20List">info@livingmessiah.com</a>
+			</li>
+			<li>
+				The <strong>Beit Din</strong> is a group of men who service this community as watchmen to guard,
+				protect and judge between those that fellowship together.
+				If you have comments, questions or concerns we encourage you to
+				contact <a href="mailto:ralphie@livingmessiah.com" target="_top">ralphie@livingmessiah.com</a> to arrange a time to speak with them.
+			</li>
+			<li>
+				<strong>Elders</strong> are a group of individuals who serve this community by dedicating time to fast and pray for our leadership team and the entire fellowship.
+				They are available to offer words of wisdom to the fellowship.
+				If you would like to speak with them, contact <a href="mailto:info@livingmessiah.com">info@livingmessiah.com</a>.
+			</li>
+		</ul>
+
+	</div>
+
+</ThankYou>
+
+
+<Other IsPrinterFriendly="_isPrinterFriendly"></Other>

@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using LivingMessiah.Web.Domain;
 using LivingMessiah.Web.Links;
-//using LivingMessiah.Web.Pages.Admin.WirecastFolder;
-//using LivingMessiah.Web.Pages.Home;
+//using LivingMessiah.Web.Features.Admin.WirecastFolder;
+//using LivingMessiah.Web.Features.Home;
 using PageFeast = LivingMessiah.Web.Features.Feasts.FeastLinks;
-using PageParasha = LivingMessiah.Web.Pages.Parasha.LinkSmartEnums.ParashaLinks;
-using PageWindmillRanch = LivingMessiah.Web.Pages.WindmillRanch.LinkSmartEnums.WindmillRanchLinks;
+using PageParasha = LivingMessiah.Web.Features.Parasha.Enums.ParashaLinks;
+using PageWindmillRanch = LivingMessiah.Web.Features.WindmillRanch.Enums.WindmillRanchLinks;
 
 namespace LivingMessiah.Web.Data;
 
@@ -321,15 +321,6 @@ public class LinksFactory : ILinksFactory
 					Icon = SampleCode.Icon,
 					HomeSidebarUsage=false,
 					SortOrder=26,
-					SitemapUsage=true
-				},
-				new Link
-				{
-					Index = Links.ShowLow.Index,
-					Title = Links.ShowLow.Title,
-					Icon = Links.ShowLow.Icon,
-					HomeSidebarUsage=false,
-					SortOrder=27,
 					SitemapUsage=true
 				},
 				new Link

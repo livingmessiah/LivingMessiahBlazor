@@ -1,0 +1,24 @@
+﻿@using LivingMessiah.Web.Features.Sukkot.Constants
+@using SukkotBlobs = LivingMessiah.Web.Features.Sukkot.Constants.Blobs
+
+<h2 class="text-primary">House Rules Confirmation</h2>
+<ul class="@FormatSize">
+	<li>
+		<i>Living Messiah Sukkot @Year.String </i> is an event wholly sponsored by Living Messiah and is a private event <u>not open to the public</u>.
+	</li>
+
+	<li>If you have not been pre-approved by an invitation email <sup><i class="far fa-envelope"></i></sup> the approval process will be initiated upon completion of the registration application form.</li>
+	<li>
+		Regardless of pre-approval to attend this event you <b><u>must</u></b> fill out the registration application form and sign the <b><u>liability waiver form</u></b>.
+		<ul class="@FormatSize">
+			<li>
+				<a class="btn btn-sm btn-info" href="@SukkotBlobs.UrlPDF(PDFs.LiabilityWaiver)"
+				target="_blank">
+					<i class="fas fa-file-pdf"></i> Liability Waiver Form <i class='fas fa-external-link-square-alt'></i>
+				</a> Please Sign
+			</li>
+		</ul>
+	</li>
+	<li>The approval process is done by the Elders of Living Messiah.</li>
+</ul>
+

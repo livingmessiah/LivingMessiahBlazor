@@ -1,0 +1,63 @@
+﻿@page "/TorahTuesday"
+@using LivingMessiah.Web.Features.Parasha
+@using WVT_Enums = LivingMessiah.Web.Features.Admin.Video.Enums.WeeklyVideoType
+@using Parasha_Enums = LivingMessiah.Web.Features.Parasha.Enums.Parasha
+@using LivingMessiah.Web.Shared.YouTube
+
+@using Page = LivingMessiah.Web.Links.TorahTuesday
+<PageTitle>@Page.Title</PageTitle>
+
+<SubNavBar UseDarkMode="false" ActiveParashaEnum="@Parasha_Enums.SeeAlsoTorahTuesday" />
+
+<div class="pb-2 mt-4 mb-2 border-bottom">
+	<h1><i class="@Page.Icon"></i> @Page.Title</h1>
+</div>
+
+<TuesdayTorahStudy />
+
+@if (ShowLatestVideo)
+{
+	<Card WeeklyVideoTypeValue="WVT_Enums.TorahTuesday.Value" />
+}
+
+@* ToDo: is this a better way  @onclick="@(e => ChangeContent(e, PartialViewEnum.Intro))"> *@
+<div class="row">
+	<div class="col">
+		<button class="my-3 btn btn-xlarge btn-primary"
+						@onclick="@ShowLatestVideo_Button_Click">
+			@((MarkupString)OppositeIcon!) @OppositeToggleMsg
+		</button>
+	</div>
+</div>
+
+@code {
+	protected override void OnInitialized()
+	{
+		SetShowLatestVideoButton();
+	}
+
+	public bool ShowLatestVideo { get; set; } = false;
+	protected string? OppositeIcon;
+	protected string? OppositeToggleMsg;
+
+	protected void ShowLatestVideo_Button_Click()
+	{
+		ShowLatestVideo = !ShowLatestVideo;
+		SetShowLatestVideoButton();
+		StateHasChanged();
+	}
+
+	protected void SetShowLatestVideoButton()
+	{
+		if (ShowLatestVideo)
+		{
+			OppositeIcon = "<i class='far fa-arrow-alt-circle-up'></i>";
+			OppositeToggleMsg = "Hide Latest Video";
+		}
+		else
+		{
+			OppositeIcon = "<i class='far fa-arrow-alt-circle-down'></i>";
+			OppositeToggleMsg = "Show Latest Video";
+		}
+	}
+}

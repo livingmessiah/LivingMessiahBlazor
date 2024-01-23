@@ -1,0 +1,59 @@
+﻿@page "/WindmillRanch/Archive"
+
+@using LivingMessiah.Web.Features.WindmillRanch.Components
+
+@using Page = Enums.WindmillRanchLinks.Archive
+<PageTitle>@Page.Title</PageTitle>
+
+<Menubar />
+
+<div class="pb-2 mt-4 mb-2 border-bottom">
+	<h2>@Page.Title</h2>
+</div>
+
+<h2 class="mt-5 mb-0"><span class="badge bg-warning">Archive</span></h2>
+
+<h5>Last Video Update regarding the property</h5>
+<p class="text-warning">ToDo: Make YouTubeDisplayOption or something like it work</p>
+		@*<YouTubeDisplayOption TopId="zzz"
+	Title="Land Vision Support Update 10-5"
+	UrlId="FisFR1vAZdE"
+	IsPrinterFriendly="false">
+	</YouTubeDisplayOption>*@
+
+<h5 class="mt-5 mb-0"><span class="badge bg-warning">40 acres</span></h5>
+<img src='@Blobs.UrlWindmillRanch("map-40-acre.jpeg")' class='img-fluid rounded mt-3' />
+
+<h5 class="mt-5 mb-0"><span class="badge bg-warning">off-grid</span></h5>
+<img src='@Blobs.UrlWindmillRanch("off-grid.jpeg")' class='img-fluid rounded mt-3' />
+
+<h5 class="mt-5 mb-0"><span class="badge bg-warning">panoramic view</span></h5>
+<img src='@Blobs.UrlWindmillRanch("panoramic-view.jpeg")' class='img-fluid rounded mt-3' />
+
+<h5 class="mt-5 mb-0"><span class="badge bg-warning">Wash arroyo and Watering hole</span></h5>
+<img src='@Blobs.UrlWindmillRanch("wash-and-watering-hole.jpeg")' class='img-fluid rounded mt-3' />
+
+
+
+<h3 class="mt-5 mb-0">Soul Source Aquifer</h3>
+<ul class="lead">
+	<li>
+		<Anchor Href="https://en.wikipedia.org/wiki/Sole_Source_Aquifer" TargetIsBlank="true" Descr="Wikipedia">
+		</Anchor>
+	</li>
+	<li>
+		<Anchor Href="https://epa.maps.arcgis.com/apps/webappviewer/index.html?id=9ebb047ba3ec41ada1877155fe31356b" TargetIsBlank="true" Descr="EPA Map">
+		</Anchor>
+	</li>
+</ul>
+
+<h2 class="mt-5 mb-0"><span class="badge bg-warning">Sole Source Aquifer <sup>Zoomed Out</sup></span></h2>
+<img src='@Blobs.UrlWindmillRanch("SoleSourceAquafer1.jpg")' class='img-fluid rounded mt-3' />
+
+
+<h2 class="mt-5 mb-0"><span class="badge bg-warning">Sole Source Aquifer <sup>Zoomed In</sup></span></h2>
+<img src='@Blobs.UrlWindmillRanch("SoleSourceAquafer3.jpg")' class='img-fluid rounded mt-3' />
+
+
+
+<ReturnAnchor />

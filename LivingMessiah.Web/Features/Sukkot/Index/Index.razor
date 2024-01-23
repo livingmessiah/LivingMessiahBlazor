@@ -1,0 +1,103 @@
+﻿@page "/sukkot"
+@using LivingMessiah.Web.Features.Sukkot.Constants
+@using static LivingMessiah.Web.Services.Auth0
+@using LivingMessiah.Web.Shared.Sukkot
+
+@using LivingMessiah.Web.Settings
+@using Microsoft.Extensions.Options
+@inject IOptions<SukkotSettings> SukkotSettings
+
+<AuthorizeView Roles="@Roles.SukkotMenuBar">
+	<SukkotSettingsList />
+	<SukkotAdminMenubar></SukkotAdminMenubar>
+</AuthorizeView>
+
+@using Page = LivingMessiah.Web.Links.Sukkot
+@using PageRegistrationSteps = LivingMessiah.Web.Links.Sukkot.RegistrationSteps
+
+<PageTitle>@Page.Title</PageTitle>
+
+<LivingMessiah.Web.Features.Sukkot.Components.BreadCrumbNav Page1Active="" />
+
+<div class="pb-2 mt-4 mb-2 border-bottom">
+	<h2><i class="@Page.Icon"></i> @Page.Title</h2>
+</div>
+
+<AuthorizeView>
+	<Authorized>
+		<h3>Hello, @Salutation !</h3>
+		<ul></ul>
+	</Authorized>
+	<NotAuthorized>
+	</NotAuthorized>
+</AuthorizeView>
+
+@if (SukkotSettings.Value.SukkotIsOpen)
+{
+	<div class="d-print-none">
+		<div class="row">
+			<div class="col-12">
+				<img src="@LivingMessiah.Web.Features.Sukkot.Constants.Blobs.UrlEvents(Other.Banner)"
+						 alt="@LivingMessiah.Web.Features.Sukkot.Constants.Blobs.Url(Other.BannerAlt)"
+						 class="img-fluid rounded" />
+			</div>
+		</div>
+	</div>
+
+	@if (SukkotSettings.Value.IsRegistrationClosed)
+	{
+		<div class="p-5 mb-4 bg-danger rounded-3">
+			<div class="container-fluid py-5">
+				<h1 class="display-5 fw-bold">Registration is CLOSED</h1>
+				<h3>
+					<span class="text-warning">
+						If you would like to join us for Sukkot, please	contact @RegistrationClosedEmail.Name at
+						<a href="mailto:@RegistrationClosedEmail.Email?Subject=@RegistrationClosedEmail.Subject" target="_top">@RegistrationClosedEmail.Email</a> &nbsp;<i class="far fa-envelope"></i>.
+					</span>
+				</h3>
+			</div>
+		</div>
+	}
+
+	<Introduction />
+
+	@if (!SukkotSettings.Value.IsRegistrationClosed)
+	{
+		<RegistrationInfo />
+		<PaymentInfo />
+	}
+	<Documents />
+
+	@if (!SukkotSettings.Value.IsRegistrationClosed)
+	{
+		<br />
+		<p class="lead">
+			Click the big green button to begin registration.
+		</p>
+
+		<div class="row">
+			<div class="col-12">
+
+				<a class="btn btn-success btn-lg"
+					 href="@PageRegistrationSteps.Index">
+					@PageRegistrationSteps.StartButtonText
+					<i class="@PageRegistrationSteps.StartButtonIcon"></i>
+				</a>
+
+			</div>
+		</div>
+
+	}
+
+	<hr />
+
+	<SukkotTShirt></SukkotTShirt>
+}
+else
+{
+	<div class="p-5 mb-4 bg-danger rounded-3">
+		<div class="container-fluid py-5">
+			<h1 class="display-5 text-warning">Registration is Over</h1>
+		</div>
+	</div>
+}

@@ -1,0 +1,149 @@
+﻿@using LivingMessiah.Web.Features.Sukkot.Constants
+@using LivingMessiah.Web.Features.Sukkot.RegistrationSteps.Enums
+@using LivingMessiah.Web.Features.Sukkot.Domain
+@using LivingMessiah.Web.SmartEnums
+@using LivingMessiah.Web.Features.Sukkot.Enums;
+
+@{
+	string Phone2 = !String.IsNullOrEmpty(@vwRegistration!.Phone) ? $"Phone: {@vwRegistration.Phone}, " : "";
+}
+
+@* General <div class="row"></div> *@
+<div class="d-print-none">
+	<div class="d-none d-sm-block">
+
+		<div class="row">
+			<div class="col-sm-12">
+				@* @Html.DisplayFor(model => vwRegistration.EMail) ...  @Html.DisplayFor(model => vwRegistration.Status) *@
+				<small class="float-end">EMail: @vwRegistration.EMail, @Phone2 Status: @vwRegistration.StatusName</small>
+				<h4>General</h4>
+			</div>
+		</div>
+
+	</div>
+
+	<div class="d-block d-sm-none">
+
+		<div class="row">
+			<div class="col-2">
+				<h4>General</h4>
+			</div>
+			<div class="col-10">
+				<ul>
+					<li>Registration#: @vwRegistration.Id</li>
+					<li>EMail: @vwRegistration.EMail</li>
+					<li>Phone: @vwRegistration.Phone</li>
+					<li>Status: @vwRegistration.StatusName</li>
+				</ul>
+			</div>
+		</div>
+
+	</div>
+</div>
+
+<div class="row d-none d-print-block">
+	<div class="col-5">
+		<h3>General</h3>
+	</div>
+	<div class="col-7">
+		<ul>
+			<li>Registration#: @vwRegistration.Id</li>
+			<li>EMail: @vwRegistration.EMail</li>
+			<li>Phone: @vwRegistration.Phone</li>
+			<li>Status: @vwRegistration.StatusName</li>
+		</ul>
+	</div>
+</div>
+
+
+@* House Rules Agreement *@
+<hr class="warning d-print-none" />
+<div class="row">
+	<div class="col-sm-12">
+		<small class="float-end">Agreed on: @vwRegistration.HouseRulesAgreementDate</small>
+		<h4>House Rules Agreement</h4>
+	</div>
+</div>
+
+
+@* Attendance *@
+<hr class="warning d-print-none" />
+
+<div class="row">
+	<div class="col-12">
+		<div class="float-end">
+				<ul class="list-inline">
+					<li class="list-inline-item" >Adults: <span class="">@vwRegistration.Adults</span></li>
+					<li class="list-inline-item" >Child (Big):<span class="">@vwRegistration.ChildBig</span></li>
+					<li class="list-inline-item" >Child (Small):<span class="">@vwRegistration.ChildSmall</span></li>
+				</ul>
+			</div>
+		<h4>Attendance</h4>
+	</div>
+</div>
+
+<div class="@MediaQuery.Xs.DivClass">
+	<AttendanceDateCalendar IsXs="true"
+													AttendanceDateList="vwRegistration.AttendanceDateList"
+													AttendanceDateList2ndMonth="vwRegistration.AttendanceDateList2ndMonth">
+	</AttendanceDateCalendar>
+</div>
+
+<div class="@MediaQuery.SmMdOrLgOrXl.DivClass">
+	<AttendanceDateCalendar IsXs="false"
+													AttendanceDateList="vwRegistration.AttendanceDateList"
+													AttendanceDateList2ndMonth="vwRegistration.AttendanceDateList2ndMonth">
+	</AttendanceDateCalendar>
+</div>
+
+@* Cost *@
+<hr class="warning d-print-none" />
+
+@* Cost Non-Print (hidden-xs) *@
+<div class="d-print-none">
+	<div class="d-none d-sm-block">
+		<CostAccountStyle vwRegistration="@vwRegistration"></CostAccountStyle>
+	</div>
+
+	@* Cost Non-Print (visible-xs) *@
+	<div class="d-block d-sm-none">
+		<div class="row">
+
+			<div class="col-2">
+				<h4>Cost</h4>
+			</div>
+			<div class="col-10">
+				<ul class="">
+					<li>Registration Cost: <span class="float-end">@vwRegistration.RegistrationFeeAdjusted</span></li>
+					<li>Total: <span class="float-end"><b>@vwRegistration.RegistrationFeeAdjusted</b></span></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+@* Cost Print *@
+<div class="d-none d-print-block">
+	<CostAccountStyle vwRegistration="@vwRegistration"></CostAccountStyle>
+</div>
+
+@if (!String.IsNullOrEmpty(vwRegistration.Notes))
+{
+	<hr class="warning d-print-none" />
+	<div class="row">
+		<div class="col-sm-2">
+			<h4>Notes</h4>
+		</div>
+		<div class="col-sm-10">
+			@vwRegistration.Notes
+		</div>
+	</div>
+}
+
+<div class="row d-none d-print-block">
+	<br />
+	<div class="col-12">
+		<Address OnOneLine="true" UseLabel="true" />
+	</div>
+</div>

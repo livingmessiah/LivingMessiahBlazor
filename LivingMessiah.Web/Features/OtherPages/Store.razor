@@ -1,0 +1,62 @@
+﻿@page "/store"
+@using static LivingMessiah.Web.Links.Store
+@using CalendarConstants = LivingMessiah.Web.Features.Calendar
+@using Page = LivingMessiah.Web.Links.Store
+<PageTitle>@Page.Title</PageTitle>
+
+<div class="pb-2 mt-4 mb-2 border-bottom">
+	<h2><i class="@Page.Icon"></i> @Page.Title</h2>
+</div>
+
+
+@*<div class="d-print-none">
+		<div class="card border-warning mt-5 mb-3">
+			<img src="@Blobs.UrlCalendar("lmm-calendar-2022-1020-850.jpg")"
+					 class="card-img-top p-2"
+					 alt="@Items.TitleCalendar">
+			<div class="card-body">
+				<h3 class="card-text text-center">
+					Living Messiah Calendar! Coming Soon
+				</h3>
+			</div>
+		</div>
+	</div>*@
+
+<h3> <i class="@Items.IconCalendar"></i>  <span class="badge bg-warning mt-2">LMM Calendar - ORDER IT NOW!!!</span> </h3>
+<p>Click the image below to order <i class="fas fa-share fa-rotate-90"></i></p>
+<a href="https://aboveallimages.net/shop/ols/categories/calendar" target="_blank">
+	<img src="@Blobs.UrlCalendar(@CalendarConstants.LMMCalendar.Image)" class="img-fluid" alt="@Items.TitleCalendar">
+</a>
+
+@*<br />
+	<br />
+	<img src="@Blobs.UrlCalendar("lmm-calendar-final-pg2-800-600.jpeg")" class="img-fluid" alt="@TitleCalendar">
+	<p><i class="fas fa-share fa-rotate-270"></i> Back cover</p>*@
+
+<br />
+<br />
+<h5>Watch Mark Webb and Ralph Cratty give an overview</h5>
+
+<div class="ratio ratio-16x9">
+	<iframe src="https://www.youtube.com/embed/hCDHK_HxpMc"
+					allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+					allowfullscreen>
+	</iframe>
+</div>
+
+<hr class="warning" />
+
+<h3> <i class="@Items.IconTShirt"></i> <span class="badge bg-warning mt-3">Living Messiah T-shirts!</span></h3>
+<a href="https://aboveallimages.net/shop?olsPage=t/living-messiah-merchandise" target="_blank">
+	<img src="@Blobs.UrlRoot("lmm-logo-t-shirt.png")" class="img-fluid">
+</a>
+
+
+<h3><span class="badge bg-warning mt-5">More Awesome Hebraic Items</span> <i class="fas fa-external-link-alt"></i></h3>
+<div class="card">
+	<div class="card-body">
+		<a href="https://aboveallimages.net/" target="_blank">
+			<img src="@Blobs.UrlRoot("above-all-images-810-250.png")" alt="Above All Images Home Page" class="img-fluid" />
+		</a>
+	</div>
+</div>

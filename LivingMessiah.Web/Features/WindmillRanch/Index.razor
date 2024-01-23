@@ -1,0 +1,70 @@
+﻿@page "/WindmillRanch"
+
+@using LivingMessiah.Web.Features.WindmillRanch.Components
+
+@using Page = Enums.WindmillRanchLinks
+<PageTitle>@Page.Title</PageTitle>
+
+<Menubar />
+
+<div class="pb-2 mt-4 mb-2">
+	<h2><i class="@Page.Icon"></i> @Page.Title</h2>
+</div>
+
+<div class="pb-2 mt-4 mb-2">
+	<a href="@Page.NewsLetter.Page" class="btn btn-danger btn-lg fs-2">
+		<i class="@Page.NewsLetter.Icon"></i> @Page.NewsLetter.Title <br /> Swale News!! <br /> It Filled Up! <br /> See Videos
+	</a>
+</div>
+
+<img src='@Blobs.UrlWindmillRanch("windmill-ranch-logo-1024-379.jpg")'
+		 alt="@Page.Descr" class="img-fluid rounded my-3" />
+
+<div class="card ">
+	<div class="card-header"><h5 class="text-center">Welcome</h5></div>
+	<div class="card-body">
+		<p class="lead">
+			Windmill Ranch is Living Messiah Ministries alternative off grid campus.
+			The ranch campus provides a place to gather for community projects and events.
+			Currently, minimal facilities are available, plan your visit accordingly.
+			Visit our
+			<a href="@Links.Home.Index"
+				 title="@Links.Home.Title" class="btn btn-outline-primary btn-sm">
+				<i class="@Links.Home.Icon" aria-hidden="true"></i>
+				&nbsp;<b>@Links.Home.Title</b>
+			</a>
+			to view our vision, mission, guidelines and code of conduct statements.
+			Community projects are on going.
+			Join us in learning and developing sustaining life skills together.
+		</p>
+	</div>
+</div>
+
+<h2 class="mt-5 mb-0"><span class="badge bg-warning">Windmill Ranch Introduction</span></h2>
+<p class="lead">
+	For the past several years Living Messiah	has been looking for land for community	development.
+	We've called this project our <b>Land Vision</b> see
+	<Anchor Href="@Blobs.UrlWindmillRanch("original-land-vision-by-jerry-watkins.pdf")"
+					UsePrefixIcon="false"
+					Descr="Initial Vision (PDF)">
+	</Anchor>.
+	We are happy to announce this vision <b>is a reality</b> and we are now in the initial development phase!
+</p>
+
+<p class="lead">
+	On October 5<sup>th</sup> 2020 we paid in full for a 40 acre ranch just South of Bisbee Arizona
+	It has 2 wells. One is working and is driven by an electric motor and the second is driven by a windmill, but it is not working because it needs new <i>leathers</i>.
+	The property has two trailers in the South West corner that sit on a hill along.
+	The property is off-grid and uses a solar system and wind generators. It also has two propane tanks and a septic tank.
+	Our desire is to build a Hebrew roots community that is self-reliant and also good stewards of the land by leveraging good permaculture design.
+</p>
+
+
+@*<div class="pb-2 mt-4 mb-2 border-bottom">
+	<h1><span class="text-primary @Anchors.GodsEconomy.Icon"></span> @Anchors.GodsEconomy.Title</h1>
+	</div>*@
+
+
+
+
+<Documents />

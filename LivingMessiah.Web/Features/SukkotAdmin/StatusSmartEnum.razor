@@ -1,0 +1,22 @@
+﻿@using LivingMessiah.Web.Features.Sukkot.RegistrationSteps.Enums
+
+@*<h5>Registration Steps</h5>*@
+<div class="card mb-3 border-warning">
+	<div class="card-body">
+		<TableTemplate Items="Status.List.OrderBy(o => o.Value).ToList()">
+			<TableHeader>
+				<th>Id</th>
+				<th>Heading</th>
+				<th>Text</th>
+				<th>Used in DB Only</th>
+			</TableHeader>
+			<RowTemplate>
+				<td>@context.Value</td>
+				<td>@context.Heading</td>
+				<td>@context.Text</td>
+				<td>@context.UsedInDbOnly</td>
+			</RowTemplate>
+		</TableTemplate>
+	</div>
+</div>
+

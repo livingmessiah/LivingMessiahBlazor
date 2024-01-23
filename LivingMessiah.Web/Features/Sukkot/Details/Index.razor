@@ -1,0 +1,63 @@
+﻿@page "/Sukkot/Details/{Id:int}/{showPrintInstructionMessage:bool}"
+@using LivingMessiah.Web.Features.Sukkot.Constants
+@using LivingMessiah.Web.Infrastructure;
+@using static LivingMessiah.Web.Links.Sukkot
+@using static LivingMessiah.Web.Services.Auth0
+@using LivingMessiah.Web.Shared.Sukkot
+@using LivingMessiah.Web.Features.Sukkot.Domain
+@using LivingMessiah.Web.Features.Sukkot.Components
+
+
+@*
+//ToDo: This needs to be DELETED!
+//  It's equivalent needs to be found in...
+//	- Pages\Sukkot\NormalUser\Index.razor
+//	- Pages\Sukkot\MasterDetail\Index.razor
+*@
+
+<AuthorizeView Roles="@Roles.SukkotMenuBar">
+	<SukkotAdminMenubar></SukkotAdminMenubar>
+</AuthorizeView>
+
+@using Page = LivingMessiah.Web.Links.Sukkot.Details
+<PageTitle>@Page.Title</PageTitle>
+
+<div class="d-print-none float-end">
+	<a class="btn btn-sm btn-default" href="javascript:window.print()">
+		<span class="fas fa-print"></span> Print
+	</a>
+</div>
+
+<LoadingComponent IsLoading="vwRegistration == null">
+
+	@if (!String.IsNullOrEmpty(vwRegistration!.PayWithCheckMessage))
+	{
+		<div class="d-print-none">
+			<PaymentInstructionsModal />
+		</div>
+	}
+
+	<h4 class="mb-4">
+		@Other.DetailsTitle
+	</h4>
+
+	<div class="card border-primary mb-3">
+		<div class="body">
+			<ul>
+				<li>
+					Name: @vwRegistration.FullName(false); <i>@vwRegistration.OtherNames</i>
+				</li>
+				<li>
+					Registration#: @vwRegistration.Id
+				</li>
+			</ul>
+
+		</div>
+	</div>
+
+	<Details vwRegistration="@vwRegistration" />
+
+</LoadingComponent>
+
+<RegistrationStepsLink BackwardDirection="true" />
+

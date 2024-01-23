@@ -1,0 +1,65 @@
+﻿@page "/Admin/Video"
+@inject IState<IndexState>? State
+
+@using Page = LivingMessiah.Web.Links.Admin.Video
+@using static LivingMessiah.Web.Services.Auth0
+@using LivingMessiah.Web.SmartEnums
+
+@using LoginLink = LivingMessiah.Web.Links.Account
+
+@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+
+<AuthorizeView Roles="@Roles.AdminOrAudiovisual">
+	<Authorized>
+
+		<div class="@MediaQuery.XsOrSm.DivClass">
+			<PageHeader IsXsOrSm="true" />
+		</div>
+
+		<div class="@MediaQuery.MdOrLgOrXl.DivClass">
+			<PageHeader IsXsOrSm="false" />
+		</div>
+
+		@if (State!.Value.VisibleComponent == Enums.VisibleComponent.MasterList)
+		{
+			<div class="@MediaQuery.XsOrSm.DivClass">
+				<LivingMessiah.Web.Features.Admin.Video.MasterDetail.MasterList IsXsOrSm="true" />
+			</div>
+
+			<div class="@MediaQuery.MdOrLgOrXl.DivClass">
+				<LivingMessiah.Web.Features.Admin.Video.MasterDetail.MasterList IsXsOrSm="false" />
+			</div>
+		}
+		else
+		{
+			<ShowMasterIndexButton />
+			<DetailPageHeader />
+		}
+		@if (State!.Value.VisibleComponent == Enums.VisibleComponent.AddEditForm)
+		{
+			<LivingMessiah.Web.Features.Admin.Video.AddEdit.Form />
+		}
+		else
+		{
+			@if (State!.Value.VisibleComponent == Enums.VisibleComponent.WeeklyVideosTable)
+			{
+				<LivingMessiah.Web.Features.Admin.Video.WeeklyVideos.Index />
+			}
+			@*else{ THIS SHOULDN'T HAPPEN}*@
+		}
+
+	</Authorized>
+	<NotAuthorized>
+
+		<div class="card border-warning my-5">
+			<div class="card-header">Not Authorized</div>
+			<div class="card-body">
+				<h5 class="">To view <b>@Page.Title</b> you need to be logged in.</h5>
+				<LoginRedirectButton ReturnUrl="@Page.Index" />
+			</div>
+		</div>
+
+	</NotAuthorized>
+</AuthorizeView>
+
+<Toaster />

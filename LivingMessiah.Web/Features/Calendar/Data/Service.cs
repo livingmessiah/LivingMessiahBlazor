@@ -1,6 +1,6 @@
 ﻿//using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
-using static LivingMessiah.Web.Pages.Shavuot.Domain.OmerGematriaFactory;
+using static LivingMessiah.Web.Features.Shavuot.Domain.OmerGematriaFactory;
 using LivingMessiah.Web.Infrastructure;
 using System.Collections.Generic;
 using static LivingMessiah.Web.Features.Calendar.ScheduleData;

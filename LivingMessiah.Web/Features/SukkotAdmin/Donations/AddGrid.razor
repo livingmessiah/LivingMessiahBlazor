@@ -1,0 +1,114 @@
+﻿@using LivingMessiah.Web.Features.SukkotAdmin.Donations.Domain
+@using Grid = Syncfusion.Blazor.Grids
+
+<div class="row">
+	<div class="col-6">
+		<SfAutoComplete Placeholder="Select a Registrant" 
+										@bind-Value="@SelectedRegistrantName"
+										DataSource="@RegistrationLookupList">
+			<AutoCompleteFieldSettings Value="Text"></AutoCompleteFieldSettings>
+			<AutoCompleteEvents TItem="RegistrationLookup" 
+													ValueChange="OnValueChanged" 
+													TValue="string"  
+													OnValueSelect="OnSelect">
+			</AutoCompleteEvents>
+		</SfAutoComplete>
+	</div>
+	<div class="col-6">
+		@if (SelectedRegistrantId != 0)
+		{
+			<div class="e-statustext badge bg-info mt-2 mb-1 float-end">Registrant: <b>@SelectedRegistrantName</b> <sup>(@SelectedRegistrantId)</sup></div>
+		}
+		else
+		{
+			<p class="text-black-50 text-center"><small>no registrant selected</small></p>
+		}
+	</div>
+</div>
+
+@if (SelectedRegistrantId != 0)
+{
+	<div class="col-lg-12 control-section">
+		<div class="content-wrapper">
+			<div class="row">
+				<SfGrid @ref="GridAdd" DataSource="@DonationDetails" Toolbar="@(new List<string>() { "Add", "Update", "Cancel" })">
+
+					<GridEditSettings AllowAdding="true" AllowEditing="false" AllowDeleting="false"></GridEditSettings>
+					<GridEvents CommandClicked="OnSaveClicked" TValue="DonationDetail" OnActionFailure="Failure"></GridEvents>
+
+					<GridColumns>
+
+						<GridColumn Field="@nameof(DonationDetail.Id)" IsPrimaryKey="true" Visible="true"
+												HeaderText="Id" Width="45" AllowAdding="false">
+						</GridColumn>
+
+						@* <SfNumericTextBox TValue="int" Value="12345" ShowSpinButton="false"></SfNumericTextBox>  *@
+
+						<GridColumn Field="@nameof(DonationDetail.RegistrationId)"
+												HeaderText="Reg Id" Width="45" Visible="true" AllowAdding="false" AllowEditing="false">
+						</GridColumn>
+
+						<GridColumn Field="@nameof(DonationDetail.Detail)" Visible="true"
+												HeaderText="Dtl" Width="45" AllowAdding="false">
+						</GridColumn>
+
+						<GridColumn Field=@nameof(DonationDetail.Amount) HeaderText="Amount"
+												ValidationRules="@(new Grid.ValidationRules{ Required=true})"
+												Width="70" Format="c0" TextAlign="TextAlign.Right">
+						</GridColumn>
+
+						<GridColumn Field=@nameof(DonationDetail.Notes) HeaderText="Notes" Width="110">
+						</GridColumn>
+
+						<GridColumn Field=@nameof(DonationDetail.ReferenceId) HeaderText="Reference"
+												ValidationRules="@(new Grid.ValidationRules{ Required=true})" Width="120">
+						</GridColumn>
+
+						<GridColumn Field=@nameof(DonationDetail.CreateDate) HeaderText="Date"
+												ValidationRules="@(new Grid.ValidationRules{ Required=true})"
+												DefaultValue="@(DateTime.Now)"
+												EditType="EditType.DatePickerEdit" Format="d" Type="ColumnType.Date" TextAlign="TextAlign.Right" Width="90">
+						</GridColumn>
+
+						<GridColumn Field="@nameof(DonationDetail.CreatedBy)" Visible="true"
+												HeaderText="Created by" Width="65" AllowAdding="false">
+						</GridColumn>
+
+						<GridColumn Width="45">
+							<GridCommandColumns>
+								<GridCommandColumn Type="CommandButtonType.Save" Title="Save"
+																	 ButtonOption="@(new CommandButtonOptions() {IconCss="e-icons e-save", CssClass="e-flat" })">
+								</GridCommandColumn>
+							</GridCommandColumns>
+						</GridColumn>
+
+					</GridColumns>
+				</SfGrid>
+
+			</div>
+		</div>
+	</div>
+
+}
+
+
+@*
+Amount
+error CS0029: Cannot implicitly convert type 'double[]' to 'object[]'
+ValidationRules="@(new Grid.ValidationRules{ Required=true, Range = new double[]{1, 1000}})"
+*@
+
+
+<style>
+
+	.control_wrapper {
+		width: 350px;
+		margin: 0 auto;
+		padding-top: 70px;
+	}
+
+	.e-statustext {
+		font-size: 16px;
+	}
+</style>
+

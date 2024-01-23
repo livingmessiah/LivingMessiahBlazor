@@ -1,0 +1,42 @@
+﻿@using RegStatusEnums = LivingMessiah.Web.Features.Sukkot.RegistrationSteps.Enums
+
+@if (StatusId == RegStatusEnums.Status.StartRegistration.Value)
+{
+	@foreach (var item in Enums.Crud.List
+				.OrderBy(o => o.Sort)
+				.Where(w => w.IsStartRegistration == true))
+	{
+		<CrudButtons OnCrudActionSelected="@ReturnedCrud"
+						 ParmCrud="Enums.Crud.FromValue(item)"
+						 Id="@IdHra"
+						 FullName="@FullName"
+						 DonationRowCount="@DonationRowCount"
+						 EMail="@EMail" />
+	}
+}
+else
+{
+	@foreach (var item in Enums.Crud.List
+						.OrderBy(o => o.Sort)
+						.Where(w => w.IsStartRegistration == false))
+	{
+		<CrudButtons OnCrudActionSelected="@ReturnedCrud"
+						 ParmCrud="Enums.Crud.FromValue(item)"
+						 Id="@Id"
+						 FullName="@FullName"
+						 DonationRowCount="@DonationRowCount"
+						 EMail="@EMail" />
+	}
+}
+
+
+
+
+
+@*
+
+ParmCrud="Enums.Crud.AddRegistration"
+
+<div class="@MediaQuery.XsOrSm.DivClass"></div>
+<div class="@MediaQuery.MdOrLgOrXl.DivClass"></div>
+*@

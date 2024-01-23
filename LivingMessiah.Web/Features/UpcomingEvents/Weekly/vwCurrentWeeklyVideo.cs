@@ -1,5 +1,5 @@
 ﻿using System;
-using WVT_Enums = LivingMessiah.Web.Pages.Admin.Video.Enums.WeeklyVideoType;
+using WVT_Enums = LivingMessiah.Web.Features.Admin.Video.Enums.WeeklyVideoType;
 
 namespace LivingMessiah.Web.Features.UpcomingEvents.Weekly;
 

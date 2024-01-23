@@ -1,0 +1,39 @@
+﻿@page "/NavigationSearch"
+@using Page = LivingMessiah.Web.Links.NavigationSearch
+@using LivingMessiah.Web.SmartEnums
+@using LivingMessiah.Web.Domain
+@inject Services.ILinkService? LinkService
+
+<PageTitle>@Page.Title</PageTitle>
+
+<input class="form-control me-2 mt-2" @bind-value="SearchText"
+			 @bind-value:event="oninput" 
+			 placeholder="Search by page" />
+
+@if (!Links!.Any())
+{
+	<p>Loading some links...</p>
+}
+else
+{
+	<div class="h5 ml-1">
+		<ol class="fa-ul">
+			@foreach (var link in FilteredLinks!)
+			{
+				<li><a href="@link.Index">@link.Title</a></li>
+			}
+		</ol>
+	</div>
+}
+
+@code {
+
+	private IEnumerable<Link>? Links;
+	protected override void OnInitialized()
+	{
+		Links = LinkService!.GetSitemapLinks();
+	}
+
+	public string SearchText = "";
+	List<Link>? FilteredLinks => Links!.Where(w => w.Title!.ToLower().Contains(SearchText.ToLower())).ToList();
+}

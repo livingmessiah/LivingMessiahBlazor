@@ -1,0 +1,21 @@
+﻿@using LivingMessiah.Web.Features.Sukkot.Constants
+
+<h3><span class="badge bg-warning">Sukkot T-shirts!</span> <i class="fas fa-external-link-alt"></i></h3>
+
+@if (TShirts.IsAvailableForSale)
+{
+	<h5>@TShirts.ForSaleMessage</h5>
+	<a href="@TShirts.Href" target="_blank">
+		<img src="@TShirts.ImgSrc"
+			 alt="@TShirts.Title" class="img-fluid rounded" />
+	</a>
+}
+else
+{
+	<h1 class="text-warning">@TShirts.ComingSoonMessage</h1>
+}
+
+<p class="my-3">
+	If you have any questions, you can always email me at <a href="mailto:Ralphie@LivingMessiah.com">Ralphie@LivingMessiah.com</a>&nbsp;<i class="far fa-envelope"></i>
+</p>
+

@@ -1,0 +1,18 @@
+﻿@page "/Shavuot"
+@using static LivingMessiah.Web.Features.Shavuot.Domain.OmerGematriaFactory
+@using LivingMessiah.Web.Features.Feasts.VerseReferenceCards
+@using Page = LivingMessiah.Web.Links.Shavuot
+
+
+<PageTitle>@Page.Title</PageTitle>
+
+<Header YearId="YearId" />
+
+<BodyTableOrGrid CurrentDay="CurrentDay" />
+
+<div class="card border-primary mt-5">
+	<Lev_23_15_16 />
+</div>
+
+<Footer/>
+<AlephBet/>
