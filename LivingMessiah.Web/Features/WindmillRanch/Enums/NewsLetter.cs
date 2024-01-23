@@ -1,7 +1,5 @@
 ﻿using Ardalis.SmartEnum;
 
-// LivingMessiah.Web.SmartEnums.MediaQuery;`
-
 namespace LivingMessiah.Web.Features.WindmillRanch.Enums;
 
 public abstract class NewsLetter : SmartEnum<NewsLetter>

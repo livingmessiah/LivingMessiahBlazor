@@ -127,6 +127,7 @@
     <Folder Include="Features\Feasts\LinkSmartEnums\" />
     <Folder Include="Features\Feasts\Links\" />
     <Folder Include="Features\WindmillRanch\LinkSmartEnums\" />
+    <Folder Include="SmartEnums\" />
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties appsettings_1development_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>

@@ -1,6 +1,6 @@
-﻿namespace LivingMessiah.Web.SmartEnums;
-using Ardalis.SmartEnum;
+﻿using Ardalis.SmartEnum;
 
+namespace LivingMessiah.Web.Enums;
 
 // public enum MediaQueryEnum { Xs = 1,	Sm = 2,	Md = 3,	Lg = 5,	Xl = 6}
 

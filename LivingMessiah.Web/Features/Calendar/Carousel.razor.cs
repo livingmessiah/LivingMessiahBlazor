@@ -1,11 +1,11 @@
-﻿using LivingMessiah.Web.SmartEnums;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
+using MediaQueryEnum = LivingMessiah.Web.Enums.MediaQuery;
 
 namespace LivingMessiah.Web.Features.Calendar;
 
 public partial class Carousel
 {
-	[Parameter, EditorRequired] public MediaQuery? mq { get; set; }
+	[Parameter, EditorRequired] public MediaQueryEnum? mq { get; set; }
 
 	protected string width = "";
 	protected string height = "";
@@ -13,27 +13,27 @@ public partial class Carousel
 	protected override void OnInitialized()
 	{
 		mq!
-			.When(MediaQuery.Xs).Then(() =>
+			.When(MediaQueryEnum.Xs).Then(() =>
 			{
 				width = "400px";
 				height = "240px";
 			})
-			.When(MediaQuery.Sm).Then(() =>
+			.When(MediaQueryEnum.Sm).Then(() =>
 			{
 				width = "500px";
 				height = "300px";
 			})
-			.When(MediaQuery.Md).Then(() =>
+			.When(MediaQueryEnum.Md).Then(() =>
 			 {
 				 width = "700px";
 				 height = "420px";
 			 })
-			.When(MediaQuery.Lg).Then(() =>
+			.When(MediaQueryEnum.Lg).Then(() =>
 			{
 				width = "900px";
 				height = "540px";
 			})
-			.When(MediaQuery.Xl).Then(() =>
+			.When(MediaQueryEnum.Xl).Then(() =>
 			{
 				width = "1100px";
 				height = "660px";
