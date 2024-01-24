@@ -85,14 +85,14 @@
 		<th class="text-info">Enum</th>
 	</TableHeader>
 	<RowTemplate>
-		<td>@context.DateYMD</td>
+		<td>@context.DateYMD!</td>
 		<td>
 			@CalendarEnum.Season.FromValue(context.EnumId).Date.ToString(DateFormat.YYYY_MM_DD)
 		</td>
 		<td>
 			@GetDateDiff(context.Date, CalendarEnum.Season.FromValue(context.EnumId).Date)
 		</td>
-		<td>@context.EnumId - @context.EventDescr</td>
+		<td>@context.EnumId - @context.EventDescr!</td>
 
 	</RowTemplate>
 </TableTemplate>
