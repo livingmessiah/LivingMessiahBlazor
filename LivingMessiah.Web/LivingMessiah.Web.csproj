@@ -68,16 +68,16 @@
   <ItemGroup>
     <PackageReference Include="Ardalis.SmartEnum" Version="7.0.0" />
     <PackageReference Include="Blazored.FluentValidation" Version="2.1.0" />
-    <PackageReference Include="Blazored.Modal" Version="7.1.0" />
+    <PackageReference Include="Blazored.Modal" Version="7.2.0" />
     <PackageReference Include="Blazored.Toast" Version="4.1.0" />
     <PackageReference Include="Blazored.Typeahead" Version="4.7.0" />
-    <PackageReference Include="Dapper" Version="2.0.151" />
-    <PackageReference Include="Fluxor" Version="5.7.0" />
-    <PackageReference Include="Fluxor.Blazor.Web" Version="5.7.0" />
-    <PackageReference Include="Fluxor.Blazor.Web.ReduxDevTools" Version="5.7.0" />
-    <PackageReference Include="HtmlAgilityPack" Version="1.11.46" />
+    <PackageReference Include="Dapper" Version="2.1.28" />
+    <PackageReference Include="Fluxor" Version="5.9.1" />
+    <PackageReference Include="Fluxor.Blazor.Web" Version="5.9.1" />
+    <PackageReference Include="Fluxor.Blazor.Web.ReduxDevTools" Version="5.9.1" />
+    <PackageReference Include="HtmlAgilityPack" Version="1.11.57" />
     <PackageReference Include="Humanizer.Core" Version="2.14.1" />
-    <PackageReference Include="Markdig" Version="0.31.0" />
+    <PackageReference Include="Markdig" Version="0.34.0" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.21.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="7.0.5" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="7.0.5" />
@@ -91,7 +91,7 @@
     <PackageReference Include="Serilog.Settings.Configuration" Version="3.4.0" />
     <PackageReference Include="Serilog.Sinks.Console" Version="4.1.0" />
     <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
-    <PackageReference Include="Serilog.Sinks.Seq" Version="5.2.2" />
+    <PackageReference Include="Serilog.Sinks.Seq" Version="6.0.0" />
     <PackageReference Include="Syncfusion.Blazor.Calendars" Version="21.2.3" />
 		<PackageReference Include="Syncfusion.Blazor.Charts" Version="21.2.3" />
     <PackageReference Include="Syncfusion.Blazor.DropDowns" Version="21.2.3" />
@@ -101,7 +101,7 @@
     <PackageReference Include="Syncfusion.Blazor.Schedule" Version="21.2.3" />
     <PackageReference Include="Syncfusion.Blazor.Themes" Version="21.2.3" />
     <PackageReference Include="Syncfusion.Blazor.TreeGrid" Version="21.2.3" />
-    <PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.6" />
 		<PackageReference Include="System.ServiceModel.Syndication" Version="7.0.0" />
 	</ItemGroup>
 
