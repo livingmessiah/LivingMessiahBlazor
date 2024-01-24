@@ -9,12 +9,16 @@
   <ItemGroup>
     <Compile Remove="Features\SukkotAdmin\Donations\Services\**" />
     <Compile Remove="Features\Sukkot\RegistrationSteps\Data\**" />
+    <Compile Remove="SmartEnums\**" />
     <Content Remove="Features\SukkotAdmin\Donations\Services\**" />
     <Content Remove="Features\Sukkot\RegistrationSteps\Data\**" />
+    <Content Remove="SmartEnums\**" />
     <EmbeddedResource Remove="Features\SukkotAdmin\Donations\Services\**" />
     <EmbeddedResource Remove="Features\Sukkot\RegistrationSteps\Data\**" />
+    <EmbeddedResource Remove="SmartEnums\**" />
     <None Remove="Features\SukkotAdmin\Donations\Services\**" />
     <None Remove="Features\Sukkot\RegistrationSteps\Data\**" />
+    <None Remove="SmartEnums\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -127,7 +131,6 @@
     <Folder Include="Features\Feasts\LinkSmartEnums\" />
     <Folder Include="Features\Feasts\Links\" />
     <Folder Include="Features\WindmillRanch\LinkSmartEnums\" />
-    <Folder Include="SmartEnums\" />
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties appsettings_1development_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
