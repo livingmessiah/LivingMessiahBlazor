@@ -2,7 +2,7 @@
 using System.Linq;
 using LivingMessiah.Web.Enums;
 
-namespace LivingMessiah.Web.Services;
+namespace LivingMessiah.Web.Features.SampleCode.Syncfusion_SfDropDownList;
 
 public interface ISmartEnumServiceForSfDropDownList
 {

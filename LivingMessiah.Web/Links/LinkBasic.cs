@@ -1,4 +1,4 @@
-﻿namespace LivingMessiah.Web.Domain;
+﻿namespace LivingMessiah.Web.Links;
 
 public class LinkBasic
 {

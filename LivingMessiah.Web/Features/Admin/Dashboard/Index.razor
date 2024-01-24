@@ -12,7 +12,7 @@
 		<h2><i class="@Page.Dashboard.Icon"></i> @Page.Dashboard.Text</h2>
 </div>
 
-@inject IWebHostEnvironment Env
+@inject IWebHostEnvironment? Env
 @inject ILogger<Index>? Logger
 @inject IToastService? Toast
 
@@ -28,7 +28,7 @@
 				</div>
 
 				<div class="card-body">
-					@if (Env.IsProduction() | Env.IsStaging())
+					@if (Env!.IsProduction() | Env!.IsStaging())
 					{
 						<p>
 							HostingEnvironment.EnvironmentName is <strong><span class="text-danger">Staging or Production</span></strong>

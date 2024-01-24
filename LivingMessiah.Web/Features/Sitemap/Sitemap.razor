@@ -1,6 +1,7 @@
 ﻿@page "/Sitemap"
 @using Page = LivingMessiah.Web.Links.Sitemap
-@using LivingMessiah.Web.Domain;
+@using LivingMessiah.Web.Links;
+
 <PageTitle>@Page.Title</PageTitle>
 
 <div class="pb-2 mt-4 mb-2 border-bottom">
@@ -15,7 +16,7 @@
 </DataList>
 
 @code {
-	[Inject] public Services.ILinkService? LinkService { get; set; }
+	[Inject] public ILinkService? LinkService { get; set; }
 
 	private IEnumerable<Link>? Links;
 	protected override void OnInitialized()

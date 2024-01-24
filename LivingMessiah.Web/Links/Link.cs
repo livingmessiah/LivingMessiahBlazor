@@ -1,4 +1,4 @@
-﻿namespace LivingMessiah.Web.Domain;
+﻿namespace LivingMessiah.Web.Links;
 
 public class Link
 {
@@ -10,18 +10,6 @@ public class Link
 	public bool HomeSidebarUsage { get; set; }
 	public string?  HomeFloatRightHebrew { get; set; }
 	public string?  HomeTitleSuffix { get; set; } // shaMayim H8064"
-
-	/*
-	In `LinksFactory!GetFeastLinks` `FeastDayValue` is populated with...
-
-	- Features.Calendar.Enums.FeastDay.Passover.Value
-	- Features.Calendar.Enums.FeastDay.Weeks.Value
-	- Features.Calendar.Enums.FeastDay.Tabernacles.Value
-
-	Called by `LinkService.GetHomeSidebarLinks`
-		- if (SukkotSettings.Value.SukkotIsOpen); Passover and Weeks are not used
-
-	*/
 	public int FeastDayValue { get; set; }
 	
 	public int SortOrder { get; set; }

@@ -1,18 +1,14 @@
-﻿using LivingMessiah.Web.Data;
-using LivingMessiah.Web.Domain;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Extensions.Options;
 using LivingMessiah.Web.Settings;
 
-namespace LivingMessiah.Web.Services;
+namespace LivingMessiah.Web.Links;
 
 public interface ILinkService
 {
 	List<Link> GetSitemapLinks();
 	List<Link> GetHomeSidebarLinks(bool isXsOrSm);
-	//List<Link> GetFeastLinks();
-	//List<LinkBasic> GetMarkdownLinks();
 }
 
 public class LinkService : ILinkService
@@ -58,7 +54,7 @@ public class LinkService : ILinkService
 			{
 				return links.GetLinks().Where(x => x.HomeSidebarUsage == true & x.SortOrder != IntroductionAndWelcomeSortOder).ToList();
 			}
-			
+
 		}
 
 	}
@@ -69,48 +65,5 @@ public class LinkService : ILinkService
 		return links.GetLinks().Where(x => x.SitemapUsage == true).ToList();
 	}
 
-
-
-	//public List<Link> GetFeastLinks()
-	//{
-	//	LinksFactory links = new LinksFactory();
-	//	return links.GetFeastLinks().ToList();
-	//}
-
-	/*
-	public List<LinkBasic> GetMarkdownLinks()
-	{
-		LinksFactory links = new LinksFactory();
-		return links.GetMarkdownLinks().ToList();
-	}
-	*/
 }
 
-/*
-This process causes this Startup error 'No process is associated with this object.'
-private readonly LinksFactory _links;
-public LinkService(LinksFactory links)
-{
-	_links = links;
-}
-...
-return _links.GetLinks().Where(x => x.HomeSidebarUsage == true).ToList();
-...
-return _links.GetLinks().Where(x => x.SitemapUsage == true).ToList();
-*/
-
-/*
-
-Link GetExternalLink();
-Link GetExternalButtonLink();
-
-
-		Simple = 1,
-		InternalBtnSm = 2,
-		InternalHome = 3,
-		External = 4,
-		ExternalButton = 5,
-		Location = 6,
-		ScrollSpyHeader = 7,
-		ScrollSpyDetail = 8
- */

@@ -1,14 +1,14 @@
 ﻿using Microsoft.AspNetCore.Components;
 using System.Collections.Generic;
-using LivingMessiah.Web.Domain;
 using LivingMessiah.Web.Settings;
 using Microsoft.Extensions.Options;
+using LivingMessiah.Web.Links;
 
 namespace LivingMessiah.Web.Features.Home;
 
 public partial class SidebarButtons
 {
-	[Inject] public Services.ILinkService? LinkService { get; set; }
+	[Inject] public ILinkService? LinkService { get; set; }
 	[Inject] public IOptions<AppSettings>? AppSettings { get; set; }
 
 	[Parameter, EditorRequired] public bool IsXsOrSm { get; set; }

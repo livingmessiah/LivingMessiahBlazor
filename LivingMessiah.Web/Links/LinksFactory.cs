@@ -1,18 +1,15 @@
 ﻿using System.Collections.Generic;
-using LivingMessiah.Web.Domain;
-using LivingMessiah.Web.Links;
 using PageFeast = LivingMessiah.Web.Features.Feasts.FeastLinks;
 using PageParasha = LivingMessiah.Web.Features.Parasha.Enums.ParashaLinks;
 using PageWindmillRanch = LivingMessiah.Web.Features.WindmillRanch.Enums.WindmillRanchLinks;
 
-namespace LivingMessiah.Web.Data;
+namespace LivingMessiah.Web.Links;
 
 public interface ILinksFactory
 {
 	List<Link> GetLinks();
 	List<Link> GetFeastLinks();
 	List<LinkBasic> GetVideoProductionLinks();
-	//List<LinkBasic> GetMarkdownLinks();
 }
 
 public class LinksFactory : ILinksFactory
@@ -29,16 +26,16 @@ public class LinksFactory : ILinksFactory
  			};
 	}
 
-	
+
 	public List<Link> GetLinks()
 	{
 		return new List<Link>
 			{
 				new Link
 				{
-					Index = LivingMessiah.Web.Links.IntroductionAndWelcome.Index,
-					Title = LivingMessiah.Web.Links.IntroductionAndWelcome.Title,
-					Icon = LivingMessiah.Web.Links.IntroductionAndWelcome.Icon,
+					Index = IntroductionAndWelcome.Index,
+					Title = IntroductionAndWelcome.Title,
+					Icon = IntroductionAndWelcome.Icon,
 					HomeSidebarUsage=true,  // if XsOrSm == true 
 					HomeFloatRightHebrew = "שָׁלוֹם",
 					HomeTitleSuffix = " Shalom  H7695",
@@ -228,7 +225,7 @@ public class LinksFactory : ILinksFactory
 				new Link
 				{
 					//Index = Store.Index, Title = Store.Title, Icon = Store.Icon,
-					Index = Links.Store.Index, Title = Links.Store.Title, Icon = Links.Store.Icon,
+					Index = Store.Index, Title = Store.Title, Icon = Store.Icon,
 					HomeSidebarUsage=true,
 					HomeFloatRightHebrew="כֻּתֹּנֶת",
 					HomeTitleSuffix=" Kuthoneth H3801",
@@ -321,27 +318,27 @@ public class LinksFactory : ILinksFactory
 				},
 				new Link
 				{
-					Index = Links.Mishpocha.Index,
-					Title = Links.Mishpocha.Title,
-					Icon = Links.Mishpocha.Icon,
+					Index = Mishpocha.Index,
+					Title = Mishpocha.Title,
+					Icon = Mishpocha.Icon,
 					HomeSidebarUsage=false,
 					SortOrder=28,
 					SitemapUsage=true
 				},
 				new Link
 				{
-					Index = Links.Community.Index,
-					Title = Links.Community.Title,
-					Icon = Links.Community.Icon,
+					Index = Community.Index,
+					Title = Community.Title,
+					Icon = Community.Icon,
 					HomeSidebarUsage=false,
 					SortOrder=29,
 					SitemapUsage=true
 				},
 				new Link
 				{
-					Index = Links.Gallery.Index,
-					Title = Links.Gallery.Title,
-					Icon = Links.Gallery.Icon,
+					Index = Gallery.Index,
+					Title = Gallery.Title,
+					Icon = Gallery.Icon,
 					HomeSidebarUsage=false,
 					SortOrder=30,
 					SitemapUsage=true
@@ -381,9 +378,9 @@ public class LinksFactory : ILinksFactory
 				new Link
 				{
 					FeastDayValue = Features.Calendar.Enums.FeastDay.Tabernacles.Value,
-					Index = Links.Sukkot.Index,
-					Title = Links.Sukkot.Title,
-					Icon = Links.Sukkot.Icon,
+					Index = Sukkot.Index,
+					Title = Sukkot.Title,
+					Icon = Sukkot.Icon,
 					HomeSidebarUsage=false,
 					HomeFloatRightHebrew="סֻכּוֹת",
 					HomeTitleSuffix=" Sukkot H5523",
@@ -392,22 +389,6 @@ public class LinksFactory : ILinksFactory
 				},
 			};
 	}
-
-
-	/*
-	public List<LinkBasic> GetMarkdownLinks()
-	{
-		return new List<LinkBasic>
-		{
-			new LinkBasic {Index = "/Admin/Markdown/Index", Title = "Markdown", Icon = "fas fa-tachometer-alt", },
-			new LinkBasic {Index = "/Admin/Markdown/BlogUrl", Title = "BlogUrl", Icon = "fas fa-globe-americas", },
-			new LinkBasic {Index = "/Admin/Markdown/EmbededStaticRazorView", Title = "Embeded Static Razor View", Icon = "fab fa-font-awesome-flag", },
-			new LinkBasic {Index = "/Admin/Markdown/LocalFilename", Title = "Local Filename", Icon = "fas fa-satellite", },
-			new LinkBasic {Index = "/Admin/Markdown/Parse", Title = "Parse", Icon = "fas fa-horse-head", },
-			new LinkBasic {Index = "/Admin/Markdown/Verse_Mat_5_17_to_20", Title = "Verse Mat:517-20", Icon = "fas fa-bible", },
-		};
-	}
-	*/
 
 
 }
