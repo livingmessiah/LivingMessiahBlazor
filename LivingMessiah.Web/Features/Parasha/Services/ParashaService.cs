@@ -22,13 +22,13 @@ public class ParashaService : IParashaService
 	private string LogExceptionMessage { get; set; } = "";
 
 	#region Constructor and DI
-	private readonly IParashaRepository ParashaRepository;
+	private readonly IRepository db;
 	private readonly ILogger Logger;
 
 	public ParashaService(
-		IParashaRepository parashaRepository, ILogger<ParashaService> logger)
+		IRepository Repository, ILogger<ParashaService> logger)
 	{
-		ParashaRepository = parashaRepository;
+		db = Repository;
 		Logger = logger;
 	}
 	#endregion
@@ -43,13 +43,13 @@ public class ParashaService : IParashaService
 
 		try
 		{
-			vm = await ParashaRepository.GetCurrentParasha();
+			vm = await db.GetCurrentParasha();
 
 			if (vm is null)
 			{
 				UserInterfaceMessage = "Current Parasha Record NOT Found";
 				Logger.LogWarning(string.Format("Inside {0} id:{1}"
-					, nameof(ParashaService) + "!" + nameof(ParashaRepository.GetCurrentParasha), UserInterfaceMessage));
+					, nameof(ParashaService) + "!" + nameof(db.GetCurrentParasha), UserInterfaceMessage));
 			}
 		}
 
@@ -58,7 +58,7 @@ public class ParashaService : IParashaService
 			UserInterfaceMessage += "An invalid operation occurred, contact your administrator";
 			Logger.LogError(string.Format("  Inside catch of {0}; after calling {1}"
 				, nameof(ParashaService) + "!" + nameof(GetCurrentParasha)
-				, nameof(ParashaRepository) + "!" + (nameof(ParashaRepository.GetCurrentParasha) )));
+				, nameof(db) + "!" + (nameof(db.GetCurrentParasha) )));
 		}
 		return vm;
 	}
@@ -67,23 +67,23 @@ public class ParashaService : IParashaService
 	{
 		UserInterfaceMessage = "";
 		Logger.LogDebug(string.Format("Inside {0}, bookId: {1}"
-			, nameof(ParashaService) + "!" + nameof(ParashaRepository.GetParashotByBookId), bookId));
+			, nameof(ParashaService) + "!" + nameof(db.GetParashotByBookId), bookId));
 		
 		var vm = new List<Parashot>(); //IReadOnlyList<Parashot> Parashot = await db.GetParashotByBookId(bookId);
 		try
 		{
-			vm = await ParashaRepository.GetParashotByBookId(bookId);
+			vm = await db.GetParashotByBookId(bookId);
 			if (vm is null || !vm.Any())
 			{
 				UserInterfaceMessage = "Parashot list NOT Found";
 				Logger.LogWarning(string.Format("Inside {0} id:{1}"
-					, nameof(ParashaService) + "!" + nameof(ParashaRepository.GetParashotByBookId), UserInterfaceMessage));
+					, nameof(ParashaService) + "!" + nameof(db.GetParashotByBookId), UserInterfaceMessage));
 				//throw new ParashotListNotFoundException(UserInterfaceMessage);
 			}
 		}
 		catch (Exception ex)
 		{
-			LogExceptionMessage = $"Inside {nameof(GetParashotByBookId)}, db.{nameof(ParashaRepository.GetParashotByBookId)}";
+			LogExceptionMessage = $"Inside {nameof(GetParashotByBookId)}, db.{nameof(db.GetParashotByBookId)}";
 			Logger.LogError(ex, LogExceptionMessage);
 			UserInterfaceMessage += "An invalid operation occurred, contact your administrator";
 			throw new InvalidOperationException(UserInterfaceMessage);
@@ -132,3 +132,5 @@ public class ParashaService : IParashaService
 }
 
 #endregion
+
+// Ignore Spelling: Parashot

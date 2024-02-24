@@ -1,13 +1,12 @@
-ï»¿using Microsoft.AspNetCore.Components;
-using Microsoft.Extensions.Options;
 using LivingMessiah.Web.Settings;
+using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Options;
 
 namespace LivingMessiah.Web.Features.ShabbatService;
 
-public class ShabbatServiceBase : ComponentBase
+public partial class Index
 {
 	[Inject] public IOptions<AppSettings>? AppSettings { get; set; }
-
 	protected bool _isPrinterFriendly = false;
 
 	protected string? _printMsg;
@@ -25,14 +24,7 @@ public class ShabbatServiceBase : ComponentBase
 
 	protected void LanguageSelectionChanged(bool showSpanish)
 	{
-		if (showSpanish)
-		{
-			_ShowSpanish = true;
-		}
-		else
-		{
-			_ShowSpanish = false;
-		}
+		_ShowSpanish = showSpanish;
 	}
 
 	protected void PrintFriendly_Button_Click()
@@ -46,7 +38,7 @@ public class ShabbatServiceBase : ComponentBase
 	{
 		if (_isPrinterFriendly)
 		{
-			_printMsg = _ShowSpanish ? "ImpresiÃ³n" : "Print";
+			_printMsg = _ShowSpanish ? "Impresión" : "Print";
 			_oppositeIcon = "<i class='far fa-arrow-alt-circle-left'></i>";
 			_oppositeToggleMsg = _ShowSpanish ? "Mostrar imagenes" : "Show Images";
 		}
@@ -54,8 +46,9 @@ public class ShabbatServiceBase : ComponentBase
 		{
 			_printMsg = "";
 			_oppositeIcon = "<i class='fas fa-print'></i>";
-			_oppositeToggleMsg = _ShowSpanish ? "Amistoso de impresiÃ³n" : "Print Friendly";
+			_oppositeToggleMsg = _ShowSpanish ? "Amistoso de impresión" : "Print Friendly";
 		}
 
 	}
+
 }

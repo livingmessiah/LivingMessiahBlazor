@@ -1,6 +1,5 @@
 ﻿@page "/shabbatservice"
 @using LivingMessiah.Web.Links;
-@inherits ShabbatServiceBase
 
 @using Page = LivingMessiah.Web.Links.ShabbatService
 <PageTitle>@Page.Title</PageTitle>
@@ -8,10 +7,10 @@
 @using PageParasha = LivingMessiah.Web.Features.Parasha.Enums.ParashaLinks;
 @using PageDonate = LivingMessiah.Web.Links.Donate
 
-<div class="d-print-none float-end">
-	<a class="btn btn-sm btn-default" href="@LivingMessiah.Web.Links.ShabbatService.Index"
-	@onclick="@PrintFriendly_Button_Click">
-		@((MarkupString)_oppositeIcon!) @_oppositeToggleMsg
+	<div class="d-print-none float-end">
+		<a class="btn btn-sm btn-default" href="@LivingMessiah.Web.Links.ShabbatService.Index"
+			 @onclick="@PrintFriendly_Button_Click">
+			@((MarkupString)_oppositeIcon!) @_oppositeToggleMsg
 	</a>
 </div>
 
@@ -451,7 +450,7 @@ else
 <PsaAndProComponent Section="@Section.FromEnum(SectionEnum.PsalmsAndProverbs)"
 										IsPrinterFriendly="_isPrinterFriendly"
 										LoadQuickly="@LoadQuickly">
-	<LivingMessiah.Web.Components.ShabbatWeek.PsalmAndProverbCurrent PerformHtmlValidation="false" />
+	<PsalmAndProverbCurrent PerformHtmlValidation="false" />
 </PsaAndProComponent>
 
 <Liturgy Section="@Section.FromEnum(SectionEnum.EtzChaim)"
@@ -767,3 +766,5 @@ else
 
 
 <Other IsPrinterFriendly="_isPrinterFriendly"></Other>
+
+

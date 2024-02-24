@@ -13,6 +13,7 @@ namespace LivingMessiah.Web.Components.ShabbatWeek;
 public interface IRepository
 {
 	string BaseSqlDump { get; }
+	Task<PsalmAndProverbCurrentQuery> GetPsalmAndProverbCurrentQuery();
 	Task<PsalmAndProverbCurrentVM> GetCurrentPsalmAndProverb();
 }
 
@@ -26,6 +27,34 @@ public class Repository : BaseRepositoryAsync, IRepository
 	public string BaseSqlDump
 	{
 		get { return base.SqlDump ?? ""; }
+	}
+
+
+	public async Task<PsalmAndProverbCurrentQuery> GetPsalmAndProverbCurrentQuery()
+	{
+		var datesTuple = Helper.CurrentShabbatDate();
+		bool isDayOfWeekSaturday = datesTuple.Item2;
+
+		string Where = $" WHERE ShabbatDate >= '{datesTuple.Item1}' ";
+
+		base.Sql = $@"
+SELECT 
+  ShabbatDate
+, PsalmsBCV, PsalmsKJVHtmlConcat, PsalmsTitle
+, ProverbsBCV, ProverbsKJVHtmlConcat, PsalmsTitle
+FROM Bible.vwPsalmsAndProverbs v 
+WHERE ShabbatDate = dbo.udfGetNextShabbatDate()
+";
+
+		log.LogDebug(String.Format("Inside {0}, Sql={1}"
+			, nameof(Repository) + "!" + nameof(GetCurrentPsalmAndProverb), base.Sql));
+
+
+		return await WithConnectionAsync(async connection =>
+		{
+			var rows = await connection.QueryAsync<PsalmAndProverbCurrentQuery>(sql: base.Sql, param: base.Parms);
+			return rows.SingleOrDefault()!;
+		});
 	}
 
 

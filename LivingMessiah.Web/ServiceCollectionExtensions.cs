@@ -14,9 +14,6 @@ using LivingMessiah.Web.Features.SukkotAdmin.Data;
 using LivingMessiah.Web.Features.SukkotAdmin.Donations.Data;
 using LivingMessiah.Web.Services;
 using FluentValidation;
-using LivingMessiah.Web.Features.Parasha.Services;
-using LivingMessiah.Web.Features.Parasha.Data;
-using LivingMessiah.Web.Features.Admin.Wirecast;
 using LivingMessiah.Web.Links;
 using LivingMessiah.Web.Features.SampleCode.Syncfusion_SfDropDownList;
 
@@ -37,13 +34,12 @@ public static class ServiceCollectionExtensions
 			.AddTransient<IValidator<Features.Sukkot.NormalUser.EntryFormVM>, Features.Sukkot.NormalUser.EntryFormVMValidator>()
 
 			.AddTransient<IDonationRepository, DonationRepository>()
-			
+
 			.AddTransient<SukkotData.ISukkotRepositoryUsedBySukkotService, SukkotData.SukkotRepositoryUsedBySukkotService>()
 			.AddTransient<ISukkotAdminRepository, SukkotAdminRepository>()
 			.AddSingleton<ISmartEnumServiceForSfDropDownList, SmartEnumServiceForSfDropDownList>()
-			.AddScoped<AppState>()
-			.AddSingleton<IParashaRepository, ParashaRepository>()
-			.AddSingleton<IParashaService, ParashaService>();
+			.AddScoped<AppState>();
+
 		return services;
 	}
 

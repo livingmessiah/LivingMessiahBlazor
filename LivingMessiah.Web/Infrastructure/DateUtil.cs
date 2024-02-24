@@ -57,6 +57,13 @@ public static class DateUtil
 		return start.AddDays(daysToAdd);
 	}
 
+
+	public static DateOnly? ToNullableDateOnly(this DateTime? input)
+	{
+		if (input == null) return null;
+		return DateOnly.FromDateTime(input.Value);
+	}
+
 	public static DateTime GetDateTimeWithoutTime(DateTime dateTimeWithTime)
 	{
 		return dateTimeWithTime.Date;

@@ -28,6 +28,7 @@ using LivingMessiah.Web.Features.Sukkot.ManageNotes.Data;
 using LivingMessiah.Web.Features.Sukkot.ManageRegistration.Data;
 using LivingMessiah.Web.Features.Contacts.Data;
 using LivingMessiah.Web.Features.Admin.Wirecast.Data;
+using LivingMessiah.Web.Features.Parasha.Data;
 
 namespace LivingMessiah.Web;
 
@@ -61,11 +62,12 @@ public class Startup
 		services.AddArchivedVideo();
 
 		services.AddCalendar();
+		services.AddCalendarHealthChecks();
 		services.AddFeastDayPlanner();
 		services.AddManageKeyDates();
 		services.AddManageParashaCalendar();
-		services.AddCalendarHealthChecks();
 		services.AddPsalmsAndProverbs();
+		services.AddParasha();
 		services.AddSpecialEvents();
 		services.AddUpcomingEvents();
 

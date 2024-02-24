@@ -13,16 +13,16 @@ using LivingMessiah.Web.Features.Parasha.ListByBook;
 
 namespace LivingMessiah.Web.Features.Parasha.Data;
 
-public interface IParashaRepository
+public interface IRepository
 {
 	string BaseSqlDump { get; }
 	Task<CurrentParasha?> GetCurrentParasha();
 	Task<List<Parashot>> GetParashotByBookId(int bookId);
 }
 
-public class ParashaRepository : BaseRepositoryAsync, IParashaRepository
+public class Repository : BaseRepositoryAsync, IRepository
 {
-	public ParashaRepository(IConfiguration config, ILogger<ParashaRepository> logger)
+	public Repository(IConfiguration config, ILogger<Repository> logger)
 		: base(config, logger, DataEnumsDatabase.LivingMessiah.ConnectionStringKey)
 	{
 	}
@@ -76,3 +76,5 @@ ORDER BY Id
 	}
 
 }
+
+// Ignore Spelling: Parashot

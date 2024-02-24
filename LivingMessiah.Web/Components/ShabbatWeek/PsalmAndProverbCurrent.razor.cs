@@ -6,9 +6,6 @@ using Microsoft.Extensions.Logging;
 using HtmlAgilityPack;
 using System.Linq;
 
-using LivingMessiah.Web.Components.ShabbatWeek;
-
-
 namespace LivingMessiah.Web.Components.ShabbatWeek;
 
 public partial class PsalmAndProverbCurrent
