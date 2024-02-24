@@ -141,7 +141,7 @@ public abstract class Office : SmartEnum<Office>
 		public override string ImageFile => "elder-3.jpg";
 		public override string IconFile => "elder-3-icon.jpg";
 		public override string IconFile2 => "icon-2-blank.jpg";
-		public override bool IsFilled => true;
+		public override bool IsFilled => false;
 		public override string OfficeHolderName => "Paul Hebron";
 		public override string Email => "Paul@livingmessiah.com";
 		public override string ImgClassSmMdLg => "w-50 p-3";
