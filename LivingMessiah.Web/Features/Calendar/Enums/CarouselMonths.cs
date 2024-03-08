@@ -5,7 +5,7 @@ namespace LivingMessiah.Web.Features.Calendar.Enums;
 public abstract class CarouselMonths : SmartEnum<CarouselMonths>
 {
 
-	#region Id's
+#region Id's
 	private static class Id
 	{
 		internal const int January = 1;
@@ -53,96 +53,96 @@ public abstract class CarouselMonths : SmartEnum<CarouselMonths>
 	private sealed class JanuarySE : CarouselMonths
 	{
 		public JanuarySE() : base($"{nameof(Id.January)}", Id.January) { }
-		public override string Image => "calendar-2023-01.jpg";
-		public override string ImageFullSize => "calendar-2023-01.jpg";
+		public override string Image => $"calendar-{Year.ImageName}-01.jpg";
+		public override string ImageFullSize => Image;
 		public override string Caption => "January";
 	}
 
 	private sealed class FebruarySE : CarouselMonths
 	{
 		public FebruarySE() : base($"{nameof(Id.February)}", Id.February) { }
-		public override string Image => "calendar-2023-02.jpg";
-		public override string ImageFullSize => "calendar-2023-02.jpg";
+		public override string Image => $"calendar-{Year.ImageName}-02.jpg";
+		public override string ImageFullSize => Image;
 		public override string Caption => "February";
 	}
 
 	private sealed class MarchSE : CarouselMonths
 	{
 		public MarchSE() : base($"{nameof(Id.March)}", Id.March) { }
-		public override string Image => "calendar-2023-03.jpg";
-		public override string ImageFullSize => "calendar-2023-03.jpg";
+		public override string Image => $"calendar-{Year.ImageName}-03.jpg";
+		public override string ImageFullSize => Image;
 		public override string Caption => "March";
 	}
 
 	private sealed class AprilSE : CarouselMonths
 	{
 		public AprilSE() : base($"{nameof(Id.April)}", Id.April) { }
-		public override string Image => "calendar-2023-04.jpg";
-		public override string ImageFullSize => "calendar-2023-04.jpg";
+		public override string Image => $"calendar-{Year.ImageName}-04.jpg";
+		public override string ImageFullSize => Image;
 		public override string Caption => "April";
 	}
 
 	private sealed class MaySE : CarouselMonths
 	{
 		public MaySE() : base($"{nameof(Id.May)}", Id.May) { }
-		public override string Image => "calendar-2023-05.jpg";
-		public override string ImageFullSize => "calendar-2023-05.jpg";
+		public override string Image => $"calendar-{Year.ImageName}-05.jpg";
+		public override string ImageFullSize => Image;
 		public override string Caption => "May";
 	}
 
 	private sealed class JuneSE : CarouselMonths
 	{
 		public JuneSE() : base($"{nameof(Id.June)}", Id.June) { }
-		public override string Image => "calendar-2023-06.jpg";
-		public override string ImageFullSize => "calendar-2023-06.jpg";
+		public override string Image => $"calendar-{Year.ImageName}-06.jpg";
+		public override string ImageFullSize => Image;
 		public override string Caption => "June";
 	}
 
 	private sealed class JulySE : CarouselMonths
 	{
 		public JulySE() : base($"{nameof(Id.July)}", Id.July) { }
-		public override string Image => "calendar-2023-07.jpg";
-		public override string ImageFullSize => "calendar-2023-07.jpg";
+		public override string Image => $"calendar-{Year.ImageName}-07.jpg";
+		public override string ImageFullSize => Image;
 		public override string Caption => "July";
 	}
 
 	private sealed class AugustSE : CarouselMonths
 	{
 		public AugustSE() : base($"{nameof(Id.August)}", Id.August) { }
-		public override string Image => "calendar-2023-08.jpg";
-		public override string ImageFullSize => "calendar-2023-07.jpg";
+		public override string Image => $"calendar-{Year.ImageName}-08.jpg";
+		public override string ImageFullSize => Image;
 		public override string Caption => "August";
 	}
 
 	private sealed class SeptemberSE : CarouselMonths
 	{
 		public SeptemberSE() : base($"{nameof(Id.September)}", Id.September) { }
-		public override string Image => "calendar-2023-09.jpg";
-		public override string ImageFullSize => "calendar-2023-09.jpg";
+		public override string Image => $"calendar-{Year.ImageName}-09.jpg";
+		public override string ImageFullSize => Image;
 		public override string Caption => "September";
 	}
 
 	private sealed class OctoberSE : CarouselMonths
 	{
 		public OctoberSE() : base($"{nameof(Id.October)}", Id.October) { }
-		public override string Image => "calendar-2023-10.jpg";
-		public override string ImageFullSize => "calendar-2023-10.jpg";
+		public override string Image => $"calendar-{Year.ImageName}-10.jpg";
+		public override string ImageFullSize => Image;
 		public override string Caption => "October";
 	}
 
 	private sealed class NovemberSE : CarouselMonths
 	{
 		public NovemberSE() : base($"{nameof(Id.November)}", Id.November) { }
-		public override string Image => "calendar-2023-11.jpg";
-		public override string ImageFullSize => "calendar-2023-11.jpg";
+		public override string Image => $"calendar-{Year.ImageName}-11.jpg";
+		public override string ImageFullSize => Image;
 		public override string Caption => "November";
 	}
 
 	private sealed class DecemberSE : CarouselMonths
 	{
 		public DecemberSE() : base($"{nameof(Id.December)}", Id.December) { }
-		public override string Image => "calendar-2023-12.jpg";
-		public override string ImageFullSize => "calendar-2023-12.jpg";
+		public override string Image => $"calendar-{Year.ImageName}-12.jpg";
+		public override string ImageFullSize => Image;
 		public override string Caption => "December";
 	}
 	#endregion

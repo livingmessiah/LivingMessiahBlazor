@@ -1,5 +1,10 @@
 ﻿namespace LivingMessiah.Web.Features.Calendar;
 
+public static class Year
+{
+	public const string ImageName = "2024";
+}
+
 public static class CalendarColors
 {
 		//https://www.color-hex.com/color/f57f17
@@ -21,7 +26,7 @@ public static class CalendarColors
 
 public static class CarouselSettings
 {
-	public const bool Display = false;
+	public const bool Display = true;
 }
 
 public static class LMMCalendar
