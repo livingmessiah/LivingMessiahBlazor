@@ -3,7 +3,6 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
 using FeastDayType = LivingMessiah.Web.Features.Calendar.Enums.FeastDay;
-using Page = LivingMessiah.Web.Links.Calendar.FeastPlanner;
 using LivingMessiah.Web.Infrastructure;
 
 namespace LivingMessiah.Web.Features.FeastDayPlanner;
@@ -15,7 +14,7 @@ public partial class Index
 	protected override void OnInitialized()
 	{
 		base.OnInitialized();
-		Logger!.LogDebug("Inside: {Page}!{Class}!{Method}", Page.Index, nameof(Index), nameof(OnInitialized));
+		Logger!.LogDebug("Inside: {Class}!{Method}", nameof(Index), nameof(OnInitialized));
 		GetDefaultFeastDayType();
 	}
 
@@ -39,7 +38,6 @@ public partial class Index
 	
 		Logger!.LogDebug("...CurrentFilter.Name: {CurrentFilter}; CurrentDate: {CurrentDate}; FirstAndLastDates: {FirstAndLastDates}"
 			, CurrentFilter.Name, dateTimeWithoutTime.ToString("dd MMM yyyy HH"), CurrentFilter.FirstAndLastDates );
-	
 	}
 
 	private void ReturnedFilter(FeastDayType filter)

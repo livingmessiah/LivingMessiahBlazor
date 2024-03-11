@@ -7,15 +7,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Features\Calendar\PlannerComponent\**" />
     <Compile Remove="Features\SukkotAdmin\Donations\Services\**" />
     <Compile Remove="Features\Sukkot\RegistrationSteps\Data\**" />
     <Compile Remove="SmartEnums\**" />
+    <Content Remove="Features\Calendar\PlannerComponent\**" />
     <Content Remove="Features\SukkotAdmin\Donations\Services\**" />
     <Content Remove="Features\Sukkot\RegistrationSteps\Data\**" />
     <Content Remove="SmartEnums\**" />
+    <EmbeddedResource Remove="Features\Calendar\PlannerComponent\**" />
     <EmbeddedResource Remove="Features\SukkotAdmin\Donations\Services\**" />
     <EmbeddedResource Remove="Features\Sukkot\RegistrationSteps\Data\**" />
     <EmbeddedResource Remove="SmartEnums\**" />
+    <None Remove="Features\Calendar\PlannerComponent\**" />
     <None Remove="Features\SukkotAdmin\Donations\Services\**" />
     <None Remove="Features\Sukkot\RegistrationSteps\Data\**" />
     <None Remove="SmartEnums\**" />

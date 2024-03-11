@@ -4,7 +4,14 @@
 
 
 <div class="pb-1 mt-5 mb-0 border-bottom border-info">
-	<h2><i class="fas fa-film"></i> Carousel | @Year.ImageName</h2>
+	@if (mq==MediaQuery.Xs)
+	{
+		<h3><i class="far fa-sticky-note"></i> Living Messiah Calendar | @Year.ImageName</h3>
+	}
+	else
+	{
+	<h2><i class="far fa-sticky-note"></i> Living Messiah Calendar | @Year.ImageName</h2>
+	}
 </div>
 
 <div class="carousel-section">

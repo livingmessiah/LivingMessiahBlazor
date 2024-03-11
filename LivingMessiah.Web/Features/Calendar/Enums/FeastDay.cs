@@ -1,4 +1,5 @@
 ﻿using Ardalis.SmartEnum;
+using Microsoft.AspNetCore.Components;
 using System;
 using FDD = LivingMessiah.Web.Features.FeastDayPlanner.Enums; //FeastDayDetail
 
@@ -236,6 +237,15 @@ public abstract class FeastDay : SmartEnum<FeastDay>
 		}
 	}
 
+	public MarkupString HasCalendarDetailsFormated
+	{
+		get
+		{
+			return HasCalendarDetails ? (MarkupString)"<mark><b><span>&#10003;</span></b></mark>" : (MarkupString)string.Empty;
+		}
+	}
+
+	
 }
 
 public record DateRange(DateTime Min, DateTime Max);
