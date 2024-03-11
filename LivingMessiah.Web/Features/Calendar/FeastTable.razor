@@ -1,9 +1,11 @@
 ﻿@page "/FeastTable"
 @using Page = LivingMessiah.Web.Links.Calendar.FeastTable
+@using LivingMessiah.Web.Infrastructure
+
 <PageTitle>@Page.Title</PageTitle>
 
-<div class="pb-1 mt-4 mb-5 border-bottom border-info">
-	<h2><i class="@Page.Icon"></i> @Page.Title</h2>
+	<div class="pb-1 mt-4 mb-5 border-bottom border-info">
+		<h2><i class="@Page.Icon"></i> @Page.Title</h2>
 </div>
 
 <div class="card mb-3 border-warning">
@@ -17,25 +19,35 @@
 				<th class="text-info">Name</th>
 				<th class="text-info">Title</th>
 				<th class="text-info">Details</th>
-				<th class="text-info">Has Calendar Details</th>
+				<th class="text-info">HCD<sup>&dagger;</sup></th>
+				<th class="text-info">Date</th>
 			</TableHeader>
 			<RowTemplate>
-				<td>@context.Value</td>
+				<td>
+					@if (@context.HasCalendarDetails)
+					{
+						<mark><b>@context.Value</b></mark>
+					}
+					else
+					{
+						@context.Value
+					}
+				</td>
+
 				<td>@context.Name</td>
 				<td>@context.CalendarTitle</td>
-				<td>@context.Details</td>
-				<td>@context.HasCalendarDetails</td>
-				@*				<td>
-				@if (@context.HasCalendarDetails)
-				{
-				Calendar.Enums.FeastDayDetail.FromValue(context.Value).Name;
-				}
-				</td>*@
+				<td>@context.Details.Truncate(25)</td>
+				<td>@context.HasCalendarDetailsFormated</td>
+				<td>@context.Date.ToString(DateFormat.ddd_mm_dd)</td>
 			</RowTemplate>
 		</TableTemplate>
 	</div>
-</div>
 
+	<div class="card-footer">
+		<h6 class="card-title float-end">&dagger; HCD: Has Calendar Details </h6>
+	</div>
+
+</div>
 
 <div class="card mb-3 border-warning">
 	<div class="card-header">
@@ -46,20 +58,28 @@
 			<TableHeader>
 				<th class="text-info">Id</th>
 				<th class="text-info">Name</th>
-				<th class="text-info">ParentFeastDayId</th>
-				@*<th class="text-info">ParentFeastDayName</th>*@
+				<th class="text-info">PFD Id <sup>&Dagger;</sup></th>
 				<th class="text-info">Add Days</th>
-				<th class="text-info">Descr</th>
+				<th class="text-info">Description</th>
+				<th class="text-info">Date</th>
 			</TableHeader>
 			<RowTemplate>
 				<td>@context.Value</td>
 				<td>@context.Name</td>
-				<td>@context.ParentFeastDayId</td>
-				<td>@context.AddDays</td>
+				<td class="text-center">
+					<mark><b>@context.ParentFeastDayId</b></mark>
+				</td>
+				<td class="text-center">@context.AddDays</td>
 				<td>@context.Description</td>
+				<td>@context.ParentDate</td>
 			</RowTemplate>
 		</TableTemplate>
 	</div>
+
+	<div class="card-footer">
+		<h6 class="card-title float-end">&Dagger; PFD Id: ParentFeastDayId</h6>
+	</div>
+
 </div>
 
 @code {

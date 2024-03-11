@@ -1,5 +1,0 @@
-
-The contents of this folder comprise of v1 of the new Planner Page (`@page "/Planner"`)
-
-It is to be depricated for the contents found in the folder `Features\FeastDayPlanner` 
-

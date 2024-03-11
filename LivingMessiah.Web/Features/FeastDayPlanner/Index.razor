@@ -1,13 +1,8 @@
-﻿@page "/PlannerV2"
+﻿@using LivingMessiah.Web.Infrastructure
 
-@using Page = LivingMessiah.Web.Links.Calendar.FeastPlanner
-@using LivingMessiah.Web.Infrastructure
-
-<PageTitle>@Page.Title</PageTitle>
-
-	<div class="pb-1 mt-4 mb-2 border-bottom border-info">
-		<LearnMoreModal />
-		<h2><i class="@Page.Icon"></i> @Page.Title</h2>
+<div class="pb-1 mt-5 mb-0 border-bottom border-info">
+	<LearnMoreModal />
+	<h2><i class="fas fa-bread-slice"></i> Feast Planner</h2>
 </div>
 
 <div class="@MediaQuery.XsOrSm.DivClass">
@@ -46,6 +41,10 @@
 	</div>
 </div>
 
+@*
+	ToDo: Not Being Used
+	- Maybe wrap this with a Learn More... Buttons
+	<CommonHebrewWords /> 
 
-
+*@
 

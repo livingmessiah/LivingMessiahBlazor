@@ -1,5 +1,5 @@
 ﻿using Ardalis.SmartEnum;
-
+using LivingMessiah.Web.Features.Admin.Video;
 using static LivingMessiah.Web.Links.Admin;
 // using LivingMessiah.Web.Links; not used, I think cuz i'm trying to make this be the source of  "Page Link" truth
 
@@ -19,8 +19,9 @@ public abstract class Nav : SmartEnum<Nav>
 		internal const int SpecialEvents = 6;
 		internal const int DatabaseError = 7;
 		internal const int ParashaCalendar = 8;
-		internal const int CalendarHealthCheck = 9;
-		internal const int Dashboard = 10;
+		internal const int FeastTable = 9;
+		internal const int CalendarHealthCheck = 10;
+		internal const int Dashboard = 11;
 	}
 	#endregion
 
@@ -33,6 +34,7 @@ public abstract class Nav : SmartEnum<Nav>
 	public static readonly Nav SpecialEvents = new SpecialEventsSE();
 	public static readonly Nav DatabaseError = new DatabaseErrorSE();
 	public static readonly Nav ParashaCalendar = new ParashaCalendarSE();
+	public static readonly Nav FeastTable = new FeastTableSE();
 	public static readonly Nav CalendarHealthCheck = new CalendarHealthCheckSE();
 	public static readonly Nav Dashboard = new DashboardSE();
 	#endregion
@@ -125,12 +127,23 @@ public abstract class Nav : SmartEnum<Nav>
 	private sealed class ParashaCalendarSE : Nav
 	{
 		public ParashaCalendarSE() : base($"{nameof(Id.ParashaCalendar)}", Id.ParashaCalendar) { }
-		public override string Index =>  "/ParashaCalendar"; //Links.ParashaCalendar.Index;
+		public override string Index => "/ParashaCalendar"; //Links.ParashaCalendar.Index;
 		public override string Text => "Parasha Calendar"; //public const string Title = "Parasha Calendar";
 		public override string Icon => "fas fa-file-csv"; // far fa-file-excel 
-		
+
 		public override string Role => "admin";
 		public override int Sort => 8;
+	}
+
+	private sealed class FeastTableSE : Nav
+	{
+		public FeastTableSE() : base($"{nameof(Id.FeastTable)}", Id.FeastTable) { }
+		public override string Index =>  Links.Calendar.FeastTable.Index;
+		public override string Text => Links.Calendar.FeastTable.Title;
+		public override string Icon => Links.Calendar.FeastTable.Icon;
+		
+		public override string Role => "admin";
+		public override int Sort => 9;
 	}
 
 	private sealed class CalendarHealthCheckSE : Nav
@@ -141,22 +154,18 @@ public abstract class Nav : SmartEnum<Nav>
 		public override string Icon => "fas fa-heartbeat"; 
 
 		public override string Role => "admin";
-		public override int Sort => 9;
+		public override int Sort => 10;
 	}
-
-	//
 
 	private sealed class DashboardSE : Nav
 	{
 		public DashboardSE() : base($"{nameof(Id.Dashboard)}", Id.Dashboard) { }
 		public override string Index => "/Admin/Dashboard"; 
-
 		public override string Text => "Dashboard";
-
 		public override string Icon => "fas fa-tachometer-alt"; 
 
 		public override string Role => "admin";
-		public override int Sort => 10;
+		public override int Sort => 11;
 	}
 
 	
