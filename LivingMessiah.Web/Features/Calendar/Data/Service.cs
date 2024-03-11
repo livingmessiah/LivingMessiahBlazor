@@ -68,8 +68,9 @@ public class Service : IService
 		LoadFeastDaysExceptHanukkah(int runningCount, List<ReadonlyEventsData> dataList)
 	{
 		int i = 0;
+		
 		foreach (var fd in Enums.FeastDay.List
-												.Where(w => w.Value != Enums.FeastDay.Hanukkah)
+												.Where(w => w.Value != Enums.FeastDay.Hanukkah & w.Value != Enums.FeastDay.Passover) 
 												.OrderBy(o => o.Value).ToList())
 		{
 			i += 1;
@@ -80,7 +81,7 @@ public class Service : IService
 				Description = fd.Details,
 				StartTime = fd.Date,
 				EndTime = fd.Date,
-				CategoryColor = Enums.DateType.Feast.CalendarColor,  // ToDo: Use Turquoise for Passover cuz it's not a High Sabbath
+				CategoryColor = Enums.DateType.Feast.CalendarColor, 
 				IsAllDay = true,
 				IsReadonly = true
 			}
@@ -90,12 +91,13 @@ public class Service : IService
 		return (runningCount + i, dataList);
 	}
 
+	// Passover
 	private static (int RunningCount, List<ReadonlyEventsData> DataList) 
-		LoadFeastDayDetails(int runningCount, List<ReadonlyEventsData> dataList)
+		LoadFeastDayDetails(int runningCount, List<ReadonlyEventsData> dataList)  
 	{
 		DateTime date;
-
 		int i = 0;
+
 		foreach (var item in Enums.FeastDayDetail.List.ToList())
 		{
 			i += 1;
@@ -107,7 +109,7 @@ public class Service : IService
 				Description = item.Description,
 				StartTime = date.AddDays(item.AddDays),
 				EndTime = date.AddDays(item.AddDays),
-				CategoryColor = Enums.DateType.Feast.CalendarColor,
+				CategoryColor = item.CalendarColor,
 				IsAllDay = true,
 				IsReadonly = true
 			}
@@ -116,10 +118,11 @@ public class Service : IService
 		return (runningCount + i, dataList);
 	}
 
+	// Omer
 	private static (int RunningCount, List<ReadonlyEventsData> DataList)
 		 LoadOmerDates(int runningCount, List<ReadonlyEventsData> dataList)
 	{
-		DateTime startDate = Enums.FeastDay.Passover.Date.AddDays(2);
+		DateTime startDate = Enums.FeastDay.Passover.Date.AddDays(1); 
 
 		int i;
 		for (i = 1; i < 50; i++)

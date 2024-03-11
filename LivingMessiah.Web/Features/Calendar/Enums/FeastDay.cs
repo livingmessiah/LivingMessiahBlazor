@@ -109,6 +109,7 @@ public abstract class FeastDay : SmartEnum<FeastDay>
 		public override DateTime Date => Convert.ToDateTime("2024-03-24"); // Purim
 	}
 
+	//ToDo, Rename this PassoverWeek(SE)
 	private sealed class PassoverSE : FeastDay
 	{
 		public PassoverSE() : base($"{nameof(Id.Passover)}", Id.Passover) { }
@@ -122,14 +123,14 @@ public abstract class FeastDay : SmartEnum<FeastDay>
 		public override string Icon => "fas fa-door-open";
 		public override string VerseReferenceCard => "Lev_23_04_08";
 		public override bool IsHighSabbath => true;
-		public override int EndOfWeekAddDays => 7;  // this is 7 not 6 because I'm starting from passover, not 1st day of unleavened bread
+		public override int EndOfWeekAddDays => 6;  // changed to 6 because I'm starting from 1st day of unleavened bread (before it was passover)
 		public override bool IsStartOfEdge => false;
 		public override bool IsEndOfEdge => false;
 
 		public override bool HasCalendarDetails => true;
 		public override int? DaysFromPrevFeast => null;  // Purim comes before and it's to fluid to track, so null
 		public override DateRange Range => new DateRange(Date, FDD.FeastDayDetail.UnleavenedBreadDay7.Date);
-		public override DateTime Date => Convert.ToDateTime("2024-04-22"); // Passover
+		public override DateTime Date => Convert.ToDateTime("2024-04-23"); // 1st day of UnleavenedBreadDay1
 	}
 
 	private sealed class WeeksSE : FeastDay

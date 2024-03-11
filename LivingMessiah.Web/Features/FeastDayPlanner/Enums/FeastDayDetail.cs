@@ -134,7 +134,7 @@ public abstract class FeastDayDetail : SmartEnum<FeastDayDetail>
 	{
 		public UnleavenedBreadDay7SE() : base($"{nameof(Id.UnleavenedBreadDay7)}", Id.UnleavenedBreadDay7) { }
 		public override int ParentFeastDayId => FeastDayType.Passover.Value;
-		public override DateTime Date => FeastDayType.Passover.Date.AddDays(7);
+		public override DateTime Date => FeastDayType.Passover.Date.AddDays(6);
 		public override string Description => "Unleavened Bread Day 7";
 		public override string HebrewDate => "Nissan 21";
 		public override string HebrewBGColor => BarColor.HebrewSabbathBGColor;
