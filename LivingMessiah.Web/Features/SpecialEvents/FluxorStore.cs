@@ -88,7 +88,7 @@ public static class Reducers
 	{
 		return state with { EditItemId = action.Id };
 	}
-		
+
 	[ReducerMethod]
 	public static State On_Set_Display_Item(State state, Set_Display_Item_Action action)
 	{
@@ -197,41 +197,46 @@ public static class Reducers
 public class Effects
 {
 	#region Constructor and DI
-	private readonly ILogger Logger;
-	private readonly Data.IRepository db;
+	private readonly ILogger? Logger;
+	private readonly Data.IRepository query;
+	private readonly Data.ICommands commands;
 
-	public Effects(ILogger<Effects> logger, Data.IRepository repository)
+	public Effects(ILogger<Effects> logger, Data.IRepository repository, Data.ICommands commands)
 	{
 		Logger = logger;
-		db = repository;
+		query = repository;
+		this.commands = commands;
 	}
 	#endregion
 
 	[EffectMethod]
 	public async Task GetList(Get_List_Action action, IDispatcher dispatcher)
 	{
+		DateTimeOffset start = DateTimeOffset.UtcNow.AddDays(-200);
+		DateTimeOffset end = DateTimeOffset.UtcNow.AddDays(+200);
 		string inside = nameof(Effects) + "!" + nameof(GetList) + "!" + nameof(Get_List_Action);
-		Logger.LogDebug(string.Format("Inside {0}; Date Range:{1} to {2}", inside, Constants.DateRange.Start, Constants.DateRange.End));
+		Logger!.LogDebug(string.Format("Inside {0}; Date Range:{1} to {2}", inside, start.ToString("d"), end.ToString("d")));
 		try
 		{
 			List<Data.vwSpecialEvent> specialEvents = new();
-			specialEvents = await db!.GetEventsByDateRange(DateTime.Parse(Constants.DateRange.Start), DateTime.Parse(Constants.DateRange.End));
+			specialEvents = await query!.GetEventsByDateRange(start, end);
+
 
 			if (specialEvents is not null)
 			{
-				Logger.LogDebug(string.Format("...calling {0}, Count: {1}", nameof(Set_Data_MasterList_Action), specialEvents.Count()));
+				Logger!.LogDebug(string.Format("...calling {0}, Count: {1}", nameof(Set_Data_MasterList_Action), specialEvents.Count()));
 				dispatcher.Dispatch(new Set_Data_MasterList_Action(specialEvents));
 				//dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Success, "Special Events Found")); // To Verbose
 			}
 			else
 			{
-				Logger.LogWarning(string.Format("...{0}; {1} is null", inside, nameof(specialEvents)));
+				Logger!.LogWarning(string.Format("...{0}; {1} is null", inside, nameof(specialEvents)));
 				dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Warning, "No Special Events Found"));
 			}
 		}
 		catch (Exception ex)
 		{
-			Logger.LogError(ex, string.Format("...Inside catch of {0}", inside));
+			Logger!.LogError(ex, string.Format("...Inside catch of {0}", inside));
 			dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Failure, Constants.Effects.ResponseMessageFailure));
 		}
 		/*
@@ -251,74 +256,99 @@ public class Effects
 	{
 		if (action.FormMode is null) throw new ArgumentException("Parameter cannot be null", nameof(action.FormMode));
 
-		string inside = $"{nameof(Effects)}!{nameof(Submit)}; Action: {action.FormMode.Name}";
-
 		if (action.FormMode == Enums.FormMode.Add)
 		{
-			Logger.LogDebug(string.Format("Inside {0}", inside));
+			Logger!.LogDebug("{Class}!{Method}!{Action}; DataInterface: {DataInterface}"
+			, nameof(Effects), nameof(Submit), action.FormMode.Name, nameof(commands));
 			try
 			{
-				var sprocTuple = await db.CreateSpecialEvent(action.FormVM);
-				dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Success, sprocTuple.Item3));
+				var sprocTuple = await commands.CreateSpecialEvent(action.FormVM);
+
+				if (sprocTuple.Item2 == 0)  // Item2:SprocReturnValue
+				{
+					Logger!.LogInformation("{Class}!{Method}; NewId: {NewId}; DataInterface: {DataInterface}"
+					, nameof(Effects), nameof(Submit), sprocTuple.Item1, nameof(commands));
+					dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Success, $"{sprocTuple.Item3}")); // Item3:ReturnMsg
+				}
+				else
+				{
+					Logger!.LogWarning("{Class}!{Method}; ReturnValue: {ReturnValue}; DataInterface: {DataInterface}"
+					, nameof(Effects), nameof(Submit), sprocTuple.Item2, nameof(commands));
+					dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Warning, $"{sprocTuple.Item3}")); // Item3:ReturnMsg
+				}
+
 			}
 			catch (Exception ex)
 			{
-				Logger.LogError(ex, string.Format("...Inside catch of {0}", inside));
+				Logger!.LogError(ex, "catch of {Class}!{Method}; DataInterface: {DataInterface}"
+				, nameof(Effects), nameof(Submit), nameof(commands));
 				dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Failure
 									, $"{Constants.Effects.ResponseMessageFailure}. Action: {action.FormMode.Name}"));
 			}
 		}
 		else
 		{
-			Logger.LogDebug(string.Format("Inside {0}; Id: {1}", inside, action.FormVM.Id));
+			Logger!.LogDebug("{Class}!{Method}!{Action}; Id: {Id}; DataInterface: {DataInterface}"
+			, nameof(Effects), nameof(Submit), action.FormMode.Name, action.FormVM.Id, nameof(commands));
 			try
 			{
-				var sprocTuple = await db.UpdateSpecialEvent(action.FormVM);
-				dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Success
-					, $"Special Event Updated for id: [{action.FormVM.Id}], Affected Rows: {sprocTuple.Item1}")); //sprocTuple.RowsAffected
+				var sprocTuple = await commands.UpdateSpecialEvent(action.FormVM);
+
+				if (sprocTuple.Item1 == 0)  // Item1:SprocReturnValue
+				{
+					dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Success
+						, $"Special Event Updated for id: [{action.FormVM.Id}], SPROC Returned Code: {sprocTuple.Item1}")); //sprocTuple.SprocReturnValue
+				}
+				else
+				{
+					Logger!.LogWarning("{Class}!{Method}; ReturnValue: {ReturnValue}; DataInterface: {DataInterface}"
+					, nameof(Effects), nameof(Submit), sprocTuple.Item1, nameof(commands));
+					dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Warning, $"{sprocTuple.Item2}")); // Item2:ReturnMsg
+
+				}
 			}
 			catch (Exception ex)
 			{
-				Logger.LogError(ex, string.Format("...Inside catch of {0}", inside));
+				Logger!.LogError(ex, "catch of {Class}!{Method}; DataInterface: {DataInterface}"
+				, nameof(Effects), nameof(Submit), nameof(commands));
 				dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Failure
 					, $"{Constants.Effects.ResponseMessageFailure}. Action: {action.FormMode.Name}"));
 			}
 		}
-
 	}
 
 
 	[EffectMethod]
 	public async Task GetItem(Get_EditItem_Action action, IDispatcher dispatcher)
 	{
-		string inside = $"{nameof(Effects)}!{nameof(GetItem)};  action.Id: {action.Id}";
-
-		Logger.LogDebug(string.Format("Inside {0}", inside));
+		Logger!.LogDebug("{Class}!{Method}; Id: {Id}; DataInterface: {DataInterface}"
+		, nameof(Effects), nameof(GetItem), action.Id, nameof(query));
 		try
 		{
 			FormVM? FormVM = new();
-			FormVM = await db!.GetEventById(action.Id); 
+			FormVM = await query!.GetEventById(action.Id);
 
-			if (FormVM is null)
+			if (FormVM is not null)
 			{
-				Logger.LogWarning(string.Format("...{0}; {1} is null", inside, nameof(FormVM)));
-				//dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Warning, $"Special Event Not Found; Id: {action.Id}"));
-				// dispatcher.Dispatch(new Set_FormVM_Action(null)); ToDo: should I make FormVM null?
+				Logger!.LogDebug("{Class}!{Method}; Title: {Title}; DataInterface!Method: {DataInterface}!{DbMethod}"
+				, nameof(Effects), nameof(GetItem), FormVM!.Title, nameof(query), nameof(query.GetEventById));
+				dispatcher.Dispatch(new Set_FormVM_Action(FormVM));
+				//dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Info, $"Got {FormVM!.Title!}"));
 			}
 			else
 			{
-				Logger.LogDebug(string.Format("...Title: {0}", FormVM!.Title));
-				dispatcher.Dispatch(new Set_FormVM_Action(FormVM));
-				//dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Info, $"Got {FormVM!.Title!}"));
-
+				Logger!.LogWarning("{Class}!{Method}; FormVM: {FormVM} is null; DataInterface!Method: {DataInterface}!{DbMethod}"
+				, nameof(Effects), nameof(GetItem), nameof(FormVM), nameof(query), nameof(query.GetEventById));
+				//dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Warning, $"Special Event Not Found; Id: {action.Id}"));
+				// dispatcher.Dispatch(new Set_FormVM_Action(null)); ToDo: should I make FormVM null?
 			}
 		}
 		catch (Exception ex)
 		{
-			Logger.LogError(ex, string.Format("...Inside catch of {0}", inside));
+			Logger!.LogError(ex, "catch of {Class}!{Method}; DataInterface: {DataInterface}"
+			, nameof(Effects), nameof(GetItem), nameof(query));
 			dispatcher.Dispatch(new Set_VisibleComponent_Action(VisibleComponent.MasterList));
 			dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Failure, Constants.Effects.ResponseMessageFailure));
-
 		}
 	}
 
@@ -326,15 +356,15 @@ public class Effects
 	public async Task Delete(Delete_Action action, IDispatcher dispatcher)
 	{
 		string inside = $"{nameof(Effects)}!{nameof(Delete)}; Id: {action.Id}";
-		Logger.LogDebug(string.Format("Inside {0}; Id: {1}", inside, action.Id));
+		Logger!.LogDebug(string.Format("Inside {0}; Id: {1}", inside, action.Id));
 		try
 		{
-			var affectedRows = await db.RemoveSpecialEvent(action.Id);
+			var affectedRows = await commands.RemoveSpecialEvent(action.Id);
 			dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Success, $"Special Event {action.Id} has been deleted"));
 		}
 		catch (Exception ex)
 		{
-			Logger.LogError(ex, string.Format("...Inside catch of {0}", inside));
+			Logger!.LogError(ex, string.Format("...Inside catch of {0}", inside));
 			dispatcher.Dispatch(new Response_Message_Action(ResponseMessage.Failure, Constants.Effects.ResponseMessageFailure));
 		}
 	}

@@ -14,6 +14,7 @@ public abstract class SpecialEventType : SmartEnum<SpecialEventType>
 		internal const int Movie = 6;
 		internal const int GuestSpeaker = 7;
 		internal const int Other = 8;
+		internal const int NewMoon = 9;
 	}
 	#endregion
 
@@ -25,6 +26,7 @@ public abstract class SpecialEventType : SmartEnum<SpecialEventType>
 	public static readonly SpecialEventType Movie = new MovieSE();
 	public static readonly SpecialEventType GuestSpeaker = new GuestSpeakerSE();
 	public static readonly SpecialEventType Other = new OtherSE();
+	public static readonly SpecialEventType NewMoon = new NewMoonSE();
 	// SE=SmartEnum
 	#endregion
 
@@ -79,6 +81,13 @@ public abstract class SpecialEventType : SmartEnum<SpecialEventType>
 		public override string Descr => "Other";
 	}
 
+	private sealed class NewMoonSE : SpecialEventType
+	{
+		public NewMoonSE() : base($"{nameof(Id.NewMoon)}", Id.NewMoon) { }
+		public override string Descr => "New Moon";
+	}
+
 	#endregion
 }
+// Ignore Spelling: Descr
 

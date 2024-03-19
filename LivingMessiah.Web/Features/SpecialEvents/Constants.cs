@@ -24,12 +24,6 @@ public static class Constants
 		public const string Color = "btn btn-outline-secondary btn-sm";
 	}
 
-	public static class DateRange
-	{
-		public const string Start = "2021-03-01";
-		public const string End = "2023-12-31";
-	}
-
 	public static class Effects
 	{
 		public const string ResponseMessageFailure = "An invalid operation occurred, contact your administrator";

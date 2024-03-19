@@ -9,6 +9,7 @@ public static class ServiceCollectionExtensions
 	{
 		services
 		.AddSingleton<IRepository, Repository>()
+		.AddSingleton<ICommands, Commands>()
 		.AddTransient<IValidator<FormVM>, FormVMValidator>();
 		return services;
 	}

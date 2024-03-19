@@ -19,6 +19,9 @@ public partial class MasterList
 
 	[CascadingParameter] IModalService Modal { get; set; } = default!;
 
+	DateTimeOffset start = DateTimeOffset.UtcNow.AddDays(-200);
+	DateTimeOffset end = DateTimeOffset.UtcNow.AddDays(+200);
+
 	protected override void OnInitialized()
 	{
 		Logger!.LogDebug(string.Format("Inside {0}", nameof(MasterList) + "!" + nameof(OnInitialized)));

@@ -44,10 +44,7 @@
 	<div class="card-body">
 		@if (!String.IsNullOrEmpty(@FormVM.ImageUrl))
 		{
-			<p class="">@FormVM.ImageUrl</p>
-			@*
-		<img src='@Blobs.UrlShabbatService(Section!.GraphicUrl)' alt="@Section.Title" class="img-fluid rounded mt-4" />
-		*@
+			<img src='@FormVM.ImageUrl' alt="Special Event Image" class="img-fluid rounded mt-1" />
 		}
 	</div>
 
