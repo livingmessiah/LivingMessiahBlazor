@@ -69,6 +69,13 @@ public static class DateUtil
 		return dateTimeWithTime.Date;
 	}
 
+	public static (string, string) GetCurrentGregorianAndHebrewDates(int testAddDays = 0)
+	{
+		DateTime today = GetDateTimeWithoutTime(DateTime.Now.AddDays(testAddDays).AddHours(Utc.ArizonaUtcMinus7));
+		string gregorianDate = today.ToString(DateFormat.FeastDayPlanner);
+		string hebrewDate = today.ToTransliteratedHebrewDateString();
+		return (gregorianDate, hebrewDate);
+	}
 
 	public static int GetNextShabbatWeek()
 	{

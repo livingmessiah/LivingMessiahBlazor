@@ -4,11 +4,8 @@
 @inject Data.IService? svc
 
 <div class="row mt-3">
-	<div class="col-3">
-		<p class="mt-3 text-center fw-bold">@vm!.GregorianDate</p>
-	</div>
 
-	<div class="col-6 text-center">
+	<div class="col-12 text-center">
 		<div class="card bg-primary text-white">
 			<div class="card-body">
 				<h4><i class="@FeastDayType!.Icon"></i> <b>@FeastDayType!.PlannerTitle</b> <span class="hebrew"> @FeastDayType!.Hebrew</span> </h4>
@@ -16,10 +13,6 @@
 			</div>
 		</div>
 		
-	</div>
-
-	<div class="col-3">
-		<p class="mt-3 text-center fw-bold">@vm.HebrewDate</p>
 	</div>
 
 </div>

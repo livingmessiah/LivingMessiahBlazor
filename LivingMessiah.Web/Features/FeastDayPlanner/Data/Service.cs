@@ -10,7 +10,6 @@ public interface IService
 {
 	HeaderServiceModel GetHeaderServiceModel(FeastDayType feastDay);
 	LunarMonths.ProgressBarVM GetHeaderServiceModelLunarMonth(LunarMonthType lunarMonth);
-
 }
 
 public class Service : IService
@@ -78,9 +77,6 @@ public class Service : IService
 			);
 
 		HeaderServiceModel model = new HeaderServiceModel();
-
-		model.GregorianDate = today.ToString(DateFormat.FeastDayPlanner);
-		model.HebrewDate = today.ToTransliteratedHebrewDateString();
 
 		if (today >= feastDay!.Range.Min && today <= feastDay!.Range.Max)
 		{

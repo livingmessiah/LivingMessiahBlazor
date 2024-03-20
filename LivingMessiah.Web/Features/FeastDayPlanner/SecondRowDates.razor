@@ -1,0 +1,24 @@
+﻿@using LivingMessiah.Web.Infrastructure;
+
+<div class="row mt-0">
+	<div class="col-6">
+		<p class=""><small>@GregorianDate</small></p>
+	</div>
+	<div class="col-6">
+		<p class="float-end"><small>@HebrewDate</small></p>
+	</div>
+</div>
+
+@code {
+	protected string? GregorianDate;
+	protected string? HebrewDate;
+
+	protected override void OnInitialized()
+	{
+		base.OnInitialized();
+		(string gregorianDate, string hebrewDate) = DateUtil.GetCurrentGregorianAndHebrewDates();
+		GregorianDate = gregorianDate;
+		HebrewDate = hebrewDate;
+	}
+
+}
