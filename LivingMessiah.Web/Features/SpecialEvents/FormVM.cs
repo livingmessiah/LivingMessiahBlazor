@@ -18,15 +18,14 @@ public class FormVM
 	public string? WebsiteDescr { get; set; }
 	public string? Description { get; set; }  // ToDo: md?, probably going to be Component Body
 
-	// ToDo: Warning	CS8618	Non-nullable property 'Description' et. al. must contain a non-null value when exiting constructor. Consider declaring the property as nullable.
-	/*
-	public FormVM()
+	public bool ShowSecondRow()
 	{
-		SpecialEventTypeId = SpecialEventType.Other.Value;
-		EventDate = DateTime.Now.AddDays(35);
-		ShowBeginDate = DateTime.Now.AddMonths(1);
-		ShowEndDate = DateTime.Now.AddDays(40);
+		/*
+		Right now I've decided to ignore if YouTubeId, SubTitle etc.
+		For know, this can be put in the SfRichTextEditor control
+		*/
+		return false;
 	}
-	*/
+
 }
 

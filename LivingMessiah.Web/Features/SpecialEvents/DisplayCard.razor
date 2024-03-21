@@ -17,66 +17,49 @@
 	</div>
 }
 
-<div class="card  border-primary my-1">
+<div class="card border-primary mb-4">
+	<img src='@FormVM!.ImageUrl' class="card-img-top p-1" />
 
 	<div class="card-header">
-
-		<div class="row">
-			<div class="col-6">
-				<h4>
-					<i class="far fa-calendar"></i>
-					<span class='badge bg-primary'>@FormVM!.EventDate.ToString(DateFormat.ddd_mm_dd)</span>
-				</h4>
-			</div>
-			<div class="col-6 text-end">
-				Type: @Enums.SpecialEventType.FromValue(FormVM.SpecialEventTypeId).Descr
-			</div>
-		</div>
-
-	</div>
-
-	<div class="card-body">
 		<h3 class="card-text text-center">
 			@FormVM.Title
 		</h3>
+
+		<h4 class="card-text text-center my-3">
+			<i class="far fa-calendar"></i>
+			<span class='badge bg-primary'>@FormVM!.EventDate.ToString(DateFormat.dddd_dd_MMMM)</span>
+		</h4>
+
 	</div>
 
-	<div class="card-body">
-		@if (!String.IsNullOrEmpty(@FormVM.ImageUrl))
-		{
-			<img src='@FormVM.ImageUrl' alt="Special Event Image" class="img-fluid rounded mt-1" />
-		}
-	</div>
+	@if (FormVM!.ShowSecondRow())
+	{
+		<div class="card-body">
 
-	<div class="card-body">
+			@if (!String.IsNullOrEmpty(@FormVM.YouTubeId))
+			{
+				<a href="https://www.youtube.com/watch?v=@FormVM.YouTubeId" target="_blank" title="@FormVM.YouTubeId">
+					<img src='https://img.youtube.com/vi/@FormVM.YouTubeId/mqdefault.jpg' class='mt-4' /> <br>  @FormVM.Title
+				</a>
+			}
 
-		@if (!String.IsNullOrEmpty(@FormVM.YouTubeId))
-		{
-			<a href="https://www.youtube.com/watch?v=@FormVM.YouTubeId" target="_blank" title="@FormVM.YouTubeId">
-				<img src='https://img.youtube.com/vi/@FormVM.YouTubeId/mqdefault.jpg' class='mt-4' /> <br>  @FormVM.Title
-			</a>
-		}
+			@if (!String.IsNullOrEmpty(@FormVM.SubTitle))
+			{
+				<h4 class="card-title">@FormVM.SubTitle</h4>
+			}
 
-
-		@if (!String.IsNullOrEmpty(@FormVM.SubTitle))
-		{
-			<h4 class="card-title">@FormVM.SubTitle</h4>
-		}
-
-		@if (!String.IsNullOrEmpty(@FormVM.WebsiteUrl))
-		{
-			<Anchor Href="@FormVM.WebsiteUrl" TargetIsBlank="true" Descr="@FormVM.WebsiteDescr">
-			</Anchor>
-		}
-	</div>
-
-	<div class="row mt-n2 mb-3">
-		<div class="col-12">
-			<SfRichTextEditor Readonly="true" @bind-Value="@FormVM.Description">
-				<RichTextEditorToolbarSettings Enable="false"></RichTextEditorToolbarSettings>
-			</SfRichTextEditor>
-
+			@if (!String.IsNullOrEmpty(@FormVM.WebsiteUrl))
+			{
+				<Anchor Href="@FormVM.WebsiteUrl" TargetIsBlank="true" Descr="@FormVM.WebsiteDescr">
+				</Anchor>
+			}
 		</div>
+	}
+
+	<div class="card-body">
+		<SfRichTextEditor Readonly="true" @bind-Value="@FormVM.Description">
+			<RichTextEditorToolbarSettings Enable="false"></RichTextEditorToolbarSettings>
+		</SfRichTextEditor>
 	</div>
 
 </div>
