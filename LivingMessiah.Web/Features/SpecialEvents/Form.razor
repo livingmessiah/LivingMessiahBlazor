@@ -133,10 +133,14 @@
 
 		<div class="row mt-n2 mb-3">
 			<div class="col-sm-12">
-				<SfRichTextEditor ShowCharCount="true" @bind-Value="@VM.Description" 
-					MaxLength="5000" Placeholder="Add some markdown " />
-				<ValidationMessage For="@(() => VM.Description)" />
 
+				<SfRichTextEditor @bind-Value="@VM.Description" ShowCharCount="true"
+													MaxLength="5000" Placeholder="Add some markdown ">
+					<ValidationMessage For="@(() => VM.Description)" />
+					<RichTextEditorToolbarSettings Items="@Tools" />
+					<RichTextEditorFontFamily Width="50px" Items="@FontFamilyItems" />
+					<RichTextEditorFontSize Width="50px" Items="@FontSizeItems" />
+				</SfRichTextEditor>
 			</div>
 		</div>
 
