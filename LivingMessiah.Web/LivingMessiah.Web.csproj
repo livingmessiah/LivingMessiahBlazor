@@ -41,6 +41,14 @@
     <None Include="Features\SpecialEvents\ShowMasterIndex.razor" />
     <None Include="Features\SpecialEvents\ToasterSpecialEvents.razor" />
     <None Include="Features\SpecialEvents\YouTubeButton.razor" />
+    <None Include="Features\ThresholdCovenant\OriginalHtml\ChristianPassOverHtml.razor" />
+    <None Include="Features\ThresholdCovenant\OriginalHtml\EarliestTempleAltarHtml.razor" />
+    <None Include="Features\ThresholdCovenant\OriginalHtml\HebrewPassOverOrCrossOverHtml.razor" />
+    <None Include="Features\ThresholdCovenant\OriginalHtml\OriginOfTheRiteHtml.razor" />
+    <None Include="Features\ThresholdCovenant\OriginalHtml\OutgrowthsAndPerversionsHtml.razor" />
+    <None Include="Features\ThresholdCovenant\OriginalHtml\PrefaceAndIntro.razor" />
+    <None Include="Features\ThresholdCovenant\OriginalHtml\PrimativeFamilyAltarHtml.razor" />
+    <None Include="Features\ThresholdCovenant\OriginalHtml\SacredBoundaryLineHtml.razor" />
     <!--<None Include="Pages\KeyDates\Obsolete\Index.razor" />-->
     <None Include="Shared\EnvComponent.razor" />
     <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css.map" />

@@ -342,6 +342,18 @@ public class LinksFactory : ILinksFactory
 					HomeSidebarUsage=false,
 					SortOrder=30,
 					SitemapUsage=true
+				},
+
+				new Link
+				{
+					Index = ThresholdCovenant.Index,
+					Title = ThresholdCovenant.Title,
+					Icon = ThresholdCovenant.Icon,
+					HomeSidebarUsage=false,
+					HomeFloatRightHebrew="סַף",
+					HomeTitleSuffix=" saph H5592",
+					SortOrder=31,
+					SitemapUsage=true
 				}
 
 			};

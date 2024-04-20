@@ -1,0 +1,58 @@
+﻿@page "/ThresholdCovenant"
+@using Microsoft.Extensions.Logging;
+
+@* <PageHeader PageEnum="LivingMessiah.Web.Enums.Nav.ThresholdCovenant" /> *@
+@using Page = LivingMessiah.Web.Links.ThresholdCovenant
+<PageTitle>@Page.Title</PageTitle>
+
+@* @inject ILogger<Index> Logger *@
+
+<div class="">
+	<TocToggleButton CurrentBoolValue=@_AreNavItemsCollapsed OnToggleSelected="@ReturnedToggle" />
+</div>
+
+@if (!_AreNavItemsCollapsed)
+{
+	<TableOfContentFilter CurrentFilter=@CurrentFilter OnFilterSelected="@ReturnedFilter" />
+}
+
+<BookSection NavItem="CurrentFilter" />
+
+@code {
+
+	protected Enums.NavItem currentNavItem = Enums.NavItem.HebrewPassOverOrCrossOver;
+	
+	public Enums.NavItem? CurrentFilter { get; set; }
+	protected override void OnInitialized()
+	{
+		base.OnInitialized();
+		CurrentFilter=Enums.NavItem.HebrewPassOverOrCrossOver;
+		_AreNavItemsCollapsed = true;
+		// Logger!.LogInformation("{Class}!{Method}; AreNavItemsCollapsed: {_AreNavItemsCollapsed}"
+		// , nameof(Index), nameof(OnInitialized), _AreNavItemsCollapsed);
+
+	}
+
+	private void ReturnedFilter(Enums.NavItem filter)
+	{
+		// Logger!.LogInformation("{Class}!{Method}; filter: {filter}"
+		// , nameof(Index), nameof(ReturnedFilter), filter);
+		_AreNavItemsCollapsed = true;
+		CurrentFilter = filter;
+		StateHasChanged();
+	}
+	
+	private bool _AreNavItemsCollapsed;
+
+
+	#region EventCallbacks
+	private void ReturnedToggle(bool areNavItemsCollapsed)
+	{
+		_AreNavItemsCollapsed = areNavItemsCollapsed;
+	// 	Logger!.LogInformation("{Class}!{Method}; AreNavItemsCollapsed: {_AreNavItemsCollapsed}"
+	// , nameof(Index), nameof(ReturnedToggle), _AreNavItemsCollapsed);
+
+		StateHasChanged();
+	}
+	#endregion
+}

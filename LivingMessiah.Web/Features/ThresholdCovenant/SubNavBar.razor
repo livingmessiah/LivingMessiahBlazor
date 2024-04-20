@@ -1,0 +1,78 @@
+﻿@using PageLink = LivingMessiah.Web.Features.ThresholdCovenant.Enums
+
+@*   *@
+
+<nav id="subNavBar" class="navbar navbar-expand-xl border-bottom box-shadow p-0 mb-3 navbar-light bg-light">
+	<div class="container">
+		
+		<a class="nav-link @NavLinkActive(@Enums.NavItem.ChristianPassOver)" title="" href="">
+			<i class="fas fa-home"></i>
+			Home
+		</a>
+
+		<button class="navbar-toggler" @onclick="ToggleSubNavBar" type="button"
+						data-bs-toggle="collapse" data-target=".navbar-collapse"
+						aria-controls="navbarSupportedContent"
+						aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="@SubNavBarCssClass navbar-collapse d-md-inline-flex flex-sm-row-reverse"
+				 @onclick="ToggleSubNavBar">
+
+			<ul class="navbar-nav flex-grow-1">
+				@foreach (var item in Enums.NavItem.List.OrderBy(o => o.Value))
+				{
+					<li class="nav-item " role="presentation">
+						<button @onclick="@(e => OnButtonClicked(item))"
+										class="nav-link @NavLinkActive(@item)" type="button" role="tab"
+										id="@item.ButtonId"
+										data-bs-toggle="tab"
+										data-bs-target="@item.Target"
+										aria-controls="@item.AriaControls"
+										aria-selected="@AriaActive(item)">
+							@item.Value <small>@item.Title</small>
+						</button>
+					</li>
+				}
+			</ul>
+
+		</div>
+	</div>
+</nav>
+
+
+@code {
+
+	[Parameter, EditorRequired] public required Enums.NavItem? CurrentFilter { get; set; }
+	[Parameter] public EventCallback<Enums.NavItem> OnFilterSelected { get; set; }
+
+	protected Enums.NavItem currentNavItem = Enums.NavItem.HebrewPassOverOrCrossOver;
+
+	bool collapseNavMenu = true;
+	string? SubNavBarCssClass => collapseNavMenu ? "collapse" : null;
+
+	void ToggleSubNavBar()
+	{
+		collapseNavMenu = !collapseNavMenu;
+	}
+	protected Enums.NavItem CurrentNavItem = Enums.NavItem.HebrewPassOverOrCrossOver;
+
+	private void OnButtonClicked(Enums.NavItem filter)
+	{
+		currentNavItem = filter;
+		OnFilterSelected.InvokeAsync(filter);
+	}
+
+	string NavLinkActive(Enums.NavItem navItem)
+	{
+		return currentNavItem == navItem ? " active" : "";
+	}
+
+	string AriaActive(Enums.NavItem navItem)
+	{
+		return currentNavItem == navItem ? "true" : "false";
+	}
+
+	//protected override async Task OnInitializedAsync()	{	await Task.Delay(0);	}
+}
