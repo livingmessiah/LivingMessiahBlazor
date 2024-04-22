@@ -1,0 +1,31 @@
+﻿@* <div class="card mt-1">
+
+	<h5 class="card-header text-center">
+		@book.Title @refChapterVerse
+	</h5> *@
+<div class="card-body">
+
+	<div class="bg-info-subtle p-1">
+		<p class="card-text">
+			<sup class="verse-number"><a href="https://www.blueletterbible.org/kjv/exo/12/21/s_62001" target="_blank">21</a></sup>
+			Then Moses called for all the elders of Israel, and said unto them, Draw out and take you a lamb according to your families, and kill the passover.
+		</p>
+
+		<p class="card-text">
+			<sup class="verse-number"><a href="https://www.blueletterbible.org/kjv/exo/12/27/s_62027" target="_blank">27</a></sup>
+			That ye shall say, It [is] the sacrifice of the LORD'S passover, who passed over the houses of the children of Israel in Egypt, when he smote the Egyptians, and delivered our houses. And the people bowed the head and worshipped.
+		</p>
+
+		<p class="card-text text-end mb-0">
+			<small><i>@book.TransliterationInHebrew</i> <span class="hebrew">@book.NameInHebrew</span> <sup>@book.Title </sup> @refChapterVerse</small>
+		</p>
+	</div>
+
+</div>
+
+@* </div> *@
+
+@code {
+	BibleBook book = BibleBook.Exodus;
+	string refChapterVerse = "12:21, 27";
+}

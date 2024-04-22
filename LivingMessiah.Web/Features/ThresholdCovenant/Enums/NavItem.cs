@@ -81,7 +81,7 @@ public abstract class NavItem : SmartEnum<NavItem>
 		public HebrewPassOverOrCrossOverSE() : base($"{nameof(Id.HebrewPassOverOrCrossOver)}", Id.HebrewPassOverOrCrossOver) { }
 		public override string ButtonId => $"{nameof(Id.HebrewPassOverOrCrossOver).ToLower()}-tab";
 		public override string Target => $"#{nameof(Id.HebrewPassOverOrCrossOver).ToLower()}";
-		public override string Title => "Hebrew Pass-over or Cros-over";
+		public override string Title => "Hebrew Pass-over or Cross-over";
 		public override string AriaControls => $"{nameof(Id.HebrewPassOverOrCrossOver).ToLower()}";
 	}
 

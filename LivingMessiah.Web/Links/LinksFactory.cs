@@ -349,7 +349,7 @@ public class LinksFactory : ILinksFactory
 					Index = ThresholdCovenant.Index,
 					Title = ThresholdCovenant.Title,
 					Icon = ThresholdCovenant.Icon,
-					HomeSidebarUsage=false,
+					HomeSidebarUsage=true,
 					HomeFloatRightHebrew="סַף",
 					HomeTitleSuffix=" saph H5592",
 					SortOrder=31,
@@ -373,7 +373,7 @@ public class LinksFactory : ILinksFactory
 					HomeFloatRightHebrew="פֶסַח",
 					HomeTitleSuffix=" pesach H6453",
 					SortOrder = 0,
-					SitemapUsage=false
+					SitemapUsage=true
 				},
 				new Link
 				{
