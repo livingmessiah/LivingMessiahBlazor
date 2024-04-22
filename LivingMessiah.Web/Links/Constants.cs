@@ -566,6 +566,15 @@ public static class ThankYou
 	public const string Descr = "Thank You !!!";
 }
 
+
+public static class ThresholdCovenant
+{
+	public const string Index = "/ThresholdCovenant";
+	public const string Title = "Threshold Covenant";
+	public const string Icon = "fas fa-broom";
+}
+
+
 public static class TorahTuesday
 {
 	public const string Index = "/TorahTuesday";

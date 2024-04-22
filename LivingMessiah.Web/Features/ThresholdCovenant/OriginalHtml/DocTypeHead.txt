@@ -1,0 +1,98 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+    <title>The Threshold Covenant, by H. Clay Trumbull, a Project Gutenberg eBook</title>
+    <link rel="coverpage" href="images/cover.jpg" />
+    <style type="text/css">
+       body { margin-left:8%;margin-right:10%; }
+       h1 { text-align:center;font-weight:normal;font-size:1.4em; }
+       h2 { text-align:center;font-weight:normal;font-size:1.2em; page-break-before: auto}
+       h3 { text-align:center;font-weight:normal;font-size:1.2em; }
+       .pageno { right:1%;font-size:x-small;background-color:inherit;color:silver;
+               text-indent:0em;text-align:right;position:absolute;
+               border:1px solid silver;padding:1px 3px;font-style:normal;
+               font-variant:normal;font-weight:normal;text-decoration:none; }
+       .pageno:after { color: silver; content: attr(title); }
+       p { text-indent:0;margin-top:0.5em;margin-bottom:0.5em;text-align:justify; }
+       sup { vertical-align: top; font-size: 0.6em; }
+       .sc { font-variant:small-caps; }
+       .large { font-size:large; }
+       .xlarge { font-size:x-large; }
+       .small { font-size:small; }
+       .lg-container-b { text-align: center; }
+       @media handheld { .lg-container-b { clear: both; }}
+       .lg-container-l { text-align: left; }
+       @media handheld { .lg-container-l { clear: both; }}
+       .linegroup { display: inline-block; text-align: left; }
+       @media handheld { .linegroup { display: block; margin-left: 1.5em; }}
+       .linegroup .group { margin: 1em auto; }
+       .linegroup .line { text-indent: -3em; padding-left: 3em; }
+       div.linegroup> :first-child { margin-top: 0; }
+       .linegroup .in1 { text-indent: -2.5em; }
+       .linegroup .in2 { text-indent: -2.0em; }
+       .linegroup .in3 { text-indent: -1.5em; }
+       .linegroup .in4 { text-indent: -1.0em; }
+       div.footnote {margin-left: 2.5em; }
+       div.footnote>:first-child { margin-top:1em; }
+       div.footnote .label { display: inline-block; width: 0em; text-indent: -2.5em;
+               text-align: right;}
+       div.pbb { page-break-before:always; }
+       hr.pb { border:none;border-bottom:1px solid; margin-bottom:1em; }
+       @media handheld { hr.pb { display:none; }}
+       .chapter { clear:both; page-break-before: always;}
+       .figcenter { clear:both; max-width:100%; margin:2em auto; text-align:center; }
+       .figcenter img { max-width:100%; height:auto; }
+       .id001 { width:600px; }
+       @media handheld { .id001 { margin-left:5%; width:90%; }}
+       .ig001 { width:100%; }
+       .table0 { margin: auto; margin-top: 1em;  width:50%;  }
+       .table1 { margin: auto; width:50%;  }
+       .table2 { margin: auto; width:50%;  }
+       .table3 { margin: auto; margin-left: 0%; margin-right:0%; width:100%;  }
+       .table4 { margin: auto; margin-left: 0%; margin-right:0%; width:100%;  }
+       .nf-center { text-align:center; }
+       .nf-center-c1 { text-align:left;margin:1em 0; }
+       .c000 { margin-top:0.5em;margin-bottom:0.5em; }
+       .c001 { margin-top:1em;  }
+       .c002 { page-break-before:always;margin-top:1em; }
+       .c003 { margin-top:1em; }
+       .c004 { margin-top:1em }
+       .c005 { margin-top:4em; }
+       .c006 { margin-top:2em;margin-bottom:0.5em; }
+       .c007 { margin-right:5.56%;text-align:right; }
+       .c008 { border:none;border-bottom:1px solid;margin-top:1em;margin-bottom:1em;
+               margin-left:37%; width:25%; margin-right:38%;  margin-top:2em;  }
+       .c009 { margin-top:2em; }
+       .c010 { page-break-before:always;margin-top:2em; }
+       .c011 { margin-top:1em;margin-bottom:0.5em; }
+       .c012 { text-decoration:none }
+       .c013 { font-size:90%; }
+       .c014 {  margin-top:2em;  }
+       .c015 { margin-left:2.78%;margin-top:1em; }
+       .c016 { margin-top:2em }
+       .c017 { text-align:center; }
+       .c018 { vertical-align:top;text-align:left;padding-right:1em; }
+       .c019 { vertical-align:top;text-align:right; }
+       .c020 { border:none; border-bottom:1px solid; width:10%; margin-left:0;
+               margin-top:1em; text-align:left; }
+       .c021 {  margin-top:1em;  }
+       .c022 { border:none;border-bottom:1px solid;margin-top:1em;margin-bottom:1em;
+               margin-left:37%; width:25%; margin-right:38%;  }
+       .c023 { vertical-align:top;text-align:left; }
+       .c024 { vertical-align:top;text-align:right;padding-right:1em; }
+       .tdr       { text-align: right; }
+       .tdl       { text-align: left;  }
+       a:link     { text-decoration: none; }
+       div.tnotes { padding-left:1em;padding-right:1em;background-color:#E3E4FA;
+              border:1px solid silver; margin:2em 5% 0 5%; text-align: justify;}
+       .htmlonly  { visibility: visible; display: inline;}
+       .epubonly  { visibility: hidden; display: none; }
+       @media handheld { .htmlonly { visibility: hidden; display: none;} }
+       @media handheld { .epubonly { visibility: visible; display: inline; } }
+    </style>
+  </head>
+  <body>
+

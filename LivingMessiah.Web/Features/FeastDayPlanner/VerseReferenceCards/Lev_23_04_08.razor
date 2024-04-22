@@ -6,8 +6,7 @@
 	</div>
 
 	<div class="card-body">
-		<h5 class="card-title">Leviticus 23:4-8</h5>
-		<blockquote>
+		<h5 class="text-center"> @book.Title @refChapterVerse</h5>
 
 			<p>
 				<sup><b>4</b></sup>
@@ -47,8 +46,7 @@
 				: ye shall do no servile work therein.
 			</p>
 
-			<small class="float-end"><i>Vayiqra</i> <span class="hebrew16">וַיִּקְרָא</span> <sup>Leviticus </sup> 23:4-8</small>
-		</blockquote>
+			<small class="float-end"><i>@book.TransliterationInHebrew</i> <span class="hebrew16">@book.NameInHebrew</span> <sup>@book.Title </sup> @refChapterVerse</small>
 
 	</div>
 
@@ -56,5 +54,6 @@
 
 
 @code {
-	
+	BibleBook book = BibleBook.Leviticus;
+	string refChapterVerse = "23:4–8";
 }

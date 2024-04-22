@@ -1,0 +1,53 @@
+﻿@* @using LivingMessiah.Web.Features.ThresholdCovenant.Enums *@
+
+<div class="card mb-3">
+	<ul class="nav @navTabType" id="myTab" role="tablist">
+
+		@foreach (var item in Enums.NavItem.List.OrderBy(o => o.Value))
+		{
+			<li class="nav-item " role="presentation">
+				<button @onclick="@(e => OnButtonClicked(item))"
+								class="nav-link @NavLinkActive(@item)" type="button" role="tab"
+								id="@item.ButtonId"
+								data-bs-toggle="tab"
+								data-bs-target="@item.Target"
+								aria-controls="@item.AriaControls"
+								aria-selected="@AriaActive(item)">
+					@item.Value <small>@item.Title</small>
+				</button>
+			</li>
+		}
+	</ul>
+
+</div>
+
+@code {
+	protected Enums.NavItem currentNavItem = Enums.NavItem.HebrewPassOverOrCrossOver;
+
+	private const string navTabType = " nav-pills";  //  nav-underlines,  nav-pills tabs
+
+	[Parameter, EditorRequired] public required Enums.NavItem? CurrentFilter { get; set; }
+	[Parameter] public EventCallback<Enums.NavItem> OnFilterSelected { get; set; }
+
+	private void OnButtonClicked(Enums.NavItem filter)
+	{
+		currentNavItem = filter;
+		OnFilterSelected.InvokeAsync(filter);
+	}
+
+	string AriaActive(Enums.NavItem navItem)
+	{
+		return currentNavItem == navItem ? "true" : "false";
+	}
+
+	string NavLinkActive(Enums.NavItem navItem)
+	{
+		return currentNavItem == navItem ? " active" : "";
+	}
+
+	string TabPageActive(Enums.NavItem navItem)
+	{
+		return currentNavItem == navItem ? " show active" : "";
+	}
+
+}
