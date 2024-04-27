@@ -1,0 +1,28 @@
+﻿
+<p class="bg-success-subtle ms-2 p-1">
+	<i class="fa fa-quote-left" aria-hidden="true"></i>&nbsp;
+
+	@if (IsMarkup)
+	{
+		@((MarkupString)Quote)
+	}
+	else
+	{
+		@Quote
+	}
+
+	<span class="text-black-50 fst-italic">-- @Person</span>
+</p>
+
+@code {
+#nullable disable
+	[Parameter, EditorRequired] public string Quote { get; set; }
+	[Parameter, EditorRequired] public bool IsMarkup { get; set; }
+	[Parameter, EditorRequired] public string Person { get; set; }
+
+
+	public MarkupString GetMarkup()
+	{
+		return (MarkupString)Quote;
+	}
+}

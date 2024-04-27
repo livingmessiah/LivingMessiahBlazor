@@ -41,6 +41,13 @@
     <None Include="Features\SpecialEvents\ShowMasterIndex.razor" />
     <None Include="Features\SpecialEvents\ToasterSpecialEvents.razor" />
     <None Include="Features\SpecialEvents\YouTubeButton.razor" />
+    <None Include="Features\ThresholdCovenant\BookSections\SubSection\BasonOrThreshold.razor" />
+    <None Include="Features\ThresholdCovenant\BookSections\SubSection\BasonThreshold.razor" />
+    <None Include="Features\ThresholdCovenant\BookSections\SubSection\EndNotes.razor" />
+    <None Include="Features\ThresholdCovenant\BookSections\SubSection\MyNotesCard.razor" />
+    <None Include="Features\ThresholdCovenant\BookSections\SubSection\NewMeaningOldRite.razor" />
+    <None Include="Features\ThresholdCovenant\BookSections\SubSection\PassoverOrPassby.razor" />
+    <None Include="Features\ThresholdCovenant\BookSections\SubSection\WelcomeWithBlood.razor" />
     <None Include="Features\ThresholdCovenant\OriginalHtml\ChristianPassOverHtml.razor" />
     <None Include="Features\ThresholdCovenant\OriginalHtml\EarliestTempleAltarHtml.razor" />
     <None Include="Features\ThresholdCovenant\OriginalHtml\HebrewPassOverOrCrossOverHtml.razor" />

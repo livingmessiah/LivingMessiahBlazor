@@ -69,14 +69,21 @@ a, .btn-link {
 
 sup.verse-number {
 	font-weight: bold;
-	color: dodgerblue
+	color: sandybrown
 }
 
 p.verse-outline {
 	font-size: .8rem;
 	font-style: italic;
 	text-align: right;
-	margin-bottom: 0px
+	margin-bottom: 5px
+}
+
+span.verse-outline {
+	font-size: .8rem;
+	font-style: italic;
+	text-align: right;
+	margin-bottom: 5px
 }
 
 hr.warning {
