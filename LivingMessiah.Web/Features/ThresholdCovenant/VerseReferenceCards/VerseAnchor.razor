@@ -1,0 +1,17 @@
+﻿<i class="fas fa-external-link-alt"></i>
+
+<a href="https://www.blueletterbible.org/kjv/@HrefSuffix" target="_blank">
+	@Book!.Title @ChapterVerse
+</a>
+
+@if (!string.IsNullOrEmpty(SubTitle))
+{
+	<span class="verse-outline">&nbsp; @SubTitle</span>
+}
+
+@code {
+	[Parameter, EditorRequired] public BibleBook? Book { get; set; } // = BibleBook.Exodus;
+	[Parameter, EditorRequired] public string? HrefSuffix { get; set; }  // exo/3/7-10/s_53007
+	[Parameter, EditorRequired] public string? ChapterVerse { get; set; }
+	[Parameter] public string SubTitle { get; set; } = "";
+}

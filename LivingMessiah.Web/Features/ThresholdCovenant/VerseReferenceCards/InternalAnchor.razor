@@ -1,0 +1,18 @@
+﻿
+<i class="fas fa-external-link-square-alt"></i>
+
+<a href="/@BookSection/@SubSection" target="_self">
+	@BookSection/@SubSection
+</a>
+
+@if (!string.IsNullOrEmpty(SubTitle))
+{
+	<span class="verse-outline">&nbsp; @SubTitle</span>
+}
+
+@code {
+	
+	[Parameter, EditorRequired] public string? BookSection { get; set; }  // exo/3/7-10/s_53007
+	[Parameter, EditorRequired] public string? SubSection { get; set; }
+	[Parameter] public string SubTitle { get; set; } = "";
+}

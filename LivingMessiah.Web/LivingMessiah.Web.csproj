@@ -41,7 +41,6 @@
     <None Include="Features\SpecialEvents\ShowMasterIndex.razor" />
     <None Include="Features\SpecialEvents\ToasterSpecialEvents.razor" />
     <None Include="Features\SpecialEvents\YouTubeButton.razor" />
-    <None Include="Features\ThresholdCovenant\BookSections\SubSection\BasonOrThreshold.razor" />
     <None Include="Features\ThresholdCovenant\BookSections\SubSection\BasonThreshold.razor" />
     <None Include="Features\ThresholdCovenant\BookSections\SubSection\EndNotes.razor" />
     <None Include="Features\ThresholdCovenant\BookSections\SubSection\MyNotesCard.razor" />

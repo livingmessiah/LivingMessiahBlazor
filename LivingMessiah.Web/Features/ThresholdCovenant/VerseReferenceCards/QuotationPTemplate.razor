@@ -1,0 +1,13 @@
+﻿
+<p class="card-text bg-success-subtle ms-2 p-1">
+	<i class="fa fa-quote-left" aria-hidden="true"></i>&nbsp;
+
+	@ChildContent
+	<span class="text-black-50 fst-italic"> -- @((MarkupString)Person)</span>
+</p>
+
+@code {
+#nullable disable
+	[Parameter, EditorRequired] public string Person { get; set; }
+	[Parameter] public RenderFragment ChildContent { get; set; }
+}

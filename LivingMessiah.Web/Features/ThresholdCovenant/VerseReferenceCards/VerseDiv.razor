@@ -1,6 +1,7 @@
 ﻿
 <div class="card-body">
 	<div class="bg-info-subtle">
+
 		<p class="card-text fs-6 ms-2 p-2 mb-0">
 			<a href="https://www.blueletterbible.org/kjv/@HrefSuffix" target="_blank">
 				@Book!.Title @ChapterVerse
@@ -9,11 +10,14 @@
 			{
 				<span class="verse-outline">&nbsp; @SubTitle</span>
 			}
-
 		</p>
-		<div class="ms-3 p-2">
-			@ChildContent
-		</div>
+
+		@if (ChildContent is not null)
+		{
+			<div class="ms-3 p-2">
+				@ChildContent
+			</div>
+		}
 
 	</div>
 </div>
