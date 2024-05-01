@@ -1,4 +1,5 @@
-﻿
+﻿@using SubSectionType = LivingMessiah.Web.Features.ThresholdCovenant.BookSections.SubSections.Enums.SectionType
+
 <div class="d-print-none mb-2">
 
 	<div class=" row mt-4">
@@ -6,9 +7,8 @@
 
 			@* nav-tabs *@
 			<ul class="nav nav-pills justify-content-center text-sm-center">
-				@foreach (var item in Enums.SectionType.List.OrderBy(o => o.Value))
+				@foreach (var item in SubSectionType.List.OrderBy(o => o.Value))
 				{
-				
 					<li class="nav-item">
 						<a @onclick="@(() => OnClickFilter(item))" title=""
 							 class="nav-link @ActiveFilter(item)">
@@ -24,15 +24,15 @@
 </div>
 
 @code {
-	[Parameter, EditorRequired] public required Enums.SectionType? CurrentFilter { get; set; }
-	[Parameter] public EventCallback<Enums.SectionType> OnFilterSelected { get; set; }
+	[Parameter, EditorRequired] public required SubSectionType? CurrentFilter { get; set; }
+	[Parameter] public EventCallback<SubSectionType> OnFilterSelected { get; set; }
 
-	protected void OnClickFilter(Enums.SectionType filter)
+	protected void OnClickFilter(SubSectionType filter)
 	{
 		OnFilterSelected.InvokeAsync(filter);
 	}
 
-	public string ActiveFilter(Enums.SectionType filter)
+	public string ActiveFilter(SubSectionType filter)
 	{
 		return filter == CurrentFilter ? "active" : "";
 	}

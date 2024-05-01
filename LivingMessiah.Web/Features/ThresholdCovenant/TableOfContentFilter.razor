@@ -2,35 +2,7 @@
 
 @inject ILogger<TableOfContentFilter> Logger
 
-@* 
-This doesn't do anything
-
-<div class="@offCanvasClass" tabindex="-1" id="tableOfContentFilter">
-	<div class="offcanvas-header">
-		<h5 class="offcanvas-title">Offcanvas</h5>
-		<button type="button" class="btn-close text-reset" @onclick="ToggleOffCanvas"></button>
-	</div>
-
-	<div class="offcanvas-body">
-		<ul class="">
-			@foreach (var item in Enums.NavItem.List.OrderBy(o => o.Value))
-			{
-				<li class="nav-item ">
-					<button @onclick="@(e => ButtonClicked(item))"
-									class="nav-link" type="button"
-									id="@item.ButtonId">
-						@item.Value <small>@item.Title</small>
-					</button>
-				</li>
-			}
-		</ul>
-
-	</div>
-</div>
-
- *@
-
-<ul class="mt-2">
+<ul class="mt-2 text-end">
 	@foreach (var item in Enums.NavItem.List.OrderBy(o => o.Value))
 	{
 		<li class="nav-item ">
@@ -55,17 +27,4 @@ This doesn't do anything
 		OnFilterSelected.InvokeAsync(filter);
 	}
 
-	private string offCanvasClass = "offcanvas offcanvas-start";
-
-	private void ToggleOffCanvas()
-	{
-		if (offCanvasClass.Contains("show"))
-		{
-			offCanvasClass = "offcanvas offcanvas-start";
-		}
-		else
-		{
-			offCanvasClass = "offcanvas offcanvas-start show";
-		}
-	}
 }

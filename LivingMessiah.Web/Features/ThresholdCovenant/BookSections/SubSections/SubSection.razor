@@ -1,4 +1,6 @@
-﻿@if (SelectedSubSectionCard is not null)
+﻿@using SubSectionType = LivingMessiah.Web.Features.ThresholdCovenant.BookSections.SubSections.Enums.SectionType
+
+@if (SelectedSubSectionCard is not null)
 {
 	<DynamicComponent Type="SelectedSubSectionCard" />
 }
@@ -7,9 +9,8 @@ else
 	<h4><span class="badge bg-warning"> <code>SelectedBookSectionCard</code> is null</span></h4>
 }
 
-
 @code {
-	[Parameter, EditorRequired] public Enums.SectionType? SectionType { get; set; }
+	[Parameter, EditorRequired] public SubSectionType? SectionType { get; set; }
 
 	protected Type? SelectedSubSectionCard;
 

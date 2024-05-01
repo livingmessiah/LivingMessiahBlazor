@@ -1,0 +1,52 @@
+﻿@* 
+  TocOffCanvas No Worky!
+*@
+
+ <div class="@offCanvasClass" tabindex="-1" id="tableOfContentFilter">
+	<div class="offcanvas-header">
+		<h5 class="offcanvas-title">Offcanvas</h5>
+		<button type="button" class="btn-close text-reset" @onclick="ToggleOffCanvas"></button>
+	</div>
+
+	<div class="offcanvas-body">
+		<ul class="">
+			@foreach (var item in Enums.NavItem.List.OrderBy(o => o.Value))
+			{
+				<li class="nav-item ">
+					<button @onclick="@(e => ButtonClicked(item))"
+									class="nav-link" type="button"
+									id="@item.ButtonId">
+						@item.Value <small>@item.Title</small>
+					</button>
+				</li>
+			}
+		</ul>
+
+	</div>
+</div>
+
+@code {
+	[Parameter, EditorRequired] public required Enums.NavItem? CurrentFilter { get; set; }
+	[Parameter] public EventCallback<Enums.NavItem> OnFilterSelected { get; set; }
+
+	protected Enums.NavItem currentNavItem = Enums.NavItem.HebrewPassOverOrCrossOver;
+	private void ButtonClicked(Enums.NavItem filter)
+	{
+		currentNavItem = filter;
+		OnFilterSelected.InvokeAsync(filter);
+	}
+
+	private string offCanvasClass = "offcanvas offcanvas-start";
+
+	private void ToggleOffCanvas()
+	{
+		if (offCanvasClass.Contains("show"))
+		{
+			offCanvasClass = "offcanvas offcanvas-start";
+		}
+		else
+		{
+			offCanvasClass = "offcanvas offcanvas-start show";
+		}
+	}
+}

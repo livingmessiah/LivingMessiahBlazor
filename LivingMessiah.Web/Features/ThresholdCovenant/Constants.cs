@@ -27,4 +27,14 @@ public static class Strongs
 
 }
 
+public static class Blobs
+{
+	private const string baseUrl = "https://livingmessiahstorage.blob.core.windows.net/images/threshold-covenant/";
+
+	public static string Image(string blob)
+	{
+		return baseUrl + blob;
+	}
+}
+
 // Ignore Spelling: Strongs, kjv, wlc

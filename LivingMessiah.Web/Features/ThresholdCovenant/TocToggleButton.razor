@@ -8,6 +8,7 @@
 	Table of Contents
 </button>
 
+
 @code {
 	[Parameter, EditorRequired] public bool CurrentBoolValue { get; set; }
 	[Parameter, EditorRequired] public EventCallback<bool> OnToggleSelected { get; set; }
@@ -15,7 +16,7 @@
 	public bool _currentBoolValue { get; set; }
 	protected override void OnParametersSet()
 	{
-		Logger!.LogInformation("{Class}!{Method}; CurrentBoolValue: {CurrentBoolValue}"
+		Logger!.LogDebug("{Class}!{Method}; CurrentBoolValue: {CurrentBoolValue}"
 		, nameof(TocToggleButton), nameof(OnParametersSet), CurrentBoolValue);
 		_currentBoolValue = CurrentBoolValue;
 	}
@@ -25,7 +26,5 @@
 		OnToggleSelected.InvokeAsync(!_currentBoolValue); // flip the boolean value
 	}
 
-	// mt-1 me-2
-	//<span class="navbar-toggler-icon"></span>
 }
 
