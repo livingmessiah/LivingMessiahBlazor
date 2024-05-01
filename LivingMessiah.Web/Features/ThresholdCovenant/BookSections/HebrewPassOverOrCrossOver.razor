@@ -1,23 +1,43 @@
-﻿@using LivingMessiah.Web.Features.ThresholdCovenant.BookSections.SubSection
+﻿@using LivingMessiah.Web.Features.ThresholdCovenant.BookSections.SubSections
+@using Microsoft.Extensions.Logging;
+@inject ILogger<HebrewPassOverOrCrossOver>? Logger
+
 
 <div class="pb-n1 mt-3 mb-3 border-bottom border-info-subtle">
 	<h5> @NavItem.Value @NavItem.Title</h5>
 </div>
 
+<div class="@MediaQuery.XsOrSm.DivClass">
+	<HeaderXsSm CurrentFilter="CurrentFilter"
+							OnFilterSelected="@ReturnedFilter" />
+</div>
 
- <MyNotesCard />
+<div class="@MediaQuery.MdOrLgOrXl.DivClass">
+	<SubSectionFilterPills CurrentFilter="@CurrentFilter"
+							 OnFilterSelected="@ReturnedFilter" />
+</div> 
 
-<NewMeaningOldRite />
+<SubSection SectionType="CurrentFilter" />
 
-<WelcomeWithBlood /> 
-
- <BasonThreshold /> 
-
-<PassoverOrPassby />
-
- <EndNotes />  
 
 @code {
-	// <HebrewPassOverOrCrossOverHtml />
+
+	protected override void OnInitialized()
+	{
+		base.OnInitialized();
+		Logger!.LogDebug("{Class}!{MethodEvent}", nameof(HebrewPassOverOrCrossOver), nameof(OnInitialized));
+		CurrentFilter = SubSections.Enums.SectionType.Introduction;
+	}
 	protected Enums.NavItem NavItem = Enums.NavItem.HebrewPassOverOrCrossOver;
+
+	public SubSections.Enums.SectionType? CurrentFilter { get; set; }
+
+	private void ReturnedFilter(SubSections.Enums.SectionType filter)
+	{
+		Logger!.LogDebug("{Class}!{Method}; filter: {Filter}", nameof(HebrewPassOverOrCrossOver), nameof(ReturnedFilter), filter);
+		CurrentFilter = filter;
+		Logger!.LogDebug("{Method} CurrentFilter: {CurrentFilter}", nameof(StateHasChanged), CurrentFilter);
+		StateHasChanged();
+	}
+
 }

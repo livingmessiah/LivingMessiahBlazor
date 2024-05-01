@@ -1,0 +1,15 @@
+﻿@using LivingMessiah.Web.Features.Parasha.Enums
+
+<i class="fas fa-external-link-alt"></i>
+<a href="@ParashaLinks.MyHebrewBible.ParashaUrl(Id, SlugUrl)" target="_blank">
+	 @BookChapterVerse <i>@SlugTitle</i>
+</a>
+
+@code {
+#nullable disable
+	//[Parameter, EditorRequired] public TriennialParasha? Parasha { get; set; } // ToDo: make parasha smart enum?
+	[Parameter, EditorRequired] public int Id { get; set; }
+	[Parameter, EditorRequired] public string SlugUrl { get; set; }
+	[Parameter, EditorRequired] public string SlugTitle { get; set; }
+	[Parameter, EditorRequired] public string BookChapterVerse { get; set; }  // Exo 11:1-12:28
+}

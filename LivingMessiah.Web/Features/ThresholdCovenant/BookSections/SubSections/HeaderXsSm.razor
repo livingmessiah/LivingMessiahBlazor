@@ -1,0 +1,59 @@
+﻿@using SubSectionType = LivingMessiah.Web.Features.ThresholdCovenant.BookSections.SubSections.Enums.SectionType
+@using LivingMessiah.Web.Infrastructure
+@using Microsoft.Extensions.Logging
+
+@inject ILogger<HeaderXsSm>? Logger
+
+<div class="d-print-none mb-2">
+
+	<div class="row mt-3  gx-1">
+		<div class="col-3 text-center mt-2">
+			@if (CurrentFilter!.IsStartOfEdge)
+			{
+				<OnEdgeButton />
+			}
+			else
+			{
+				<NavigationButton CurrentFilter="CurrentFilter"
+													OnFilterSelected="ReturnedGrandChildFilter"
+													IsPrevious=true />
+			}
+		</div>
+
+		<div class="col-6 text-center">
+			<div class="card bg-primary text-white">
+				<div class="card-body">
+					<h5 class=""><b>@CurrentFilter!.Title</b> </h5>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-3 text-center mt-2">
+			@if (CurrentFilter!.IsEndOfEdge)
+			{
+				<OnEdgeButton />
+			}
+			else
+			{
+				<NavigationButton CurrentFilter="CurrentFilter"
+													OnFilterSelected="ReturnedGrandChildFilter"
+													IsPrevious=false />
+			}
+		</div>
+	</div>
+
+</div>
+
+
+@code {
+	[Parameter, EditorRequired] public required SubSectionType? CurrentFilter { get; set; }
+	[Parameter, EditorRequired] public EventCallback<SubSectionType> OnFilterSelected { get; set; }
+
+	private void ReturnedGrandChildFilter(SubSectionType filter)
+	{
+		Logger!.LogDebug("...inside {Class}!{Method}; filter: {Filter}"
+			, nameof(HeaderXsSm), nameof(ReturnedGrandChildFilter), filter);
+		OnFilterSelected.InvokeAsync(filter);
+	}
+
+}

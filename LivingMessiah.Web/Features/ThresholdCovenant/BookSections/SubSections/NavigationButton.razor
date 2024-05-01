@@ -1,0 +1,35 @@
+﻿@using SubSectionType = LivingMessiah.Web.Features.ThresholdCovenant.BookSections.SubSections.Enums.SectionType
+
+<button @onclick="@(() => OnClickFilter())"
+				class="btn btn-light btn-lg ">
+	<i class="fas @icon fa-fw fa-2x"></i>
+</button>
+<p class="mt-1 fw-bold"><small>@SubSectionType!.Title</small></p>
+
+
+@code {
+	[Parameter, EditorRequired] public required SubSectionType? CurrentFilter { get; set; }
+	[Parameter, EditorRequired] public EventCallback<SubSectionType> OnFilterSelected { get; set; }
+	[Parameter, EditorRequired] public required bool IsPrevious { get; set; }
+
+	SubSectionType? SubSectionType;
+	string? icon;
+	protected override void OnParametersSet()
+	{
+		if (IsPrevious)
+		{
+			icon = "fa-chevron-circle-left";
+			SubSectionType = SubSectionType.FromValue(CurrentFilter!.Value - 1);
+		}
+		else
+		{
+			icon = "fa-chevron-circle-right";
+			SubSectionType = SubSectionType.FromValue(CurrentFilter!.Value + 1);
+		}
+	}
+
+	protected void OnClickFilter()
+	{
+		OnFilterSelected.InvokeAsync(SubSectionType);
+	}
+}

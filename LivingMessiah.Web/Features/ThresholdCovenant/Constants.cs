@@ -5,6 +5,7 @@ namespace LivingMessiah.Web.Features.ThresholdCovenant;
 public static class DynamicComponentPaths
 {
 	public static string BookSectionCards = "LivingMessiah.Web.Features.ThresholdCovenant.BookSections.";
+	public static string SubSectionCards = "LivingMessiah.Web.Features.ThresholdCovenant.BookSections.SubSections.";
 }
 
 public static class Strongs
@@ -17,6 +18,11 @@ public static class Strongs
 	public static MarkupString G(string number)
 	{
 		return (MarkupString)$"<sup><a href='https://www.blueletterbible.org/lexicon/{number}/kjv/tr/0-1/>' target='blank' title='Blue Letter Bible TR Lexicon {number}'{number}</a></sup>";
+	}
+
+	public static MarkupString HandTransLit(string transliteration, string number)
+	{
+		return (MarkupString)$"<sup><i>{transliteration}</i> <a href='https://www.blueletterbible.org/lexicon/{number}/kjv/wlc/0-1/' target='blank' title='Blue Letter Bible WLC Lexicon {number}'>{number}</a></sup>";
 	}
 
 }

@@ -18,6 +18,14 @@ public static class ParashaLinks
 		{
 			return $"{baseUrl}/{id}?slug={slug}/";
 		}
+
+		//private const string articleBaseUrl = "https://myhebrewbible.com/Article/";
+		private const string articleBaseUrl = "https://myhebrewbible.azurewebsites.net/Article/";
+		public static string ArticleUrl(int id, string slug)
+		{
+			return $"{articleBaseUrl}/{id}/{slug}/";
+		}
+
 	}
 
 	public static class TorahTuesday

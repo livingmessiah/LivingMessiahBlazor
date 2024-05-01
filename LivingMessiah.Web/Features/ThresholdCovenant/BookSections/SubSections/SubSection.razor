@@ -1,0 +1,20 @@
+﻿@if (SelectedSubSectionCard is not null)
+{
+	<DynamicComponent Type="SelectedSubSectionCard" />
+}
+else
+{
+	<h4><span class="badge bg-warning"> <code>SelectedBookSectionCard</code> is null</span></h4>
+}
+
+
+@code {
+	[Parameter, EditorRequired] public Enums.SectionType? SectionType { get; set; }
+
+	protected Type? SelectedSubSectionCard;
+
+	protected override void OnParametersSet()
+	{
+		SelectedSubSectionCard = Type.GetType($"{DynamicComponentPaths.SubSectionCards}{SectionType!.Name}");
+	}
+}
