@@ -8,6 +8,8 @@ public static class DynamicComponentPaths
 	public static string SubSectionCards = "LivingMessiah.Web.Features.ThresholdCovenant.BookSections.SubSections.";
 }
 
+
+
 public static class Strongs
 {
 	public static MarkupString H(string number)

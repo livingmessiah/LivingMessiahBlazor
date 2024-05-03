@@ -1,0 +1,68 @@
+﻿
+@* 
+	@using Microsoft.Extensions.Logging;
+	@inject ILogger<TocOffCanvasFilter>? Logger 
+*@
+
+<button class="btn btn-primary btn-sm" data-bs-toggle="offcanvas" data-bs-target="#offcanvasid" aria-controls="offcanvasid">
+	<i class="fas fa-bars"></i>
+	Table of Contents
+</button>
+
+@* offcanvas-* -start, -end, -top or -bottom *@
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasid" aria-labelledby="offcanvasidLabel">
+	<div class="offcanvas-header">
+		
+
+		@* this forces the close button to the right *@
+		<span class=""></span>
+		@* <span class="">Select a sub-section ⤵️</span> *@
+
+		<button type="button" class="btn-close"
+						data-bs-dismiss="offcanvas" aria-label="Close">
+		</button>
+
+	</div>
+
+	<div class="offcanvas-body">
+	
+			@* <img src="@ThresholdCovenant.Blobs.Image("book-cover.jpg")" alt="Book cover" class="img-fluid rounded-start"> *@
+
+		<ul class="list-group">
+			@foreach (var item in Enums.NavItem.List.OrderBy(o => o.Value))
+			{
+				<li class="list-group-item @ActiveFilter(item)">
+					<a @onclick="@(e => ButtonClicked(item))"
+									type="button"
+									id="@item.ButtonId">
+						@item.Value <small>@item.Title</small>
+					</a>
+				</li>
+			}
+		</ul>
+
+	</div>
+</div>
+
+@code {
+
+	[Parameter, EditorRequired] public required Enums.NavItem? CurrentFilter { get; set; }
+	[Parameter] public EventCallback<Enums.NavItem> OnFilterSelected { get; set; }
+
+	protected Enums.NavItem currentNavItem = Enums.NavItem.HebrewPassOverOrCrossOver;
+	private async Task ButtonClicked(Enums.NavItem filter)
+	{
+		currentNavItem = filter;
+		// Logger!.LogDebug("{Class}!{Method}; currentNavItem: {currentNavItem}", nameof(TocOffCanvasFilter), nameof(ButtonClicked), currentNavItem.Name);
+		await OnFilterSelected.InvokeAsync(filter);
+	}
+
+	
+	public string ActiveFilter(Enums.NavItem? filter)
+	{
+		return filter == CurrentFilter ? "active" : "";
+	}
+
+	// Ignore Spelling: dropdown, offcanvas
+
+}

@@ -13,56 +13,31 @@
 			</div>
 			<div class="col-sm-4 p-2 text-center">
 				<h3 class="">@Page.Title</h3>
-				<h5> by H. Clay Trumbull</h5>
+			<h5> by H. Clay Trumbull</h5>
+		</div>
+		<div class="col-sm-4">
+			<div class="card-body d-flex justify-content-end mx-1">
+				<TocOffCanvasFilter CurrentFilter=@CurrentFilter OnFilterSelected="@ReturnedFilter" />
 			</div>
-			<div class="col-sm-4">
-				<div class="card-body d-flex justify-content-end mx-1">
-				
-				@if (_AreNavItemsCollapsed)
-				{
-					<TocToggleButton CurrentBoolValue=@_AreNavItemsCollapsed OnToggleSelected="@ReturnedToggle" />
-				}
-				
-				@if (!_AreNavItemsCollapsed)
-				{
-					<TableOfContentFilter CurrentFilter=@CurrentFilter OnFilterSelected="@ReturnedFilter" />
-				}
 
-			</div>
-			
 		</div>
 	</div>
 </div>
-
 
 <BookSection NavItem="CurrentFilter" />
 
 @code {
 
-	protected Enums.NavItem currentNavItem = Enums.NavItem.HebrewPassOverOrCrossOver;
+	//public Enums.NavItem? CurrentFilter { get; set; }
+	public Enums.NavItem? CurrentFilter { get; set; } = Enums.NavItem.HebrewPassOverOrCrossOver;
 
-	public Enums.NavItem? CurrentFilter { get; set; }
-	protected override void OnInitialized()
-	{
-		base.OnInitialized();
-		CurrentFilter = Enums.NavItem.HebrewPassOverOrCrossOver;
-		_AreNavItemsCollapsed = true;
-	}
-
+	#region EventCallbacks
 	private void ReturnedFilter(Enums.NavItem filter)
 	{
-		_AreNavItemsCollapsed = true;
 		CurrentFilter = filter;
 		StateHasChanged();
 	}
-
-	private bool _AreNavItemsCollapsed;
-
-	#region EventCallbacks
-	private void ReturnedToggle(bool areNavItemsCollapsed)
-	{
-		_AreNavItemsCollapsed = areNavItemsCollapsed;
-		StateHasChanged();
-	}
 	#endregion
+
+
 }

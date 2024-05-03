@@ -36,6 +36,7 @@ public abstract class NavItem : SmartEnum<NavItem>
 	public abstract string Target { get; }
 	public abstract string Title { get; }
 	public abstract string AriaControls { get; }
+	public abstract string Href { get; }
 	#endregion
 
 	#region Private Instantiation
@@ -46,7 +47,7 @@ public abstract class NavItem : SmartEnum<NavItem>
 		public override string Target => $"#{nameof(Id.PrimativeFamilyAltar).ToLower()}";
 		public override string Title => "Primative Family Altar";
 		public override string AriaControls => $"{nameof(Id.PrimativeFamilyAltar).ToLower()}";
-
+		public override string Href => $"{Links.ThresholdCovenant.Index}/{nameof(Id.PrimativeFamilyAltar)} ";
 	}
 
 	private sealed class EarliestTempleAltarSE : NavItem
@@ -56,6 +57,7 @@ public abstract class NavItem : SmartEnum<NavItem>
 		public override string Target => $"#{nameof(Id.EarliestTempleAltar).ToLower()}";
 		public override string Title => "Earliest Temple Altar";
 		public override string AriaControls => $"{nameof(Id.EarliestTempleAltar).ToLower()}";
+		public override string Href => $"{Links.ThresholdCovenant.Index}/{nameof(Id.EarliestTempleAltar)} ";
 	}
 
 	private sealed class SacredBoundaryLineSE : NavItem
@@ -65,6 +67,7 @@ public abstract class NavItem : SmartEnum<NavItem>
 		public override string Target => $"#{nameof(Id.SacredBoundaryLine).ToLower()}";
 		public override string Title => "Sacred Boundary Line";
 		public override string AriaControls => $"{nameof(Id.SacredBoundaryLine).ToLower()}";
+		public override string Href => $"{Links.ThresholdCovenant.Index}/{nameof(Id.SacredBoundaryLine)} ";
 	}
 
 	private sealed class OriginOfTheRiteSE : NavItem
@@ -74,6 +77,7 @@ public abstract class NavItem : SmartEnum<NavItem>
 		public override string Target => $"#{nameof(Id.OriginOfTheRite).ToLower()}";
 		public override string Title => "Origin of the Rite";
 		public override string AriaControls => $"{nameof(Id.OriginOfTheRite).ToLower()}";
+		public override string Href => $"{Links.ThresholdCovenant.Index}/{nameof(Id.OriginOfTheRite)} ";
 	}
 
 	private sealed class HebrewPassOverOrCrossOverSE : NavItem
@@ -83,6 +87,7 @@ public abstract class NavItem : SmartEnum<NavItem>
 		public override string Target => $"#{nameof(Id.HebrewPassOverOrCrossOver).ToLower()}";
 		public override string Title => "Hebrew Pass-over or Cross-over";
 		public override string AriaControls => $"{nameof(Id.HebrewPassOverOrCrossOver).ToLower()}";
+		public override string Href => $"{Links.ThresholdCovenant.Index}/{nameof(Id.HebrewPassOverOrCrossOver)} ";
 	}
 
 	private sealed class ChristianPassOverSE : NavItem
@@ -92,6 +97,7 @@ public abstract class NavItem : SmartEnum<NavItem>
 		public override string Target => $"#{nameof(Id.ChristianPassOver).ToLower()}";
 		public override string Title => "Christian PassOver";
 		public override string AriaControls => $"{nameof(Id.ChristianPassOver).ToLower()}";
+		public override string Href => $"{Links.ThresholdCovenant.Index}/{nameof(Id.ChristianPassOver)} ";
 	}
 
 	private sealed class OutgrowthsAndPerversionsSE : NavItem
@@ -101,6 +107,7 @@ public abstract class NavItem : SmartEnum<NavItem>
 		public override string Target => $"#{nameof(Id.OutgrowthsAndPerversions).ToLower()}";
 		public override string Title => "Outgrowths and Perversions";
 		public override string AriaControls => $"{nameof(Id.OutgrowthsAndPerversions).ToLower()}";
+		public override string Href => $"{Links.ThresholdCovenant.Index}/{nameof(Id.OutgrowthsAndPerversions)} ";
 	}
 
 
