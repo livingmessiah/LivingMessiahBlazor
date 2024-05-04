@@ -1,22 +1,14 @@
 ﻿
-@* 
-	@using Microsoft.Extensions.Logging;
-	@inject ILogger<TocOffCanvasFilter>? Logger 
-*@
-
-<button class="btn btn-primary btn-sm" data-bs-toggle="offcanvas" data-bs-target="#offcanvasid" aria-controls="offcanvasid">
+<button class="btn btn-primary btn-sm" data-bs-toggle="offcanvas" data-bs-target=@($"#offcanvasid{IdSuffix}") aria-controls=@($"offcanvasid{IdSuffix}")>
+	@ButtonLabel
 	<i class="fas fa-bars"></i>
-	Table of Contents
 </button>
 
-@* offcanvas-* -start, -end, -top or -bottom *@
-<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasid" aria-labelledby="offcanvasidLabel">
+<div class="offcanvas offcanvas-@placementSuffix" tabindex="-1" id=@($"offcanvasid{IdSuffix}") aria-labelledby=@($"offcanvasidLabel{IdSuffix}")>
 	<div class="offcanvas-header">
-		
 
-		@* this forces the close button to the right *@
+		@* Hack: this forces the close button to the right *@
 		<span class=""></span>
-		@* <span class="">Select a sub-section ⤵️</span> *@
 
 		<button type="button" class="btn-close"
 						data-bs-dismiss="offcanvas" aria-label="Close">
@@ -28,14 +20,14 @@
 	
 			@* <img src="@ThresholdCovenant.Blobs.Image("book-cover.jpg")" alt="Book cover" class="img-fluid rounded-start"> *@
 
-		<ul class="list-group">
+		<ul class="@UlGroup">
 			@foreach (var item in Enums.NavItem.List.OrderBy(o => o.Value))
 			{
-				<li class="list-group-item @ActiveFilter(item)">
+				<li class="@UlItem @ActiveFilter(item)">
 					<a @onclick="@(e => ButtonClicked(item))"
 									type="button"
 									id="@item.ButtonId">
-						@item.Value <small>@item.Title</small>
+						@item.Value <small class="@FontWeight(item)">@item.Title</small>
 					</a>
 				</li>
 			}
@@ -44,25 +36,50 @@
 	</div>
 </div>
 
+
 @code {
 
 	[Parameter, EditorRequired] public required Enums.NavItem? CurrentFilter { get; set; }
 	[Parameter] public EventCallback<Enums.NavItem> OnFilterSelected { get; set; }
+	[Parameter, EditorRequired] public bool IsXsOrSm { get; set; }
 
+	protected string ButtonLabel => IsXsOrSm ? "Table of Contents" : "Table of Contents";  // TOC
+	protected string UlGroup => IsXsOrSm ? "list-unstyled" : "list-group";
+	protected string UlItem => IsXsOrSm ? "" : "list-group-item";  
+	protected string IdSuffix => IsXsOrSm ? "xssm" : "mdlgxl";
+	
 	protected Enums.NavItem currentNavItem = Enums.NavItem.HebrewPassOverOrCrossOver;
 	private async Task ButtonClicked(Enums.NavItem filter)
 	{
 		currentNavItem = filter;
-		// Logger!.LogDebug("{Class}!{Method}; currentNavItem: {currentNavItem}", nameof(TocOffCanvasFilter), nameof(ButtonClicked), currentNavItem.Name);
+		
 		await OnFilterSelected.InvokeAsync(filter);
 	}
 
-	
+
 	public string ActiveFilter(Enums.NavItem? filter)
 	{
 		return filter == CurrentFilter ? "active" : "";
 	}
 
-	// Ignore Spelling: dropdown, offcanvas
+
+	public string FontWeight(Enums.NavItem? filter)
+	{
+		if (!IsXsOrSm) { return string.Empty;	}
+
+		return filter == CurrentFilter ? "fw-bold text-primary" : "";
+	}
+
+	private const string placementSuffix = "end"; // offcanvas-* start, end, top or bottom"
+
+	/*
+	 
+		@using Microsoft.Extensions.Logging;
+		@inject ILogger<TocOffCanvasFilter>? Logger
+		Logger!.LogDebug("{Class}!{Method}; currentNavItem: {currentNavItem}", nameof(TocOffCanvasFilter), nameof(ButtonClicked), currentNavItem.Name);
+
+	*/
+
+	// Ignore Spelling: dropdown, offcanvas, offcanvasid, Logger
 
 }
