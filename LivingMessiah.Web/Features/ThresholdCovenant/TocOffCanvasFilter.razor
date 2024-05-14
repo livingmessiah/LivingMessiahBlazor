@@ -4,7 +4,7 @@
 	<i class="fas fa-bars"></i>
 </button>
 
-<div class="offcanvas offcanvas-@placementSuffix" tabindex="-1" id=@($"offcanvasid{IdSuffix}") aria-labelledby=@($"offcanvasidLabel{IdSuffix}")>
+<div class="offcanvas @Placement" tabindex="-1" id=@($"offcanvasid{IdSuffix}") aria-labelledby=@($"offcanvasidLabel{IdSuffix}")>
 	<div class="offcanvas-header">
 
 		@* Hack: this forces the close button to the right *@
@@ -25,7 +25,7 @@
 			{
 				<li class="@UlItem @ActiveFilter(item)">
 					<a @onclick="@(e => ButtonClicked(item))"
-									type="button"
+						 type="button" data-bs-dismiss="offcanvas"
 									id="@item.ButtonId">
 						@item.Value <small class="@FontWeight(item)">@item.Title</small>
 					</a>
@@ -43,11 +43,17 @@
 	[Parameter] public EventCallback<Enums.NavItem> OnFilterSelected { get; set; }
 	[Parameter, EditorRequired] public bool IsXsOrSm { get; set; }
 
-	protected string ButtonLabel => IsXsOrSm ? "Table of Contents" : "Table of Contents";  // TOC
+	protected string ButtonLabel => IsXsOrSm ? "Contents" : "Table of Contents";  
 	protected string UlGroup => IsXsOrSm ? "list-unstyled" : "list-group";
 	protected string UlItem => IsXsOrSm ? "" : "list-group-item";  
 	protected string IdSuffix => IsXsOrSm ? "xssm" : "mdlgxl";
+
 	
+	protected string Placement => IsXsOrSm ? _placement["top"] : _placement["end"];
+
+	protected static Dictionary<string, string> _placement = new Dictionary<string, string> {
+		{ "start", "offcanvas-start" },{ "end", "offcanvas-end" },{ "top", "offcanvas-top skinny-offcanvas" },{ "bottom", "offcanvas-bottom" } };
+
 	protected Enums.NavItem currentNavItem = Enums.NavItem.HebrewPassOverOrCrossOver;
 	private async Task ButtonClicked(Enums.NavItem filter)
 	{
@@ -70,7 +76,6 @@
 		return filter == CurrentFilter ? "fw-bold text-primary" : "";
 	}
 
-	private const string placementSuffix = "end"; // offcanvas-* start, end, top or bottom"
 
 	/*
 	 

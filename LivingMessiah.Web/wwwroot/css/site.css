@@ -86,6 +86,11 @@ span.verse-outline {
 	margin-bottom: 5px
 }
 
+.skinny-offcanvas {
+	background-color: aqua; /* Set your desired background color */
+	max-width: 300px;
+}
+
 hr.warning {
 	border-bottom: 3px solid #ece1c1;
 }
