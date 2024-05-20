@@ -1,0 +1,59 @@
+﻿<div class="card border-primary mb-3">
+
+	<div class="row g-0">
+
+		<div class="col-sm-8">
+			<div class="card-header">
+				<h4 class="card-title">Itinerary</h4>
+			</div>
+
+			<div class="body">
+				<p class="card-text p-2 mb-3">
+					Before the main service we do an in-depth study of a topic. 
+					It's meant to be less formal and highly interactive.
+					Because the topics are in-depth their discussion occur over many weeks.
+				</p>
+			</div>
+			
+			<div class="body">
+
+				<ul class="">
+					<li>
+						Before the main service
+					</li>
+
+					<li>
+						<i class="text-warning far fa-clock"></i> 1:30 - 2:15 pm
+					</li>
+					<li>
+						at <b>Living Messiah</b> <LinkComponent LinkComponentEnum="@LinkComponentEnum.Location" />
+					</li>
+
+				</ul>
+
+			</div>
+
+
+		</div>
+
+		<div class="col-sm-4">
+
+			<div class="card-header text-center">
+				<h4 class="card-title">Facilitator</h4>
+			</div>
+			<div class="body p-1 text-center">
+				<img src=@Blobs.FacilitatorImg(null) class="img-fluid rounded-circle" alt="Mike Naranjo" /> @* float-end rounded-circle or  rounded-end *@
+			</div>
+
+			<p class="card-text pb-1 text-center">
+				<b>@Defaults.FacilitatorName(null)</b>
+			</p>
+
+		</div>
+
+	</div> @* row *@
+</div>
+
+@code {
+	//[Parameter] public Enums.Parasha? ActiveParashaEnum { get; set; }
+}

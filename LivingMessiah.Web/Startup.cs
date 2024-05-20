@@ -18,6 +18,7 @@ using LivingMessiah.Web.Features.PsalmsAndProverbs;
 using LivingMessiah.Web.Features.Calendar.Data;
 using LivingMessiah.Web.Features.Calendar.ManageKeyDates.Data;
 using LivingMessiah.Web.Features.Calendar.ManageParashaCalendar;
+using LivingMessiah.Web.Features.InDepthStudy.Data;
 using LivingMessiah.Web.Features.Calendar.HealthChecks.Data;
 using LivingMessiah.Web.Features.FeastDayPlanner.Data;
 using LivingMessiah.Web.Features.SpecialEvents.Data;
@@ -65,6 +66,7 @@ public class Startup
 		services.AddCalendarHealthChecks();
 		services.AddFeastDayPlanner();
 		services.AddManageKeyDates();
+		services.AddInDepthStudy();
 		services.AddManageParashaCalendar();
 		services.AddPsalmsAndProverbs();
 		services.AddParasha();

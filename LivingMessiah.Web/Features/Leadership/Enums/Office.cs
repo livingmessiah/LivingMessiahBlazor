@@ -70,8 +70,8 @@ public abstract class Office : SmartEnum<Office>
 		public override string IconFile => "beit-din-1-icon.jpg";
 		public override string IconFile2 => "beit-din-icon-2.jpg";
 		public override bool IsFilled => false;
-		public override string OfficeHolderName => "Ralphie Cratty and wife Peribeth";
-		public override string Email => "Ralphie@livingmessiah.com";
+		public override string OfficeHolderName => "";  //Ralphie Cratty and wife Peribeth
+		public override string Email => "";  //Ralphie@livingmessiah.com
 		public override string ImgClassSmMdLg => "w-75 p-3";
 		public override int Sort => 2;
 
@@ -126,7 +126,7 @@ public abstract class Office : SmartEnum<Office>
 		public override string Title => "Elder";
 		public override string ImageFile => "elder-2.jpg";
 		public override string IconFile => "elder-2-icon.jpg";
-		public override string IconFile2 => "icon-2-blank.jpg";
+		public override string IconFile2 => "icon-2-209-224.jpg";
 		public override bool IsFilled => true;
 		public override string OfficeHolderName => "Mike Naranjo";
 		public override string Email => "Info@livingmessiah.com";
@@ -142,8 +142,8 @@ public abstract class Office : SmartEnum<Office>
 		public override string IconFile => "elder-3-icon.jpg";
 		public override string IconFile2 => "icon-2-blank.jpg";
 		public override bool IsFilled => false;
-		public override string OfficeHolderName => "Paul Hebron";
-		public override string Email => "Paul@livingmessiah.com";
+		public override string OfficeHolderName => ""; // Paul Hebron
+		public override string Email => ""; //Paul@livingmessiah.com
 		public override string ImgClassSmMdLg => "w-50 p-3";
 		public override int Sort => 5;
 	}
@@ -156,8 +156,8 @@ public abstract class Office : SmartEnum<Office>
 		public override string IconFile => "elder-4-icon.jpg";
 		public override string IconFile2 => "elder-5-icon.jpg";
 		public override bool IsFilled => false;
-		public override string OfficeHolderName => "Dan Murphy and wife Renee";
-		public override string Email => "Dan@livingmessiah.com";
+		public override string OfficeHolderName => "";  //Dan Murphy and wife Renee
+		public override string Email => "";  //Dan@livingmessiah.com
 		public override string ImgClassSmMdLg => "w-50 p-3";
 		public override int Sort => 6;
 	}

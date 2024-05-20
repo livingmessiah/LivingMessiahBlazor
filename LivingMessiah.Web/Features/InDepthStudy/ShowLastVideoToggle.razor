@@ -1,0 +1,43 @@
+﻿
+<button class="btn btn-sm btn-primary mt-1"
+				@onclick="ButtonClicked">
+	<i class="@_oppositeIcon"></i>
+	@_oppositeToggleMsg
+</button>
+
+
+@code {
+	[Parameter, EditorRequired] public bool CurrentShowOrHide { get; set; }
+	[Parameter, EditorRequired] public EventCallback<bool> OnToggleSelected { get; set; }
+
+	public bool _showOrHide { get; set; }
+	protected string? _oppositeIcon;
+	protected string? _oppositeToggleMsg;
+
+	protected override void OnParametersSet()
+	{
+		_showOrHide = CurrentShowOrHide;
+		UpdateUI();
+	}
+
+	private void ButtonClicked()
+	{
+		UpdateUI();
+		OnToggleSelected.InvokeAsync(!_showOrHide); // flip the boolean value
+	}
+
+	private void UpdateUI()
+	{
+		if (_showOrHide)
+		{
+			_oppositeIcon = "far fa-arrow-alt-circle-up";
+			_oppositeToggleMsg = "Hide";
+		}
+		else
+		{
+			_oppositeIcon = "far fa-arrow-alt-circle-down";
+			_oppositeToggleMsg = "Details";
+		}
+	}
+
+}

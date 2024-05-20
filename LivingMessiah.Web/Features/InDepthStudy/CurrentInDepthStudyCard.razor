@@ -1,0 +1,98 @@
+﻿@using Blazored.Toast.Services
+@using Microsoft.AspNetCore.Components
+@using Microsoft.Extensions.Logging
+@using System.Threading.Tasks
+
+@inject Data.IRepository? db
+@* @inject LivingMessiah.Web.Features.UpcomingEvents.Weekly.ICacheService svc *@
+@inject ILogger<CurrentInDepthStudyCard>? Logger
+@inject IToastService? Toast
+
+<LoadingComponent IsLoading="InDepthStudyQuery==null" TurnSpinnerOff="TurnSpinnerOff">
+	<div class="card  border-success my-0">
+		<div class="card-header">
+
+			<div class="row">
+				<div class="col-6">
+					<h4>
+						<i class="far fa-calendar"></i>
+						<span class='badge bg-primary'>@InDepthStudyQuery!.EventDate().Date.ToString(DateFormat.ddd_mm_dd)</span>
+					</h4>
+				</div>
+				<div class="col-6">
+					<h5>
+						<span class="float-end">In Depth Study</span>
+					</h5>
+				</div>
+			</div>
+
+		</div>
+
+		<div class="card-body">
+			<h3 class="card-text text-center">
+				@InDepthStudyQuery.Title
+			</h3>
+		</div>
+
+		<div class="card-body text-center">
+
+			<p>
+				<code>iframe</code> not show for <b>@InDepthStudyQuery.Title | @InDepthStudyQuery.YouTubeId</b>
+			</p>
+
+@* 			<div class="ratio ratio-16x9">
+				<iframe src="https://www.youtube.com/embed/@InDepthStudyQuery.YouTubeId?rel=0"
+								title="@InDepthStudyQuery.Title | @InDepthStudyQuery.YouTubeId" allowfullscreen></iframe>
+			</div>
+ *@
+			<p class="my-0">
+				<i class="fas fa-share fa-rotate-270"></i> Watch the video when it is live
+			</p>
+
+		</div>
+
+
+		<div class="card-footer">
+
+			Bible Link
+			<a href="@InDepthStudyQuery.BiblicalUrlReference"
+					class="btn btn-primary btn-sm my-2" target="_blank">
+				<span class="fas fa-external-link-alt"></span>
+				<b>@InDepthStudyQuery.BookTitle @InDepthStudyQuery.Chapter</b> <i>@InDepthStudyQuery.BookChapterTitle</i>
+			</a>
+
+		</div>
+
+	</div>
+
+</LoadingComponent>
+
+@code {
+
+	protected bool TurnSpinnerOff = false;
+	public Data.InDepthStudyQuery? InDepthStudyQuery;  // vwCurrentWeeklyVideo? CurrentWeeklyVideo;
+
+	protected override async Task OnInitializedAsync()
+	{
+		try
+		{
+			Logger!.LogDebug("{Class}!{Method}", nameof(CurrentInDepthStudyCard), nameof(OnInitializedAsync));
+			InDepthStudyQuery = await db!.GetIndepth()!; 
+
+			if (InDepthStudyQuery == null)
+			{
+				Toast!.ShowWarning($"{nameof(InDepthStudyQuery)} NOT FOUND");
+			}
+		}
+		catch (System.Exception ex)
+		{
+			Logger!.LogError(ex, "{Class}!{Method}; {Command}", nameof(CurrentInDepthStudyCard), nameof(OnInitializedAsync), nameof(db.GetIndepth));
+			Toast!.ShowError("An invalid operation occurred reading database, contact your administrator");
+		}
+		finally
+		{
+			TurnSpinnerOff = true;
+		}
+	}
+
+}

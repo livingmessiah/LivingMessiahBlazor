@@ -1,6 +1,16 @@
 ﻿@page "/InDepthStudy"
-@using WVT_Enums = LivingMessiah.Web.Features.Admin.Video.Enums.WeeklyVideoType
-@using LivingMessiah.Web.Shared.YouTube
+
+@using Blazored.Toast.Services
+@using Microsoft.AspNetCore.Components
+@using Microsoft.Extensions.Logging
+@using System.Threading.Tasks
+
+@inject Data.IRepository? db
+@inject LivingMessiah.Web.Features.UpcomingEvents.Weekly.ICacheService svc
+@inject ILogger<CurrentInDepthStudyCard>? Logger
+@inject IToastService? Toast
+
+
 @using Page = LivingMessiah.Web.Links.IndepthStudy
 <PageTitle>@Page.Title</PageTitle>
 
@@ -8,55 +18,56 @@
 	<h2><i class="@Page.Icon"></i> @Page.Title</h2>
 </div>
 
-<h3><span class="badge bg-warning">Torah perspective of the Gospels</span></h3>
+<ItineraryCard />
 
-<p class="lead mt-2">
-	<img src=@Blobs.Persons("Ralphie.jpg") class="img-fluid rounded-circle float-end" alt="Ralphie Cratty" />
-	<b>Ralphie Cratty</b>, a member of our <i>Beit Din</i>, leads the class of the Gospels from a Hebraic mindset.
-	Ralphie came to a greater understanding of the scriptures after discovering the truth regarding the Creator’s name.
-	This gave him a desire to re-examine his understanding of all the scriptures from the Hebraic mindset.
-	He now has a deep passion for seeking out the scriptures and continues learning each and every day.
-</p>
-
-<div class="card border-primary mb-3">
-
-	<div class="card-header">
-		<h4 class="card-title">@Page.Title</h4>
-	</div>
-
-	<div class="body">
-
-		<ul class="lead">
-			<li>
-				Meets every Shabbat before the main service
-			</li>
-
-			<li>
-				<i class="text-warning far fa-clock"></i> 1:30 - 2:15 pm at <b>Living Messiah</b>
-				<LinkComponent LinkComponentEnum="@LinkComponentEnum.Location">
-				</LinkComponent>
-			</li>
-			<li>
-				<span class="far fa-envelope"></span>&nbsp;Contact
-				<a href="mailto:ralphie@livingmessiah.com?Subject=Indepth-Study" target="_top"> ralphie@livingmessiah.com</a> for more information
-			</li>
-		</ul>
-
-	</div>
-
-</div>
-
-@if (ShowLatestVideo)
+@if (VM is not null)
 {
-	<Card WeeklyVideoTypeValue="WVT_Enums.InDepthStudy.Value"></Card>
+	<ShowHideLastVideoComponent VM="VM" />
+}
+else
+{
+	<p>InDepthStudyQuery IS NULL</p>
 }
 
-@* ToDo: is this a better way  @onclick="@(e => ChangeContent(e, PartialViewEnum.Intro))"> *@
-<div class="row">
-	<div class="col">
-		<button class="my-3 btn btn-xlarge btn-primary"
-						@onclick="@ShowLatestVideo_Button_Click">
-			@((MarkupString)OppositeIcon!) @OppositeToggleMsg
-		</button>
-	</div>
-</div>
+<ArchiveTable ShowTable="false" />
+
+@code {
+	protected bool TurnSpinnerOff = false;
+	public Data.InDepthStudyQuery? InDepthStudyQuery;  // vwCurrentWeeklyVideo? CurrentWeeklyVideo;
+	public CurrentVideoVM? VM;
+
+	protected override async Task OnInitializedAsync()
+	{
+		try
+		{
+			Logger!.LogDebug("{Class}!{Method}", nameof(CurrentInDepthStudyCard), nameof(OnInitializedAsync));
+			InDepthStudyQuery = await db!.GetIndepth()!;
+
+			if (InDepthStudyQuery == null)
+			{
+				Toast!.ShowWarning($"{nameof(InDepthStudyQuery)} NOT FOUND");
+			}
+			else
+			{
+				VM = new CurrentVideoVM();
+				VM.Date = InDepthStudyQuery.ShabbatDate.ToString(DateFormat.ddd_mm_dd);
+				VM.Title = InDepthStudyQuery.Title;
+				VM.GraphicFile = InDepthStudyQuery.GraphicFile ?? Blobs.DefaultImage();
+				VM.Category = InDepthStudyQuery.Category;
+				VM.SubCategory = InDepthStudyQuery.SubCategory;
+				VM.YouTubeUrl = InDepthStudyQuery.YouTubeUrl;
+				VM.BookChapterLabel = $"{InDepthStudyQuery.BookTitle} {InDepthStudyQuery.Chapter}";
+				VM.BiblicalUrlReference = InDepthStudyQuery.BiblicalUrlReference;
+			}
+		}
+		catch (System.Exception ex)
+		{
+			Logger!.LogError(ex, "{Class}!{Method}; {Command}", nameof(CurrentInDepthStudyCard), nameof(OnInitializedAsync), nameof(db.GetIndepth));
+			Toast!.ShowError("An invalid operation occurred reading database, contact your administrator");
+		}
+		finally
+		{
+			TurnSpinnerOff = true;
+		}
+	}
+}

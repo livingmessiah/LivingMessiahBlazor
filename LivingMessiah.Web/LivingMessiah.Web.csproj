@@ -147,6 +147,7 @@
   <ItemGroup>
     <Folder Include="Features\Feasts\LinkSmartEnums\" />
     <Folder Include="Features\Feasts\Links\" />
+    <Folder Include="Features\InDepthStudy\Enums\" />
     <Folder Include="Features\WindmillRanch\LinkSmartEnums\" />
   </ItemGroup>
 

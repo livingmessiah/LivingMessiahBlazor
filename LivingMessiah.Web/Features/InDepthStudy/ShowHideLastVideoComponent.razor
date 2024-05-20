@@ -1,0 +1,90 @@
+﻿
+
+<div class="card  border-success my-0">
+	<div class="card-header">
+
+		<div class="row">
+			<div class="col-8">
+
+				<div class="card-body">
+					Latest Video <br /> <i class="far fa-calendar"></i> @VM!.Date
+				</div>
+			</div>
+			<div class="col-4">
+				<div class="card-body d-flex justify-content-end">
+					<ShowLastVideoToggle CurrentShowOrHide=@_showVideo OnToggleSelected="@ReturnedToggle" />
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	@if (_showVideo)
+	{
+		<div class="card-body">
+			<h5 class="card-text text-center">
+				@VM.Title
+			</h5>
+
+			@if ((VM.Category is not null) && (VM.SubCategory is not null))
+			{
+				<div class="card-body">
+					<h5 class="card-text text-center">
+						@($"{VM.Category} | {VM.SubCategory}")
+					</h5>
+				</div>
+			}
+
+
+		</div>
+
+		<div class="card-body text-center">
+			<img src="@Blobs.ImageFullPath(VM.GraphicFile!)" class="img-fluid" />
+		</div>
+
+		<div class="card-footer">
+			<div class="row">
+
+				<div class="col-4 text-center">
+					Bible Link <br />
+					<a href="@VM.BiblicalUrlReference"
+						 class="btn btn-primary btn-sm" target="_blank">
+						<span class="fas fa-external-link-alt"></span>
+						<b>@VM.BookChapterLabel</b>
+					</a>
+				</div>
+
+				<div class="col-4 text-center">
+					@* title="@VM.YouTubeId" *@
+					YouTube Link <br />
+					<a href="@VM.YouTubeUrl" target="_blank">
+						<span class="btn btn-danger btn-sm"><i class="fab fa-youtube"></i></span>
+					</a>
+				</div>
+
+				<div class="col-4 text-center">
+					<p>
+						In Depth Link <br />
+						<b>ToDo</b>
+					</p>
+				</div>
+
+			</div> @* row *@
+		</div>	@* footer *@
+
+	}
+
+</div>
+
+
+@code {
+	[Parameter, EditorRequired] public CurrentVideoVM? VM { get; set; }
+
+	private bool _showVideo = false;
+
+	private void ReturnedToggle(bool showVideo)
+	{
+		_showVideo = showVideo;
+	}
+	// <p class="my-0">	<i class="fas fa-share fa-rotate-270"></i> Watch the video when it is live</p>
+}
