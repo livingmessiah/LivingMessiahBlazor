@@ -1,43 +1,59 @@
-﻿
+﻿@using LivingMessiah.Web.Infrastructure
 
-<div class="card  border-warning mt-3">
-	<div class="card-header">
+@* template: Features\Admin\Video\WeeklyVideos\Index.razor  *@
 
-		<div class="row">
-			<div class="col-12">
-				<div class="card-body d-flex justify-content-end">
-					<ArchiveShowHideToggle CurrentShowOrHide=@CurrentShowTable OnToggleSelected="@ReturnedToggle" />
-					
-				</div>
-			</div>
-		</div>
+<LoadingComponent IsLoading="ArchiveList==null">
+	<TableTemplate Items="ArchiveList">
+		<TableHeader>
+			<th>Shabbat Week</th>
+			<th>Image</th>
+			<th>Cat/SubCat</th>
+			<th>YouTube Id</th>
+			<th>B/C</th>
+			<th>Title</th>
+		</TableHeader>
+		<RowTemplate>
+			<td>
+				@context.ShabbatDate.ToShortDateString()
+			</td>
+			<td>
+				@context.GraphicFile
+			</td>
+			<td>
+				@context.CatSubCat
+			</td>
+			<td>
+				@if (context.YouTubeId != null)
+				{
+					<a href="@context.YouTubeUrl" target="_blank"
+						 title="@context.YouTubeUrl">
+						<u>@context.YouTubeId</u>
+						<i class="fas fa-external-link-square-alt"></i>
+					</a>
+				}
+				else
+				{
+					<p class="text-info"><i>Missing</i></p>
+				}
+			</td>
+			<td>
+				@if (context.BookTitle is not null)
+				{
+					<a href="@context.BiblicalUrlReference" target="_blank"
+						 title="@context.BookTitle : @context.Chapter">
+						<u>MHB</u>
+						<i class="fas fa-external-link-square-alt"></i>
+					</a>
+				}
+			</td>
 
-		<div class="row">
-			<div class="col-12">
-				<div class="card-body">
-
-					<p>CurrentShowTable: @CurrentShowTable</p>
-
-					@if (CurrentShowTable)
-					{
-						<p>ToDo: Show Archive Table</p>
+			<td>
+				@StringExtensions.Truncate(@context.Title!, 20)
+			</td>
 
 
-						@if (InDepthStudyList is not null)
-						{
-							<p class="ms-5">InDepthStudyList is NOT null</p>
-						}
-						else
-						{
-							<p class="ms-5">InDepthStudyList IS null</p>
-						}
-					}
 
-				</div>
-			</div>
-		</div>
-
-	</div>
-</div>
-
+		</RowTemplate>
+	</TableTemplate>
+</LoadingComponent>
 

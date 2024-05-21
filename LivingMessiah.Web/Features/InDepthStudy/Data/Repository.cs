@@ -1,16 +1,9 @@
 ﻿using Dapper;
 using LivingMessiah.Web.Data;
-using LivingMessiah.Web.Features.UpcomingEvents.Weekly;
 using Microsoft.Extensions.Configuration;
 using DataEnumsDatabase = LivingMessiah.Web.Data.Enums.Database;
-
 using Microsoft.Extensions.Logging;
-
-
-//using LivingMessiah.Web.Features.Calendar.ManageKeyDates.Queries;
-using System;
 using System.Collections.Generic;
-//using System.Linq;
 using System.Threading.Tasks;
 using System.Linq;
 
@@ -21,6 +14,7 @@ public interface IRepository
 	string BaseSqlDump { get; }
 	Task<IReadOnlyList<InDepthStudyQuery>>? GetIndepthVideos(int daysOld);
 	Task<InDepthStudyQuery>? GetIndepth();
+	Task<IReadOnlyList<ArchiveQuery>>? GetArchive();
 }
 
 public class Repository : BaseRepositoryAsync, IRepository
@@ -69,6 +63,34 @@ ORDER BY ShabbatDate DESC
 		return await WithConnectionAsync(async connection =>
 		{
 			var rows = await connection.QueryAsync<InDepthStudyQuery>(sql: base.Sql, param: base.Parms);
+			return rows.ToList();
+		});
+
+	}
+
+	public async Task<IReadOnlyList<ArchiveQuery>>? GetArchive() // int daysOld = 12
+	{
+		//base.Parms = new DynamicParameters(new { DaysOld = daysOld });
+		base.Sql = $@"
+--Declare @TOP int=12
+SELECT TOP 50
+	Id
+, ShabbatDate
+, YouTubeId
+, YouTubeUrl
+, Category
+, SubCategory
+, Title
+, GraphicFile
+, BookTitle
+, Chapter
+, BiblicalUrlReference
+FROM dbo.vwInDepthStudyArchive
+ORDER BY ShabbatDate DESC
+		";
+		return await WithConnectionAsync(async connection =>
+		{
+			var rows = await connection.QueryAsync<ArchiveQuery>(sql: base.Sql); //, param: base.Parms
 			return rows.ToList();
 		});
 

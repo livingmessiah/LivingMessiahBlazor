@@ -10,7 +10,6 @@
 @inject ILogger<CurrentInDepthStudyCard>? Logger
 @inject IToastService? Toast
 
-
 @using Page = LivingMessiah.Web.Links.IndepthStudy
 <PageTitle>@Page.Title</PageTitle>
 
@@ -29,7 +28,19 @@ else
 	<p>InDepthStudyQuery IS NULL</p>
 }
 
-<ArchiveTable ShowTable="false" />
+<div class="row">
+	<div class="col-12 d-flex justify-content-end mt-3">
+			<ArchiveShowHideToggle CurrentShowOrHide=@CurrentShowTable OnToggleSelected="@ReturnedArchiveToggle" />
+	</div>
+</div>
+
+
+
+@if (CurrentShowTable)
+{
+	<ArchiveTable />
+}
+
 
 @code {
 	protected bool TurnSpinnerOff = false;
@@ -70,4 +81,13 @@ else
 			TurnSpinnerOff = true;
 		}
 	}
+
+	#region EventCallbacks
+	public bool CurrentShowTable { get; set; } = false;
+	private void ReturnedArchiveToggle(bool showTable)
+	{
+		CurrentShowTable = showTable;
+		StateHasChanged();
+	}
+	#endregion
 }
