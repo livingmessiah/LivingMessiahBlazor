@@ -73,7 +73,7 @@ ORDER BY ShabbatDate DESC
 		//base.Parms = new DynamicParameters(new { DaysOld = daysOld });
 		base.Sql = $@"
 --Declare @TOP int=12
-SELECT TOP 50
+SELECT TOP 20
 	Id
 , ShabbatDate
 , YouTubeId

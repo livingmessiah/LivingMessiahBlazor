@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Components;
+using System;
 
 namespace LivingMessiah.Web.Features.InDepthStudy.Data;
 
@@ -23,36 +24,68 @@ public class ArchiveQuery
 		return $"Id: {Id}, YouTubeId: {YouTubeId ?? "NULL"}";
 	}
 
-	public string CatSubCat
+	public MarkupString YouTube
+	{
+		get
+		{
+			if (String.IsNullOrEmpty(YouTubeId))
+			{
+				return (MarkupString)"<mark><b>MISSING</b></mark>";
+			}
+			else
+			{
+				return (MarkupString)$"<a href='{YouTubeUrl}' target=`_blank` title='{YouTubeUrl}' <u>{YouTubeId}</u></a> <span class='btn btn-danger btn-xs'><i class='fab fa-youtube'></i></span>";
+				//<i class='fab fa-youtube'></i>    <i class='fas fa-external-link-square-alt'></i>
+			}
+		}
+	}
+
+	public MarkupString CatSubCat
 	{
 		get
 		{
 			if (String.IsNullOrEmpty(Category) && String.IsNullOrEmpty(SubCategory))
 			{
+				
+				return (MarkupString)"<mark>?</mark>";
+			}
+			else
+			{
+				return (MarkupString)$"{Category} <br /> {SubCategory}";
+			}
+		}
+	}
+
+	public string BookChapter
+	{
+		get
+		{
+			if (String.IsNullOrEmpty(BookTitle) && String.IsNullOrEmpty(Chapter))
+			{
 				return "";
 			}
 			else
 			{
-				return $"{Category} | {SubCategory}";
+				return $"{BookTitle} {Chapter}";
 			}
 		}
-
 	}
 
-
-	/*
-
-	https://myhebrewbible.com/bookchapter/Amos/3/the-necessity-of-gods-judgment-testimony-against-israel
-
-	BiblicalUrlReference: 
-
-	public DateTime EventDate()
+	public string Thumbnail
 	{
-		return ShabbatDate;
+		get
+		{
+			if (!String.IsNullOrEmpty(YouTubeId))
+			{
+				return $"http://img.youtube.com/vi/{YouTubeId}/{"default.jpg"}";
+			}
+			else
+			{
+				return "";
+			}
+		}
 	}
-	*/
+
 }
 
-//, ShabbatWeekId: {ShabbatWeekId}
-// public string? ShabbatDate { get; set; }
-//	public int ShabbatWeekId { get; set; }
+

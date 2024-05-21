@@ -3,55 +3,44 @@
 @* template: Features\Admin\Video\WeeklyVideos\Index.razor  *@
 
 <LoadingComponent IsLoading="ArchiveList==null">
-	<TableTemplate Items="ArchiveList">
+	<TableTemplate Items="ArchiveList" HeaderCSS="table table-bordered border-warning-subtle table-hover">
 		<TableHeader>
-			<th>Shabbat Week</th>
+			<th>Shabbat <br /> Week</th>
+			<th>Title<br />M.H.B.</th>
 			<th>Image</th>
-			<th>Cat/SubCat</th>
-			<th>YouTube Id</th>
-			<th>B/C</th>
-			<th>Title</th>
+			<th>Category <br /> Subcategory</th>
 		</TableHeader>
 		<RowTemplate>
+
 			<td>
-				@context.ShabbatDate.ToShortDateString()
-			</td>
-			<td>
-				@context.GraphicFile
-			</td>
-			<td>
-				@context.CatSubCat
-			</td>
-			<td>
-				@if (context.YouTubeId != null)
-				{
-					<a href="@context.YouTubeUrl" target="_blank"
-						 title="@context.YouTubeUrl">
-						<u>@context.YouTubeId</u>
-						<i class="fas fa-external-link-square-alt"></i>
-					</a>
-				}
-				else
-				{
-					<p class="text-info"><i>Missing</i></p>
-				}
-			</td>
-			<td>
-				@if (context.BookTitle is not null)
-				{
-					<a href="@context.BiblicalUrlReference" target="_blank"
-						 title="@context.BookTitle : @context.Chapter">
-						<u>MHB</u>
-						<i class="fas fa-external-link-square-alt"></i>
-					</a>
-				}
+				@context.ShabbatDate.ToShortDateString() <br />
+				@context.YouTube
 			</td>
 
 			<td>
 				@StringExtensions.Truncate(@context.Title!, 20)
+				<br />
+				@if (context.BookTitle is not null)
+				{
+					<a href="@context.BiblicalUrlReference" target="_blank"
+						 title="@context.BookChapter">
+						<u>@context.BookChapter</u>
+					</a>
+					<i class="fas fa-external-link-square-alt"></i>
+				}
 			</td>
 
 
+			<td>
+				<img src="@context.Thumbnail" class="img-fluid" title="@context.GraphicFile" />
+			</td>
+
+			<td>
+				@context.CatSubCat
+			</td>
+
+
+			@* <td>@context.YouTube</td> *@
 
 		</RowTemplate>
 	</TableTemplate>
