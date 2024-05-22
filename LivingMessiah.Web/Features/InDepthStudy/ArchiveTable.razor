@@ -1,6 +1,10 @@
 ﻿@using LivingMessiah.Web.Infrastructure
 
-@* template: Features\Admin\Video\WeeklyVideos\Index.razor  *@
+@* template: Features\Admin\Video\WeeklyVideos\Index.razor
+	@using Page = LivingMessiah.Web.Links.Admin.Video
+	<AuthorizeView Roles="@Roles.AdminOrAudiovisual">
+	<Authorized>
+*@
 
 <LoadingComponent IsLoading="ArchiveList==null">
 	<TableTemplate Items="ArchiveList" HeaderCSS="table table-bordered border-warning-subtle table-hover">
@@ -8,17 +12,18 @@
 			<th>Shabbat <br /> Week</th>
 			<th>Title<br />M.H.B.</th>
 			<th>Image</th>
-			<th>Category <br /> Subcategory</th>
+			<th class ="text-center"><small>Max<br />Res</small></th>
+			<th><small>Category <br /> Subcategory</small></th>
 		</TableHeader>
 		<RowTemplate>
 
 			<td>
 				@context.ShabbatDate.ToShortDateString() <br />
-				@context.YouTube
+				<small>@context.YouTube</small>
 			</td>
 
 			<td>
-				@StringExtensions.Truncate(@context.Title!, 20)
+				@StringExtensions.Truncate(@context.Title!, 25)
 				<br />
 				@if (context.BookTitle is not null)
 				{
@@ -30,9 +35,17 @@
 				}
 			</td>
 
-
 			<td>
-				<img src="@context.Thumbnail" class="img-fluid" title="@context.GraphicFile" />
+				<a href="@context.GraphicFileUrl" class="" title="download full size image" target="_blank">
+					<img src="@context.ThumbnailImgSrc" class="img-fluid" title="@context.GraphicFile" />
+				</a>
+
+			</td>
+
+			<td class="text-center">
+				<a href="@context.MaxResDefaultImgSrc" class="" title="download full size image from YouTube" target="_blank">
+					<i class="fas fa-external-link-square-alt"></i>
+				</a>
 			</td>
 
 			<td>

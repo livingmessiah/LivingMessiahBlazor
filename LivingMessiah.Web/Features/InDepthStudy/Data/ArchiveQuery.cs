@@ -18,8 +18,16 @@ public class ArchiveQuery
 
 	public string? Category { get; set; }
 	public string? SubCategory { get; set; }
+	
+	public string GraphicFileUrl
+	{
+		get
+		{
+			return !String.IsNullOrEmpty(GraphicFile) ? Blobs.ImageFullPath(GraphicFile) : "";
+		}
+	}
 
-	public override string ToString()
+public override string ToString()
 	{
 		return $"Id: {Id}, YouTubeId: {YouTubeId ?? "NULL"}";
 	}
@@ -28,15 +36,9 @@ public class ArchiveQuery
 	{
 		get
 		{
-			if (String.IsNullOrEmpty(YouTubeId))
-			{
-				return (MarkupString)"<mark><b>MISSING</b></mark>";
-			}
-			else
-			{
-				return (MarkupString)$"<a href='{YouTubeUrl}' target=`_blank` title='{YouTubeUrl}' <u>{YouTubeId}</u></a> <span class='btn btn-danger btn-xs'><i class='fab fa-youtube'></i></span>";
-				//<i class='fab fa-youtube'></i>    <i class='fas fa-external-link-square-alt'></i>
-			}
+			return String.IsNullOrEmpty(YouTubeId)
+				? (MarkupString)"<mark><b>MISSING</b></mark>"
+				: (MarkupString)$"<a href='{YouTubeUrl}' target=`_blank` title='{YouTubeUrl}' <u>{YouTubeId}</u></a> <span class='btn btn-danger btn-xxs'><i class='fab fa-youtube'></i></span>";
 		}
 	}
 
@@ -44,15 +46,9 @@ public class ArchiveQuery
 	{
 		get
 		{
-			if (String.IsNullOrEmpty(Category) && String.IsNullOrEmpty(SubCategory))
-			{
-				
-				return (MarkupString)"<mark>?</mark>";
-			}
-			else
-			{
-				return (MarkupString)$"{Category} <br /> {SubCategory}";
-			}
+			return String.IsNullOrEmpty(Category) && String.IsNullOrEmpty(SubCategory)
+				? (MarkupString)"<mark>?</mark>"
+				: (MarkupString)$"{Category} <br /> {SubCategory}";
 		}
 	}
 
@@ -60,32 +56,26 @@ public class ArchiveQuery
 	{
 		get
 		{
-			if (String.IsNullOrEmpty(BookTitle) && String.IsNullOrEmpty(Chapter))
-			{
-				return "";
-			}
-			else
-			{
-				return $"{BookTitle} {Chapter}";
-			}
+			return String.IsNullOrEmpty(BookTitle) && String.IsNullOrEmpty(Chapter) ? "" : $"{BookTitle} {Chapter}";
 		}
 	}
 
-	public string Thumbnail
+	public string ThumbnailImgSrc
 	{
 		get
 		{
-			if (!String.IsNullOrEmpty(YouTubeId))
-			{
-				return $"http://img.youtube.com/vi/{YouTubeId}/{"default.jpg"}";
-			}
-			else
-			{
-				return "";
-			}
+			return !String.IsNullOrEmpty(YouTubeId) ? $"http://img.youtube.com/vi/{YouTubeId}/{"default.jpg"}" : "";
+		}
+	}
+
+	public string MaxResDefaultImgSrc
+	{
+		get
+		{
+			return !String.IsNullOrEmpty(YouTubeId) ? $"http://img.youtube.com/vi/{YouTubeId}/{"maxresdefault.jpg"}" : "";
 		}
 	}
 
 }
 
-
+// Ignore Spelling: Img
