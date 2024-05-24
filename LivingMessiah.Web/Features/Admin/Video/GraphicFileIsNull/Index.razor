@@ -1,0 +1,31 @@
+﻿@page "/admin/Video/GraphicFilesNull"
+@using Page = LivingMessiah.Web.Links.Admin.Video.GraphicFileIsNull
+@using static LivingMessiah.Web.Services.Auth0
+
+
+<AuthorizeView Roles="@Roles.Admin">
+
+	<Authorized>
+		<IndexPageHeader />
+		<Table />
+	</Authorized>
+
+	<NotAuthorized>
+
+		<div class="card border-warning my-5">
+			<div class="card-header">Not Authorized</div>
+
+			<div class="card-body">
+				<h5 class="">To view <b>@Page.Title</b> you need to be logged in.</h5>
+				<LoginRedirectButton ReturnUrl="@Page.Index" />
+			</div>
+		</div>
+
+	</NotAuthorized>
+
+</AuthorizeView>
+
+
+@code {
+
+}

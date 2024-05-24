@@ -1,0 +1,78 @@
+﻿@using Microsoft.AspNetCore.Hosting
+@using Microsoft.Extensions.Hosting
+@using Microsoft.Extensions.Logging;
+
+@inject Data.IRepository? db
+@inject ILogger<Table>? Logger
+@inject IToastService? Toast
+
+<LoadingComponent IsLoading="GraphicFileIsNullList==null" TurnSpinnerOff="TurnSpinnerOff">
+	<TableTemplate Items="GraphicFileIsNullList" HeaderCSS="table table-bordered  table-hover">
+		<TableHeader>
+			<th>Shabbat Week Id <br /> Week <br /> YT Id <br /> Torah</th>
+			<th>Thumbnail <br /> YT MaxRes <i class="fas fa-external-link-square-alt"></i></th>
+			<th>Blob File Name</th>
+			<th>Action</th>
+		</TableHeader>
+
+		<RowTemplate>
+
+			<td>
+				@context.ShabbatWeekIdFileName <br />
+				@context.ShabbatDate.ToString(DateFormat.YYYY_MM_DD) <br />
+				@context.YouTubeId <br />
+				@context.TorahFileName
+			</td>
+
+			<td class="text-center">
+
+				<a href="@context.MaxResDefaultImgSrc" class="" title="download full size image from YouTube" target="_blank">
+					<img src="@context.ThumbnailImgSrc" class="img-fluid" />
+				</a>
+
+			</td>
+
+			<td>@context.BlobFileName</td>
+
+			<td>
+				ToDo
+			</td>
+
+			@*
+
+
+			<button @onclick="@(e => Edit_ButtonClick(context.Id))" type="button"
+			title="Weekly Video Edit" class="@Enums.Crud.Edit.ButtonColor btn-sm">
+			<sup class="text-black-50">@context.Id</sup> <i class="@Enums.Crud.Edit.Icon"></i>
+			</button>
+
+			*@
+
+			@* <td>@context.GraphicFile</td> *@
+
+		</RowTemplate>
+	</TableTemplate>
+</LoadingComponent>
+
+@code {
+	protected bool TurnSpinnerOff = false;
+	List<GraphicFileIsNull.GraphicFileIsNullVM>? GraphicFileIsNullList;
+
+	protected override async Task OnInitializedAsync()
+	{
+		Logger!.LogDebug("{Class}!{Method}", nameof(Table), nameof(OnInitializedAsync));
+		try
+		{
+			GraphicFileIsNullList = await db!.GetGraphicFileIsNullList();
+		}
+		catch (System.Exception ex)
+		{
+			Logger!.LogError(ex, "{Class}!{Method}; {Command}", nameof(Table), nameof(OnInitializedAsync), nameof(db.GetGraphicFileIsNullList));
+			Toast!.ShowError("An invalid operation occurred reading database, contact your administrator");
+		}
+		finally
+		{
+			TurnSpinnerOff = true;
+		}
+	}
+}
