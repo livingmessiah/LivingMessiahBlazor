@@ -26,6 +26,14 @@ public class WeeklyVideoTable
 		}
 	}
 
+	public string MaxResDefaultImgSrc
+	{
+		get
+		{
+			return !String.IsNullOrEmpty(YouTubeId) ? $"http://img.youtube.com/vi/{YouTubeId}/{"maxresdefault.jpg"}" : "";
+		}
+	}
+
 	public int Book { get; set; }
 	public int Chapter { get; set; }
 	public string BC
@@ -39,4 +47,5 @@ public class WeeklyVideoTable
 	}
 
 	public string? Title { get; set; }
+	public string? GraphicFile { get; set; }
 }

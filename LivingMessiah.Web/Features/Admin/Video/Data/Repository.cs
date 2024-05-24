@@ -19,6 +19,8 @@ public interface IRepository
 
 	Task<List<Models.ShabbatWeek>> GetShabbatWeekList(int top);
 	Task<List<Models.WeeklyVideoTable>> GetWeeklyVideoTableList(int top);
+	Task<List<GraphicFileIsNull.GraphicFileIsNullVM>> GetGraphicFileIsNullList();
+	
 
 	Task<AddEdit.FormVM> Get(int id);
 	Task<Tuple<int, int, string>> WeeklyVideoInsert(Video.AddEdit.FormVM formVM);
@@ -60,7 +62,7 @@ ORDER BY ShabbatDate DESC
 
 	public async Task<List<Models.WeeklyVideoTable>> GetWeeklyVideoTableList(int top = 9)
 	{
-		base.log.LogDebug(string.Format("Inside {0}, top={1}", nameof(Repository) + "!" + nameof(GetWeeklyVideoTableList), top));
+		base.log.LogDebug("{Class}!{Method}, top={top}", nameof(Repository), nameof(GetWeeklyVideoTableList), top);
 		Parms = new DynamicParameters(new { Top = top });
 
 		Sql = $@"
@@ -88,6 +90,33 @@ ORDER BY ShabbatDate DESC, tvf.WeeklyVideoTypeId
 		});
 	}
 
+	public async Task<List<GraphicFileIsNull.GraphicFileIsNullVM>> GetGraphicFileIsNullList()
+	{
+		base.log.LogDebug("{Class}!{Method}", nameof(Repository), nameof(GetGraphicFileIsNullList));
+
+		Sql = $@"
+SELECT 
+	wv.ShabbatWeekId
+,	wv.WeeklyVideoTypeId
+, sw.ShabbatDate
+,	wv.YouTubeId
+, wv.GraphicFile
+, p.Torah
+FROM WeeklyVideo wv
+	INNER JOIN ShabbatWeek sw
+		ON wv.ShabbatWeekId = sw.Id
+	INNER JOIN Bible.Parasha p
+		ON sw.Id = p.ShabbatWeekId
+WHERE wv.Id IS NOT NULL AND wv.YouTubeId IS NOT NULL AND wv.GraphicFile IS NULL 
+AND wv.WeeklyVideoTypeId = 1 -- Features.Admin.Video.Enums.WeeklyVideoType 1==MainServiceEnglish; 2=MainServiceSpanish
+ORDER BY ShabbatDate DESC
+";
+		return await WithConnectionAsync(async connection =>
+		{
+			var rows = await connection.QueryAsync<GraphicFileIsNull.GraphicFileIsNullVM>(sql: Sql);
+			return rows.ToList();
+		});
+	}
 
 	public async Task<AddEdit.FormVM> Get(int id)
 	{

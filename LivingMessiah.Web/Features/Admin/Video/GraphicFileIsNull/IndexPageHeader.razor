@@ -1,0 +1,21 @@
+﻿
+@using Page = LivingMessiah.Web.Links.Admin.Video.GraphicFileIsNull
+@using PageReturn = LivingMessiah.Web.Links.Admin.Video
+
+<div class="pb-1 mt-4 mb-2">
+	<div class="pb-1 mt-4 mb-1 border-bottom border-info">
+		<h2>
+			<i class="@Page.Icon"></i> @Page.Title
+			<span class="fs-5 mb-1 float-end">
+				<a href="@PageReturn.Index" class="list-group-item" title="@PageReturn.Title">
+					<i class="@PageReturn.Icon" aria-hidden="true"></i> @PageReturn.Title <i class="fas fa-undo-alt"></i>
+				</a>
+				
+			</span>
+		</h2>
+	</div>
+</div>
+
+@code {
+
+}

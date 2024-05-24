@@ -66,12 +66,14 @@ public static class Admin
 		public const string Redirect = "/Admin/Video";
 		public const string Title = "Admin Video";
 		public const string Icon = "fab fa-teamspeak";
-	}
-	public static class CascadingDropdownList
-	{
-		public const string Index = "/Admin/CascadingDropdownList/";
-		public const string Title = "Cascading Dropdown List";
-		public const string Icon = "fas fa-tachometer-alt";
+
+		public static class GraphicFileIsNull
+		{
+			public const string Index = "/Admin/Video/GraphicFilesNull/";
+			public const string Title = " Graphic Files is Null";
+			public const string Icon = "far fa-image";
+		}
+
 	}
 
 	// public static class ParashaCalendar See LivingMessiah.Web.Features.Home.Enums.Nav

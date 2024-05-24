@@ -15,6 +15,15 @@ public static class Constants
 		};
 	}
 
+	public static class GraphicFiles
+	{
+		public const string Icon = Links.Admin.Video.GraphicFileIsNull.Icon; 
+		public const string Text = Links.Admin.Video.GraphicFileIsNull.Title;
+		public const string Index = Links.Admin.Video.GraphicFileIsNull.Index;
+		public const string Color = "text-info";
+		public const string ButtonColor = "btn btn-outline-info";  
+	}
+
 	public static class RepopulateButton
 	{
 		public const string Icon = "fas fa-retweet";
