@@ -21,6 +21,7 @@
 				@context.ShabbatWeekIdFileName <br />
 				@context.ShabbatDate.ToString(DateFormat.YYYY_MM_DD) <br />
 				@context.YouTubeId <br />
+				@context.ShabbatWeekId <br />
 				@context.TorahFileName
 			</td>
 
@@ -35,18 +36,12 @@
 			<td>@context.BlobFileName</td>
 
 			<td>
-				ToDo
+				@* <button @onclick="@(e => ButtonClicked(context.BlobFileName))" type="button" *@
+				<button @onclick="@(e => ButtonClicked(context.YouTubeId!, context.BlobFileName, context.ShabbatWeekId))" type="button"
+								title="Add Blob" class="text-success btn-sm">
+					<i class="fas fa-plus"></i>
+				</button>
 			</td>
-
-			@*
-
-
-			<button @onclick="@(e => Edit_ButtonClick(context.Id))" type="button"
-			title="Weekly Video Edit" class="@Enums.Crud.Edit.ButtonColor btn-sm">
-			<sup class="text-black-50">@context.Id</sup> <i class="@Enums.Crud.Edit.Icon"></i>
-			</button>
-
-			*@
 
 			@* <td>@context.GraphicFile</td> *@
 
@@ -55,6 +50,9 @@
 </LoadingComponent>
 
 @code {
+
+	[Parameter, EditorRequired] public EventCallback<YouTubeAndFileVM> OnBlobSelected { get; set; }  // EventCallback<string>
+
 	protected bool TurnSpinnerOff = false;
 	List<GraphicFileIsNull.GraphicFileIsNullVM>? GraphicFileIsNullList;
 
@@ -74,5 +72,15 @@
 		{
 			TurnSpinnerOff = true;
 		}
+	}
+
+	private void ButtonClicked(string youTubeId, string blobFileName, int shabbatWeekId)
+	{
+		YouTubeAndFileVM vm = new();
+		vm.YouTubeId = youTubeId;
+		vm.GraphicFile = blobFileName;
+		vm.ShabbatWeekId = shabbatWeekId;
+		OnBlobSelected.InvokeAsync(vm);
+		//OnBlobSelected.InvokeAsync(blobFileName);
 	}
 }

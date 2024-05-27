@@ -1,21 +1,22 @@
 ﻿@page "/InDepthStudy"
 
+@using Page = LivingMessiah.Web.Links.IndepthStudy
 @using Blazored.Toast.Services
-@using Microsoft.AspNetCore.Components
+@* @using Microsoft.AspNetCore.Components *@
 @using Microsoft.Extensions.Logging
 @using System.Threading.Tasks
 
-@inject Data.IRepository? db
-@inject LivingMessiah.Web.Features.UpcomingEvents.Weekly.ICacheService svc
-@inject ILogger<CurrentInDepthStudyCard>? Logger
-@inject IToastService? Toast
-
-@using Page = LivingMessiah.Web.Links.IndepthStudy
 <PageTitle>@Page.Title</PageTitle>
 
 <div class="pb-2 mt-4 mb-4 border-bottom">
 	<h2><i class="@Page.Icon"></i> @Page.Title</h2>
 </div>
+
+
+@inject ILogger<Index>? Logger
+@inject IToastService? Toast 
+@inject Data.IRepository? db
+@* @inject LivingMessiah.Web.Features.UpcomingEvents.Weekly.ICacheService svc *@
 
 <ItineraryCard />
 

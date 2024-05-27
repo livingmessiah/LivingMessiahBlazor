@@ -2,12 +2,25 @@
 @using Page = LivingMessiah.Web.Links.Admin.Video.GraphicFileIsNull
 @using static LivingMessiah.Web.Services.Auth0
 
+@using Blazored.Toast.Services
+@inject IToastService? Toast
 
 <AuthorizeView Roles="@Roles.Admin">
 
 	<Authorized>
+
 		<IndexPageHeader />
-		<Table />
+
+		@if (_showDetail)
+		{
+			<ProcessChosenBlob YouTubeId="@_youTubeId"
+												 BlobFileName="@GraphicFile"
+												 ShabbatWeekId="ShabbatWeekId"
+												 OnProcessCompleted="ReturnedProccess" />
+		}
+
+		<Table OnBlobSelected=@ReturnedSelection />
+
 	</Authorized>
 
 	<NotAuthorized>
@@ -28,4 +41,47 @@
 
 @code {
 
+	private bool _showDetail = false;
+
+	#region EventCallbacks
+
+	private string? _youTubeId = null;
+	private string? GraphicFile = null;
+	private int ShabbatWeekId = 0;
+
+
+	private void ReturnedSelection(YouTubeAndFileVM vm)  // string blobFile
+	{
+		_youTubeId = vm.YouTubeId!;
+		GraphicFile = vm.GraphicFile!;
+		ShabbatWeekId = vm.ShabbatWeekId;
+		_showDetail = true;
+		//StateHasChanged();
+	}
+
+	private BlobRecord? _blobRecord;
+	private void ReturnedSelectionRec(BlobRecord rec)  // string blobFile
+	{
+		_blobRecord = rec;
+		_showDetail = true;
+		//StateHasChanged();
+	}
+
+
+	private string? _returnedTransactionMessage;
+	private void ReturnedTransactionMessage(string msg)
+	{
+		_returnedTransactionMessage = msg;
+		Toast!.ShowInfo($"Transaction Message: {nameof(ReturnedTransactionMessage)}");
+	}
+
+	private void ReturnedProccess(bool cancelClicked)
+	{
+		_showDetail = false;
+		if (cancelClicked)
+		{
+			Toast!.ShowInfo("Cancel button clicked, No processing of blob");
+		}
+	}
+	#endregion
 }
