@@ -22,7 +22,6 @@ public void Dump()
 Severity	Code	Description	Project	File	Line	Suppression State
 Error	CS0446	Foreach cannot operate on a 'method group'. Did you intend to invoke the 'method group'?	LivingMessiah.Web	C:\Users\JohnM\source\repos\LivingMessiahBlazor\LivingMessiah.Web\Features\Admin\Video\Models\VideoImage.cs	34	Active
 
-
 */
 
 public record VideoImage(string VideoId, string FileName);
@@ -40,6 +39,7 @@ public static class VideoFactory
 		}
 	}
 
+	// ToDo review
 	public static List<VideoImage> PopulateVideoList()
 	{
 		var x = new List<VideoImage>

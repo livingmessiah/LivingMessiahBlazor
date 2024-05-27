@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
-using LivingMessiah.Web.Features.Admin.Video.MasterDetail;
 using LivingMessiah.Web.Data;
 using DataEnumsDatabase = LivingMessiah.Web.Data.Enums.Database;
+using LivingMessiah.Web.Features.Admin.Video.GraphicFileIsNull;
 
 namespace LivingMessiah.Web.Features.Admin.Video.Data;
 
@@ -19,13 +19,14 @@ public interface IRepository
 
 	Task<List<Models.ShabbatWeek>> GetShabbatWeekList(int top);
 	Task<List<Models.WeeklyVideoTable>> GetWeeklyVideoTableList(int top);
-	Task<List<GraphicFileIsNull.GraphicFileIsNullVM>> GetGraphicFileIsNullList();
+	Task<List<GraphicFileIsNullVM>> GetGraphicFileIsNullList();
 	
 
 	Task<AddEdit.FormVM> Get(int id);
 	Task<Tuple<int, int, string>> WeeklyVideoInsert(Video.AddEdit.FormVM formVM);
 	Task<Tuple<int, int, string>> WeeklyVideoUpdate(Video.AddEdit.FormVM formVM);
 	Task<Tuple<int, int, string>> WeeklyVideoDelete(int id);
+	Task<Tuple<int, int, string>> WeeklyVideoUpdateGraphicFile(YouTubeAndFileVM VM);
 }
 
 
@@ -269,6 +270,48 @@ WHERE Id = @Id
 
 		});
 	}
+
+
+	public async Task<Tuple<int, int, string>> WeeklyVideoUpdateGraphicFile(YouTubeAndFileVM VM)
+	{
+		Sql = "dbo.stpWeeklyVideo_GraphicFile_Update";
+		Parms = new DynamicParameters(new
+		{
+			VM.WeeklyVideoTypeId,
+			VM.ShabbatWeekId,
+			VM.GraphicFile,
+		});
+
+		Parms.Add("@ReturnValue", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue);
+
+		int affectedRows = 0;
+		int SprocReturnValue = 0;
+		string ReturnMsg = "";
+
+		return await WithConnectionAsync(async connection =>
+		{
+			string parameters = $"ShabbatWeekId: ShabbatWeekId: {VM.ShabbatWeekId}, WeeklyVideoTypeId: {VM.WeeklyVideoTypeId}";
+			string inside = $"{nameof(Repository)}!{nameof(WeeklyVideoUpdateGraphicFile)}; about to execute SPROC: {Sql}";
+			log.LogDebug(string.Format("Inside {0}", inside));
+
+			affectedRows = await connection.ExecuteAsync(sql: Sql, param: Parms, commandType: CommandType.StoredProcedure);
+			SprocReturnValue = Parms.Get<int>("ReturnValue");
+
+			if (SprocReturnValue != 0)
+			{
+				ReturnMsg = $"Database call failed; {nameof(VM.YouTubeId)}:{VM.YouTubeId}; SprocReturnValue: {SprocReturnValue}";
+				log.LogWarning(string.Format("inside {0}, parameters:{1}, ReturnMsg:{2}, {3} Sql: {4}"
+					, inside, parameters, ReturnMsg, Environment.NewLine, Sql));
+			}
+			else
+			{
+				ReturnMsg = $"Video updated for {VM.ShabbatWeekId}/{VM.WeeklyVideoTypeId}";
+			}
+
+			return new Tuple<int, int, string>(affectedRows, SprocReturnValue, ReturnMsg);
+		});
+	}
+
 
 	//	#endregion
 

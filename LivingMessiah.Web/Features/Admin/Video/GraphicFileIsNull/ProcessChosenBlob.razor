@@ -1,0 +1,51 @@
+﻿@using Blazored.Toast.Services
+@using Microsoft.Extensions.Logging
+
+@inject IToastService? Toast
+@inject Data.IRepository? db 
+@inject ILogger<ProcessChosenBlob>? Logger
+
+@if (_YouTubeId is not null)
+{
+	<div class="card border-warning mx-3 mb-3">
+		<img src='@($"http://img.youtube.com/vi/{YouTubeId}/{"maxresdefault.jpg"}")' class="card-img-top">
+
+		@* @($"Hello {this.Model.SomeProperty}") *@
+
+		<div class="card-header text-center"><h3>Chosen Blob</h3></div>
+
+		<div class="card-body">
+
+			<div class="container d-flex justify-content-between">
+				<p><b>YouTubeId</b>: @_YouTubeId</p>
+				<p><b>BlobFileName</b>: @_BlobFileName</p>
+			</div>
+
+			@* <p class="card-title">YouTubeId: @_YouTubeId | BlobFileName: @_BlobFileName</p> *@
+
+		</div>
+
+		<div class="card-footer text-body-secondary text-center">
+			<div class="d-grid gap-1 d-flex justify-content-end">
+			<button @onclick="ButtonClicked" type="button"
+							title="Add Blob" class="text-success btn-sm">
+				Process Blob <i class="fas fa-network-wired"></i>
+				@* fas fa-plus *@
+			</button>
+
+				<button @onclick="CancelClicked" type="button"
+								title="Cancel" class="btn-sm">
+								Cancel
+				</button>
+
+			</div>
+		</div>
+	</div>
+}
+else
+{
+	<p class="text-black-50 text-end"><small><sup>no blob chosen</sup></small></p>
+}
+
+
+
