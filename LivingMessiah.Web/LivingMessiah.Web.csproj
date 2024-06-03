@@ -88,6 +88,7 @@
 
   <ItemGroup>
     <PackageReference Include="Ardalis.SmartEnum" Version="7.0.0" />
+    <PackageReference Include="Azure.Storage.Blobs" Version="12.20.0" />
     <PackageReference Include="Blazored.FluentValidation" Version="2.1.0" />
     <PackageReference Include="Blazored.Modal" Version="7.2.0" />
     <PackageReference Include="Blazored.Toast" Version="4.1.0" />

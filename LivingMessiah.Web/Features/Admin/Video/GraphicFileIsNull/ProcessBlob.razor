@@ -1,0 +1,53 @@
+﻿@using Blazored.Toast.Services
+@using Microsoft.Extensions.Logging
+
+@if (@BlobRecord!.YouTubeId is not null)
+{
+	<div class="card border-warning mx-3 mb-3">
+		@* YouTubeId *@
+		<img src='@($"http://img.youtube.com/vi/{@BlobRecord!.YouTubeId}/{"maxresdefault.jpg"}")' class="card-img-top">
+		<div class="card-header text-center"><h3>Chosen Blob</h3></div>
+		<div class="card-body">
+			<div class="container d-flex justify-content-between">
+				<p><b>YouTubeId</b>: @BlobRecord!.YouTubeId</p>
+				<p><b>GraphicFile</b>: @BlobRecord.GraphicFile</p>
+			</div>
+		</div>
+
+		<div class="card-footer text-body-secondary text-center">
+			<div class="d-grid gap-1 d-flex justify-content-start">
+				<CopyImgFromYouTubeURLButton Blob="@BlobRecord!.GraphicFile"
+																		 YouTubeId="@BlobRecord!.YouTubeId" />
+
+			</div>
+
+			<div class="d-grid gap-1 d-flex justify-content-end">
+				<UpdateGraphicFileButton BlobRecord="@BlobRecord" />
+
+				<button @onclick="CancelClicked" type="button"
+								title="Cancel" class="btn-sm">
+					Cancel
+				</button>
+
+			</div>
+		</div>
+
+	</div>
+}
+else
+{
+	<p class="text-black-50 text-end"><small><sup>no blob chosen</sup></small></p>
+}
+
+
+
+@code {
+	[Parameter, EditorRequired] public BlobRecord? BlobRecord { get; set; }
+	[Parameter, EditorRequired] public EventCallback<bool> OnProcessCompleted { get; set; } 
+
+	private void CancelClicked()
+	{
+		OnProcessCompleted.InvokeAsync(true);
+	}
+
+}

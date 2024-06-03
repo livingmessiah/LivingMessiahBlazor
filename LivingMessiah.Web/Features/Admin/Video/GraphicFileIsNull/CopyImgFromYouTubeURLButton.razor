@@ -1,0 +1,51 @@
+﻿@using Azure.Storage.Blobs;
+@using Azure.Storage.Blobs.Specialized;
+@using LivingMessiah.Web.Features.Admin.Video.Data;
+@using Microsoft.Extensions.Logging;
+@using System;
+@using LivingMessiah.Web.Settings
+@using Microsoft.Extensions.Options
+
+@inject ILogger<CopyImgFromYouTubeURLButton>? Logger
+@inject IOptions<BlobSettings>? BlobSettings
+@inject IToastService? Toast
+
+<button @onclick="ButtonClicked" type="button"
+				title="" class="text-primary btn-sm">
+	Copy YouTube Image <i class="fas fa-copy"></i>
+</button>
+
+@code {
+
+	[Parameter, EditorRequired] public string? Blob { get; set; }
+	[Parameter, EditorRequired] public string? YouTubeId { get; set; }
+
+	private async Task ButtonClicked()
+	{
+		try
+		{
+			Logger!.LogDebug("{Method}, Parameters: {YouTubeId}, {Container}!{Blob}"
+			, nameof(ButtonClicked), YouTubeId, BlobSettings!.Value.ContainerParasha, Blob);
+			
+			BlobServiceClient blobServiceClient = new BlobServiceClient(BlobSettings!.Value.ConnectionString);
+
+			BlockBlobClient destinationBlob = blobServiceClient
+				.GetBlobContainerClient(BlobSettings!.Value.ContainerParasha)
+				.GetBlockBlobClient(Blob);
+
+			await PutBlobFromURL.CopyFromExternalSourceAsync(
+				$"http://img.youtube.com/vi/{YouTubeId}/{"maxresdefault.jpg"}", destinationBlob);
+
+			Logger!.LogInformation("{Method}; {Command} successfully copied {YouTubeId} to {Container}!{Blob} ",
+				nameof(ButtonClicked), nameof(PutBlobFromURL.CopyFromExternalSourceAsync), YouTubeId, BlobSettings!.Value.ContainerParasha, Blob);
+			Toast!.ShowSuccess($"Successfully copied YouTube Id {YouTubeId} to {BlobSettings!.Value.ContainerParasha}!{Blob}");
+		}
+
+		catch (Exception ex)
+		{
+			Logger!.LogError(ex, "{Method}; {Command}", nameof(ButtonClicked), nameof(PutBlobFromURL.CopyFromExternalSourceAsync));
+			Toast!.ShowError($"{Global.ToastShowError} {nameof(CopyImgFromYouTubeURLButton)}, {nameof(ButtonClicked)}");
+		}
+	}
+}
+

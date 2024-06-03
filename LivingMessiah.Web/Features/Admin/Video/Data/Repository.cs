@@ -26,8 +26,9 @@ public interface IRepository
 	Task<Tuple<int, int, string>> WeeklyVideoInsert(Video.AddEdit.FormVM formVM);
 	Task<Tuple<int, int, string>> WeeklyVideoUpdate(Video.AddEdit.FormVM formVM);
 	Task<Tuple<int, int, string>> WeeklyVideoDelete(int id);
-	Task<Tuple<int, int, string>> WeeklyVideoUpdateGraphicFile(YouTubeAndFileVM VM);
-}
+
+	Task<Tuple<int, int, string>> WeeklyVideoUpdateGraphicFile(BlobRecord blobRecord);
+	}
 
 
 public class Repository : BaseRepositoryAsync, IRepository
@@ -272,14 +273,14 @@ WHERE Id = @Id
 	}
 
 
-	public async Task<Tuple<int, int, string>> WeeklyVideoUpdateGraphicFile(YouTubeAndFileVM VM)
+	public async Task<Tuple<int, int, string>> WeeklyVideoUpdateGraphicFile(BlobRecord rec)
 	{
 		Sql = "dbo.stpWeeklyVideo_GraphicFile_Update";
 		Parms = new DynamicParameters(new
 		{
-			VM.WeeklyVideoTypeId,
-			VM.ShabbatWeekId,
-			VM.GraphicFile,
+			rec.WeeklyVideoTypeId,
+			rec.ShabbatWeekId,
+			rec.GraphicFile,
 		});
 
 		Parms.Add("@ReturnValue", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue);
@@ -290,22 +291,21 @@ WHERE Id = @Id
 
 		return await WithConnectionAsync(async connection =>
 		{
-			string parameters = $"ShabbatWeekId: ShabbatWeekId: {VM.ShabbatWeekId}, WeeklyVideoTypeId: {VM.WeeklyVideoTypeId}";
-			string inside = $"{nameof(Repository)}!{nameof(WeeklyVideoUpdateGraphicFile)}; about to execute SPROC: {Sql}";
-			log.LogDebug(string.Format("Inside {0}", inside));
-
+			string parameters = $"ShabbatWeekId: ShabbatWeekId: {rec.ShabbatWeekId}, WeeklyVideoTypeId: {rec.WeeklyVideoTypeId}";
+			
+			log.LogDebug("{Method}; Calling SPROC: {Command}",	nameof(WeeklyVideoUpdateGraphicFile), Sql);
 			affectedRows = await connection.ExecuteAsync(sql: Sql, param: Parms, commandType: CommandType.StoredProcedure);
 			SprocReturnValue = Parms.Get<int>("ReturnValue");
 
 			if (SprocReturnValue != 0)
 			{
-				ReturnMsg = $"Database call failed; {nameof(VM.YouTubeId)}:{VM.YouTubeId}; SprocReturnValue: {SprocReturnValue}";
-				log.LogWarning(string.Format("inside {0}, parameters:{1}, ReturnMsg:{2}, {3} Sql: {4}"
-					, inside, parameters, ReturnMsg, Environment.NewLine, Sql));
+				ReturnMsg = $"Database call failed; {nameof(rec.YouTubeId)}:{rec.YouTubeId}; SprocReturnValue: {SprocReturnValue}";
+				log.LogWarning("{Method}; {Parameters}; {ReturnMsg}"
+					, nameof(WeeklyVideoUpdateGraphicFile), parameters, ReturnMsg);
 			}
 			else
 			{
-				ReturnMsg = $"Video updated for {VM.ShabbatWeekId}/{VM.WeeklyVideoTypeId}";
+				ReturnMsg = $"Video updated for {rec.ShabbatWeekId}/{rec.WeeklyVideoTypeId}";
 			}
 
 			return new Tuple<int, int, string>(affectedRows, SprocReturnValue, ReturnMsg);
