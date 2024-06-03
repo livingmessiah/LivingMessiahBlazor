@@ -36,14 +36,11 @@
 			<td>@context.BlobFileName</td>
 
 			<td>
-				@* <button @onclick="@(e => ButtonClicked(context.BlobFileName))" type="button" *@
 				<button @onclick="@(e => ButtonClicked(context.YouTubeId!, context.BlobFileName, context.ShabbatWeekId))" type="button"
 								title="Add Blob" class="text-success btn-sm">
 					<i class="fas fa-plus"></i>
 				</button>
 			</td>
-
-			@* <td>@context.GraphicFile</td> *@
 
 		</RowTemplate>
 	</TableTemplate>
@@ -51,21 +48,21 @@
 
 @code {
 
-	[Parameter, EditorRequired] public EventCallback<YouTubeAndFileVM> OnBlobSelected { get; set; }  // EventCallback<string>
+	[Parameter, EditorRequired] public EventCallback<BlobRecord> OnBlobSelected { get; set; }
 
 	protected bool TurnSpinnerOff = false;
 	List<GraphicFileIsNull.GraphicFileIsNullVM>? GraphicFileIsNullList;
 
 	protected override async Task OnInitializedAsync()
 	{
-		Logger!.LogDebug("{Class}!{Method}", nameof(Table), nameof(OnInitializedAsync));
+		Logger!.LogDebug("{Method}", nameof(OnInitializedAsync));
 		try
 		{
 			GraphicFileIsNullList = await db!.GetGraphicFileIsNullList();
 		}
 		catch (System.Exception ex)
 		{
-			Logger!.LogError(ex, "{Class}!{Method}; {Command}", nameof(Table), nameof(OnInitializedAsync), nameof(db.GetGraphicFileIsNullList));
+			Logger!.LogError(ex, "{Method}; {Command}", nameof(OnInitializedAsync), nameof(db.GetGraphicFileIsNullList));
 			Toast!.ShowError("An invalid operation occurred reading database, contact your administrator");
 		}
 		finally
@@ -76,11 +73,7 @@
 
 	private void ButtonClicked(string youTubeId, string blobFileName, int shabbatWeekId)
 	{
-		YouTubeAndFileVM vm = new();
-		vm.YouTubeId = youTubeId;
-		vm.GraphicFile = blobFileName;
-		vm.ShabbatWeekId = shabbatWeekId;
-		OnBlobSelected.InvokeAsync(vm);
-		//OnBlobSelected.InvokeAsync(blobFileName);
+		OnBlobSelected.InvokeAsync(new BlobRecord(shabbatWeekId, Enums.WeeklyVideoType.MainServiceEnglish.Value, youTubeId, blobFileName));
 	}
+
 }

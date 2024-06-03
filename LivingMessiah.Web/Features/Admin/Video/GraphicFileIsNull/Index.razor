@@ -1,4 +1,4 @@
-﻿@page "/admin/Video/GraphicFilesNull"
+﻿@page "/admin/Video/GraphicFilesNull" 
 @using Page = LivingMessiah.Web.Links.Admin.Video.GraphicFileIsNull
 @using static LivingMessiah.Web.Services.Auth0
 
@@ -6,36 +6,18 @@
 @inject IToastService? Toast
 
 <AuthorizeView Roles="@Roles.Admin">
-
 	<Authorized>
-
 		<IndexPageHeader />
-
 		@if (_showDetail)
 		{
-			<ProcessChosenBlob YouTubeId="@_youTubeId"
-												 BlobFileName="@GraphicFile"
-												 ShabbatWeekId="ShabbatWeekId"
-												 OnProcessCompleted="ReturnedProccess" />
+			<ProcessBlob BlobRecord="@_blobRecord" OnProcessCompleted="@ReturnedProccess" />
 		}
-
 		<Table OnBlobSelected=@ReturnedSelection />
-
 	</Authorized>
 
 	<NotAuthorized>
-
-		<div class="card border-warning my-5">
-			<div class="card-header">Not Authorized</div>
-
-			<div class="card-body">
-				<h5 class="">To view <b>@Page.Title</b> you need to be logged in.</h5>
-				<LoginRedirectButton ReturnUrl="@Page.Index" />
-			</div>
-		</div>
-
+		<LoginRedirectCard PageTitle="@Page.Title" ReturnUrl="@Page.Index" />
 	</NotAuthorized>
-
 </AuthorizeView>
 
 
@@ -45,34 +27,12 @@
 
 	#region EventCallbacks
 
-	private string? _youTubeId = null;
-	private string? GraphicFile = null;
-	private int ShabbatWeekId = 0;
-
-
-	private void ReturnedSelection(YouTubeAndFileVM vm)  // string blobFile
-	{
-		_youTubeId = vm.YouTubeId!;
-		GraphicFile = vm.GraphicFile!;
-		ShabbatWeekId = vm.ShabbatWeekId;
-		_showDetail = true;
-		//StateHasChanged();
-	}
-
 	private BlobRecord? _blobRecord;
-	private void ReturnedSelectionRec(BlobRecord rec)  // string blobFile
+	private void ReturnedSelection(BlobRecord rec) 
 	{
 		_blobRecord = rec;
 		_showDetail = true;
 		//StateHasChanged();
-	}
-
-
-	private string? _returnedTransactionMessage;
-	private void ReturnedTransactionMessage(string msg)
-	{
-		_returnedTransactionMessage = msg;
-		Toast!.ShowInfo($"Transaction Message: {nameof(ReturnedTransactionMessage)}");
 	}
 
 	private void ReturnedProccess(bool cancelClicked)

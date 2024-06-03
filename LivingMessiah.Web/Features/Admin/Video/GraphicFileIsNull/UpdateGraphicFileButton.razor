@@ -1,0 +1,47 @@
+﻿@using LivingMessiah.Web.Features.Admin.Video.Data
+@using Microsoft.Extensions.Logging
+@using System
+@using System.Threading.Tasks
+
+@inject Data.IRepository? db
+@inject ILogger<UpdateGraphicFileButton>? Logger
+@inject IToastService? Toast
+
+<button @onclick="ButtonClicked" type="button"
+				title="Add Blob" class="text-primary btn-sm">
+	Update Graphic Column <i class="far fa-edit"></i>
+</button>
+
+@code {
+
+	[Parameter, EditorRequired] public BlobRecord? BlobRecord { get; set; }
+
+	private async Task ButtonClicked()
+	{
+		try
+		{
+			Logger!.LogDebug("{Method}, {BlobRecord}", nameof(ButtonClicked), BlobRecord!.ToString());
+
+			var DatabaseResult = await db!.WeeklyVideoUpdateGraphicFile(BlobRecord!)
+				.ContinueWith(t => new SprocTuple(t.Result.Item1, t.Result.Item2, t.Result.Item3));
+
+			if (DatabaseResult.ReturnValue == 0)  
+			{
+				Logger!.LogInformation("{Method}; {Command} successfully updated {GraphicFile} for Key1 {ShabbatWeekId} and Key2 {WeeklyVideoTypeId}  ",
+					nameof(ButtonClicked), nameof(db.WeeklyVideoUpdateGraphicFile), BlobRecord!.GraphicFile, BlobRecord!.ShabbatWeekId, BlobRecord!.WeeklyVideoTypeId);
+				Toast!.ShowSuccess($"Graphic Column Updated! ReturnValue: {DatabaseResult.ReturnValue}; ReturnMsg{DatabaseResult.ReturnMsg}");
+			}
+			else
+			{
+				Toast!.ShowWarning($"{nameof(UpdateGraphicFileButton)}!{nameof(ButtonClicked)} Clicked; ReturnMsg{DatabaseResult.ReturnMsg}");
+			}
+		}
+		catch (Exception ex)
+		{
+			Logger!.LogError(ex, "{Method}; {Command}", nameof(ButtonClicked), nameof(db.WeeklyVideoUpdateGraphicFile));
+			Toast!.ShowError($"{Global.ToastShowError} {nameof(UpdateGraphicFileButton)}, {nameof(ButtonClicked)}");
+		}
+
+	}
+
+}

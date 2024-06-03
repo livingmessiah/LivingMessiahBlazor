@@ -1,0 +1,22 @@
+﻿@using Link = LivingMessiah.Web.Links.Account
+
+@inject NavigationManager? NavigationManager
+
+<div class="card border-warning my-5">
+	<div class="card-header">Not Authorized</div>
+
+	<div class="card-body">
+		<h5 class="">To view <b>@PageTitle</b> you need to be logged in.</h5>
+		<LoginRedirectButton ReturnUrl="@ReturnUrl" />
+	</div>
+</div>
+
+@code {
+	[Parameter] public string? PageTitle { get; set; }
+	[Parameter] public string? ReturnUrl { get; set; }  // PageIndex
+
+	void RedirectToLoginClick()
+	{
+		NavigationManager!.NavigateTo($"{Link.Login}?returnUrl={ReturnUrl}", true);
+	}
+}
