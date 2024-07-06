@@ -93,3 +93,4 @@ public abstract class BaseRepositoryAsync
 	}
 
 }
+// Ignore Spelling: parms

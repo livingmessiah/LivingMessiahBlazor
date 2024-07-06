@@ -114,6 +114,14 @@ hr.warning {
 	direction: rtl;
 }
 
+/*nrl:(Not Real Letter)*/
+.hebrew-nrl {
+	font-size: 22.0pt;
+	font-weight:300;
+	font-family: david;
+	direction: rtl;
+}
+
 
 .hebrew30 {
 	font-size: 30.0pt;

@@ -145,7 +145,7 @@ public abstract class FeastDay : SmartEnum<FeastDay>
 		public override string TabTitle => $"{nameof(Id.Weeks)}";
 		public override string PlannerTitle => nameof(Id.Weeks);
 		public override string Icon => "fab fa-creative-commons-zero";
-		public override string VerseReferenceCard => "Lev_23_15_21";
+		public override string VerseReferenceCard => "Lev_23_15_21"; //  "Lev_23_10_11_and_15_21";
 		public override bool IsHighSabbath => true;
 		public override int EndOfWeekAddDays => 0;
 		public override bool IsStartOfEdge => false;

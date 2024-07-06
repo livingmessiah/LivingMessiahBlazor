@@ -1,0 +1,27 @@
+﻿@English
+<span class="badge text-bg-light">
+	<span class="hebrew"> @Hebrew</span> <sup>@HideStrongs()</sup>
+</span>
+
+@code {
+	[Parameter] public string? English { get; set; }
+	[Parameter] public string? Hebrew { get; set; }
+	[Parameter] public string? TransLiteration { get; set; }
+	[Parameter] public int H { get; set; }   // ("H8104") Strongs.H("H8104")
+
+
+	// The strong's number can be see in the anchor title
+	private MarkupString HideStrongs() 
+	{
+		return (MarkupString)$"<a href='https://www.blueletterbible.org/lexicon/h{H}/kjv/wlc/0-1/' target='blank' title='Blue Letter Bible WLC Lexicon H{H}'><em>{TransLiteration}</em></a>";
+	}
+
+	private MarkupString ShowStrong() 
+	{
+		return (MarkupString)$"<a href='https://www.blueletterbible.org/lexicon/h{H}/kjv/wlc/0-1/' target='blank' title='Blue Letter Bible WLC Lexicon H{H}'>H{H}</a> H{H}";
+	}
+
+	//private const bool ShowStrongs = false;
+
+	//[Parameter] public RenderFragment? ChildContent { get; set; }
+}
