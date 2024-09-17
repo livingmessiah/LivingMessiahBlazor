@@ -90,12 +90,17 @@
 
 			<div class="col-sm-6">
 				<div class="mb-3">
-					<SfCalendar TValue="DateTime?"
-											IsMultiSelection="true" ShowTodayButton="false"
-											@bind-Values="@VM.AttendanceDateList2ndMonth"
-											Min="@DateRangeAttendance.Range2ndMonth.Min"
-											Max="@DateRangeAttendance.Range2ndMonth.Max">
-					</SfCalendar>
+
+					@if (DateRangeAttendance.HasSecondMonth)
+					{
+						<SfCalendar TValue="DateTime?"
+												IsMultiSelection="true" ShowTodayButton="false"
+												@bind-Values="@VM.AttendanceDateList2ndMonth"
+												Min="@DateRangeAttendance.Range2ndMonth.Min"
+												Max="@DateRangeAttendance.Range2ndMonth.Max">
+						</SfCalendar>
+					}
+
 
 				</div>
 			</div>
@@ -185,9 +190,9 @@
 				<label for="statusEnum" class="control-label">Status Type</label>
 				<InputSelect id="type" @bind-Value="VM.StatusId" class="form-control">
 					@foreach (var item in Sukkot.RegistrationSteps.Enums.Status
-					.List.Where(w => w.Value >= Sukkot.RegistrationSteps.Enums.Status.Payment.Value)
-					.OrderBy(o => o.Value)
-					.ToList())
+							.List.Where(w => w.Value >= Sukkot.RegistrationSteps.Enums.Status.Payment.Value)
+							.OrderBy(o => o.Value)
+							.ToList())
 					{
 						<option value="@item.Value">@item.Heading</option>
 					}

@@ -2,7 +2,7 @@
 using Blazored.FluentValidation;
 using Microsoft.Extensions.Logging;
 using ParentState = LivingMessiah.Web.Features.Sukkot.ManageRegistration.Index;
-using System.Threading.Tasks;
+using Blazored.Toast.Services;
 
 namespace LivingMessiah.Web.Features.Sukkot.ManageRegistration.Registrant;
 
@@ -11,20 +11,29 @@ public partial class Form
 	[Inject] public ILogger<Form>? Logger { get; set; }
 	[Inject] private IState<RegistrantState>? State { get; set; }
 	[Inject] public IDispatcher? Dispatcher { get; set; }
+	[Inject] public IToastService? Toast { get; set; }
 
 	private FormVM? VM => State!.Value.FormVM;
 
 	protected override void OnInitialized()
 	{
-		Logger!.LogDebug(string.Format("Inside {0}", nameof(Form) + "!" + nameof(OnInitialized)));
-		string? s = State!.Value.HRA_EMail ?? string.Empty;
-		if (!string.IsNullOrEmpty(s))
+		Logger!.LogDebug("{Class}!{Method}", nameof(Form), nameof(OnInitialized));
+		base.OnInitialized();
+		try
 		{
-			VM!.EMail = s;
-			VM.StatusId = RegistrationSteps.Enums.Status.Payment.Value;
+			string? s = State!.Value.HRA_EMail ?? string.Empty;
+			if (!string.IsNullOrEmpty(s))
+			{
+				VM!.EMail = s;
+				VM.StatusId = RegistrationSteps.Enums.Status.Payment.Value;
+			}
+		}
+		catch (System.Exception ex)
+		{
+			Logger!.LogError(ex, "{Class}!{Method}", nameof(Form), nameof(OnInitialized));
+			Toast!.ShowError($"{Global.ToastShowError} {nameof(Form)}!{nameof(OnInitialized)}");
 		}
 
-		base.OnInitialized();
 	}
 
 	public Sukkot.Enums.DateRangeType DateRangeAttendance { get; set; } = Sukkot.Enums.DateRangeType.Attendance;
