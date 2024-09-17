@@ -32,19 +32,27 @@ public abstract class DateRangeType : SmartEnum<DateRangeType>
 	#region Private Instantiation
 
 	// Configuration with NO second month
-	/*
+	/*	*/
 	private sealed class AttendanceSE : DateRangeType
 	{
 		public AttendanceSE() : base($"{nameof(Id.Attendance)}", Id.Attendance) { }
 		public override string Title => "Attendance Date";
-		public override DateRange Range => new DateRange(Convert.ToDateTime("2023-09-29"), Convert.ToDateTime("2023-10-07"));
+		public override DateRange Range => new DateRange(Convert.ToDateTime("2024-10-16"), Convert.ToDateTime("2024-10-25"));
 		public override DateRange Range2ndMonth => null;
 		public override bool HasSecondMonth => false;
 	}
-	*/
+
+	private sealed class LodgingSE : DateRangeType
+	{
+		public LodgingSE() : base($"{nameof(Id.Lodging)}", Id.Lodging) { }
+		public override string Title => "Lodging Date";
+		public override DateRange Range => new DateRange(Convert.ToDateTime("2024-10-16"), Convert.ToDateTime("024-10-25"));
+		public override DateRange Range2ndMonth => null;
+		public override bool HasSecondMonth => false;
+	}
 
 	// 	 Configuration WITH second month
-	/**/
+	/*
 	private sealed class AttendanceSE : DateRangeType
 	{
 		public AttendanceSE() : base($"{nameof(Id.Attendance)}", Id.Attendance) { }
@@ -60,10 +68,10 @@ public abstract class DateRangeType : SmartEnum<DateRangeType>
 		public LodgingSE() : base($"{nameof(Id.Lodging)}", Id.Lodging) { }
 		public override string Title => "Lodging Date";
 		public override DateRange Range => new DateRange(Convert.ToDateTime("2023-09-29"), Convert.ToDateTime("2023-09-30"));
-		public override bool HasSecondMonth => true;
 		public override DateRange Range2ndMonth => new DateRange(Convert.ToDateTime("2023-10-01"), Convert.ToDateTime("2023-10-07"));
+		public override bool HasSecondMonth => true;
 	}
-
+*/
 	#endregion
 }
 

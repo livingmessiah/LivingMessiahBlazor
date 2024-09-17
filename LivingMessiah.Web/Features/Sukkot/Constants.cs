@@ -2,15 +2,15 @@
 
 public static class Year
 {
-	public const int Int = 2023;
-	public const string String = "2023";
+	public const int Int = 2024;
+	public const string String = "2024";
 }
 
 public static class RegistrationClosedEmail
 {
 	public static string Subject { get; set; } = $"Late Sukkot {Year.String} Registration Question";
-	public const string Name = "Ralphie";
-	public const string Email = "ralphie@livingmessiah.com";
+	public const string Name = "Mark";
+	public const string Email = "mark@livingmessiah.com";
 }
 
 public static class Stripe
@@ -29,7 +29,7 @@ public static class Routing
 
 public static class TShirts
 {
-	public static bool IsAvailableForSale { get; set; } = true;
+	public static bool IsAvailableForSale { get; set; } = false;
 	public static string ForSaleMessage { get; set; } = "T-Shirts are available for sale, click the image below.";
 	public static string ComingSoonMessage { get; set; } = "T-Shirts not yet available, check back later. ";
 
@@ -37,7 +37,7 @@ public static class TShirts
 	{
 		get
 		{
-			return  Blobs.UrlRoot("sukkot-2023-tee-shirts.jpg");
+			return  Blobs.UrlRoot("sukkot-2024-tee-shirts.jpg");
 		}
 	}
 	public static string Href { get; set; } = "https://aboveallimages.net/shop/ols/categories/sukkot";
@@ -59,10 +59,10 @@ public static class PDFs
 {
 	public const string RegistrationWalkThrough = "sukkot-registration-walkthrough-users-manual.pdf";
 	public const string StripeWalkThrough = "sukkot-making-a-payment-with-stripe.pdf";  // ToDo: these needs to be updated
-	public const string Schedule = "sukkot-2023-schedule.pdf";
+	public const string Schedule = "sukkot-2024-schedule.pdf";
 	public const string LiabilityWaiver = "sukkot-2022-liability-waiver.pdf"; // NOT DONE YET
-	public const string HouseRules = "sukkot-2023-house-rules.pdf";
-	public const string LegalAgreementVerbiage = "Sukkot-2023-Legal-Agreement-Verbiage.pdf";
+	public const string HouseRules = "sukkot-2024-house-rules.pdf";
+	public const string LegalAgreementVerbiage = "Sukkot-2024-Legal-Agreement-Verbiage.pdf";
 
 	// Where are these used?, both written 8/7/2021
 	public const string WindmillRanchSupplementalRules = "windmill-ranch-supplemental-rules.pdf";
@@ -102,20 +102,20 @@ public static class Blobs
 public static class RegistrationMeta
 {
 	public static bool IsThereEarlyRegistration { get; set; } = false;
-	public static System.DateTime EarlyRegistrationLastDay = new System.DateTime(Year.Int, 9, 15);
+	public static System.DateTime EarlyRegistrationLastDay = new System.DateTime(Year.Int, 9, 16);
 	public const decimal EarlyRegistrationFee = 75.0m;
-	public static System.DateTime RegistrationLastDay = new System.DateTime(Year.Int, 9, 15);
+	public static System.DateTime RegistrationLastDay = new System.DateTime(Year.Int, 9, 16);
 	public const decimal RegistrationFee = 75.0m;
 
-	// Represented in the Sql Server table Sukkot.Constants; columngs AttendanceMinDate and AttendanceMaxDate
-	public const string IntroductionDates = "sundown Friday, September 29, through sundown Saturday, October 7th";
+	// Represented in the Sql Server table Sukkot.Constants; columns AttendanceMinDate and AttendanceMaxDate
+	public const string IntroductionDates = "sundown Wednesday, October 16, through sundown Thursday, October 24th";
 }
 
 
 
 public static class Other
 {
-	public const string Banner = "2023-sukkot-banner-1020-372-3d.jpg";
+	public const string Banner = "2024-sukkot-banner-1020-430-3d.jpg";
 	public const string BannerAlt = $"{Year.String} Sukkot Registration Banner";
 	public static string DetailsTitle { get; set; } = $"Living Messiah Sukkot Registration {Year.String}";
 	 
