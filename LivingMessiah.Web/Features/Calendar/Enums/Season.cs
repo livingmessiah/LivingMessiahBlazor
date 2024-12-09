@@ -45,7 +45,9 @@ public abstract class Season : SmartEnum<Season>
 		public override string Icon => "fas fa-snowflake";
 		public override string Emoji => "❄";
 		public override string CalendarColor => CalendarColors.Primary;
-		public override DateTime Date => Convert.ToDateTime("2023-12-21"); // EnumId: 1; Winter
+//	public override DateTime Date => Convert.ToDateTime("2023-12-21"); // EnumId: 1; Winter
+		public override DateTime Date => Convert.ToDateTime("2024-12-20"); // EnumId: 1; Winter
+
 	}
 	private sealed class SpringSE : Season
 	{
@@ -55,7 +57,9 @@ public abstract class Season : SmartEnum<Season>
 		public override string Icon => "fas fa-cloud-sun-rain";
 		public override string Emoji => "🌨";
 		public override string CalendarColor => CalendarColors.Success;
-		public override DateTime Date => Convert.ToDateTime("2024-03-17"); // EnumId: 2; Spring
+//	public override DateTime Date => Convert.ToDateTime("2024-03-17"); // EnumId: 2; Spring
+		public override DateTime Date => Convert.ToDateTime("2025-03-17"); // EnumId: 2; Spring
+
 	}
 	private sealed class SummerSE : Season
 	{
@@ -65,7 +69,9 @@ public abstract class Season : SmartEnum<Season>
 		public override string Icon => "far fa-sun";
 		public override string Emoji => "☀";
 		public override string CalendarColor => CalendarColors.Danger;
-		public override DateTime Date => Convert.ToDateTime("2024-06-20"); // EnumId: 3; Summer
+//	public override DateTime Date => Convert.ToDateTime("2024-06-20"); // EnumId: 3; Summer
+		public override DateTime Date => Convert.ToDateTime("2025-06-20"); // EnumId: 3; Summer
+
 	}
 	private sealed class FallSE : Season
 	{
@@ -75,7 +81,9 @@ public abstract class Season : SmartEnum<Season>
 		public override string Icon => "fab fa-canadian-maple-leaf";
 		public override string Emoji => "🍁";
 		public override string CalendarColor => CalendarColors.Warning;
-		public override DateTime Date => Convert.ToDateTime("2024-09-25"); // EnumId: 4; Fall
+//	public override DateTime Date => Convert.ToDateTime("2024-09-25"); // EnumId: 4; Fall
+		public override DateTime Date => Convert.ToDateTime("2025-09-26"); // EnumId: 4; Fall
+
 	}
 	#endregion
 

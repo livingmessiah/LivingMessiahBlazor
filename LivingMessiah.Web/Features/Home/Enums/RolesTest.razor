@@ -71,6 +71,10 @@
 			}
 		}
 
+		/*
+		# `SmartFlagTestEnum` [BitWiseOrOperator](https://github.com/ardalis/SmartEnum#bitwiseoroperator)
+		The `FromValue()` methods allow the **Or** `( | )` operator to be used to add enum values together and provide multiple values at once.
+		*/
 		var roleElderSukkot = Enums.Roles.FromValue(Enums.Roles.Elder | Enums.Roles.Sukkot);
 		foreach (var item in roleElderSukkot)
 		{

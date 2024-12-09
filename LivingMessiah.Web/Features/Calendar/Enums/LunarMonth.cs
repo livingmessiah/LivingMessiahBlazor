@@ -27,7 +27,7 @@ public abstract class LunarMonth : SmartEnum<LunarMonth>
 		internal const int Heshvan = 13;
 		internal const int Kislev = 14;
 		internal const int Tevet = 15;
-		internal const int Adar2 = 16;
+		//internal const int Adar2 = 16;
 	}
 	#endregion
 
@@ -47,7 +47,7 @@ public abstract class LunarMonth : SmartEnum<LunarMonth>
 	public static readonly LunarMonth Heshvan = new HeshvanMonth();
 	public static readonly LunarMonth Kislev = new KislevMonth();
 	public static readonly LunarMonth Tevet = new TevetMonth();
-	public static readonly LunarMonth Adar2 = new Adar2Month();
+	//public static readonly LunarMonth Adar2 = new Adar2Month();
 
 	private LunarMonth(string name, int value) : base(name, value) { }
 
@@ -78,7 +78,8 @@ public abstract class LunarMonth : SmartEnum<LunarMonth>
 		public override string FullName => nameof(Id.Heshvan); // + PGY;
 		public override string Description => String.IsNullOrEmpty(BiblicalHebrew) ? $"{BiblicalName}" : $"{BiblicalName} {BiblicalHebrew}"; 
 		public override bool IsPreviousYear => true;
-		public override DateTime Date => Convert.ToDateTime("2023-10-14"); // EnumId: 1; Heshvan | Bul
+//	public override DateTime Date => Convert.ToDateTime("2023-10-14"); // EnumId: 1; Heshvan | Bul
+		public override DateTime Date => Convert.ToDateTime("2024-10-31"); // EnumId: 1; Heshvan | Bul
 	}
 
 	private sealed class KislevPrevGregYrMonth : LunarMonth
@@ -92,7 +93,9 @@ public abstract class LunarMonth : SmartEnum<LunarMonth>
 		public override string FullName => nameof(Id.Kislev); // + PGY;
 		public override string Description => String.IsNullOrEmpty(BiblicalHebrew) ? $"{BiblicalName}" : $"{BiblicalName} {BiblicalHebrew}";
 		public override bool IsPreviousYear => true;
-		public override DateTime Date => Convert.ToDateTime("2023-11-12"); // EnumId: 2; Kislev | 9th
+//	public override DateTime Date => Convert.ToDateTime("2023-11-12"); // EnumId: 2; Kislev | 9th
+		public override DateTime Date => Convert.ToDateTime("2024-11-30"); // EnumId: 2; Kislev | 9th
+
 	}
 
 	private sealed class TevetPrevGregYrMonth : LunarMonth
@@ -106,7 +109,8 @@ public abstract class LunarMonth : SmartEnum<LunarMonth>
 		public override string FullName => nameof(Id.Tevet); // + PGY;
 		public override string Description => String.IsNullOrEmpty(BiblicalHebrew) ? $"{BiblicalName}" : $"{BiblicalName} {BiblicalHebrew}";
 		public override bool IsPreviousYear => true;
-		public override DateTime Date => Convert.ToDateTime("2023-12-12"); // EnumId: 3; Tevet | 10th	}
+//	public override DateTime Date => Convert.ToDateTime("2023-12-12"); // EnumId: 3; Tevet | 10th	}
+		public override DateTime Date => Convert.ToDateTime("2025-01-01"); // EnumId: 3; Tevet | 10th
 	}
 
 	private sealed class ShevatMonth : LunarMonth
@@ -120,7 +124,8 @@ public abstract class LunarMonth : SmartEnum<LunarMonth>
 		public override string FullName => nameof(Id.Shevat);
 		public override string Description => String.IsNullOrEmpty(BiblicalHebrew) ? $"{BiblicalName}" : $"{BiblicalName} {BiblicalHebrew}";
 		public override bool IsPreviousYear => false;
-		public override DateTime Date => Convert.ToDateTime("2024-01-10"); // EnumId: 4; Shevat | 11th
+//	public override DateTime Date => Convert.ToDateTime("2024-01-10"); // EnumId: 4; Shevat | 11th
+		public override DateTime Date => Convert.ToDateTime("2025-01-30"); // EnumId: 4; Shevat | 11th
 	}
 
 	private sealed class AdarMonth : LunarMonth
@@ -134,9 +139,11 @@ public abstract class LunarMonth : SmartEnum<LunarMonth>
 		public override string FullName => nameof(Id.Adar);
 		public override string Description => String.IsNullOrEmpty(BiblicalHebrew) ? $"{BiblicalName}" : $"{BiblicalName} {BiblicalHebrew}";
 		public override bool IsPreviousYear => false;
-		public override DateTime Date => Convert.ToDateTime("2024-02-09"); // EnumId: 5; Adar | 12th
+//	public override DateTime Date => Convert.ToDateTime("2024-02-09"); // EnumId: 5; Adar | 12th
+		public override DateTime Date => Convert.ToDateTime("2025-03-01"); // EnumId: 5; Adar | 12th
 	}
 
+/*
 	private sealed class Adar2Month : LunarMonth
 	{
 		public Adar2Month() : base($"{nameof(Id.Adar2)}", Id.Adar2) { }
@@ -150,7 +157,7 @@ public abstract class LunarMonth : SmartEnum<LunarMonth>
 		public override bool IsPreviousYear => false;
 		public override DateTime Date => Convert.ToDateTime("2024-03-09"); // EnumId: 6; Adar II | 13th
 	}
-
+*/
 
 
 
@@ -165,7 +172,9 @@ public abstract class LunarMonth : SmartEnum<LunarMonth>
 		public override string FullName => nameof(Id.Nissan);
 		public override string Description => String.IsNullOrEmpty(BiblicalHebrew) ? $"{BiblicalName}" : $"{BiblicalName} {BiblicalHebrew}";
 		public override bool IsPreviousYear => false;
-		public override DateTime Date => Convert.ToDateTime("2024-04-09"); // EnumId: 7; Nissan | Abib
+		//public override DateTime Date => Convert.ToDateTime("2024-04-09"); // EnumId: 7; Nissan | Abib
+		public override DateTime Date => Convert.ToDateTime("2025-03-30"); // EnumId: 6; Nissan | Abib
+
 	}
 
 	private sealed class IyarMonth : LunarMonth
@@ -179,7 +188,8 @@ public abstract class LunarMonth : SmartEnum<LunarMonth>
 		public override string FullName => nameof(Id.Iyar);
 		public override string Description => String.IsNullOrEmpty(BiblicalHebrew) ? $"{BiblicalName}" : $"{BiblicalName} {BiblicalHebrew}";
 		public override bool IsPreviousYear => false;
-		public override DateTime Date => Convert.ToDateTime("2024-05-07"); // EnumId: 8; Iyar | Ziv
+//	public override DateTime Date => Convert.ToDateTime("2024-05-07"); // EnumId: 8; Iyar | Ziv
+		public override DateTime Date => Convert.ToDateTime("2025-04-29"); // EnumId: 7; Iyar | Ziv
 	}
 
 	private sealed class SivanMonth : LunarMonth
@@ -193,7 +203,8 @@ public abstract class LunarMonth : SmartEnum<LunarMonth>
 		public override string FullName => nameof(Id.Sivan);
 		public override string Description => String.IsNullOrEmpty(BiblicalHebrew) ? $"{BiblicalName}" : $"{BiblicalName} {BiblicalHebrew}";
 		public override bool IsPreviousYear => false;
-		public override DateTime Date => Convert.ToDateTime("2024-06-06"); // EnumId: 9; Sivan | 3rd
+//	public override DateTime Date => Convert.ToDateTime("2024-06-06"); // EnumId: 9; Sivan | 3rd
+		public override DateTime Date => Convert.ToDateTime("2025-05-28"); // EnumId: 8; Sivan | 3rd
 	}
 
 	private sealed class TammuzMonth : LunarMonth
@@ -207,7 +218,8 @@ public abstract class LunarMonth : SmartEnum<LunarMonth>
 		public override string FullName => nameof(Id.Tammuz);
 		public override string Description => String.IsNullOrEmpty(BiblicalHebrew) ? $"{BiblicalName}" : $"{BiblicalName} {BiblicalHebrew}";
 		public override bool IsPreviousYear => false;
-		public override DateTime Date => Convert.ToDateTime("2024-07-05"); // EnumId: 10; Tammuz | 4th
+//	public override DateTime Date => Convert.ToDateTime("2024-07-05"); // EnumId: 10; Tammuz | 4th
+		public override DateTime Date => Convert.ToDateTime("2025-06-27"); // EnumId: 9; Tammuz | 4th
 	}
 
 	private sealed class AvMonth : LunarMonth
@@ -221,7 +233,8 @@ public abstract class LunarMonth : SmartEnum<LunarMonth>
 		public override string FullName => nameof(Id.Av);
 		public override string Description => String.IsNullOrEmpty(BiblicalHebrew) ? $"{BiblicalName}" : $"{BiblicalName} {BiblicalHebrew}";
 		public override bool IsPreviousYear => false;
-		public override DateTime Date => Convert.ToDateTime("2024-08-04"); // EnumId: 11; Av | 5th
+//	public override DateTime Date => Convert.ToDateTime("2024-08-04"); // EnumId: 11; Av | 5th
+		public override DateTime Date => Convert.ToDateTime("2025-07-26"); // EnumId: 10; Av | 5th
 	}
 
 	private sealed class ElulMonth : LunarMonth
@@ -235,7 +248,9 @@ public abstract class LunarMonth : SmartEnum<LunarMonth>
 		public override string FullName => nameof(Id.Elul);
 		public override string Description => String.IsNullOrEmpty(BiblicalHebrew) ? $"{BiblicalName}" : $"{BiblicalName} {BiblicalHebrew}";
 		public override bool IsPreviousYear => false;
-		public override DateTime Date => Convert.ToDateTime("2024-09-02"); // EnumId: 12; Elul | 6th
+//  public override DateTime Date => Convert.ToDateTime("2024-09-02"); // EnumId: 12; Elul | 6th
+		public override DateTime Date => Convert.ToDateTime("2025-08-25"); // EnumId: 11; Elul | 6th
+
 	}
 
 	private sealed class TishriMonth : LunarMonth
@@ -249,7 +264,9 @@ public abstract class LunarMonth : SmartEnum<LunarMonth>
 		public override string FullName => nameof(Id.Tishri);
 		public override string Description => String.IsNullOrEmpty(BiblicalHebrew) ? $"{BiblicalName}" : $"{BiblicalName} {BiblicalHebrew}";
 		public override bool IsPreviousYear => false;
-		public override DateTime Date => Convert.ToDateTime("2024-10-02"); // EnumId: 13; Tishri | Ethanim
+//	public override DateTime Date => Convert.ToDateTime("2024-10-02"); // EnumId: 13; Tishri | Ethanim
+		public override DateTime Date => Convert.ToDateTime("2025-09-23"); // EnumId: 12; Tishri | Ethanim
+
 	}
 
 
@@ -265,7 +282,8 @@ public abstract class LunarMonth : SmartEnum<LunarMonth>
 		public override string FullName => nameof(Id.Heshvan);
 		public override string Description => String.IsNullOrEmpty(BiblicalHebrew) ? $"{BiblicalName}" : $"{BiblicalName} {BiblicalHebrew}";
 		public override bool IsPreviousYear => false;
-		public override DateTime Date => Convert.ToDateTime("2024-10-31"); // EnumId: 14; Heshvan | Bul
+//	public override DateTime Date => Convert.ToDateTime("2024-10-31"); // EnumId: 14; Heshvan | Bul
+		public override DateTime Date => Convert.ToDateTime("2025-10-23"); // EnumId: 13; Heshvan | Bul
 	}
 
 	private sealed class KislevMonth : LunarMonth
@@ -279,7 +297,8 @@ public abstract class LunarMonth : SmartEnum<LunarMonth>
 		public override string FullName => nameof(Id.Kislev);
 		public override string Description => String.IsNullOrEmpty(BiblicalHebrew) ? $"{BiblicalName}" : $"{BiblicalName} {BiblicalHebrew}";
 		public override bool IsPreviousYear => false;
-		public override DateTime Date => Convert.ToDateTime("2024-11-30"); // EnumId: 15; Kislev | 9th
+//	public override DateTime Date => Convert.ToDateTime("2024-11-30"); // EnumId: 15; Kislev | 9th
+		public override DateTime Date => Convert.ToDateTime("2025-11-21"); // EnumId: 14; Kislev | 9th
 	}
 
 	private sealed class TevetMonth : LunarMonth
@@ -287,32 +306,19 @@ public abstract class LunarMonth : SmartEnum<LunarMonth>
 		public TevetMonth() : base($"{nameof(Id.Tevet)}", Id.Tevet) { }
 		public override int BabylonianSort => 10;
 		public override int HebrewSort => 4;
-		public override string Hebrew => "טבת"; 
+		public override string Hebrew => "טבת";
 		public override string BiblicalName => "10th";
 		public override string BiblicalHebrew => "";
 		public override string FullName => nameof(Id.Tevet);
 		public override string Description => String.IsNullOrEmpty(BiblicalHebrew) ? $"{BiblicalName}" : $"{BiblicalName} {BiblicalHebrew}";
 		public override bool IsPreviousYear => false;
-		public override DateTime Date => Convert.ToDateTime("2024-12-29"); // EnumId: 16; Tevet | 10th
+//	public override DateTime Date => Convert.ToDateTime("2024-12-29"); // EnumId: 16; Tevet | 10th
+		public override DateTime Date => Convert.ToDateTime("2025-12-21"); // EnumId: 15; Tevet | 10th
 	}
-
 	#endregion
 }
 
-// Ignore Spelling: Nissan
-// Ignore Spelling: Iyar
-// Ignore Spelling: Sivan
-// Ignore Spelling: Tammuz
-// Ignore Spelling: Av
-// Ignore Spelling: Elul
-// Ignore Spelling: Tishri
-
-// Ignore Spelling: Shevat
-// Ignore Spelling: Adar
-// Ignore Spelling: Heshvan
-// Ignore Spelling: Kislev
-// Ignore Spelling: Tevet
-// Ignore Spelling: Adar2
+// Ignore Spelling: Nissan, Iyar, Sivan, Tammuz, Av, Elul, Tishri, Shevat, Adar, Heshvan, Kislev, Tevet, Adar2
 
 /*
 
@@ -332,8 +338,6 @@ ORDER BY EnumId
 
 --SELECT * 	FROM KeyDate.LunarMonth 
 
-
-
 			internal const int Nissan = 1;
 			internal const int Iyar = 2;
 			internal const int Sivan = 3;
@@ -350,7 +354,5 @@ ORDER BY EnumId
 			internal const int Kislev = 14;
 			internal const int Tevet = 15;
 			internal const int Adar2 = 16;
-
-
 
 */

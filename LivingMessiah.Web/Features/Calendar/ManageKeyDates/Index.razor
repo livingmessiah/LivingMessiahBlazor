@@ -24,6 +24,12 @@
 					<div class="mt-4">
 						<EditGrid ParamCalendarEntries="CalendarEntriesFiltered" Year="_currentYear" />
 					</div>
+
+					@if (CurrentFilter == LivingMessiah.Web.Features.Calendar.Enums.DateType.Feast)
+					{
+						<p class="mt-2 fs-6">Feast dates are <span class="text-danger"><b>DAY OF</b></span></p>
+					}
+
 				}
 				else
 				{
@@ -58,7 +64,6 @@
 
 				<RefreshButtons CurrentFilter="@CurrentFilter"
 												OnRefreshSelected="@ReturnedRefresh" />
-
 
 				@if (KeyDateConstants is not null)
 				{

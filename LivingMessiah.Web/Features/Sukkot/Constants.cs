@@ -104,7 +104,7 @@ public static class RegistrationMeta
 	public static bool IsThereEarlyRegistration { get; set; } = false;
 	public static System.DateTime EarlyRegistrationLastDay = new System.DateTime(Year.Int, 9, 16);
 	public const decimal EarlyRegistrationFee = 75.0m;
-	public static System.DateTime RegistrationLastDay = new System.DateTime(Year.Int, 9, 16);
+	public static System.DateTime RegistrationLastDay = new System.DateTime(Year.Int, 10, 15);
 	public const decimal RegistrationFee = 75.0m;
 
 	// Represented in the Sql Server table Sukkot.Constants; columns AttendanceMinDate and AttendanceMaxDate

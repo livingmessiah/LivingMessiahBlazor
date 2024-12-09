@@ -2,7 +2,7 @@
 
 public static class Year
 {
-	public const string ImageName = "2024";
+	public const string ImageName = "2025";
 }
 
 public static class CalendarColors

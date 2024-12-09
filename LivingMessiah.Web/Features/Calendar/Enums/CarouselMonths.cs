@@ -19,7 +19,8 @@ public abstract class CarouselMonths : SmartEnum<CarouselMonths>
 		internal const int September = 9;
 		internal const int October = 10;
 		internal const int November = 11;
-		internal const int December = 12;
+		internal const int December = 12;  
+		internal const int AppointedTimes = 13;
 	}
 	#endregion
 
@@ -36,6 +37,8 @@ public abstract class CarouselMonths : SmartEnum<CarouselMonths>
 	public static readonly CarouselMonths October = new OctoberSE();
 	public static readonly CarouselMonths November = new NovemberSE();
 	public static readonly CarouselMonths December = new DecemberSE();
+	public static readonly CarouselMonths AppointedTimes = new AppointedTimesSE();
+	
 	// SE=SmartEnum
 	#endregion
 
@@ -144,6 +147,14 @@ public abstract class CarouselMonths : SmartEnum<CarouselMonths>
 		public override string Image => $"calendar-{Year.ImageName}-12.jpg";
 		public override string ImageFullSize => Image;
 		public override string Caption => "December";
+	}
+
+	private sealed class AppointedTimesSE : CarouselMonths
+	{
+		public AppointedTimesSE() : base($"{nameof(Id.AppointedTimes)}", Id.AppointedTimes) { }
+		public override string Image => $"calendar-{Year.ImageName}-13-appointed-times.jpg"; 
+		public override string ImageFullSize => Image;
+		public override string Caption => "Appointed Times";
 	}
 	#endregion
 
