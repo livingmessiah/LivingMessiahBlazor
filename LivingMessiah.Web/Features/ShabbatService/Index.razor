@@ -45,6 +45,7 @@ else
 
 @* IsPrinterFriendly="_isPrinterFriendly" *@
 
+@*
 <CardWithToggleVisiblity LoadQuickly="@LoadQuickly"
 												 CardCss="border-primary my-3"
 												 IsPrinterFriendly="_isPrinterFriendly"
@@ -105,7 +106,7 @@ else
 	</ChildContent>
 
 </CardWithToggleVisiblity>
-
+*@
 
 <CardWithToggleVisiblity IsPrinterFriendly="_isPrinterFriendly"
 												 LoadQuickly="@LoadQuickly"
@@ -660,6 +661,8 @@ else
 
 </Liturgy>
 
+
+@*
 @if (_ShowSpanish)
 {
 	<ShabbatServiceYouTube IsPrinterFriendly="@_isPrinterFriendly"
@@ -674,6 +677,8 @@ else
 												 ShowSpanish="false">
 	</ShabbatServiceYouTube>
 }
+*@
+
 
 
 @*
@@ -681,7 +686,8 @@ else
 	[Episode 15 - August 17, 2020 Application State](https://youtu.be/BB4lK2kfKf0)
 	<ShabbatServiceYouTube IsPrinterFriendly="@_isPrinterFriendly"
 												 ShowSpanish="@_ShowSpanish">
-	</ShabbatServiceYouTube>*@
+	</ShabbatServiceYouTube>
+*@
 
 
 <ThankYou Section="@Section.FromEnum(SectionEnum.ThankYou)"
@@ -768,6 +774,8 @@ else
 </ThankYou>
 
 
-<Other IsPrinterFriendly="_isPrinterFriendly"></Other>
+@* 
+<Other IsPrinterFriendly="_isPrinterFriendly"></Other> 
+*@
 
 

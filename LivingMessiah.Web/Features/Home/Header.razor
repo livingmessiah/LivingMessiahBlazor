@@ -1,0 +1,39 @@
+﻿
+<div class="card border-danger my-3">
+	<div class="card-header bg-danger">
+		<h1 class="text-center text-white ">
+				Lyrics, Liturgy and Teaching
+			</h1>
+	</div>
+	
+	<div class="body my-2">
+			<h3 class="text-center">
+				@Title
+			</h3>
+	</div>
+	
+	<div class="body">
+			<h3 class="text-center">
+				@Teaching
+			</h3>
+	</div>
+
+
+		<div class="card-footer">
+			<div class="text-center">
+				<a href="@PDF" target="_blank" title="@Title | @Teaching"
+			   class="btn btn-outline-danger btn-xl">
+					<span class="fs-4">PDF Download</span>
+						<i class="fas fa-file-download fa-fw fa-2x" aria-hidden="true"></i>
+				</a>
+			</div>
+	</div>
+
+
+</div>
+
+@code {
+[Parameter, EditorRequired] public string? Title { get; set; }  
+[Parameter, EditorRequired] public string? Teaching { get; set; }
+[Parameter, EditorRequired] public string? PDF { get; set; }
+}

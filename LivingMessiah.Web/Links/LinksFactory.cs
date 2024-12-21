@@ -55,22 +55,13 @@ public class LinksFactory : ILinksFactory
 				},
 				new Link
 				{
-					Index = PageWindmillRanch.Index,
-					Title = PageWindmillRanch.Title,
-					Icon = PageWindmillRanch.Icon,
-					HomeSidebarUsage=true,
-					SortOrder=3,
-					SitemapUsage=true
-				},
-				new Link
-				{
 					Index = ShabbatService.Index,
 					Title = ShabbatService.Title,
 					Icon = ShabbatService.Icon,
 					HomeSidebarUsage=true,
 					HomeFloatRightHebrew="שַׁבָּת",
 					HomeTitleSuffix=" Shabbat H7676",
-					SortOrder=4,
+					SortOrder=3,
 					SitemapUsage=true
 				},
 
@@ -83,6 +74,15 @@ public class LinksFactory : ILinksFactory
 					//Commented out not because it's wrong, but it's too wide
 					//HomeFloatRightHebrew="שׁוֹפָר",
 					//HomeTitleSuffix=" Shofar H7782",
+					SortOrder=4,
+					SitemapUsage=true
+				},
+				new Link
+				{
+					Index = PageWindmillRanch.Index,
+					Title = PageWindmillRanch.Title,
+					Icon = PageWindmillRanch.Icon,
+					HomeSidebarUsage=true,
 					SortOrder=5,
 					SitemapUsage=true
 				},

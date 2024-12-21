@@ -23,7 +23,7 @@ public enum SectionEnum
 	Avinu = 14,
 	AhronicBlessing = 15,
 	WineAndBread = 16,
-	NewsFlash = 17,
+	//NewsFlash = 17,
 	PsalmsAndProverbs = 18,
 	ThankYou = 19,
 }
@@ -77,8 +77,8 @@ public class Section
 	public static Section WineAndBread { get; } = new Section(
 		SectionEnum.WineAndBread, "wine-and-bread-1024-385.jpeg", "Wine and Bread", "Toggle16", "5:10 pm");
 
-	public static Section NewsFlash { get; } = new Section(
-		SectionEnum.NewsFlash, "news-flash-1039-398.jpeg", "News Flash", "Toggle17", "");
+	//public static Section NewsFlash { get; } = new Section(
+	//	SectionEnum.NewsFlash, "news-flash-1039-398.jpeg", "News Flash", "Toggle17", "");
 
 	public static Section PsalmsAndProverbs { get; } = new Section(
 		SectionEnum.PsalmsAndProverbs, "psalms-and-proverbs-1024-385.jpeg", "Psalms and Proverbs", "Toggle18", "");
