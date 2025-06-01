@@ -1,0 +1,32 @@
+﻿
+<div class="card border-success mt-5 mb-3 ">
+	<div class="card-header bg-success">
+		<h1 class="text-center text-white ">
+			Hebrew Class
+		</h1>
+	</div>
+
+ 	<div class="body">
+		<h5 class="text-center p-3">
+			Bney Yosef North America Hebrew Class
+		</h5>
+	</div> 
+
+	<div class="card-footer">
+		<div class="text-center">
+			<a href="@PDF" target="_blank" title=""
+				 class="btn btn-outline-success btn-xl">
+				<i class="fas fa-file-pdf fa-fw fa-2x"></i>
+				<span class="fs-4">PDF</span>
+				<i class="fas fa-file-download fa-fw fa-2x" aria-hidden="true"></i>
+			</a>
+		</div>
+	</div>
+
+
+</div>
+
+@code {
+	//[Parameter, EditorRequired] public string? Teaching { get; set; }
+	[Parameter, EditorRequired] public string? PDF { get; set; }
+}

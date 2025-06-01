@@ -23,7 +23,7 @@ public static class Omer
 
 public static class Dates
 {
-	public const string _12_Passover = "4/22/2024";
+	public const string _12_Passover = "4/12/2025";
 	/*
 	Called by...
 	- Pages\Articles\Pesach.razor.cs
