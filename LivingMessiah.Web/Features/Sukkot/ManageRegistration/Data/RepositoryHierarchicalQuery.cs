@@ -77,7 +77,7 @@ ORDER BY Detail
 		log.LogDebug(String.Format("Inside {0}, Sql={1}"
 			, nameof(RepositoryHierarchicalQuery) + "!" + nameof(GetDisplayAndDonationsById), base.Sql));
 
-		Detail.DetailAndDonationsHierarchicalQuery qry = new();
+		Detail.DetailAndDonationsHierarchicalQuery? qry = new();
 		string errMsg = "";
 		try
 		{
@@ -126,16 +126,16 @@ ORDER BY Detail
 
 	}
 
-	public string? Sql { get; set; }
-	public DynamicParameters? Parms { get; set; }  // using Dapper; Note, only place dependent on Dapper
+	public new string? Sql { get; set; }
+	public DynamicParameters? Params { get; set; }  // using Dapper; Note, only place dependent on Dapper
 
-	public string? SqlDump
+	public new string? SqlDump
 	{
 		get
 		{
 			string s = "";
 			s = Sql ?? "SQL IS NULL";
-			if (Parms != null)
+			if (Params != null)
 			{
 				/* See Notes in LivingMessiah.Data!BaseRepositoryAsync*/
 			}

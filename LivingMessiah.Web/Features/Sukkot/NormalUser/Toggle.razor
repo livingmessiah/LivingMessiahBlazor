@@ -3,17 +3,17 @@
 	<div class="col-12">
 		@if (IsCollapsed)
 		{
-			<Button @onclick="@(e => ToggleButtonClick(IsCollapsed))"
+			<button @onclick="@(e => ToggleButtonClick(IsCollapsed))"
 						class="btn-primary btn-sm float-end">
 				Form Details <i class='fas fa-chevron-down'></i>
-			</Button>
+			</button>
 		}
 		else
 		{
-			<Button @onclick="@(e => ToggleButtonClick(IsCollapsed))"
+			<button @onclick="@(e => ToggleButtonClick(IsCollapsed))"
 						class="btn-primary btn-sm float-end">
 				Hide <i class='fas fa-chevron-up'></i>
-			</Button>
+			</button>
 		}
 	</div>
 </div>
